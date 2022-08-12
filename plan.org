@@ -1,0 +1,80 @@
+#+title: Thesis Plan
+#+author: Arin Wongprommoon
+
+* Title
+* Abstract
+* Lay summary
+* Section: (Literature) Yeast metabolic cycle
+** Introduction to biological rhythms
+** Definition and description of yeast metabolic cycle
+- Context of discovery
+- Introduce chemostat vs single-cell discussions
+- Biochemical and metabolic aspects
+  - Metabolites
+  - Mobilisation of macromolecules, storage molecules
+- Transcription aspects
+- Cell biology aspects, including cell division cycle
+** Yeast metabolic cycle under perturbations
+- Nutrient perturbations
+- Key deletion strains shed light on mechanism
+** Big picture: a nutrient sensor than entrains the cell division cycle?
+** In other organisms
+- Other yeasts
+- Other organisms: bacteria, mammalian cells
+** Disputes and unresolved questions
+- Limitations of chemostat
+- Do cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony?
+- Populations of cells?
+* Section: (Literature) Flavins and flavoproteins
+** Introduction to cellular autofluorescence
+** Biochemical basis of flavins and flavoproteins
+- Flavins are molecules with a certain aromatic moiety than can undergo redox reactions.
+- Flavoproteins have FAD and FMN as co-factors.
+** Studies on global flavin changes in response to perturbations
+- How oxygen and nutrient changes affect flavins and other autofluorescence
+** Description of key flavoproteins and their roles
+- (Sort by abundance)
+** Flavins and flavoproteins in the yeast metabolic cycle
+- Easy-to-measure metabolic readout, linked to many biochemical processes
+*** Review of chemostat and single-cell studies that use flavin
+*** Do flavin cycles suggest cycling of lipid stores?
+* Section: Single-cell analysis of yeast metabolic cycles
+** Relationship between the metabolic cycle and cell division cycle: synchrony and autonomy
+- Synchrony: in permissive conditions, they synchronise.
+- Autonomy: other conditions make it clear that the metabolic cycle is independent of the cell division cycle
+** Effect of carbon source and perturbations on the yeast metabolic cycle
+- Fermentable vs non-fermentable carbon source
+- (Nitrogen sources?)
+- Perturbations: starvation, bulk addition of substrate, feast-and-famine
+** Effect of gene deletions on the yeast metabolic cycle
+*** (Literature) Review of chemostat-based studies that employ gene deletions
+- Categorise by system affected?
+** (Modelling the yeast metabolic cycle)
+- Discuss difficulty of having a fine-grained model: too many unknowns with this biological system
+*** (Literature) Modelling chemostat-based studies
+- Metabolic responses to environment
+- Cell communication
+*** Coarse-grained, phenomenological model
+** Reconciling single-cell studies with chemostat-based studies
+- (Mostly interpretation and discussion)
+* Section: Analysis of oscillatory time series
+** Classification: is my time series oscillatory?
+*** (Literature) Rhythmicity detection for biological data
+- Compare and contrast methods
+- Highlight challenges with large datasets of noisy biological data
+*** Machine learning approaches to classification
+** Characterisation: I have one time series -- what properties does it have?
+*** (Literature) Periods, phases, amplitudes
+*** Combining methods to get a picture of periodicity
+** Clustering: I have many time series -- what are their relationships to each other?
+*** (Literature)
+*** Machine learning approaches to clustering
+- Featurisaion -- decisions to make
+- Clustering approaches and algorithms -- compare and contrast
+* Methods
+** Strains and media
+** Single-cell microfluidics
+** Segmentation, extraction, post-processing
+** Time series analysis
+* Conclusions
+* Appendices
