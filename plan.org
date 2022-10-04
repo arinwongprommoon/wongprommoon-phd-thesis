@@ -4,39 +4,56 @@
 * Title
 * Abstract
 * Lay summary
+* Section: Motivation of thesis
+- Understanding how an organism adapts its metabolism and cellular processes in response to external conditions
+- Through the yeast metabolic cycle as a framework for other biological oscillators.  Reasons are twofold: (a) biological oscillators are important for coordination of responses and are present across kingdoms, (b) there are many unknowns about the yeast metabolic cycle, in particular the mechanistic basis and what happens in individual cells.
 * Section: (Literature) Yeast metabolic cycle
 ** Introduction to biological rhythms
+*** Biological basis
+- Circadian, cell division cycle, etc.  Biochemical oscillations.  Mellor provides a good overview.
+*** Theoretical basis
+- Mathematics of systems of coupled oscillators.
 ** Definition and description of yeast metabolic cycle
-- Context of discovery
-- Introduce chemostat vs single-cell discussions
+- Context of discovery: i.e. in chemostats, after glucose starvation, primary read-out being dissolved oxygen, start from Benjamin Tu in 2005.
+- Overview of sequence of events: high oxygen consumption and low oxygen consumption phases, and what happens in each.  I will get into more detail in the following bullet points.
 - Biochemical and metabolic aspects
-  - Metabolites
-  - Mobilisation of macromolecules, storage molecules
+  - Metabolites: NADPH, ATP, flavins, etc.
+  - Mobilisation of macromolecules, storage molecules (carbohydates, lipids).
 - Transcription aspects
 - Cell biology aspects, including cell division cycle
-** Yeast metabolic cycle under perturbations
-- Nutrient perturbations
-- Key deletion strains shed light on mechanism
-** Big picture: a nutrient sensor than entrains the cell division cycle?
+- Introduce chemostat vs single-cell discussions
 ** In other organisms
 - Other yeasts
 - Other organisms: bacteria, mammalian cells
+** Yeast metabolic cycle under perturbations
+- Nutrient perturbations
+  - Changing concentration or compositions of carbon sources.
+  - Changing concentration or compositions of nitrogen sources.
+- Key deletion strains shed light on mechanism
+** Big picture/Hypothesis: a nutrient sensor than entrains the cell division cycle?
+- Idea that the yeast metabolic cycle is a autonomous biological oscillator that operates at a range of frequencies in response to a range of (permissive) growth conditions.  This oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle.  The yeast metabolic cycle creates windows of opportunities for the cell to commit to START if conditions are favourable: e.g. good stores.
+** Implications of the metabolic cycle
+- Fundamental mechanistic basis for biological oscillators, such as the cell division cycle.  Could change what we know about the cell division cycle.
 ** Disputes and unresolved questions
-- Limitations of chemostat
+- Limitations of chemostat: obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habit of yeast, starvation.
 - Do cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony?
-- Populations of cells?
+- Do single-cell flavin-based metabolic cycles from deletion strains recapitulate dissolved oxygen-based metabolic cycles in chemostats?  If not, what would be a likely explanation?
 * Section: (Literature) Flavins and flavoproteins
 ** Introduction to cellular autofluorescence
+- (Refer to reviews, there are good ones in the 2000s)
 ** Biochemical basis of flavins and flavoproteins
-- Flavins are molecules with a certain aromatic moiety than can undergo redox reactions.
+- Flavins are molecules with a certain aromatic moiety than can undergo redox reactions.  Show chemical structures.  These include FAD and FMN.
 - Flavoproteins have FAD and FMN as co-factors.
-** Studies on global flavin changes in response to perturbations
-- How oxygen and nutrient changes affect flavins and other autofluorescence
-** Description of key flavoproteins and their roles
+*** Description of key flavoproteins and their roles
 - (Sort by abundance)
+- Most in biosythesis and redox.
+** Studies on global flavin changes in response to perturbations
+- How oxygen and nutrient changes affect flavins and other autofluorescence (there are papers that specifically study this)
 ** Flavins and flavoproteins in the yeast metabolic cycle
-- Easy-to-measure metabolic readout, linked to many biochemical processes
+- Autofluorescence is usually something people would avoid in experiments, but we are taking advantage of it.
+- Easy-to-measure metabolic readout (does not require additional engineering of strains), linked to many biochemical processes
 *** Review of chemostat and single-cell studies that use flavin
+- (To justify my use)
 *** Do flavin cycles suggest cycling of lipid stores?
 * Section: Single-cell analysis of yeast metabolic cycles
 ** Relationship between the metabolic cycle and cell division cycle: synchrony and autonomy
