@@ -56,7 +56,7 @@ Single-cell analysis of flavin-based yeast metabolic rhythms
 *** Review of chemostat and single-cell studies that use flavin
 - (To justify my use)
 *** Do flavin cycles suggest cycling of lipid stores?
-* Section: Single-cell analysis of yeast metabolic cycles
+* Section: (Biological) Single-cell analysis of yeast metabolic cycles
 ** Relationship between the metabolic cycle and cell division cycle: synchrony and autonomy
 - Synchrony: in permissive conditions, they synchronise.
 - Autonomy: other conditions make it clear that the metabolic cycle is independent of the cell division cycle
@@ -67,15 +67,9 @@ Single-cell analysis of flavin-based yeast metabolic rhythms
 ** Effect of gene deletions on the yeast metabolic cycle
 *** (Literature) Review of chemostat-based studies that employ gene deletions
 - Categorise by system affected?
-** (Modelling the yeast metabolic cycle)
-- Discuss difficulty of having a fine-grained model: too many unknowns with this biological system
-*** (Literature) Modelling chemostat-based studies
-- Metabolic responses to environment
-- Cell communication
-*** Coarse-grained, phenomenological model
 ** Reconciling single-cell studies with chemostat-based studies
 - (Mostly interpretation and discussion)
-* Section: Analysis of oscillatory time series
+* Section: (Computational) Analysis of oscillatory time series
 ** Classification: is my time series oscillatory?
 *** (Literature) Rhythmicity detection for biological data
 - Compare and contrast methods
@@ -87,8 +81,18 @@ Single-cell analysis of flavin-based yeast metabolic rhythms
 ** Clustering: I have many time series -- what are their relationships to each other?
 *** (Literature)
 *** Machine learning approaches to clustering
-- Featurisaion -- decisions to make
+- Featurisation -- decisions to make
 - Clustering approaches and algorithms -- compare and contrast
+* Section: (Computational) Modelling the yeast metabolic cycle
+- Discuss difficulty of having a fine-grained model: too many unknowns with this biological system
+** Modelling temporal partitioning of biosynthesis
+- Research question: Given a finite amount of enzymes and the nutrient conditions yeast cells are subject to, is it more efficient for the cells to temporally partition synthesis of macromolecules (lipid, carbohydrates, amino acids), or to synthesise all of them at the same time?  If so, does the time scale fit with that of the yeast metabolic cycle?
+- Methods: Flux balance analysis
+** Modelling chemostat-based studies
+- Metabolic responses to environment
+- Cell communication
+- Relating them to the single-cell yeast metabolic cycle
+** Coarse-grained, phenomenological model
 * Methods
 ** Strains and media
 ** Single-cell microfluidics
