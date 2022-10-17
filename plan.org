@@ -2,7 +2,7 @@
 #+author: Arin Wongprommoon
 
 * Title
-Single-cell analysis of flavin-based yeast metabolic rhythms
+Single-cell time-series analysis of flavin-based yeast metabolic rhythms
 * Abstract
 * Lay summary
 * Section: Motivation of thesis
@@ -70,6 +70,7 @@ Single-cell analysis of flavin-based yeast metabolic rhythms
 ** Reconciling single-cell studies with chemostat-based studies
 - (Mostly interpretation and discussion)
 * Section: (Computational) Analysis of oscillatory time series
+** Cleaning: choosing data, filtering, missing time points
 ** Classification: is my time series oscillatory?
 *** (Literature) Rhythmicity detection for biological data
 - Compare and contrast methods
@@ -78,11 +79,13 @@ Single-cell analysis of flavin-based yeast metabolic rhythms
 ** Characterisation: I have one time series -- what properties does it have?
 *** (Literature) Periods, phases, amplitudes
 *** Combining methods to get a picture of periodicity
-** Clustering: I have many time series -- what are their relationships to each other?
+** Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?
 *** (Literature)
 *** Machine learning approaches to clustering
 - Featurisation -- decisions to make
 - Clustering approaches and algorithms -- compare and contrast
+** Correlation: I have two signals from the same cell -- what are their relationships to each other?
+- Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
 * Section: (Computational) Modelling the yeast metabolic cycle
 - Discuss difficulty of having a fine-grained model: too many unknowns with this biological system
 ** Modelling temporal partitioning of biosynthesis
