@@ -105,5 +105,7 @@ Single-cell time-series analysis of flavin-based yeast metabolic rhythms
 - Cell communication
 - Relating them to the single-cell yeast metabolic cycle
 ** Coarse-grained, phenomenological model
-* Conclusions
+* Chapter: Conclusions
+- Towards a coarse-grained, phenomenological model of the yeast metabolic cycle.
+- Further avenues of study.
 * Appendices
