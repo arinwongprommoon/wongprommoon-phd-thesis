@@ -80,6 +80,8 @@ Single-cell time-series analysis of flavin-based yeast metabolic rhythms
 - Clustering approaches and algorithms -- compare and contrast
 ** Correlation: I have two signals from the same cell -- what are their relationships to each other?
 - Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
+** Summary
+- Justification of each steps of my pipeline
 * Chapter: (Results, biological) Single-cell flavin-based yeast metabolic cycles
 ** Relationship between the metabolic cycle and cell division cycle: synchrony and autonomy
 - Synchrony: in permissive conditions, they synchronise.
