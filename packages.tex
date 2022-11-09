@@ -69,7 +69,14 @@
 \usepackage{amsthm}
 
 %% Fancy chemical symbols (Might require installation)
-% \usepackage[version=3]{mhchem}
+\usepackage[version=4]{mhchem}
+
+%% SI units
+\usepackage{siunitx}
+\DeclareSIUnit\molar{\mole\per\cubic\deci\metre}
+\DeclareSIUnit\Molar{\textsc{m}}
+\DeclareSIUnit\calorie{cal}
+\sisetup{detect-all}
 
 %% Better fractions ie 1/2 with diagonal slash
 \usepackage{nicefrac}
