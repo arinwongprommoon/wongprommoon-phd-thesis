@@ -57,6 +57,11 @@ Single-cell time-series analysis of flavin-based yeast metabolic rhythms
 **** Review of chemostat and single-cell studies that use flavin
 - (To justify my use)
 **** Do flavin cycles suggest cycling of lipid stores?
+* Chapter: Methods
+** Strains and media
+** Single-cell microfluidics
+** Segmentation, extraction, post-processing
+** Time series analysis
 * Chapter: (Computational) Analysis of oscillatory time series
 ** Introduction: overview of the 'pipeline'
 - Zielinski et al. (2014) is a good starting point
@@ -99,10 +104,5 @@ Single-cell time-series analysis of flavin-based yeast metabolic rhythms
 - Cell communication
 - Relating them to the single-cell yeast metabolic cycle
 ** Coarse-grained, phenomenological model
-* Methods
-** Strains and media
-** Single-cell microfluidics
-** Segmentation, extraction, post-processing
-** Time series analysis
 * Conclusions
 * Appendices
