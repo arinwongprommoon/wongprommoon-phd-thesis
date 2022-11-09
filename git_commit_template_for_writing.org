@@ -1,0 +1,113 @@
+:PROPERTIES:
+:ID:       6d662236-1bd0-4997-bc7e-571b9d512cfb
+:END:
+#+TITLE: git commit template for writing
+
+* Format
+
+#+begin_example
+<type>(optional scope): <description>
+# changes features:         fix, feat, change, remove
+# changes meaning of code:  refactor, perf
+# maintenance:              chore, build, test, ci
+# no effect:                docs, style
+
+WHY IS THIS CHANGE NEEDED?:
+# fix: describe how bug was discovered, describe incorrect program behaviour.
+# change, remove: describe undesired program behaviour.
+# feat, refactor: explain how user/developer benefits from this.
+
+HOW DOES THE CHANGE SOLVE THE PROBLEM?:
+# why you made the changes, design choices/creativity,
+# details on specific lines if needed.
+# for fix, perf: may be helpful to explain mistakes in program logic first.
+
+WHAT SIDE EFFECTS DOES THIS CHANGE HAVE?:
+# risks: e.g. does it break anything else?  backwards compatibility?
+# technical debt?
+
+EVIDENCE THAT COMMIT WORKS:
+# e.g. tests
+
+REFERENCES:
+# add issue numbers, merge requests, references to previous commits, etc.
+#+end_example
+
+** Types
+*** Content
+Affects content, e.g. text, tables, figures
+
+**** Changes meaning
+- ~add~: Add new ideas (parallel to ~feat~)
+- ~erase~: Removes ideas (parallel to ~remove~)
+- ~reword~: Rewording (parallel to ~change~)
+
+**** Does not change meaning, but changes other things
+- ~restruct~: Restructures section/paragraphs/sentences (parallel to ~refactor~)
+- ~clarify~: Clarify, shorten (remove redundancy), expand.
+- ~proof~: Proofreading, e.g. correct typos, remove errant commas.
+
+**** Other
+- ~comment~: Comments related to content (parallel to ~docs~)
+
+*** Code
+Affects LaTeX control functions, other markup, or other code.
+
+**** Changes features
+Use these categories if your commit changes what the markup does.
+- ~change~: Change the implementation of an existing feature
+  - Difference from ~fix~: this is mostly for changing parameters.
+- ~feat~: Add new feature.
+- ~fix~: Fixes a bug.
+  + Difference from ~change~: something has to be /wrong/ -- broken (e.g. an error that makes it impossible for the user to run the program) or defective.
+- ~remove~: Removes a feature.
+
+**** Does not change features, but changes meaning of code
+Use these categories if your commit does not change the basic things the markup can do, but changes how it does things.
+ - ~perf~: Improves performance of an algorithm or execution time but doesn't change behaviour of feature.  In other words, just making something faster.
+ - ~refactor~: Neither fixes bug nor adds/change feature, restructuring.  Changes design, structure, or implementation -- i.e. doesn't change what the program can do, but changes /how/ it does things (and the meaning of code changes).
+   - Refactoring is usually to:
+     - (a) make code easier to extend, i.e. easier to add new behaviour
+     - (b) make code easier to maintain, i.e. make it easier for other people to understand the logic behind your code, thus easier to fix bugs
+
+**** Maintenance changes outside of main codebase
+Use these categories if your commit has to do with maintenance tasks.  If you're editing something that does not end in ~.tex~, it likely belongs to this category.
+- ~build~: Change the build system or external dependencies, i.e. adding, removing, upgrading dependencies (~.cls~, ~.bib~).
+- ~chore~: Maintenance task or boilerplate code.  This is not tied to a specific feature.
+
+**** No effect to markup
+Use these categories if your commit does not affect markup functionality or meaning of code.
+- ~docs~: Changes that only affect documentation or comments.
+- ~style~: Does not affect meaning of code -- e.g. white-space, formatting, etc.
+
+** Scope
+For my thesis, this will be abbreviations of sections or chapters:
+- ~front~: (for frontmatter) cover, title, acknowledgements, etc.
+- ~abstract~: abstract
+- ~intro~: introduction (currently chapter 1)
+- ~methods~: methods (currently chapter 2)
+- ~analysis~: analysis of oscillatory time series (currently chapter 3)
+- ~biology~: Single-cell flavin-based yeast metabolic cycles (currently chapter 4)
+- ~model~: Modelling the yeast metabolic cycle (currently chapter 5)
+- ~concl~: conclusions (currently chapter 6)
+- ~back~: (for backmatter)
+- ~bib~: bibliography
+
+** Description
+- Be 50--72 characters (~magit~ takes care of this).
+- Try to start with a verb in the present tense.
+  - For ~fix~, ~feat~, ~perf~, ~test~, try to complete the sentence: 'After this commit, the application will...'.  Avoid verbs that describe /your/ action as opposed to the application's behaviour.
+
+** Body
+In general, it is more important to describe why and how the changes were made than to describe what the changes were (unless it is not obvious from the code).  Anyone can run ~git show~ to see what the changes are, but nobody can read your mind and find out why you made the changes.
+
+Some sections of the body can be deleted depending on the type.  The prompts in the body are most relevant for ~fix~, ~feat~, ~perf~, and ~test~.  Most prompts are not needed for ~chore~; only 'why' and 'how' are needed for ~docs~ and ~style~.
+
+Developers can use bullet points with a short message on each.  Or if it suffices, just a few words.
+
+A developer who knows about the project but was not involved in the issue being addressed by the commit should be able to understand the whole commit message.  If such a developer cannot answer the questions in the template, then the developer who created the commit failed to communicate.  You should use this principle to judge whether you delete some sections.
+
+** A note on atomic commits
+Commits should be 'atomic', i.e. each commit addresses one issue.  If you write 'and' (or 'various') in the first line of a commit message, chances are, the commit is not atomic.  Split the changes among two or more commits.
+
+This template pushes developers towards making atomic commits, while discouraging making many tiny commits.
