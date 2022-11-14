@@ -85,7 +85,24 @@
 \usepackage{booktabs}
 
 %% Citations
-\usepackage[natbibapa]{apacite}
+\usepackage[
+  natbib=true,
+  backend=biber,
+  doi=false,
+  isbn=false,
+  url=false,
+  date=year,
+  style=authoryear,
+  citestyle=authoryear,
+  minnames=1,
+  maxnames=2,
+  minbibnames=1,
+  maxbibnames=99,
+  giveninits=true]{biblatex}
+\addbibresource{bib/arin-all.bib}
+\bibliography{bib/arin-all}
+
+\usepackage{varioref}
 
 %% Proper hyphenation
 \usepackage[british]{babel}
