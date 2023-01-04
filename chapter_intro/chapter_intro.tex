@@ -1,6 +1,5 @@
 % ROUGH DRAFT, based on 10-month report for now
 % TODO:
-% - Correct references to Better BibLaTeX
 % - Re-structure according to thesis plan
 % - Incorporate annotations made to paper copy of 10-month report
 
@@ -17,7 +16,7 @@ Insert content here.
 
 Biological rhythms compartmentalise cellular processes and ensure that the cell prepares for sequential events.
 Such biological rhythms include the circadian rhythm and the cell cycle.
-Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \citep{mellor_molecular_2016}.
+Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \citep{mellorMolecularBasisMetabolic2016}.
 
 % Define the yeast metabolic cycle -- in brief
 
@@ -29,40 +28,40 @@ It comprises of oscillations in oxygen consumption, metabolite concentrations, a
 
 % Development of ideas about the yeast metabolic cycle -- might go in interest of space
 Several aspects of the YMC have been observed over decades.
-\citet{nosoh_synchronization_1962} discovered that synchronised \emph{S. cerevisiae} cultures show oscillatory oxygen consumption.
-\citet{kaspar_von_meyenburg_energetics_1969} showed that gas metabolism and energy generation increase upon budding, while and \citet{mochan_respiratory_1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
-\citet{satroutdinov_oscillatory_1992} were the first to describe the metabolic components of the short-phase YMC for cells in continuous culture.
-\citet{tu_logic_2005} first incorporated transcript cycling in the description of the YMC and defined the YMC events.
+\citet{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \emph{S. cerevisiae} cultures show oscillatory oxygen consumption.
+\citet{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while and \citet{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
+\citet{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of the short-phase YMC for cells in continuous culture.
+\citet{tuLogicYeastMetabolic2005} first incorporated transcript cycling in the description of the YMC and defined the YMC events.
 % [DANGLING SENTENCE]
 %The YMC is defined in contrast to glycolytic oscillations \citep{chance_control_1964}, which are fluctuations in NADH fluorescence in anaerobic conditions with a period of 4 minutes.
 
-The YMC has been observed in bulk cultures and manifests itself as a 40-minute short-phase cycle or a 4- to 5-hour long-phase cycle synchronised to the cell cycle \citep{mellor_molecular_2016}.
+The YMC has been observed in bulk cultures and manifests itself as a 40-minute short-phase cycle or a 4- to 5-hour long-phase cycle synchronised to the cell cycle \citep{mellorMolecularBasisMetabolic2016}.
 %The short-phase cycle occurs in the polyploid IFO0233 strain cultured under 2\% glucose w/v, while the long-phase cycle occurs in the diploid CEN.PK strain cultured under 1\% glucose w/v \citep{tu_chapter_2010}.
 These cycles are synchronised across cells in culture.
-Furthermore, the YMC is robust, with oscillations persisting for weeks to months \citep{lloyd_redox_2007}.
-Additionally, the oscillation period is insensitive to temperatures from \SI{25}{\celsius} to \SI{35}{\celsius} and media pH values from 2.9 to 6.0 \citep{lloyd_ultradian_2005}.
+Furthermore, the YMC is robust, with oscillations persisting for weeks to months \citep{lloydRedoxRhythmicityClocks2007}.
+Additionally, the oscillation period is insensitive to temperatures from \SI{25}{\celsius} to \SI{35}{\celsius} and media pH values from 2.9 to 6.0 \citep{lloydUltradianMetronomeTimekeeper2005}.
 
 % In more detail... Describe the main features with brief references to key papers and experiments, as evidence.
 
 The YMC can be divided into three phases: the oxidative phase, the reductive-building phase, and the reductive-charging phase.
-The oxidative and reductive phases are characterised by the rate of oxygen consumption \citep{mellor_molecular_2016}.
-Using unsupervised clustering, \citet{tu_logic_2005} described the following events in each phase:
-% [IT LOOKS A BIT OUT OF PLACE...] \citet{krishna_minimal_2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
+The oxidative and reductive phases are characterised by the rate of oxygen consumption \citep{mellorMolecularBasisMetabolic2016}.
+Using unsupervised clustering, \citet{tuLogicYeastMetabolic2005} described the following events in each phase:
+% [IT LOOKS A BIT OUT OF PLACE...] \citet{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
 
 \begin{enumerate}
   \item \emph{Oxidative phase:} Cells consume oxygen at a high rate as respiration, fermentation, and energy-demanding processes like biosynthesis and gene expression occur.
-    As the oxidative phase transitions to the reductive-building phase, ethanol and acetate concentrations in the medium peak as respiration finishes \citep{tu_logic_2005}.
-    `Redox state' metabolites, including NADH, NADPH, and glutathione, become most oxidised in this phase \citep{lloyd_ultradian_2005}.
-Here, 70\% of metabolite concentrations peak with the combined autofluorescence of NADH and NADPH \citep{murray_regulation_2007}.
+    As the oxidative phase transitions to the reductive-building phase, ethanol and acetate concentrations in the medium peak as respiration finishes \citep{tuLogicYeastMetabolic2005}.
+    `Redox state' metabolites, including NADH, NADPH, and glutathione, become most oxidised in this phase \citep{lloydUltradianMetronomeTimekeeper2005}.
+Here, 70\% of metabolite concentrations peak with the combined autofluorescence of NADH and NADPH \citep{murrayRegulationYeastOscillatory2007}.
 \item \emph{Reductive-building phase:} Cells consume oxygen at a low rate, and activities linked to mitochondrial growth occur.
   There is evidence to suggest that activities linked to cell proliferation -- such as initiation of the cell division cycle, DNA replication, and spindle pole activity -- are gated to the reductive-building phase for both the short-period and long-period YMC.
-  Such evidence includes budding activity and the pattern of the expression of \emph{YOX1}, which encodes a cell division cycle repressor \citep{tu_logic_2005}.
-  However, measuring DNA content and oxygen consumption in cells grown at different growth rates \citep{slavov_coupling_2011} showed that the S phase of the cell cycle may occur in the oxidative phase if the cells have a slow growth rate.
+  Such evidence includes budding activity and the pattern of the expression of \emph{YOX1}, which encodes a cell division cycle repressor \citep{tuLogicYeastMetabolic2005}.
+  However, measuring DNA content and oxygen consumption in cells grown at different growth rates \citep{slavovCouplingGrowthRate2011} showed that the S phase of the cell cycle may occur in the oxidative phase if the cells have a slow growth rate.
   This evidence indicates that the gating between the YMC and the cell cycle is flexible.
 \item \emph{Reductive-charging phase:} Cells consume oxygen at a low rate.
   Non-respiratory metabolism and degradation processes occur to prepare the cell for the oxidative phase.
   This non-respiratory metabolism includes glycolysis, ethanol and fatty acid metabolism, and nitrogen metabolism.
-  With these metabolic modes, under the regulation of the transcription factors Msn2p and Msn4p \citep{kuang_msn2/4_2017}, acetyl CoA accumulates for ATP production in the oxidative phase \citep{tu_logic_2005}.
+  With these metabolic modes, under the regulation of the transcription factors Msn2p and Msn4p \citep{kuangMsn2RegulateExpression2017}, acetyl CoA accumulates for ATP production in the oxidative phase \citep{tuLogicYeastMetabolic2005}.
 After acetyl CoA levels reach a threshold, it promotes histone acetylation and thus induces the oxidative phase.
 These metabolic pathways also optimise production of NADPH -- based on the induction of \emph{GND2} -- to buffer against oxidative stress in the oxidative phase.
 Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuoles, and the proteosome also peak in the reductive-charging phase.
@@ -71,14 +70,14 @@ Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuol
 % Describe features that may differ in different strain and nutrient backgrounds, i.e. 'what can change the YMC?'.
 % This REALLY needs more detail: review literature related to the R/C phase ----- I don't think there's a lot though.
 
-The phase difference between the YMC and cell cycle varies in different conditions \citep{ewald_yeast_2016}. % ok, but have I seen this phase shift with the different media (i.e. SC vs SM)?  What did Ewald have to say about this phase shift??
-Adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \citep{kuang_msn2/4_2017, krishna_minimal_2018}.
-The long-phase cycle may vary from 1.4 to 14 hours depending on the strain and culture conditions including the chemostat dilution rate \citep{causton_metabolic_2018}.
-Specifically, increasing the growth rate increases the duration of the oxidative phase relative to the reductive phases \citep{slavov_coupling_2011}.
+The phase difference between the YMC and cell cycle varies in different conditions \citep{ewaldYeastCyclinDependentKinase2016}. % ok, but have I seen this phase shift with the different media (i.e. SC vs SM)?  What did Ewald have to say about this phase shift??
+Adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \citep{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
+The long-phase cycle may vary from 1.4 to 14 hours depending on the strain and culture conditions including the chemostat dilution rate \citep{caustonMetabolicRhythmsFramework2018}.
+Specifically, increasing the growth rate increases the duration of the oxidative phase relative to the reductive phases \citep{slavovCouplingGrowthRate2011}.
 % [I'M NOT SURE HOW ESSENTIAL THE FIRST SIX WORDS OF THE SENTENCE IS]
 It has also been found that media quality affects the period of the YMC.
-Specifically, decreasing glucose concentration prolongs the YMC \citep{mellor_molecular_2016,papagiannakis_autonomous_2017}, and decreasing nitrogen source concentration does so too \citep{baumgartner_flavin-based_2018}.
-Furthermore, the YMC can oscillate multiple times per cell cycle, or even disappear in some conditions \citep{baumgartner_flavin-based_2018}. % which conditions?  can these be tested?
+Specifically, decreasing glucose concentration prolongs the YMC \citep{mellorMolecularBasisMetabolic2016,papagiannakisAutonomousMetabolicOscillations2017}, and decreasing nitrogen source concentration does so too \citep{baumgartnerFlavinbasedMetabolicCycles2018}.
+Furthermore, the YMC can oscillate multiple times per cell cycle, or even disappear in some conditions \citep{baumgartnerFlavinbasedMetabolicCycles2018}. % which conditions?  can these be tested?
 % End with comment: 'many strings to pull with R/C', or something related
 
 % State the main unknowns of the yeast metabolic cycle:
@@ -86,27 +85,27 @@ Furthermore, the YMC can oscillate multiple times per cell cycle, or even disapp
 % - whether things are the same in batch vs bulk
 
 There are unknowns in the molecular mechanism that drives YMCs.
-Genome-wide transcript cycling has two superclusters that correspond to the oxidative and reductive-building phases \citep{machne_yin_2012}.
-However, there has been no genome-wide analysis of genes that influence cycling \citep{mellor_molecular_2016}, though some genes seem to have key roles.
-For example, \emph{MSN2} and \emph{MSN4} have been shown to regulate acetyl CoA accumulation in the reductive-charging phase, as evidenced by the lack of YMCs in deletion strains \citep{kuang_msn2/4_2017}.
-Moreover, deletion of \emph{GTS1} shortens the oscillation periods \citep{lloyd_ultradian_2005}, and deletion of \emph{ZWF1} removes the oscillations \citep{tu_cyclic_2007}.
+Genome-wide transcript cycling has two superclusters that correspond to the oxidative and reductive-building phases \citep{machneYinYangYeast2012}.
+However, there has been no genome-wide analysis of genes that influence cycling \citep{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
+For example, \emph{MSN2} and \emph{MSN4} have been shown to regulate acetyl CoA accumulation in the reductive-charging phase, as evidenced by the lack of YMCs in deletion strains \citep{kuangMsn2RegulateExpression2017}.
+Moreover, deletion of \emph{GTS1} shortens the oscillation periods \citep{lloydUltradianMetronomeTimekeeper2005}, and deletion of \emph{ZWF1} removes the oscillations \citep{tuCyclicChangesMetabolic2007}.
 
 However, there are a number of questions remaining.
 For example, without proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
-How YMCs are coordinated between cells is also unclear, though experimental studies \citep{murray_regulation_2007} and mathematical models \citep{krishna_minimal_2018} suggest that acetaldehyde and hydrogen sulfide may mediate cell-to-cell communication.
+How YMCs are coordinated between cells is also unclear, though experimental studies \citep{murrayRegulationYeastOscillatory2007} and mathematical models \citep{krishnaMinimalPushPull2018} suggest that acetaldehyde and hydrogen sulfide may mediate cell-to-cell communication.
 The reason for this synchronisation between cells is still unclear. % citation needed
 
 Current knowledge of the YMC derives mostly from studies done on batch or continuous yeast cultures, but it is unclear whether aspects of the YMC discovered in bulk culture apply to single cells.
-\citet{papagiannakis_autonomous_2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
-Furthermore, by measuring the level of flavins in the cell, \citet{baumgartner_flavin-based_2018} demonstrated that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell cycle inhibitor rapamycin desynchronises the YMC and the cell cycle.
-Additionally, \citet{ozsezen_inference_2019} suggested that the YMC controls the early and late cell cycle independently, based on modelling the oscillators as a system of Kuramoto oscillators.
+\citet{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
+Furthermore, by measuring the level of flavins in the cell, \citet{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell cycle inhibitor rapamycin desynchronises the YMC and the cell cycle.
+Additionally, \citet{ozsezenInferenceHighLevelInteraction2019} suggested that the YMC controls the early and late cell cycle independently, based on modelling the oscillators as a system of Kuramoto oscillators.
 However, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined.
 
 %Systems biology approaches have been used to develop models to explain features of biological rhythms.
-%\citet{ozsezen_inference_2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators.
+%\citet{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators.
 %Additionally, a data-driven stochastic modelling approach was used to describe the relationship between the circadian and cell cycle oscillators without assuming a prior relationship \citep{droin_low-dimensional_2019}.
 %This strategy is yet to be applied to the metabolic and cell cycle oscillators.
-%However, \citet{ozsezen_inference_2019} assumed the same, specific coupling function for all interactions between the four oscillators.
+%However, \citet{ozsezenInferenceHighLevelInteraction2019} assumed the same, specific coupling function for all interactions between the four oscillators.
 
 In sum, the YMC is a robust biological rhythm in \emph{S. cerevisiae} that responds to nutrient availability.
 In turn, if the cell divides, it temporally partitions cell cycle events in relation to YMC events to prevent oxidative damage.
@@ -116,10 +115,10 @@ Therefore, the general aim of my project is to study YMC regulation in isolated 
 % Significance of study
 
 Metabolic oscillations may be the origins of biological timekeeping mechanisms.
-Indeed, \citet{lloyd_redox_2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle.
-Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneill_circadian_2011}, refuting the idea that gene circuits are responsible for these rhythms.
-Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \citep{papagiannakis_autonomous_2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
-Furthermore, YMCs share mechanisms with the circadian oscillator \citep{causton_metabolic_2015,arata_quantitative_2019}, suggesting a common evolutionary origin.
+Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle.
+Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneillCircadianRhythmsPersist2011}, refuting the idea that gene circuits are responsible for these rhythms.
+Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \citep{papagiannakisAutonomousMetabolicOscillations2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
+Furthermore, YMCs share mechanisms with the circadian oscillator \citep{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
 Thus, studying YMCs may shed light on the evolution of biological rhythms.
 
 %%% Local Variables:
