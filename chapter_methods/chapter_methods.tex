@@ -1,5 +1,6 @@
+% ROUGH DRAFT, based on 10-month report for now
+% PROBABLY BEST WRITTEN AFTER BIOLOGICAL RESULTS CHAPTER DRAFT DONE
 % TODO:
-% - Copy content from 10-month report
 % - Add annotations from 10-month report
 
 \chapter{Methods}
@@ -8,8 +9,61 @@
 \section{Strains and media}
 \label{sec:methods-strains_media}
 
+% TODO: Add all other strains I used
+
+Two \emph{S. cerevisiae} strains are used.
+The first strain is the prototrophic FY4 strain \citep{winstonConstructionSetConvenient1995, brachmannDesignerDeletionStrains1998} from the Kaeberlein lab.
+To create the second strain, the BY4741 strain with genotype \emph{MAT}a \emph{his3$\Delta$1 leu2$\Delta$0 met15$\Delta$0 ura3$\Delta$0} \citep{brachmannDesignerDeletionStrains1998} was transformed with pBS34 \citep{haileyFluorescenceResonanceEnergy2002} to tag \emph{WHI5::mCherry:KAN}.
+This auxotrophic WHI5::mCherry strain was used to monitor Whi5p localisation.
+
+% TODO: Describe Delft media
+
 \section{Single-cell microfluidics}
 \label{sec:methods-microfluidics}
 
+% TODO: Update with Delft media and other cultivation conditions.
+% Update fluorescence settings and duration of experiments.
+
+FY4 cells and WHI5::mCherry cells were grown at \SI{30}{\celsius} overnight in synthetic complete (SC) or synthetic minimal (SM) media supplemented by 2\% w/v glucose, according to table [NOTE: TABLE REMOVED].
+Synthetic complete media is composed of \SI{2.55}{\gram\per\litre} yeast nitrogen base (YNB), \SI{7.5}{\gram\per\litre} \ce{(NH4)2SO4}, \SI{2.1}{\gram\per\litre} EDI amino acid dropout mix, \SI{0.075}{\gram\per\litre} adenine, \SI{0.15}{\gram\per\litre} histidine, \SI{0.15}{\gram\per\litre} methionine, \SI{0.3}{\gram\per\litre} leucine, \SI{0.15}{\gram\per\litre} tryptophan, and \SI{0.15}{\gram\per\litre} uracil.
+Synthetic minimal media is equivalent to synthetic complete media, but without amino acids.
+% Kevin's OD measurements?
+After overnight growth, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10 -- 0.20, and then were incubated for 4 hr at \SI{30}{\celsius}.
+
+% Refer to Jove paper if it comes out
+ALCATRAS microfluidics \citep{craneMicrofluidicSystemStudying2014}  chambers were filled with media supplemented with 2\% w/v glucose and 0.05\% w/v bovine serum albumin.
+Cells were then loaded into the ALCATRAS chambers.
+Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre} into the chambers.
+The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
+
+Microscopy was performed using a 60 $\times$ 1.4 NA oil immersion objective (Nikon), and the Nikon Perfect Focus System was used to ensure consistent focus.
+Five z-slices were taken for brightfield images, with a spacing of \SI{0.6}{\nano\metre} between slices.
+Fluorescence imaging was performed with an OptoLED light source (Cain Research), and LED voltage was optimised for maximum signal intensity without LED cut-off prior to experiments.
+For flavin imaging, the excitation frequency was \SI{430}{\nano\metre}, the emission filter was set to \SI{455}{\nano\metre}, and exposure time varied: \SI{0}{\milli\second}, \SI{60}{\milli\second}, \SI{120}{\milli\second}, and \SI{180}{\milli\second}.
+For mCherry imaging, the excitation frequency was \SI{590}{\nano\metre} and the exposure time was \SI{100}{\milli\second}.
+Z-slices were taken for the mCherry images, with the same number of slices and spacing as for the brightfield images.
+Image acquisition was for 14 hr 57 min 30 s in each experiment.
+For all channels, images were taken every 150 s.
+
 \section{Segmentation, extraction, post-processing}
 \label{sec:methods-segmentation}
+
+% TODO: Most of this is obsolete.  Update for aliby.
+
+The brightfield z-stack images were segmented using custom neural network-based software based in MATLAB.
+The software identified cell boundaries, birth events, and cell lineages.
+
+Because the aperture of the microscope causes optical aberration, aperture-fitting and flat-field corrections were performed for the flavin and mCherry channels independently, using custom MATLAB scripts.
+First, the average brightfield image across all imaging positions at three random time points was generated (figure [FIGURE REMOVED], left).
+Second, a circular aperture mask (figure [FIGURE REMOVED], centre) was fitted for each channel based on the saturated average image.
+Cells outside this aperture were excluded as they exhibited low signal intensity.
+Third, a flat-field correction for cells inside the aperture was generated (figure [FIGURE REMOVED], right) by fitting a Gaussian filter to the average image.
+
+Flavin autofluorescence was quantified by calculating the mean intensity of pixels within the cell boundaries and then subtracting the background fluorescence. % This is `imBackground` - elaborate if needed.
+Whi5p localisation was quantified by calculating the \texttt{nucEstConv} measure for each z-slice and then finding the maximum projection across the five z-slices.
+The \texttt{nucEstConv} measure was based on convolution with a Gaussian filter of a size specific to the nucleus size \citep{geronHandsOnMachineLearning2017}.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../thesis.tex"
+%%% End:
