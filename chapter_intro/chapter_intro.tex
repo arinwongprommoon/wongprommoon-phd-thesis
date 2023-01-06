@@ -10,10 +10,25 @@
 The motivation of this thesis is to understand how an organism adapts its metabolism and cellular processes in response to external conditions.
 I do so by through using the the yeast metabolic cycle as a framework for other biological oscillators.
 My reasons are twofold: (a) biological oscillators are important for coordination of responses and are present across kingdoms, (b) there are many unknowns about the yeast metabolic cycle, in particular the mechanistic basis and what happens in individual cells.
+% might as well mention flavins here if i have to mention this in my description of chapter 1 in the list below.
 
 Therefore, the general aim of my project is to study YMC regulation in isolated cells, especially mechanisms that ensure synchrony with the cell cycle, in different nutrient conditions.
 
-% - And then describe the logic of the rest of the chapters?
+% - describe the logic of the rest of the chapters
+% TODO: replace chapter numbers with \ref{}
+This thesis is divided into six chapters:
+\begin{enumerate}
+  \item Chapter 1 discusses the background behind the yeast metabolic cycle and the logic of using flavin autofluorescence as a way to monitor the yeast metabolic cycle.
+  \item Chapter 2 discusses the methods used in my project, i.e. single-cell microfluidics of yeast cells, followed by an automated image analysis pipeline.
+  \item Chapter 3 discusses the analysis of oscillatory time series; given the size of the datasets and the challenges of analysing noisy low-resolution time series, this deserves discussion in its own right.
+  This chapter will step through the process of analysis and provide a review \& justification of the computational methods at each stage.
+  \item Chapter 4 presents the biological results of my investigation of single-cell flavin-based yeast metabolic rhythms, employing the analysis methods discussed in chapter 3.
+  In brief, I show that the metabolic cycle and cell division cycle are autonomous and synchronise in permissive conditions, while perturbations affect the relationship between these two biological oscillators.
+  \item Chapter 5 discusses approaches to model the yeast metabolic cycle mathematically (so that predictions can be made) -- specifically addressing the questions of whether temporal partitioning of biosynthesis explains the timing of the yeast metabolic cycle and whether models of chemostat-based studies can be adapted to our understanding of single-cell metabolic cycles.
+  \item Finally, chapter 6 ties together previous understanding of the metabolic cycle, experimental observations, and mathematical models to propose a coarse-grained, phenomenological model of the yeast metabolic cycle.
+  And suggests further avenues of study.
+\end{enumerate}
+
 
 \section{Yeast metabolic cycle}
 \label{sec:intro-ymc}
