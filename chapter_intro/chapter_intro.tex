@@ -80,16 +80,6 @@ Certainly, the yeast metabolic cycle has been modelled as a system of coupled os
 
 \subsection{Definition and description of the yeast metabolic cycle}
 \label{subsec:intro-ymc-definition}
-% - Context of discovery: i.e. in chemostats, after glucose starvation, primary read-out being dissolved oxygen, start from Benjamin Tu in 2005.
-% - Overview of sequence of events: high oxygen consumption and low oxygen consumption phases, and what happens in each.  I will get into more detail in the following bullet points.
-% - Biochemical and metabolic aspects
-%   - Metabolites: NADPH, ATP, flavins, etc.
-%   - Mobilisation of macromolecules, storage molecules (carbohydates, lipids).
-% - Transcription aspects
-% - Cell biology aspects, including cell division cycle
-% - Introduce chemostat vs single-cell discussions
-
-
 % Worth re-reading: Mellor 2016, Lloyd 2019
 
 % Definition issue:
@@ -98,9 +88,20 @@ Certainly, the yeast metabolic cycle has been modelled as a system of coupled os
 % uses the term with single-cell NAD(P)H/ATP cycles.  I use the latter.
 % There is this dispute in the scientific literature, which is worth discussing, it's central
 % to my project, after all.
+
+Heads-up: people don't really agree on what the yeast metabolic cycle (YMC) is, so I'm going to go with the bits that everyone seems to agree on first, and then discuss what people disagree on, and why.
+
+% [BEGIN COMMENTED DRAFT TEXT]
+% You can't discuss the definition of the yeast metabolic cycle (YMC) without addressing a certain dispute in the literature.
+% Different authors have different standards to deem whether something is considered a yeast metabolic cycle or not.
+% For example, most chemostat people \citep{laxmanBehaviorMetabolicCycling2010,caustonMetabolicRhythmsFramework2018} [CHECK WHETHER THEY ACTUALLY SAY THIS] only call it an YMC if the cycles are synchronised across cells.
+% [END COMMENTED DRAFT TEXT]
+
 The yeast metabolic cycle (YMC) is one such biological rhythm.
 % 'aerobic' -- Oct 2020, Kevin did experiments in SC+pyruvate, degassed.
 %   (I think the fluorescence killed cells)
+
+% - Context of discovery: i.e. in chemostats, after glucose starvation, primary read-out being dissolved oxygen, start from Benjamin Tu in 2005.
 It is observed in \emph{Saccharomyces cerevisiae} cells cultured at high density and aerobic,
 % 'nutrient-limited' -- Not necessarily.  Cycles are seen in SC+20 g/L glucose.
 %   Glucose limitation is somewhere between 10--100 mg/L (Julian's data).
@@ -146,6 +147,8 @@ The oxidative and reductive phases are characterised by the rate of oxygen consu
 Using unsupervised clustering, \citet{tuLogicYeastMetabolic2005} described the following events in each phase:
 % [IT LOOKS A BIT OUT OF PLACE...] \citet{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
 
+% - Overview of sequence of events: high oxygen consumption and low oxygen consumption phases, and what happens in each.  I will get into more detail in the following bullet points.
+% ------------------------------------------------------------------------------
 \begin{enumerate}
   \item \emph{Oxidative phase:} Cells consume oxygen at a high rate as respiration, fermentation, and
         % Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
@@ -180,6 +183,15 @@ Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuol
 
 % (Describe features that may differ in different strain and nutrient backgrounds, i.e. 'what can change the YMC?'.)
 % This REALLY needs more detail: review literature related to the R/C phase ----- I don't think there's a lot though.
+
+% - Biochemical and metabolic aspects
+%   - Metabolites: NADPH, ATP, flavins, etc.
+%   - Mobilisation of macromolecules, storage molecules (carbohydates, lipids).
+% - Transcription aspects
+% - Cell biology aspects, including cell division cycle
+% ------------------------------------------------------------------------------
+
+% insert stuff here
 
 \subsection{Metabolic cycles in other organisms}
 \label{subsec:intro-ymc-other_organisms}
@@ -231,6 +243,7 @@ Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases 
 Furthermore, YMCs share mechanisms with the circadian oscillator \citep{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
 Thus, studying YMCs may shed light on the evolution of biological rhythms.
 
+% - Introduce chemostat vs single-cell discussions...
 \subsection{Disputes and unresolved questions}
 \label{subsec:intro-ymc-unresolved}
 % - Limitations of chemostat: obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habit of yeast, starvation.
