@@ -6,18 +6,40 @@
 
 \section{Motivation of thesis}
 
-Insert content here.
+% - Understanding how an organism adapts its metabolism and cellular processes in response to external conditions
+% - Through the yeast metabolic cycle as a framework for other biological oscillators.  Reasons are twofold: (a) biological oscillators are important for coordination of responses and are present across kingdoms, (b) there are many unknowns about the yeast metabolic cycle, in particular the mechanistic basis and what happens in individual cells.
 
-\section{Scientific Background}
-\label{sec:intro-bg}
+\section{Yeast metabolic cycle}
+\label{sec:intro-ymc}
 
+\subsection{Introduction to biological rhythms}
+\label{subsec:intro-ymc-biological_rhythms}
+
+\subsubsection{Biological basis of biological rhythms}
+\label{subsubsec:intro-ymc-biological_rhythms-biological_basis}
 % (Introduction: Physiological importance of biological rhythms, including the circadian rhythm, the cell cycle, and the yeast metabolic cycle.)
+
+% - Circadian, cell division cycle, etc.  Biochemical oscillations.  Mellor provides a good overview.
 
 Biological rhythms compartmentalise cellular processes and ensure that the cell prepares for sequential events.
 Such biological rhythms include the circadian rhythm and the cell cycle.
 Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \citep{mellorMolecularBasisMetabolic2016}.
 
-% (Define the yeast metabolic cycle -- in brief)
+\subsubsection{Theoretical basis of biological rhythms}
+\label{subsubsec:intro-ymc-biological_rhythms-theoretical_basis}
+% - Mathematics of systems of coupled oscillators.
+
+\subsection{Definition and description of the yeast metabolic cycle}
+\label{subsec:intro-ymc-definition}
+% - Context of discovery: i.e. in chemostats, after glucose starvation, primary read-out being dissolved oxygen, start from Benjamin Tu in 2005.
+% - Overview of sequence of events: high oxygen consumption and low oxygen consumption phases, and what happens in each.  I will get into more detail in the following bullet points.
+% - Biochemical and metabolic aspects
+%   - Metabolites: NADPH, ATP, flavins, etc.
+%   - Mobilisation of macromolecules, storage molecules (carbohydates, lipids).
+% - Transcription aspects
+% - Cell biology aspects, including cell division cycle
+% - Introduce chemostat vs single-cell discussions
+
 
 % Worth re-reading: Mellor 2016, Lloyd 2019
 
@@ -110,6 +132,18 @@ Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuol
 % (Describe features that may differ in different strain and nutrient backgrounds, i.e. 'what can change the YMC?'.)
 % This REALLY needs more detail: review literature related to the R/C phase ----- I don't think there's a lot though.
 
+\subsection{Metabolic cycles in other organisms}
+\label{subsec:intro-ymc-other_organisms}
+% - Other yeasts
+% - Other organisms: bacteria, mammalian cells
+
+\subsection{Yeast metabolic cycles under perturbations}
+\label{subsec:intro-ymc-perturbations}
+% - Nutrient perturbations
+  % - Changing concentration or compositions of carbon sources.
+  % - Changing concentration or compositions of nitrogen sources.
+  % - Key deletion strains shed light on mechanism
+
 The phase difference between the YMC and cell cycle varies in different conditions % how?
 % Confirmation that the YMC responds to nutrient availability?  How does phase
 % resetting help the Cell Division Cycle then?
@@ -126,6 +160,34 @@ Specifically, decreasing glucose concentration prolongs the YMC \citep{mellorMol
 and decreasing nitrogen source concentration does so too \citep{baumgartnerFlavinbasedMetabolicCycles2018}.
 Furthermore, the YMC can oscillate multiple times per cell cycle, or even disappear in some conditions \citep{baumgartnerFlavinbasedMetabolicCycles2018}. % which conditions?  can these be tested?
 % --> also see Causton et al. (2015)
+
+\subsection{Big picture/Hypothesis: a nutrient sensor than entrains the cell division cycle?}
+\label{subsec:intro-ymc-hypothesis}
+% - Idea that the yeast metabolic cycle is a autonomous biological oscillator that operates at a range of frequencies in response to a range of (permissive) growth conditions.  This oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle.  The yeast metabolic cycle creates windows of opportunities for the cell to commit to START if conditions are favourable: e.g. good stores.
+In sum, the YMC is a robust biological rhythm in \emph{S. cerevisiae} that responds to nutrient availability.
+% **Logical inconsistency**: previously I mentioned that this coupling is flexible &
+% this idea is disputed.  This is an error!
+In turn, if the cell divides, it temporally partitions cell cycle events in relation to YMC events to prevent oxidative damage.
+In bulk culture, the YMC synchronises between cells for an unclear reason.
+Therefore, the general aim of my project is to study YMC regulation in isolated cells, especially mechanisms that ensure synchrony with the cell cycle, in different nutrient conditions.
+
+\subsection{Implications of the metabolic cycle}
+\label{subsec:intro-ymc-implications}
+%- Fundamental mechanistic basis for biological oscillators, such as the cell division cycle.  Could change what we know about the cell division cycle.
+% (Significance of study)
+
+Metabolic oscillations may be the origins of biological timekeeping mechanisms.
+Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle.
+Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneillCircadianRhythmsPersist2011}, refuting the idea that gene circuits are responsible for these rhythms.
+Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \citep{papagiannakisAutonomousMetabolicOscillations2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
+Furthermore, YMCs share mechanisms with the circadian oscillator \citep{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
+Thus, studying YMCs may shed light on the evolution of biological rhythms.
+
+\subsection{Disputes and unresolved questions}
+\label{subsec:intro-ymc-unresolved}
+% - Limitations of chemostat: obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habit of yeast, starvation.
+% - Do cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony?
+% - Do single-cell flavin-based metabolic cycles from deletion strains recapitulate dissolved oxygen-based metabolic cycles in chemostats?  If not, what would be a likely explanation?
 
 % (State the main unknowns of the yeast metabolic cycle:
 % - molecular mechanisms, specifically...? -> deletions to investigate
@@ -171,22 +233,6 @@ However, the effects of perturbations to specific metabolic networks in single-c
 %This strategy is yet to be applied to the metabolic and cell cycle oscillators.
 %However, \citet{ozsezenInferenceHighLevelInteraction2019} assumed the same, specific coupling function for all interactions between the four oscillators.
 % [END COMMENTED MAIN TEXT]
-
-In sum, the YMC is a robust biological rhythm in \emph{S. cerevisiae} that responds to nutrient availability.
-% **Logical inconsistency**: previously I mentioned that this coupling is flexible &
-% this idea is disputed.  This is an error!
-In turn, if the cell divides, it temporally partitions cell cycle events in relation to YMC events to prevent oxidative damage.
-In bulk culture, the YMC synchronises between cells for an unclear reason.
-Therefore, the general aim of my project is to study YMC regulation in isolated cells, especially mechanisms that ensure synchrony with the cell cycle, in different nutrient conditions.
-
-% (Significance of study)
-
-Metabolic oscillations may be the origins of biological timekeeping mechanisms.
-Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle.
-Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneillCircadianRhythmsPersist2011}, refuting the idea that gene circuits are responsible for these rhythms.
-Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \citep{papagiannakisAutonomousMetabolicOscillations2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
-Furthermore, YMCs share mechanisms with the circadian oscillator \citep{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
-Thus, studying YMCs may shed light on the evolution of biological rhythms.
 
 %%% Local Variables:
 %%% mode: latex
