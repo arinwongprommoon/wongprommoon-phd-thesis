@@ -38,17 +38,45 @@ This thesis is divided into six chapters:
 
 \subsubsection{Biological basis of biological rhythms}
 \label{subsubsec:intro-ymc-biological_rhythms-biological_basis}
-% (Introduction: Physiological importance of biological rhythms, including the circadian rhythm, the cell cycle, and the yeast metabolic cycle.)
+% Physiological importance of biological rhythms
+% including the circadian rhythm, cell division cycle, yeast metabolic cycle
+% Basis, e.g. biochemical oscillators
 
-% - Circadian, cell division cycle, etc.  Biochemical oscillations.  Mellor provides a good overview.
+% Literature:
+% Mellor (2016) -- provides a good overview.
+%I'm sure there are other citations I have lying around.
+
+Biological rhythms are ... [INSERT SOME DEFINITION HERE].
 
 Biological rhythms compartmentalise cellular processes and ensure that the cell prepares for sequential events.
-Such biological rhythms include the circadian rhythm and the cell cycle.
 Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \citep{mellorMolecularBasisMetabolic2016}.
+Such biological rhythms include the circadian rhythm and the cell division cycle.
 
 \subsubsection{Theoretical basis of biological rhythms}
 \label{subsubsec:intro-ymc-biological_rhythms-theoretical_basis}
 % - Mathematics of systems of coupled oscillators.
+
+% Single oscillations
+% Useful here: cell division cycle modelling literature, e.g. Novak/Tyson
+Biological rhythms are modelled as ....
+For example, the cell division cycle is modelled based on the molecular mechanisms (negative feedback loops) -- the most up-to-date and comprehensive one [REALLY?? CHECK CDC LITERATURE.  BUT DON'T GO TOO DEEP BECAUSE MY PHD ISN'T STRICTLY ABOUT CDCS] being \textcite{novakMitoticKinaseOscillation2022}, which employ ordinary differential equations to model negative feedback loops that sustain oscillations of kinases [MAKE SURE THIS SENTENCE IS ACTUALLY FACTUAL].
+But people can get away with doing that with the cell division cycle because the molecular basis is well-characterised.
+Less well-characterised biological rhythms such as glycolytic oscillations lead to more coarse-grained models, such as one driven by a positive feedback loop \parencite{goldbeterMultisynchronizationOtherPatterns} [EXPLAIN THE MODEL A BIT MORE HERE]. % Also add more examples
+
+% Forced oscillators, coupled oscillators
+% Useful here: \textcite{tysonTimekeepingDecisionmakingLiving} and related reviews
+As biological rhythms are often coupled with each other, there is interest in modelling forced and coupled oscillators.
+If an oscillator is forced, it means that it has a natural oscillation frequency when left to its own devices, but it is in a situation in which an external force is applied at a regular interval so as to force the oscillator to a certain frequency.
+An example is the circadian clock, which is forced by being entrained to the light-dark cycle \parencite{goldbeterMultisynchronizationOtherPatterns}.
+Closer to home, yeast glycolytic oscillations can also be entrained via a periodic input of substrate.
+The concept of forced oscillators is closely linked to coupled oscillators, in which two oscillators are coupled to each other by certain activation/deactivation events.
+% This is a good place to put an Arnold tongue figure to illustrate the point I'm trying to make in the next 3 sentences.
+What tends to happen is that the two coupled oscillators oscillate at a compromise frequency if the natural frequencies of each are close enough to each other.
+Otherwise, what can happen are complex oscillations in which the oscillators lock to a rational ratio of frequencies -- i.e. one oscillator goes through $p$ periods while the other goes through $q$ periods; the exact ratio depends on the ratio of the natural frequencies.
+And in certain cases, chaos can happen.
+There is a mathematical basis [CITATION NEEDED], and experimental observations support this [CITATIONS NEEDED, AND GO INTO SPECIFIC BIOLOGICAL EXAMPLES].
+Certainly, the yeast metabolic cycle has been modelled as a system of coupled oscillators before \citep{papagiannakisAutonomousMetabolicOscillations2017,ozsezenInferenceHighLevelInteraction2019}, based on how it is linked to the cell division cycle -- but I will discuss this later when I finish defining what the metabolic cycle is.
+% I can see this becoming relevant again in the modelling chapter
 
 \subsection{Definition and description of the yeast metabolic cycle}
 \label{subsec:intro-ymc-definition}
