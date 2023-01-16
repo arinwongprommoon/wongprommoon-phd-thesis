@@ -101,8 +101,10 @@ The yeast metabolic cycle (YMC) is one such biological rhythm.
 % 'aerobic' -- Oct 2020, Kevin did experiments in SC+pyruvate, degassed.
 %   (I think the fluorescence killed cells)
 
+% GOOD MAIN IDEA-THEN-EVIDENCE STRUCTURE HERE
+
 % - Context of discovery: i.e. in chemostats, after glucose starvation, primary read-out being dissolved oxygen, start from Benjamin Tu in 2005.
-It is observed in \emph{Saccharomyces cerevisiae} cells cultured at high density and aerobic,
+It was initially described in \emph{Saccharomyces cerevisiae} cells cultured in chemostats; therefore, at high cell density and aerobic,
 % 'nutrient-limited' -- Not necessarily.  Cycles are seen in SC+20 g/L glucose.
 %   Glucose limitation is somewhere between 10--100 mg/L (Julian's data).
 nutrient-limited conditions.
@@ -115,88 +117,99 @@ Several aspects of the YMC have been observed over decades.
 \citet{tuLogicYeastMetabolic2005} first incorporated transcript cycling in the description of the YMC and defined the YMC events.
 
 % Are these two sides of the same coin?
-% 'Shitty reactor' idea: no short/long cycles in high-quality chemostats
-The YMC has been observed in bulk cultures and manifests itself as a
+% I think I either have my own notes on this or notes from a meeting with Kevin Correia
+In bulk culture, the YMC has been observed as a
 % Murray camp
-40-minute short-phase cycle or
+40-minute short-phase cycle [INSERT MURRAY CAMP CITATIONS HERE] or
 % Tu camp
-a 4- to 5-hour long-phase cycle synchronised to the cell cycle \citep{mellorMolecularBasisMetabolic2016}.
+a 4- to 5-hour long-phase cycle synchronised to the cell cycle [INSERT TU CAMP CITATIONS HERE]
+%\citep{mellorMolecularBasisMetabolic2016}.
+
 % [START COMMENTED-OUT MAIN TEXT]
 %The short-phase cycle occurs in the polyploid IFO0233 strain cultured under 2\% glucose w/v, while the long-phase cycle occurs in the diploid CEN.PK strain cultured under 1\% glucose w/v \citep{tu_chapter_2010}.
 % [END COMMENTED-OUT MAIN TEXT]
 % or is it cells independently responding to chemostat conditions?
 % My experimental evidence (Apr 2021) strongly suggests this.  And also see Laxman et al. (2010)
 These cycles are synchronised across cells in culture.
+% 'Shitty reactor' idea: no short/long cycles in high-quality chemostats.
+% I have an org note on this, and some related citations.
+However, there is some debate in the literature as to what is responsible for the two phase lengths observed.
+One possible explanation is that such short- or long-phase cycles are an artefact of chemostat culture conditions and truly high-quality chemostats do not produce such cycles [CITATION/SUPPORTING EVIDENCE NEEDED, especially that i'm making an argument possibly counter to the literature].
+For example, accumulation of hydrogen sulfide \citep{oneillCircadianRhythmsPersist2011} and limitations imposed by [WHAT IS IT?? I CAN'T REMEMBER -- READ MY ORG NOTE].
+This begs the question of whether yeast cells autonomously and individually generate these cycles -- a question bulk culture in chemostats cannot answer.  % probably good to tie all unsolved questions at the end and say 'look, this is why i do single-cell'.
+
 Furthermore, the YMC is robust, with oscillations persisting for weeks to months \citep{lloydRedoxRhythmicityClocks2007}.
-% 'insensitive' -- potentially vague, but can easily clarify
 Additionally, the oscillation period is insensitive to temperatures from \SI{25}{\celsius} to \SI{35}{\celsius} and media pH values from
 % also see O'Neill et al. (2020)
 2.9 to 6.0 \citep{lloydUltradianMetronomeTimekeeper2005}.
 
 % (In more detail... Describe the main features with brief references to key papers and experiments, as evidence.)
 
-The YMC can be divided into three phases: the oxidative phase, the reductive-building phase, and the
-% Debate whether this phase actually exists or is an artefact of the chemostat
-% conditions in experiments thus far.  RC may be an adaptation of 'unhappy' cells
-% to chemostat.  Think of feast-and-famine or glucose limitation.
-% There are many strings to pull on this phase.
-% Though Lloyd/Murray camp also describe these 3 phases
-% However, all publications agree with OX/HOC and RED/LOC as major phases
-reductive-charging phase.
-The oxidative and reductive phases are characterised by the rate of oxygen consumption \citep{mellorMolecularBasisMetabolic2016}.
-Using unsupervised clustering, \citet{tuLogicYeastMetabolic2005} described the following events in each phase:
-% [IT LOOKS A BIT OUT OF PLACE...] \citet{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
-
-% - Overview of sequence of events: high oxygen consumption and low oxygen consumption phases, and what happens in each.  I will get into more detail in the following bullet points.
-% ------------------------------------------------------------------------------
-\emph{Oxidative phase:} Cells consume oxygen at a high rate as respiration, fermentation, and
-        % Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
-        % but I showed that they do
-        energy-demanding processes
-        like biosynthesis and gene expression occur.
-    As the oxidative phase transitions to the reductive-building phase, ethanol and acetate concentrations in the medium peak as respiration finishes \citep{tuLogicYeastMetabolic2005}.
-    % and so does flavins? (FMN and FAD)
-    % makes sense if they are oxidised when respiration occurs
-    `Redox state' metabolites, including NADH, NADPH, and glutathione, become most oxidised in this phase \citep{lloydUltradianMetronomeTimekeeper2005}.
-Here, 70\% of metabolite concentrations peak with the combined autofluorescence of NADH and NADPH \citep{murrayRegulationYeastOscillatory2007}.
-
-\emph{Reductive-building phase:} Cells consume oxygen at a low rate, and activities linked to mitochondrial growth occur.
-% Idea put forth: temporal separation prevents ROS damage to DNA.  But disputed,
-% as shown here.
-  There is evidence to suggest that activities linked to cell proliferation -- such as initiation of the cell division cycle, DNA replication, and spindle pole activity -- are gated to the reductive-building phase for both the short-period and long-period YMC.
-  Such evidence includes budding activity and the pattern of the expression of \emph{YOX1}, which encodes a cell division cycle repressor \citep{tuLogicYeastMetabolic2005}.
-% But Heinemann lab publications suggest that YMC gates early & late cell cycle independently.
-% Not sure if they changed the growth rate of the cells though -- probably quite difficult
-% to do in microfluidics setting.
-  However, measuring DNA content and oxygen consumption in cells grown at different growth rates \citep{slavovCouplingGrowthRate2011} showed that the S phase of the cell cycle may occur in the oxidative phase if the cells have a slow growth rate.
-% What would be the function of such flexible gating?  Seems like community
-% has no meaningful consensus yet.  Probably allocation of metabolites.
-  This evidence indicates that the gating between the YMC and the cell cycle is flexible.
-
-  \emph{Reductive-charging phase:} Cells consume oxygen at a low rate.
-  Non-respiratory metabolism and degradation processes occur to prepare the cell for the oxidative phase.
-  This non-respiratory metabolism includes glycolysis, ethanol and fatty acid metabolism, and nitrogen metabolism.
-  With these metabolic modes, under the regulation of the transcription factors Msn2p and Msn4p \citep{kuangMsn2RegulateExpression2017}, acetyl CoA accumulates for ATP production in the oxidative phase \citep{tuLogicYeastMetabolic2005}.
-After acetyl CoA levels reach a threshold, it promotes histone acetylation and thus induces the oxidative phase.
-These metabolic pathways also optimise production of NADPH -- based on the induction of \emph{GND2} -- to buffer against oxidative stress in the oxidative phase.
-Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuoles, and the proteosome also peak in the reductive-charging phase.
-
-% (Describe features that may differ in different strain and nutrient backgrounds, i.e. 'what can change the YMC?'.)
-% This REALLY needs more detail: review literature related to the R/C phase ----- I don't think there's a lot though.
-
+% INTEGRATE THIS STRUCTURE IN EACH PARAGRAPH THAT DISCUSSES EACH PHASE
 % - Biochemical and metabolic aspects
 %   - Metabolites: NADPH, ATP, flavins, etc.
 %   - Mobilisation of macromolecules, storage molecules (carbohydates, lipids).
 % - Transcription aspects
 % - Cell biology aspects, including cell division cycle
-% ------------------------------------------------------------------------------
+% ---------------------------------------------------------------------
+The YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase.
+% Though Lloyd/Murray camp also describe these 3 phases
+These oxidative and reductive phases are characterised by the rate of oxygen consumption \citep{mellorMolecularBasisMetabolic2016}.
+\citet{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
+% Using unsupervised clustering, \citet{tuLogicYeastMetabolic2005} described the following events in each phase: --> WOULD LIKE TO AVOID THIS BECAUSE IT'S A REFERENCE TO JUST ONE PUBLICATION -- I'D RATHER WORK FROM THE CONSENSUS
 
-% insert stuff here
+[ADD DIAGRAM HERE -- MELLOR HAS A GOOD ONE, ADAPT HERS]
+
+In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
+% Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
+% but I showed that they do
+energy-demanding processes
+like biosynthesis and gene expression occur.
+In chemostats, this manifests as a rapid decrease in measured dissolved oxygen.
+Occurrence of biosynthesis and gene expression is confirmed by increased transcripts of [INSERT NAME OF TRANSCRIPTS HERE] \parencite{tuLogicYeastMetabolic2005}.
+As the oxidative phase transitions to the reductive phase, ethanol and acetate concentrations in the medium peak as respiration finishes \citep{tuLogicYeastMetabolic2005}.
+`Redox state' metabolites, including NADH, NADPH, glutathione \citep{lloydUltradianMetronomeTimekeeper2005}, and flavins (FMN and FAD) % check if true for flavins
+\parencite{murrayRedoxRegulationRespiring2011} become most oxidised in this phase.
+Here, 70\% of metabolite concentrations peak with the combined autofluorescence of NADH and NADPH \citep{murrayRegulationYeastOscillatory2007}.
+
+In the reductive phase, cells consume oxygen at a low rate, showing up as an increase in dissolved oxygen in chemostats.
+Some authors [INSERT CHAIN OF PUBLICATIONS HERE] identify a reductive-building (RB) phase and a reductive-charging (RC) phase within this main phase based on cellular and transcriptomic events.
+However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
+That said, I will discuss the reductive phase in terms of the reductive-building and reductive-charging phases, then discuss the evidence in favour of merging these phases.
+
+During the so-called reductive-building phase, and activities linked to mitochondrial growth occur.
+% as shown here.
+There is evidence to suggest that activities linked to cell proliferation -- such as initiation of the cell division cycle, DNA replication, and spindle pole activity -- are gated to the reductive-building phase for both the short-period and long-period YMC.
+Such evidence includes budding activity and the pattern of the expression of \emph{YOX1}, which encodes a cell division cycle repressor \citep{tuLogicYeastMetabolic2005}.
+The hypothesis is that these links create a temporal separation between oxidative biochemical processes (in OX) and the cell division cycle so as to prevent reactive oxygen species generated by oxidative process from damaging DNA.
+However, measuring DNA content and oxygen consumption in cells grown at different growth rates \citep{slavovCouplingGrowthRate2011} showed that the S phase of the cell cycle may occur in the oxidative phase if the cells have a slow growth rate.
+% Not sure if they changed the growth rate of the cells though -- probably quite difficult
+% to do in microfluidics setting.
+This may be explained by the YMC gating the early and late cell cycle independently, as evidenced by single-cell evindence in [DESCRIBE THE EXACT LINE OF EVIDENCE HEINEMANN USED HERE] \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+% What would be the function of such flexible gating?  Seems like community
+% has no meaningful consensus yet.  Probably allocation of metabolites.
+This evidence indicates that the gating between the YMC and the cell cycle is flexible,
+though there is no meaningful consensus as to the function of such flexible gating.
+% Discuss allocation of metabolites later -- and this can be linked to the modelling chapter of thesis.
+
+% There are many strings to pull on this phase.
+Finally, during the so-called reductive-charging phase,
+non-respiratory metabolism and degradation processes occur to prepare the cell for the oxidative phase.
+This non-respiratory metabolism includes glycolysis, ethanol and fatty acid metabolism, and nitrogen metabolism.
+With these metabolic modes, under the regulation of the transcription factors Msn2p and Msn4p \citep{kuangMsn2RegulateExpression2017}, acetyl CoA accumulates for ATP production in the oxidative phase \citep{tuLogicYeastMetabolic2005}.
+After acetyl CoA levels reach a threshold, it promotes histone acetylation and thus induces the oxidative phase.
+These metabolic pathways also optimise production of NADPH -- based on the induction of \emph{GND2} -- to buffer against oxidative stress in the oxidative phase.
+Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuoles, and the proteosome also peak in the reductive-charging phase.
+
+% (Discuss the evidence in favour of merging the reductive-building and reductive-charging phases)
+% This REALLY needs more detail: review literature related to the R/C phase ----- I don't think there's a lot though.
 
 \subsection{Metabolic cycles in other organisms}
 \label{subsec:intro-ymc-other_organisms}
 % - Other yeasts
 % - Other organisms: bacteria, mammalian cells
+% (I think Mellor probably talks about this)
+something something leads to the question of whether the metabolic cycle reflects something fundamental, perhaps an ancient biochemical adaptation to allow the cell to adapt its biochemistry and cell division cycle to external conditions.
 
 \subsection{Yeast metabolic cycles under perturbations}
 \label{subsec:intro-ymc-perturbations}
