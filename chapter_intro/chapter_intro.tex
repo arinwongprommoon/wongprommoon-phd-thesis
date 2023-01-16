@@ -218,31 +218,93 @@ something something leads to the question of whether the metabolic cycle reflect
   % - Changing concentration or compositions of nitrogen sources.
   % - Key deletion strains shed light on mechanism
 
+Nutrient and genetic perturbations can affect the length of the metabolic cycle and its relationship with other cellular events.
+The long-phase cycle may vary from 1.4 to 14 hours depending on the strain and culture conditions including the chemostat dilution rate \citep{caustonMetabolicRhythmsFramework2018}. % how?
+
+The main nutrient perturbations people have studied so far are perturbations in carbon sources and in nitrogen sources.
+
+Perturbations in carbon sources are well-documented.
+
+% change glucose concentration
+Lower glucose concentrations prolong the metabolic cycle, as evidenced by both chemostat [CITATION NEEDED, I currently just have Mellor 2016] and single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+% 20 g/L --> 0.5 g/L doesn't seem to significantly prolong it, but maybe
+% a greater effect will be seen if we get to the region of glucose limitation
+% Though I am aware that this is my experimental observations -- need to see if literature confirms.
+This effect is pronounced in the region of glucose limitation;
+increasing the glucose concentration beyond a certain point does not produce an effect.
+This experimental observations could by explained by models such as \textcite{jonesCyberneticModelGrowth1999}, which proposes that [INSERT WHAT THE MODEL PREDICTS IN TERMS OF GLUCOSE CONCENTRATION HERE].
+
+% ferm vs non-ferm
+Furthermore, non-fermentable carbon sources like pyruvate also lead to long-duration metabolic cycles \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+
+% bulk addition and depletion
+In addition, bulk depletion or addition of a carbon source can reset the phase of the YMC.
+Chemostat studies say that an initial starvation phase is needed to generate long-lasting synchronous metabolic cycles \parencite{tuLogicYeastMetabolic2005} [OTHER CITATIONS PROBABLY USEFUL].
+On the other hand, adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \citep{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
+
+Perturbations in nitrogen sources are less well-studied.
+% Maybe also because long OX stage as it's the stage for biomass building
+But \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, based on single-cell observations, suggest that decreasing nitrogen source concentration prolongs the YMC, as evidenced by [INSERT EXACTLY WHAT THEY DID HERE]
+
+The fact that nutrient perturbations affect the metabolic cycle suggests a model in which cells adjust the metabolic cycle depending on nutrient availability, dynamically. % I say this SO MANY times.
+
+Also, people have varied chemostat dilution rates and this broadly supports the above.
+For example, increasing the growth rate increases the duration of the oxidative phase relative to the reductive phases \citep{slavovCouplingGrowthRate2011}, thus prolonging the metabolic cycle.
+However, the caveat is that doing such a thing affects so many aspects of the cell environment, that it is difficult to tease things apart.
+
+% Reorganise this shit ----------------------------------------------------------------------
 The phase difference between the YMC and cell cycle varies in different conditions % how?
 % Confirmation that the YMC responds to nutrient availability?  How does phase
 % resetting help the Cell Division Cycle then?
 \citep{ewaldYeastCyclinDependentKinase2016}. % ok, but have I seen this phase shift with the different media (i.e. SC vs SM)?  What did Ewald have to say about this phase shift??
 % 'bulk carbon source' -- could be adaptation to changing nutrient concentrations in general?
-Adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \citep{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
-The long-phase cycle may vary from 1.4 to 14 hours depending on the strain and culture conditions including the chemostat dilution rate \citep{caustonMetabolicRhythmsFramework2018}. % how?
-Specifically, increasing the growth rate increases the duration of the oxidative phase relative to the reductive phases \citep{slavovCouplingGrowthRate2011}.
-It has also been found that media quality affects the period of the YMC.
-% 20 g/L --> 0.5 g/L doesn't seem to significantly prolong it, but maybe
-% a greater effect will be seen if we get to the region of glucose limitation
-Specifically, decreasing glucose concentration prolongs the YMC \citep{mellorMolecularBasisMetabolic2016,papagiannakisAutonomousMetabolicOscillations2017},
-% Maybe because long OX stage as it's the stage for biomass building
-and decreasing nitrogen source concentration does so too \citep{baumgartnerFlavinbasedMetabolicCycles2018}.
 Furthermore, the YMC can oscillate multiple times per cell cycle, or even disappear in some conditions \citep{baumgartnerFlavinbasedMetabolicCycles2018}. % which conditions?  can these be tested?
 % --> also see Causton et al. (2015)
+% -----------------------------------------------------------------------------------------------
+
+Although the complete molecular basis of the yeast metabolic cycle is not well-characterised, key gene deletions shed light on the molecular mechanism of the yeast metabolic cycle.
+% Mellor (2016) provide an awesome table.
+
+Many of these deletions have been made for genes that control the cell division cycle and metabolism.
+
+In particular, there are several deletions shown to remove the metabolic oscillations in chemostats: namely, \emph{ZWF1} \citep{tuCyclicChangesMetabolic2007}, \emph{GSY2}, \emph{GPH1} \parencite{oneillCircadianRhythmsPersist2011}.
+\emph{ZWF1} is responsible for entry into the pentose phosphate pathway and subsequently a major source of NADPH generation, so deleting this gene may impair control of cellular redox;
+however, because of its role, this gene has also been shown to wreck things like amino acid metabolism and auxotrophy [CONSULT MY ZWF1 NOTE, MAKE SURE WHAT I WRITE IS ACCURATE], so it might be a bit difficult to draw conclusions from this deletion in particular.
+What's interesting is \emph{GSY2} and \emph{GPH1}, which both have roles in glucose/glycogen mobilisation and storage, thus suggesting that cycling of carbohydrate stores may be needed for the function of the metabolic cycle % contradict with idea of lipid stores?  link with modelling?
+
+Additionally, other deletions have been shown to either change the frequency or the shape of the metabolic oscillations -- at least in terms of their dissolved oxygen traces.
+\textcite{caustonMetabolicCyclesYeast2015} provide three examples: \emph{RIM11}, \emph{SWE1}, and \emph{TSA1 TSA2}. % they actually had more, but these are the three that pop in my head right now
+\emph{RIM11} does this...
+\emph{SWE1} does this...
+\emph{TSA1 TSA2} does this...
+
+Some discussion about peroxiredoxins and thioredoxins can fit here.
+Cite \textcite{amponsahPeroxiredoxinsCoupleMetabolism2021}.
+
+However, few genetic perturbation studies have been attempted in single-cell studies.
+The most significant is in \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, in which by deleting genes related to cell division cycle machinery [WHICH??], they showed that the metabolic cycle operates independently from the cell division cycle.
 
 \subsection{Big picture/Hypothesis: a nutrient sensor than entrains the cell division cycle?}
 \label{subsec:intro-ymc-hypothesis}
-% - Idea that the yeast metabolic cycle is a autonomous biological oscillator that operates at a range of frequencies in response to a range of (permissive) growth conditions.  This oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle.  The yeast metabolic cycle creates windows of opportunities for the cell to commit to START if conditions are favourable: e.g. good stores.
-In sum, the YMC is a robust biological rhythm in \emph{S. cerevisiae} that responds to nutrient availability.
+
+From existing evidence, we can create a big picture of what the yeast metabolic cycle is.
+Idea that the yeast metabolic cycle is a autonomous biological oscillator that operates at a range of frequencies in response to a range of (permissive) growth conditions, as evidenced by how extreme [BE MORE SPECIFIC, AND REFER TO A PREVIOUS SECTION] nutrient conditions throw the oscillator out of balance.
+
+The yeast metabolic cycle creates windows of opportunities for the cell to commit to START if conditions are favourable: e.g. good stores.
+Thus, this oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle and biosynthetic/redox processes.
+Though the relationship between the metabolic cycle and the cell division cycle is governed by the mathematical basis of coupled oscillators.
+Most importantly, there is a small window of frequencies in which both oscillators can be phase-locked, and that other, complicated relationships exist: e.g. multiple metabolic cycles per cell division cycle -- in line in the window-of-opportunity idea above.
+
+In addition, the yeast metabolic cycle responds dynamically and rapidly to nutrient availability.
+Specifically, abrupt changes in availability may reset the phase of the cycle, and the concentration of nutrients in media changes the duration of the cycle -- again, within a window of frequencies.
+
 % **Logical inconsistency**: previously I mentioned that this coupling is flexible &
 % this idea is disputed.  This is an error!
-In turn, if the cell divides, it temporally partitions cell cycle events in relation to YMC events to prevent oxidative damage.
-In bulk culture, the YMC synchronises between cells for an unclear reason.
+% [COMMENTED-OUT MAIN TEXT]
+% In turn, if the cell divides, it temporally partitions cell cycle events in relation to YMC events to prevent oxidative damage.
+
+% In bulk culture, the YMC synchronises between cells for an unclear reason.
+
 
 \subsection{Implications of the metabolic cycle}
 \label{subsec:intro-ymc-implications}
