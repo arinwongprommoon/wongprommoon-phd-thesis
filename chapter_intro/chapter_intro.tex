@@ -397,10 +397,6 @@ It is entirely possible that observed cell-to-cell synchronisation is the effect
 \subsection{Introduction to cellular autofluorescence}
 \label{subsec:intro-flavin-autofluo}
 % - (Refer to reviews, there are good ones in the 2000s)
-% \citet{sianoNADHFlavinFluorescence1989}
-% \citet{podrazkyMonitoringGrowthStress2003}
-% \citet{maslankaAutofluorescenceYeastSaccharomyces2018}
-% \cite{horvathSituFluorescenceCell1993}
 
 \subsection{Biochemical basis of flavins and flavoproteins}
 \label{subsec:intro-flavin-biochem}
@@ -444,14 +440,60 @@ So it's clear that cell only makes new flavin for whatever purposes FMN and FAD 
 \label{subsec:intro-flavin-perturbations}
 % - How oxygen and nutrient changes affect flavins and other autofluorescence (there are papers that specifically study this)
 
+% (Corresponds to 'Responses of flavin to changing conditions' section in org note -- go through notes I made from each publication and synthesise.)
+% \citet{sianoNADHFlavinFluorescence1989}
+% \citet{podrazkyMonitoringGrowthStress2003}
+% \citet{maslankaAutofluorescenceYeastSaccharomyces2018}
+% \cite{horvathSituFluorescenceCell1993}
+
 \subsection{Flavins and flavoproteins in the yeast metabolic cycle}
 \label{subsec:intro-flavin-ymc}
 % - Autofluorescence is usually something people would avoid in experiments, but we are taking advantage of it.
 % - Easy-to-measure metabolic readout (does not require additional engineering of strains), linked to many biochemical processes
+\begin{itemize}
+\item \emph{Precedent:} Flavin oscillations have been used to represent the YMC both in bulk-culture (\cite{murrayRedoxRegulationRespiring2011}) and in single-cell conditions (\cite{baumgartnerFlavinbasedMetabolicCycles2018}).
+
+\item \emph{Biological basis:}
+\begin{itemize}
+\item They're linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1) and NAD(P)H cycles have been implicated in bulk-culture (\cite{tuLogicYeastMetabolic2005} and more) and single-cell (\cite{papagiannakisAutonomousMetabolicOscillations2017}) studies of the YMC.
+\item The timing of flavin cycle peaks -- indicating oxidation -- coincides with the oxidative state of the YMC (\cite{murrayRedoxRegulationRespiring2011}).
+\item Most abundant flavoproteins may have roles linked with the YMC.
+\begin{itemize}
+\item Most abundant, Fas1: fatty acid synthetase, see \cite{campbellBuildingBlocksAre2020}.
+\item Second most abundant, Yhb1: nitric oxide oxidoreductase, redox of NAD(P)H and FAD.
+\end{itemize}
+\end{itemize}
+
+\item \emph{Technical basis:} Using flavin allows easy fluorescence measurement (autofluorescence) to provide a time series associated with the YMC.
+
+\item \emph{Solving unknowns:}
+\begin{itemize}
+\item Few studies have characterised how such oscillations respond to changing nutrient conditions or to gene deletions.
+\item Few studies have used flavin oscillations to study how well features of the YMC found in bulk-culture experiments translate to the single cell.
+\end{itemize}
+\end{itemize}
 
 \subsubsection{Review of chemostat and single-cell studies that use flavin}
 \label{subsubsec:intro-flavin-ymc-precedent}
 % - To justify my use, e.g. \textcite{murrayRedoxRegulationRespiring2011}, \textcite{baumgartnerFlavinbasedMetabolicCycles2018}
+
+% (From 'Comments' section in org note)
+% Intended to come after review of at least the two studies I mentioned above.
+% This may lead to a change in the name of the sub-sub-section, or a small-scale reorganisation.
+\begin{itemize}
+\item Because budding yeast can uptake riboflavin via Mch5 (\cite{gudipatiFlavoproteomeYeastSaccharomyces2014a}), using nutrient media that contains riboflavin may confound flavin oscillations.  Specifically, we cannot tell apart intracellular flavin that derives from riboflavin uptake and from \emph{de novo} biosynthesis.
+\begin{itemize}
+\item \emph{Evidence:} ramp experiment in SC shows increase in flavin signal while equivalent experiment in minimal (Delft) media does not (February 2021).
+\item Not 100\% with this logic yet.  Do we want to keep the 'flavin pool' constant? Because growing yeast in minimal media does not guarantee that the pool is constant; they can still make new flavin \emph{de novo}
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\item Judging by flavin measurements alone, we cannot be sure if changes are due to changes in the 'flavin pool' or due to changes in intracellular flavin redox state (as a function of intracellular redox state in general).
+\begin{itemize}
+\item I think a lot of the studies I've read assume a constant 'flavin pool'? And therefore the oscillations are therefore periodic shifts in redox equilibrium.
+\end{itemize}
+\end{itemize}
 
 \subsubsection{Do flavin cycles suggest cycling of lipid stores?}
 \label{subsubsec:intro-flavin-ymc-lipid_cycling}
