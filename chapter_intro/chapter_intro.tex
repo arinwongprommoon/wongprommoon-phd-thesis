@@ -271,12 +271,15 @@ In particular, there are several deletions shown to remove the metabolic oscilla
 \emph{ZWF1} is responsible for entry into the pentose phosphate pathway and subsequently a major source of NADPH generation, so deleting this gene may impair control of cellular redox;
 however, because of its role, this gene has also been shown to wreck things like amino acid metabolism and auxotrophy [CONSULT MY ZWF1 NOTE, MAKE SURE WHAT I WRITE IS ACCURATE], so it might be a bit difficult to draw conclusions from this deletion in particular.
 What's interesting is \emph{GSY2} and \emph{GPH1}, which both have roles in glucose/glycogen mobilisation and storage, thus suggesting that cycling of carbohydrate stores may be needed for the function of the metabolic cycle % contradict with idea of lipid stores?  link with modelling?
+In addition, \emph{MSN2} and \emph{MSN4} have been shown to regulate acetyl CoA accumulation in the reductive-charging phase, as evidenced by the lack of YMCs in deletion strains \citep{kuangMsn2RegulateExpression2017}.
+This tells us that genes involved in signalling pathways play an important role in the integrity of the metabolic cycle too.
 
 Additionally, other deletions have been shown to either change the frequency or the shape of the metabolic oscillations -- at least in terms of their dissolved oxygen traces.
 \textcite{caustonMetabolicCyclesYeast2015} provide three examples: \emph{RIM11}, \emph{SWE1}, and \emph{TSA1 TSA2}. % they actually had more, but these are the three that pop in my head right now
 \emph{RIM11} does this...
 \emph{SWE1} does this...
 \emph{TSA1 TSA2} does this...
+Moreover, deletion of \emph{GTS1} shortens the oscillation periods \citep{lloydUltradianMetronomeTimekeeper2005},
 
 Some discussion about peroxiredoxins and thioredoxins can fit here.
 Cite \textcite{amponsahPeroxiredoxinsCoupleMetabolism2021}.
@@ -303,64 +306,77 @@ Specifically, abrupt changes in availability may reset the phase of the cycle, a
 % [COMMENTED-OUT MAIN TEXT]
 % In turn, if the cell divides, it temporally partitions cell cycle events in relation to YMC events to prevent oxidative damage.
 
-% In bulk culture, the YMC synchronises between cells for an unclear reason.
-
-
 \subsection{Implications of the metabolic cycle}
 \label{subsec:intro-ymc-implications}
 %- Fundamental mechanistic basis for biological oscillators, such as the cell division cycle.  Could change what we know about the cell division cycle.
 % (Significance of study)
 
 Metabolic oscillations may be the origins of biological timekeeping mechanisms.
-Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle.
+Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle. % on what basis was this assertion made?
 Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneillCircadianRhythmsPersist2011}, refuting the idea that gene circuits are responsible for these rhythms.
 Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \citep{papagiannakisAutonomousMetabolicOscillations2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
 Furthermore, YMCs share mechanisms with the circadian oscillator \citep{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
 Thus, studying YMCs may shed light on the evolution of biological rhythms.
 
-% - Introduce chemostat vs single-cell discussions...
+% *** I think chemostat vs single-cell discussions should be introduced WAY earlier, as I can't avoid discussing anything else about the YMC without going into the weeds of this.  But I can then dive into the dispute later.
 \subsection{Disputes and unresolved questions}
 \label{subsec:intro-ymc-unresolved}
-% - Limitations of chemostat: obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habit of yeast, starvation.
-% - Do cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony?
 % - Do single-cell flavin-based metabolic cycles from deletion strains recapitulate dissolved oxygen-based metabolic cycles in chemostats?  If not, what would be a likely explanation?
 
 % (State the main unknowns of the yeast metabolic cycle:
 % - molecular mechanisms, specifically...? -> deletions to investigate
 % - whether things are the same in batch vs bulk)
+There are several disputes and unknowns within the current literature pertaining yeast metabolic cycles.
 
-There are unknowns in the molecular mechanism that drives YMCs.
-Genome-wide transcript cycling has two superclusters that correspond to the oxidative and reductive-building phases \citep{machneYinYangYeast2012}.
-However, there has been no genome-wide analysis of genes that influence cycling \citep{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
-For example, \emph{MSN2} and \emph{MSN4} have been shown to regulate acetyl CoA accumulation in the reductive-charging phase, as evidenced by the lack of YMCs in deletion strains \citep{kuangMsn2RegulateExpression2017}.
-Moreover, deletion of \emph{GTS1} shortens the oscillation periods \citep{lloydUltradianMetronomeTimekeeper2005},
-% There are more: GSY2, GPH1 (O'Neill et al., 2020)
-and deletion of \emph{ZWF1} removes the oscillations \citep{tuCyclicChangesMetabolic2007}.
+% (Chemostat vs single-cell)
+The most important dispute relates to how there are both studies arising from chemostat/bulk conditions and from single cell conditions.
+Namely, whether metabolic cycles described in single-cell studies are equivalent to the metabolic cycles described in bulk studies.
+This leads to definition issues, i.e. some authors only use the term metabolic cycle to refer to cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase, while single-cell studies naturally have to expand that definition to include metabolite cycling and sequences of cellular events that are associated with the chemostat metabolic cycle.
+Any conclusion from a single-cell study would be subject to the question: does it recapitulate dissolved oxygen-based metabolic cycles in chemostats?
+Particularly when it uses a different readout such as metabolite redox state or ATP concentration... and it has to use a different readout because measuring the dissolved oxygen concentration does not make sense for single-cell studies.
 
-However, there are a number of questions remaining.
-For example, without proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
-How YMCs are coordinated between cells is also unclear, though experimental studies \citep{murrayRegulationYeastOscillatory2007} and mathematical models
-% Actually, they aren't *that* explicit on H2S mediating cell-cell communication
-% Disputed: may be an artefact of chemostat activation.
-% No synchronisation in single-cell conditions, so here's where simulating chemostat in microfluidics
-% comes in (feast-and-famine).
-% The different aspects found from bulk culture & single-cell experiments isn't written so
-% clearly.  A proper review will be better.  These are just some aspects pasted together.
-\citep{krishnaMinimalPushPull2018} suggest that acetaldehyde and hydrogen sulfide may mediate cell-to-cell communication.
-The reason for this synchronisation between cells is still unclear. % citation needed
+Furthermore, using the chemostat imposes limitations: it obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habit of yeast, and always imposes starvation.
+Contributions from sub-populations of cells are highlighted by publications like \citet{burnettiCellCycleStart2016}, which [PUT WHAT THEY SAY HERE].
+In addition, there is the question of whether cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony (as proposed by e.g. \citet{krishnaMinimalPushPull2018}, which proposes that acetaldehyde does this; someone else proposed hydrogen sulfide).
+Bulk culture set-ups, including chemostats, are not able to address questions about cell sub-populations and autonomy of the metabolic cycle; however, single-cell set-ups may fill in such a technical gap.
+
+Such limitations of the chemostat leads to disputes on the very phases the metabolic cycle exhibits, as discussed earlier.
+The conditions of the chemostat may well force the population of cells to behave in a certain way.
 
 Current knowledge of the YMC derives mostly from studies done on batch or continuous yeast cultures, but it is unclear whether aspects of the YMC discovered in bulk culture apply to single cells.
+There's only been a few single-cell studies of the YMC, and here I provide a brief review.
+\citet{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue [ELABORATE];
+however, it lacks quantitative time-series analysis.
 % This does seen like a key difference seen in single-cell, but the fact wasn't made clear
 % in writing here.
 \citet{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
 % Also, Murray et al. (2011) -- flavins in BULK culture.
 Furthermore, by measuring the level of flavins in the cell, \citet{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell cycle inhibitor rapamycin desynchronises the YMC and the cell cycle.
 Additionally, \citet{ozsezenInferenceHighLevelInteraction2019} suggested that the YMC controls the early and late cell cycle independently, based on modelling the oscillators as a system of Kuramoto oscillators.
-However, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined.
 
-% And there is Laxman et al. (2010), which is an early attempt at microfluidics
-% to address the bulk vs single-cell issue.  However, it lacks quantitative
-% time-series analysis of any sort.
+% (Unknown molecular mechanics)
+Looking beyond the main disputes, there are several unknowns in the metabolic cycle.
+There are unknowns in the molecular mechanism that drives YMCs.
+Genome-wide transcript cycling has two superclusters that correspond to the oxidative and reductive-building phases \citep{machneYinYangYeast2012}.
+However, there has been no genome-wide analysis of genes that influence cycling \citep{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
+However, there are a number of questions remaining.
+For example, without proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
+In terms of metabolite cycling...
+[Write something about lipid stores (Campbell et al. 2020) vs carbohydrate stores (Ewald et al. 2016) here.]
+Additionally, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined [EVIDENCE NEEDED].
+
+How YMCs are coordinated between cells is also unclear... and as I said above, whether such coordination is even needed is thrown into question by the presence of metabolic cycles in single-cell conditions.
+% Need to re-read Murray et al. (2007) -- appreciate the evidence they give here
+Experimental studies \citep{murrayRegulationYeastOscillatory2007} and mathematical models
+% Actually, they aren't *that* explicit on H2S mediating cell-cell communication
+% No synchronisation in single-cell conditions, so here's where simulating chemostat in microfluidics
+% comes in (feast-and-famine).
+% The different aspects found from bulk culture & single-cell experiments isn't written so
+% clearly.  A proper review will be better.  These are just some aspects pasted together.
+\citep{krishnaMinimalPushPull2018} suggest that acetaldehyde and hydrogen sulfide may mediate cell-to-cell communication.
+The reason for this synchronisation between cells is still unclear. % citation needed
+In addition, perhaps such cell-to-cell synchronisation may well be an artefact of chemostat activation [EVIDENCE/CITATION NEEDED -- SEE NOTES FROM KEVIN CORREIA].
+It is entirely possible that observed cell-to-cell synchronisation is the effect of all cells independently responding to some condition, and chemostat studies cannot adequate say whether this is the case.
 
 % [BEGIN COMMENTED MAIN TEXT]
 %Systems biology approaches have been used to develop models to explain features of biological rhythms.
@@ -369,10 +385,6 @@ However, the effects of perturbations to specific metabolic networks in single-c
 %This strategy is yet to be applied to the metabolic and cell cycle oscillators.
 %However, \citet{ozsezenInferenceHighLevelInteraction2019} assumed the same, specific coupling function for all interactions between the four oscillators.
 % [END COMMENTED MAIN TEXT]
-
-[Write something about lipid stores (Campbell et al. 2020) vs carbohydrate stores (Ewald et al. 2016) here.]
-
-[Worth having a discussion about subpopulations, e.g. Burnetti et al. 2016.  Not sure where that would fit in the main text currently.]
 
 \section{Flavins and flavoproteins}
 \label{sec:intro-flavin}
