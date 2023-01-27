@@ -1,0 +1,36 @@
+#+title: Requirements
+
+In general: https://www.ed.ac.uk/academic-services/students/thesis-submission
+
+* Thesis format guidance
+- Mandatory: signed declaration (see https://www.ed.ac.uk/sites/default/files/atoms/files/thesis_signed_declaration.pdf):
+  - (a) that the thesis has been composed by the student, and
+    (b) either that the work is the student’s own, or, if the student has been a member of a research group, that the student has made a substantial contribution to the work, such contribution being clearly indicated, and
+    (c) that the work has not been submitted for any other degree or professional qualification except as specified, and
+    (d) that any included publications are the student’s own work, except where indicated throughout the thesis and summarised and clearly identified on the declarations page of the thesis
+- Fonts: Sans serif, size 12
+- Word spacing: even spacing, avoid hyphenation
+- Title page:
+  - Title of thesis, author's name.
+  - Name of degree, the University of Edinburgh, year of presentation.
+- Abstract & lay summary
+- Table of contents, including: all sections and bibliography, list of tables & photographs.
+- Figures
+  - Third-party material: fair use & correct attribution (https://www.ed.ac.uk/information-services/library-museum-gallery/library-help/copyright).
+  - Provide alternative text to images.
+- Word count: < 100,000
+  - Included: main text, preface, footnotes, references.
+  - Not included: appendices, bibliography, abstract, lay summary.
+
+* Published papers
+Where published papers are to be included as a thesis chapter these must include an introduction
+and conclusion and be incorporated into the thesis at the appropriate point*. It is in the interests of
+students to include any relevant published papers in their thesis. These should either be included
+as a chapter, an appendix or an electronic copy. If copies of published papers are to be included in
+the thesis, the publisher's formal permission should be obtained and, where appropriate, the
+permission of any joint authors. A note that permission has been obtained should be included in
+the thesis. (Permission from the publisher is not required for papers published in Open Access
+journals, or openly licensed, for example using Creative Commons licence.)
+
+Further guidance on including publications in a thesis is available at:
+https://www.ed.ac.uk/files/atoms/files/publications_in_thesis.pdf
