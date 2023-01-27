@@ -57,6 +57,8 @@ Thus, this means that biological rhythms can vary according to conditions -- the
 
 [FIGURE(S) MAY BE USEFUL IN DEMONSTRATING THE CELL DIVISION CYCLE HERE.  SHOW G1/S/G2/M PHASES, SHOW OVERVIEW OF CDKs, ETC.]
 
+% VERY useful citation: adlerYeastCellCycle2022
+
 Such biological rhythms include the circadian rhythm and the cell division cycle.
 To demonstrate the definition of biological rhythm, I will discuss here the cell division cycle, which is a very well-characterised biological rhythm.
 The cell division cycle includes gene-expression oscillators in the form of a series of gene expression pathways that link together in a feedback loop system, governed by regulator proteins like cyclin-dependent kinases [CHECK IF FACTUAL].
@@ -76,11 +78,25 @@ However, in contrast to the cell division cycle, the control mechanisms of the y
 % - Mathematics of systems of coupled oscillators.
 
 % Single oscillations
-% Useful here: cell division cycle modelling literature, e.g. Novak/Tyson
-Biological rhythms are modelled as ....
-For example, the cell division cycle is modelled based on the molecular mechanisms (negative feedback loops) -- the most up-to-date and comprehensive one [REALLY?? CHECK CDC LITERATURE.  BUT DON'T GO TOO DEEP BECAUSE MY PHD ISN'T STRICTLY ABOUT CDCS] being \textcite{novakMitoticKinaseOscillation2022}, which employ ordinary differential equations to model negative feedback loops that sustain oscillations of kinases [MAKE SURE THIS SENTENCE IS ACTUALLY FACTUAL].
+% Useful here: cell division cycle modelling literature, e.g. Novak/Tyson,
+% Adler et al. (2022) -- comprehensive review of cell division cycle models
+% Goldbeter (2022) -- models of several examples
+There are many approaches in mathematically modelling biological oscillations.
+The theoretical basis of biological rhythms originated in work in the 1960s and 1970s, and since then experimental observations have informed the finer development of these models \parencite{tysonTimekeepingDecisionmakingLiving}.
+[WHAT ARE THESE OLD MODELS MOSTLY BASED ON?]
+
+As an example to illustrate, I'm going to talk about modelling the cell division cycle.
+The cell division cycle has inspired a long history of models with a variety of approaches \parencite{adlerYeastCellCycle2022}.
+Early models are based on a negative feedback loop of key components as identified by experimental studies -- for example, \textcite{goldbeterBiochemicalOscillationsCellular1996} [CHECK IN ADLER ET AL. 2022 IF THIS CITATION IS CORRECT] assumed one cyclin, one kinase, and one protease to construct a negative feedback loop with a delay, giving rise to stable oscillations.
+Such a strategy forms the basis of later models that incorporate more detail, including additional control points of the cell division cycle, responses to perturbations such as osmotic stress, and relationship with other oscillators like the circadian rhythm.
+One such comprehensive [???] example is \textcite{novakMitoticKinaseOscillation2022}, which employ ordinary differential equations to model negative feedback loops that sustain oscillations of kinases [MAKE SURE THIS SENTENCE IS ACTUALLY FACTUAL].
+
 But people can get away with doing that with the cell division cycle because the molecular basis is well-characterised.
-Less well-characterised biological rhythms such as glycolytic oscillations lead to more coarse-grained models, such as one driven by a positive feedback loop \parencite{goldbeterMultisynchronizationOtherPatterns} [EXPLAIN THE MODEL A BIT MORE HERE]. % Also add more examples
+The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels in budding yeast cells at the time scale of 10-ish seconds [CITATION NEEDED -- I THINK THERE WAS THIS MATLAB-HEAVY PAPER ON GLYCOLYTIC OSCILLATIONS TOO], when they are in high-glucose conditions.
+% Are you sure is less well-characterised?
+% Lloyd (2019) says it's the most studied one after the cell division cycle.
+% But the Goldbeter citation below is 2022, so...
+Because the glycolytic oscillation is less well-characterised, models that describe it are more coarse-grained, such as one driven by a single positive feedback loop \parencite{goldbeterMultisynchronizationOtherPatterns} [EXPLAIN THE MODEL A BIT MORE HERE]. % Also add more examples
 
 % Forced oscillators, coupled oscillators
 % Useful here: \textcite{tysonTimekeepingDecisionmakingLiving} and related reviews
