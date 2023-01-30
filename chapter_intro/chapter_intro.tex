@@ -556,35 +556,17 @@ Furthermore,
 few studies have used flavin oscillations to study how well features of the YMC found in bulk-culture experiments translate to the single cell.
 Thus, filling in this knowledge gap is an avenue for further research.
 
-% Caveats of using flavin...
-% - Could be other things fluorescing in that wavelength region
-% - Is a sum of many things -- can't conclude that flavin you see is mostly Fas1
-% - flavin pool concept
+Nevertheless, there are caveats of using flavin.
+There could be other things fluorescing in that wavelength region, although [INSERT CITATIONS/EVIDENCE TO JUSTIFY THAT USE OF THIS WAVELENGTH IS OKAY].
+Additionally, judging by flavin measurements alone, we cannot be sure if changes in the reading are due to changes in the `flavin pool' (the amount of flavin-derived moieties in the cells across all their redox states) or due to changes in intracellular flavin redox state, as a function of intracellular redox state.
+KEGG pathway (see section ...) suggests that there is a mechanism for the cell to increase its flavin pool by uptake of riboflavin from the media or from biosynthesis; certainly, the uptake route via Mch5p is confirmed by \textcite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
+However, the experimenter can eliminate the former possibility by using minimal media that does not contain riboflavin.
 
-% ------------------------------------------------------------------------------
-% MOVE TO BIOLOGICAL RESULTS CHAPTER
-% \subsubsection{Review of chemostat and single-cell studies that use flavin}
-% \label{subsubsec:intro-flavin-ymc-precedent}
-% % - To justify my use, e.g. \textcite{murrayRedoxRegulationRespiring2011}, \textcite{baumgartnerFlavinbasedMetabolicCycles2018}
-
-% % (From 'Comments' section in org note)
-% % Intended to come after review of at least the two studies I mentioned above.
-% % This may lead to a change in the name of the sub-sub-section, or a small-scale reorganisation.
-% \begin{itemize}
-% \item Because budding yeast can uptake riboflavin via Mch5 (\cite{gudipatiFlavoproteomeYeastSaccharomyces2014}), using nutrient media that contains riboflavin may confound flavin oscillations.  Specifically, we cannot tell apart intracellular flavin that derives from riboflavin uptake and from \emph{de novo} biosynthesis.
-% \begin{itemize}
-% \item \emph{Evidence:} ramp experiment in SC shows increase in flavin signal while equivalent experiment in minimal (Delft) media does not (February 2021).
-% \item Not 100\% with this logic yet.  Do we want to keep the 'flavin pool' constant? Because growing yeast in minimal media does not guarantee that the pool is constant; they can still make new flavin \emph{de novo}
-% \end{itemize}
-% \end{itemize}
-
-% \begin{itemize}
-% \item Judging by flavin measurements alone, we cannot be sure if changes are due to changes in the 'flavin pool' or due to changes in intracellular flavin redox state (as a function of intracellular redox state in general).
-% \begin{itemize}
-% \item I think a lot of the studies I've read assume a constant 'flavin pool'? And therefore the oscillations are therefore periodic shifts in redox equilibrium.
-% \end{itemize}
-% \end{itemize}
-% ------------------------------------------------------------------------------
+Most studies [CITATIONS NEEDED] assume a constant flavin pool, based on [DISCUSS THEIR EVIDENCE HERE].
+And therefore the oscillations can be seen as periodic shifts in redox equilibrium.
+There is also the question of whether there is free-floating flavin in the cell, as opposed to flavins in the form of FAD/FMN bound to proteins.
+Either way, flavin fluorescence is the sum of the activity of many proteins, and this leads to another caveat: you cannot conclude that flavin fluorescence is mostly Fas1 or any other protein, and the only biochemical conclusion you can make is conclusions about overall cellular redox state.
+To close, I have to note that some of these caveats are not unique to flavin fluorescence, but a shared limitation of using fluorescence.
 
 \subsubsection{Do flavin cycles suggest cycling of lipid stores?}
 \label{subsubsec:intro-flavin-ymc-lipid_cycling}
