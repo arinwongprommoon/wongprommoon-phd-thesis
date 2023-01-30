@@ -529,32 +529,37 @@ This is good because I need to rule out the possibility that what I'm seeing is 
 
 \subsection{Flavins and flavoproteins in the yeast metabolic cycle}
 \label{subsec:intro-flavin-ymc}
-% - Autofluorescence is usually something people would avoid in experiments, but we are taking advantage of it.
-% - Easy-to-measure metabolic readout (does not require additional engineering of strains), linked to many biochemical processes
-\begin{itemize}
-\item \emph{Precedent:} Flavin oscillations have been used to represent the YMC both in bulk-culture (\cite{murrayRedoxRegulationRespiring2011}) and in single-cell conditions (\cite{baumgartnerFlavinbasedMetabolicCycles2018}).
 
-\item \emph{Biological basis:}
-\begin{itemize}
-\item They're linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1) and NAD(P)H cycles have been implicated in bulk-culture (\cite{tuLogicYeastMetabolic2005} and more) and single-cell (\cite{papagiannakisAutonomousMetabolicOscillations2017}) studies of the YMC.
-\item The timing of flavin cycle peaks -- indicating oxidation -- coincides with the oxidative state of the YMC (\cite{murrayRedoxRegulationRespiring2011}).
-\item Most abundant flavoproteins may have roles linked with the YMC.
-\begin{itemize}
-\item Most abundant, Fas1: fatty acid synthetase, see \cite{campbellBuildingBlocksAre2020}.
-\item Second most abundant, Yhb1: nitric oxide oxidoreductase, redox of NAD(P)H and FAD.
-\end{itemize}
-\end{itemize}
+Autofluorescence is usually something people would avoid in experiments, but we are taking advantage of it to monitor the yeast metabolic cycle.
+This is because it is an easy-to-measure metabolic readout: it does not require additional engineering of strains e.g. fluorescence tags which may introduce burden, and all you need to do is adjust the excitation/emission wavelengths on the fluorescence microscope to the appropriate value.
+Plus, depending on the fluorescent compound targeted, it can be linked to many biochemical processes; for example, flavins, as illustrated by the above review of flavin and flavoproteins in the cell.
+
+I monitor flavin fluorescence and I have several justifications.
+First, there is precedent.
+Flavin oscillations have been used to represent the YMC both in bulk-culture \citep{murrayRedoxRegulationRespiring2011} and in single-cell conditions \citep{baumgartnerFlavinbasedMetabolicCycles2018}.
+% elaborate a bit more on these, i.e. what exactly did they do?
+
+% Link to previous sections as appropriate.
+% Expand/Elaborate citations as appropriate.
+To extend on that precedent, there is further justification on the biological basis of flavins and flavoproteins.
+They're linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1) and NAD(P)H cycles have been implicated in bulk-culture \citep{tuLogicYeastMetabolic2005} % and more
+and single-cell \citep{papagiannakisAutonomousMetabolicOscillations2017} studies of the YMC.
+The timing of flavin cycle peaks -- indicating oxidation -- coincides with the oxidative state of the YMC \citep{murrayRedoxRegulationRespiring2011}.
+Most abundant flavoproteins may have roles linked with the YMC.
+The most abundant is Fas1 (fatty acid synthetase); because there is evidence that cycles of fatty acid stores are implicated in metabolic cycling in yeast \citep{campbellBuildingBlocksAre2020}, it is likely that fatty acid synthetase is heavily implicated.
+Following this, the second most abundant is Yhb1 (nitric oxide oxidoreductase), and its role in the redox reactions between of NAD(P)H and FAD, as described earlier, provides a clear link between NAD(P)H cycles as described previously to flavin cycles via their relationships in the cellular redox state.
 
 % And discuss: 'flavin pool' concept.
+Reiterating the unknowns of the yeast metabolic cycle (section \ref{subsec:intro-ymc-unresolved}):
+few studies have characterised how such oscillations respond to changing nutrient conditions or to gene deletions.
+Furthermore,
+few studies have used flavin oscillations to study how well features of the YMC found in bulk-culture experiments translate to the single cell.
+Thus, filling in this knowledge gap is an avenue for further research.
 
-\item \emph{Technical basis:} Using flavin allows easy fluorescence measurement (autofluorescence) to provide a time series associated with the YMC.
-
-\item \emph{Solving unknowns:}
-\begin{itemize}
-\item Few studies have characterised how such oscillations respond to changing nutrient conditions or to gene deletions.
-\item Few studies have used flavin oscillations to study how well features of the YMC found in bulk-culture experiments translate to the single cell.
-\end{itemize}
-\end{itemize}
+% Caveats of using flavin...
+% - Could be other things fluorescing in that wavelength region
+% - Is a sum of many things -- can't conclude that flavin you see is mostly Fas1
+% - flavin pool concept
 
 % ------------------------------------------------------------------------------
 % MOVE TO BIOLOGICAL RESULTS CHAPTER
