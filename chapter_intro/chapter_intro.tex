@@ -118,29 +118,17 @@ Certainly, the yeast metabolic cycle has been modelled as a system of coupled os
 \label{subsec:intro-ymc-definition}
 % Worth re-reading: Mellor 2016, Lloyd 2019
 
-% Definition issue:
-% Oscillations individually vs synchronised.
-% Laxman et al. (2010) only calls it YMC if synchronised, while Papagiannakis et al. (2017)
-% uses the term with single-cell NAD(P)H/ATP cycles.  I use the latter.
-% There is this dispute in the scientific literature, which is worth discussing, it's central
-% to my project, after all.
-
 Heads-up: people don't really agree on what the yeast metabolic cycle (YMC) is, so I'm going to go with the bits that everyone seems to agree on first, and then discuss what people disagree on, and why.
 I will discuss these disputes in the literature in section \ref{subsec:intro-ymc-unresolved}.
-
-% [BEGIN COMMENTED DRAFT TEXT]
-% You can't discuss the definition of the yeast metabolic cycle (YMC) without addressing a certain dispute in the literature.
-% Different authors have different standards to deem whether something is considered a yeast metabolic cycle or not.
-% For example, most chemostat people \citep{laxmanBehaviorMetabolicCycling2010,caustonMetabolicRhythmsFramework2018} [CHECK WHETHER THEY ACTUALLY SAY THIS] only call it an YMC if the cycles are synchronised across cells.
-% [END COMMENTED DRAFT TEXT]
 
 The yeast metabolic cycle (YMC) is one such biological rhythm.
 % 'aerobic' -- Oct 2020, Kevin did experiments in SC+pyruvate, degassed.
 %   (I think the fluorescence killed cells)
 
-% GOOD MAIN IDEA-THEN-EVIDENCE STRUCTURE HERE
-
+%   GOOD MAIN IDEA-THEN-EVIDENCE STRUCTURE HERE
+It is an ultradian oscillator.
 It comprises of oscillations in oxygen consumption, metabolite concentrations, and cellular events -- all coordinated by genome-wide transcriptional oscillations.
+Importantly, the cellular events the metabolic cycle has consistently been linked to is the cell division cycle.
 % - Context of discovery: i.e. in chemostats, after glucose starvation, primary read-out being dissolved oxygen, start from Benjamin Tu in 2005.
 It was initially described in \emph{Saccharomyces cerevisiae} cells cultured in chemostats; therefore, at high cell density and aerobic,
 % 'nutrient-limited' -- Not necessarily.  Cycles are seen in SC+20 g/L glucose.
@@ -376,7 +364,8 @@ There are several disputes and unknowns within the current literature pertaining
 The most important dispute relates to how there are both studies arising from chemostat/bulk conditions and from single cell conditions,
 although there are much fewer studies from single-cell set-ups.
 Namely, whether metabolic cycles described in single-cell studies are equivalent to the metabolic cycles described in bulk studies.
-This leads to definition issues, i.e. some authors only use the term metabolic cycle to refer to cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase, while single-cell studies naturally have to expand that definition to include metabolite cycling and sequences of cellular events that are associated with the chemostat metabolic cycle.
+This leads to definition issues, i.e. some authors \parencite{laxmanBehaviorMetabolicCycling2010, caustonMetabolicRhythmsFramework2018} only use the term metabolic cycle to refer to synchronised cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase, while single-cell studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018, zylstraMetabolicDynamicsCell2022} naturally have to expand that definition to include metabolite cycling and sequences of cellular events that are associated with the chemostat metabolic cycle.
+As I work with budding yeast in a single-cell setup, I work with the latter definition.
 Any conclusion from a single-cell study would be subject to the question: does it recapitulate dissolved oxygen-based metabolic cycles in chemostats?
 
 Particularly when it uses a different readout such as metabolite redox state or ATP concentration... and it has to use a different readout because measuring the dissolved oxygen concentration does not make sense for single-cell studies.
