@@ -1,17 +1,83 @@
 \chapter{Modelling the yeast metabolic cycle}
 \label{ch:model}
 
-% - Discuss difficulty of having a fine-grained model: too many unknowns with this biological system
+Discuss difficulty of having a fine-grained model: too many unknowns with this biological system.
+Especially that we don't know much about the molecular mechanisms (link to introduction) and the main read-outs of single-cell studies (NAD(P)H, flavins) are 'aggregate' measures of enzymatic activity and realistically only function to monitor the cellular redox state.
+
 \section{Modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
-% - Research question: Given a finite amount of enzymes and the nutrient conditions yeast cells are subject to, is it more efficient for the cells to temporally partition synthesis of macromolecules (lipid, carbohydrates, amino acids), or to synthesise all of them at the same time?  If so, does the time scale fit with that of the yeast metabolic cycle?
-% - Methods: Flux balance analysis
+Research question: Given a finite amount of enzymes and the nutrient conditions yeast cells are subject to, is it more efficient for the cells to temporally partition synthesis of macromolecules (lipid, carbohydrates, amino acids), or to synthesise all of them at the same time?
+If so, does the time scale fit with that of the yeast metabolic cycle?
 
+There have been studies that attempt to address similar questions.
+% add notes from org-roam about this publication
+\textcite{takhaveevTemporalSegregationBiosynthetic2023} showed that in different stages of the cell division cycle, the level of synthesis of each class of macromolecule is different.
+They used single-cell NAD(P)H responses (metabolic cycles) to inhibitors that block synthesis of each class of macromolecule to infer the activity of biosynthesis of classes of macromolecules over a cell division cycle.
+Then, they used these activities as coefficients for FBA on a modified thermodynamic-stoichiometric metabolic model at each time point to deduce biomass production rates.
+Does not suggest that synthesis of each class of macromolecule excludes all others (which makes sense).
+Importantly, this study does not predict timescale.
+% please clarify this sentence
+Rather, confirms that timescale of observed synthesis events matches simulations.
+
+My approach is to use a genome-scale model of /Saccharomyces cerevisiae/ and perform flux balance analysis (FBA).
+Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
+Traditional genome-scale models assume that the uptake rate of carbon source limits production; however, levels of each enzyme also restrict reaction fluxes.
+Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} -- the latter of which imposes a ribosome capacity constraint and additionally imposes compartment constraints -- constrain the total sum of fluxes based on a defined total amount of enzyme.
+Using an enzyme-constrained model also fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
+
+In my approach, I exclude each class of macromolecule in turn in the biomass-generation reaction and optimise the model.
+Then, using the optimised flux through the biomass-generating reaction, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
+I used bionumbers [CITATIONS NEEDED] to create my estimation of timescale.
+% TODO: improve wording of this sentence to make it more clear
+I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
+
+I set the growth rate to 0.1, the carbon source to glucose (i.e. leaving glucose uptake flux unrestricted), and leaving flux through the biomass reaction unrestricted.
+% TODO: format units, use SIunitX or otherwise
+Simulating the unmodified enzyme-constrained model gives a flux through the biomass reaction of 0.0889 mmol/(gDW h).
+To convert this value to a time it takes to synthesise a new cell, I estimated the molecular weight of biomass as 0.966 g/mol \parencite{takhaveevTemporalSegregationBiosynthetic2023} and the dry mass of the cell as 15 pg [CITATION NEEDED -- LOOK AT THE CELL ECONOMICS PROJECT AND TRACE FROM THERE].
+% should this be in the methods?
+% TODO: check numbers and update.  it's here for now just to get a gist of the structure
+My logic is:
+\begin{enumerate}
+   \item Flux through biomass reaction = 0.0889 mmol/(gDW h), i.e. 1 gDW of cell produces 0.0889 mmol biomass in an hour.
+   \item The molecular weight of biomass is 0.966 g/mmol.  Therefore, 1 gDW of cell produces (0.0889 * 0.966) g biomass in an hour.
+   \item The dry mass of a cell is 15 pg.  Therefore, 1 cell produces (15e-12)(0.0889 * 0.966) g biomass in an hour.
+   \item When the cell wants to divide, it produces 1 cells' worth of biomass, i.e. 15 pg.  If the cell produces (15e-12)(0.0889 * 0.966) g biomass in an hour, it takes (15e-12)/(15e-12 * 0.0889 * 0.966) hours.  This evaluates to 11.6 hours.
+\end{enumerate}
+And this is close to the 10 hours in theory given the growth rate of 0.1 h-1.
+
+For ablated biomass reactions, I used the molecular weight of each class of macromolecule from [CITATION] in place of the molecular weight of biomass and the dry mass of each class of macromolecule in place of the dry mass of the cell in step 4.
+This results in these:
+% TODO: convert to a table or a bar chart, can be combined with results from unmodified biomass reaction
+\begin{itemize}
+  \item lipids: flux through ablated biomass reaction: 0.1082 mmol/(gDW h), estimated time: 0.6932 hours
+  \item proteins: flux 0.0987 mmol/(gDW h), estimated time: 0.0939 hours
+  \item carbohydrates: flux 0.1322 mmol/(gDW h), estimated time: 0.0018 hours
+  \item DNA: flux 0.1482 mmol/(gDW h), estimated time: 0.0000 hours
+  \item RNA: flux 0.1401 mmol/(gDW h), estimated time: estimated time: 0.0078 hours
+\end{itemize}
+Sum of times: 0.7967 hours.
+Therefore, I conclude that given a finite amount of enzymes, it is more efficient to partition synthesis of macromolecules temporally, and the time scale is at the same order of magnitude as the yeast metabolic cycle.
+
+Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
+% - How long does it take to replicate the genome?  It is biosynthesis of nucleotides + process of polymerising them.  There has to be super basic cell division cycle literature about this...
+% - Fatty acids: cell may use pentose phosphate pathawy and gluconeogenesis to route flow in a cycle to generate masses of NAD(P)H.  Check if the fluxes suggest this.
+
+Discussion: Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
+Furthermore, the timescale gleaned from this investigation may explain the discrepancy between the shorter (on the range of 1 hour) single-cell metabolic cycles and the longer (on the range of 4 hours) dissolved oxygen oscillations in chemostats along with the longer (on the range of 10 hours) cell division cycles in chemostats.
+% give some idea of explanation here
+From a biochemical perspective, [DISCUSS IMPLICATIONS FROM LOOKING AT FLUXES]
+
+% AM I STILL DOING THIS??
 \section{Modelling chemostat-based studies}
 \label{sec:model-chemostat}
 % - Metabolic responses to environment
 % - Cell communication
 % - Relating them to the single-cell yeast metabolic cycle
 
+Cite \textcite{jonesCyberneticModelGrowth1999}.
+
 \section{Coarse-grained, phenomenological model}
 \label{sec:model-coarse}
+
+% leads nicely to conclusion
