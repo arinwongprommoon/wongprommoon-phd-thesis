@@ -76,6 +76,26 @@ And replacing all other pseudo-reactions and replacing them with a global pseudo
 This approach is similar to FBA with molecular crowding.
 
 In my approach, I exclude each class of macromolecule in turn in the objective function (biomass-generating reaction) and optimise the model.
+Specifically, given the objective function:
+
+\texttt{
+  55.3 atp_c + 55.3 h2o_c + lipid_c + protein_c + carbohydrate_c + dna_c + rna_c + cofactor + ion --> 55.3 adp_c + biomass_c + 55.3 h_c + 55.3 pi_c
+}
+
+There are five classes of macromolecules: lipids, proteins, carbohydrates, DNA, and RNA.
+To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of all five classes except for lipids to zero in the above equation, giving:
+
+\texttt{
+  55.3 atp_c + 55.3 h2o_c + lipid_c + cofactor + ion --> 55.3 adp_c + biomass_c + 55.3 h_c + 55.3 pi_c
+}
+
+And I repeated this for the other four macromolecules.
+
+For each version of the model, I computed the objective flux and the flux through each of the five pseudoreactions for the synthesis of the five classes of macromolecules, summarised here:
+
+[INSERT BAR CHART]
+
+% Edit this when I improve my logic, with better molecular weights
 Then, using the optimised flux of the objective function, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
 I used bionumbers [CITATIONS NEEDED] to create my estimation of timescale.
 % TODO: improve wording of this sentence to make it more clear
