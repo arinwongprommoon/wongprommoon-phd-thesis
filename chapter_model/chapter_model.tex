@@ -25,8 +25,58 @@ Traditional genome-scale models assume that the uptake rate of carbon source lim
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} -- the latter of which imposes a ribosome capacity constraint and additionally imposes compartment constraints -- constrain the total sum of fluxes based on a defined total amount of enzyme.
 Using an enzyme-constrained model also fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
 
-In my approach, I exclude each class of macromolecule in turn in the biomass-generation reaction and optimise the model.
-Then, using the optimised flux through the biomass-generating reaction, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
+ecYeast8 is derived from Yeast8 by applying the GECKO formalism.
+In a conventional genome-scaled model, metabolic fluxes through reactions are constrained between a lower bound and an upper bound.
+This is to narrow down the solution space when optimising the objective function.
+The GECKO formalism imposes an additional constraint on the metabolic fluxes based on the concentration of the enzyme that catalyses the reaction.
+As a simple example, for a reaction $R_{j}$ catalysed by enzyme $E_{i}$ (and $E_{i}$ only), the formalism imposes:
+
+\begin{equation}
+  v_{j} \le k_{cat}^{ij} \cdot [E_{i}]
+\end{equation}
+
+In other words, the flux through the reaction must not exceed $v_{max}$.
+Slightly different relationships are imposed for other types of enzymes, i.e. isozymes, promiscuous enzymes, and enzyme complexes.
+
+To apply this constraint, GECKO modifies reactions in the genome-scaled model it is applied to.
+For example, if the model defines a reaction $R_{j}$ catalysed by $E_{i}$:
+\begin{equation}
+  \ce{ A + B ->[E_{i}] C + D }
+\end{equation}
+
+GECKO adds a term to the equation to make it:
+\begin{equation}
+  \ce{ n_{ij}E_{i} + A + B -> C + D }
+\end{equation}
+with $n_{ij} = \frac{1}{k_{cat}^{ij}}$.
+This transformation, adding the enzyme as a pseudo-reactant, is based on the interpretation that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
+
+GECKO then also creates an overall enzyme pseudo-reaction $EU_{i}$: $\ce{ -> E_{i}}$, in order to preserve the mass balance of enzymes.  The flux $e_{i}$ of this pseudo-reaction is thus constrained: $0 \le e_{i} \le [E_{i}]$.
+
+Slightly different formalisms are used for reversible reactions, isozymes, promiscuous enzymes, and complexes.  Namely:
+\begin{itemize}
+  \item Reversible reactions are modelled as the forward and reverse reactions separately.
+  \item For isozymes, the original reaction is copied $n$ times and each has as isozyme catalysing the reaction.
+  In addition, there is an `arm' reaction to act as an intermediate between the substrate and the products.
+  \item No actions are needed for promiscuous enzymes.
+  \item Complexes: one reaction that uses all subunit proteins that all share the same $k_{cat}$ value.
+\end{itemize}
+
+GECKO repeats this logic for all enzyme-catalysed reactions in the genome-scale model to create an enzyme-constrained model.
+GECKO takes $k_{cat}$ values from BRENDA [CITATION NEEDED] and enzyme data from SWISSPROT and KEGG [CITATIONS NEEDED], including molecular weight of protein and associated pathways.
+To constrain enzyme levels in the model, GECKO goes through each enzyme and defines upper bounds that correspond to literature values of enzyme properties.
+For the proteins that do not have literature values, the constraint is based on the protein mass fraction and a saturation factor.
+Then, GECKO scales the amino acid composition so as to reflect the total protein content.
+And then changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
+experimental data justifies this assumption.
+
+Alternatively, rather than constraining each enzyme, GECKO can impose a global constraint -- i.e. behave as if none of the proteins have literature values.
+GECKO accomplishes this by introducing a pseudo-reaction $ER_{pool}$: $\ce{ -> E_{pool} }$, with a flux $e_{pool} \le (P_{total} - P_{measured}) \cdot f \cdot \sigma$, where $P$ represents protein fraction, $f$ the mass fraction of proteins, and $\sigma$ a parameter that represents the average saturation of enzymes.
+And replacing all other pseudo-reactions and replacing them with a global pseudo-reaction $ER_{i}$: $\ce{ MW_{i} E_{pool} -> E_{i} }$.
+This approach is similar to FBA with molecular crowding.
+
+In my approach, I exclude each class of macromolecule in turn in the objective function (biomass-generating reaction) and optimise the model.
+Then, using the optimised flux of the objective function, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
 I used bionumbers [CITATIONS NEEDED] to create my estimation of timescale.
 % TODO: improve wording of this sentence to make it more clear
 I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
