@@ -77,9 +77,13 @@ This approach is similar to FBA with molecular crowding.
 
 In my approach, I exclude each class of macromolecule in turn in the objective function (biomass-generating reaction) and optimise the model.
 Then, using the optimised flux of the objective function, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
-I used bionumbers [CITATIONS NEEDED] to create my estimation of timescale.
 % TODO: improve wording of this sentence to make it more clear
 I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
+
+For this to be possible, I needed to compute molecular weights for bulk metabolites that represent macromolecules in the ecYeast8 model.
+This includes: lipids (\texttt{s_1096}), proteins (\texttt{s_3717}), carbohydrates (\texttt{s_3718}), RNA (\texttt{s_4049}), and DNA (\texttt{s_3720}).
+Additionally, I computed molecular weights for bulk metabolites that represent cofactors (\texttt{s_4205}), and ions (\texttt{s_4206}), as they are part of the objective function too.
+I followed the same procedure as \parencite{takhaveevTemporalSegregationBiosynthetic2023}.
 
 I set the growth rate to 0.1, the carbon source to glucose (i.e. leaving glucose uptake flux unrestricted), and leaving flux through the biomass reaction unrestricted.
 % TODO: format units, use SIunitX or otherwise
