@@ -79,14 +79,16 @@ In my approach, I exclude each class of macromolecule in turn in the objective f
 Specifically, given the objective function:
 
 \texttt{
-  55.3 atp_c + 55.3 h2o_c + lipid_c + protein_c + carbohydrate_c + dna_c + rna_c + cofactor + ion --> 55.3 adp_c + biomass_c + 55.3 h_c + 55.3 pi_c
+  55.3 atp\_c + 55.3 h2o\_c + lipid\_c + protein\_c + carbohydrate\_c + dna\_c + rna\_c + cofactor + ion \\
+  --> 55.3 adp\_c + biomass\_c + 55.3 h\_c + 55.3 pi\_c
 }
 
 There are five classes of macromolecules: lipids, proteins, carbohydrates, DNA, and RNA.
 To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of all five classes except for lipids to zero in the above equation, giving:
 
 \texttt{
-  55.3 atp_c + 55.3 h2o_c + lipid_c + cofactor + ion --> 55.3 adp_c + biomass_c + 55.3 h_c + 55.3 pi_c
+  55.3 atp\_c + 55.3 h2o\_c + lipid\_c + cofactor + ion \\
+  --> 55.3 adp\_c + biomass\_c + 55.3 h\_c + 55.3 pi\_c
 }
 
 And I repeated this for the other four macromolecules.
@@ -101,16 +103,146 @@ Then, using the optimised flux of the objective function, I estimates the time i
 I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
 
 For this to be possible, I needed to compute molecular weights for bulk metabolites that represent macromolecules in the ecYeast8 model.
-This includes: lipids (\texttt{s_1096}), proteins (\texttt{s_3717}), carbohydrates (\texttt{s_3718}), RNA (\texttt{s_4049}), and DNA (\texttt{s_3720}).
-Additionally, I computed molecular weights for bulk metabolites that represent cofactors (\texttt{s_4205}), and ions (\texttt{s_4206}), as they are part of the objective function too.
-I followed the same procedure as \parencite{takhaveevTemporalSegregationBiosynthetic2023}.
+The ecYeast8 model does not specify the molecular weights of these bulk metabolites.
+The bulk metabolites includes: lipids (\texttt{s\_1096}), proteins (\texttt{s\_3717}), carbohydrates (\texttt{s\_3718}), RNA (\texttt{s\_4049}), and DNA (\texttt{s\_3720}).
+Additionally, I computed molecular weights for bulk metabolites that represent cofactors (\texttt{s\_4205}), and ions (\texttt{s\_4206}), as they are part of the objective function too.
+I applied the procedure that \textcite{takhaveevTemporalSegregationBiosynthetic2023} used to compute the molecular weight of biomass in their model.
+Namely, I assumed that in reactions that produce the bulk metabolites, there is conservation of mass, and therefore,
 
-I set the growth rate to 0.1, the carbon source to glucose (i.e. leaving glucose uptake flux unrestricted), and leaving flux through the biomass reaction unrestricted.
+\begin{equation}
+\label{eq:conservation-of-mass}
+    \sum_{s}(\text{molar mass}_{s})(\text{stoichiometric coefficient}_{s}) - \sum_{p}(\text{molar mass}_{p})(\text{stoichiometric coefficient}_{p})
+\end{equation}
+
+where $s = 1, ... (\text{number of substrates})$ represents substrates and $p = 1, ... (\text{number of products})$ represents products of the reaction in question.
+
+This procedure must be applied because the ecYeast8 model does not necessarily imply that each molecule of macromolecule corresponds to a single molecule in a real cell.
+Certainly, it is not possible to create a model with such an implication because each species of a macromolecule represented by the bulk metabolite have different molecular weights, and because most macromolecules are polymers -- the model exhibits the average molecular weight of a monomer in such instances.
+
+To compute the molecular weight of the carbohydrate metabolite, I inspected reaction \texttt{r\_4048}:
+
+\texttt{
+  0.748514964334505 (1->3)-beta-D-glucan + 0.25009165448919 (1->6)-beta-D-glucan + 0.361414527575564 glycogen + 0.710939625370425 mannan + 0.138275712087142 trehalose \\
+  --> carbohydrate
+}
+
+Here, the molecular weights of all species except for \texttt{carbohydrate}, the bulk metabolite, are represented in the model.
+Thus, equation \ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the carbohydrate metabolite.
+
+The same process can be applied to compute the molecular weights of the DNA, RNA, cofactor, and ion metabolites as the equations similarly have reactants with molecular weights represented in the model and only the bulk metabolite, the sole product, as the metabolite with an unspecified molecular weight.
+The DNA molecular weight was computed from reaction \texttt{r\_4050}:
+
+\texttt{
+  0.00359999993816018 dAMP + 0.00240000011399388 dCMP + 0.00240000011399388 dGMP + 0.00359999993816018 dTMP
+  \\ --> DNA
+}
+
+The RNA molecular weight was computed from reaction \texttt{r\_4049}:
+
+\texttt{
+  0.0445348319234424 AMP + 0.043276239184487 CMP + 0.0445348319234424 GMP + 0.0579920969091588 UMP
+  \\ --> RNA
+}
+
+The cofactor molecular weight was computed from reaction \texttt{r\_4598}:
+
+\texttt{
+  0.000190000006114133 coenzyme A + 9.99999974737875e-06 FAD + 0.00264999992214143 NAD + 0.000150000007124618 NADH + 0.000569999974686652 NADP(+) + 0.00270000007003546 NADPH + 0.000989999971352518 riboflavin + 1.20000004244503e-06 TDP + 6.34000025456771e-05 THF + 9.99999997475243e-07 heme a
+  \\ --> cofactor
+}
+
+And the ion molecular weight was computed from reaction \texttt{r\_4599}:
+\texttt{
+    3.04000004689442e-05 iron(2+) + 0.00362999993376434 potassium + 0.003969999961555 sodium + 0.0199999995529652 sulphate + 0.00129000004380941 chloride + 0.00273000006563962 Mn(2+) + 0.000747999991290271 Zn(2+) + 0.000216999993426725 Ca(2+) + 0.0012425429886207 Mg(2+) + 0.000659000012092292 Cu(2+)
+    \\ --> ion
+}
+
+Other metabolites were less straightforward and required some judgement calls.
+To compute the molecular weight of the protein metabolite, I inspected reaction \texttt{r\_4047}:
+
+\texttt{
+  0.527012401964609 Ala-tRNA(Ala) + 0.184592178971158 Arg-tRNA(Arg) + 0.116820320233205 Asn-tRNA(Asn) + ... + 0.303939602869103 Val-tRNA(Val)
+  \\ --> 0.527012401964609 tRNA(Ala) + 0.184592178971158 tRNA(Arg) + 0.116820320233205 tRNA(Asn) + ... + 0.116820320233205 tRNA(Val) + protein
+}
+
+In this reaction, the aminoacyl-tRNA reactants are represented in the form of the atoms that make up the aminoacyl residues plus \texttt{R} to represent the tRNA, and the tRNA products are represented as \texttt{RH}.
+For example, \texttt{Ala-tRNA(Ala)}, alanyl-tRNA, is represented as \texttt{C3H7NOR}.
+The protein pseudoreaction shows how different proportions of each aminoacyl-tRNA combine to form the cell's proteins, so it is safe to discard the \texttt{R} formalism that corresponds to the tRNA from the reaction.
+On doing so, the mass balance represented by \ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the protein metabolite.
+
+Finally, the lipid metabolite is the least straightforward because some of the reactants do not have molecular weights specified.
+The lipid pseudoreaction is represented in reaction \texttt{r\_2108}:
+
+\texttt{
+  lipid backbone + lipid chain --> lipid
+}
+
+And both \texttt{lipid backbone} and \texttt{lipid chain} have no molecular weight specified.
+
+Reaction \texttt{r\_4065} specifies a lipid chain pseudoreaction, in which \texttt{lipid chain} is generated:
+
+\texttt{
+  0.00808584038168192 C16:0 chain + 0.0237302090972662 C16:1 chain + 0.00226631597615778 C18:0 chain + 0.00870663858950138 C18:1 chain
+  \\ --> lipid chain
+}
+
+As all reactants have molecular weights defined in the model, the molecular weight of \texttt{lipid chain} can be computed from the mass balance of this reaction.
+
+Reaction \texttt{r\_4063} specifies a lipid backbone pseudoreaction, in which \texttt{lipid backbone} is generated:
+
+\texttt{
+  0.00691029997542501 1-phosphatidyl-1D-myo-inositol backbone + 0.026582900248468 ergosterol + 0.0068058000644669 ergosterol ester backbone + 0.00148009998956695 fatty acid backbone + ...
+  \\ --> lipid backbone
+}
+
+Within this reaction, all reactants have defined molecular weights except for \texttt{fatty acid backbone}.
+Four reactions in the model produce \texttt{fatty acid backbone}.
+\begin{table}[ht]
+  \centering
+    \begin{tabular}{llS}
+      ID & Reaction & {\makecell{Computed molecular\\ weight (g/mol)}} \\
+      \hline
+    \texttt{r\_3975} & \makecell{\texttt{palmitate} \\ \texttt{--> 0.25542094 fatty acid backbone + 0.25642888 C16:0 chain}} & 744.56 \\
+    \texttt{r\_3976} & \makecell{\texttt{palmitoleate} \\ \texttt{--> 0.25340506 fatty acid backbone + 0.254413 C16:1 chain}} & 714.49 \\
+    \texttt{r\_3977} & \makecell{\texttt{stearate} \\ \texttt{--> 0.2834747 fatty acid backbone + 0.28448264 C18:0 chain}} & 742.55 \\
+    \texttt{r\_3978} & \makecell{\texttt{oleate} \\ \texttt{--> 0.28145882 fatty acid backbone + 0.28246676 C18:1 chain}} & 716.51 \\
+    \end{tabular}
+    \caption{ecYeast8 reactions that generate the \texttt{fatty acid backbone} metabolite}
+    \label{tab:ecyeast8-fatty-acid-backbone-rxns}
+\end{table}
+
+All species in these reactions except for \texttt{fatty acid backbone} have molecular weights specified, and thus I applied mass balance to find the molecular weight of \texttt{fatty acid backbone} from each reaction.
+However, the molecular weights computed from each equation are different, as shown in the table above.
+Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the average of the four weights (736.04 g/mol) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields 24.39 g/mol).
+
+With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, I can now compute the molecular weight of \texttt{lipid} using mass balance.
+
+In summary, the molecular weights of the bulk metabolites are:
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{lS}
+    Metabolite & {Computed molecular weight (g/mol)} \\
+    \hline
+    Protein & 464.02 \\
+    Carbohydrate & 383.12 \\
+    RNA & 64.04 \\
+    Lipid & 48.78 \\
+    Cofactors & 4.83 \\
+    DNA & 3.90 \\
+    Ions & 2.48
+  \end{tabular}
+  \caption{Computed molecular weights of bulk metabolites in ecYeast8}
+  \label{tab:ecyeast8-mol-weights}
+\end{table}
+
+And thus the molecular weight of biomass is 971.18 g/mol, close to the 966 g/mol in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
+As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by Grigiatis [TODO: Add proper citation].
+
+On simulating the ecYeast8 model using parsimonious flux balance analysis, I set the growth rate to 0.1, the carbon source to glucose (i.e. leaving glucose uptake flux unrestricted), and leaving flux through the biomass reaction unrestricted.
 % TODO: format units, use SIunitX or otherwise
 Simulating the unmodified enzyme-constrained model gives a flux through the biomass reaction of 0.0889 mmol/(gDW h).
 To convert this value to a time it takes to synthesise a new cell, I estimated the molecular weight of biomass as 0.966 g/mol \parencite{takhaveevTemporalSegregationBiosynthetic2023} and the dry mass of the cell as 15 pg [CITATION NEEDED -- LOOK AT THE CELL ECONOMICS PROJECT AND TRACE FROM THERE].
 % should this be in the methods?
-% TODO: check numbers and update.  it's here for now just to get a gist of the structure
 My logic is:
 \begin{enumerate}
    \item Flux through biomass reaction = 0.0889 mmol/(gDW h), i.e. 1 gDW of cell produces 0.0889 mmol biomass in an hour.
@@ -120,17 +252,35 @@ My logic is:
 \end{enumerate}
 And this is close to the 10 hours in theory given the growth rate of 0.1 h-1.
 
-For ablated biomass reactions, I used the molecular weight of each class of macromolecule from [CITATION] in place of the molecular weight of biomass and the dry mass of each class of macromolecule in place of the dry mass of the cell in step 4.
-This results in these:
-% TODO: convert to a table or a bar chart, can be combined with results from unmodified biomass reaction
+For ablated biomass reactions, I followed a similar logic.
+Using carbohydrates as an example:
 \begin{itemize}
-  \item lipids: flux through ablated biomass reaction: 0.1082 mmol/(gDW h), estimated time: 0.6932 hours
-  \item proteins: flux 0.0987 mmol/(gDW h), estimated time: 0.0939 hours
-  \item carbohydrates: flux 0.1322 mmol/(gDW h), estimated time: 0.0018 hours
-  \item DNA: flux 0.1482 mmol/(gDW h), estimated time: 0.0000 hours
-  \item RNA: flux 0.1401 mmol/(gDW h), estimated time: estimated time: 0.0078 hours
+    \item Flux through carbohydrate pseudoreaction is 0.1322 mmol/(gDW * h).  This means that each gDW of cell produces 0.1322 mmol of carbohydrate in an hour.
+    \item Cell dry mass is 15e-12 g.  This means that each cell produces (15e-12)*(0.1322) mmol of carbohydrate in an hour.
+    \item The molecular weight of the carbohydrate bulk metabolite is 383.12 g/mol, which is 383.12e-3 g/mmol.  This means that each cell produces (383e-3)*(15e-12)*(0.1322) g of carbohydrate in an hour
+    \item Cell has (3450+75)e-15 = 3525e-15 g carbohydrates.  This means that each cell produces all the new carbohydrates it needs in (3525e-15) / ((383e-3)*(15e-12)*(0.1322)) hours.  This yields 4.64 hours.
 \end{itemize}
-Sum of times: 0.7967 hours.
+
+Here, I used the flux from the simulated model, the molecular weight as computed earlier, and the mass of the macromolecule per dry cell as described by [CITATION NEEDED: GRIGIATIS].
+
+Repeating this process for the other macromolecules yields:
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{lSS}
+    Priority & {\makecell{Flux through\\ ablated objective function (mmol/(gDW h))}} & {Estimated time (h)} \\
+    \hline
+    Lipids & 0.1082 & 11.3679 \\
+    Proteins & 0.0987 & 11.1337 \\
+    Carbohydrates & 0.1322 & 4.6397 \\
+    DNA & 0.1482 & 8.6527 \\
+    RNA & 0.1401 & 12.2571
+  \end{tabular}
+  \caption{Ablated objective function predicts timescales for biosynthesis prioritising each class of macromolecule.}
+  \label{tab:ecyeast8-ablated-timescales}
+\end{table}
+
+% TODO: Fix conclusion
 Therefore, I conclude that given a finite amount of enzymes, it is more efficient to partition synthesis of macromolecules temporally, and the time scale is at the same order of magnitude as the yeast metabolic cycle.
 
 Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
