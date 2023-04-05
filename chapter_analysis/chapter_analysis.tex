@@ -76,8 +76,27 @@ Thus, a Fourier-based method may not adequately provide the information for a re
 
 \subsection{Machine learning approaches to classification}
 \label{subsec:analysis-classification-ml}
-% Could be useful: Results section of 10-month report
+% - Write results from classifier project (SVM, RF, etc.)
 
+% Copied from 10m report...
+% Note: this predates the classifier project --
+% I now have better data, understand ML more, and have better methods.
+% However, I still think it's instructive in writing an 'update' when I read all the content together
+% ----------------------
+% ROC: DISCUSS IN PRESENTATION AS AN APPENDIX SLIDE
+% also re-word. I wrote this when I was tired.
+Currently, the oscillation classifier has limited use.
+It is difficult to characterise the time series of flavin autofluorescence using standard methods based on the data available.
+The peak of the normalised classical periodogram inadequately captures the quality of the oscillations.
+
+The oscillation classifier has one tuning parameter, the false discovery rate, and its value affects the proportion of time series classed as oscillating.
+A reliable ground truth is needed to optimise the value of the false discovery rate so that the classification accuracy is maximised.
+Because none of the experiments performed were ones from which oscillations were not expected, I lacked a reliable ground truth for the presence of oscillations.
+I resorted to subjective judgements of whether a time series exhibited oscillations, and thus any optimised false discovery rate would have low reliability.
+
+The YMC gene deletion experiments discussed in section [REF: SYNCHRONY SECTION FROM 10m] will provide a more reliable ground truth for the development of the oscillation classifier, as oscillations are not expected in these experiments.
+%Furthermore, I will construct neural net-based classifiers so that more information is leveraged from the time series to inform the classifier.
+With the improved ground truth, I will then compare the performance of the oscillation classifier with graph-based clustering in discriminating between oscillating and non-oscillating time series.
 
 \section{Characterisation: I have one time series -- what properties does it have?}
 \label{sec:analysis-characterisation}
