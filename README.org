@@ -1,0 +1,26 @@
+#+title: Arin Wongprommoon's PhD Thesis
+
+* How to compile
+
+Use
+
+#+begin_src shell
+$ pdflatex thesis.tex
+#+end_src
+
+and
+#+begin_src shell
+$ biber thesis
+#+end_src
+
+however many times it takes to produce a reasonable output PDF.  It should be called ~thesis.pdf~.
+
+Or, if you use emacs with AUCTeX, open to ~thesis.tex~ and call ~C-c C-c~ however many times it takes to work (invoking ~LaTeX~, ~Biber~, ~View~, etc. from the menu).
+
+* Design
+- I use the template https://github.com/H0R5E/edengths, but inevitably with some quirks carried over from my ten-month report.
+- I use doom emacs (https://github.com/doomemacs/doomemacs) with ~latex~ enabled in ~init.el~, and work directly on ~.tex~ files using AUCTeX/RefTeX/etc.
+- I considered working on ~.org~ files but decided against it because:
+  1. I will have to write control elements to get it into a ~.tex~ file anyway, and it makes more sense to edit ~.tex~ files directly, especially when I'm already proficient in LaTeX.  An additional layer with org mode also makes it more prone to bugs.
+  2. I already have a lot of writing done in LaTeX, e.g. the ten-month report, so I want an architecture that makes it easy to copy of that.  I also have a lot of writing done in org mode, but it's easier to convert from org mode to LaTeX than the other way around.
+  3. Virtually all quantitative or mathematically-inclined scientists use LaTeX, but a very small (and admittedly crazy) group of people use org mode too.  Therefore, if I write in LaTeX, it will be easy to share with supervisors, collaborators, or scientific journals.

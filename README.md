@@ -1,2 +1,0 @@
-# wongprommoon-phd-thesis
-
