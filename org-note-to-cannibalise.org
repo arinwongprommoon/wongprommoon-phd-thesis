@@ -3,35 +3,29 @@
 ** General
 - [[id:2904d5dc-8900-4e14-a511-e86ca97e1164][Literature Review Things and Beyond -- Long Note]], [[id:09ae3901-b3e3-4af0-b538-50d8e10052dd][What_we_know_about_metabolic_cycles]] -- though I need to go through it paragraph-by-paragraph (if not line-by-line) for new content as the bulk of the introduction content is already there.  Probably won't bulk up word count, but will refine existing content.
 - [[id:6f2ff949-79cc-466a-91ad-5073fe3217ff][Development of Fluorescent Reporters to Measure Metabolic Oscillations in Single Saccharomyces cerevisiae Cells]] -- 'Also might be super useful for writing my thesis, especially the introduction.'
-** Description
+** Yeast metabolic cycle
+*** Biological rhythms (other oscillations/broader context)
+- [[id:2e7a6d0a-5f09-4d46-8162-5b666b58ba71][glycolytic oscillations]] -- a couple of bullet points.  I think I have a sentence that essentially says this -- need to check for consistency.
+- [[cite:&doddLiveCellImaging2017a]]
+*** Definition & description
 - [[id:2d231a43-61a4-4c38-9c83-62fab840be3a][Mitotic kinase oscillation governs the latching of cell cycle switches]] ([[cite:&novakMitoticKinaseOscillation2022]])
-** Coupled oscillators
+*** Modelling (coupled oscillators)
 - [[id:f13dd776-be3b-4717-a964-7fdd5ed9f435][YMC and CDC coupling ratios]] -- table of ratios based on experimental papers.  Useful citations on Arnold tongue.  However, doesn't seem very useful beyond this.
 - https://www.worldscientific.com/doi/epdf/10.1142/S0219720020400065 (https://dl.acm.org/doi/10.1145/3365953.3365956) -- mammalian clock and cell division cycle, observed different coupling ratios, especially under treatment of dexamethasone.  Good as a citation.
 - [[cite:&crossModeLockingCell2005]]
 - [[id:aacbe724-ae59-401c-bb8b-4bedabe576c5][Ideas_from_different_coupled_oscillators_(2019-10-]]
-** Flavin
-- [[id:6f1221d4-c198-4494-941d-7780c8eb1b3e][SWAIN_KEVIN_2021-05-03]] -- some ideas on useful flavin reactions, flavin pool, flavoproteins
-** Chemostat vs single-cell
+*** Disputes (chemostat vs single-cell)
 - [[id:a2ed5a17-4272-4a5e-b461-570861513cf4][Reconciling chemostat and single-cell studies]] -- _this is a goldmine_.
 - [[id:caa6a963-182b-4973-9a93-918e5721e4a6][YMCs_chemostat_vs_single-cell]] -- mostly notes from talking to Kevin, so probably not massively useful is bulking word count.
-** Other oscillations/broader context
-- [[id:2e7a6d0a-5f09-4d46-8162-5b666b58ba71][glycolytic oscillations]] -- a couple of bullet points.  I think I have a sentence that essentially says this -- need to check for consistency.
-- [[cite:&doddLiveCellImaging2017a]]
+** Flavin
+- [[id:6f1221d4-c198-4494-941d-7780c8eb1b3e][SWAIN_KEVIN_2021-05-03]] -- some ideas on useful flavin reactions, flavin pool, flavoproteins
+* Methods
 * Analysis
 ** General
 ** Characterisation
 - [[id:96bf0dac-44dc-4163-87a5-5e9b02f52cd2][MEETING 2022-05-05 Tomasz Zielinski]]
 - [[id:dccd3e4a-645a-4f4e-8ea3-92ce46675ca2][MEETING_2022-06-01 Andrew Millar]]
 - [[id:0fa47c5c-6d4c-4948-8037-5fe2933f41fc][Test_for_periodocities]]
-** Cross-correlation
-- [[id:5fbe9a08-0d4e-44ed-95db-89ff4cd2ee86][cross-correlation]] -- Literature.  Start from Kiviet et al. -- need to cite them as an example to justify my use.  Also see [[id:edd0cfb3-8af6-498c-bfca-959acab9c89e][Stochasticity of metabolism and growth at the single-cell level]], [[id:53c3666e-30f9-42c8-a357-3181a941954c][Regulatory activity revealed by dynamic correlations in gene expression noise]].  _This is probably the biggest bang for the buck_.
-  - [[id:e417e5c4-d1db-4c58-ac0b-be9189763622][autocorrelation]] briefly notes theoretical expectations and [[id:2f8f6205-eaba-4ae4-8e57-34b45820ecc3][Synchronous long-term oscillations in a synthetic gene circuit]] as an example of use across a population.  _May be useful in writing justification for my mathematical methods, which may deviate from the consensus -- BABY paper will be useful too._
-- [[id:c75b5b5f-8aab-431a-8450-d4a98cfb43a6][Oscillators with stochastic parameters]] -- I think I haven't added this yet.
-** Clustering
-- [[id:23d55690-a37a-426b-b11d-d3d155f28c75][UMAP to discover structures in flavin datasets]] -- completely forgot that I did this.  This is more like a tasklist + discussions with Diego & Evangelos.  It does reference some figures, which I haven't attached, so I may have to fish from emails to Diego.
-- [[id:6bba292b-d2d2-49e7-92b1-704edaf32d04][Mutual information as similarity for hierarchical rclustering]]
-- [[id:f3810173-6909-4e41-bd65-4998c5b4e179][HCTSA_-_literature]], [[id:4a094918-204f-43df-80fd-7a00c5dbe741][HCTSA]],[[id:5525cbdb-38d6-4095-a7a2-8d50dfef9630][2020-06-11 HCTSA crap I plan to do]]
 ** Classification
 - [[id:c4868d23-6b69-4d78-bcdb-a4037b8b9b1e][Methods to classify oscillations]] -- 'paper idea'
 - [[id:55b40a52-0793-4652-b58c-e12172e107ff][Time series classification]] -- good for literature review
@@ -40,6 +34,14 @@
 - [[id:3a061286-1111-4d6c-b609-d6767a6e87e4][catch22 and mutual information on Alejandro's dataset]]
 - [[id:59052dc2-c889-4149-931a-5296f3293ae0][Using autoregressive model]], [[id:9194a49e-28b0-4222-836b-ad284c5745fc][Using autoregressive model with a population of cells]]
 - [[id:e4edd764-acc2-4f02-82cd-3252d6f9ed2c][Using SVM with a population of cells]]
+** Clustering
+- [[id:23d55690-a37a-426b-b11d-d3d155f28c75][UMAP to discover structures in flavin datasets]] -- completely forgot that I did this.  This is more like a tasklist + discussions with Diego & Evangelos.  It does reference some figures, which I haven't attached, so I may have to fish from emails to Diego.
+- [[id:6bba292b-d2d2-49e7-92b1-704edaf32d04][Mutual information as similarity for hierarchical rclustering]]
+- [[id:f3810173-6909-4e41-bd65-4998c5b4e179][HCTSA_-_literature]], [[id:4a094918-204f-43df-80fd-7a00c5dbe741][HCTSA]],[[id:5525cbdb-38d6-4095-a7a2-8d50dfef9630][2020-06-11 HCTSA crap I plan to do]]
+** Cross-correlation
+- [[id:5fbe9a08-0d4e-44ed-95db-89ff4cd2ee86][cross-correlation]] -- Literature.  Start from Kiviet et al. -- need to cite them as an example to justify my use.  Also see [[id:edd0cfb3-8af6-498c-bfca-959acab9c89e][Stochasticity of metabolism and growth at the single-cell level]], [[id:53c3666e-30f9-42c8-a357-3181a941954c][Regulatory activity revealed by dynamic correlations in gene expression noise]].  _This is probably the biggest bang for the buck_.
+  - [[id:e417e5c4-d1db-4c58-ac0b-be9189763622][autocorrelation]] briefly notes theoretical expectations and [[id:2f8f6205-eaba-4ae4-8e57-34b45820ecc3][Synchronous long-term oscillations in a synthetic gene circuit]] as an example of use across a population.  _May be useful in writing justification for my mathematical methods, which may deviate from the consensus -- BABY paper will be useful too._
+- [[id:c75b5b5f-8aab-431a-8450-d4a98cfb43a6][Oscillators with stochastic parameters]] -- I think I haven't added this yet.
 * Biological results
 ** General
 - [[id:3c48cc58-77c5-4a27-a968-549f6359bd8d][SWAIN_KEVIN_2020-11-16]] -- swe1, relationship between flavin and redox.  Will be useful for context & discussion of results.
