@@ -6,8 +6,6 @@
 \label{sec:analysis-overview}
 
 % - Zielinski et al. (2014) is a good starting point
-% - Titles of the section lends themselves to a punchy opener paragraph that
-%   describes the process
 
 % From synthetic oscillations report
 In the time series analysis literature, there is a wealth of analysis methods that aim to find parameters pertaining to the periodicity of noisy time series and that aim to characterise the relationship between two signals.
@@ -18,6 +16,7 @@ The problem with applying classical time series analysis methods to biological t
 Classical methods such as Fourier analysis have been shown to be useful in characterising noisy biological time series when they are long, e.g. from neuron impulse recordings, which can include up to thousands of oscillations.
 However, for examples such as the yeast metabolic cycle, it is not feasible to record time series that include such a high number of oscillations; in this case, 5-10 oscillations are more realistic.
 As a result, methods like Fourier analysis only provide poor resolution for characteristics such as the period of oscillations.
+% ----- end from synthetic oscillations report
 
 To discuss the process of analysing oscillatory time series in more detail, I will be using my data as an example and divide this chapter according to steps in the process.
 My data consists of 100--1000 time series of recorded flavin intensity changes for each cell, indicating the yeast metabolic cycle.
@@ -39,6 +38,62 @@ This chapter is divided into six sections, five of which correspond to a process
 
 \section{Cleaning: choosing data, filtering, missing time points}
 \label{sec:analysis-cleaning}
+
+The first step of any data science pipeline is cleaning data, and of course there is the adage: 80\% of data science is cleaning data [CITATION NEEDED].
+Cleaning data is important because of the principle of `garbage in, garbage out' -- regardless of how cutting-edge the analysis methods are, if the input data is flawed, then you cannot get good insights from the data.
+However, this step involves the most judgement calls, i.e. the analyst needs to decide on criteria to separate useful data from useless data.
+These criteria may be based on existing standards of practice or, for systems biology, knowledge of either the underlying biological processes or of the mathematical constraints.
+Often, these criteria can be arbitrary because there is an absence of existing standards of practice for the specific situation -- in this case, any decision is going to be a trade-off and needs justification.
+
+Three problems I occur in my data are: choosing data, time series filtering, and dealing with missing time points.
+They can best be illustrated in a heatmap of raw data from an experiment [DESCRIBE THE EXAMPLE EXPERIMENT] here:
+
+[FIGURE: A HEATMAP BASED ON RAW DATA.  IT SHOULD CONTAIN SOME TRACES THAT DON'T FILL 80\% OF THE TIME COURSE -- SOME EXAMPLE ROWS SHOULD BE LABELLED  IT SHOULD CLEARLY SHOW A LONG-TERM TREND.  IT MAY HAVE MISSING TIME POINTS BECAUSE OF THE LIMITATIONS OF MERGER.  THE CAPTION MUST DESCRIBE THE COMPONENTS OF THE HEATMAP SO A READER CAN INTERPRET IT -- E.G. AXES, COLOUR SCHEME]
+
+[THIS FIGURE MAY HAVE SOME AUXILLARY FIGURES TO HELP EXPLAIN.  I CAN PICK ONE TIME SERIES OUT OF THE HEATMAP, REPRESENT IT AS A LINE PLOT, HIGHLIGHT THE FIRST COUPLE OF TIME POINTS, AND HAVE BRIGHTFIELD AND FLAVIN IMAGES THAT CORRESPOND TO THESE TIME POINTS.  USE ImageViewer TO PRODUCE THIS FIGURE.  I SHOULD HAVE EXPLAINED ENOUGH IN THE METHODS TO HAVE THIS MAKE SENSE.]
+
+The first step is choosing data.
+Some time series have few time points.
+Most often, these correspond to cells that were not present in traps for a long duration, and some can be the result of errors in the track merging algorithm used in the data extraction process [CAN I CITE ALAN'S THESIS?].
+Here, I choose time series that have points present in at least 80\% of the total time points.
+This is an arbitrary cut-off, but it ensures that my time series have enough oscillations for further analysis, such as characterisation of the frequencies of these oscillations.
+Otherwise, short, and likely uninformative, time series can `pollute' algorithms that operate on the population of time series, confounding the analysis.
+
+Next, the data must be filtered to remove long-term trends.
+Depending on the scientific question, such long-term trends can be useful:
+for example, in climate science, if there is a time series of atmospheric \ce{CO2} over a period of decades, we would like to filter out the annual (seasonal) cycles and look at the long-term changes over time.
+In the analysis of biological rhythms, however, long-term trends are the element that must be removed to uncover the periodic behaviour of biological time series \parencite{zielinskiStrengthsLimitationsPeriod2014} [OR IS THE 2022 PUBLICATION BETTER SUITED TO PROVE MY POINT?  IN ANY CASE, LIFT A COUPLE SENTENCES FROM THEIR DISCUSSION OF REMOVING TRENDS IN BIOLOGICAL TIME SERIES DATA].
+As an example, \textcite{zielinskiPeriodEstimationRhythm2022} offers several methods of detrending time series: polynomial detrending (including linear detrending), sliding-window detrending, ... [READ THE PAPER AND INSERT THE REST HERE].
+However, each method has its own caveats.
+
+[FIGURE: SHOW LONG-TERM TRENDS.  DRAW A MEAN+STD ERR PLUS A COUPLE OF RAW TIME SERIES.]
+
+In the process of finding a way to filter my time series, I have considered two methods: sliding-window methods (such as using a Savitzky-Golay filter) and a high/low-pass filter.
+Sliding-window methods are common in the single-cell biological rhythm literature; for example... [EITHER (A) VOMIT A LIST OF CITATIONS AND LEAVE IT THERE, OR (B) MENTION A COUPLE AND DESCRIBE IN A BIT MORE DETAIL, GROUP SAVITZKY-GOLAY FILTERS, PUBLICATIONS THAT USE STUPIDER METHODS, ETC.  I'M SURE HEINEMANN'S PUBLICATIONS USE THEM, AND I'M SURE THERE WERE A COUPLE USED IN JOURNAL CLUBS THAT I'VE COMMENTED IN MY NOTES HAVING USED STUPID METHODS.]
+However, these methods unnecessarily smooth data, therefore distorting the data and affecting conclusions, and give no control over the frequencies and introduce artefacts in the frequency spectrum (figure ...)
+In contrast, defining a high- or low-pass filter offers direct control over frequencies, but the user must use a judgement call to define a critical frequency.
+In my case, I define the critical frequency for a high-pass filter as 1/350 min-1 [PROPERLY FORMAT UNITS PLEASE] as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments.
+Of course, this will exclude the possibility of metabolic cycles that go on for longer, but as I said, this is a trade-off I am willing to make so that I can extract the individual oscillations better.
+
+[FIGURE: SHOW HOW SLIDING WINDOW AND HIGH-PASS FILTER AFFECT TIME SERIES DIFFERENTLY.  SHOW RAW TIME SERIES AND FFT, AND SHOW PROCESSED TIME SERIES AND FFTS.  FOR HIGH-PASS FILTER, ALSO DRAW A VERTICAL LINE TO SHOW THE CRITICAL FREQUENCY ON THE FFT.  ALSO ADD A FIGURE SIMILAR TO THE ONE IN THE scipy DOCUMENTATION ON THE HIGH-PASS FILTER TO SHOW THAT THE RELEVANT FREQUENCIES HAVE BEEN DESTROYED.]
+
+Next, missing time points can pose a problem, especially when many analysis methods [WHICH?] are not made for this.
+In my case, these missing time points often arise because of errors in track joining [MORE ELABORATION PLEASE -- READ ALAN'S THESIS], but occur infrequently enough [EVIDENCE NEEDED] that I could just perform linear interpolation to fill in the data or discard the time series altogether.
+However, there are methods that deal with missing time points.
+Most notable is the Lomb-Scargle periodogram (LSP) -- to be discussed in section ... -- which was developed for astronomical data that often has missing time points, corresponding to cloud cover, for example.
+Other methods that have been used in the biological time series literature include ... [FISH OUT SOME FROM ZIELINSKI ET AL. 2014, AND DESCRIBE THEM A BIT].
+
+Finally, I discuss a way to evaluate the quality of a (processed) dataset -- specifically, computing a signal-to-noise ratio.
+[PROBABLY MAKES SENSE TO DO A MINI-LITERATURE REVIEW OF THE SIGNAL-TO-NOISE RATIO CONCEPT, ESPECIALLY IN THE CONTEXT OF ENGINEERING].
+Here, I define a cut-off frequency between signal and noise, based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
+[I BASED THIS OFF A POST ON STACKOVERFLOW -- ONE OF THE GIT COMMIT MESSAGES HAS TO HAVE MENTIONED THIS.  IF THIS STACKOVERFLOW POST MENTIONS SOME PUBLICATION, CITE IT, LIFT WORDS FROM IT.]
+Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise [EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.]
+
+[FIGURE: SINGLE TIME SERIES, FOURIER SPECTRUM OF THIS TIME SERIES, WITH A LINE DIVIDING SIGNAL (S) AND NOISE (N), AND AN EQUATION SNR = S/N SOMEWHERE.]
+
+[FIGURE: EXAMPLE HISTOGRAM OF SNRs FROM A COUPLE OF EXPERIMENTS.  STEAL FROM ONE OF MY LAB PRESENTATIONS.]
+
+(Add some kind of take-home or conclusion of the section here...)
 
 \section{Classification: is my time series oscillatory?}
 \label{sec:analysis-classification}
