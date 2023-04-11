@@ -98,13 +98,22 @@ Again, this is a judgement call, and this is based on looking at several experim
 \section{Classification: is my time series oscillatory?}
 \label{sec:analysis-classification}
 
+To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
+However, there are challenges with classification of noisy biological time series with relatively few time points.
+
+[A PARAGRAPH ON RHYTHMICITY TESTS -- BASE THIS OFF ZIELINSKI ET AL. 2014/2022.  START FROM eJTK.  THIS SHOULD BE A MINI-REVIEW.]
+
+In this section, I will discuss my use of spectral methods, model-fitting methods, and machine learning methods.
+
 % Literature review subsection
-\subsection{Rhythmicity detection for biological data}
-\label{subsec:analysis-classification-rhythmicity}
+
 % - Compare and contrast methods
 % - Highlight challenges with large datasets of noisy biological data
 % - Review existing methods first and then talk about the methods I tried, with results.
 %   FFT (already copied from 10m, to be re-written slightly), AR (steal figures from AC22 poster & presentations made in that time)
+
+\subsection{Rhythmicity detection using spectral methods}
+\label{subsec:analysis-classification-spectral}
 
 % Copied from 10m report
 % ----------------------
@@ -112,7 +121,6 @@ Again, this is a judgement call, and this is based on looking at several experim
 
 % Discussion about oscillatory behaviour vs periodic behaviour?
 
-To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
 \citet{glynnDetectingPeriodicPatterns2006} describe a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \citep{lombLeastsquaresFrequencyAnalysis1976}.
 This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \citep{scargleStudiesAstronomicalTime1982}.
 The classification was based on controlling the false discovery rate for identification of oscillations.
@@ -147,30 +155,206 @@ Thus, a Fourier-based method may not adequately provide the information for a re
   \label{fig:ClassifierBestWorstPS}
 \end{figure}
 
-
-\subsection{Machine learning approaches to classification}
-\label{subsec:analysis-classification-ml}
-% - Write results from classifier project (SVM, RF, etc.)
-
-% Copied from 10m report...
-% Note: this predates the classifier project --
-% I now have better data, understand ML more, and have better methods.
-% However, I still think it's instructive in writing an 'update' when I read all the content together
-% ----------------------
-% ROC: DISCUSS IN PRESENTATION AS AN APPENDIX SLIDE
-% also re-word. I wrote this when I was tired.
 Currently, the oscillation classifier has limited use.
 It is difficult to characterise the time series of flavin autofluorescence using standard methods based on the data available.
 The peak of the normalised classical periodogram inadequately captures the quality of the oscillations.
 
 The oscillation classifier has one tuning parameter, the false discovery rate, and its value affects the proportion of time series classed as oscillating.
+
 A reliable ground truth is needed to optimise the value of the false discovery rate so that the classification accuracy is maximised.
 Because none of the experiments performed were ones from which oscillations were not expected, I lacked a reliable ground truth for the presence of oscillations.
 I resorted to subjective judgements of whether a time series exhibited oscillations, and thus any optimised false discovery rate would have low reliability.
 
-The YMC gene deletion experiments discussed in section [REF: SYNCHRONY SECTION FROM 10m] will provide a more reliable ground truth for the development of the oscillation classifier, as oscillations are not expected in these experiments.
-%Furthermore, I will construct neural net-based classifiers so that more information is leveraged from the time series to inform the classifier.
-With the improved ground truth, I will then compare the performance of the oscillation classifier with graph-based clustering in discriminating between oscillating and non-oscillating time series.
+\subsection{Rhythmicity detection using model fitting}
+\label{subsec:analysis-classification-ar}
+
+The autoregressive model has been used before to characterise biological time series \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+This model is based on the assumption that each data point in the time series can be expressed as a linear combination of $N$ data points that precede it -- $N$ thus representing the order of the model.
+This autoregressive model thus `smooths' the time series.
+\parencite{jiaFrequencyDomainAnalysis2021} describe an application of the autoregressive model, based on the fact that there is an analytical solution for the periodogram based on this model.
+In this publication, they use this paradigm to classify synthetic oscillations produced from a stochastic model of gene expression [CHECK IF ACCURATE.  AND LIFTING THE FIGURE FROM THEIR PAPER THAT SHOWS THIS WILL BE HELPFUL].
+Specifically, the presence of a peak in the periodogram suggests that the time series is oscillatory.
+And because the periodogram is produced from a analytical solution, you can compute the period and quantitfy the quality of the oscillation from this periodogram more easily than from a Fourier spectrum created from noisy data.
+
+[FIGURE: EXAMPLE -- TIME SERIES ON THE LEFT, WITH SMOOTHED TIME SERIES, AND AR PERIODOGRAM ON THE RIGHT.]
+
+In my investigations, very few time series within a dataset were classified as oscillatory using this method.
+The problem is that there are no parameters that I can adjust to change the `tolerance' for detecting rhythmicity.
+However, among the time series that it deems oscillatory, it guesses the frequency fairly well.
+
+(Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.)
+
+Alternatively, I can treat the order of the model as a parameter, and perform model selection on it.
+
+% This subsection needs better re-organisation.
+% I've done some attempts by putting some headers in comments.
+% But perhaps a better way is to draft some `summary' figures to show key takeaways, and then let the text flow accordingly.
+\subsection{Machine learning approaches to classification}
+\label{subsec:analysis-classification-ml}
+% - Write results from classifier project (SVM, RF, etc.)
+
+% Copied from org note: 'Using SVM with a population of cells', which isn't particularly well-written.
+% ----------------------
+
+% [TODO] Worth re-doing the whole experiment using better data, e.g. the data I'm actually using in the biological results chapter.
+
+% DESCRIPTION OF DATA
+
+For this section, I used data from BY4741 cells under 10 g/L glucose, before any nutrient changes.
+% Probably no need to go into so much detail.
+I removed the first 25 time points that is most likely cells adapting to microfluidic conditions.
+I also removed time points after time point 168, when nutrient switching occurred.
+I removed all time series with NaNs.
+In total, there are 294 cells, each with 118 time points, spaced 5 minutes apart.
+
+% DATA PROCESSING
+
+% [TODO] Repeat experiment with Butterworth filter, rather than sliding window detrending
+
+Figure ... shows a clear downwards trend (which I can't explain biologically yet). If an SVM model is trained using time points as features, there is a risk that the model recognises this trend rather than the presence of oscillations.
+This plot highlights the risk: for some reason non-oscillating time series (hand-scored) tends to have a smaller gradient.
+I thus detrended the data by generating a moving average with a sliding window size of 45 time points, and then dividing each data point by the moving average. I chose 45 time points because that covers ~3 cell division cycles.
+However, there are caveats.
+If the cell division cycle length differs, this window length should change; a spectral method (FFT, autoregressive) could give me an idea of what this cell division cycle length is.
+Additionally, this decreases the number of time points --- there are now 98.
+
+As the dynamic range of each time series are different from each other, I scaled each time series.
+I used the standard scaler (\texttt{sklearn.preprocessing.StandardScaler()}), which makes each time series has mean 0 and standard deviation 1.
+
+% LABELLING
+
+Based on the processed (range restricted, detrending, normalised) data, I manually scored the 294 time series as non-oscillatory (label '0') or oscillatory (label '1').
+Here, there are 211 oscillatory time series (72\%) and 83 non-oscillatory time series (28\%).
+Thus, there is a slight class imbalance.
+
+% SPLITTING
+
+I chose 150 time series at random to be used as training data -- the rest becomes testing data.
+
+% MODELS
+
+I explored several model architectures: a support vector machine (SVM) and a random forest (RF) architecture.
+
+I used an support vector classifier (SVC) with a radial bias kernel, using hyperparameters $C = 1$ and $\gamma = 1/(\mathrm{number of time points})$, and normalise features using the standard scaler.
+For featurisation, I explored using time points as features, the time series' Fourier spectrum as features, and using \texttt{catch22} features.
+I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
+
+Using time points as features, the metrics show that precision and recall is better than random, and stratified
+five-fold cross-validation does not suggest overfitting (figure ...).
+
+% Replace this with a bar plot.
+% It's probably a good idea to combine all bar plots in this bit of the chapter into one figure with subfigures, so that it is easy to compare featurisation strategies.
+\texttt{
+     Precision 0.8127 Recall 0.7458\\
+     Precision 0.8127 Recall 0.7458\\
+     Precision 0.8036 Recall 0.7288\\
+     Precision 0.8410 Recall 0.7966\\
+     Precision 0.8966 Recall 0.8793\\
+}
+
+% Replace this with a bar plot
+\texttt{
+     Precision 0.5562 Recall 0.7458\\
+     Precision 0.5562 Recall 0.7458\\
+     Precision 0.5312 Recall 0.7288\\
+     Precision 0.5312 Recall 0.7288\\
+     Precision 0.5496 Recall 0.7414\\
+}
+
+Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
+features.
+However, there seems to be greater variation in these measures.
+
+% Replace this with a bar plot
+\texttt{
+     Precision 0.8700 Recall 0.8644\\
+     Precision 0.9005 Recall 0.8983\\
+     Precision 0.7676 Recall 0.7797\\
+     Precision 0.8857 Recall 0.8644\\
+     Precision 0.9517 Recall 0.9483\\
+}
+
+The spectra suggest that oscillatory cells exhibit a peak that is absent in non-oscillatory cells.
+The peak corresponds to a period of 70~80 minutes.
+This peak may explain the good precision \& recall scores.
+
+For my last strategy of featurisation,
+I employed the \emph{hctsa} toolbox \citep{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
+This toolbox contains 7701 features defined from across the time series analysis literature.
+I focused on the 22-feature \emph{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
+\citet{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
+This feature set excludes features that are dependent on mean or spread.
+
+\begin{table}[htbp]
+  \small
+  \centering
+  \begin{tabularx}{\linewidth}{bbS}
+    \toprule
+    Feature name & Description \\
+    \midrule
+    \texttt{DN\_\-HistogramMode\_\-5} & Mode of z-scored distribution (5-bin histogram) \\
+    \texttt{DN\_\-HistogramMode\_\-10} & Mode of z-scored distribution (10-bin histogram) \\
+    \texttt{SB\_\-BinaryStats\_\-mean\_\-longstretch1} & Longest period of consecutive values above the mean  \\
+    \texttt{DN\_\-OutlierInclude\_\-p\_\-001\_\-mdrmd} & Time intervals between successive extreme events above the mean \\
+    \texttt{DN\_\-OutlierInclude\_\-n\_\-001\_\-mdrmd} & Time intervals between successive extreme events below the mean \\
+    \texttt{first\_\-1e\_\-ac} & First 1/e crossing of autocorrelation function \\
+    \texttt{firstMin\_\-acf} & First minimum of autocorrelation function \\
+    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-area\_\-5\_\-1} & Total power in lowest fifth of frequencies in the Fourier power spectrum \\
+    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} & Centroid of the Fourier power spectrum \\
+    \texttt{FC\_\-LocalSimple\_\-mean3\_\-stderr} & Mean error from a rolling 3-sample mean forecasting \\
+    \texttt{CO\_\-trev\_\-1\_\-num} & Time-reversibility statistic, $\langle(x_{t+1} - x_t)^3\rangle_t$ \\
+    \texttt{CO\_\-HistogramAMI\_\-even\_\-2\_\-5} & Automutual information, $m = 2, \tau = 5$ \\
+    \texttt{IN\_\-AutoMutualInfoStats\_\-40\_\-gaussian\_\-fmmi} & First minimum of the automutual information function \\
+    \texttt{MD\_\-hrv\_\-classic\_\-pnn40} & Proportion of successive differences exceeding $0.04\sigma$ \\
+    \texttt{SB\_\-BinaryStats\_\-diff\_\-longstretch0} & Longest period of successive incremental decreases \\
+    \texttt{SB\_\-MotifThree\_\-quantile\_\-hh} & Shannon entropy of two successive letters in equiprobable 3-letter symbolization \\
+    \texttt{FC\_\-LocalSimple\_\-mean1\_\-tauresrat} & Change in correlation length after iterative differencing \\
+    \texttt{CO\_\-Embed2\_\-Dist\_\-tau\_\-d\_\-expfit\_\-meandiff} & Exponential fit to successive distances in 2-d embedding space \\
+    \texttt{SC\_\-FluctAnal\_\-2\_\-dfa\_\-50\_\-1\_\-2\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with DFA (50\% sampling) \\
+    \texttt{SC\_\-FluctAnal\_\-2\_\-rsrangefit\_\-50\_\-1\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with linearly rescaled range fits \\
+    \texttt{SB\_\-TransitionMatrix\_\-3ac\_\-sumdiagcov} & Trace of covariance of transition matrix between symbols in 3-letter alphabet \\
+    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \citet{wangStructureBasedStatisticalFeatures2007}   \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{\emph{catch22} features, adapted from \citet{lubbaCatch22CAnonicalTimeseries2019}.
+  }
+  \label{tab:catch22}
+\end{table}
+
+Precision and recall are best with this set of features.
+
+% Replace this with a bar plot
+\texttt{
+     Precision 0.8550 Recall 0.8475\\
+     Precision 0.8628 Recall 0.8644\\
+     Precision 0.8983 Recall 0.8814\\
+     Precision 0.9525 Recall 0.9492\\
+     Precision 0.9832 Recall 0.9828\\
+}
+
+Feature vectors seem to suggest that feature 10 (9 on the plots as arrays start from zero, \texttt{FC\_LocalSimple\_mean3\_stderr}, mean error from a rolling 3-sample mean forecasting) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
+[EXPLAIN WTF IS FC\_Local...]
+
+[SOME FIGURES MAY BE USEFUL HERE.]
+
+% ADAPTATION OF SVM: PREDICT PROBABILITIES
+I extended the support vector classifier by using the \texttt{predict\_proba = True} option [PLEASE REPLACE THIS WITH AN ACTUAL, VERBOSE EXPLANATION] so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
+
+The distribution of probabilities falls in a U-shape, which is good.
+
+[FIGURE: U-SHAPE HISTOGRAM FROM AC2022 POSTER.  ALSO INCLUDE THE RESULT FROM RANDOMLY ASSIGNING LABELS, WHICH SHOULD NOT GIVE A U-SHAPE, AS A CONTROL TO SHOW THAT THE MODEL IS ACTUALLY GOOD].
+
+In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by examples.
+
+[FIGURE: GALLERY OF TIME SERIES WITH 0\%, 20\% ... 100\% PROBABILITY OF OSCILLATION]
+
+% I mention modularity clustering before its appropriate section here.
+% I can create a reference to that section, or move this paragraph to that section and re-word it a bit so it fits the logical flow.
+The \texttt{catch22} features seem to function best so far.
+It makes sense -- given that I could plot cells in \texttt{catch22} feature space and perform modularity clustering, an SVM model based on drawing a `lane' between two clouds of points in \texttt{catch22} feature space should work.
+Furthermore, the publication that describes \texttt{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019} has tested the features' ability to categorise time series across multiple large datasets.
+
+(Better discussion here.  Sum up key points and discuss caveats.  Will probably be easier once I restructure this subsection.)
 
 \section{Characterisation: I have one time series -- what properties does it have?}
 \label{sec:analysis-characterisation}
@@ -196,7 +380,9 @@ With the improved ground truth, I will then compare the performance of the oscil
 % - Clustering approaches and algorithms -- compare and contrast
 % - Review existing methods first and then talk about the methods I tried, with results.
 
-% Copied from 10m report
+% Copied from 10m report.
+% - Supervised classification is going to be mostly killed because it belongs in a previous section, and I have better data than SM vs SC.
+% - Unsupervised clustering: the literature stays, but I'll try doing it on better data.  To add: UMAP.
 % ----------------------
 Graph-based Clustering of Oscillations Based on Feature Vectors
 %\label{sec:graphclustering}

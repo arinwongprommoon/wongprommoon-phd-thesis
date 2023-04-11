@@ -32,7 +32,10 @@
 - [[id:a2ff4a77-0aec-48ad-97bb-3be2607b9711][catch22]], [[id:2a084f2b-276e-4ed1-9d64-c94dcbfe0467][Catch22: CAnonical Time-series CHaracteristics]]
 - [[id:090bb791-8165-426e-81b4-8b12cd72669e][Identifying the most important catch22 features for classification]]
 - [[id:3a061286-1111-4d6c-b609-d6767a6e87e4][catch22 and mutual information on Alejandro's dataset]]
-- [[id:59052dc2-c889-4149-931a-5296f3293ae0][Using autoregressive model]], [[id:9194a49e-28b0-4222-836b-ad284c5745fc][Using autoregressive model with a population of cells]]
+- AR
+  - Search supervisors' meeting notes for the word 'autoregressive model'
+  - (surprisingly badly documented) [[id:59052dc2-c889-4149-931a-5296f3293ae0][Using autoregressive model]], [[id:9194a49e-28b0-4222-836b-ad284c5745fc][Using autoregressive model with a population of cells]]
+  - Scour through meeting presentations
 - [[id:e4edd764-acc2-4f02-82cd-3252d6f9ed2c][Using SVM with a population of cells]]
 ** Clustering
 - [[id:23d55690-a37a-426b-b11d-d3d155f28c75][UMAP to discover structures in flavin datasets]] -- completely forgot that I did this.  This is more like a tasklist + discussions with Diego & Evangelos.  It does reference some figures, which I haven't attached, so I may have to fish from emails to Diego.
