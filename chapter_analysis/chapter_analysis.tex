@@ -19,6 +19,24 @@ Classical methods such as Fourier analysis have been shown to be useful in chara
 However, for examples such as the yeast metabolic cycle, it is not feasible to record time series that include such a high number of oscillations; in this case, 5-10 oscillations are more realistic.
 As a result, methods like Fourier analysis only provide poor resolution for characteristics such as the period of oscillations.
 
+To discuss the process of analysing oscillatory time series in more detail, I will be using my data as an example and divide this chapter according to steps in the process.
+My data consists of 100--1000 time series of recorded flavin intensity changes for each cell, indicating the yeast metabolic cycle.
+Some experiments include HTB2::mCherry strain cells, and I obtain both flavin intensity changes and mCherry intensity changes from each cell;
+the mCherry indicating the cell division cycle.
+In these time series, there is a new time point every 5 minutes, for a total of 100--300 time points.
+These data are stored as dataframes for each condition (strain and media conditions), with the time series as rows and time points as columns --
+in the case of HTB2::mCherry cells, the flavin and mCherry time series are in separate dataframes.
+
+This chapter is divided into six sections, five of which correspond to a process and questions each process address:
+\begin{enumerate}
+  \item Cleaning: choosing data, filtering confounding trends, dealing with missing time points.
+  \item Classification: is my time series oscillatory?
+  \item Characterisation: I have one time series -- what properties does it have?
+  \item Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?
+  \item Correlation: I have two signals from the same cell -- what are their relationships to each other?
+  \item Summary: bringing it all together in a pipeline.
+\end{enumerate}
+
 \section{Cleaning: choosing data, filtering, missing time points}
 \label{sec:analysis-cleaning}
 
