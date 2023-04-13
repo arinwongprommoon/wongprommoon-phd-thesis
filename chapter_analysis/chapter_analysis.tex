@@ -100,6 +100,8 @@ Again, this is a judgement call, and this is based on looking at several experim
 
 To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
 However, there are challenges with classification of noisy biological time series with relatively few time points.
+In addition, such a classification task necessarily needs a cut-off somewhere, thus requiring judgement calls.
+You'd see this crop up in this section multiple times when I discuss my methods and I reveal different angles of approaching this.
 
 [A PARAGRAPH ON RHYTHMICITY TESTS -- BASE THIS OFF ZIELINSKI ET AL. 2014/2022.  START FROM eJTK.  THIS SHOULD BE A MINI-REVIEW.]
 
@@ -359,223 +361,105 @@ Furthermore, the publication that describes \texttt{catch22} features \parencite
 \section{Characterisation: I have one time series -- what properties does it have?}
 \label{sec:analysis-characterisation}
 
+The importance of characterising my time series is that I can quantify how my yeast metabolic cycles respond to genetic and nutrient perturbations.
+Here, I discuss characterising periods, phases, and amplitudes of the oscillations.
+Note that I discuss many of the same non-machine learning methods as I did for the classification section -- such methods are often developed for characterisation but offer features that are useful for classification, but it makes more sense in my thesis to order it this way because you'd usually try to filter out the non-oscillatory time series before trying to grab properties of the oscillatory ones.
+Then I will discuss the merit of combining several methods, given the limitations of analysing noisy biological time series that I have found.
+Characterisation is also intimately related to classification, in particular the machine learning methods: these methods can be adapted to tell apart different strains (presumably of different shapes) rather than telling apart oscillatory and non-oscillatory time series.
+
 % Literature review subsection
+% STEAL IDEAS FROM: ZIELINSKI ET AL. 2014
 \subsection{Periods, phases, amplitudes}
 \label{subsec:analysis-characterisation-quantities}
 
-\subsection{Combining methods to get a picture of periodicity}
-\label{subsec:analysis-characterisation-combined}
+% Copied from meeting with Zielinski.
+% TODO with this:
+% - adapt to prose
+% - support with evidence, e.g. discussion points from his paper and others
+Period
+\begin{itemize}
+\item Easy to obtain a fixed number from data because it is well-defined.
+\end{itemize}
+
+Shape
+\begin{itemize}
+\item Difficult to analyse and assign a meaningful quantitative measure.  Much easier to describe by eye.
+\begin{itemize}
+\item Often expressed as \emph{skewness} -- after treating one oscillation/peak as a distribution.  Such a peak can be obtained by averaging individual oscillations in a population.
+\end{itemize}
+\item My oscillations all have similar shapes: triangular \& symmetrical.
+\end{itemize}
 
 
-\section{Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?}
-\label{sec:analysis-clustering}
+Phase
+\begin{itemize}
+\item Tricky to obtain a fixed number from data.  The phase angle obtained can often be noisy/varied.
+\begin{itemize}
+\item Period estimator will always give an error.
+\item Modular arithmetic needed.
+\item We need multiple replicates -- plot populations of time series and see if they overlap.
+\end{itemize}
+\item Need an original/reference phase, which I \emph{need to choose} and it is not always super clear.  There is usually damping compared to this.
+\item Phase depends on the period too.  It could be:
+\begin{itemize}
+\item Absolute (hours), or
+\item With respect to the period (radians).  Normally, use this one, unless I am interested in response to a treatment.
+\end{itemize}
+\end{itemize}
 
-% Literature review subsection
-\subsection{(Literature)}
-\label{subsec:analysis-clustering-literature}
+Amplitude
+\begin{itemize}
+\item Easier to do and easy to explain.
+\item Likely the least important characteristic.
+\item Fit a cosine.  Works if shape doesn't change a lot.  Bad if oscillations are skewed.
+\end{itemize}
 
-\subsection{Machine learning approaches to clustering}
-\label{subsec:analysis-clustering-ml}
-% - Featurisation -- decisions to make
-% - Clustering approaches and algorithms -- compare and contrast
-% - Review existing methods first and then talk about the methods I tried, with results.
+Of these, finding the period is the easiest to do and most pertinent for my investigation of the yeast metabolic cycle, so I'm going to focus on this.
+Here is a review of some methods used in \textcite{zielinskiStrengthsLimitationsPeriod2014}
 
-% Copied from 10m report.
-% - Supervised classification is going to be mostly killed because it belongs in a previous section, and I have better data than SM vs SC.
-% - Unsupervised clustering: the literature stays, but I'll try doing it on better data.  To add: UMAP.
-% ----------------------
-Graph-based Clustering of Oscillations Based on Feature Vectors
-%\label{sec:graphclustering}
+% Copied from meeting with Zielinski.
+% I probably need to try out at least the first two
+FFT NLLS
+\begin{itemize}
+\item Try this first.  Common with circadian people.
+\item Enforces shapes.  Chooses number of sinusoids that fit the shape best, up to 5.  Then reports the best component.
+\item Has confidence intervals, e.g. relative amplitude error ($\leq$ 50\% is good).
+\item Skewness doesn't affect period.
+\end{itemize}
 
-% mini-review -- IT'S PRETTY UNWIELDY AT THIS POINT, AND REFERENCES CONCEPTS NOT DISCUSSED TILL LATER
-Clustering of time series has been used to identify groupings within a set of time series \citep{wangStructureBasedStatisticalFeatures2007}, including biological time series \citep{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \citep{tuLogicYeastMetabolic2005}.
-However, \citet{wangStructureBasedStatisticalFeatures2007} and \citet{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
-Though \citet{shafieiDopamineSignalingModulates2019} used modularity clustering \citep{newmanModularityCommunityStructure2006}, the method was based on one time series feature, which may not adequately capture the characteristics of the time series.
+MFourFit
+\begin{itemize}
+\item Uses harmonics.  Can use the harmonics to describe shapes of oscillations.
+\item Fits only 1 component, unlike FFT NLLS.  Period and phase interpreted from the main sinusoid component.
+\item Enforces shapes.
+\item Skewness doesn't affect period.
+\end{itemize}
 
-Thus, I converted each time series of flavin autofluorescence to a vector of features, and represented the vectors as nodes on a geometric graph.
-Such a geometric graph may function as a visualisation tool as well.
+MESA
+\begin{itemize}
+\item Fit autoregressive model then gets period from it.
+\item Scours periods, then selects model that does best.
+\item Empirically does well and fast.
+\item Is based on a very different principle than MFourFit, so if both methods agree on the value of the period, then we can be confident that we have the correct period.
+\end{itemize}
 
-% FIGURE: pipeline and options.  It's rather difficult to visualise what happens, so such a figure, like the one I often use in the lab presentations in the summer, will be helpful.  Though may be more impactful in the presentation rather than in this report.
+Lomb-Scargle periodogram
+\begin{itemize}
+\item Fits one sinusoid, assumes a period.
+\item Choose one that gives least error.
+\end{itemize}
 
-\subsubsection{Supervised Classification}
-\label{sec:graphclustering-supervised}
+As I've already discussed the FFT and autoregressive model, I am now going to focus on the autocorrelation function.
 
-I employed the \emph{hctsa} toolbox \citep{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
-This toolbox contains 7701 features defined from across the time series analysis literature.
-I focused on the 22-feature \emph{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
-\citet{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
-This feature set excludes features that are dependent on mean or spread.
+\subsection{Autocorrelation function}
+\label{subsec:analysis-characterisation-acf}
 
-% sort these by accuracy. (jesus christ this looks like a fuckload of work...)
-\begin{table}[htbp]
-  \small
-  \centering
-  \begin{tabularx}{\linewidth}{bbS}
-    % To do: make numbers align right.  Also I'm not really sure if should be putting the accuracies here when I have them in a violin plot...
-    \toprule
-    Feature name & Description & Accuracy\\
-    \midrule
-    \texttt{DN\_\-HistogramMode\_\-5} & Mode of z-scored distribution (5-bin histogram) &  46.43 \\
-    \texttt{DN\_\-HistogramMode\_\-10} & Mode of z-scored distribution (10-bin histogram) & 53.15 \\
-    \texttt{SB\_\-BinaryStats\_\-mean\_\-longstretch1} & Longest period of consecutive values above the mean  & 66.47 \\
-    \texttt{DN\_\-OutlierInclude\_\-p\_\-001\_\-mdrmd} & Time intervals between successive extreme events above the mean & 57.80 \\
-    \texttt{DN\_\-OutlierInclude\_\-n\_\-001\_\-mdrmd} & Time intervals between successive extreme events below the mean & 56.45 \\
-    \texttt{first\_\-1e\_\-ac} & First 1/e crossing of autocorrelation function & 78.97 \\
-    \texttt{firstMin\_\-acf} & First minimum of autocorrelation function & 81.96 \\
-    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-area\_\-5\_\-1} & Total power in lowest fifth of frequencies in the Fourier power spectrum & 60.57 \\
-    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} & Centroid of the Fourier power spectrum & 81.41 \\
-    \texttt{FC\_\-LocalSimple\_\-mean3\_\-stderr} & Mean error from a rolling 3-sample mean forecasting & 71.73 \\
-    \texttt{CO\_\-trev\_\-1\_\-num} & Time-reversibility statistic, $\langle(x_{t+1} - x_t)^3\rangle_t$ & 65.42 \\
-    \texttt{CO\_\-HistogramAMI\_\-even\_\-2\_\-5} & Automutual information, $m = 2, \tau = 5$ & 77.01 \\
-    \texttt{IN\_\-AutoMutualInfoStats\_\-40\_\-gaussian\_\-fmmi} & First minimum of the automutual information function & 75.85 \\
-    \texttt{MD\_\-hrv\_\-classic\_\-pnn40} & Proportion of successive differences exceeding $0.04\sigma$ & 47.05 \\
-    \texttt{SB\_\-BinaryStats\_\-diff\_\-longstretch0} & Longest period of successive incremental decreases & 55.69 \\
-    \texttt{SB\_\-MotifThree\_\-quantile\_\-hh} & Shannon entropy of two successive letters in equiprobable 3-letter symbolization & 49.63 \\
-    \texttt{FC\_\-LocalSimple\_\-mean1\_\-tauresrat} & Change in correlation length after iterative differencing & 76.07 \\
-    \texttt{CO\_\-Embed2\_\-Dist\_\-tau\_\-d\_\-expfit\_\-meandiff} & Exponential fit to successive distances in 2-d embedding space & 62.65 \\
-    \texttt{SC\_\-FluctAnal\_\-2\_\-dfa\_\-50\_\-1\_\-2\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with DFA (50\% sampling) & 59.34 \\
-    \texttt{SC\_\-FluctAnal\_\-2\_\-rsrangefit\_\-50\_\-1\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with linearly rescaled range fits & 72.54 \\
-    \texttt{SB\_\-TransitionMatrix\_\-3ac\_\-sumdiagcov} & Trace of covariance of transition matrix between symbols in 3-letter alphabet & 57.40 \\
-    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \citet{wangStructureBasedStatisticalFeatures2007}   & 68.32 \\
-    \bottomrule \\
-  \end{tabularx}
-  \caption{\emph{catch22} features, adapted from \citet{lubbaCatch22CAnonicalTimeseries2019}.
-  The accuracies (\%) of the linear classifiers based on each feature, tasked to discriminate between cells grown in SC and cells grown in SM, are indicated.}
-  \label{tab:catch22}
-\end{table}
-
-%----- SC VS SM -----
-%I found that \emph{catch22} features have a varied ability to distinguish experimentally relevant groupings in the dataset. %; however, this may be attributed in part to the limitations of the experiments.  % strong link to discussion --> what experiments to do to rectify this
-Feature extraction was able to discriminate between cells grown in complete and minimal media.
-A linear support vector machine (SVM) trained on the 22-element feature vectors was able to classify the two groups with a mean accuracy of 76.67\%, using 10-fold cross validation.
-For comparison, the accuracy of random guessing is 50.00\%.
-This classification performance can be shown by a confusion matrix (figure \ref{fig:EffectofMediaCM}), which refers to a contingency table that shows the numbers of instances predicted to belong in each group in rows, and shows the numbers of instances in actual groups in columns.
-Furthermore, \texttt{first\-Min\_\-acf} and \texttt{SP\_\-Sum\-ma\-ries\_\-welch\_\-rect\_\-cen\-troid} (table \ref{tab:catch22}) had the greatest linear classifier accuracies.
-Cells in minimal media had greater \texttt{first\-Min\_\-acf} values than cells in complete media, and lower \texttt{SP\_\-Sum\-ma\-ries\_\-welch\_\-rect\_\-cen\-troid} values (figure \ref{fig:EffectofMediaTopFeatures}).
-These values were consistent with cells in minimal media having longer oscillation periods (figure \ref{fig:catch22validation}).
-These results suggest that the period was an important defining feature for the two groups of cells.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.3\textwidth]{10m_EffectofMediaCM}
-  \caption{Linear support vector machine trained on \emph{catch22} features performed well at classifying cells cultured in complete (SC) and minimal (SM) media.
-    Confusion matrix shows one out of ten repeats.
-    For each row/column, green numbers indicate the proportion of correct identifications, and red numbers indicate the proportion of incorrect identifications.}
-  \label{fig:EffectofMediaCM}
-\end{figure}
-% Remove top part of figure using Inkscape or something
-% ideally I'd generate a figure in which less space is wasted, but I don't have the time now...
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.45\textwidth]{10m_EffectofMediaTopFeatures}
-  \caption{\texttt{first\-Min\_\-acf} and \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} performed best at classifying cells cultured in complete and minimal media because the distributions of feature values differed the most between the two groups.
-    Numbers above violin plots indicate mean linear classification accuracy.}
-  \label{fig:EffectofMediaTopFeatures}
-\end{figure}
-% might have to crop this
-
-% :: BIG NEW FIGURE ::
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{10m_catch22validation}
-  \caption{Comparison of time series, autocorrelation function, and Fourier spectrum for a cell cultured in minimal media (SM) vs a cell cultured in complete media (SC)}
-  \label{fig:catch22validation}
-\end{figure}
-
-%----- EXPOSURE TIME -----
-In contrast, \emph{catch22} features performed poorly at discriminating between the three groups defined by flavin LED exposure time (\SI{60}{\milli\second}, \SI{120}{\milli\second}, \SI{180}{\milli\second}) in the set of cells cultured in complete media (SVM: 32.69\% accuracy, figure \ref{fig:FlavinExpostestCM}; accuracy of random guessing is 33.33\%).
-% [I'm not sure if I should include this segue to using full-set hctsa.  I didn't mention it in the oscillating vs non-oscillating section.]
-%With the full \emph{hctsa} feature set, the 25 features with the greatest mean linear classification accuracy in discriminating groups defined by exposure time were dependent on mean and spread.
-%Having features that best distinguish the groups be dependent on mean and spread was consistent with cells subjected to longer exposure times exhibiting flavin signals of higher intensity %(mean raw readings for \SI{60}{\milli\second}: 0.63 AU, \SI{120}{\milli\second}: 1.3 AU, \SI{180}{\milli\second}: 1.7 AU;
-%(standard deviations for time series from \SI{60}{\milli\second}: 0.040 AU, \SI{120}{\milli\second}: 0.067 AU, \SI{180}{\milli\second}: 0.085 AU). % is this needed?  is this too detailed?
-These findings suggest that exposure time did not affect the characteristics of flavin autofluorescence traces apart from fluorescence intensity.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.4\textwidth]{10m_FlavinExpostestCM}
-  \caption{Linear support vector machine trained on \emph{catch22} features performed poorly at classifying cells by LED exposure time.
-    Confusion matrix shows one out of ten repeats.
-    For each row/column, green numbers indicate the proportion of correct identifications, and red numbers indicate the proportion of incorrect identifications.}
-  \label{fig:FlavinExpostestCM}
-\end{figure}
-
-%----- OSCILLATING VS NON-OSCILLATING -----
-
-Discrimination between manually-categorised oscillating and non-oscillating flavin autofluorescence traces was also poor (SVM: 66.91\% accuracy, figure \ref{fig:OscillatingCM}; accuracy of random guessing is 50.00\%). %, and using the full \emph{hctsa} feature set was no better (SVM: XX.XX\% accuracy). % Add numbers.  (not sure of violin plots and confusion matrices will be very informative)
-These results suggested that using 22 %or even 7700
-features across disciplines did not improve on the oscillation classifier (section [INSERT REF HERE]), which was effectively based on one feature, namely, the peak of the normalised classical periodogram.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.4\textwidth]{10m_OscillatingCM}
-  \caption{Linear support vector machine trained on \emph{catch22} features performed poorly at classifying oscillating and non-oscillating time series.
-    Confusion matrix shows one out of ten repeats.
-    For each row/column, green numbers indicate the proportion of correct identifications, and red numbers indicate the proportion of incorrect identifications.}
-  \label{fig:OscillatingCM}
-\end{figure}
-
-\subsubsection{Unsupervised Clustering}
-\label{sec:graphclustering-unsupervised}
-
-Modularity clustering is the problem of partitioning a graph into clusters in order to optimise a `modularity' value.
-This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \citep{newmanModularityCommunityStructure2006}.
-The general Louvain algorithm \citep{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
-This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \citep{fortunatoResolutionLimitCommunity2007}.
-
-Unsupervised graph-based clustering suggested that the division between complete and minimal media was dominant among time series of flavin autofluorescence. %(figure \ref{fig:EffectofMediaClusters}).
-I constructed an incomplete graph to represent the pairwise similarity between time series based on the \emph{catch22} feature vectors.
-Then, I identified communities in the resulting network using the general Louvain algorithm.
-When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to complete and minimal media groups (figure \ref{fig:EffectofMediaClusters}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
-% (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
-Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.5\textwidth]{10m_EffectofMediaClusters}
-  \caption{Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \emph{catch22} vectors close to labels defined by media.}
-  \label{fig:EffectofMediaClusters}
-\end{figure}
-
-Indeed, I found that the method was able to distinguish time series generated in my project from time series obtained by \citet{baumgartnerFlavinbasedMetabolicCycles2018} (figure \ref{fig:DistanceMatrixBaumgartner}, table \ref{tab:ClusterBaumgartner})
-However, this ability to distinguish the data sources may have been because the data from different sources were processed in different ways.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.6\textwidth]{10m_DistanceMatrixBaumgartner}
-  \caption{Graph-based clustering was able to partition minimal media time series, complete media time series, and time series from \citet{baumgartnerFlavinbasedMetabolicCycles2018}.
-    This distance matrix is based on cosine distances between \emph{catch22} feature vectors for pairs of time series.  Distances between 0 and 1 (legend, right) are represented as colours.}
-  \label{fig:DistanceMatrixBaumgartner}
-\end{figure}
-
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}[h]{rrrr}
-    & SM & SC & Baumgartner et al.\\
-    Cluster 1 & 1 & 11 & 141\\
-    Cluster 2 & 63 & 28 & 6\\
-    Cluster 3 & 56 & 22 & 8\\
-    Cluster 4 & 79 & 4 & 0\\
-    Cluster 5 & 44 & 4 & 1
-  \end{tabular}
-  \caption{Graph-based clustering is able to partition minimal media time series, complete media time series, and time series from \citet{baumgartnerFlavinbasedMetabolicCycles2018}.  Table shows one graph partition returned by the general Louvain algorithm.  The graph was constructed according to section [METHODS: HCTSA].  In this case, the default value for the resolution parameter was used.}
-  \label{tab:ClusterBaumgartner}
-\end{table}
-% Rand index?
-
-\section{Correlation: I have two signals from the same cell -- what are their relationships to each other?}
-\label{sec:analysis-correlation}
-% - Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
-
-% Copied from project: 'Modelling cross-correlation between sinusoids and relaxation oscillators',
-% or, my 'synthetic oscillations report'.
-% Currently doesn't really fit the thesis so much -- it comes with its own subsections, and this part can definitely be shorter.  Certainly, there shouldn't be a 'results' subsection.
 This report explores the cross-correlation and autocorrelation functions, adapted to a population of noisy time series, as a method to characterise the periodicity and heterogeneity of oscillatory time series.  The report does so through simulated oscillatory time series based on models with very well-characterised behaviours: a harmonic oscillator and a relaxation oscillator.  The hope is that these synthetic time series can adequately model flavin fluorescence oscillations and the behaviour of histones during the cell division cycle.
 
-\subsection{Mathematical basis}
-\label{sec:analysis-correlation-maths}
-\subsubsection{Simulating oscillators}
-\label{sec:analysis-correlation-maths-osc}
+\subsubsection{Mathematical basis}
+\label{subsubsec:analysis-correlation-maths}
+% \subsubsection{Simulating oscillators}
+% \label{sec:analysis-correlation-maths-osc}
 
 I choose the harmonic oscillator and the FitzHugh-Nagumo model to investigate because they are simple, well-characterised, and mimic the biological time series that I am interested in.  Here I detail the rationale behind my choices and describe the oscillators I choose.
 
@@ -623,8 +507,8 @@ and the parameters include \(RI_{\mathrm{ext}}\) (external stimulus), \(\tau\), 
 This model produces time series \(v(t)\) that is a relaxation oscillator [why relaxation oscillator?].
 \end{enumerate}
 
-\subsubsection{Generating noise}
-\label{sec:analysis-correlation-maths-noise}
+% \subsubsection{Generating noise}
+% \label{sec:analysis-correlation-maths-noise}
 
 Biological time series, and certainly the ones that I study, have noise.  So, it makes sense to add noise to our models as well, because noise affects the behaviour of models and the analysis methods applied to the time series generated by our models.
 
@@ -961,6 +845,240 @@ My intention is to have it model periodic changes in histone 2B intensity levels
 \end{center}
 \end{enumerate}
 
+% \subsection{Discussion}
+% \label{sec:analysis-correlation-discussion}
+
+My investigation aims to address a signal processing question.  Therefore, for the purposes of my investigation, it is not important that these oscillators function as an accurate model of the biological systems responsible for the biological oscillations observed.  Indeed, given that up to 50 flavoproteins may be responsible for flavin autofluorescence, a component of such a poorly biochemically characterised system like the yeast metabolic cycle, it is not feasible to find a mathematical model that accurately describes the biological oscillations.
+
+So long as the time series resemble the real oscillators of interest, the hope is that the conclusions from investigating our simple \& well-characterised models may answer questions on the behaviour and relationships between our real oscillators. [this sentence is a bit vague, but will revisit this after I weave together the story]  Potentially, this investigation can be extended to oscillators modelled by other systems of differential equations that describe other biological rhythms.
+
+
+\subsection{Combining methods to get a picture of periodicity}
+\label{subsec:analysis-characterisation-combined}
+
+As each method comes with own advantages and limitations -- especially apparent when we're dealing with noisy biological data -- it is useful to use several methods in concert get an idea of the periodicity (or other properties) of the oscillations.
+For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator.
+The autocorrelation function, in particular, has been used in the yeast metabolic cycle literature, e.g. \textcite{papagiannakisAutonomousMetabolicOscillations2017}.
+
+Here, I consider combining the autocorrelation function and the Fourier transform, and will use this in my analysis of biological data.
+
+[FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
+
+[FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
+
+\subsection{Revisiting classification to characterise differences between conditions}
+\label{subsec:analysis-characterisation-classification_redux}
+
+(This section should be similar to the machine learning section above, but adapted for differences between conditions or strains.)
+
+
+\section{Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?}
+\label{sec:analysis-clustering}
+
+% Literature review subsection
+\subsection{(Literature)}
+\label{subsec:analysis-clustering-literature}
+
+\subsection{Machine learning approaches to clustering}
+\label{subsec:analysis-clustering-ml}
+% - Featurisation -- decisions to make
+% - Clustering approaches and algorithms -- compare and contrast
+% - Review existing methods first and then talk about the methods I tried, with results.
+
+% Copied from 10m report.
+% - Supervised classification is going to be mostly killed because it belongs in a previous section, and I have better data than SM vs SC.
+% - Unsupervised clustering: the literature stays, but I'll try doing it on better data.  To add: UMAP.
+% ----------------------
+Graph-based Clustering of Oscillations Based on Feature Vectors
+%\label{sec:graphclustering}
+
+% mini-review -- IT'S PRETTY UNWIELDY AT THIS POINT, AND REFERENCES CONCEPTS NOT DISCUSSED TILL LATER
+Clustering of time series has been used to identify groupings within a set of time series \citep{wangStructureBasedStatisticalFeatures2007}, including biological time series \citep{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \citep{tuLogicYeastMetabolic2005}.
+However, \citet{wangStructureBasedStatisticalFeatures2007} and \citet{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
+Though \citet{shafieiDopamineSignalingModulates2019} used modularity clustering \citep{newmanModularityCommunityStructure2006}, the method was based on one time series feature, which may not adequately capture the characteristics of the time series.
+
+Thus, I converted each time series of flavin autofluorescence to a vector of features, and represented the vectors as nodes on a geometric graph.
+Such a geometric graph may function as a visualisation tool as well.
+
+% FIGURE: pipeline and options.  It's rather difficult to visualise what happens, so such a figure, like the one I often use in the lab presentations in the summer, will be helpful.  Though may be more impactful in the presentation rather than in this report.
+
+\subsubsection{Supervised Classification}
+\label{sec:graphclustering-supervised}
+
+I employed the \emph{hctsa} toolbox \citep{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
+This toolbox contains 7701 features defined from across the time series analysis literature.
+I focused on the 22-feature \emph{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
+\citet{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
+This feature set excludes features that are dependent on mean or spread.
+
+% sort these by accuracy. (jesus christ this looks like a fuckload of work...)
+\begin{table}[htbp]
+  \small
+  \centering
+  \begin{tabularx}{\linewidth}{bbS}
+    % To do: make numbers align right.  Also I'm not really sure if should be putting the accuracies here when I have them in a violin plot...
+    \toprule
+    Feature name & Description & Accuracy\\
+    \midrule
+    \texttt{DN\_\-HistogramMode\_\-5} & Mode of z-scored distribution (5-bin histogram) &  46.43 \\
+    \texttt{DN\_\-HistogramMode\_\-10} & Mode of z-scored distribution (10-bin histogram) & 53.15 \\
+    \texttt{SB\_\-BinaryStats\_\-mean\_\-longstretch1} & Longest period of consecutive values above the mean  & 66.47 \\
+    \texttt{DN\_\-OutlierInclude\_\-p\_\-001\_\-mdrmd} & Time intervals between successive extreme events above the mean & 57.80 \\
+    \texttt{DN\_\-OutlierInclude\_\-n\_\-001\_\-mdrmd} & Time intervals between successive extreme events below the mean & 56.45 \\
+    \texttt{first\_\-1e\_\-ac} & First 1/e crossing of autocorrelation function & 78.97 \\
+    \texttt{firstMin\_\-acf} & First minimum of autocorrelation function & 81.96 \\
+    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-area\_\-5\_\-1} & Total power in lowest fifth of frequencies in the Fourier power spectrum & 60.57 \\
+    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} & Centroid of the Fourier power spectrum & 81.41 \\
+    \texttt{FC\_\-LocalSimple\_\-mean3\_\-stderr} & Mean error from a rolling 3-sample mean forecasting & 71.73 \\
+    \texttt{CO\_\-trev\_\-1\_\-num} & Time-reversibility statistic, $\langle(x_{t+1} - x_t)^3\rangle_t$ & 65.42 \\
+    \texttt{CO\_\-HistogramAMI\_\-even\_\-2\_\-5} & Automutual information, $m = 2, \tau = 5$ & 77.01 \\
+    \texttt{IN\_\-AutoMutualInfoStats\_\-40\_\-gaussian\_\-fmmi} & First minimum of the automutual information function & 75.85 \\
+    \texttt{MD\_\-hrv\_\-classic\_\-pnn40} & Proportion of successive differences exceeding $0.04\sigma$ & 47.05 \\
+    \texttt{SB\_\-BinaryStats\_\-diff\_\-longstretch0} & Longest period of successive incremental decreases & 55.69 \\
+    \texttt{SB\_\-MotifThree\_\-quantile\_\-hh} & Shannon entropy of two successive letters in equiprobable 3-letter symbolization & 49.63 \\
+    \texttt{FC\_\-LocalSimple\_\-mean1\_\-tauresrat} & Change in correlation length after iterative differencing & 76.07 \\
+    \texttt{CO\_\-Embed2\_\-Dist\_\-tau\_\-d\_\-expfit\_\-meandiff} & Exponential fit to successive distances in 2-d embedding space & 62.65 \\
+    \texttt{SC\_\-FluctAnal\_\-2\_\-dfa\_\-50\_\-1\_\-2\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with DFA (50\% sampling) & 59.34 \\
+    \texttt{SC\_\-FluctAnal\_\-2\_\-rsrangefit\_\-50\_\-1\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with linearly rescaled range fits & 72.54 \\
+    \texttt{SB\_\-TransitionMatrix\_\-3ac\_\-sumdiagcov} & Trace of covariance of transition matrix between symbols in 3-letter alphabet & 57.40 \\
+    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \citet{wangStructureBasedStatisticalFeatures2007}   & 68.32 \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{\emph{catch22} features, adapted from \citet{lubbaCatch22CAnonicalTimeseries2019}.
+  The accuracies (\%) of the linear classifiers based on each feature, tasked to discriminate between cells grown in SC and cells grown in SM, are indicated.}
+  \label{tab:catch22}
+\end{table}
+
+%----- SC VS SM -----
+%I found that \emph{catch22} features have a varied ability to distinguish experimentally relevant groupings in the dataset. %; however, this may be attributed in part to the limitations of the experiments.  % strong link to discussion --> what experiments to do to rectify this
+Feature extraction was able to discriminate between cells grown in complete and minimal media.
+A linear support vector machine (SVM) trained on the 22-element feature vectors was able to classify the two groups with a mean accuracy of 76.67\%, using 10-fold cross validation.
+For comparison, the accuracy of random guessing is 50.00\%.
+This classification performance can be shown by a confusion matrix (figure \ref{fig:EffectofMediaCM}), which refers to a contingency table that shows the numbers of instances predicted to belong in each group in rows, and shows the numbers of instances in actual groups in columns.
+Furthermore, \texttt{first\-Min\_\-acf} and \texttt{SP\_\-Sum\-ma\-ries\_\-welch\_\-rect\_\-cen\-troid} (table \ref{tab:catch22}) had the greatest linear classifier accuracies.
+Cells in minimal media had greater \texttt{first\-Min\_\-acf} values than cells in complete media, and lower \texttt{SP\_\-Sum\-ma\-ries\_\-welch\_\-rect\_\-cen\-troid} values (figure \ref{fig:EffectofMediaTopFeatures}).
+These values were consistent with cells in minimal media having longer oscillation periods (figure \ref{fig:catch22validation}).
+These results suggest that the period was an important defining feature for the two groups of cells.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.3\textwidth]{10m_EffectofMediaCM}
+  \caption{Linear support vector machine trained on \emph{catch22} features performed well at classifying cells cultured in complete (SC) and minimal (SM) media.
+    Confusion matrix shows one out of ten repeats.
+    For each row/column, green numbers indicate the proportion of correct identifications, and red numbers indicate the proportion of incorrect identifications.}
+  \label{fig:EffectofMediaCM}
+\end{figure}
+% Remove top part of figure using Inkscape or something
+% ideally I'd generate a figure in which less space is wasted, but I don't have the time now...
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{10m_EffectofMediaTopFeatures}
+  \caption{\texttt{first\-Min\_\-acf} and \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} performed best at classifying cells cultured in complete and minimal media because the distributions of feature values differed the most between the two groups.
+    Numbers above violin plots indicate mean linear classification accuracy.}
+  \label{fig:EffectofMediaTopFeatures}
+\end{figure}
+% might have to crop this
+
+% :: BIG NEW FIGURE ::
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{10m_catch22validation}
+  \caption{Comparison of time series, autocorrelation function, and Fourier spectrum for a cell cultured in minimal media (SM) vs a cell cultured in complete media (SC)}
+  \label{fig:catch22validation}
+\end{figure}
+
+%----- EXPOSURE TIME -----
+In contrast, \emph{catch22} features performed poorly at discriminating between the three groups defined by flavin LED exposure time (\SI{60}{\milli\second}, \SI{120}{\milli\second}, \SI{180}{\milli\second}) in the set of cells cultured in complete media (SVM: 32.69\% accuracy, figure \ref{fig:FlavinExpostestCM}; accuracy of random guessing is 33.33\%).
+% [I'm not sure if I should include this segue to using full-set hctsa.  I didn't mention it in the oscillating vs non-oscillating section.]
+%With the full \emph{hctsa} feature set, the 25 features with the greatest mean linear classification accuracy in discriminating groups defined by exposure time were dependent on mean and spread.
+%Having features that best distinguish the groups be dependent on mean and spread was consistent with cells subjected to longer exposure times exhibiting flavin signals of higher intensity %(mean raw readings for \SI{60}{\milli\second}: 0.63 AU, \SI{120}{\milli\second}: 1.3 AU, \SI{180}{\milli\second}: 1.7 AU;
+%(standard deviations for time series from \SI{60}{\milli\second}: 0.040 AU, \SI{120}{\milli\second}: 0.067 AU, \SI{180}{\milli\second}: 0.085 AU). % is this needed?  is this too detailed?
+These findings suggest that exposure time did not affect the characteristics of flavin autofluorescence traces apart from fluorescence intensity.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.4\textwidth]{10m_FlavinExpostestCM}
+  \caption{Linear support vector machine trained on \emph{catch22} features performed poorly at classifying cells by LED exposure time.
+    Confusion matrix shows one out of ten repeats.
+    For each row/column, green numbers indicate the proportion of correct identifications, and red numbers indicate the proportion of incorrect identifications.}
+  \label{fig:FlavinExpostestCM}
+\end{figure}
+
+%----- OSCILLATING VS NON-OSCILLATING -----
+
+Discrimination between manually-categorised oscillating and non-oscillating flavin autofluorescence traces was also poor (SVM: 66.91\% accuracy, figure \ref{fig:OscillatingCM}; accuracy of random guessing is 50.00\%). %, and using the full \emph{hctsa} feature set was no better (SVM: XX.XX\% accuracy). % Add numbers.  (not sure of violin plots and confusion matrices will be very informative)
+These results suggested that using 22 %or even 7700
+features across disciplines did not improve on the oscillation classifier (section [INSERT REF HERE]), which was effectively based on one feature, namely, the peak of the normalised classical periodogram.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.4\textwidth]{10m_OscillatingCM}
+  \caption{Linear support vector machine trained on \emph{catch22} features performed poorly at classifying oscillating and non-oscillating time series.
+    Confusion matrix shows one out of ten repeats.
+    For each row/column, green numbers indicate the proportion of correct identifications, and red numbers indicate the proportion of incorrect identifications.}
+  \label{fig:OscillatingCM}
+\end{figure}
+
+\subsubsection{Unsupervised Clustering}
+\label{sec:graphclustering-unsupervised}
+
+Modularity clustering is the problem of partitioning a graph into clusters in order to optimise a `modularity' value.
+This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \citep{newmanModularityCommunityStructure2006}.
+The general Louvain algorithm \citep{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
+This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \citep{fortunatoResolutionLimitCommunity2007}.
+
+Unsupervised graph-based clustering suggested that the division between complete and minimal media was dominant among time series of flavin autofluorescence. %(figure \ref{fig:EffectofMediaClusters}).
+I constructed an incomplete graph to represent the pairwise similarity between time series based on the \emph{catch22} feature vectors.
+Then, I identified communities in the resulting network using the general Louvain algorithm.
+When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to complete and minimal media groups (figure \ref{fig:EffectofMediaClusters}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
+% (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
+Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{10m_EffectofMediaClusters}
+  \caption{Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \emph{catch22} vectors close to labels defined by media.}
+  \label{fig:EffectofMediaClusters}
+\end{figure}
+
+Indeed, I found that the method was able to distinguish time series generated in my project from time series obtained by \citet{baumgartnerFlavinbasedMetabolicCycles2018} (figure \ref{fig:DistanceMatrixBaumgartner}, table \ref{tab:ClusterBaumgartner})
+However, this ability to distinguish the data sources may have been because the data from different sources were processed in different ways.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.6\textwidth]{10m_DistanceMatrixBaumgartner}
+  \caption{Graph-based clustering was able to partition minimal media time series, complete media time series, and time series from \citet{baumgartnerFlavinbasedMetabolicCycles2018}.
+    This distance matrix is based on cosine distances between \emph{catch22} feature vectors for pairs of time series.  Distances between 0 and 1 (legend, right) are represented as colours.}
+  \label{fig:DistanceMatrixBaumgartner}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}[h]{rrrr}
+    & SM & SC & Baumgartner et al.\\
+    Cluster 1 & 1 & 11 & 141\\
+    Cluster 2 & 63 & 28 & 6\\
+    Cluster 3 & 56 & 22 & 8\\
+    Cluster 4 & 79 & 4 & 0\\
+    Cluster 5 & 44 & 4 & 1
+  \end{tabular}
+  \caption{Graph-based clustering is able to partition minimal media time series, complete media time series, and time series from \citet{baumgartnerFlavinbasedMetabolicCycles2018}.  Table shows one graph partition returned by the general Louvain algorithm.  The graph was constructed according to section [METHODS: HCTSA].  In this case, the default value for the resolution parameter was used.}
+  \label{tab:ClusterBaumgartner}
+\end{table}
+% Rand index?
+
+\section{Correlation: I have two signals from the same cell -- what are their relationships to each other?}
+\label{sec:analysis-correlation}
+% - Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
+
+% Copied from project: 'Modelling cross-correlation between sinusoids and relaxation oscillators',
+% or, my 'synthetic oscillations report'.
+% Currently doesn't really fit the thesis so much -- it comes with its own subsections, and this part can definitely be shorter.  Certainly, there shouldn't be a 'results' subsection.
+
+% (some text used to be here)
+
+
 \item Cross-correlation between harmonic and FitzHugh-Nagumo oscillators
 \label{sec:orgd5cc0d1}
 
@@ -1159,26 +1277,6 @@ where \(a\) and \(v\) are the two time series to be correlated, and \(\overline{
 \end{enumerate}
 \end{enumerate}
 
-\subsection{Discussion}
-\label{sec:analysis-correlation-discussion}
-
-\subsubsection{Choice of oscillators}
-\label{sec:analysis-correlation-discussion-osc}
-
-My investigation aims to address a signal processing question.  Therefore, for the purposes of my investigation, it is not important that these oscillators function as an accurate model of the biological systems responsible for the biological oscillations observed.  Indeed, given that up to 50 flavoproteins may be responsible for flavin autofluorescence, a component of such a poorly biochemically characterised system like the yeast metabolic cycle, it is not feasible to find a mathematical model that accurately describes the biological oscillations.
-
-So long as the time series resemble the real oscillators of interest, the hope is that the conclusions from investigating our simple \& well-characterised models may answer questions on the behaviour and relationships between our real oscillators. [this sentence is a bit vague, but will revisit this after I weave together the story]  Potentially, this investigation can be extended to oscillators modelled by other systems of differential equations that describe other biological rhythms.
-
-\subsubsection{Adding noise}
-\label{sec:analysis-corelation-discussion-noise}
-
-Alternatives considered:
-
-\begin{enumerate}
-\item Make parameter stochastic, i.e. the value changes over the time steps (elaborate more).  Justification: noisy parameters describe what happens in biological processes.  Why rejected: doesn't actually make the time series noisy.
-
-\item Stochastic differential equations.  Why rejected: too much work for what it's worth.
-\end{enumerate}
 
 \section{Summary}
 \label{sec:analysis-summary}
