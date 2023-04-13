@@ -25,9 +25,9 @@
 ** Characterisation
 - [[id:96bf0dac-44dc-4163-87a5-5e9b02f52cd2][MEETING 2022-05-05 Tomasz Zielinski]]
 - [[id:dccd3e4a-645a-4f4e-8ea3-92ce46675ca2][MEETING_2022-06-01 Andrew Millar]]
-- [[id:0fa47c5c-6d4c-4948-8037-5fe2933f41fc][Test_for_periodocities]]
 ** Classification
 - [[id:c4868d23-6b69-4d78-bcdb-a4037b8b9b1e][Methods to classify oscillations]] -- 'paper idea'
+- [[id:0fa47c5c-6d4c-4948-8037-5fe2933f41fc][Test_for_periodocities]]
 - [[id:55b40a52-0793-4652-b58c-e12172e107ff][Time series classification]] -- good for literature review
 - [[id:a2ff4a77-0aec-48ad-97bb-3be2607b9711][catch22]], [[id:2a084f2b-276e-4ed1-9d64-c94dcbfe0467][Catch22: CAnonical Time-series CHaracteristics]]
 - [[id:090bb791-8165-426e-81b4-8b12cd72669e][Identifying the most important catch22 features for classification]]
