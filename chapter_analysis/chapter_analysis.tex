@@ -1225,12 +1225,20 @@ This method is used a lot in econometrics and climate science [CITATIONS NEEDED]
 \label{sec:analysis-summary}
 % - Justification of each steps of my pipeline
 
-% Writing idea: take intro/discussion (or what I have in my head as intro/discusion parts) of each section of this chapter and synthesise a story.  I'll probably be able to come up with something when my brain is less dead.
-Can be seen as part of a long data analysis pipeline, to be used in the biological results chapter.
-This can be an interesting software engineering question to bring it all together.
+% I expect this will be improved when I go through the whole analysis again and get good take-home messages in my head.
+I've described the way that I process my single-cell time series data, broken down into five main steps: cleaning data, classification of oscillatory time series, characterisation of features of oscillatory time series, clustering of similar time series in a large dataset, and correlation of two related time series.
+This can form an analysis workflow which can be adapted to other biological rhythms or analysis of large datasets of time series in general.
+And this can be an interesting software engineering question to bring it all together.
 
-Intellectual investigation in its own right and opens more questions than answers.
-Future direction e.g. using Bayesian method to classify oscillations, whether better data or better featurisation helps.
+In each step of the way, there are several methods to choose from, each with its own merits and caveats -- mostly because there doesn't seem to be an agreed-upon standardised way to solve problems.
+This is particularly highlighted in the many `judgement calls'.
+In cleaning data, the analyst must decide on a threshold to filter out useless data from the useful ones, but without compromising on the size of the resulting dataset so the remaining dataset is still useful.
+In classification of oscillatory time series: rhythmicity detection inevitably hinges upon defining a threshold between `oscillatory' and `non-oscillatory'.
+Furthermore, it is difficult to do this with noisy and relatively short (on the order of 10 oscillations, rather than 1000) time series.
+Characterisation of oscillatory time series is more `objective', but there are issues in the representation of properties like shape and phase.
+And the machine learning methods rely on supplying a training set, choosing appropriate featurisation methods, and tuning hyperparameters, as with any other machine learning method.
 
-The running theme here: lots of judgement calls.
-For example, threshold to tell apart oscillating and non-oscillating time series.
+Solving mathematical and computational problems for each task is an intellectual investigation in its own right (each can spin off to form its own thesis), and opens more questions than answers.
+And so future directions include things like using Bayesian method to classify oscillations, or whether better data or better featurisation helps.
+
+I illustrate the use of my analysis workflow in the next chapter, when I apply it to biological results.
