@@ -1,0 +1,57 @@
+#+title: Analysis Chapter Code List
+
+* Data
+** Current
+- islay:18581 (2020-02-07): SC/SM experiment -- SUPERSEDED BY GLUCOSE EXPERIMENTS OF 2022 SERIES
+- islay:20016 (2021-07-08): BY4741 vs zwf1Δ
+- islay:19979 (2021-06-09), 20212 (2021-09-03): Causton strains
+** To use: experimental
+- islay:26643 (2022-05-19): Delft + 20 g/L glucose
+** To use: synthetic
+- As ground truths for classifier: white/Gaussian noise, harmonic oscillator, FitzHugh-Nagumo oscillator
+  - ~skeletons/projects/arin-synthetic-oscillators/synthetic.py~: ~white_noise~, ~sinusoid~ or ~harmonic~, ~fitzhugh_nagumo~ plus noise from ~white_noise~ or ~gillespie_noise~.
+
+* General
+
+* Cleaning
+** Choosing time series by presence of time points
+- Traces fill N% of time course: I think this is already handled by ~aliby~.  By default, the ~cutoff~ parameter in ~agora.io.signal~'s ~Signal.retained()~ is 0.8.
+- Dropping NaNs: ~skeletons/projects/arin-ymc-dataviz/slicer.py~: ~slice_interval~ has a ~dropna()~, and this function is used in ~signalcollection.SlicedSignalCollection~
+** Removing long-term trends
+- (SUPERSEDED) Sliding-window detrending: ~postprocessor.core.processes.detrend~, sole parameter is ~window = 16~, is based on ~pandas.DataFrame.rolling~ and computing a moving average.
+  - [ ] Writing TODO: Use the phrase 'moving average'.
+- Butterworth filter: ~postprocessor.core.processes.butter~, with four parameters.  High-pass filter with order 2 and critical frequency 1/350 used in ~skeletons/projects/arin-ymc-dataviz/strain_report_dev.py~.
+- (NOT USED) Savitzky-Golay filter: ~postprocessor.core.processes.savgol~, with ~window = 7~ and ~polynom = 3~ parameters.
+- (NOT IMPLEMENTED) Other methods in the biological timekeeping literature.
+** Other
+- Standard scaler: ~postprocessor.core.processes.standardscaler~.
+
+* Classification
+** Spectral methods
+- (NOT USED, SUBSUMED INTO FFT) Lomb-Scargle periodogram: I realised early on (in 2020) that it's the same as the FFT if the time series are evenly spaced, so I don't think I ever implemented LSP.
+  - Scoring: https://github.com/arinwongprommoon/phd-expts/blob/develop/ymc/pipeline/score.py in particular ~glynn06~ (I believe, the repository is awfully disorganised).  The principle is getting the height of the heighest peak of the periodogram.  The ranking is in https://github.com/arinwongprommoon/phd-expts/blob/develop/ymc/pipeline/__init__.py#L292
+- Fourier transform: ~postprocessor.core.processes.fft~, used in ~strain_report_dev.py~.
+** Model-fitting
+- (CURRENTLY DISABLED) Autoregressive model: ~postprocessor.core.processes.autoreg~
+** Other methods from biological timekeeping literature
+- (NOT IMPLEMENTED) Other methods in the biological timekeeping literature.
+** Machine learning
+- Manual labelling: ~skeletons/projects/arin-ymc-dataviz/score.ipynb~ (should be moved to ~classifier~ project)
+- ~catch22~: ~postprocessor.core.processes.catch22~
+- Most of the pipeline: ~skeletons/projects/arin-ymc-dataviz/gridsearch_dev.py~ (should have a linked notebook and should be moved to ~classifier~ project).  Still based on the pre-dictionary refactor of strain analysis script.  Contains:
+  - featurisation (~catch22~)
+  - standard scaler
+  - classifier: SVC with ~predict_proba~ or random forest with recursive feature elimination, depending on which code is commented
+  - evaluation: k-fold cross validation (precision and recall), ROC curve, feature importances (for random forest)
+  - clustering: UMAP
+  - plotting (scattered throughout the code)
+
+* Clustering
+
+* Correlation
+
+* Integration/summary
+
+* Visualisations
+
+* Remarks
