@@ -39,19 +39,41 @@
 - Manual labelling: ~skeletons/projects/arin-ymc-dataviz/score.ipynb~ (should be moved to ~classifier~ project)
 - ~catch22~: ~postprocessor.core.processes.catch22~
 - Most of the pipeline: ~skeletons/projects/arin-ymc-dataviz/gridsearch_dev.py~ (should have a linked notebook and should be moved to ~classifier~ project).  Still based on the pre-dictionary refactor of strain analysis script.  Contains:
-  - featurisation (~catch22~)
+  - featurisation (~catch22~, using a transformer in ~skeletons/projects/arin-classifier/postpre.py~... so will need to deal with dependencies)
   - standard scaler
-  - classifier: SVC with ~predict_proba~ or random forest with recursive feature elimination, depending on which code is commented
-  - evaluation: k-fold cross validation (precision and recall), ROC curve, feature importances (for random forest)
+  - classifier: SVC with ~predict_proba~ or random forest with recursive feature elimination, depending on which code is commented (using ~skeletons/projects/arin-classifier/binary.py~)
+  - evaluation: k-fold cross validation (precision and recall), ROC curve, feature importances (for random forest), under ~skeletons/projects/arin-classifier/metrics.py~
   - clustering: UMAP
   - plotting (scattered throughout the code)
+- Gridsearch: under development in the aforementioned script.  I think I killed the grid-search ability at some point.
+
+* Characterisation
+- (NOT IMPLEMENTED) Other methods in the biological timekeeping literature.
+- Autocorrelation/Cross-correlation
+  - The function: ~skeletons/projects/arin-synthetic-oscillators/crosscorr.py~ (this is more current, with functionality relevant to ACF-standalone investigations.  Peter's version is ~autocrosscorr.py~), properly ~postprocessor.core.multisignal.crosscorr~.
+  - Investigations: ~skeletons/projects/arin-synthetic-oscillators/synth_osc_dev.ipynb~, ~gillespie_noise_dev.ipynb~, ~gillespie_noise_stat.ipynb~ (with some repetition between them).
+- Other functions e.g. FFT, AR, are described earlier.  Same for the machine learning.  Just have to adapt them for different data & labels.
 
 * Clustering
+** Graph-based clustering
+- MATLAB: https://github.com/arinwongprommoon/phd-expts/blob/develop/ymc/featext-MATLAB/gcluster.m
+- Python: ~skeletons/projects/arin-ymc-dataviz/graphclustering_dev.py~, IIRC still under development.
+** UMAP
+- UMAP: ~skeletons/projects/arin-ymc-dataviz/umap_dev.py~, which depends on ~umapper.py~
 
 * Correlation
-
-* Integration/summary
+- Methods implemented in autocorrelation/cross-correlation.
 
 * Visualisations
+- Most are already in ~strain_report_dev.py~ and plotting routines are in ~postprocessor.routines~.
 
 * Remarks
+** Software design
+- Script-notebook pairs (jupytext).
+- Main notebooks will include: strain analysis (should be roughly the same), classifier, ACF/XCF/Gillespie, UMAP/clustering.  I don't want to do more work than necessary.
+- Things to (almost) completely rewrite: LSP, graph-based clustering -- the stuff they are based on are either super outdated or based in MATLAB.
+- Create 'small' notebooks so I can produce the rest of the figures, probably one per figure.  Though I need to especially re-plan my clustering figures.
+  - Aim to have my PhD thesis figures reproducible (but don't spend /too/ much time on this), if not by anyone then at least myself.
+- May need to move scripts/notebooks across directories to compartmentalise them properly or to kill dependency issues.
+** Data
+- Data: export high-glucose data before and after the 'mandatory' pre-processing in the strain analysis script.
