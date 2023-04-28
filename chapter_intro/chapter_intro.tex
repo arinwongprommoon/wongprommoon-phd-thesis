@@ -48,7 +48,7 @@ This thesis is divided into six chapters:
 
 [FIGURE: SHOW COMPONENTS OF A BIOLOGICAL OSCILLATOR, ADAPTED FROM MELLOR 2016]
 
-Biological rhythms can be defined as physiological or cellular processes that repeat after a certain period of time [CITATIONS NEEDED].
+Biological rhythms can be defined as physiological or cellular processes that repeat after a certain period of time.
 Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \citep{mellorMolecularBasisMetabolic2016}.
 Biological rhythms can occur at different time scales, from short (seconds, e.g. glycolytic cycle), to ultradian cycle (i.e. cycles that are more frequent than 24 hours), to circadian rhythms (i.e. 24 hours).
 Biological rhythms are important in biological timekeeping -- in other words, separating physiological processes, including cellular processes, to different times to coincide with other processes so that things work the way they should.
@@ -61,10 +61,10 @@ Thus, this means that biological rhythms can vary according to conditions -- the
 
 Such biological rhythms include the circadian rhythm and the cell division cycle.
 To demonstrate the definition of biological rhythm, I will discuss here the cell division cycle, which is a very well-characterised biological rhythm.
-The cell division cycle includes gene-expression oscillators in the form of a series of gene expression pathways that link together in a feedback loop system, governed by regulator proteins like cyclin-dependent kinases [CHECK IF FACTUAL].
+The cell division cycle in budding yeast is governed by a series of gene regulatory networks that interact in a feedback loop, resulting in oscillatory expression of regulatory proteins, namely, cyclin-CDK complexes that regulate cellular events in a temporal manner \citep{adlerYeastCellCycle2022, orlandoGlobalControlCellcycle2008, murrayRecyclingCellCycle2004}.
 This cycle also includes biochemical and metabolic oscillators, for example, biosynthesis during S phase.
 As with other biological rhythms, the cell division cycle also includes a system to control it, i.e. so that DNA replication occurs once every cell division cycle and so that the cell only divides when necessary.
-The importance of such control systems are highlighted by disorders when these systems go wrong, e.g. chromosome aberrations and cancer [NEED MORE DETAIL, POTENTIALLY CITATIONS].
+The importance of such control systems are highlighted by disorders when these systems go wrong, e.g. chromosome aberrations and cancer.% [NEED MORE DETAIL, POTENTIALLY CITATIONS].
 
 The yeast metabolic cycle is a type of biological rhythm because it has all the above properties that define a biological rhythm.
 Namely, it has gene-expression oscillators as evidenced by transcript cycling in its phases,
@@ -82,21 +82,19 @@ However, in contrast to the cell division cycle, the control mechanisms of the y
 % Adler et al. (2022) -- comprehensive review of cell division cycle models
 % Goldbeter (2022) -- models of several examples
 There are many approaches in mathematically modelling biological oscillations.
-The theoretical basis of biological rhythms originated in work in the 1960s and 1970s, and since then experimental observations have informed the finer development of these models \parencite{tysonTimekeepingDecisionmakingLiving}.
-[WHAT ARE THESE OLD MODELS MOSTLY BASED ON?]
+The theoretical basis of biological rhythms originated in work in the 1960s, which included simple systems of ordinary differential equations to describe negative feedback control circuits \citep{goodwinOscillatoryBehaviorEnzymatic1965, griffithMathematicsCellularControl1968}.
+Experimental observations have then informed the development of models with finer detail.
+And furthermore, synthetic genetic circuits have also been modelled and developed \citep{elowitzSyntheticOscillatoryNetwork2000}.
 
 As an example to illustrate, I'm going to talk about modelling the cell division cycle.
-The cell division cycle has inspired a long history of models with a variety of approaches \parencite{adlerYeastCellCycle2022}.
-Early models are based on a negative feedback loop of key components as identified by experimental studies -- for example, \textcite{goldbeterBiochemicalOscillationsCellular1996} [CHECK IN ADLER ET AL. 2022 IF THIS CITATION IS CORRECT] assumed one cyclin, one kinase, and one protease to construct a negative feedback loop with a delay, giving rise to stable oscillations.
-Such a strategy forms the basis of later models that incorporate more detail, including additional control points of the cell division cycle, responses to perturbations such as osmotic stress, and relationship with other oscillators like the circadian rhythm.
-One such comprehensive [???] example is \textcite{novakMitoticKinaseOscillation2022}, which employ ordinary differential equations to model negative feedback loops that sustain oscillations of kinases [MAKE SURE THIS SENTENCE IS ACTUALLY FACTUAL].
+The cell division cycle has inspired a long history of models with a variety of approaches.
+Early models are based on a negative feedback loop of key components as identified by experimental studies -- for example, \textcite{goldbeterMinimalCascadeModel1991} assumed a minimal model of one cyclin, one kinase, and one protease to construct a negative feedback loop with a delay, giving rise to stable oscillations.
+Such a strategy forms the basis of later models that incorporate more detail, including additional control points of the cell division cycle \parencite{chenIntegrativeAnalysisCell2004}, responses to perturbations such as osmotic stress \parencite{adroverTimeDependentQuantitativeMulticomponent2011}, and relationship with other oscillators like the circadian rhythm \parencite{gerardEntrainmentMammalianCell2012, charvinForcedPeriodicExpression2009, droinLowdimensionalDynamicsTwo2019}. \parencite{adlerYeastCellCycle2022}.
+More recent, comprehensive models include \textcite{adlerYeastCellCycle2022} which is based on a system of ordinary differential equations adapted for the modelling to pheromone and osmotic shock responses, and \textcite{novakMitoticKinaseOscillation2022}, which models the cell division cycle as a series of switches between two stable steady states whose behaviour is regulated by the CDK oscillator.
 
 But people can get away with doing that with the cell division cycle because the molecular basis is well-characterised.
-The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels in budding yeast cells at the time scale of 10-ish seconds [CITATION NEEDED -- I THINK THERE WAS THIS MATLAB-HEAVY PAPER ON GLYCOLYTIC OSCILLATIONS TOO], when they are in high-glucose conditions.
-% Are you sure is less well-characterised?
-% Lloyd (2019) says it's the most studied one after the cell division cycle.
-% But the Goldbeter citation below is 2022, so...
-Because the glycolytic oscillation is less well-characterised, models that describe it are more coarse-grained, such as one driven by a single positive feedback loop \parencite{goldbeterMultisynchronizationOtherPatterns} [EXPLAIN THE MODEL A BIT MORE HERE]. % Also add more examples
+The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels (and other cofactors) in budding yeast cells at the time scale of 10-ish seconds \parencite{doddLiveCellImaging2017, lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, when they are in high-glucose conditions.
+Because the glycolytic oscillation is less well-characterised, models that describe it are more coarse-grained, such as one driven by positive feedback loops as a system of two coupled instability-generating mechanisms \parencite{goldbeterMultisynchronizationOtherPatterns}. % Also add more examples
 
 % Forced oscillators, coupled oscillators
 % Useful here: \textcite{tysonTimekeepingDecisionmakingLiving} and related reviews
@@ -109,7 +107,8 @@ The concept of forced oscillators is closely linked to coupled oscillators, in w
 What tends to happen is that the two coupled oscillators oscillate at a compromise frequency if the natural frequencies of each are close enough to each other.
 Otherwise, what can happen are complex oscillations in which the oscillators lock to a rational ratio of frequencies -- i.e. one oscillator goes through $p$ periods while the other goes through $q$ periods; the exact ratio depends on the ratio of the natural frequencies.
 And in certain cases, chaos can happen.
-There is a mathematical basis [CITATION NEEDED], and experimental observations support this [CITATIONS NEEDED, AND GO INTO SPECIFIC BIOLOGICAL EXAMPLES].
+There is a mathematical basis in Arnold tongues \citep{heltbergTaleTwoRhythms2021}, and experimental observations support this.
+For example, \citep{charvinForcedPeriodicExpression2009} showed that externally forcing cell division cycles via glucose pulsing leads to phase-locking of the cell division cycle oscillator only within a range of extrinsic periods.
 
 Certainly, the yeast metabolic cycle has been modelled as a system of coupled oscillators before \citep{papagiannakisAutonomousMetabolicOscillations2017,ozsezenInferenceHighLevelInteraction2019}, based on how it is linked to the cell division cycle -- but I will discuss this in section \ref{subsec:intro-ymc-model} when I finish defining what the metabolic cycle is.
 % I can see this becoming relevant again in the modelling chapter
