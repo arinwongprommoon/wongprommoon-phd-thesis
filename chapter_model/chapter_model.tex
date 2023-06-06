@@ -2,28 +2,78 @@
 \label{ch:model}
 
 Discuss difficulty of having a fine-grained model: too many unknowns with this biological system.
-Especially that we don't know much about the molecular mechanisms (link to introduction) and the main read-outs of single-cell studies (NAD(P)H, flavins) are 'aggregate' measures of enzymatic activity and realistically only function to monitor the cellular redox state.
+Especially that we don't know much about the molecular mechanisms (link to introduction) and the main read-outs of single-cell studies (NAD(P)H, flavins) are `aggregate' measures of enzymatic activity and realistically only function to monitor the cellular redox state.
+
+So what we can only do are coarse-grained models or `coarser' ways to answer biological questions with the YMC.
+Here, I present using genome-scale metabolic models and flux balance analysis (FBA) to address the logic of the metabolic cycle --
+specifically, why is it advantageous for the cell, and is there a link with resource allocation?
+
+\section{Flux balance analysis}
+\label{sec:model-fba}
+
+TODO: Short introduction to genome-scale metabolic models -- what they are, what they aim to do, flux balance analysis, and limitations.
 
 \section{Modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
 Research question: Given a finite amount of enzymes and the nutrient conditions yeast cells are subject to, is it more efficient for the cells to temporally partition synthesis of macromolecules (lipid, carbohydrates, amino acids), or to synthesise all of them at the same time?
 If so, does the time scale fit with that of the yeast metabolic cycle?
 
-There have been studies that attempt to address similar questions.
-% add notes from org-roam about this publication
+There have been studies that attempt to address differing metabolic requirements in each phase of the yeast metabolic cycle using flux balance analysis (FBA).
 \textcite{takhaveevTemporalSegregationBiosynthetic2023} showed that in different stages of the cell division cycle, the level of synthesis of each class of macromolecule is different.
 They used single-cell NAD(P)H responses (metabolic cycles) to inhibitors that block synthesis of each class of macromolecule to infer the activity of biosynthesis of classes of macromolecules over a cell division cycle.
 Then, they used these activities as coefficients for FBA on a modified thermodynamic-stoichiometric metabolic model at each time point to deduce biomass production rates.
-Does not suggest that synthesis of each class of macromolecule excludes all others (which makes sense).
-Importantly, this study does not predict timescale.
-% please clarify this sentence
-Rather, confirms that timescale of observed synthesis events matches simulations.
+% Does not suggest that synthesis of each class of macromolecule excludes all others (which makes sense).
+% Rather, this study confirms that timescale of observed synthesis events matches simulations.
+% Do I even cite this?  It's so bad.
+Additionally, \textcite{cesurGenomeWideAnalysisYeast} constructed a different FBA model for each YMC phase based on transcriptomic and epigenetic data, using the GIMME algorithm, i.e.\ exclude reactions that correspond to genes that are not expressed at certain time points.
+Both studies model behaviours at each phase of the YMC, rather than predicting timescale.
 
-My approach is to use a genome-scale model of /Saccharomyces cerevisiae/ and perform flux balance analysis (FBA).
+An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}, in which they extend a genome-scale model of the cyanobacterium \emph{Synechococcus elongatus} PCC7942 to address the temporal order of intracellular synthesis reactions that optimises the growth rate of the cell, under resource constraints.
+However, this model relies on an external oscillation -- namely, the light-dark cycle -- in contrast to the yeast metabolic cycle which is autonomously generated.
+Therefore, I can't adapt this to my study.
+
+My approach is to use a genome-scale model of \emph{Saccharomyces cerevisiae} and perform flux balance analysis (FBA).
 Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
-Traditional genome-scale models assume that the uptake rate of carbon source limits production; however, levels of each enzyme also restrict reaction fluxes.
+I use this model because it is the most recent, offering a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
+Here, I use models Yeast8.6.0 and ecYeast8.6.0, the latest version for which both original and enzyme-constrained variants are available.
+In addition, it has `pseudometabolites' defined by \emph{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes, making it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
+
+Traditional genome-scale models assume that the uptake rate of carbon source limits production.
+However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
+An enzyme-constrained model fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} -- the latter of which imposes a ribosome capacity constraint and additionally imposes compartment constraints -- constrain the total sum of fluxes based on a defined total amount of enzyme.
-Using an enzyme-constrained model also fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
+ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017}, which applies the enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
+
+In the next section, I will discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in other genome-scale metabolic models, and because I take advantage of some of these formalisms.
+
+\section{Yeast8, ecYeast8, and their formalisms}
+\label{sec:model-yeast8}
+
+ecYeast8 contains four formalisms relevant to my study:
+\begin{enumerate}
+  \item
+        The biomass reaction is defined by having `pseudometabolites' as reactants and a biomass species as a product.
+        These pseudometabolites include lipids, proteins, carbohydrates, RNA, DNA, ions, and cofactors.
+        This is in contrast to BiGG genome-scale models that have biomass reactions defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of mmol gDW-1.
+  \item
+        The pseudometabolites are defined by `\emph{isa}' reactions, which group specific chemical species into classes of metabolites.
+        This accounts for some KEGG definitions of reactions requiring generic compounds and allows flexibility of biomass definition in different growth conditions.
+        These \emph{isa} reactions are defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of mmol gDW-1, and a pseudometabolite as a product.
+        In effect, the abundances are shifted one reaction away from the biomass reaction.
+  \item
+        SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
+        This formalism, specifically for lipid metabolism, is needed because species of lipid backbones and acyl chain can combine to form lipids in more than one thousand ways, and the resulting lipid species are difficult to all be accounted for in a genome-scale metabolic model.
+        SLIMEr thus introduces reactions that split lipids into their basic components and lipid pseudoreactions to preserve the distribution of acyl chains.
+        The result is that the definitions of lipids are flexible.
+  \item
+        GECKO was applied to Yeast8 to produce ecYeast8.  GECKO modifies the stochiometric matrix of an input genome-scale metabolic model to account for enzyme abundances and kinetics.
+        Specifically, it adds to enzyme-catalysed reactions enzyme species with a stoichiometric coefficient derived from its $k_{cat}$ value.
+        The formalism also adds reactions to model drawing enzymes from a pool, with bounds derived from enzyme abundances.  GECKO models the case where there is an upper limit of the amount of amino acids available to be allocated to enzyme production.
+\end{enumerate}
+
+Here, I detail how I work around them for my study and take advantage of them.
+
+% Add subsections
 
 ecYeast8 is derived from Yeast8 by applying the GECKO formalism.
 In a conventional genome-scaled model, metabolic fluxes through reactions are constrained between a lower bound and an upper bound.
@@ -292,16 +342,16 @@ Furthermore, the timescale gleaned from this investigation may explain the discr
 % give some idea of explanation here
 From a biochemical perspective, [DISCUSS IMPLICATIONS FROM LOOKING AT FLUXES]
 
-% AM I STILL DOING THIS??
-\section{Modelling chemostat-based studies}
-\label{sec:model-chemostat}
-% - Metabolic responses to environment
-% - Cell communication
-% - Relating them to the single-cell yeast metabolic cycle
+% % AM I STILL DOING THIS??
+% \section{Modelling chemostat-based studies}
+% \label{sec:model-chemostat}
+% % - Metabolic responses to environment
+% % - Cell communication
+% % - Relating them to the single-cell yeast metabolic cycle
 
-Cite \textcite{jonesCyberneticModelGrowth1999}.
+% Cite \textcite{jonesCyberneticModelGrowth1999}.
 
-\section{Coarse-grained, phenomenological model}
-\label{sec:model-coarse}
+% \section{Coarse-grained, phenomenological model}
+% \label{sec:model-coarse}
 
-% leads nicely to conclusion
+% % leads nicely to conclusion
