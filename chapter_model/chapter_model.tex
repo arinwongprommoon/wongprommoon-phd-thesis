@@ -1,3 +1,9 @@
+% FIXME: Stick to a naming convention, and disambiguate!
+% Resolve:
+% - pseudometabolite/bulk metabolite/biomass component
+% - pseudoreaction/isa reaction
+% - biomass reaction/growth reaction/objective function
+% - use of the term 'flux', esp. 'flux through reaction'
 \chapter{Modelling the yeast metabolic cycle}
 \label{ch:model}
 
@@ -73,7 +79,12 @@ ecYeast8 contains four formalisms relevant to my study:
 
 Here, I detail how I work around them for my study and take advantage of them.
 
-% Add subsections
+% FIXME: Delete this subsection?
+% It's mostly a duplicate of the appendix of the GECKO paper,
+% and I wrote it just to make sure I understand it.
+% I haven't used it in discussion so far.
+\subsection{GECKO}
+\label{subsec:model-yeast8-gecko}
 
 ecYeast8 is derived from Yeast8 by applying the GECKO formalism.
 In a conventional genome-scaled model, metabolic fluxes through reactions are constrained between a lower bound and an upper bound.
@@ -125,32 +136,22 @@ GECKO accomplishes this by introducing a pseudo-reaction $ER_{pool}$: $\ce{ -> E
 And replacing all other pseudo-reactions and replacing them with a global pseudo-reaction $ER_{i}$: $\ce{ MW_{i} E_{pool} -> E_{i} }$.
 This approach is similar to FBA with molecular crowding.
 
-In my approach, I exclude each class of macromolecule in turn in the objective function (biomass-generating reaction) and optimise the model.
-Specifically, given the objective function:
+The way I use this is just taking ecYeast8.6.0, which assumes the values of the three parameters: $f = 0.5$, $P_{total} = 0.5$, and $\sigma = 0.5$.
+These are good first approximations.
+This is also a judgement call, especially when the protein fraction varies across growth rates, but $f = 0.5$ is close to the model's mass fraction (insert link to molecular weight calculation section).
 
-\texttt{
-  55.3 atp\_c + 55.3 h2o\_c + lipid\_c + protein\_c + carbohydrate\_c + dna\_c + rna\_c + cofactor + ion \\
-  --> 55.3 adp\_c + biomass\_c + 55.3 h\_c + 55.3 pi\_c
-}
 
-There are five classes of macromolecules: lipids, proteins, carbohydrates, DNA, and RNA.
-To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of all five classes except for lipids to zero in the above equation, giving:
+\subsection{Computing molecular weights of pseudoreactions}
+\label{subsec:model-yeast8-molweights}
 
-\texttt{
-  55.3 atp\_c + 55.3 h2o\_c + lipid\_c + cofactor + ion \\
-  --> 55.3 adp\_c + biomass\_c + 55.3 h\_c + 55.3 pi\_c
-}
+In the yeast cell, biomass components (lipids, carbohydrates, proteins) are present in different fractions.
+Knowing these fractions are useful in computing the time it takes to synthesise each biomass component (to be discussed later).
+However, the mass fraction of each component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}, and it is computationally expensive to re-run GECKO each time the protein mass fraction varies.
+Therefore, I decided to compute the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, for a back-of-the-envelope calculation.
 
-And I repeated this for the other four macromolecules.
-
-For each version of the model, I computed the objective flux and the flux through each of the five pseudoreactions for the synthesis of the five classes of macromolecules, summarised here:
-
-[INSERT BAR CHART]
-
-% Edit this when I improve my logic, with better molecular weights
-Then, using the optimised flux of the objective function, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
-% TODO: improve wording of this sentence to make it more clear
-I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
+\emph{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in mmol gDW-1.
+Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023};
+the resulting molecular weight will thus represent the mass fraction of each biomass component in units of g/gDW.
 
 For this to be possible, I needed to compute molecular weights for bulk metabolites that represent macromolecules in the ecYeast8 model.
 The ecYeast8 model does not specify the molecular weights of these bulk metabolites.
@@ -287,6 +288,44 @@ In summary, the molecular weights of the bulk metabolites are:
 
 And thus the molecular weight of biomass is 971.18 g/mol, close to the 966 g/mol in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
 As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by Grigiatis [TODO: Add proper citation].
+
+% Could move to 'results' part of this chapter?
+\subsection{Ablating pseudometabolites from the biomass reaction}
+\label{subsec:model-yeast8-pseudometabolites}
+
+I take advantage of the presence of pseudometabolites to remove each of them in turn (easily) from the biomass reaction.
+
+In my approach, I exclude each class of macromolecule in turn in the objective function (biomass-generating reaction) and optimise the model.
+Specifically, given the objective function:
+
+\texttt{
+  55.3 atp\_c + 55.3 h2o\_c + lipid\_c + protein\_c + carbohydrate\_c + dna\_c + rna\_c + cofactor + ion \\
+  --> 55.3 adp\_c + biomass\_c + 55.3 h\_c + 55.3 pi\_c
+}
+
+There are five classes of macromolecules: lipids, proteins, carbohydrates, DNA, and RNA.
+To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of all five classes except for lipids to zero in the above equation, giving:
+
+\texttt{
+  55.3 atp\_c + 55.3 h2o\_c + lipid\_c + cofactor + ion \\
+  --> 55.3 adp\_c + biomass\_c + 55.3 h\_c + 55.3 pi\_c
+}
+
+And I repeated this for the other four macromolecules.
+
+% Working title.
+% TODO: come up with a better one.
+\section{Estimating timescale of biosynthesis}
+\label{sec:model-timescale}
+
+For each version of the model, I computed the objective flux and the flux through each of the five pseudoreactions for the synthesis of the five classes of macromolecules, summarised here:
+
+[INSERT BAR CHART]
+
+% Edit this when I improve my logic, with better molecular weights
+Then, using the optimised flux of the objective function, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
+% TODO: improve wording of this sentence to make it more clear
+I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
 
 On simulating the ecYeast8 model using parsimonious flux balance analysis, I set the growth rate to 0.1, the carbon source to glucose (i.e. leaving glucose uptake flux unrestricted), and leaving flux through the biomass reaction unrestricted.
 % TODO: format units, use SIunitX or otherwise
