@@ -173,7 +173,7 @@ Certainly, it is not possible to create a model with such an implication because
 To compute the molecular weight of the carbohydrate metabolite, I inspected reaction \texttt{r\_4048}:
 
 \texttt{
-  0.748514964334505 (1->3)-beta-D-glucan + 0.25009165448919 (1->6)-beta-D-glucan + 0.361414527575564 glycogen + 0.710939625370425 mannan + 0.138275712087142 trehalose \\
+  0.684535 (1->3)-beta-D-glucan + 0.228715 (1->6)-beta-D-glucan + 0.330522 glycogen + 0.650171 mannan + 0.126456 trehalose \\
   --> carbohydrate
 }
 
@@ -184,27 +184,28 @@ The same process can be applied to compute the molecular weights of the DNA, RNA
 The DNA molecular weight was computed from reaction \texttt{r\_4050}:
 
 \texttt{
-  0.00359999993816018 dAMP + 0.00240000011399388 dCMP + 0.00240000011399388 dGMP + 0.00359999993816018 dTMP
+  0.0036 dAMP + 0.0024 dCMP + 0.0024 dGMP + 0.0036 dTMP
   \\ --> DNA
 }
 
 The RNA molecular weight was computed from reaction \texttt{r\_4049}:
 
 \texttt{
-  0.0445348319234424 AMP + 0.043276239184487 CMP + 0.0445348319234424 GMP + 0.0579920969091588 UMP
+  0.0445348 AMP + 0.0432762 CMP + 0.0445348 GMP + 0.0579921 UMP
   \\ --> RNA
 }
 
 The cofactor molecular weight was computed from reaction \texttt{r\_4598}:
 
 \texttt{
-  0.000190000006114133 coenzyme A + 9.99999974737875e-06 FAD + 0.00264999992214143 NAD + 0.000150000007124618 NADH + 0.000569999974686652 NADP(+) + 0.00270000007003546 NADPH + 0.000989999971352518 riboflavin + 1.20000004244503e-06 TDP + 6.34000025456771e-05 THF + 9.99999997475243e-07 heme a
+  0.00019 coenzyme A + 1e-05 FAD + 0.00265 NAD + 0.00015 NADH + 0.00057 NADP(+) + 0.0027 NADPH + 0.00099 riboflavin + 1.2e-06 TDP + 6.34e-05 THF + 1e-06 heme a
   \\ --> cofactor
 }
 
 And the ion molecular weight was computed from reaction \texttt{r\_4599}:
+
 \texttt{
-    3.04000004689442e-05 iron(2+) + 0.00362999993376434 potassium + 0.003969999961555 sodium + 0.0199999995529652 sulphate + 0.00129000004380941 chloride + 0.00273000006563962 Mn(2+) + 0.000747999991290271 Zn(2+) + 0.000216999993426725 Ca(2+) + 0.0012425429886207 Mg(2+) + 0.000659000012092292 Cu(2+)
+    3.04e-05 iron(2+) + 0.00363 potassium + 0.00397 sodium + 0.02 sulphate + 0.00129 chloride + 0.00273 Mn(2+) + 0.000748 Zn(2+) + 0.000217 Ca(2+) + 0.00124254 Mg(2+) + 0.000659 Cu(2+)
     \\ --> ion
 }
 
@@ -212,8 +213,8 @@ Other metabolites were less straightforward and required some judgement calls.
 To compute the molecular weight of the protein metabolite, I inspected reaction \texttt{r\_4047}:
 
 \texttt{
-  0.527012401964609 Ala-tRNA(Ala) + 0.184592178971158 Arg-tRNA(Arg) + 0.116820320233205 Asn-tRNA(Asn) + ... + 0.303939602869103 Val-tRNA(Val)
-  \\ --> 0.527012401964609 tRNA(Ala) + 0.184592178971158 tRNA(Arg) + 0.116820320233205 tRNA(Asn) + ... + 0.116820320233205 tRNA(Val) + protein
+  0.57284 Ala-tRNA(Ala) + 0.200644 Arg-tRNA(Arg) + 0.126979 Asn-tRNA(Asn) + ... + 0.330369 Val-tRNA(Val)
+  \\ --> 0.57284 tRNA(Ala) + 0.200644 tRNA(Arg) + 0.126979 tRNA(Asn) + ... + 0.330369 tRNA(Val) + protein
 }
 
 In this reaction, the aminoacyl-tRNA reactants are represented in the form of the atoms that make up the aminoacyl residues plus \texttt{R} to represent the tRNA, and the tRNA products are represented as \texttt{RH}.
@@ -233,7 +234,7 @@ And both \texttt{lipid backbone} and \texttt{lipid chain} have no molecular weig
 Reaction \texttt{r\_4065} specifies a lipid chain pseudoreaction, in which \texttt{lipid chain} is generated:
 
 \texttt{
-  0.00808584038168192 C16:0 chain + 0.0237302090972662 C16:1 chain + 0.00226631597615778 C18:0 chain + 0.00870663858950138 C18:1 chain
+  0.0073947 C16:0 chain + 0.0217019 C16:1 chain + 0.0020726 C18:0 chain + 0.000796243 C18:1 chain
   \\ --> lipid chain
 }
 
@@ -242,7 +243,7 @@ As all reactants have molecular weights defined in the model, the molecular weig
 Reaction \texttt{r\_4063} specifies a lipid backbone pseudoreaction, in which \texttt{lipid backbone} is generated:
 
 \texttt{
-  0.00691029997542501 1-phosphatidyl-1D-myo-inositol backbone + 0.026582900248468 ergosterol + 0.0068058000644669 ergosterol ester backbone + 0.00148009998956695 fatty acid backbone + ...
+  0.000631964 1-phosphatidyl-1D-myo-inositol backbone + 0.00243107 ergosterol + 0.000622407 ergosterol ester backbone + 0.000135359 fatty acid backbone + ...
   \\ --> lipid backbone
 }
 
@@ -253,10 +254,10 @@ Four reactions in the model produce \texttt{fatty acid backbone}.
     \begin{tabular}{llS}
       ID & Reaction & {\makecell{Computed molecular\\ weight (g/mol)}} \\
       \hline
-    \texttt{r\_3975} & \makecell{\texttt{palmitate} \\ \texttt{--> 0.25542094 fatty acid backbone + 0.25642888 C16:0 chain}} & 744.56 \\
-    \texttt{r\_3976} & \makecell{\texttt{palmitoleate} \\ \texttt{--> 0.25340506 fatty acid backbone + 0.254413 C16:1 chain}} & 714.49 \\
-    \texttt{r\_3977} & \makecell{\texttt{stearate} \\ \texttt{--> 0.2834747 fatty acid backbone + 0.28448264 C18:0 chain}} & 742.55 \\
-    \texttt{r\_3978} & \makecell{\texttt{oleate} \\ \texttt{--> 0.28145882 fatty acid backbone + 0.28246676 C18:1 chain}} & 716.51 \\
+    \texttt{r\_3975} & \makecell{\texttt{palmitate} \\ \texttt{--> 0.255421 fatty acid backbone + 0.256429 C16:0 chain}} & 742.54 \\
+    \texttt{r\_3976} & \makecell{\texttt{palmitoleate} \\ \texttt{--> 0.253405 fatty acid backbone + 0.254413 C16:1 chain}} & 744.56 \\
+    \texttt{r\_3977} & \makecell{\texttt{stearate} \\ \texttt{--> 0.283475 fatty acid backbone + 0.284483 C18:0 chain}} & 714.49 \\
+    \texttt{r\_3978} & \makecell{\texttt{oleate} \\ \texttt{--> 0.281459 fatty acid backbone + 0.282467 C18:1 chain}} & 716.51 \\
     \end{tabular}
     \caption{ecYeast8 reactions that generate the \texttt{fatty acid backbone} metabolite}
     \label{tab:ecyeast8-fatty-acid-backbone-rxns}
@@ -264,7 +265,7 @@ Four reactions in the model produce \texttt{fatty acid backbone}.
 
 All species in these reactions except for \texttt{fatty acid backbone} have molecular weights specified, and thus I applied mass balance to find the molecular weight of \texttt{fatty acid backbone} from each reaction.
 However, the molecular weights computed from each equation are different, as shown in the table above.
-Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the average of the four weights (736.04 g/mol) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields 24.39 g/mol).
+Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the average of the four weights (729.53 g/mol) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields 21.31 g/mol).
 
 With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, I can now compute the molecular weight of \texttt{lipid} using mass balance.
 
@@ -274,10 +275,10 @@ In summary, the molecular weights of the bulk metabolites are:
   \begin{tabular}{lS}
     Metabolite & {Computed molecular weight (g/mol)} \\
     \hline
-    Protein & 464.02 \\
-    Carbohydrate & 383.12 \\
+    Protein & 504.37 \\
+    Carbohydrate & 350.37 \\
     RNA & 64.04 \\
-    Lipid & 48.78 \\
+    Lipid & 31.57 \\
     Cofactors & 4.83 \\
     DNA & 3.90 \\
     Ions & 2.48
@@ -286,7 +287,7 @@ In summary, the molecular weights of the bulk metabolites are:
   \label{tab:ecyeast8-mol-weights}
 \end{table}
 
-And thus the molecular weight of biomass is 971.18 g/mol, close to the 966 g/mol in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
+And thus the molecular weight of biomass is 961.57 g/mol, close to the 966 g/mol in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
 As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by Grigiatis [TODO: Add proper citation].
 
 % Could move to 'results' part of this chapter?
