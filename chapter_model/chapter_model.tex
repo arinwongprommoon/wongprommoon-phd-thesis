@@ -314,12 +314,35 @@ To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of
 
 And I repeated this for the other four macromolecules.
 
+\section{Exchange reaction saturation}
+\label{sec:model-saturation}
+
+For various purposes [INSERT WHICH PURPOSES HERE], I need to know the saturation of the exchange reactions -- i.e. the uptake goes up and up, but at some point the growth rate maxes out.
+This follows \textcite{elsemmanWholecellModelingYeast2022}, in which they deal with how FBA doesn't account for concentrations of substrates in the media by varying glucose uptake in the model and see how the growth rate changes, producing a sort of saturation curve that agrees with the theoretical basis of saturation of glucose transporters [TODO: FACT-CHECKING THIS SENTENCE, AND RE-WRITE SO IT IS MORE SCIENTIFIC].
+
+Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
+I did this with two carbon sources to be investigated later, glucose and pyruvate, and with ammonium as a nitrogen source.
+
+[TODO: REMOVE NON-WILD TYPE CURVES]
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ecYeast8-glucose-saturation.png}
+\end{center} Figure X: Glucose saturation
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ecYeast8-pyruvate-saturation.png}
+\end{center} Figure X: Pyruvate saturation
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ecYeast8-ammonium-saturation.png}
+\end{center} Figure X: Ammonium saturation.  Glucose uptake set to 16.9, optimal found by non-modified model.
+
 % Working title.
 % TODO: come up with a better one.
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-For each version of the model, I computed the objective flux and the flux through each of the five pseudoreactions for the synthesis of the five classes of macromolecules, summarised here:
+For each version of the ablated model, I computed the objective flux and the flux through each of the five pseudoreactions for the synthesis of the five classes of macromolecules, summarised here:
 
 [INSERT BAR CHART]
 
