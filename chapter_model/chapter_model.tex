@@ -1,9 +1,17 @@
 % FIXME: Stick to a naming convention, and disambiguate!
 % Resolve:
-% - pseudometabolite/bulk metabolite/biomass component
+% - pseudometabolite/bulk metabolite/biomass component/macromolecule
+%   --> biomass component metabolite (some aren't macromolecules, e.g. ions)
 % - pseudoreaction/isa reaction
+%   --> isa reaction (pseudoreaction is too broad, isa reaction introduced in Yeast5),
+%   then use biomass component-generating isa reaction
 % - biomass reaction/growth reaction/objective function
+%   --> prefer biomass reaction
 % - use of the term 'flux', esp. 'flux through reaction'
+% FIXME: Units/SI units, format them correctly (e.g. mmol gDW-1 h-1)
+% and do not use slash characters.
+% FIXME: Check if g/mol units for molecular weights of biomass makes sense
+% (should it be g/mmol?)
 \chapter{Modelling the yeast metabolic cycle}
 \label{ch:model}
 
@@ -287,8 +295,11 @@ In summary, the molecular weights of the bulk metabolites are:
   \label{tab:ecyeast8-mol-weights}
 \end{table}
 
-And thus the molecular weight of biomass is 961.57 g/mol, close to the 966 g/mol in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
 As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by Grigiatis [TODO: Add proper citation].
+
+And thus the molecular weight of biomass is 961.57 g/mol, close to the 966 g/mol in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
+In theory, this number should be 1000 g/mol because the stoichiometric coefficients of the species that form biomass components are expressed in terms of mmol per gDW \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the slight deviation from 1000 could be explained by the SLIMEr formalism;
+plus, it has been reported that the sum of stoichiometric coefficients are not always verified \parencite{chanStandardizingBiomassReactions2017}.
 
 % Could move to 'results' part of this chapter?
 \subsection{Ablating pseudometabolites from the biomass reaction}
@@ -335,63 +346,61 @@ I did this with two carbon sources to be investigated later, glucose and pyruvat
 
 \begin{center}
 \includegraphics[width=.9\linewidth]{ecYeast8-ammonium-saturation.png}
-\end{center} Figure X: Ammonium saturation.  Glucose uptake set to 16.9, optimal found by non-modified model.
+\end{center} Figure X: Ammonium saturation.  Glucose uptake set to 16.89, optimal found by non-modified model.
 
 % Working title.
 % TODO: come up with a better one.
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-For each version of the ablated model, I computed the objective flux and the flux through each of the five pseudoreactions for the synthesis of the five classes of macromolecules, summarised here:
+I used the ecYeast8.6.0 model with glucose uptake restricted to 0 $\leq$ 16.89 $\leq$, as the optimal value found by the non-modified model.
+This value agrees with theoretical saturation rates of 16 $\sim$ 19 mmol gDW-1 h-1.
+Using the biomass reaction as the objective function, I optimise the model to obtain the predicted growth rate, and computed the doubling time based on this growth rate as follows:
 
-[INSERT BAR CHART]
+\begin{equation}
+  t = \frac{\ln 2}{\lambda}
+\end{equation}
 
-% Edit this when I improve my logic, with better molecular weights
-Then, using the optimised flux of the objective function, I estimates the time it takes for the cell to synthesise all macromolecules of that class enough to create a new cell.
-% TODO: improve wording of this sentence to make it more clear
-I then compared the estimated timescale for to the timescale estimated by the unmodified biomass reaction.
+where $t$ is the doubling time and $\lambda$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
 
-On simulating the ecYeast8 model using parsimonious flux balance analysis, I set the growth rate to 0.1, the carbon source to glucose (i.e. leaving glucose uptake flux unrestricted), and leaving flux through the biomass reaction unrestricted.
-% TODO: format units, use SIunitX or otherwise
-Simulating the unmodified enzyme-constrained model gives a flux through the biomass reaction of 0.0889 mmol/(gDW h).
-To convert this value to a time it takes to synthesise a new cell, I estimated the molecular weight of biomass as 0.966 g/mol \parencite{takhaveevTemporalSegregationBiosynthetic2023} and the dry mass of the cell as 15 pg [CITATION NEEDED -- LOOK AT THE CELL ECONOMICS PROJECT AND TRACE FROM THERE].
-% should this be in the methods?
-My logic is:
-\begin{enumerate}
-   \item Flux through biomass reaction = 0.0889 mmol/(gDW h), i.e. 1 gDW of cell produces 0.0889 mmol biomass in an hour.
-   \item The molecular weight of biomass is 0.966 g/mmol.  Therefore, 1 gDW of cell produces (0.0889 * 0.966) g biomass in an hour.
-   \item The dry mass of a cell is 15 pg.  Therefore, 1 cell produces (15e-12)(0.0889 * 0.966) g biomass in an hour.
-   \item When the cell wants to divide, it produces 1 cells' worth of biomass, i.e. 15 pg.  If the cell produces (15e-12)(0.0889 * 0.966) g biomass in an hour, it takes (15e-12)/(15e-12 * 0.0889 * 0.966) hours.  This evaluates to 11.6 hours.
-\end{enumerate}
-And this is close to the 10 hours in theory given the growth rate of 0.1 h-1.
+I ablate components in biomass reaction (i.e.\ macromolecules like lipids, proteins, carbohydrates, DNA, RNA, and also cofactors \& ions) that have pseudoreactions associated with the 'Growth' subsystem, as discussed in previous section (INSERT LINK HERE) in turn.
+In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
+Doubling time is computed, taking into account the mass fraction of each biomass component -- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
+Specifically, the computation is:
 
-For ablated biomass reactions, I followed a similar logic.
-Using carbohydrates as an example:
-\begin{itemize}
-    \item Flux through carbohydrate pseudoreaction is 0.1322 mmol/(gDW * h).  This means that each gDW of cell produces 0.1322 mmol of carbohydrate in an hour.
-    \item Cell dry mass is 15e-12 g.  This means that each cell produces (15e-12)*(0.1322) mmol of carbohydrate in an hour.
-    \item The molecular weight of the carbohydrate bulk metabolite is 383.12 g/mol, which is 383.12e-3 g/mmol.  This means that each cell produces (383e-3)*(15e-12)*(0.1322) g of carbohydrate in an hour
-    \item Cell has (3450+75)e-15 = 3525e-15 g carbohydrates.  This means that each cell produces all the new carbohydrates it needs in (3525e-15) / ((383e-3)*(15e-12)*(0.1322)) hours.  This yields 4.64 hours.
-\end{itemize}
+\begin{equation}
+  t_{i} = f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
+\end{equation}
 
-Here, I used the flux from the simulated model, the molecular weight as computed earlier, and the mass of the macromolecule per dry cell as described by [CITATION NEEDED: GRIGIATIS].
+where $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions), $t_{i}$ is the predicted time for synthesis of each biomass component, $f_{i}$ is the mass fraction of each biomass component, and $\lambda{i}^{\prime}$ is optimal flux of the ablated biomass reaction.
+$f_{i}$ for each biomass component is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass (see table X -- LINK TO TABLE TO MOLECULAR WEIGHTS).
 
-Repeating this process for the other macromolecules yields:
+For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction [BUT, WHY?]:
 
-\begin{table}[ht]
-  \centering
-  \begin{tabular}{lSS}
-    Priority & {\makecell{Flux through\\ ablated objective function (mmol/(gDW h))}} & {Estimated time (h)} \\
-    \hline
-    Lipids & 0.1082 & 11.3679 \\
-    Proteins & 0.0987 & 11.1337 \\
-    Carbohydrates & 0.1322 & 4.6397 \\
-    DNA & 0.1482 & 8.6527 \\
-    RNA & 0.1401 & 12.2571
-  \end{tabular}
-  \caption{Ablated objective function predicts timescales for biosynthesis prioritising each class of macromolecule.}
-  \label{tab:ecyeast8-ablated-timescales}
-\end{table}
+\begin{equation}
+  t_{i} = f_{i} \cdot t
+\end{equation}
+
+where $t$ is the doubling time found in equation X [LINK TO THE FIRST ONE].
+
+[INSERT BAR CHART: SHOWING FLUXES OF ORIGINAL BIOMASS REACTION AND THE SEVEN ABLATED ONES]
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ablation_example_ratio.png}
+\end{center} Figure X: Comparing time scales derived from ablating components of the biomass reaction (blue) and from assuming that synthesis time is proportional to the mass fraction of the biomass component (red).  Times for each biomass component (lipid, protein, carbohydrate, DNA, RNA, cofactor, ion) were computed according to equations X--Y.  Blue under `all biomass' is the sum of times derived from ablation (other blue bars), while red under `all biomass' is derived from the flux of the original biomass reaction (equation X).  As a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
+
+And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
+A represents sum of times from focusing on each biomass component -- thus represents time predicted, assuming biomass components are synthesised in turn.
+B represents time of synthesis of protein component if time is assumed to be proportional to mass fraction.
+This is always protein as it accounts for $\approx$50\% of the mass fraction.
+B thus represents the limiting, slowest process
+A smaller A/B ratio (< 1) means that -- under these conditions -- synthesising biomass components in sequence saves more time.
+
+% ------
+% NEXT STEPS:
+% - Headline ablation results ('robustness')
+% - Heatmap results
+% *** Leave this mostly in bullet points for now because the results are WIP/in flux
 
 % TODO: Fix conclusion
 Therefore, I conclude that given a finite amount of enzymes, it is more efficient to partition synthesis of macromolecules temporally, and the time scale is at the same order of magnitude as the yeast metabolic cycle.
