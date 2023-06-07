@@ -395,12 +395,44 @@ B represents time of synthesis of protein component if time is assumed to be pro
 This is always protein as it accounts for $\approx$50\% of the mass fraction.
 B thus represents the limiting, slowest process
 A smaller A/B ratio (< 1) means that -- under these conditions -- synthesising biomass components in sequence saves more time.
+In this case, the ratio is about 0.7.
 
 % ------
 % NEXT STEPS:
 % - Headline ablation results ('robustness')
+The fact that this still holds true for auxotrophs and deletion strains supports experimental evidence that auxotrophs and deletion strains have YMCs.
+
+[INSERT ABLATION BAR CHARTS: BY4741, BY4742, zwf1, tsa2]
+
+% Adding supplements, e.g. amino acids, dNTPs/NTPs, pyruvate, glucose limitation?
+
 % - Heatmap results
 % *** Leave this mostly in bullet points for now because the results are WIP/in flux
+I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ecYeast8-ablation-heatmap.png}
+\end{center}
+
+The ratio maxes out at about 0.7.  The black regions = zero growth, due to zero uptake of C/N -- safe to ignore these.
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ecYeast8-ablation-heatmap-under_saturation_8x.png}
+\end{center}
+
+Zoom in region below saturation: ammonium exchange rates affect the ratio more than glucose.
+At e.g.\ glucose saturation, ammonium exchange rate controls the ratio.
+If the ammonium exchange rate is low, indicating nitrogen limitation, then the biomass flux is (comparatively) high, and temporal partitioning is more advantageous for the cell.
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{ecYeast8-ablation-heatmap-pyruvate-under_saturation_8x.png}
+\end{center}
+
+In contrast, if pyruvate is used as the carbon source, at high ammonium exchange rates, pyruvate seems to be the thing that controls the ratio (which maxes out at about 0.4).
+If both are low, there is a combinatorial effect.
+
+Taken together, this suggests that temporal partitioning is a strategy advantageous under growth-limiting conditions, and would explain why YMCs occur in these conditions, including during glucose starvation.
+
 
 % TODO: Fix conclusion
 Therefore, I conclude that given a finite amount of enzymes, it is more efficient to partition synthesis of macromolecules temporally, and the time scale is at the same order of magnitude as the yeast metabolic cycle.
