@@ -182,14 +182,14 @@ In the oxidative phase, cells consume oxygen at a high rate as respiration, ferm
 energy-demanding processes
 like biosynthesis and gene expression occur.
 In chemostats, this manifests as a rapid decrease in measured dissolved oxygen.
-Occurrence of biosynthesis and gene expression is confirmed by increased transcripts of [INSERT NAME OF TRANSCRIPTS HERE] \parencite{tuLogicYeastMetabolic2005}.
+Occurrence of biosynthesis and associated gene expression is confirmed by increased transcripts from genes encoding components of the translation machinery and amino acid biosynthesis \parencite{tuLogicYeastMetabolic2005}.
 As the oxidative phase transitions to the reductive phase, ethanol and acetate concentrations in the medium peak as respiration finishes \citep{tuLogicYeastMetabolic2005}.
-`Redox state' metabolites, including NADH, NADPH, glutathione \citep{lloydUltradianMetronomeTimekeeper2005}, and flavins (FMN and FAD) % check if true for flavins
+`Redox state' metabolites, including NADH, NADPH, glutathione \citep{lloydUltradianMetronomeTimekeeper2005}, and flavins (FMN and FAD)
 \parencite{murrayRedoxRegulationRespiring2011} become most oxidised in this phase.
 Here, 70\% of metabolite concentrations peak with the combined autofluorescence of NADH and NADPH \citep{murrayRegulationYeastOscillatory2007}.
 
 In the reductive phase, cells consume oxygen at a low rate, showing up as an increase in dissolved oxygen in chemostats.
-During the so-called reductive-building phase, and activities linked to mitochondrial growth occur.
+During the reductive-building phase, activities linked to mitochondrial growth occur.
 % as shown here.
 There is evidence to suggest that activities linked to cell proliferation -- such as initiation of the cell division cycle, DNA replication, and spindle pole activity -- are gated to the reductive-building phase for both the short-period and long-period YMC.
 Such evidence includes budding activity and the pattern of the expression of \emph{YOX1}, which encodes a cell division cycle repressor \citep{tuLogicYeastMetabolic2005}.
@@ -197,15 +197,17 @@ The hypothesis is that these links create a temporal separation between oxidativ
 However, measuring DNA content and oxygen consumption in cells grown at different growth rates \citep{slavovCouplingGrowthRate2011} showed that the S phase of the cell cycle may occur in the oxidative phase if the cells have a slow growth rate.
 % Not sure if they changed the growth rate of the cells though -- probably quite difficult
 % to do in microfluidics setting.
-This may be explained by the YMC gating the early and late cell cycle independently, as evidenced by single-cell evindence in [DESCRIBE THE EXACT LINE OF EVIDENCE HEINEMANN USED HERE] \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+% Re-phrase it a little to make it more different from Papagiannakis et al.
+This may be explained by the YMC gating the early and late cell cycle independently, as evidenced by periodic localisation of the anaphase-promoting complex and mitotic exit activator Cdc14 phosphatase in metaphase-arrested cells \parencite{luPeriodicCyclinCdkActivity2010} and, conversely, the persistence of NAD(P)H cycling upon arresting of the late cell cycle by depletion of Cdc14 \parencite{papagiannakisAutonomousMetabolicOscillations2017}, all observed in single cells.
 % What would be the function of such flexible gating?  Seems like community
 % has no meaningful consensus yet.  Probably allocation of metabolites.
-This evidence indicates that the gating between the YMC and the cell cycle is flexible,
-though there is no meaningful consensus as to the function of such flexible gating.
+This evidence indicates that the gating between the YMC and the cell cycle is flexible;
+though there is no meaningful consensus as to the function of such flexible gating,
+such gating can be instrumental in the allocation of metabolites to different temporal phases of both cellular oscillators.
 % Discuss allocation of metabolites later -- and this can be linked to the modelling chapter of thesis.
 
 % There are many strings to pull on this phase.
-Finally, during the so-called reductive-charging phase,
+Finally, during the reductive-charging phase,
 non-respiratory metabolism and degradation processes occur to prepare the cell for the oxidative phase.
 This non-respiratory metabolism includes glycolysis, ethanol and fatty acid metabolism, and nitrogen metabolism.
 With these metabolic modes, under the regulation of the transcription factors Msn2p and Msn4p \citep{kuangMsn2RegulateExpression2017}, acetyl CoA accumulates for ATP production in the oxidative phase \citep{tuLogicYeastMetabolic2005}.
@@ -216,7 +218,8 @@ Genes associated with protein degradation, ubiquitinylation, peroxisomes, vacuol
 \subsubsection{Variations in the yeast metabolic cycle} % Need a better name
 \label{subsubsec:intro-ymc-definition-variation}
 
-Furthermore, the YMC is robust, with oscillations persisting for weeks to months \citep{lloydRedoxRhythmicityClocks2007}.
+Furthermore, the YMC is robust.
+It is persistent, up to weeks or months \citep{lloydRedoxRhythmicityClocks2007}.
 Additionally, the oscillation period is insensitive to temperatures from \SI{25}{\celsius} to \SI{35}{\celsius} and media pH values from
 % also see O'Neill et al. (2020)
 2.9 to 6.0 \citep{lloydUltradianMetronomeTimekeeper2005}.
