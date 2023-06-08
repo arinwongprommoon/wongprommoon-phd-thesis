@@ -274,26 +274,26 @@ The main nutrient perturbations people have studied so far are perturbations in 
 Perturbations in carbon sources are well-documented.
 
 % change glucose concentration
-Lower glucose concentrations prolong the metabolic cycle, as evidenced by both chemostat [CITATION NEEDED, I currently just have Mellor 2016] and single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+Lower glucose concentrations prolong the metabolic cycle, as evidenced by both chemostat studies that assess the effect of changing the dilution rate \parencite{burnettiCellCycleStart2016, oneillEukaryoticCellBiology2020} and single-cell studies that assess the effect of glucose concentrations in the limiting region \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
 % 20 g/L --> 0.5 g/L doesn't seem to significantly prolong it, but maybe
 % a greater effect will be seen if we get to the region of glucose limitation
 % Though I am aware that this is my experimental observations -- need to see if literature confirms.
-For example, increasing the growth rate increases the duration of the oxidative phase relative to the reductive phases \citep{slavovCouplingGrowthRate2011}, thus prolonging the metabolic cycle.
+For example, decreasing the dilution rate decreases the growth rate, and in turn increases the duration of the oxidative phase relative to the reductive phases \citep{slavovCouplingGrowthRate2011}, thus prolonging the metabolic cycle.
 This effect is pronounced in the region of glucose limitation;
 increasing the glucose concentration beyond a certain point does not produce an effect.
-This experimental observations could by explained by models such as \textcite{jonesCyberneticModelGrowth1999}, which proposes that [INSERT WHAT THE MODEL PREDICTS IN TERMS OF GLUCOSE CONCENTRATION HERE].
+This experimental observations could by explained by models such as \textcite{jonesCyberneticModelGrowth1999}, which suggest that as the dilution rate is decreased, metabolic oscillations acquire greater amplitudes and longer periods, but if it low enough, metabolism becomes entirely oxidative, and metabolic oscillations disappear.
 
 % ferm vs non-ferm
-Furthermore, non-fermentable carbon sources like pyruvate also lead to long-duration metabolic cycles \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+Furthermore, non-fermentable carbon sources like pyruvate also lead to long-duration metabolic cycles, comparable to cells under limiting levels of glucose \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
 
 % bulk addition and depletion
 In addition, bulk depletion or addition of a carbon source can reset the phase of the YMC.
-Chemostat studies say that an initial starvation phase is needed to generate long-lasting synchronous metabolic cycles \parencite{tuLogicYeastMetabolic2005} [OTHER CITATIONS PROBABLY USEFUL].
-On the other hand, adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \citep{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
+Chemostat studies say that an initial starvation phase is needed to generate long-lasting synchronous metabolic cycles \parencite{tuLogicYeastMetabolic2005}. %[OTHER CITATIONS PROBABLY USEFUL].
+On the other hand, adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \citep{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018} or eliminate it \citep{jonesCyberneticModelGrowth1999}.
 
 Perturbations in nitrogen sources are less well-studied.
 % Maybe also because long OX stage as it's the stage for biomass building
-But \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, based on single-cell observations, suggest that decreasing nitrogen source concentration prolongs the YMC, as evidenced by [INSERT EXACTLY WHAT THEY DID HERE]
+But \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, based on single-cell observations, suggest that decreasing nitrogen source concentration prolongs the YMC, as evidenced by longer flavin oscillations when cells are grown on lower concentrations of yeast nitrogen base (YNB) media or on urea, a non-preferred nitrogen source.
 
 The fact that nutrient perturbations affect the metabolic cycle suggests a model in which cells adjust the metabolic cycle depending on nutrient availability, dynamically. % I say this SO MANY times.
 However, the caveat is that creating nutrient perturbations in a chemostat affects so many aspects of the cell environment, that it is difficult to tease things apart.
