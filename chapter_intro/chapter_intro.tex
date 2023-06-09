@@ -458,10 +458,19 @@ Genome-wide transcript cycling has two superclusters that correspond to the oxid
 However, there has been no genome-wide analysis of genes that influence cycling \citep{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
 However, there are a number of questions remaining.
 For example, without proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
-In terms of metabolite cycling...
-[Write something about lipid stores \citep{campbellBuildingBlocksAre2020} vs carbohydrate stores \citep{ewaldYeastCyclinDependentKinase2016} here.  This is also a good place to add the figures I made from my investigation of the \citet{campbellBuildingBlocksAre2020} data and see if there is any periodicity.]
-Additionally, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined [EVIDENCE NEEDED].
+In terms of metabolite cycling,
+\citep{campbellBuildingBlocksAre2020} show that there is cycling of lipid stores during the cell division cycle and the precursors are synthesised as they are needed, as evidenced by metabolome abundance data.
+\citep{ewaldYeastCyclinDependentKinase2016} also show that the cell division cycle machinery regulate trehalose mobilisation, showing the coupling between carbohydrate store levels and cellular oscillators.
+By pulling on the coupling between the yeast metabolic cycle and the cell division cycle, we can extend this to say that lipid store cycling and perhaps to a lesser extent carbohydrate store cycling are likely instrumental to the yeast metabolic cycle.
+Though, strong experimental evidence such as direct investigation of how an impairment in lipid utilisation affects the yeast metabolic cycle in single-cells is needed to truly prove that such cycles are responsible for the metabolic cycle.
+The logic I've used so far is working backwards from the cell division cycle, and this isn't preferable because we want to believe that the yeast metabolic cycle is autonomous and gates the cell division cycle, not the other way around.
 
+[FIGURE: MY INVESTIGATION OF CAMPBELL ET AL. 2020 TO SHOW PERIODICITY OF TRANSCRIPTS/PROTEINS/METABOLITES]
+
+%Additionally, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined [EVIDENCE NEEDED].
+
+% [2023-06-09] I expect much of the comments for the below paragraph to be no longer needed because I've treated this topic better in a previous section.  I think all I need to do is write good summary paragraphs.
+% -------------------------------------------------------
 How YMCs are coordinated between cells is also unclear... and as I said above, whether such coordination is even needed is thrown into question by the presence of metabolic cycles in single-cell conditions.
 % Need to re-read Murray et al. (2007) -- appreciate the evidence they give here
 Experimental studies \citep{murrayRegulationYeastOscillatory2007} and mathematical models
@@ -480,18 +489,27 @@ It is entirely possible that observed cell-to-cell synchronisation is the effect
 
 %- campbell et al. 2020: suggests temporal regulation of biosynthesis for cell division cycle -- similar logic to ymc?  can put this in implications of ymc section
 
+The presence of the metabolic cycle and experimental studies that suggest that its control has commonalities with the cell division cycle and the circadian rhythm
+leads to the question of whether the metabolic cycle reflects something fundamental.
+This could perhaps an ancient biochemical adaptation to allow the cell to adapt its biochemistry and cell division cycle to external conditions.
+And all biological oscillators may have arisen from this ancient condition-dependent cycle.
 
 % Describe metabolic cycles in other organisms...
-% - Other yeasts
-% - Other organisms: bacteria, mammalian cells
-% (I think Mellor probably talks about this)
-Something something leads to the question of whether the metabolic cycle reflects something fundamental, perhaps an ancient biochemical adaptation to allow the cell to adapt its biochemistry and cell division cycle to external conditions.
+Similar metabolic cycles have been described in other organisms.
+Oscillations in NAD(P)H fluorescence have been observed in \emph{E. coli} coupled to its cell division cycle, as evidenced by time-lapse microscopy of single cells \citep{zhangDynamicSinglecellNAD2018}.
+In addition, addition of glucose or hydrogen peroxide to the medium results in global changes in autofluorescence, reflecting a response to nutrient conditions.
+Finally, similar metabolic cycles have been observed in mammalian cells.
+For example, \citet{zhuLogicTemporalCompartmentalization2022} describe a 12-hour metabolic cycle in liver cells that includes temporal partitioning of metabolic processes into energy homeostasis, genetic integrity maintenance processes, immune response, and gene expression -- linking the processes to the circadian rhythm and the whole cycle to a more general 12-hour mammalian ultradian clock.
+Importantly, this hepatic metabolic cycle operates independently from the spatial organisation of cells in the liver, reminiscent of the autonomy of the yeast metabolic cycle.
+In addition, HeLa cells with synchronised cell division have been shown to exhibit both NAD(P)H and ATP oscillations throughout the cell division cycle \citep{ahnTemporalFluxomicsReveals2017}, but the literature is conflicted about the these oscillations' dynamics across different mammalian cell types \citep{zylstraMetabolicDynamicsCell2022}.
+There is reason to believe that a wide range of organisms exhibit biochemical phenomena similar to the yeast metabolic cycle, as the aims of controlling cell division to match environmental conditions and temporal coordination of biosynthesis \& cellular redox state with cell division should be fundamental goals that apply to all eukaryotes too.
 
 %- Fundamental mechanistic basis for biological oscillators, such as the cell division cycle.  Could change what we know about the cell division cycle.
 % (Significance of study)
 Metabolic oscillations may be the origins of biological timekeeping mechanisms.
-Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle. % on what basis was this assertion made?
-Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneillCircadianRhythmsPersist2011}, refuting the idea that gene circuits are responsible for these rhythms.
+Indeed, \citet{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle, based on temperature compensation and sensitivity of the period.
+The logic here is that it makes sense for a biological oscillation to have temperature compensation because temperature oscillates with a period of a day on most of the planet.
+Circadian rhythms can occur in cells of multicellular eukaryotes without transcription \citep{oneillCircadianRhythmsPersist2011}, refuting the idea that gene circuits are responsible for such rhythms.
 Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \citep{papagiannakisAutonomousMetabolicOscillations2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
 Furthermore, YMCs share mechanisms with the circadian oscillator \citep{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
 Thus, studying YMCs may shed light on the evolution of biological rhythms.
