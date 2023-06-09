@@ -295,6 +295,9 @@ Perturbations in nitrogen sources are less well-studied.
 % Maybe also because long OX stage as it's the stage for biomass building
 But \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, based on single-cell observations, suggest that decreasing nitrogen source concentration prolongs the YMC, as evidenced by longer flavin oscillations when cells are grown on lower concentrations of yeast nitrogen base (YNB) media or on urea, a non-preferred nitrogen source.
 
+In addition, perturbations outside nutrient sources also affect the YMC.
+For example, externally applied hydrogen peroxide, as a source of oxidative stress, shifts the YMC to the oxidative phase \citep{amponsahPeroxiredoxinsCoupleMetabolism2021}.
+
 The fact that nutrient perturbations affect the metabolic cycle suggests a model in which cells adjust the metabolic cycle depending on nutrient availability, dynamically. % I say this SO MANY times.
 However, the caveat is that creating nutrient perturbations in a chemostat affects so many aspects of the cell environment, that it is difficult to tease things apart.
 
@@ -315,25 +318,34 @@ Although the complete molecular basis of the yeast metabolic cycle is not well-c
 
 Many of these deletions have been made for genes that control the cell division cycle and metabolism.
 
-In particular, there are several deletions shown to remove the metabolic oscillations in chemostats: namely, \emph{ZWF1} \citep{tuCyclicChangesMetabolic2007}, \emph{GSY2}, \emph{GPH1} \parencite{oneillCircadianRhythmsPersist2011}.
-\emph{ZWF1} is responsible for entry into the pentose phosphate pathway and subsequently a major source of NADPH generation, so deleting this gene may impair control of cellular redox;
-however, because of its role, this gene has also been shown to wreck things like amino acid metabolism and auxotrophy [CONSULT MY ZWF1 NOTE, MAKE SURE WHAT I WRITE IS ACCURATE], so it might be a bit difficult to draw conclusions from this deletion in particular.
-What's interesting is \emph{GSY2} and \emph{GPH1}, which both have roles in glucose/glycogen mobilisation and storage, thus suggesting that cycling of carbohydrate stores may be needed for the function of the metabolic cycle. % contradict with idea of lipid stores?  link with modelling?
+In particular, there are several deletions shown to remove the metabolic oscillations in chemostats: such as \emph{ZWF1} \citep{tuCyclicChangesMetabolic2007}, \emph{GSY2}, and \emph{GPH1} \parencite{oneillEukaryoticCellBiology2020}.
+\emph{ZWF1} codes for glucose-6-phosphate dehydrogenase and is thus responsible for entry into the pentose phosphate pathway and subsequently a major source of NADPH generation, so deleting this gene may impair control of cellular redox.
+However, because of its role, this gene has also been shown to wreck a lot of things like adapting to oxidative and pH stress and also causes methionine auxotrophy, so it might be a bit difficult to draw conclusions from this deletion in particular.
+Furthermore, other enzyme-catalysed reactions in the cell that generate NADPH exist (Idp2p, Ald6p) and have shown to compensate for the loss of \emph{ZWF1} when cells are grown on lactate plates or on liquid cultures with glucose as the carbon source \parencite{minardSourcesNADPHYeast2005}.
+This therefore raises the question of just how important \emph{ZWF1} is to the yeast metabolic cycle, and to what extent is NADPH generation is needed for control of cellular redox.
+What's interesting is \emph{GSY2} and \emph{GPH1}, which both have roles in glucose/glycogen mobilisation and storage, thus suggesting that cycling of carbohydrate stores may be needed for the function of the metabolic cycle.
+However, metabolic oscillations have been observed in high-glucose conditions \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} in which glycogen synthesis is repressed, therefore suggesting that glycogen cycling may play a more minor role in defining the yeast metabolic cycle and another nutrient cycling phenomenon may be more responsible.
 In addition, \emph{MSN2} and \emph{MSN4} have been shown to regulate acetyl CoA accumulation in the reductive-charging phase, as evidenced by the lack of YMCs in deletion strains \citep{kuangMsn2RegulateExpression2017}.
 This tells us that genes involved in signalling pathways play an important role in the integrity of the metabolic cycle too.
 
 Additionally, other deletions have been shown to either change the frequency or the shape of the metabolic oscillations -- at least in terms of their dissolved oxygen traces.
-\textcite{caustonMetabolicCyclesYeast2015} provide three examples: \emph{RIM11}, \emph{SWE1}, and \emph{TSA1 TSA2}. % they actually had more, but these are the three that pop in my head right now
-\emph{RIM11} does this...
-\emph{SWE1} does this...
-\emph{TSA1 TSA2} does this...
-Moreover, deletion of \emph{GTS1} shortens the oscillation periods \citep{lloydUltradianMetronomeTimekeeper2005},
-
-Some discussion about peroxiredoxins and thioredoxins can fit here.
-Cite \textcite{amponsahPeroxiredoxinsCoupleMetabolism2021}.
+\textcite{caustonMetabolicCyclesYeast2015} provide several examples, of which I discuss \emph{RIM11}, \emph{SWE1}, and \emph{TSA1 TSA2}. % they actually had more, but these are the three that pop in my head right now
+Rim11p is the yeast homolog of the GSK3$\beta$ serine/threonine kinase, which regulates metabolism and plays a role in setting the speed of the circadian clock;
+the \emph{RIM11} deletion has been shown to result in shortened periods of dissolved-oxygen metabolic cycles in the chemostat, thus pointing towards a common mechanism for both biological oscillators.
+Swe1p is a conserved cell division cycle regulator that functions at the G2/M checkpoint and has roles in coupling the cell division cycle with the circadian rhythm;
+deleting \emph{SWE1} also resulted in shortened periods of dissolved-oxygen metabolic cycles but with the same rate of DNA replication, suggesting a dysregulation in the coupling between the yeast metabolic cycle and the cell division cycle.
+Tsa1p and Tsa2p are paralogous cytoplasmic thioredoxin peroxidases that cooperate in the peroxiredoxin-thioredoxin system to eliminate reactive oxygen species and have been shown to be a marker for circadian rhythms;
+a double deletion of the two associated genes still results in metabolic cycles, but with an additional burst in high oxygen consumption during what would otherwise be the reductive-charging phase, showing that the peroxiredoxin-thioredoxin system is instrumental in the integrity of the yeast metabolic cycle.
+In addition, \textcite{amponsahPeroxiredoxinsCoupleMetabolism2021} show the presence of cycling peroxiredoxin oxidation during the YMC using chemostat-based studies, with a corresponding cycling of hydrogen peroxide.
+They also confirm that inactivating peroxiredoxins (tsa1$\Delta$ tsa2$\Delta$, additionally with inducible degradation of Ahp1, another cytosolic peroxiredoxin) disrupts the metabolic cycle and decouples it from the cell division cycle.
+%Moreover, deletion of \emph{GTS1} shortens the oscillation periods \citep{lloydUltradianMetronomeTimekeeper2005},
 
 However, few genetic perturbation studies have been attempted in single-cell studies.
-The most significant is in \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, in which by deleting genes related to cell division cycle machinery [WHICH??], they showed that the metabolic cycle operates independently from the cell division cycle.
+The most significant is in \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, in which by deleting genes (atp5$\Delta$, cyt1$\Delta$) required for respiration, they showed that metabolic cycling does not require respiration.
+This would explain the presence of metabolic cycles in both fermentative and non-fermentative growth, and begs the question of whether dissolved-oxygen oscillations in the chemostat are the best way to capture the yeast metabolic cycle.
+% LINK TO CHEMOSTAT VS SINGLE-CELL
+
+%in which by deleting genes related to cell division cycle machinery [WHICH??], they showed that the metabolic cycle operates independently from the cell division cycle.
 
 \subsection{Modelling the yeast metabolic cycle}
 \label{subsec:intro-ymc-model}
