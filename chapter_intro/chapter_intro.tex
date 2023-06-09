@@ -345,19 +345,37 @@ The most significant is in \textcite{baumgartnerFlavinbasedMetabolicCycles2018},
 This would explain the presence of metabolic cycles in both fermentative and non-fermentative growth, and begs the question of whether dissolved-oxygen oscillations in the chemostat are the best way to capture the yeast metabolic cycle.
 % LINK TO CHEMOSTAT VS SINGLE-CELL
 
-%in which by deleting genes related to cell division cycle machinery [WHICH??], they showed that the metabolic cycle operates independently from the cell division cycle.
-
 \subsection{Modelling the yeast metabolic cycle}
 \label{subsec:intro-ymc-model}
 
+[THE SUMMARY FIGURES FROM THESE PAPERS MAY BE USEFUL TO HELP ILLUSTRATE THE IDEAS]
+
 Systems biology approaches have been used to develop models to explain features of biological rhythms.
-An early model is \parencite{jonesCyberneticModelGrowth1999} [PLEASE ELABORATE].
-There's also \textcite{krishnaMinimalPushPull2018} [PLEASE ELABORATE].
-\citet{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators.
+An early model is \parencite{jonesCyberneticModelGrowth1999} which simulates dynamic competition between three modes of metabolism (fermentation, glucose oxidation, and ethanol oxidation) using differential equations.
+This model predicts spontaneous generation of oscillations in dissolved oxygen, cell mass, and storage carbohydrates in continuous cultures.
+This prediction is consistent with most chemostat-based studies of the yeast metabolic cycle.
+Furthermore, the model predicts that, within a window of dilution rate values, if the dilution rate decreases, the dissolved oxygen oscillations increase in amplitude and period; the increase in period agrees with experimental studies such as \textcite{oneillEukaryoticCellBiology2020}.
+However, the model also predicts oscillations in the extracellular concentrations of glucose and ethanol, which conflicts with the steady-state assumption of chemostat studies, and may mean that the chemostat oscillations may in part be because of dynamic responses to such nutrient level changes, in contrast to single-cell studies.
+
+\textcite{krishnaMinimalPushPull2018} uses a frustrated bistability model to produce a relaxation oscillator that explains how a population of yeast cells switches between quiescent and growth states when faced with a limited amount of metabolic resources.
+This model assumes that the cells retain hysteresis of their current state and posits that cells of two populations communicate through diffused acetyl-CoA to sustain the population-level oscillatory behaviour.
+Read together with the discussion from \textcite{burnettiCellCycleStart2016}, which also propose that yeast cells committed to the metabolic cycle secrete metabolites that induce other cells to enter the metabolic cycle provided that they have enough storage carbohydrates, this model provides an attractive cell-to-cell signalling explanation for the population-level behaviour observed in the chemostat.
+However, such an explanation does not explain the presence of metabolic cycling in single-cell conditions in which cells are physically separated and signalling between cells cannot occur -- though it must be noted that autonomous generation of metabolic cycles and synchrony of metabolic cycles in a population can possibly arise from two different mechanisms that are independent of each other.
+
+Based on single-cell experimental observations, more recently, \citet{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators at different stages of the metabolic cycle.
+This study builds upon existing use of the simple Kuramoto model to model collective oscillatory behaviour in other biological systems.
+The study uses observations of single-cell growth on growth conditions with different carbon source conditions to determine parameters that define the natural frequencies of the cell division cycle oscillators and the strength of the coupling between the four oscillators in the model.
+Parameter optimisation predicts that the metabolic cycle most strongly influences the START point of the cell division cycle, and more weakly influences the M and S phases, while the three points of the cell division cycle negligibly influence each other.
+Under perturbations, the model system also exhibits stability but also a shift in oscillation frequency, agreeing with experimental observations, and also predicts the effects of Cdc20 and Cdc14 dynamic depletions.
+However, a key criticism of this model-based study is that by using the Kuramoto model, it makes simplistic assumptions about the oscillators, which may be unrealistic especially given how little we know about the mechanistic basis of the metabolic oscillator.
+
 % [This is a bit out of place... probably nix it given that I've given up on using this.]
 % Additionally, a data-driven stochastic modelling approach was used to describe the relationship between the circadian and cell cycle oscillators without assuming a prior relationship \citep{droin_low-dimensional_2019}.
 % This strategy is yet to be applied to the metabolic and cell cycle oscillators.
 % However, \citet{ozsezenInferenceHighLevelInteraction2019} assumed the same, specific coupling function for all interactions between the four oscillators.
+
+Taken together, modelling approaches have been able to predict some aspects of the metabolic cycle, but most focus on specific aspects to the detriment of other experimental observations, and none sufficiently reconcile observations from both chemostat-based and single-cell studies.
+Constructing more accurate models are complicated by how little of the mechanistic basis of the yeast metabolic cycle has been elucidated thus far.
 
 \subsection{Big picture/Hypothesis: a nutrient sensor than entrains the cell division cycle?}
 \label{subsec:intro-ymc-hypothesis}
