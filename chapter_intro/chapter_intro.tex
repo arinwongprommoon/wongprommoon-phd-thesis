@@ -381,15 +381,18 @@ Constructing more accurate models are complicated by how little of the mechanist
 \label{subsec:intro-ymc-hypothesis}
 
 From existing evidence, we can create a big picture of what the yeast metabolic cycle is.
-Idea that the yeast metabolic cycle is a autonomous biological oscillator that operates at a range of frequencies in response to a range of (permissive) growth conditions, as evidenced by how extreme [BE MORE SPECIFIC, AND REFER TO A PREVIOUS SECTION] nutrient conditions throw the oscillator out of balance.
+Idea that the yeast metabolic cycle is a autonomous biological oscillator that operates at a range of frequencies in response to a range of (permissive) growth conditions, as evidenced by how extreme conditions throw the oscillator out of balance.
+If we're just going by the evidence from chemostat-based studies, such extreme conditions include poor nutrient quality, glucose concentration being too high, and media being too acidic (pH < 2.9) [CONSULT PREVIOUS SECTIONS TO MAKE THIS MORE CLEAR, LINK TO PREVIOUS SECTION TOO].
+However, there is reason to suggest that the metabolic oscillator can function in some conditions previously deemed to be unfavourable;
+for example, single-cell studies show that yeast cell show metabolic oscillations in high-glucose conditions.
+Within the permissive growth conditions, different conditions affect the frequency of the metabolic cycle;
+for example, a low concentration of glucose or nitrogen source results in longer cycles, and bulk addition of certain compounds can reset the phase of the metabolic cycle.
+These observations support the idea that the metabolic oscillator includes the functionality of a nutrient sensor.
 
-The yeast metabolic cycle creates windows of opportunities for the cell to commit to START if conditions are favourable: e.g. good stores.
+The yeast metabolic cycle then creates windows of opportunities for the cell to commit to START if conditions are favourable: e.g. good carbohydrate or lipid stores.
 Thus, this oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle and biosynthetic/redox processes.
 Though the relationship between the metabolic cycle and the cell division cycle is governed by the mathematical basis of coupled oscillators.
 Most importantly, there is a small window of frequencies in which both oscillators can be phase-locked, and that other, complicated relationships exist: e.g. multiple metabolic cycles per cell division cycle -- in line in the window-of-opportunity idea above.
-
-In addition, the yeast metabolic cycle responds dynamically and rapidly to nutrient availability.
-Specifically, abrupt changes in availability may reset the phase of the cycle, and the concentration of nutrients in media changes the duration of the cycle -- again, within a window of frequencies.
 
 % **Logical inconsistency**: previously I mentioned that this coupling is flexible &
 % this idea is disputed.  This is an error!
@@ -418,20 +421,27 @@ As I work with budding yeast in a single-cell setup, I work with the latter defi
 Any conclusion from a single-cell study would be subject to the question: does it recapitulate dissolved oxygen-based metabolic cycles in chemostats?
 
 Particularly when it uses a different readout such as metabolite redox state or ATP concentration... and it has to use a different readout because measuring the dissolved oxygen concentration does not make sense for single-cell studies.
-Furthermore, using the chemostat imposes limitations: it obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habit of yeast, and always imposes starvation.
+Furthermore, using the chemostat imposes limitations: it obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habitat of yeast, and always imposes starvation.
 The limitation of the imposition of starvation is highlighted by how single-cell studies have shown that metabolic oscillations occur when cells are cultured in high (20 g/L) glucose conditions.
-Contributions from sub-populations of cells are highlighted by publications like \citet{burnettiCellCycleStart2016}, which [PUT WHAT THEY SAY HERE].
+% There is space to strengthen this sentence to make the evidence more explicit.
+\citet{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for chemostat observations, as evidenced by how the yeast cells spend proportionately more time in the reductive phase at lower dilution rates.
+Contributions from sub-populations of cells are further highlighted by \citet{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that there a group of genetically identical yeast cells divide themselves into two populations.
+One population of cells has high glycolytic activity and arrest cell division, while the other population of cells adapt by virtue of their mitochondrial network response and resume cell growth; the distinction between the two populations is made obvious when the culture is subject to abrupt glucose starvation.
+Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
+Taken together, it is possible that phenotypically different sub-populations in the chemostat culture may partially explain the observations in the chemostat so far.
 In addition, there is the question of whether cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony (as proposed by e.g. \citet{krishnaMinimalPushPull2018}, which proposes that acetaldehyde does this; someone else proposed hydrogen sulfide).
 Bulk culture set-ups, including chemostats, are not able to address questions about cell sub-populations and autonomy of the metabolic cycle; however, single-cell set-ups may fill in such a technical gap.
-% NOTE: Sub-populations in single-cell: justify using Bagamery et al. (2020).  In addition to population in e.g. Burnetti et al. (2016).
 
 Such limitations of the chemostat leads to disputes on the very phases the metabolic cycle exhibits, as discussed earlier.
 The conditions of the chemostat may well force the population of cells to behave in a certain way.
 
 It is unclear whether aspects of the YMC discovered in bulk culture apply to single cells.
 There's only been a few single-cell studies of the YMC, and here I provide a brief review.
-\citet{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue [ELABORATE];
-however, it lacks quantitative time-series analysis.
+\citet{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue by culturing strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cycling cells from a chemostat to a microfluidic device for real-time imaging of the cells.
+The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
+This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two subpopulations in the culture.
+However, it lacks quantitative time-series analysis, rather, reporting qualitative interpretations of fluorescent images.
+And the microfluidic device did not truly physically separate each cell individually, thus it is unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
 % This does seen like a key difference seen in single-cell, but the fact wasn't made clear
 % in writing here.
 \citet{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
