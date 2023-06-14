@@ -1,0 +1,38 @@
+% [START BLOCK 2]
+However, there is some debate in the literature as to what is responsible for the two phase lengths observed.
+One possible explanation is that such short- or long-phase cycles are an artefact of chemostat culture conditions.
+Idea that chemostat is not truly steady-state because the concentration of solutes or gases change over time; mathematical model showing glucose levels oscillate \citep{jonesCyberneticModelGrowth1999}.
+These changes can be oscillatory and can be a result of cyclic build-up processes in the yeast population.
+If these changes are oscillatory, you can't necessarily conclude that any changes you observe in the chemostat are a result of the yeast metabolic cycle.
+Based on the explanation \citep{jonesCyberneticModelGrowth1999}, the dissolved oxygen cycles and NAD(P)H-flavin cycles are different things.
+NAD(P)H-flavin cycles occur even if the conditions are constant -- or, as much as we can assume with constantly-perfused microfluidics -- and at faster frequencies as compared to dissolved oxygen cycles.
+This reinforces the bad-chemostat idea.
+
+An example is the accumulation of hydrogen sulfide in \citep{oneillEukaryoticCellBiology2020}.
+The way the chemostat is set up may mean that hydrogen sulfide gas is constantly blown off, so the equilibrium shifts towards \ce{HS- -> H2S}.
+If the chemostat is of high quality, this should not happen and there should not be so-called short-phase or long-phase metabolic cycles.
+This would explain why single-cell studies report metabolic cycles within a short window of frequencies, unlike the wider ranges reported for long-phase metabolic cycles based on the chemostat.
+
+This begs the question of whether yeast cells autonomously and individually generate these cycles -- a question bulk culture in chemostats cannot answer.
+% [END BLOCK 2]
+
+% [START UNNUMBERED BLOCK]
+This would explain the presence of metabolic cycles in both fermentative and non-fermentative growth, and begs the question of whether dissolved-oxygen oscillations in the chemostat are the best way to capture the yeast metabolic cycle.
+% [END UNNUMBERED BLOCK]
+
+% [START UNNUMBERED BLOCK]
+% [2023-06-09] I expect much of the comments for the below paragraph to be no longer needed because I've treated this topic better in a previous section.  I think all I need to do is write good summary paragraphs.
+% -------------------------------------------------------
+How YMCs are coordinated between cells is also unclear... and as I said above, whether such coordination is even needed is thrown into question by the presence of metabolic cycles in single-cell conditions.
+% Need to re-read Murray et al. (2007) -- appreciate the evidence they give here
+Experimental studies \citep{murrayRegulationYeastOscillatory2007} and mathematical models
+% Actually, they aren't *that* explicit on H2S mediating cell-cell communication
+% No synchronisation in single-cell conditions, so here's where simulating chemostat in microfluidics
+% comes in (feast-and-famine).
+% The different aspects found from bulk culture & single-cell experiments isn't written so
+% clearly.  A proper review will be better.  These are just some aspects pasted together.
+\citep{krishnaMinimalPushPull2018} suggest that acetaldehyde and hydrogen sulfide may mediate cell-to-cell communication.
+The reason for this synchronisation between cells is still unclear. % citation needed
+In addition, perhaps such cell-to-cell synchronisation may well be an artefact of chemostat activation [EVIDENCE/CITATION NEEDED -- SEE NOTES FROM KEVIN CORREIA].
+It is entirely possible that observed cell-to-cell synchronisation is the effect of all cells independently responding to some condition, and chemostat studies cannot adequate say whether this is the case.
+% [END UNNUMBERED BLOCK]
