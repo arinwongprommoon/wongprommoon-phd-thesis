@@ -1,9 +1,10 @@
-% ROUGH DRAFT, based on 10-month report for now
 % TODO:
 % - Editing
 %   - Add/Read citations where marked
 %   - Chemostat vs single-cell writing
+%   - Reorganise end of flavins in YMC section
 %   - Internal links/refs
+% - Add figures & tables
 
 \chapter{Introduction}
 
@@ -411,14 +412,16 @@ Genome-wide transcript cycling has two superclusters that correspond to the oxid
 However, there has been no genome-wide analysis of genes that influence cycling \citep{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
 As we lack proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
 
-Metabolome cycling may play a role in the metabolic cycle and can explain temporal partitiong of biosynthesis, but the evidence so far is indirect as it is based on the cell division cycle.
-\citet{campbellBuildingBlocksAre2020} show that there is cycling of lipid stores during the cell division cycle and the precursors are synthesised as they are needed, as evidenced by metabolome abundance data.
+[FIGURE: MY INVESTIGATION OF CAMPBELL ET AL. 2020 TO SHOW PERIODICITY OF TRANSCRIPTS/PROTEINS/METABOLITES]
+
+Metabolome cycling may play a role in the metabolic cycle and can explain temporal partitioning of biosynthesis, but the evidence so far is indirect as it is based on the cell division cycle.
+\textcite{campbellBuildingBlocksAre2020} showed that lipid biosynthesis in budding yeast is periodic with the cell division cycle and peaks during S phase, as evidenced by an increase in the number of metabolites implicated in lipid metabolism in such phases, based on metabolomics analysis of prototrophic cells with synchronised cell division cycles.
+Here, precursors are synthesised as they are needed.
 \citet{ewaldYeastCyclinDependentKinase2016} also show that the cell division cycle machinery regulate trehalose mobilisation, showing the coupling between carbohydrate store levels and cellular oscillators.
+They also showed that lipid metabolism increased during S/G2/M, likely due to the synthesis of new cell membranes during bud growth, as evidenced by pathway enrichment analysis.
 Based on the coupling between the yeast metabolic cycle and the cell division cycle, it can be inferred that lipid store cycling and perhaps to a lesser extent carbohydrate store cycling are likely instrumental to the yeast metabolic cycle.
 Though, investigation of how an impairment in lipid utilisation affects the yeast metabolic cycle in single-cells is needed to truly prove that such cycles are responsible for the metabolic cycle.
 Preferable, I need evidence to support metabolome cycles that also confirms that the YMC is independent of the cell division cycle.
-
-[FIGURE: MY INVESTIGATION OF CAMPBELL ET AL. 2020 TO SHOW PERIODICITY OF TRANSCRIPTS/PROTEINS/METABOLITES]
 
 %Additionally, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined [EVIDENCE NEEDED].
 
@@ -452,58 +455,52 @@ Thus, studying YMCs may shed light on the evolution of biological rhythms.
 
 \section{Flavins and flavoproteins}
 \label{sec:intro-flavin}
-I'm writing this section because I'm using flavins to monitor the yeast metabolic cycle, as been done previously, and I'm going to discuss the background knowledge needed to make sense of the results.
 
 \subsection{Introduction to cellular autofluorescence}
 \label{subsec:intro-flavin-autofluo}
 % - (Refer to reviews, e.g. Maslanka et al. 2018 -- is a goldmine)
 
-Cellular autofluorescence is defined as the intrinsic fluorescence of a cell absent of any fluorescent tags, and this is caused by the autofluorescence of compounds in the cell that have light emission properties \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}.
+Cellular autofluorescence is defined as the intrinsic fluorescence of a cell without fluorescent tags.
+It is caused by the autofluorescence of compounds that have light emission properties \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}.
 Such endogenous fluorophores include coenzymes, vitamins, and amino acids with aromatic chemical groups, flavins being one of them.
-However, autofluorescence can pose difficulty in cellular microscopy because their wavelengths can overlap and therefore it is difficult to draw biochemical conclusions from the signal alone.
+However, autofluorescence pose difficulty in cellular microscopy because their wavelengths can overlap with other fluorophores and therefore it is difficult to draw biochemical conclusions from the signal alone.
 For example, flavin autofluorescence overlaps with the spectrum of the fluorescent glucose analogue 6-NBDG \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}, and thus interferes with studies that use this analogue to study glucose uptake.
-Owing to the identity of those compounds, cellular autofluorescence can be a key indicator of the physiology and metabolism of the cell, and it has certainly been leveraged to give insight into the yeast metabolic cycle.
+Owing to the identity of the compounds that are responsible for autofluorescence, cellular autofluorescence can indicate of the physiology and metabolism of the cell, and it has been used to study the yeast metabolic cycle.
+Autofluorescence thus offers an easy way to monitor cell physiology without engineering genetic constructs.
 
 \subsection{Biochemical basis of flavins and flavoproteins}
 \label{subsec:intro-flavin-biochem}
-Flavins refer to a group of organic compounds that share a common moiety.
-Its aromatic structure allows redox reactions.
 
 [ADD CHEMICAL DIAGRAM: FLAVIN GROUP, FMN, FAD]
 
+Flavins are a group of organic compounds that share an aromatic moiety that allows redox reactions.
 Specifically, the flavin moiety can exist in the oxidised, semiquinone, or reduced states.
-Transitions between the states involve electron transfer.
-
-Because flavins can exist in these states, they function as electron carriers in the cell.
-In \emph{Saccharomyces cerevisiae}, flavin is present in FMN and FAD, which function as prosthetic groups in a group of proteins called flavoproteins whose genes account for 1.1\% of the genome \citep{gudipatiFlavoproteomeYeastSaccharomyces2014}.
-FMN and FAD can either be covalently bound to these proteins or be free.
+Flavins thus function as electron carriers in the cell.
+In \emph{Saccharomyces cerevisiae}, flavin is present in FMN and FAD, which function as prosthetic groups in flavin-dependent proteins, or flavoproteins, whose genes account for 1.1\% of the genome \citep{gudipatiFlavoproteomeYeastSaccharomyces2014}.
+FMN and FAD can be covalently bound to these proteins or be free.
   % [citation needed -- IIRC they don't exist as the free from for long?  Is the free form transient?].
 FAD is a co-enzyme and has major roles in transferring electrons from the TCA cycle to the mitochondrial ETC.
-FMN exists in both free and protein-bound forms.
 
 % (Biosynthesis of flavin)
-[ADD FIGURE: Schematic of riboflavin uptake and biosynthesis and their relationship with flavin-containing compounds in the yeast cell.]
+[ADD FIGURE: Schematic of riboflavin uptake and biosynthesis and their relationship with flavin-containing compounds in the yeast cell.  And KEGG diagram.]
 % In more detail: https://www.genome.jp/pathway/map00740 (biosynthesis of riboflavin and derivatives, KEGG)
 
-Broadly speaking, flavins in \emph{Saccharomyces cerevisiae} are derived from riboflavin.
-Riboflavin can be synthesised in a \emph{de novo} pathway which derives from purine biosynthesis and the oxidative pentose phosphate pathway.
+Flavins in \emph{Saccharomyces cerevisiae} are derived from riboflavin.
+Riboflavin can be synthesised \emph{de novo} from purine biosynthesis and the oxidative pentose phosphate pathway.
 % Is there more to this than the KEGG diagram?
-
-Architecture thus easily to understand and study -- very few processes are involved in making it, and nothing uses up flavin.
-So it's clear that cell only makes new flavin for whatever purposes FMN and FAD are for.
+Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD.
 
 [ADD FIGURE: SCHEMATIC OF DETECTING FLAVINS VIA MICROSCOPY, THAT I USE IN COUNTLESS POSTERS \& PRESENTATIONS]
 
-From a technical standpoint, these redox states affect the emission/absorption of electromagnetic radiation of the flavin moiety.
-
 [ADD FIGURE(S): FLUORESCENCE EXCITATION \& EMISSION SPECTRUM OF RIBOFLAVIN.  EITHER FROM FPBASE OR ADAPT FROM IN VIVO STUDIES CITED.]
 
-From a technical standpoint, we can take advantage of cellular autofluorescence caused by the presence of flavins to monitor the redox state of the cell, and by extension, the yeast metabolic cycle.
+From a technical standpoint, these redox states affect the emission/absorption of electromagnetic radiation of the flavin moiety.
+
+The redox biochemistry of flavins give rise to fluorescence, so monitoring flavin autofluorescence monitors the redox state of the cell.
 Flavins, in their oxidised forms (FMN and FAD), have a peak excitation frequency of $\approx$460 nm and a peak emission frequency of $\approx$535 nm \parencite{maslankaAutofluorescenceYeastSaccharomyces2018, wagnieresVivoFluorescenceSpectroscopy1998}.
+Comparison of \emph{in vivo} autofluorescence in mammalian cells and the fluorescence spectrum of riboflavin in PBS confirms this fluorescence behaviour \parencite{aubinAutofluorescenceViableCultured1979}.
 In contrast, the reduced forms FMNH2 and FADH2 have negligible fluorescence \parencite{mastersConfocalRedoxImaging1994}.
-In addition, comparison of \emph{in vivo} autofluorescence in mammalian cells and the fluorescence spectrum of riboflavin in PBS confirm the fluorescence spectrum of flavins in the cell \parencite{aubinAutofluorescenceViableCultured1979}.
-Therefore, we can detect flavin redox states using fluorescence microscopy, using excitation and emission wavelength windows that correspond to this spectrum.
-Certainly, this has been performed both in chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} of the yeast metabolic cycle.
+Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} have monitored flavin autofluorescence to study the YMC.
 
 \subsubsection{Description of key flavoproteins and their roles}
 \label{subsubsec:intro-flavin-biochem-descriptions}
@@ -513,72 +510,47 @@ Certainly, this has been performed both in chemostat-based \parencite{sasidharan
 
 [ADD FIGURE: BAR CHART SHOWING ABUNDANCE OF MOST ABUNDANT FLAVOPROTEINS]
 
-\citet{gudipatiFlavoproteomeYeastSaccharomyces2014} describe 68 genes that code for 47 flavoproteins (flavin-dependent proteins) in budding yeast and their roles.
+\citet{gudipatiFlavoproteomeYeastSaccharomyces2014} describe 68 genes that code for 47 flavoproteins in budding yeast.
 Of these, 35 require FAD, 15 require FMN, and 3 require both.
-In budding yeast, covalent bonding of flavins to associated proteins are under-represented; most flavins sit in the active site without covalent bonding.
-Many of the flavoproteins are poorly characterised with regard to their biochemical and enzymatic properties \citep{kochStructureBiochemicalKinetic2017}.
-
-Focusing on the 12 most abundant \citep{hoUnificationProteinAbundance2018} flavoproteins...
+In budding yeast, most flavins sit in the active site without covalent bonding.
+The biochemical and enzymatic properties of many flavoproteins are poorly characterised \citep{kochStructureBiochemicalKinetic2017}.
 
 [ADD TABLE: SHOWING NAMES OF TOP 12 FLAVOPROTEINS, APPROXIMATE ABUNDANCE, THE REACTION THEY CATALYSE, AND THEIR ROLES, AND CITATIONS.  STEAL CONTENT FROM THE FLAVOPROTEINS ORG NOTE]
 
-The top dozen proteins or so on this list all catalyse redox reactions except for ilv2 -- though it has been hypothesised that an ancestral form catalysed a redox reaction; that said, it's a bit of a circular argument because this is inferred from the presence of FAD \citep{pangCrystalStructureYeast2002}.
-Indeed, the role in redox reactions is expected given the review and the redox capabilities of the flavin group afforded by its structure.
-If they're all roughly in the same direction regarding redox, then the `cellular redox state' explanation makes sense: I would expect the equilibrium of these reactions to go roughly the same way at any given point of the YMC.
+The most abundant flavoproteins catalyse redox reactions except for Ilv2p.
+It has been hypothesised that an ancestral form of Ilv1p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \citep{pangCrystalStructureYeast2002}.
 
-Specifically, these reactions include reduction of reactive chemical species/reactions involved in the response to oxidative stress (manifesting as increased abundances in response to DNA replication stress).
-This is unsurprising given that these reactions need redox -- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
+Specifically, these reactions include reduction of reactive chemical species to respond to oxidative stress --- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
 Additionally, the reactions include biosynthetic reactions.
 
-Many, but not all, of these reactions require NADPH or NADH to donate electrons -- suggesting a link between flavins and NAD(P)H in regulating the so-called `cellular redox state'.
-There is oye2 itself that catalyses the NADPH redox reaction; thus, this reaction should be \emph{the} main link between flavins and NAD(P)H.
-It's no surprise then that flavin and NAD(P)H cycles are linked -- indeed, \citet{murrayRedoxRegulationRespiring2011} report that NAD(P)H and flavin both peak at the end of the HOC phase of the YMC.
+Many of these reactions require NADPH or NADH to donate electrons, suggesting a link between flavins and NAD(P)H in regulating the cellular redox state.
+In particular, Oye2p catalyses the NADPH redox reaction, thus providing a link between flavins and NAD(P)H.
+To maintain the cellular redox state, it is thus reasonable to assume that the redox equilibrium of all flavoprotein-catalysed reactions are in the same direction at any point of the YMC.
+Supporting this, \citet{sianoNADHFlavinFluorescence1989} show that NAD(P)H fluorescence and the fluorescence of lipoamide dehydrogenase, a flavoprotein, indicate simultaneous reduction in response to lowered dissolved oxygen.
+They further show redox equilibrium in both fluorophores in response to glucose addition.
 
-So far that none of these are `CDC proteins' in the strictest sense, but due to the interconnectedness of biochemistry in the cell, I'd expect e.g. fatty acid synthesis proteins to cycle along with the CDC as cell makes more membrane.
-This is good because I need to rule out the possibility that what I'm seeing is just a function of the cell division cycle to make sure that I'm actually observing the metabolic cycle.
-
-\subsection{Studies on global flavin changes in response to perturbations}
-\label{subsec:intro-flavin-perturbations}
-
-SIANO
-Measure flavin fluorescence in a bioreactor.
-Attribute most of the fluorescence to lipoamide dehydrogenase, which requires FAD.  This protein corresponds to Lpd1p and has been confirmed to be a flavoprotein.
-At aerobic-anaerobic transitions, flavin fluorescence goes down (reduced) as dissolved oxygen goes down.  NAD(P)H fluorescence goes up (reduced) as dissolved oxygen goes down.  Both are reduced at the same time, confirming the cellular redox state idea.  Both responses are in redox equilibrium in response to glucose addition.
-
-MASLANKA
-Flavin fluorescence is less sensitive to environmental conditions than NAD(P)H fluorescence, which requires strictly controlled conditions for measurement.
-Different concentrations of riboflavin influence the autofluorescence signal and also the physiological status of cells, as an antioxidant, and as a precursor to FAD which plays a role in maintaining the levels of GSH.
+It is important to rule out the possibility that flavin cycling is merely a function of the cell division cycle to make sure that flavin monitoring monitors the YMC.
+None of these flavoproteins are strictly cell division cycle proteins, but this does not preclude cell division cycle-linked cycling of flavin autofluorescence.
+For example, fatty acid synthesis proteins should cycle along with the cell division cycle as cell synthesises more plasma membrane.
 
 \subsection{Flavins and flavoproteins in the yeast metabolic cycle}
 \label{subsec:intro-flavin-ymc}
 
-Autofluorescence is usually something people would avoid in experiments, but we are taking advantage of it to monitor the yeast metabolic cycle.
-This is because it is an easy-to-measure metabolic readout: it does not require additional engineering of strains e.g. fluorescence tags which may introduce burden, and all you need to do is adjust the excitation/emission wavelengths on the fluorescence microscope to the appropriate value.
-Plus, depending on the fluorescent compound targeted, it can be linked to many biochemical processes; for example, flavins, as illustrated by the above review of flavin and flavoproteins in the cell.
-
-I monitor flavin fluorescence and I have several justifications.
-First, there is precedent.
-Flavin fluorescence readings have been used to monitor metabolic oscillators both in chemostat \citep{murrayRedoxRegulationRespiring2011} and in single-cell \citep{baumgartnerFlavinbasedMetabolicCycles2018} experimental set-ups.
-
-To extend on that precedent, there is further justification on the biological basis of flavins and flavoproteins.
-They're linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1), as discussed in section \ref{subsubsec:intro-flavin-biochem-descriptions}, and NAD(P)H cycles have been implicated in bulk-culture \citep{tuLogicYeastMetabolic2005} % and more
+Flavin fluorescence can be used to monitor the metabolic cycle.
+The biological basis of flavins justifies this use.
+Flavins are linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1), as discussed in section \ref{subsubsec:intro-flavin-biochem-descriptions}, and NAD(P)H cycles have been implicated in bulk-culture \citep{tuLogicYeastMetabolic2005} % and more
 and single-cell \citep{papagiannakisAutonomousMetabolicOscillations2017} studies of the YMC, as discussed in section \ref{subsubsec:intro-ymc-definition-phases}.
 The timing of flavin cycle peaks -- indicating oxidation -- coincides with the oxidative state of the YMC, as evidence by how flavin fluorescence peaks in-phase with oxygen uptake rates in the chemostat \citep{murrayRedoxRegulationRespiring2011,sasidharanTimeStructureYeastMetabolism2012}.
-Riboflavin has been shown to peak in the oxidative state of the YMC, while FAD peaks in the reductive-building phase \parencite{tuCyclicChangesMetabolic2007}.
-They took metabolic extracts at evenly-spaced time intervals and used a directed LC-MS/MS-based technique for metabolic profiling of the extracts.
-Riboflavin and FAD are two (of many) metabolites they found oscillating.
+Riboflavin has been shown to oscillate and peak in the oxidative state of the YMC, while FAD peaks in the reductive-building phase, as evidenced by metabolic profiling of extracts from chemostat cultures taken at evenly-spaced intervals \parencite{tuCyclicChangesMetabolic2007}.
 Most abundant flavoproteins may have roles linked with the YMC.
 The most abundant is Fas1 (fatty acid synthetase); because there is evidence that cycles of fatty acid stores are implicated in metabolic cycling in yeast \citep{campbellBuildingBlocksAre2020}, it is likely that fatty acid synthetase is heavily implicated.
 Following this, the second most abundant is Yhb1, which may play a major role as discussed earlier.
 
 So, for these reasons, I expect flavin autofluorescence to be oscillatory and be a useful read-out of the yeast metabolic cycle.
-
-Reiterating the unknowns of the yeast metabolic cycle (section \ref{subsec:intro-ymc-unresolved}):
-few studies have characterised how such oscillations respond to changing nutrient conditions or to gene deletions.
-Furthermore,
-few studies have used flavin oscillations to study how well features of the YMC found in bulk-culture experiments translate to the single cell.
+Few studies have characterised how such oscillations respond to changing nutrient conditions or to gene deletions.
 Thus, filling in this knowledge gap is an avenue for further research.
 
+% [MARKED FOR REORGANISATION]
 Nevertheless, there are caveats of using flavin.
 There could be other things fluorescing in that wavelength region, although the benefits of using a non-invasive method to monitor the redox metabolism of the cell that doesn't require additional genetic engineering outweighs the caveats.
 And, this applies to other sources of autofluorescence too, including NAD(P)H.
@@ -593,27 +565,11 @@ Furthermore, measuring flavin fluorescence also incorporates fluorescence from r
 Either way, flavin fluorescence is the sum of the activity of many components, and this leads to another caveat: you cannot conclude that flavin fluorescence is mostly Fas1 or any other protein, and the only biochemical conclusion you can make is conclusions about overall cellular redox state.
 To close, I have to note that some of these caveats are not unique to flavin fluorescence, but a shared limitation of using fluorescence.
 
-\subsubsection{Do flavin cycles suggest cycling of lipid stores?}
-\label{subsubsec:intro-flavin-ymc-lipid_cycling}
-% e.g. \textcite{campbellBuildingBlocksAre2020}
-% Should this instead be in the bit where I discuss the molecular basis of the YMC?
 
-[POTENTIAL FIGURES: MY ANALYSIS OF CAMPBELL ET AL. 2020 DATAFRAMES]
-
-\textcite{campbellBuildingBlocksAre2020} showed that lipid biosynthesis in budding yeast is periodic with the cell division cycle and peaks during S phase, as evidenced by an increase in the number of metabolites implicated in lipid metabolism in such phases, based on metabolomics analysis of prototrophic cells with synchronised cell division cycles.
-Furthermore, \textcite{ewaldYeastCyclinDependentKinase2016} also showed that lipid metabolism increased during S/G2/M, likely due to the synthesis of new cell membranes during bud growth, as evidenced by pathway enrichment analysis.
-Taken together, such evidence suggests that cycling of cellular lipid stores may be key to the metabolic and cell division cycle oscillators in budding yeast.
-This is further strengthened by the fact that a lipid-synthesis enzyme is the most abundant flavoprotein.
-Then mention that a lipid-synthesis enzyme is one of the top flavoproteins.
-But the evidence may be tenuous because of the `aggregate effects' of all flavoproteins as I discussed earlier in this section.
-
-% Discuss ruling out other carbon metabolism, see Zylstra & Heinemann 2022
-
-\section{Aims of thesis} % maybe rename this
-\label{sec:intro-end}
-
-This should be a short section on the questions I aim to answer, in the style of the last bit of introduction in a published paper.
-% Though I'm not entirely sure if it would fit the logical flow of the introduction thus far; so see other theses to make sure.
+MASLANKA
+Flavin fluorescence is less sensitive to environmental conditions than NAD(P)H fluorescence, which requires strictly controlled conditions for measurement.
+Different concentrations of riboflavin influence the autofluorescence signal and also the physiological status of cells, as an antioxidant, and as a precursor to FAD which plays a role in maintaining the levels of GSH.
+% [END MARK]
 
 %%% Local Variables:
 %%% mode: latex
