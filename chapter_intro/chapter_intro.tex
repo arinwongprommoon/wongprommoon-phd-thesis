@@ -1,8 +1,6 @@
 % TODO:
 % - Editing
 %   - Add/Read citations where marked
-%   - Chemostat vs single-cell writing
-%   - Reorganise end of flavins in YMC section
 %   - Internal links/refs
 % - Add figures & tables
 
@@ -565,26 +563,13 @@ So, for these reasons, I expect flavin autofluorescence to be oscillatory and be
 Few studies have characterised how such oscillations respond to changing nutrient conditions or to gene deletions.
 Thus, filling in this knowledge gap is an avenue for further research.
 
-% [MARKED FOR REORGANISATION]
-Nevertheless, there are caveats of using flavin.
-There could be other things fluorescing in that wavelength region, although the benefits of using a non-invasive method to monitor the redox metabolism of the cell that doesn't require additional genetic engineering outweighs the caveats.
-And, this applies to other sources of autofluorescence too, including NAD(P)H.
-Additionally, judging by flavin measurements alone, we cannot be sure if changes in the reading are due to changes in the `flavin pool' (the amount of flavin-derived moieties in the cells across all their redox states) or due to global changes in intracellular flavin redox state, as a function of intracellular redox state.
-KEGG pathway (see section ...) suggests that there is a mechanism for the cell to increase its flavin pool by uptake of riboflavin from the media or from biosynthesis; certainly, the uptake route via Mch5p is confirmed by \textcite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
-However, the experimenter may reduce the chance of the former possibility by using minimal media that does not contain riboflavin, which is a common component in yeast media.
-
-% This paragraph is asking to be deleted because it repeats stuff from earlier.
-Most studies [CITATIONS NEEDED] assume a constant flavin pool, based on [DISCUSS THEIR EVIDENCE HERE].
-And therefore the oscillations can be seen as periodic shifts in redox equilibrium.
-Furthermore, measuring flavin fluorescence also incorporates fluorescence from riboflavin, in addition to flavoproteins.
-Either way, flavin fluorescence is the sum of the activity of many components, and this leads to another caveat: you cannot conclude that flavin fluorescence is mostly Fas1 or any other protein, and the only biochemical conclusion you can make is conclusions about overall cellular redox state.
-To close, I have to note that some of these caveats are not unique to flavin fluorescence, but a shared limitation of using fluorescence.
-
-
-MASLANKA
-Flavin fluorescence is less sensitive to environmental conditions than NAD(P)H fluorescence, which requires strictly controlled conditions for measurement.
-Different concentrations of riboflavin influence the autofluorescence signal and also the physiological status of cells, as an antioxidant, and as a precursor to FAD which plays a role in maintaining the levels of GSH.
-% [END MARK]
+Nevertheless, there are caveats to using flavin autofluorescence.
+Riboflavin fluorescence is captured too, so different concentrations of riboflavin influence the autofluorescence signal along with influencing the physiological state of the cell \citep{maslankaAutofluorescenceYeastSaccharomyces2018}.
+The experimenter can eliminate the effects of riboflavin by using riboflavin-free minimal media \citep{verduynEffectBenzoicAcid1992}.
+Additionally, flavin fluorescence is the aggregate of many flavoprotein components, therefore it cannot be concluded that flavin fluorescence is the readout of one protein in particular --- the only conclusion that can be made is of overall redox state.
+Furthermore, the changes in flavin fluorescence can be because of changes in the `flavin pool' --- the amount of flavin-derived moieties in the cells across all their redox states --- or due to global changes in intracellular flavin redox state, as a function of intracellular redox state.
+Most studies assume a constant flavin pool and see oscillations as periodic shifts in redox equilibrium.
+These caveats are not unique to flavin fluorescence, but are shared limitations with other auto-fluorescing cellular components like NAD(P)H, and the benefits of having a non-invasive method to monitor cellular metabolism outweighs the caveats.
 
 %%% Local Variables:
 %%% mode: latex
