@@ -362,47 +362,62 @@ Most importantly, there is a small window of frequencies in which both oscillato
 % (State the main unknowns of the yeast metabolic cycle:
 % - molecular mechanisms, specifically...? -> deletions to investigate
 % - whether things are the same in batch vs bulk)
-There are several disputes and unknowns within the current literature pertaining yeast metabolic cycles.
 
 \subsubsection{Chemostat vs single-cell studies}
 \label{subsubsec:intro-ymc-unresolved-chemostat_singlecell}
 
-% (Chemostat vs single-cell)
-The most important dispute relates to how there are both studies arising from chemostat/bulk conditions and from single cell conditions,
-although there are much fewer studies from single-cell set-ups.
-Namely, whether metabolic cycles described in single-cell studies are equivalent to the metabolic cycles described in bulk studies.
-This leads to definition issues, i.e. some authors \parencite{laxmanBehaviorMetabolicCycling2010, caustonMetabolicRhythmsFramework2018} only use the term metabolic cycle to refer to synchronised cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase, while single-cell studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018, zylstraMetabolicDynamicsCell2022} naturally have to expand that definition to include metabolite cycling and sequences of cellular events that are associated with the chemostat metabolic cycle.
-As I work with budding yeast in a single-cell setup, I work with the latter definition.
-Any conclusion from a single-cell study would be subject to the question: does it recapitulate dissolved oxygen-based metabolic cycles in chemostats?
+There is a dispute of whether the same conclusions can be drawn from chemostat-based studies and from single-cell based studies.
+Most studies of the YMC arise from chemostat experiments and any conclusion from a single-cell study is subject to the question of whether it recapitulates the YMC in the chemostat.
+Reconciling the two types of studies is difficult because the readouts and conditions are different:
+chemostat studies produce dissolved oxygen and transcript cycling readings, while single-cell experiments cannot report on dissolved oxygen and chiefly report metabolite cycling.
+This leads to differing definitions of the YMC:
+some authors \parencite{laxmanBehaviorMetabolicCycling2010, caustonMetabolicRhythmsFramework2018} only use the term metabolic cycle to refer to synchronised cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase, while single-cell studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018, zylstraMetabolicDynamicsCell2022} naturally have to expand that definition to include metabolite cycling and sequences of cellular events that are associated with the chemostat metabolic cycle.
+For the purposes of my thesis, I adhere to the definition used by single-cell studies.
 
-Particularly when it uses a different readout such as metabolite redox state or ATP concentration... and it has to use a different readout because measuring the dissolved oxygen concentration does not make sense for single-cell studies.
-Furthermore, using the chemostat imposes limitations: it obscures contributions from sub-populations of cells or individual cells, is not realistic compared to natural habitat of yeast, and always imposes starvation.
-The limitation of the imposition of starvation is highlighted by how single-cell studies have shown that metabolic oscillations occur when cells are cultured in high (20 g/L) glucose conditions.
-% There is space to strengthen this sentence to make the evidence more explicit.
+I argue that there are three caveats to chemostat-based studies:
+the experimenter cannot assume that the chemostat is in steady-state,
+the chemostat obscures contributions from sub-populations,
+and the chemostat imposes glucose starvation.
+These caveats affect the interpretation of YMC studies.
+
+There is a wide assumption that the chemostat is in steady-state, but it may not be true.
+A mathematical model shows that levels of solutes change over time \citep{jonesCyberneticModelGrowth1999}.
+In addition, \citet{oneillEukaryoticCellBiology2020} shows a chemostat setup that promotes evaporation of hydrogen sulfide gas, thus shifting the equilibrium of the reduction of bisulfides.
+This may affect redox metabolism in the cell.
+In such a case, chemostat observations may not reflect cell-autonomous behaviour.
+Instead, the oscillations may reflect individual cells' responses to the initial starvation imposed at the start of chemostat-based studies
+The subsequent response to regularly changing media conditions could explain temporal segregation of physiological processes in phases of the YMC.
+In other words, the conditions of the chemostat may force the population of cells to behave in a certain way.
+However, temporal segregation of physiological process has also been reported in single-cell studies \citep{takhaveevTemporalSegregationBiosynthetic2023}, suggesting that the cycling of solutes in the chemostat could affect some, but not all, temporal aspects of the metabolic cycle.
+
+The chemostat obscures contribution of sub-populations of cells.
 \citet{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for chemostat observations, as evidenced by how the yeast cells spend proportionately more time in the reductive phase at lower dilution rates.
 Contributions from sub-populations of cells are further highlighted by \citet{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that there a group of genetically identical yeast cells divide themselves into two populations.
-One population of cells has high glycolytic activity and arrest cell division, while the other population of cells adapt by virtue of their mitochondrial network response and resume cell growth; the distinction between the two populations is made obvious when the culture is subject to abrupt glucose starvation.
 Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
 Taken together, it is possible that phenotypically different sub-populations in the chemostat culture may partially explain the observations in the chemostat so far.
-In addition, there is the question of whether cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony (as proposed by e.g. \citet{krishnaMinimalPushPull2018}, which proposes that acetaldehyde does this; someone else proposed hydrogen sulfide).
-Bulk culture set-ups, including chemostats, are not able to address questions about cell sub-populations and autonomy of the metabolic cycle; however, single-cell set-ups may fill in such a technical gap.
+In addition, there is the question of whether cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony, as proposed by \citet{krishnaMinimalPushPull2018}.
+Bulk culture set-ups, including chemostats, are not able to address questions about cell sub-populations and autonomy of the metabolic cycle.
+However, single-cell set-ups may fill in such a technical gap.
 
-Such limitations of the chemostat leads to disputes on the very phases the metabolic cycle exhibits, as discussed earlier.
-The conditions of the chemostat may well force the population of cells to behave in a certain way.
+Finally, the chemostat imposes glucose starvation, and single-cell studies with different carbon sources give a different picture in terms of metabolic requirements.
+Chemostat studies and related models suggest that glucose starvation and oxidative metabolism are required for oscillations in dissolved oxygen level that define YMCs.
+NAD(P)H oscillations have been recorded in non-fermentative conditions, such as pyruvate or low-glucose media \citep{papagiannakisAutonomousMetabolicOscillations2017}.
+However, NAD(P)H \citep{papagiannakisAutonomousMetabolicOscillations2017,ozsezenInferenceHighLevelInteraction2019} and flavin \citep{baumgartnerFlavinbasedMetabolicCycles2018} oscillations still occur in constant high-glucose conditions, and only within a window of periods in contrast to the 1.4--14 hour range reported for chemostat-based studies.
+Furthermore, \emph{ATP5} and \emph{CYT1} deletions that impair oxidative respiration do not remove single-cell flavin-based metabolic oscillations \citep{baumgartnerFlavinbasedMetabolicCycles2018}, thus giving additional evidence that oxidative metabolism is not required for the YMC.
 
-It is unclear whether aspects of the YMC discovered in bulk culture apply to single cells.
-There's only been a few single-cell studies of the YMC, and here I provide a brief review.
+Single-cell microfluidic studies are well-positioned to address the limitations of the chemostat,
+although there have been only few studies.
 \citet{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue by culturing strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cycling cells from a chemostat to a microfluidic device for real-time imaging of the cells.
 The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
 This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two subpopulations in the culture.
 However, it lacks quantitative time-series analysis, rather, reporting qualitative interpretations of fluorescent images.
-And the microfluidic device did not truly physically separate each cell individually, thus it is unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
+The microfluidic device did not truly physically separate each cell individually, thus it is unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
 % This does seen like a key difference seen in single-cell, but the fact wasn't made clear
 % in writing here.
 \citet{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
-% Also, Murray et al. (2011) -- flavins in BULK culture.
 Furthermore, by measuring the level of flavins in the cell, \citet{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell cycle inhibitor rapamycin desynchronises the YMC and the cell cycle.
-Additionally, \citet{ozsezenInferenceHighLevelInteraction2019} suggested that the YMC controls the early and late cell cycle independently, based on modelling the oscillators as a system of Kuramoto oscillators.
+In sum, these single-cell studies address a small fraction of the knowledge covered by chemostat studies, and further such studies are required.
+
 
 \subsubsection{Molecular and genetic mechanisms}
 \label{subsubsec:intro-ymc-unresolved-molecular}
