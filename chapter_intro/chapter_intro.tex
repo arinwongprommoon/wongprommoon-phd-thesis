@@ -93,7 +93,7 @@ More recent, comprehensive models include \textcite{adlerYeastCellCycle2022} whi
 
 In contrast, less well-characterised natural biological rhythms have given rise to models with fewer detail and precision.
 An example is the glycolytic oscillation.
-The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels (and other cofactors) in budding yeast cells at the time scale of 10-ish seconds \parencite{doddLiveCellImaging2017, lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, when they are in high-glucose conditions.
+The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels (and other cofactors) in budding yeast cells at the time scale of 10 seconds \parencite{doddLiveCellImaging2017, lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, when they are in high-glucose conditions.
 A recent model is a coarse-grained model
 driven by positive feedback loops as a system of two coupled instability-generating mechanisms \parencite{goldbeterMultisynchronizationOtherPatterns}.
 
@@ -133,7 +133,7 @@ based on a chemostat-based investigation of growth of budding yeast on glucose-s
 
 The yeast metabolic cycle is longer in duration and is more robust than a similar biological oscillator, the glycolytic oscillation.
 The glycolytic oscillation has a period on the scale of 40 seconds \citep{olsenRegulationGlycolyticOscillations2009}.
-In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \citep{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4-5 hours \citep{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \citep{beuseEffectDilutionRate1998, oneillEukaryoticCellBiology2020}.
+In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \citep{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4--5 hours \citep{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \citep{beuseEffectDilutionRate1998, oneillEukaryoticCellBiology2020}.
 
 Glycolytic oscillations are highly damped, but yeast metabolic oscillations are robust, lasting for weeks \parencite{lloydRedoxRhythmicityClocks2007}.
 Additionally, glycolytic oscillations have been observed in anaerobic conditions \citep{lloydSaccharomycesCerevisiaeOscillatory2019}, but yeast metabolic cycles have been observed in aerobic conditions.
@@ -313,7 +313,7 @@ However, the model also predicts oscillations in the extracellular concentration
 \textcite{krishnaMinimalPushPull2018} uses a frustrated bistability model to produce a relaxation oscillator that explains how a population of yeast cells switches between quiescent and growth states when faced with a limited amount of metabolic resources.
 This model assumes that the cells retain hysteresis of their current state and posits that cells of two populations communicate through diffused acetyl-CoA to sustain the population-level oscillatory behaviour.
 Read together with the discussion from \textcite{burnettiCellCycleStart2016}, which also propose that yeast cells committed to the metabolic cycle secrete metabolites that induce other cells to enter the metabolic cycle provided that they have enough storage carbohydrates, this model provides an attractive cell-to-cell signalling explanation for the population-level behaviour observed in the chemostat.
-However, such an explanation does not explain the presence of metabolic cycling in single-cell conditions in which cells are physically separated and signalling between cells cannot occur -- though it must be noted that autonomous generation of metabolic cycles and synchrony of metabolic cycles in a population can possibly arise from two different mechanisms that are independent of each other.
+However, such an explanation does not explain the presence of metabolic cycling in single-cell conditions in which cells are physically separated and signalling between cells cannot occur --- though it must be noted that autonomous generation of metabolic cycles and synchrony of metabolic cycles in a population can possibly arise from two different mechanisms that are independent of each other.
 
 Based on single-cell experimental observations, \citet{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators at different stages.
 This study builds upon use of the Kuramoto model to model collective oscillatory behaviour in other biological systems.
@@ -345,7 +345,7 @@ These observations support the idea that the metabolic oscillator includes the f
 The yeast metabolic cycle then creates windows of opportunities for the cell to commit to START if conditions are favourable, for example, good carbohydrate or lipid stores.
 Thus, this oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle and biosynthetic/redox processes.
 Though the relationship between the metabolic cycle and the cell division cycle is governed by the mathematical basis of coupled oscillators.
-Most importantly, there is a small window of frequencies in which both oscillators can be phase-locked, and that other, complicated relationships exist: e.g. multiple metabolic cycles per cell division cycle -- in line in the window-of-opportunity idea above.
+Most importantly, there is a small window of frequencies in which both oscillators can be phase-locked, and that other, complicated relationships exist: e.g.\ multiple metabolic cycles per cell division cycle --- in line in the window-of-opportunity idea above.
 
 % **Logical inconsistency**: previously I mentioned that this coupling is flexible &
 % this idea is disputed.  This is an error!
@@ -531,7 +531,7 @@ The biochemical and enzymatic properties of many flavoproteins are poorly charac
 [ADD TABLE: SHOWING NAMES OF TOP 12 FLAVOPROTEINS, APPROXIMATE ABUNDANCE, THE REACTION THEY CATALYSE, AND THEIR ROLES, AND CITATIONS.  STEAL CONTENT FROM THE FLAVOPROTEINS ORG NOTE]
 
 The most abundant flavoproteins catalyse redox reactions except for Ilv2p.
-It has been hypothesised that an ancestral form of Ilv1p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \citep{pangCrystalStructureYeast2002}.
+It has been hypothesised that an ancestral form of Ilv2p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \citep{pangCrystalStructureYeast2002}.
 
 Specifically, these reactions include reduction of reactive chemical species to respond to oxidative stress --- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
 Additionally, the reactions include biosynthetic reactions.
@@ -551,9 +551,9 @@ For example, fatty acid synthesis proteins should cycle along with the cell divi
 
 Flavin fluorescence can be used to monitor the metabolic cycle.
 The biological basis of flavins justifies this use.
-Flavins are linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1), as discussed in section \ref{subsubsec:intro-flavin-biochem-descriptions}, and NAD(P)H cycles have been implicated in bulk-culture \citep{tuLogicYeastMetabolic2005} % and more
+Flavins are linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1p), as discussed in section \ref{subsubsec:intro-flavin-biochem-descriptions}, and NAD(P)H cycles have been implicated in bulk-culture \citep{tuLogicYeastMetabolic2005} % and more
 and single-cell \citep{papagiannakisAutonomousMetabolicOscillations2017} studies of the YMC, as discussed in section \ref{subsubsec:intro-ymc-definition-phases}.
-The timing of flavin cycle peaks -- indicating oxidation -- coincides with the oxidative state of the YMC, as evidence by how flavin fluorescence peaks in-phase with oxygen uptake rates in the chemostat \citep{murrayRedoxRegulationRespiring2011,sasidharanTimeStructureYeastMetabolism2012}.
+The timing of flavin cycle peaks --- indicating oxidation --- coincides with the oxidative state of the YMC, as evidence by how flavin fluorescence peaks in-phase with oxygen uptake rates in the chemostat \citep{murrayRedoxRegulationRespiring2011,sasidharanTimeStructureYeastMetabolism2012}.
 Riboflavin has been shown to oscillate and peak in the oxidative state of the YMC, while FAD peaks in the reductive-building phase, as evidenced by metabolic profiling of extracts from chemostat cultures taken at evenly-spaced intervals \parencite{tuCyclicChangesMetabolic2007}.
 Most abundant flavoproteins may have roles linked with the YMC.
 The most abundant is Fas1 (fatty acid synthetase); because there is evidence that cycles of fatty acid stores are implicated in metabolic cycling in yeast \citep{campbellBuildingBlocksAre2020}, it is likely that fatty acid synthetase is heavily implicated.
