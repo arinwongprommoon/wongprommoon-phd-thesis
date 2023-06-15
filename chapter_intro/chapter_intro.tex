@@ -45,8 +45,6 @@ This thesis is divided into six chapters:
 % Mellor (2016) -- provides a good overview.
 % and that collection of review articles probably give good definitions
 
-[FIGURE: SHOW COMPONENTS OF A BIOLOGICAL OSCILLATOR, ADAPTED FROM MELLOR 2016]
-
 Biological rhythms are repeating physiological or cellular processes.
 Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \citep{mellorMolecularBasisMetabolic2016}.
 Biological rhythms can occur at different time scales, from seconds (e.g.\ glycolytic cycle), to ultradian cycle (i.e.\ cycles that are more frequent than 24 hours), to circadian rhythms (24 hours).
@@ -54,10 +52,7 @@ Biological rhythms are important in temporally separating physiological processe
 This is instrumental in responding to external conditions, including nutrient conditions, growth requirements, or the day-night cycle.
 Thus, this means that biological rhythms can vary according to conditions.
 
-[FIGURE(S) MAY BE USEFUL IN DEMONSTRATING THE CELL DIVISION CYCLE HERE.  SHOW G1/S/G2/M PHASES, SHOW OVERVIEW OF CDKs, ETC.]
-
 % VERY useful citation: adlerYeastCellCycle2022
-
 Such biological rhythms include the circadian rhythm and the cell division cycle.
 To demonstrate the definition of biological rhythm, I will discuss here the cell division cycle, which is well-characterised.
 The cell division cycle in budding yeast is governed by a series of gene regulatory networks that interact in a feedback loop, resulting in oscillatory expression of regulatory proteins, namely, cyclin-CDK complexes that regulate cellular events in a temporal manner \citep{adlerYeastCellCycle2022, orlandoGlobalControlCellcycle2008, murrayRecyclingCellCycle2004}.
@@ -151,8 +146,20 @@ Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluo
 % Structure should then link well with the definition of biological rhythms in
 % a previous subsection.
 % ---------------------------------------------------------------------
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{mellorMolecularBasisMetabolic2016_3c_adapted}
+  \caption{
+    Phases of the yeast metabolic cycle,
+    with (left) high- (HOC) and low-oxygen consumption (LOC) phases defined by changes in dissolved oxygen concentration (dO\textsubscript{2}) over time in the chemostat
+    and (right) oxidative (OX), reductive-building (RB) and reductive-charging (RC) phases defined by cycling of transcripts.
+    Adapted from \citet{mellorMolecularBasisMetabolic2016}.}
+  \label{fig:intro-ymc-overview}
+\end{figure}
+
 Based on chemostat studies,
-the YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase.
+the YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase (figure~\ref{fig:intro-ymc-overview}).
 % Though Lloyd/Murray camp also describe these 3 phases
 Many authors \citep{slavovMetabolicCyclingCell2011, murrayRedoxRegulationRespiring2011, caustonMetabolicRhythmsFramework2018} use oxygen consumption rates, evidenced by the change of dissolved oxygen concentrations over time, as a basis to refer to the YMC as a two-phase cycle.
 Though, there are authors \citep{machneYinYangYeast2012} that base their two-phase model on the clustering of gene expression patterns.
@@ -164,8 +171,6 @@ Single-cell studies \citep{papagiannakisAutonomousMetabolicOscillations2017, bau
 % ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
 %However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
 Possibly, the two- or three-phase response results from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \citep{slavovCouplingGrowthRate2011}.
-
-[ADD DIAGRAM HERE -- MELLOR HAS A GOOD ONE, ADAPT HERS]
 
 In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
 % Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
@@ -300,7 +305,7 @@ The most significant is in \textcite{baumgartnerFlavinbasedMetabolicCycles2018},
 \subsection{Modelling the yeast metabolic cycle}
 \label{subsec:intro-ymc-model}
 
-[THE SUMMARY FIGURES FROM THESE PAPERS MAY BE USEFUL TO HELP ILLUSTRATE THE IDEAS]
+%[THE SUMMARY FIGURES FROM THESE PAPERS MAY BE USEFUL TO HELP ILLUSTRATE THE IDEAS]
 
 Mathematical models have been developed to explain the aspects of the YMC.
 An early model is \parencite{jonesCyberneticModelGrowth1999} which simulates dynamic competition between three modes of metabolism --- fermentation, glucose oxidation, and ethanol oxidation --- using differential equations.
@@ -425,7 +430,7 @@ Genome-wide transcript cycling has two superclusters that correspond to the oxid
 However, there has been no genome-wide analysis of genes that influence cycling \citep{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
 As we lack proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
 
-[FIGURE: MY INVESTIGATION OF CAMPBELL ET AL. 2020 TO SHOW PERIODICITY OF TRANSCRIPTS/PROTEINS/METABOLITES]
+%[FIGURE: MY INVESTIGATION OF CAMPBELL ET AL. 2020 TO SHOW PERIODICITY OF TRANSCRIPTS/PROTEINS/METABOLITES]
 
 Metabolome cycling may play a role in the metabolic cycle and can explain temporal partitioning of biosynthesis, but the evidence so far is indirect as it is based on the cell division cycle.
 \textcite{campbellBuildingBlocksAre2020} showed that lipid biosynthesis in budding yeast is periodic with the cell division cycle and peaks during S phase, as evidenced by an increase in the number of metabolites implicated in lipid metabolism in such phases, based on metabolomics analysis of prototrophic cells with synchronised cell division cycles.
@@ -484,9 +489,16 @@ Autofluorescence thus offers an easy way to monitor cell physiology without engi
 \subsection{Biochemical basis of flavins and flavoproteins}
 \label{subsec:intro-flavin-biochem}
 
-[ADD CHEMICAL DIAGRAM: FLAVIN GROUP, FMN, FAD]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{patelFlavinContainingOxidativeBiocatalysts2006_1}
+  \caption{
+    Chemical structure of FMN and FAD, with redox states of the aromatic flavin moiety shown.
+    Adapted from \citet{patelFlavinContainingOxidativeBiocatalysts2006}.}
+  \label{fig:intro-flavin-structure}
+\end{figure}
 
-Flavins are a group of organic compounds that share an aromatic moiety that allows redox reactions.
+Flavins are a group of organic compounds that share an aromatic moiety that allows redox reactions (figure~\ref{fig:intro-flavin-structure}).
 Specifically, the flavin moiety can exist in the oxidised, semiquinone, or reduced states.
 Flavins thus function as electron carriers in the cell.
 In \emph{Saccharomyces cerevisiae}, flavin is present in FMN and FAD, which function as prosthetic groups in flavin-dependent proteins, or flavoproteins, whose genes account for 1.1\% of the genome \citep{gudipatiFlavoproteomeYeastSaccharomyces2014}.
@@ -495,22 +507,43 @@ FMN and FAD can be covalently bound to these proteins or be free.
 FAD is a co-enzyme and has major roles in transferring electrons from the TCA cycle to the mitochondrial ETC.
 
 % (Biosynthesis of flavin)
-[ADD FIGURE: Schematic of riboflavin uptake and biosynthesis and their relationship with flavin-containing compounds in the yeast cell.  And KEGG diagram.]
-% In more detail: https://www.genome.jp/pathway/map00740 (biosynthesis of riboflavin and derivatives, KEGG)
 
-Flavins in \emph{Saccharomyces cerevisiae} are derived from riboflavin.
-Riboflavin can be synthesised \emph{de novo} from purine biosynthesis and the oxidative pentose phosphate pathway.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{flavin-cell-schematic}
+  \caption{
+    Simplified schematic of biosynthesis of flavins and detection of the oxidation states in fluorescence microscopy.
+    }
+  \label{fig:intro-flavin-schematic}
+\end{figure}
+
+% https://www.genome.jp/pathway/map00740
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{kegg-flavin}
+  \caption{
+    Reference pathway for biosynthesis of riboflavin and derivatives, KEGG pathway database \citep{kanehisaKEGGTaxonomybasedAnalysis2023}.
+    }
+  \label{fig:intro-flavin-kegg}
+\end{figure}
+
+Flavins in \emph{Saccharomyces cerevisiae} are derived from riboflavin (figure~\ref{fig:intro-flavin-schematic}).
+Riboflavin can be synthesised \emph{de novo} from purine biosynthesis and the oxidative pentose phosphate pathway (figure~\ref{fig:intro-flavin-kegg}).
 % Is there more to this than the KEGG diagram?
 Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD.
 
-[ADD FIGURE: SCHEMATIC OF DETECTING FLAVINS VIA MICROSCOPY, THAT I USE IN COUNTLESS POSTERS \& PRESENTATIONS]
-
-[ADD FIGURE(S): FLUORESCENCE EXCITATION \& EMISSION SPECTRUM OF RIBOFLAVIN.  EITHER FROM FPBASE OR ADAPT FROM IN VIVO STUDIES CITED.]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{fpbase-riboflavin}
+  \caption{
+    Fluorescence spectrum of riboflavin, (dotted line) excitation and (solid line) emission spectra shown, FPbase \citep{lambertUsingFPbaseFluorescent2023}.
+    }
+  \label{fig:intro-flavin-spectra}
+\end{figure}
 
 From a technical standpoint, these redox states affect the emission/absorption of electromagnetic radiation of the flavin moiety.
-
 The redox biochemistry of flavins give rise to fluorescence, so monitoring flavin autofluorescence monitors the redox state of the cell.
-Flavins, in their oxidised forms (FMN and FAD), have a peak excitation frequency of $\approx$460 nm and a peak emission frequency of $\approx$535 nm \parencite{maslankaAutofluorescenceYeastSaccharomyces2018, wagnieresVivoFluorescenceSpectroscopy1998}.
+Flavins, in their oxidised forms (FMN and FAD), have a peak excitation frequency of $\approx$460 nm and a peak emission frequency of $\approx$535 nm \parencite{maslankaAutofluorescenceYeastSaccharomyces2018, wagnieresVivoFluorescenceSpectroscopy1998}, displayed in figure~\ref{fig:intro-flavin-spectra}.
 Comparison of \emph{in vivo} autofluorescence in mammalian cells and the fluorescence spectrum of riboflavin in PBS confirms this fluorescence behaviour \parencite{aubinAutofluorescenceViableCultured1979}.
 In contrast, the reduced forms FMNH2 and FADH2 have negligible fluorescence \parencite{mastersConfocalRedoxImaging1994}.
 Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} have monitored flavin autofluorescence to study the YMC.
@@ -521,9 +554,17 @@ Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murr
 % - (On second thought, I'm not sure how useful a shopping list of flavoproteins is.
 % probably better to pick a couple that are really key to what i study)
 
-[ADD FIGURE: BAR CHART SHOWING ABUNDANCE OF MOST ABUNDANT FLAVOPROTEINS]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{flavoprotein_abundance_bar}
+  \caption{
+    Flavoproteins (blue bars) shown by abundance \citep{hoUnificationProteinAbundance2018}, with Rps7ap (grey bar) shown as reference.
+    Only the 17 most abundant flavoproteins are shown.
+    }
+  \label{fig:intro-flavoprotein-abundance}
+\end{figure}
 
-\citet{gudipatiFlavoproteomeYeastSaccharomyces2014} describe 68 genes that code for 47 flavoproteins in budding yeast.
+\citet{gudipatiFlavoproteomeYeastSaccharomyces2014} describe 68 genes that code for 47 flavoproteins in budding yeast (figure~\ref{fig:intro-flavoprotein-abundance}).
 Of these, 35 require FAD, 15 require FMN, and 3 require both.
 In budding yeast, most flavins sit in the active site without covalent bonding.
 The biochemical and enzymatic properties of many flavoproteins are poorly characterised \citep{kochStructureBiochemicalKinetic2017}.
