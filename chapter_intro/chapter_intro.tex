@@ -569,9 +569,35 @@ Of these, 35 require FAD, 15 require FMN, and 3 require both.
 In budding yeast, most flavins sit in the active site without covalent bonding.
 The biochemical and enzymatic properties of many flavoproteins are poorly characterised \citep{kochStructureBiochemicalKinetic2017}.
 
-[ADD TABLE: SHOWING NAMES OF TOP 12 FLAVOPROTEINS, APPROXIMATE ABUNDANCE, THE REACTION THEY CATALYSE, AND THEIR ROLES, AND CITATIONS.  STEAL CONTENT FROM THE FLAVOPROTEINS ORG NOTE]
+\begin{table}[htbp]
+  \small
+  \centering
+  % Control spacing between rows
+  \renewcommand{\arraystretch}{2}
+  \begin{tabularx}{\linewidth}{sbbs}
+    \toprule
+    Protein & Name & Reaction catalysed & Reference\\
+    \midrule
+    fas1 & beta subunit of fatty acid synthetase & \ce{acetyl-CoA + malonyl-CoA + NADPH + ATP -> palmitate} & \citet{singhDiscoveryRegulatorySubunit2020} \\
+    yhb1 & nitric oxide oxidoreductase & \ce{2NO + 2O2 + NAD(P)H -> 2NO3- + NAD(P)+ + H+} & \citet{bonamoreFlavohemoglobinStructureReactivity2008} \\
+    ura1 & dihydroorotate dehydrogenase & \ce{dihydroorotic acid + fumarate -> orotic acid + succinate} & \citet{zameitatDihydroorotateDehydrogenaseSaccharomyces2007} \\
+    pst2 & NAD(P)H-quinone oxidoreductase & \ce{NAD(P)H + H+ + quinone -> NAD(P)+ + hydroquinone} & \citet{kochStructureBiochemicalKinetic2017} \\
+    trr1 & cytoplasmic thioredoxin reductase & \ce{H+ + NADPH + thioredoxin disulfide -> NADP+ + thioredoxin} & \citet{machadoThioredoxinReductasedependentInhibition1997} \\
+    ilv2 & acetolactate synthase & \ce{2 pyruvate -> 2-acetolactate + CO2} & \citet{pangCrystalStructureYeast2002} \\
+    oye2 & NADPH oxidoreductase & \ce{NADPH + H+ + acceptor <--> NADP+ + reduced acceptor} & \citet{odatOldYellowEnzymes2007} \\
+    dld3 & 2-hydroxyglutarate transhydrogenase & \ce{D-2-hydroxyglutarate + pyruvate -> \alpha-ketoglutarate + lactate} & \citet{becker-ketternSaccharomycesCerevisiaeForms2016} \\
+    pdx3 & pyridoxine phosphate oxidase & \ce{pyridoxamine 5-phosphate + H2O + O2 -> pyridoxal 5-phosphate + NH3 + H2O} & \citet{tsugePurificationPropertiesPyridoxamine1979} \\
+    erg1 & squalene epoxidase & \ce{squalene + H+ + NADPH + O2 -> 2,3-oxidosqualene + NADP+ + H2O} & \citet{satohEnzymaticPropertiesSqualene1993} \\
+    lpd1 & dihydrolipoamide dehydrogenase & \ce{dihydrolipoamide + NAD+ -> lipoamide + NADH+ + H+} & \citet{morrisonChapter14Dihydrolipoamide2021} \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{
+    Roles of most common flavoproteins.
+  }
+  \label{tab:intro-flavoproteins}
+\end{table}
 
-The most abundant flavoproteins catalyse redox reactions except for Ilv2p.
+The most abundant flavoproteins catalyse redox reactions except for Ilv2p (table~\ref{tab:intro-flavoproteins}).
 It has been hypothesised that an ancestral form of Ilv2p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \citep{pangCrystalStructureYeast2002}.
 
 Specifically, these reactions include reduction of reactive chemical species to respond to oxidative stress --- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
