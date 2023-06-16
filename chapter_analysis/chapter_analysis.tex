@@ -126,13 +126,13 @@ In this section, I will discuss my use of spectral methods, model-fitting method
 
 % Discussion about oscillatory behaviour vs periodic behaviour?
 
-\citet{glynnDetectingPeriodicPatterns2006} describe a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \citep{lombLeastsquaresFrequencyAnalysis1976}.
-This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \citep{scargleStudiesAstronomicalTime1982}.
+\textcite{glynnDetectingPeriodicPatterns2006} describe a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
+This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \parencite{scargleStudiesAstronomicalTime1982}.
 The classification was based on controlling the false discovery rate for identification of oscillations.
 In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
 
-I developed a classifier based on \citet{glynnDetectingPeriodicPatterns2006} to classify time series of flavin autofluorescence.
+I developed a classifier based on \textcite{glynnDetectingPeriodicPatterns2006} to classify time series of flavin autofluorescence.
 %I then compared the classification results against manual classification of these time series into oscillating and non-oscillating.
 The classifier was able to rank the time series by quality of oscillation (figure \ref{fig:ClassifierBestWorstTS}).
 The peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation (figure \ref{fig:ClassifierBestWorstPS}).
@@ -284,10 +284,10 @@ The peak corresponds to a period of 70~80 minutes.
 This peak may explain the good precision \& recall scores.
 
 For my last strategy of featurisation,
-I employed the \emph{hctsa} toolbox \citep{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
+I employed the \emph{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
 This toolbox contains 7701 features defined from across the time series analysis literature.
 I focused on the 22-feature \emph{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
-\citet{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
+\textcite{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
 This feature set excludes features that are dependent on mean or spread.
 
 \begin{table}[htbp]
@@ -318,10 +318,10 @@ This feature set excludes features that are dependent on mean or spread.
     \texttt{SC\_\-FluctAnal\_\-2\_\-dfa\_\-50\_\-1\_\-2\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with DFA (50\% sampling) \\
     \texttt{SC\_\-FluctAnal\_\-2\_\-rsrangefit\_\-50\_\-1\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with linearly rescaled range fits \\
     \texttt{SB\_\-TransitionMatrix\_\-3ac\_\-sumdiagcov} & Trace of covariance of transition matrix between symbols in 3-letter alphabet \\
-    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \citet{wangStructureBasedStatisticalFeatures2007}   \\
+    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \textcite{wangStructureBasedStatisticalFeatures2007}   \\
     \bottomrule \\
   \end{tabularx}
-  \caption{\emph{catch22} features, adapted from \citet{lubbaCatch22CAnonicalTimeseries2019}.
+  \caption{\emph{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
   }
   \label{tab:catch22}
 \end{table}
@@ -884,9 +884,9 @@ Here, I consider combining the autocorrelation function and the Fourier transfor
 % \label{subsec:analysis-clustering-literature}
 
 % mini-review -- IT'S PRETTY UNWIELDY AT THIS POINT, AND REFERENCES CONCEPTS NOT DISCUSSED TILL LATER
-Clustering of time series has been used to identify groupings within a set of time series \citep{wangStructureBasedStatisticalFeatures2007}, including biological time series \citep{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \citep{tuLogicYeastMetabolic2005}.
-However, \citet{wangStructureBasedStatisticalFeatures2007} and \citet{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
-Though \citet{shafieiDopamineSignalingModulates2019} used modularity clustering \citep{newmanModularityCommunityStructure2006}, the method was based on one time series feature, which may not adequately capture the characteristics of the time series.
+Clustering of time series has been used to identify groupings within a set of time series \parencite{wangStructureBasedStatisticalFeatures2007}, including biological time series \parencite{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \parencite{tuLogicYeastMetabolic2005}.
+However, \textcite{wangStructureBasedStatisticalFeatures2007} and \textcite{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
+Though \textcite{shafieiDopamineSignalingModulates2019} used modularity clustering \parencite{newmanModularityCommunityStructure2006}, the method was based on one time series feature, which may not adequately capture the characteristics of the time series.
 
 For my investigation of the yeast metabolic cycle, clustering is important because it can discover structure in a dataset and can summarise the difference between the groups it finds.
 And I can also ask the question of whether such differences conform to biological groupings in the dataset -- if so, I can then ask the question of which time series features from each biological grouping is responsible for this.
@@ -912,9 +912,9 @@ Such a geometric graph may function as a visualisation tool as well.
 % FIGURE: pipeline and options.  It's rather difficult to visualise what happens, so such a figure, like the one I often use in the lab presentations in the summer, will be helpful.  Though may be more impactful in the presentation rather than in this report.
 
 Modularity clustering is the problem of partitioning a graph into clusters in order to optimise a `modularity' value.
-This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \citep{newmanModularityCommunityStructure2006}.
-The general Louvain algorithm \citep{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
-This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \citep{fortunatoResolutionLimitCommunity2007}.
+This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
+The general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
+This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
 
 Unsupervised graph-based clustering suggested that the division between complete and minimal media was dominant among time series of flavin autofluorescence. %(figure \ref{fig:EffectofMediaClusters}).
 I constructed an incomplete graph to represent the pairwise similarity between time series based on the \emph{catch22} feature vectors.
@@ -932,13 +932,13 @@ Such results suggested that unsupervised graph-based clustering may have potenti
   \label{fig:EffectofMediaClusters}
 \end{figure}
 
-Indeed, I found that the method was able to distinguish time series generated in my project from time series obtained by \citet{baumgartnerFlavinbasedMetabolicCycles2018} (figure \ref{fig:DistanceMatrixBaumgartner}, table \ref{tab:ClusterBaumgartner})
+Indeed, I found that the method was able to distinguish time series generated in my project from time series obtained by \textcite{baumgartnerFlavinbasedMetabolicCycles2018} (figure \ref{fig:DistanceMatrixBaumgartner}, table \ref{tab:ClusterBaumgartner})
 However, this ability to distinguish the data sources may have been because the data from different sources were processed in different ways.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.6\textwidth]{10m_DistanceMatrixBaumgartner}
-  \caption{Graph-based clustering was able to partition minimal media time series, complete media time series, and time series from \citet{baumgartnerFlavinbasedMetabolicCycles2018}.
+  \caption{Graph-based clustering was able to partition minimal media time series, complete media time series, and time series from \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
     This distance matrix is based on cosine distances between \emph{catch22} feature vectors for pairs of time series.  Distances between 0 and 1 (legend, right) are represented as colours.}
   \label{fig:DistanceMatrixBaumgartner}
 \end{figure}
@@ -953,7 +953,7 @@ However, this ability to distinguish the data sources may have been because the 
     Cluster 4 & 79 & 4 & 0\\
     Cluster 5 & 44 & 4 & 1
   \end{tabular}
-  \caption{Graph-based clustering is able to partition minimal media time series, complete media time series, and time series from \citet{baumgartnerFlavinbasedMetabolicCycles2018}.  Table shows one graph partition returned by the general Louvain algorithm.  The graph was constructed according to section [METHODS: HCTSA].  In this case, the default value for the resolution parameter was used.}
+  \caption{Graph-based clustering is able to partition minimal media time series, complete media time series, and time series from \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.  Table shows one graph partition returned by the general Louvain algorithm.  The graph was constructed according to section [METHODS: HCTSA].  In this case, the default value for the resolution parameter was used.}
   \label{tab:ClusterBaumgartner}
 \end{table}
 % Rand index?
