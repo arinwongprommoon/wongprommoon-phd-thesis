@@ -7,7 +7,7 @@
 \section{Motivation of thesis}
 
 This thesis aims to understand how an organism adapts its metabolism and cellular processes in response to external conditions.
-I do so by through using the yeast metabolic cycle (YMC) as a framework for biological oscillators.
+I do so by using the yeast metabolic cycle (YMC) as a framework for biological oscillators.
 My reasons are twofold: (a) biological oscillators are important for coordination of responses and are present across kingdoms, (b) there are unanswered questions about the mechanistic basis of the YMC and about reconciling evidence from two types of experimental studies.
 Therefore, I study YMC regulation in isolated cells in different nutrient conditions.
 
@@ -46,7 +46,7 @@ This thesis is divided into six chapters:
 
 Biological rhythms are repeating physiological or cellular processes.
 Genetic oscillators, biochemical oscillators, and metabolic oscillators, all linked to a cellular redox cycle, govern biological rhythms \parencite{mellorMolecularBasisMetabolic2016}.
-Biological rhythms can occur at different time scales, from seconds (e.g.\ glycolytic cycle), to ultradian cycle (i.e.\ cycles that are more frequent than 24 hours), to circadian rhythms (24 hours).
+Biological rhythms can occur at different time scales, from seconds (e.g.\ glycolytic cycle), to ultradian cycles (i.e.\ cycles that are more frequent than 24 hours), to circadian rhythms (24 hours).
 Biological rhythms are important in temporally separating physiological processes.
 This is instrumental in responding to external conditions, including nutrient conditions, growth requirements, or the day-night cycle.
 Thus, this means that biological rhythms can vary according to conditions.
@@ -85,8 +85,8 @@ For example, \textcite{goldbeterMinimalCascadeModel1991} assumed a minimal model
 Such a strategy forms the basis of later models that incorporate more detail, including additional control points of the cell division cycle \parencite{chenIntegrativeAnalysisCell2004}, responses to perturbations such as osmotic stress \parencite{adroverTimeDependentQuantitativeMulticomponent2011}, and relationship with other oscillators like the circadian rhythm \parencite{gerardEntrainmentMammalianCell2012, charvinForcedPeriodicExpression2009, droinLowdimensionalDynamicsTwo2019}.
 More recent, comprehensive models include \textcite{adlerYeastCellCycle2022} which is based on a system of ordinary differential equations adapted for the modelling to pheromone and osmotic shock responses, and \textcite{novakMitoticKinaseOscillation2022}, which models the cell division cycle as a series of switches between two stable steady states whose behaviour is regulated by the CDK oscillator.
 
-In contrast, less well-characterised natural biological rhythms have given rise to models with fewer detail and precision.
-An example is the glycolytic oscillation.
+In contrast, other less well-characterised natural biological rhythms have given rise to models with fewer detail and precision.
+An example is glycolytic oscillations.
 The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels (and other cofactors) in budding yeast cells at the time scale of 10 seconds \parencite{doddLiveCellImaging2017, lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, when they are in high-glucose conditions.
 A recent model is a coarse-grained model
 driven by positive feedback loops as a system of two coupled instability-generating mechanisms \parencite{goldbeterMultisynchronizationOtherPatterns}.
@@ -166,7 +166,7 @@ Though, there are authors \parencite{machneYinYangYeast2012} that base their two
 In contrast to the two-phase model, some authors identify a three-phase model with a reductive-building (RB) phase and a reductive-charging (RC) phase within the reductive phase, especially within the long-phase (4--5 hours) yeast metabolic cycle.
 This three-phase model is primarily based on cellular events, including clustering of transcript trajectories \parencite{tuLogicYeastMetabolic2005} and of metabolite concentration trajectories \parencite{tuCyclicChangesMetabolic2007}.
 
-Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate is an emergent property from chemostat cultures.
+Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
 % ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
 %However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
 Possibly, the two- or three-phase response results from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
@@ -257,7 +257,7 @@ For example, externally applied hydrogen peroxide, as a source of oxidative stre
 % [MOVED FROM PREVIOUS SECTION]
 The oscillation period is insensitive to temperatures from \SI{25}{\celsius} to \SI{35}{\celsius} and media pH values from
 2.9 to 6.0 \parencite{lloydUltradianMetronomeTimekeeper2005} --- though the period of dissolved-oxygen oscillations decrease as pH decreases to below 2.9 and the oscillations disappear when conditions are too acidic \parencite{oneillEukaryoticCellBiology2020}.
-Additionally, the dissolved-oxygen oscillations are robust to media potassium ion concentrations varying between 1 and 10 mM, but such oscillations disappear when the potassium concentration falls below 1 mM \parencite{oneillEukaryoticCellBiology2020}.
+Additionally, the dissolved-oxygen oscillations are robust to media potassium ion concentrations varying between 1 and 10 mM, but disappear when the potassium concentration falls below 1 mM \parencite{oneillEukaryoticCellBiology2020}.
 
 Finally, the phase difference between the YMC and cell cycle varies in different conditions % how?
 % Confirmation that the YMC responds to nutrient availability?  How does phase
@@ -356,7 +356,7 @@ Within the permissive growth conditions, different conditions affect the frequen
 For example, a low concentration of glucose or nitrogen source results in longer cycles, and bulk addition of certain compounds can reset the phase of the metabolic cycle.
 These observations support the idea that the metabolic oscillator includes the functionality of a nutrient sensor.
 
-The yeast metabolic cycle then creates windows of opportunities for the cell to commit to START if conditions are favourable, for example, good carbohydrate or lipid stores.
+The observations suggest that the yeast metabolic cycle creates windows of opportunities for the cell to commit to START if conditions are favourable, for example, good carbohydrate or lipid stores.
 Thus, this oscillator acts as a timing mechanism for cellular processes, most importantly the cell division cycle and biosynthetic/redox processes.
 Though the relationship between the metabolic cycle and the cell division cycle is governed by the mathematical basis of coupled oscillators.
 Most importantly, there is a small window of frequencies in which both oscillators can be phase-locked, and that other, complicated relationships exist: e.g.\ multiple metabolic cycles per cell division cycle --- in line in the window-of-opportunity idea above.
@@ -422,7 +422,7 @@ although there have been only few studies.
 \textcite{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue by culturing strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cycling cells from a chemostat to a microfluidic device for real-time imaging of the cells.
 The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
 This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two subpopulations in the culture.
-However, it lacks quantitative time-series analysis, rather, reporting qualitative interpretations of fluorescent images.
+However, it lacks quantitative time-series analysis, rather, reporting qualitative interpretations of fluorescence images.
 The microfluidic device did not truly physically separate each cell individually, thus it was unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
 % This does seen like a key difference seen in single-cell, but the fact wasn't made clear
 % in writing here.
@@ -448,7 +448,8 @@ Here, precursors are synthesised as they are needed.
 They also showed that lipid metabolism increased during S/G2/M, likely due to the synthesis of new cell membranes during bud growth, as evidenced by pathway enrichment analysis.
 Based on the coupling between the yeast metabolic cycle and the cell division cycle, it can be inferred that lipid store cycling and perhaps to a lesser extent carbohydrate store cycling are likely instrumental to the yeast metabolic cycle.
 Though, investigation of how an impairment in lipid utilisation affects the yeast metabolic cycle in single cells is needed to truly prove that such cycles are responsible for the metabolic cycle.
-Preferably, I need evidence to support metabolome cycles that also confirms that the YMC is independent of the cell division cycle.
+% [REMOVE THIS SENTENCE, OR REWORD AS DISCUSSION OF EVIDENCE]
+% Preferably, I need evidence to support metabolome cycles that also confirms that the YMC is independent of the cell division cycle.
 
 %Additionally, the effects of perturbations to specific metabolic networks in single-cell conditions are yet to be determined [EVIDENCE NEEDED].
 
@@ -468,7 +469,7 @@ Metabolic cycles have been observed in mammalian cells.
 For example, \textcite{zhuLogicTemporalCompartmentalization2022} describe a 12-hour metabolic cycle in liver cells that includes temporal partitioning of metabolic processes into energy homeostasis, genetic integrity maintenance processes, immune response, and gene expression --- linking the processes to the circadian rhythm and the whole cycle to a more general 12-hour mammalian ultradian clock.
 Importantly, this hepatic metabolic cycle operates independently from the spatial organisation of cells in the liver, reminiscent of the autonomy of the yeast metabolic cycle.
 In addition, HeLa cells with synchronised cell division have been shown to exhibit both NAD(P)H and ATP oscillations throughout the cell division cycle \parencite{ahnTemporalFluxomicsReveals2017}, but the literature is conflicted about the these oscillations' dynamics across different mammalian cell types \parencite{zylstraMetabolicDynamicsCell2022}.
-There is reason to believe that a wide range of organisms exhibit biochemical phenomena similar to the yeast metabolic cycle, as the aims of controlling cell division to match environmental conditions along with the temporal coordination of biosynthesis and cellular redox state with cell division should be fundamental goals that apply to all eukaryotes.
+There is reason to believe that a wide range of organisms exhibit biochemical phenomena similar to the yeast metabolic cycle, as the aims of controlling cell division to match environmental conditions along with the temporal coordination of biosynthesis and cellular redox state with cell division should be fundamental goals that apply to multiple domains of life.
 
 %- Fundamental mechanistic basis for biological oscillators, such as the cell division cycle.  Could change what we know about the cell division cycle.
 % (Significance of study)
@@ -586,17 +587,17 @@ The biochemical and enzymatic properties of many flavoproteins are poorly charac
     \toprule
     Protein & Name & Reaction catalysed & Reference\\
     \midrule
-    fas1 & beta subunit of fatty acid synthetase & \ce{acetyl-CoA + malonyl-CoA + NADPH + ATP -> palmitate} & \textcite{singhDiscoveryRegulatorySubunit2020} \\
-    yhb1 & nitric oxide oxidoreductase & \ce{2NO + 2O2 + NAD(P)H -> 2NO3- + NAD(P)+ + H+} & \textcite{bonamoreFlavohemoglobinStructureReactivity2008} \\
-    ura1 & dihydroorotate dehydrogenase & \ce{dihydroorotic acid + fumarate -> orotic acid + succinate} & \textcite{zameitatDihydroorotateDehydrogenaseSaccharomyces2007} \\
-    pst2 & NAD(P)H-quinone oxidoreductase & \ce{NAD(P)H + H+ + quinone -> NAD(P)+ + hydroquinone} & \textcite{kochStructureBiochemicalKinetic2017} \\
-    trr1 & cytoplasmic thioredoxin reductase & \ce{H+ + NADPH + thioredoxin disulfide -> NADP+ + thioredoxin} & \textcite{machadoThioredoxinReductasedependentInhibition1997} \\
-    ilv2 & acetolactate synthase & \ce{2 pyruvate -> 2-acetolactate + CO2} & \textcite{pangCrystalStructureYeast2002} \\
-    oye2 & NADPH oxidoreductase & \ce{NADPH + H+ + acceptor <--> NADP+ + reduced acceptor} & \textcite{odatOldYellowEnzymes2007} \\
-    dld3 & 2-hydroxyglutarate transhydrogenase & \ce{D-2-hydroxyglutarate + pyruvate -> \alpha-ketoglutarate + lactate} & \textcite{becker-ketternSaccharomycesCerevisiaeForms2016} \\
-    pdx3 & pyridoxine phosphate oxidase & \ce{pyridoxamine 5-phosphate + H2O + O2 -> pyridoxal 5-phosphate + NH3 + H2O} & \textcite{tsugePurificationPropertiesPyridoxamine1979} \\
-    erg1 & squalene epoxidase & \ce{squalene + H+ + NADPH + O2 -> 2,3-oxidosqualene + NADP+ + H2O} & \textcite{satohEnzymaticPropertiesSqualene1993} \\
-    lpd1 & dihydrolipoamide dehydrogenase & \ce{dihydrolipoamide + NAD+ -> lipoamide + NADH+ + H+} & \textcite{morrisonChapter14Dihydrolipoamide2021} \\
+    Fas1 & beta subunit of fatty acid synthetase & \ce{acetyl-CoA + malonyl-CoA + NADPH + ATP -> palmitate} & \textcite{singhDiscoveryRegulatorySubunit2020} \\
+    Yhb1 & nitric oxide oxidoreductase & \ce{2NO + 2O2 + NAD(P)H -> 2NO3- + NAD(P)+ + H+} & \textcite{bonamoreFlavohemoglobinStructureReactivity2008} \\
+    Ura1 & dihydroorotate dehydrogenase & \ce{dihydroorotic acid + fumarate -> orotic acid + succinate} & \textcite{zameitatDihydroorotateDehydrogenaseSaccharomyces2007} \\
+    Pst2 & NAD(P)H-quinone oxidoreductase & \ce{NAD(P)H + H+ + quinone -> NAD(P)+ + hydroquinone} & \textcite{kochStructureBiochemicalKinetic2017} \\
+    Trr1 & cytoplasmic thioredoxin reductase & \ce{H+ + NADPH + thioredoxin disulfide -> NADP+ + thioredoxin} & \textcite{machadoThioredoxinReductasedependentInhibition1997} \\
+    Ilv2 & acetolactate synthase & \ce{2 pyruvate -> 2-acetolactate + CO2} & \textcite{pangCrystalStructureYeast2002} \\
+    Oye2 & NADPH oxidoreductase & \ce{NADPH + H+ + acceptor <--> NADP+ + reduced acceptor} & \textcite{odatOldYellowEnzymes2007} \\
+    Dld3 & 2-hydroxyglutarate transhydrogenase & \ce{D-2-hydroxyglutarate + pyruvate -> \alpha-ketoglutarate + lactate} & \textcite{becker-ketternSaccharomycesCerevisiaeForms2016} \\
+    Pdx3 & pyridoxine phosphate oxidase & \ce{pyridoxamine 5-phosphate + H2O + O2 -> pyridoxal 5-phosphate + NH3 + H2O} & \textcite{tsugePurificationPropertiesPyridoxamine1979} \\
+    Erg1 & squalene epoxidase & \ce{squalene + H+ + NADPH + O2 -> 2,3-oxidosqualene + NADP+ + H2O} & \textcite{satohEnzymaticPropertiesSqualene1993} \\
+    Lpd1 & dihydrolipoamide dehydrogenase & \ce{dihydrolipoamide + NAD+ -> lipoamide + NADH+ + H+} & \textcite{morrisonChapter14Dihydrolipoamide2021} \\
     \bottomrule \\
   \end{tabularx}
   \caption{
