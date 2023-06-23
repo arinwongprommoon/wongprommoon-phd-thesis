@@ -53,18 +53,19 @@ Thus, this means that biological rhythms can vary according to conditions.
 
 % VERY useful citation: adlerYeastCellCycle2022
 Such biological rhythms include the circadian rhythm and the cell division cycle.
-To demonstrate the definition of biological rhythm, I discuss the cell division cycle, which is well-characterised.
+To demonstrate the definition of biological rhythm, I discuss the cell division cycle, which is well-char\-ac\-terised.
 The cell division cycle in budding yeast is governed by a series of gene regulatory networks that interact in a feedback loop, resulting in oscillatory expression of regulatory proteins, namely, cyclin-CDK complexes that regulate cellular events in a temporal manner \parencite{adlerYeastCellCycle2022, orlandoGlobalControlCellcycle2008, murrayRecyclingCellCycle2004}.
 This cycle also includes biochemical and metabolic oscillators, for example, biosynthesis during S phase.
 As with other biological rhythms, the cell division cycle also includes a system to control it, so that DNA replication occurs once every cell division cycle and so that the cell only divides when necessary.
 The importance of such control systems are highlighted by disorders when these systems are impaired, such as chromosome aberrations and cancer.
 
-The yeast metabolic cycle is a type of biological rhythm because it has the properties that define a biological rhythm.
-Namely, it has gene-expression oscillators as evidenced by transcript cycling in its phases,
-it has biochemical oscillators as evidenced by changes in dissolved oxygen in the chemostat,
-and it has metabolite oscillations as evidence by changes in the levels of compounds that undergo redox reactions like NADH/NADPH and flavins.
-I discuss further this evidence in the context of the known progression of the yeast metabolic cycle in section \ref{subsubsec:intro-ymc-definition-phases}.
-However, in contrast to the cell division cycle, the control mechanisms of the yeast metabolic cycle are less well characterised --- I discuss this further in section \ref{subsec:intro-ymc-unresolved}.
+% [COMMENTED OUT TEXT]
+% The yeast metabolic cycle is a type of biological rhythm because it has the properties that define a biological rhythm.
+% Namely, it has gene-expression oscillators as evidenced by transcript cycling in its phases,
+% it has biochemical oscillators as evidenced by changes in dissolved oxygen in the chemostat,
+% and it has metabolite oscillations as evidence by changes in the levels of compounds that undergo redox reactions like NADH/NADPH and flavins.
+% I discuss further this evidence in the context of the known progression of the yeast metabolic cycle in section \ref{subsubsec:intro-ymc-definition-phases}.
+% However, in contrast to the cell division cycle, the control mechanisms of the yeast metabolic cycle are less well characterised --- I discuss this further in section \ref{subsec:intro-ymc-unresolved}.
 
 \subsubsection{Theoretical basis of biological rhythms}
 \label{subsubsec:intro-ymc-biological_rhythms-theoretical_basis}
@@ -113,26 +114,6 @@ I will discuss this in section \ref{subsec:intro-ymc-model}.
 \label{subsec:intro-ymc-definition}
 % Worth re-reading: Mellor 2016, Lloyd 2019
 
-% Not too sure if the subsubsections in this subsection are a good idea.
-\subsubsection{History of evidence for the yeast metabolic cycle}
-\label{subsubsec:intro-ymc-definition-history}
-
-Aspects of the YMC have been observed over decades.
-\textcite{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \emph{S. cerevisiae} cultures show oscillatory oxygen consumption.
-\textcite{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while \textcite{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
-\textcite{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of a 40-minute YMC for cells in continuous culture.
-\textcite{tuLogicYeastMetabolic2005}
-first incorporated transcript cycling in the description of the YMC and defined the YMC events,
-based on a chemostat-based investigation of growth of budding yeast on glucose-starved conditions.
-
-The yeast metabolic cycle is longer in duration and is more robust than a similar biological oscillator, the glycolytic oscillation.
-The glycolytic oscillation has a period on the scale of 40 seconds \parencite{olsenRegulationGlycolyticOscillations2009}.
-In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \parencite{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4--5 hours \parencite{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \parencite{beuseEffectDilutionRate1998, oneillEukaryoticCellBiology2020}.
-
-Glycolytic oscillations are highly damped, but yeast metabolic oscillations are robust, lasting for weeks \parencite{lloydRedoxRhythmicityClocks2007}.
-Additionally, glycolytic oscillations have been observed in anaerobic conditions \parencite{lloydSaccharomycesCerevisiaeOscillatory2019}, but yeast metabolic cycles have been observed in aerobic conditions.
-Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluorescence only, but yeast metabolic cycles consist of fluctuations in NADH fluorescence as well as fluctuations in other compounds like ATP and flavins.
-
 \subsubsection{Phases of the yeast metabolic cycle}
 \label{subsubsec:intro-ymc-definition-phases}
 % INTEGRATE THIS STRUCTURE IN EACH PARAGRAPH THAT DISCUSSES EACH PHASE
@@ -157,19 +138,69 @@ Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluo
   \label{fig:intro-ymc-overview}
 \end{figure}
 
+The yeast metabolic cycle is an ultradian biological rhythm which has been described to entail oscillations in oxygen consumption, metabolite concentrations, transcript levels, and cellular events, at the population level.
+This yeast metabolic cycle is linked to the cell division cycle, but operates autonomously.
+
 Based on chemostat studies,
 the YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase (figure~\ref{fig:intro-ymc-overview}).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{tuLogicYeastMetabolic2005_1}
+  \caption{
+    The yeast metabolic cycle has been described as spontaneous respiratory cycles of 4--5 hours, as evidenced by regular oscillations of dissolved oxygen in the chemostat, after starvation period.
+    Adapted from \textcite{tuLogicYeastMetabolic2005}.}
+  \label{fig:intro-ymc-tu-oxygen}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{tuLogicYeastMetabolic2005_3d_adapted}
+  \caption{
+    The yeast metabolic cycle is characterised by transcript cycling.
+    Such transcripts are divided into three clusters based on their patterns and phase relationship.
+    The peaking of these transcripts correspond to the three (OX, RB, RC) phases of the yeast metabolic cycle.
+    Adapted from \textcite{tuLogicYeastMetabolic2005}.}
+  \label{fig:intro-ymc-tu-transcripts}
+\end{figure}
+
 % Though Lloyd/Murray camp also describe these 3 phases
-Many authors \parencite{slavovMetabolicCyclingCell2011, murrayRedoxRegulationRespiring2011, caustonMetabolicRhythmsFramework2018} use oxygen consumption rates, evidenced by the change of dissolved oxygen concentrations over time, as a basis to refer to the YMC as a two-phase cycle.
-Though, there are authors \parencite{machneYinYangYeast2012} that base their two-phase model on the clustering of gene expression patterns.
+Many authors \parencite{slavovMetabolicCyclingCell2011, murrayRedoxRegulationRespiring2011, caustonMetabolicRhythmsFramework2018} use oxygen consumption rates, evidenced by the change of dissolved oxygen concentrations over time, as a basis to refer to the YMC as a two-phase cycle (figure~\ref{fig:intro-ymc-tu-oxygen}).
+Though, there are authors \parencite{machneYinYangYeast2012} that base their two-phase model on the clustering of transcript level patterns.
 \textcite{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
 In contrast to the two-phase model, some authors identify a three-phase model with a reductive-building (RB) phase and a reductive-charging (RC) phase within the reductive phase, especially within the long-phase (4--5 hours) yeast metabolic cycle.
-This three-phase model is primarily based on cellular events, including clustering of transcript trajectories \parencite{tuLogicYeastMetabolic2005} and of metabolite concentration trajectories \parencite{tuCyclicChangesMetabolic2007}.
+This three-phase model is primarily based on cellular events, including clustering of transcript trajectories \parencite{tuLogicYeastMetabolic2005} (figure~\ref{fig:intro-ymc-tu-transcripts}) and of metabolite concentration trajectories \parencite{tuCyclicChangesMetabolic2007}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{zylstraMetabolicDynamicsCell2022_1}
+  \caption{
+    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell, generated autonomously of the cell division cycle, but are linked in permissive conditions.
+    Adapted from \textcite{zylstraMetabolicDynamicsCell2022}.}
+  \label{fig:intro-ymc-overview-ss}
+\end{figure}
 
 Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
+Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (figure~\ref{fig:intro-ymc-overview-ss}).
+In the discussion of later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
 % ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
 %However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
 Possibly, the two- or three-phase response results from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{oneillEukaryoticCellBiology2020_3a_adapted}
+  \caption{
+    The yeast metabolic cycle seen as temporal partitioning of cellular processes into phases.
+    Here, in the low-oxygen consumption (LOC) phase, the cell accumulate carbohydrates, amino acids, and solutes.
+    In contrast, in the high-oxygen consumption (HOC) phase, the reverse is true:
+    the cell uses its accumulated resources for biosynthesis and translation.
+    Once reserves are exhausted, the cell resumes its LOC phase.
+    Adapted from \textcite{oneillEukaryoticCellBiology2020}.}
+  \label{fig:intro-ymc-overview-oneill}
+\end{figure}
+
+Cellular processes occur in association with the phases of the metabolic cycle (figure~\ref{fig:intro-ymc-overview-oneill}).
 
 In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
 % Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
@@ -177,13 +208,13 @@ In the oxidative phase, cells consume oxygen at a high rate as respiration, ferm
 energy-demanding processes
 like biosynthesis and gene expression occur.
 Occurrence of biosynthesis and associated gene expression is confirmed by increased transcripts from genes encoding components of the translation machinery and amino acid biosynthesis \parencite{tuLogicYeastMetabolic2005}.
-As the oxidative phase transitions to the reductive phase, ethanol and acetate concentrations in the medium peak as respiration finishes \parencite{tuLogicYeastMetabolic2005}.
 `Redox state' metabolites, including NADH, NADPH, glutathione \parencite{lloydUltradianMetronomeTimekeeper2005}, and flavins (FMN and FAD)
 \parencite{murrayRedoxRegulationRespiring2011} become most oxidised in this phase.
-Here, 70\% of metabolite concentrations peak with the combined autofluorescence of NADH and NADPH \parencite{murrayRegulationYeastOscillatory2007}.
+As cells transition from the oxidative to the reductive phase, 70\% of metabolite concentrations peak, at the same time as when NAD(P)H autofluorescence peaks and the DNA synthesis rate is at its maximum \parencite{lloydTemporalArchitectureEukaryotic2006}.
 
 In the reductive phase, cells consume oxygen at a low rate.
 During the reductive-building phase, activities linked to mitochondrial growth occur.
+In the early reductive-building phase, ethanol and acetate concentrations in the medium peak, marking a transition from oxidative respiration to glycolytic metabolism \parencite{tuCyclicChangesMetabolic2007}.
 % as shown here.
 There is evidence to suggest that activities linked to cell proliferation --- such as initiation of the cell division cycle, DNA replication, and spindle pole activity --- are gated to the reductive-building phase for both the short-period and long-period YMC.
 Such evidence includes budding activity and the pattern of the expression of \emph{YOX1}, which encodes a cell division cycle repressor \parencite{tuLogicYeastMetabolic2005}.
@@ -211,6 +242,26 @@ This evidence indicates that the gating between the YMC and the cell cycle is fl
 Though there is no meaningful consensus as to the function of such flexible gating,
 such gating can be instrumental in the allocation of metabolites to different temporal phases of both cellular oscillators.
 % Discuss allocation of metabolites later -- and this can be linked to the modelling chapter of thesis.
+
+\subsubsection{History of evidence for the yeast metabolic cycle}
+\label{subsubsec:intro-ymc-definition-history}
+
+
+Aspects of the YMC have been observed over decades.
+\textcite{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \emph{S. cerevisiae} cultures show oscillatory oxygen consumption.
+\textcite{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while \textcite{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
+\textcite{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of a 40-minute YMC for cells in continuous culture.
+\textcite{tuLogicYeastMetabolic2005}
+first incorporated transcript cycling in the description of the YMC and defined the YMC events,
+based on a chemostat-based investigation of growth of budding yeast on glucose-starved conditions.
+
+The yeast metabolic cycle is longer in duration and is more robust than a similar biological oscillator, the glycolytic oscillation.
+The glycolytic oscillation has a period on the scale of 40 seconds \parencite{olsenRegulationGlycolyticOscillations2009}.
+In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \parencite{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4--5 hours \parencite{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \parencite{beuseEffectDilutionRate1998, oneillEukaryoticCellBiology2020}.
+
+Glycolytic oscillations are highly damped, but yeast metabolic oscillations are robust, lasting for weeks \parencite{lloydRedoxRhythmicityClocks2007}.
+Additionally, glycolytic oscillations have been observed in anaerobic conditions \parencite{lloydSaccharomycesCerevisiaeOscillatory2019}, but yeast metabolic cycles have been observed in aerobic conditions.
+Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluorescence only, but yeast metabolic cycles consist of fluctuations in NADH fluorescence as well as fluctuations in other compounds like ATP and flavins.
 
 
 \subsection{Yeast metabolic cycles under perturbations}
@@ -245,8 +296,9 @@ However, non-fermentable carbon sources like pyruvate give long-duration metabol
 
 % bulk addition and depletion
 In addition, bulk depletion or addition of a carbon source can reset the phase of the YMC.
-Chemostat studies show that an initial starvation phase is needed to generate long-lasting synchronous metabolic cycles \parencite{tuLogicYeastMetabolic2005}. %[OTHER CITATIONS PROBABLY USEFUL].
-On the other hand, adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \parencite{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018} or eliminate it \parencite{jonesCyberneticModelGrowth1999}.
+%Chemostat studies show that an initial starvation phase is needed to generate long-lasting synchronous metabolic cycles \parencite{tuLogicYeastMetabolic2005}. %[OTHER CITATIONS PROBABLY USEFUL].
+%On the other hand,
+Adding a bulk carbon source such as acetate, ethanol, or acetaldehyde can reset the phase of the YMC \parencite{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018} or eliminate it \parencite{jonesCyberneticModelGrowth1999}.
 
 Perturbations in nitrogen sources are less well-studied.
 % Maybe also because long OX stage as it's the stage for biomass building
@@ -382,9 +434,11 @@ There is a dispute of whether the same conclusions can be drawn from chemostat-b
 Most studies of the YMC arise from chemostat experiments and any conclusion from a single-cell study is subject to the question of whether it recapitulates the YMC in the chemostat.
 Reconciling the two types of studies is difficult because the readouts and conditions are different:
 chemostat studies produce dissolved oxygen and transcript cycling readings, while single-cell experiments cannot report on dissolved oxygen and chiefly report metabolite cycling.
-This leads to differing definitions of the YMC:
-some authors \parencite{laxmanBehaviorMetabolicCycling2010, caustonMetabolicRhythmsFramework2018} only use the term metabolic cycle to refer to synchronised cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase, while single-cell studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018, zylstraMetabolicDynamicsCell2022} naturally have to expand that definition to include metabolite cycling and sequences of cellular events that are associated with the chemostat metabolic cycle.
-For the purposes of my thesis, I adhere to the definition used by single-cell studies.
+This leads to differing definitions of the YMC.
+Some authors \parencite{laxmanBehaviorMetabolicCycling2010, caustonMetabolicRhythmsFramework2018} only use the term metabolic cycle to refer to synchronised cycles of dissolved oxygen concentrations observed in chemostat cultures that must have gone through a starvation phase.
+In contrast, single-cell studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018, zylstraMetabolicDynamicsCell2022} define the metabolic cycle as metabolite cycling and sequences of cellular events.
+This is because in such settings, the cells are not synchronised by diffusible chemical signals and dissolved oxygen concentrations cannot be measured.
+Additionally, these studies do not include the requirement of a starvation phase as part of their definition as they show that cell exhibit metabolite cycling even without having gone through a period of starvation.
 
 I argue that there are three caveats to chemostat-based studies:
 the experimenter cannot assume that the chemostat is in steady-state,
