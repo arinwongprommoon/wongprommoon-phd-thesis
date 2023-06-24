@@ -380,10 +380,20 @@ This model assumes that the cells retain hysteresis of their current state and p
 Taken together, the models provide an attractive cell-to-cell signalling explanation for the population-level behaviour observed in the chemostat.
 However, such an explanation does not explain the presence of metabolic cycling in single-cell conditions in which cells are physically separated and thus signalling between cells cannot occur --- though it must be noted that autonomous generation of metabolic cycles and synchrony of metabolic cycles in a population can each arise from mechanisms that are independent of each other.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{ozsezenInferenceHighLevelInteraction2019_7}
+  \caption{
+    The relationship between the yeast metabolic cycle and the cell division cycle can be seen as a system of coupled oscillators.
+    Namely, the cell division cycle is modelled as three oscillators (START, S, M), and the yeast metabolic oscillator (MET) gates entry into START and M phases, while progression from START to S is independent of the metabolic cycle.
+    Adapted from \textcite{ozsezenInferenceHighLevelInteraction2019}.}
+  \label{fig:intro-ymc-coupled_oscillators}
+\end{figure}
+
 Based on single-cell experimental observations, \textcite{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators at different stages.
 This study builds upon use of the Kuramoto model to model collective oscillatory behaviour in other biological systems.
 The study uses growth on different carbon source conditions to determine parameters that define the natural frequencies of the cell division cycle oscillators and the strength of the coupling between the four oscillators.
-Parameter optimisation predicts that the metabolic cycle most strongly influences the START point of the cell division cycle, and more weakly influences the M and S phases, while the three points of the cell division cycle negligibly influence each other.
+Parameter optimisation predicts that the metabolic cycle most strongly influences the START point of the cell division cycle, and more weakly influences the M and S phases, while the three points of the cell division cycle negligibly influence each other (figure~\ref{fig:intro-ymc-coupled_oscillators}).
 Under perturbations, the model system also exhibits stability but also a shift in oscillation frequency, agreeing with experimental observations, and also predicts the effects of Cdc20 and Cdc14 dynamic depletions.
 However, a key criticism of this model-based study is that by using the Kuramoto model, it makes simplistic assumptions about the oscillators, which may be unrealistic especially given how little is known about the mechanistic basis of the metabolic oscillator.
 
@@ -456,7 +466,17 @@ The subsequent response to regularly changing media conditions could explain tem
 In other words, the conditions of the chemostat may force the population of cells to behave in a certain way.
 However, temporal segregation of physiological process has also been reported in single-cell studies \parencite{takhaveevTemporalSegregationBiosynthetic2023}, suggesting that the cycling of solutes in the chemostat could affect some, but not all, temporal aspects of the metabolic cycle.
 
-The chemostat obscures contribution of sub-populations of cells.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{mellorMolecularBasisMetabolic2016_3b_adapted}
+  \caption{
+    Model for how sub-populations of cells may account for oscillations of dissolved oxygen observed in the chemostat.
+    Cells may enter the cell division cycle (pink-blue-red lines), gated by the metabolic cycle, in a staggered manner, and the combined effect of all cells may explain dissolved oxygen concentrations (black lines, top row).
+    Adapted from \textcite{mellorMolecularBasisMetabolic2016}.}
+  \label{fig:intro-ymc-populations}
+\end{figure}
+
+The chemostat obscures contribution of sub-populations of cells (~\ref{fig:intro-ymc-populations}).
 \textcite{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for chemostat observations, as evidenced by how the yeast cells spend proportionately more time in the reductive phase at lower dilution rates.
 Contributions from sub-populations of cells are further highlighted by \textcite{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that a group of genetically identical yeast cells divide themselves into two populations.
 Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
