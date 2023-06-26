@@ -1,0 +1,13 @@
+#+title: Time Guides
+TODO: categorise this further
+Units: P (Pomodoro, approx 25 minute)
+* Reading
+- 1 short review: 1 P.
+- 1 medium-sized paper: skimming 1-2 P, reading 2-3 P.
+
+* Typing text
+
+* Figures/etc.
+- Adding a couple of already-made figures with simple legends: 2 P.
+
+* Editing/proofreading
