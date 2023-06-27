@@ -50,14 +50,66 @@ Biological rhythms can occur at different time scales, from seconds (e.g.\ glyco
 Biological rhythms are important in temporally separating physiological processes.
 This is instrumental in responding to external conditions, including nutrient conditions, growth requirements, or the day-night cycle.
 Thus, this means that biological rhythms can vary according to conditions.
+Such biological rhythms include the circadian rhythm, the cell division cycle, the glycolytic cycle, and the yeast metabolic cycle.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{adlerYeastCellCycle2022_1}
+  \caption{
+    Overview of the cell division cycle.
+    The cell division cycle consists of G\textsubscript{1}, S, G\textsubscript{2}, and M phases (black arrows).
+    The cell expresses different cyclins, cell division cycle regulators, as it transitions through different phases of the cell division cycle (coloured curves).
+    Adapted from \textcite{adlerYeastCellCycle2022}.}
+  \label{fig:intro-cdc-overview}
+\end{figure}
 
 % VERY useful citation: adlerYeastCellCycle2022
-Such biological rhythms include the circadian rhythm and the cell division cycle.
 To demonstrate the definition of biological rhythm, I discuss the cell division cycle, which is well-char\-ac\-terised.
-The cell division cycle in budding yeast is governed by a series of gene regulatory networks that interact in a feedback loop, resulting in oscillatory expression of regulatory proteins, namely, cyclin-CDK complexes that regulate cellular events in a temporal manner \parencite{adlerYeastCellCycle2022, orlandoGlobalControlCellcycle2008, murrayRecyclingCellCycle2004}.
-This cycle also includes biochemical and metabolic oscillators, for example, biosynthesis during S phase.
-As with other biological rhythms, the cell division cycle also includes a system to control it, so that DNA replication occurs once every cell division cycle and so that the cell only divides when necessary.
-The importance of such control systems are highlighted by disorders when these systems are impaired, such as chromosome aberrations and cancer.
+The cell division cycle is a series of cellular events that ensure that a precursor cell divides into two progeny cells.
+These events include cell growth and accumulation of biomass, replication of genetic material with proofreading, and dividing the cell into two compartments.
+In eukaryotes, the latter event consists of karyokinesis (division of the nucleus) and cytokinesis (division of the cell).
+In budding yeast (\emph{Saccharomyces cerevisiae}), the cell division cycle is divided into the G\textsubscript{1}, S, G\textsubscript{2}, and M phases (figure~\ref{fig:intro-cdc-overview}).
+In the gap phases (G\textsubscript{1} and G\textsubscript{2}), the cell primarily grows and accumulates biomass.
+The cell replicates DNA in the S phase and in the M phase it conducts mitosis, in which chromosomes are segregated between the progeny cells.
+
+The cell division cycle is important in unicellular organisms such as budding yeast as it is the mechanism by which the organism reproduces.
+Regulation of the cell division cycle is thus important
+because the cell must only divide when necessary,
+because the cell must have resources available for division before it does so,
+because the cell must ensure faithful replication of DNA to prevent deleterious mutations in progeny cells,
+and because the cell must ensure that its components are divided equally between its two progeny cells so that its progeny cells can function normally.
+The cell division cycle in budding yeast has checkpoints between phases to ensure that biological events from the previous phases are completed before the cell proceeds to the next one.
+The most important checkpoint is START in late G\textsubscript{1} phase, at which the cell checks whether it has the resources needed to replicate, and if requirements are met, it irreversibly commits to cell division.
+The cell division cycle in budding yeast is also governed by a series of gene regulatory networks that interact in a feedback loop, resulting in oscillatory expression of regulatory proteins, namely, cyclin-CDK complexes that regulate cellular events in a temporal manner \parencite{adlerYeastCellCycle2022, orlandoGlobalControlCellcycle2008, murrayRecyclingCellCycle2004}.
+Specifically, cyclins are proteins that sequentially accumulate and are destroyed as the cell transitions through phases of the cell division cycle.
+In budding yeast, these cyclins bind to and activate the cyclin-dependent kinase (CDK) Cdc28, which is constitutively expressed.
+The different cyclin-CDK combinations in each phase thus determines the events in the cell \parencite{adlerYeastCellCycle2022}:
+
+\begin{enumerate}
+  \item In early G\textsubscript{1}, Cln3-Cdc28 phosphorylates Whi5, leading to activation of genes that regulate budding and DNA replication.
+  \item In late G\textsubscript{1}, Cln1-Cdc28 and Cln2-Cdc28 hyperphosphorylates Sic1, leading to activation of DNA replication which marks S phase.
+  \item In late S phase, Clb1-Cdc28 and Clb2-Cdc28 phosphorylates Ndd1, leading to a feedback loop that activates entry into mitosis.
+  \item To exit mitosis, the cell activates a system to target Clb1 and Clb2 for degradation.
+\end{enumerate}
+
+To coordinate cell division and metabolism with nutrient availability, budding yeast also has a system of cross-talk between nutrient signalling, growth, and the cell division cycle \parencite{ewaldHowYeastCoordinates2018}.
+START is the main control point at which information from nutrient-sensing systems is integrated.
+In response to carbon deprivation, Cip1 delays START, and Msa1/2 responds to nutrient depletion and blocks START.
+In addition, Rim15 integrates information from TOR and PKA pathways, which respond to nutrient depletion and other stresses, and induces cell division cycle arrest, but also responds to nutrient-poor conditions like non-fermentable carbon sources by inducing an earlier entry into START.
+Furthermore, there is also evidence that sudden starvation at other phases affects cell division cycle progression; for example, through the S-phase inhibitor Sic1.
+There is also coordination between internal nutrient stores with the cell division cycle.
+During S/G\textsubscript{2}/M, Cdc28 activates the trehalase Nth1 so that the storage carbohydrate can be liquidised to provide glucose for glycolysis \parencite{ewaldYeastCyclinDependentKinase2016}.
+Additionally, during G\textsubscript{1}/S, Cdc28 activates the lipase Tgl4 to break down storage lipids \parencite{kuratCdk1Cdc28DependentActivation2009}.
+There is also evidence for an additional cyclin-dependent kinase, Pho85 \parencite{huangPho85MultifunctionalCyclindependent2007}, which acts to inhibit the expression of genes involved in the phosphate starvation response in high levels of environmental phosphate \parencite{oneillRegulationPHO4Nuclear1996}, and also has roles in inhibiting glycogen synthase \parencite{wilsonSubstrateTargetingYeast1999}.
+
+% [COMMENTED OUT MAIN TEXT -- DOESN'T FIT IN WITH THE REST]
+% As with other biological rhythms, the cell division cycle also includes a system to control it, so that DNA replication occurs once every cell division cycle and so that the cell only divides when necessary.
+%The importance of such control systems are highlighted by disorders when these systems are impaired, such as chromosome aberrations and cancer (uncontrolled cell division).
+
+% TODO : Add glycolytic cycle paragraph
+% - Define it.  Steal bits from later sections that discus this cycle, and also refer back to original papers.
+% - Why this cycle exists
+% - How it is regulated & link to definition of a biological rhythm
 
 % [MIGHT COMMENT THIS OUT?]
 The yeast metabolic cycle is a type of biological rhythm because it has the properties that define a biological rhythm.
