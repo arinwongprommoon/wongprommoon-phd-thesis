@@ -106,10 +106,27 @@ There is also evidence for an additional cyclin-dependent kinase, Pho85 \parenci
 % As with other biological rhythms, the cell division cycle also includes a system to control it, so that DNA replication occurs once every cell division cycle and so that the cell only divides when necessary.
 %The importance of such control systems are highlighted by disorders when these systems are impaired, such as chromosome aberrations and cancer (uncontrolled cell division).
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{doddLiveCellImaging2017_3a_adapted}
+  \caption{
+    Glycolytic cycles are characterised by oscillations in NADH (orange) and pH (blue) at a period of approximately 40--50 s, and are usually highly damped.
+    Adapted from \textcite{doddLiveCellImaging2017}.}
+  \label{fig:intro-glycolytic-overview}
+\end{figure}
+
 % TODO : Add glycolytic cycle paragraph
 % - Define it.  Steal bits from later sections that discus this cycle, and also refer back to original papers.
-% - Why this cycle exists
-% - How it is regulated & link to definition of a biological rhythm
+% - Why this cycle exists (see discussion of cited papers)
+% - How it is regulated & link to definition of a biological rhythm (mention the PFK system thingy)
+Glycolytic oscillations are an example of a biological rhythm whose mechanistic basis is relatively poorly characterised.
+The glycolytic oscillation is a biochemical oscillator in budding yeast, characterised by damped  oscillations in the levels of glycolytic intermediates at the time scale of 40--50 seconds  \parencite{ghoshOscillationsGlycolyticIntermediates1964}.
+These oscillations have been observed as a response to high-glucose conditions and in anaerobic conditions.
+Later studies show that levels of NADH \parencite{lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, pH, and mitochondrial membrane potential \parencite{doddLiveCellImaging2017} also oscillate at the same frequency (figure~\ref{fig:intro-glycolytic-overview}).
+Many hypotheses have been proposed to explain the existence of glycolytic oscillations, but there is no consensus \parencite{lloydSaccharomycesCerevisiaeOscillatory2019}, though \textcite{thokeConstantLowentropyProcess2018} proposed that these oscillations are the result of cells attempting to maintain a constant low-entropy state while remaining metabolically active.
+Evidence shows that glycolytic oscillations are regulated through solely biochemical means.
+Specifically, a high ADP/ATP ratio and the presence of fructose-1,6-bisphosphate activate the activity of phosphofructokinase, which then controls the flux through glycolysis, forming a negative feedback loop that causes oscillations \parencite{ghoshOscillationsGlycolyticIntermediates1964, higginsChemicalMechanismOscillation1964}.
+Such a biochemical mechanism would explain how oscillations are sustained at a short timescale.
 
 % [MIGHT COMMENT THIS OUT?]
 The yeast metabolic cycle is a type of biological rhythm because it has the properties that define a biological rhythm.
@@ -138,11 +155,18 @@ For example, \textcite{goldbeterMinimalCascadeModel1991} assumed a minimal model
 Such a strategy forms the basis of later models that incorporate more detail, including additional control points of the cell division cycle \parencite{chenIntegrativeAnalysisCell2004}, responses to perturbations such as osmotic stress \parencite{adroverTimeDependentQuantitativeMulticomponent2011}, and relationship with other oscillators like the circadian rhythm \parencite{gerardEntrainmentMammalianCell2012, charvinForcedPeriodicExpression2009, droinLowdimensionalDynamicsTwo2019}.
 More recent, comprehensive models include \textcite{adlerYeastCellCycle2022} which is based on a system of ordinary differential equations adapted for the modelling to pheromone and osmotic shock responses, and \textcite{novakMitoticKinaseOscillation2022}, which models the cell division cycle as a series of switches between two stable steady states whose behaviour is regulated by the CDK oscillator.
 
-In contrast, other less well-characterised natural biological rhythms have given rise to models with fewer detail and precision.
+Less well-characterised natural biological rhythms have given rise to models with fewer detail and precision.
 An example is glycolytic oscillations.
-The glycolytic oscillation is a type of ultradian biochemical oscillator, characterised by oscillations in NADH levels (and other cofactors) in budding yeast cells at the time scale of 10 seconds \parencite{doddLiveCellImaging2017, lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, when they are in high-glucose conditions.
-A recent model is a coarse-grained model
-driven by positive feedback loops as a system of two coupled instability-generating mechanisms \parencite{goldbeterMultisynchronizationOtherPatterns}.
+Most models focus on few intermediates of glycolysis that would explain the observed oscillations.
+\textcite{ghoshOscillationsGlycolyticIntermediates1964} proposed a simple biochemical mechanism governed by the action of phosphofructokinase, dependent on the concentration of fructose-1,6-bisphosphate.
+\textcite{higginsChemicalMechanismOscillation1964} then tested this mechanism, described by differential equations that model six chemical reactions, computationally.
+Later, \textcite{termoniaOscillationsControlFeatures1981} incorporated pyruvate kinase kinetics and levels of AMP, ADP, and ATP as part of their kinetic model based on Michaelis-Menten kinetics.
+Other studies focus on non-linear dynamics.
+\textcite{goldbeterDissipativeStructuresAllosteric1972} models the product-activated phosphofructokinase reaction, taking into account the allosteric nature of the enzyme.
+This model contains a single positive feedback loop as a instability-generating mechanism in a bistability model that explains oscillations.
+In \textcite{moranOnsetBirhythmicityRegulated1984}, the model was modified to incorporate a reaction of product recycling into substrate to explain birhythmicity, namely, the potential for oscillations of different amplitudes.
+Another development of the model includes a three-variable model that represents two coupled reactions each under a positive feedback loop, explaining more complex oscillatory phenomena that could arise from pulsing of substrates \parencite{decrolyBirhythmicityChaosOther1982}.
+In contrast to work that models the cell division cycle, gene expression dynamics and the effects of perturbations have not been incorporated in the modelling of the glycolytic cycle.
 
 % Forced oscillators, coupled oscillators
 % Useful here: \textcite{tysonTimekeepingDecisionmakingLiving} and related reviews
@@ -309,11 +333,12 @@ based on a chemostat-based investigation of growth of budding yeast on glucose-s
 
 The yeast metabolic cycle is longer in duration and is more robust than a similar biological oscillator, the glycolytic oscillation.
 The glycolytic oscillation has a period on the scale of 40 seconds \parencite{olsenRegulationGlycolyticOscillations2009}.
-In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \parencite{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4--5 hours \parencite{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \parencite{beuseEffectDilutionRate1998, oneillEukaryoticCellBiology2020}.
+In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \parencite{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4--5 hours \parencite{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \parencite{beuseEffectDilutionRate1998}.
 
 Glycolytic oscillations are highly damped, but yeast metabolic oscillations are robust, lasting for weeks \parencite{lloydRedoxRhythmicityClocks2007}.
 Additionally, glycolytic oscillations have been observed in anaerobic conditions \parencite{lloydSaccharomycesCerevisiaeOscillatory2019}, but yeast metabolic cycles have been observed in aerobic conditions.
-Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluorescence only, but yeast metabolic cycles consist of fluctuations in NADH fluorescence as well as fluctuations in other compounds like ATP and flavins.
+Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluorescence and glycolytic intermediates.
+However, yeast metabolic cycles consist of fluctuations in NADH fluorescence, flavin fluorescence, and ATP concentrations as well as biosynthetic intermediates in TCA cycle, amino acid, and nucleic acid metabolism \parencite{tuCyclicChangesMetabolic2007}.
 
 
 \subsection{Yeast metabolic cycles under perturbations}
