@@ -4,6 +4,7 @@ Units: P (Pomodoro, approx 25 minute)
 * Reading
 - 1 short review: 1 P.
 - 1 medium-sized paper: skimming 1-2 P, reading 2-3 P.
+- 1 book chapter: skimming 1 P.
 
 * Typing text
 

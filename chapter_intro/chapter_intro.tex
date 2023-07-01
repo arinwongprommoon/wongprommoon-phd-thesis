@@ -500,7 +500,8 @@ This model predicts spontaneous generation of oscillations in dissolved oxygen, 
 This prediction is consistent with chemostat-based studies of the yeast metabolic cycle.
 Furthermore, the model predicts that, within a window of dilution rate values, if the dilution rate decreases, the dissolved oxygen oscillations increase in amplitude and period.
 The increase in period agrees with experimental studies such as \textcite{oneillEukaryoticCellBiology2020}.
-However, the model also predicts oscillations in the extracellular concentrations of glucose and ethanol, which conflicts with the steady-state assumption of chemostat studies.
+However, the model also predicts oscillations in the extracellular concentrations of glucose and ethanol.
+In theory, such oscillations can only occur if there is a nutrient-consuming prey species that is in turn consumed by two competing predators, or if there are two competitors and an inhibitor added to the chemostat that inhibits only one of the competitors \parencite{smithTheoryChemostatDynamics1995}. % discuss whether the J & K model fits the latter case only if someone complains about it.
 
 \textcite{krishnaMinimalPushPull2018} use a frustrated bistability model to describe a relaxation oscillator that explains how a population of yeast cells switches between quiescent and growth states when faced with a limited amount of metabolic resources.
 This model assumes that the cells retain hysteresis of their current state and posits that cells of two populations communicate through diffused acetyl-CoA to sustain population-level oscillatory behaviour.
@@ -604,12 +605,14 @@ However, temporal segregation of physiological process has also been reported in
   \label{fig:intro-ymc-populations}
 \end{figure}
 
-The chemostat obscures contribution of sub-populations of cells (~\ref{fig:intro-ymc-populations}).
+The chemostat obscures contribution of sub-populations of cells (figure~\ref{fig:intro-ymc-populations}).
 \textcite{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for chemostat observations, as evidenced by how the yeast cells spend proportionately more time in the reductive phase at lower dilution rates.
 Contributions from sub-populations of cells are further highlighted by \textcite{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that a group of genetically identical yeast cells divide themselves into two populations.
 Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
 Taken together, it is possible that phenotypically different sub-populations in the chemostat culture may partially explain the observations in the chemostat so far.
 In addition, there is the question of whether cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony, as proposed by \textcite{krishnaMinimalPushPull2018}.
+Furthermore, \textcite{smithTheoryChemostatDynamics1995} shows, theoretically, that a chemostat with two competing species with an inhibitor added to the chemostat that inhibits one of the competitors can generate oscillations.
+In the case of the yeast metabolic cycle, the competitors can be genetically identical sub-populations of the yeast cells that have different levels of sensitivities to an inhibitor, perhaps a metabolic by-product.
 Bulk culture set-ups, including chemostats, are not able to address questions about cell sub-populations and autonomy of the metabolic cycle.
 However, single-cell set-ups may fill in such a technical gap.
 
