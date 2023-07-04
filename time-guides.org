@@ -10,6 +10,7 @@ Units: P (Pomodoro, approx 25 minute)
 
 * Figures/etc.
 - Adding a couple of already-made figures with simple legends: 2 P.
+- 1 table: 0.75-1 P. (yes, it takes that long)
 
 * Editing/proofreading
 
