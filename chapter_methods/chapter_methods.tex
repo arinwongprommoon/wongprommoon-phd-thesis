@@ -8,28 +8,131 @@
 \section{Strains and media}
 \label{sec:methods-strains_media}
 
-% TODO: Add all other strains I used in a proper table.
+The \emph{S. cerevisiae} strains used in this thesis are described in table~\ref{tab:methods-strains}.
+% Potential additions: CEN.PK & Causton strains, if they go into the biological chapter.
 
-Two \emph{S. cerevisiae} strains are used.
-The first strain is the prototrophic FY4 strain \parencite{winstonConstructionSetConvenient1995, brachmannDesignerDeletionStrains1998} from the Kaeberlein lab.
-To create the second strain, the BY4741 strain with genotype \emph{MAT}a \emph{his3$\Delta$1 leu2$\Delta$0 met15$\Delta$0 ura3$\Delta$0} \parencite{brachmannDesignerDeletionStrains1998} was transformed with pBS34 \parencite{haileyFluorescenceResonanceEnergy2002} to tag \emph{WHI5::mCherry:KAN}.
-This auxotrophic WHI5::mCherry strain was used to monitor Whi5p localisation.
+\begin{table}
+  \footnotesize
+  \centering
+  \begin{tabularx}{\linewidth}{bbbbb}
+    \toprule
+    Name & Background & Genotype & Origin & Notes\\
+    \midrule
+    FY4 & FY4 & - & EUROSCARF & \textcite{winstonConstructionSetConvenient1995} \\
+    htb2::mCherry & FY4 & HTB2::mCherry & In-house, CRISPR & - \\
+    BY4741 & BY4741 & \emph{MAT}a \emph{his3$\Delta$1 leu2$\Delta$0 met15$\Delta$0 ura3$\Delta$0} & EUROSCARF & \textcite{brachmannDesignerDeletionStrains1998}\\
+    zwf1$\Delta$ & BY4741 & zwf1$\Delta$::KAN & Edinburgh Genome Foundry & Yeast deletion collection \\
+    BY4742 & BY4742 & \emph{MAT}a \emph{his3$\Delta$1 leu2$\Delta$0 lys2$\Delta$0 ura3$\Delta$0} & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019}\\
+    tsa1$\Delta$ tsa2$\Delta$ & BY4742 & tsa1$\Delta$::natNT2 tsa2$\Delta$::kanMX4 & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019} \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{Strains used in this thesis.}
+  \label{tab:methods-strains}
+\end{table}
 
-% TODO: Describe Delft media
+The minimal medium described by \parencite{verduynEffectBenzoicAcid1992} was used unless otherwise stated.
+This minimal medium does not contain riboflavin, thus minimising its effect on flavin autofluorescence imaging, and its composition is known and easily-controlled.
+Specifically, the composition of the carbon source-limiting medium are described in tables~\ref{tab:methods-media-delft}--\ref{tab:methods-media-delft-vitamins}, and the media pH was adjusted to 6.0 before use using potassium hydroxide, or sodium hydroxide for potassium-free media.
+For auxotrophic strains, supplements were added according to table~\ref{tab:methods-media-auxotroph}.
+Then, a carbon source is added as appropriate to create the growth medium.
+
+% TODO: align numbers by their decimal point
+\begin{table}
+  \footnotesize
+  \centering
+  \begin{tabularx}{\linewidth}{bbb}
+    \toprule
+    Reagent & Concentration & Remarks\\
+    \midrule
+    \ce{KH2PO4} & \SI{3.}{\gram~\litre^{-1}} & \\
+    \ce{MgSO4.7H2O} & \SI{0.5}{\gram~\litre^{-1}} & \\
+    \ce{(NH4)2SO4} & \SI{5.}{\gram~\litre^{-1}} & \\
+    \ce{Trace metals} & \SI{1.}{\milli\litre~\litre^{-1}} & See table~\ref{tab:methods-media-delft-metals} \\
+    \ce{Vitamins} & \SI{1.}{\milli\litre~\litre^{-1}} & See table~\ref{tab:methods-media-delft-vitamins}.  Add upon use. \\
+    \ce{Carbon source} & variable & Add upon use. \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{
+    Composition of base minimal medium.
+    For potassium-free media, replace \ce{KH2PO4} with \SI{2.65}{\gram~\litre^{-1}} \ce{NaH2PO4}, which gives the same molarity.
+  }
+  \label{tab:methods-media-delft}
+\end{table}
+
+\begin{table}
+  \footnotesize
+  \centering
+  \begin{tabularx}{\linewidth}{bbb}
+    \toprule
+    Reagent & Formula & Concentration [\SI{}{\gram~\litre^{-1}}]\\
+    \midrule
+    EDTA & \ce{C10H14N2Na2O8.2H2O} & 15.00 \\
+    Zinc sulfate & \ce{ZnSO4.7H2O} & 4.50 \\
+    Manganese (II) chloride & \ce{MnCl2.2H2O} & 0.84 \\
+    Cobalt (II) chloride & \ce{CoCl2.6H2O} & 0.30 \\
+    Copper (II) sulfate & \ce{CuSO4.5H2O} & 0.30 \\
+    Sodium molybdate & \ce{Na2MoO4.2H2O} & 0.40 \\
+    Calcium chloride & \ce{CaCl2.2H2O} & 4.50 \\
+    Iron (II) sulfate & \ce{FeSO4.7H2O} & 3.00 \\
+    Boric acid & \ce{H3BO3} & 1.00 \\
+    Potassium iodide & \ce{KI} & 0.10 \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{
+    Composition of trace metal mix for minimal media described in table~\ref{tab:methods-media-delft}.
+  }
+  \label{tab:methods-media-delft-metals}
+\end{table}
+
+\begin{table}
+  \footnotesize
+  \centering
+  \begin{tabularx}{\linewidth}{bbb}
+    \toprule
+    Reagent & Formula & Concentration [\SI{}{\gram~\litre^{-1}}]\\
+    \midrule
+    D-(+)-biotin & \ce{C10H16N2O3S} & 0.05 \\
+    D-panthothenic acid calcium salt & \ce{Ca(C9H16NO5)2} & 1.00 \\
+    Nicotinic acid & \ce{C6H5NO2} & 1.00 \\
+    \emph{myo}-Inositol & \ce{C6H12O6} & 25.00 \\
+    Thiamine chloride hydrochloride & \ce{C12H15ClN4OS.HCl} & 1.00 \\
+    Pyridoxal hydrochloride & \ce{C8H12ClNO3} & 1.00 \\
+    4-aminobenzoic acid & \ce{C7H7NO2} & 0.20 \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{
+    Composition of vitamin mix for minimal media described in table~\ref{tab:methods-media-delft}.
+  }
+  \label{tab:methods-media-delft-vitamins}
+\end{table}
+
+\begin{table}
+  \footnotesize
+  \centering
+  \begin{tabularx}{\linewidth}{bbb}
+    \toprule
+    Reagent & Concentration [\SI{}{\milli\gram~\litre^{-1}}] \\
+    \midrule
+    histidine & 125. \\
+    leucine & 500. \\
+    tryptophan & 75. \\
+    methionine & 100. \\
+    uracil & 150. \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption{
+    Supplements to minimal media for BY4741-background auxotrophic strains, compositions derived from \textcite{pronkAuxotrophicYeastStrains2002}.
+    For BY4742-background strains, replace methionine with \SI{100}{\milli\gram~\litre^{-1}} lysine-HCl.
+  }
+  \label{tab:methods-media-auxotroph}
+\end{table}
 
 \section{Single-cell microfluidics}
 \label{sec:methods-microfluidics}
 
-% TODO: Update with Delft media and other cultivation conditions.
-% Update fluorescence settings and duration of experiments.
-% Change percent w/v to g/L
-% Define EDI amino acid dropout mix
-
-FY4 cells and WHI5::mCherry cells were grown at \SI{30}{\celsius} overnight in synthetic complete (SC) or synthetic minimal (SM) media supplemented by 2\% w/v glucose, according to table [NOTE: TABLE REMOVED].
-Synthetic complete media is composed of \SI{2.55}{\gram\per\litre} yeast nitrogen base (YNB), \SI{7.5}{\gram\per\litre} \ce{(NH4)2SO4}, \SI{2.1}{\gram\per\litre} EDI amino acid dropout mix, \SI{0.075}{\gram\per\litre} adenine, \SI{0.15}{\gram\per\litre} histidine, \SI{0.15}{\gram\per\litre} methionine, \SI{0.3}{\gram\per\litre} leucine, \SI{0.15}{\gram\per\litre} tryptophan, and \SI{0.15}{\gram\per\litre} uracil.
-Synthetic minimal media is equivalent to synthetic complete media, but without amino acids.
+Cells were grown in a minimal media formulation appropriate for the experiment, supplements appropriate for the strain's auxotrophy, and a carbon source (glucose or pyruvate) appropriate for the experiment (see section~\ref{sec:methods-strains_media}).
 % Kevin's OD measurements?
-After overnight growth, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10 -- 0.20, and then were incubated for 4 hr at \SI{30}{\celsius}.
+After \SI{14}{hr} overnight growth, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and then were incubated for \SI{4}{hr} at \SI{30}{\celsius}.
 
 % Refer to Jove paper if it comes out
 ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014}  chambers were filled with media supplemented with 2\% w/v glucose and 0.05\% w/v bovine serum albumin.
@@ -37,14 +140,15 @@ Cells were then loaded into the ALCATRAS chambers.
 Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre} into the chambers.
 The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
 
+% Update fluorescence settings
 Microscopy was performed using a 60 $\times$ 1.4 NA oil immersion objective (Nikon), and the Nikon Perfect Focus System was used to ensure consistent focus.
 Five z-slices were taken for brightfield images, with a spacing of \SI{0.6}{\nano\metre} between slices.
 Fluorescence imaging was performed with an OptoLED light source (Cain Research), and LED voltage was optimised for maximum signal intensity without LED cut-off prior to experiments.
 For flavin imaging, the excitation frequency was \SI{430}{\nano\metre}, the emission filter was set to \SI{455}{\nano\metre}, and exposure time varied: \SI{0}{\milli\second}, \SI{60}{\milli\second}, \SI{120}{\milli\second}, and \SI{180}{\milli\second}.
 For mCherry imaging, the excitation frequency was \SI{590}{\nano\metre} and the exposure time was \SI{100}{\milli\second}.
 Z-slices were taken for the mCherry images, with the same number of slices and spacing as for the brightfield images.
-Image acquisition was for 14 hr 57 min 30 s in each experiment.
-For all channels, images were taken every 150 s.
+Image acquisition duration varied for each experiment.
+For all channels, images were taken every \SI{5}{min}.
 
 \section{Segmentation, extraction, post-processing}
 \label{sec:methods-segmentation}
