@@ -1,7 +1,3 @@
-% ROUGH DRAFT, based on 10-month report for now
-% PROBABLY BEST WRITTEN AFTER BIOLOGICAL RESULTS CHAPTER DRAFT DONE
-% TODO:
-
 \chapter{Methods}
 \label{ch:methods}
 
@@ -130,43 +126,53 @@ Then, a carbon source is added as appropriate to create the growth medium.
 \section{Single-cell microfluidics}
 \label{sec:methods-microfluidics}
 
-Cells were grown in a minimal media formulation appropriate for the experiment, supplements appropriate for the strain's auxotrophy, and a carbon source (glucose or pyruvate) appropriate for the experiment (see section~\ref{sec:methods-strains_media}).
+Cells were grown from colonies on solid agar in a liquid culture composed of minimal media formulation appropriate for the experiment, supplements appropriate for the strain's auxotrophy, and a carbon source (glucose or pyruvate) appropriate for the experiment (see section~\ref{sec:methods-strains_media}).
 % Kevin's OD measurements?
-After \SI{14}{hr} overnight growth, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and then were incubated for \SI{4}{hr} at \SI{30}{\celsius}.
+The cells were incubated at \SI{30}{\celsius} for \SI{14}{\hour} (overnight) if the carbon source is glucose or \SI{48}{\hour} if the carbon source is pyruvate.
+Subsequently, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and were then incubated for a further \SI{4}{\hour}.
 
-% Refer to Jove paper if it comes out
-ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014}  chambers were filled with media supplemented with 2\% w/v glucose and 0.05\% w/v bovine serum albumin.
-Cells were then loaded into the ALCATRAS chambers.
-Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre} into the chambers.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{microfluidics}
+  \caption{
+    Overview of single-cell microfluidics set-up using the ALCATRAS system.
+    Cells are loaded into chambers within devices, where they are trapped and separated (centre).
+    The media composition the cells experience are controlled with syringe pumps (left).
+    Brightfield and fluorescent images are taken at regular intervals, and then processed using \emph{aliby} to provide time series of fluorescence intensity changes for each parent cell.
+  }
+  \label{fig:methods-microfluidics}
+\end{figure}
+
+ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared and for an experiment, one device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
+Cells were then loaded into the ALCATRAS chambers --- different chambers can house cells from different strains (figure~\ref{fig:methods-microfluidics}).
+Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
+As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after they bud.
+There are two syringes that can contain different media, and in experiments that require different nutrient conditions at different times, the ALCATRAS system is programmed to switch between the two syringes.
 The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
 
 % Update fluorescence settings
 Microscopy was performed using a 60 $\times$ 1.4 NA oil immersion objective (Nikon), and the Nikon Perfect Focus System was used to ensure consistent focus.
-Five z-slices were taken for brightfield images, with a spacing of \SI{0.6}{\nano\metre} between slices.
+X-Y spatial positions were defined for each chamber to maximise spatial coverage of the chamber while ensuring that the microscope takes less time to move positions and capture images than the interval period.
+Images were taken every \SI{5}{\minute}, and image acquisition duration varied for each experiment.
+Brightfield and flavin images were captured in all strains and mCherry images were additionally captured for the HTB2::mCherry strain.
+Five z-slices were taken for brightfield images, with a spacing of \SI{0.6}{\micro\metre} between slices.
 Fluorescence imaging was performed with an OptoLED light source (Cain Research), and LED voltage was optimised for maximum signal intensity without LED cut-off prior to experiments.
-For flavin imaging, the excitation frequency was \SI{430}{\nano\metre}, the emission filter was set to \SI{455}{\nano\metre}, and exposure time varied: \SI{0}{\milli\second}, \SI{60}{\milli\second}, \SI{120}{\milli\second}, and \SI{180}{\milli\second}.
-For mCherry imaging, the excitation frequency was \SI{590}{\nano\metre} and the exposure time was \SI{100}{\milli\second}.
-Z-slices were taken for the mCherry images, with the same number of slices and spacing as for the brightfield images.
-Image acquisition duration varied for each experiment.
-For all channels, images were taken every \SI{5}{min}.
+For flavin imaging, the excitation filter was set to 430/24 (\SIrange{418}{442}{\nano\metre}), the emission filter was set to 535/30 (\SIrange{520}{550}{\nano\metre}), and the exposure time was \SI{60}{\milli\second}.
+One z-slice was taken for each flavin image in each position.
+% TODO: Ask Ivan and add numbers here
+For mCherry imaging, the excitation filter was set to 590/XX (\SIrange{0}{0}{\nano\metre}), the emission filter was to set XXX/XX (\SIrange{0}{0}{\nano\metre}) and the exposure time was \SI{100}{\milli\second}.
+Five z-slices were taken for mCherry images, with a spacing of \SI{0.6}{\micro\metre} between slices.
 
 \section{Segmentation, extraction, post-processing}
 \label{sec:methods-segmentation}
 
-% TODO: Most of this is obsolete.  Update for aliby.
+I used \emph{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an end-to-end Python-based software package developed for time-lapse microscopy, to process the microscope images in order to obtain flavin and mCherry time series for further analysis.
 
-The brightfield z-stack images were segmented using custom neural network-based software based in MATLAB.
-The software identified cell boundaries, birth events, and cell lineages.
-
-Because the aperture of the microscope causes optical aberration, aperture-fitting and flat-field corrections were performed for the flavin and mCherry channels independently, using custom MATLAB scripts.
-First, the average brightfield image across all imaging positions at three random time points was generated (figure [FIGURE REMOVED], left).
-Second, a circular aperture mask (figure [FIGURE REMOVED], centre) was fitted for each channel based on the saturated average image.
-Cells outside this aperture were excluded as they exhibited low signal intensity.
-Third, a flat-field correction for cells inside the aperture was generated (figure [FIGURE REMOVED], right) by fitting a Gaussian filter to the average image.
-
-Flavin autofluorescence was quantified by calculating the mean intensity of pixels within the cell boundaries and then subtracting the background fluorescence. % This is `imBackground` - elaborate if needed.
-Whi5p localisation was quantified by calculating the \texttt{nucEstConv} measure for each z-slice and then finding the maximum projection across the five z-slices.
-The \texttt{nucEstConv} measure was based on convolution with a Gaussian filter of a size specific to the nucleus size \parencite{geronHandsOnMachineLearning2017}.
+\emph{aliby} tracks tiles that correspond to a trap across time-lapse images to account for expected spatial drifting in the microscope.
+It then uses \emph{BABY} \parencite{pietschLabelfreeMethodTrack2022} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells.
+\emph{aliby} then overlays the cell outlines onto the fluorescent (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
+The background fluorescence is also computed, based on the pixel intensity outside cell outlines, and is then subtracted from the cell fluorescence.
+Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 
 %%% Local Variables:
 %%% mode: latex
