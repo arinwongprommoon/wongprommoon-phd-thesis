@@ -4,7 +4,7 @@
 \section{Strains and media}
 \label{sec:methods-strains_media}
 
-The \emph{S. cerevisiae} strains used in this thesis are described in table~\ref{tab:methods-strains}.
+The \textit{S. cerevisiae} strains used in this thesis are described in table~\ref{tab:methods-strains}.
 % Potential additions: CEN.PK & Causton strains, if they go into the biological chapter.
 
 \begin{table}
@@ -16,9 +16,9 @@ The \emph{S. cerevisiae} strains used in this thesis are described in table~\ref
     \midrule
     FY4 & FY4 & - & EUROSCARF & \textcite{winstonConstructionSetConvenient1995} \\
     htb2::mCherry & FY4 & HTB2::mCherry & In-house, CRISPR & - \\
-    BY4741 & BY4741 & \emph{MAT}a \emph{his3$\Delta$1 leu2$\Delta$0 met15$\Delta$0 ura3$\Delta$0} & EUROSCARF & \textcite{brachmannDesignerDeletionStrains1998}\\
+    BY4741 & BY4741 & \textit{MAT}a \textit{his3$\Delta$1 leu2$\Delta$0 met15$\Delta$0 ura3$\Delta$0} & EUROSCARF & \textcite{brachmannDesignerDeletionStrains1998}\\
     zwf1$\Delta$ & BY4741 & zwf1$\Delta$::KAN & Edinburgh Genome Foundry & Yeast deletion collection \\
-    BY4742 & BY4742 & \emph{MAT}a \emph{his3$\Delta$1 leu2$\Delta$0 lys2$\Delta$0 ura3$\Delta$0} & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019}\\
+    BY4742 & BY4742 & \textit{MAT}a \textit{his3$\Delta$1 leu2$\Delta$0 lys2$\Delta$0 ura3$\Delta$0} & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019}\\
     tsa1$\Delta$ tsa2$\Delta$ & BY4742 & tsa1$\Delta$::natNT2 tsa2$\Delta$::kanMX4 & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019} \\
     \bottomrule \\
   \end{tabularx}
@@ -90,7 +90,7 @@ Then, a carbon source is added as appropriate to create the growth medium.
     D-(+)-biotin & \ce{C10H16N2O3S} & 0.05 \\
     D-panthothenic acid calcium salt & \ce{Ca(C9H16NO5)2} & 1.00 \\
     Nicotinic acid & \ce{C6H5NO2} & 1.00 \\
-    \emph{myo}-Inositol & \ce{C6H12O6} & 25.00 \\
+    \textit{myo}-Inositol & \ce{C6H12O6} & 25.00 \\
     Thiamine chloride hydrochloride & \ce{C12H15ClN4OS.HCl} & 1.00 \\
     Pyridoxal hydrochloride & \ce{C8H12ClNO3} & 1.00 \\
     4-aminobenzoic acid & \ce{C7H7NO2} & 0.20 \\
@@ -138,7 +138,7 @@ Subsequently, the cells were diluted so that the resulting culture had an OD\tex
     Overview of single-cell microfluidics set-up using the ALCATRAS system.
     Cells are loaded into chambers within devices, where they are trapped and separated (centre).
     The media composition the cells experience are controlled with syringe pumps (left).
-    Brightfield and fluorescent images are taken at regular intervals, and then processed using \emph{aliby} to provide time series of fluorescence intensity changes for each parent cell.
+    Brightfield and fluorescent images are taken at regular intervals, and then processed using \textit{aliby} to provide time series of fluorescence intensity changes for each parent cell.
   }
   \label{fig:methods-microfluidics}
 \end{figure}
@@ -166,11 +166,11 @@ Five z-slices were taken for mCherry images, with a spacing of \SI{0.6}{\micro\m
 \section{Segmentation, extraction, post-processing}
 \label{sec:methods-segmentation}
 
-I used \emph{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an end-to-end Python-based software package developed for time-lapse microscopy, to process the microscope images in order to obtain flavin and mCherry time series for further analysis.
+I used \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an end-to-end Python-based software package developed for time-lapse microscopy, to process the microscope images in order to obtain flavin and mCherry time series for further analysis.
 
-\emph{aliby} tracks tiles that correspond to a trap across time-lapse images to account for expected spatial drifting in the microscope.
-It then uses \emph{BABY} \parencite{pietschLabelfreeMethodTrack2022} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells.
-\emph{aliby} then overlays the cell outlines onto the fluorescent (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
+\textit{aliby} tracks tiles that correspond to a trap across time-lapse images to account for expected spatial drifting in the microscope.
+It then uses \textit{BABY} \parencite{pietschLabelfreeMethodTrack2022} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells.
+\textit{aliby} then overlays the cell outlines onto the fluorescent (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
 The background fluorescence is also computed, based on the pixel intensity outside cell outlines, and is then subtracted from the cell fluorescence.
 Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 

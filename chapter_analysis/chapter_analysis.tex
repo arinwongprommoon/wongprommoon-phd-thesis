@@ -284,9 +284,9 @@ The peak corresponds to a period of 70~80 minutes.
 This peak may explain the good precision \& recall scores.
 
 For my last strategy of featurisation,
-I employed the \emph{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
+I employed the \textit{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
 This toolbox contains 7701 features defined from across the time series analysis literature.
-I focused on the 22-feature \emph{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
+I focused on the 22-feature \textit{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
 \textcite{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
 This feature set excludes features that are dependent on mean or spread.
 
@@ -321,7 +321,7 @@ This feature set excludes features that are dependent on mean or spread.
     \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \textcite{wangStructureBasedStatisticalFeatures2007}   \\
     \bottomrule \\
   \end{tabularx}
-  \caption{\emph{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
+  \caption{\textit{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
   }
   \label{tab:catch22}
 \end{table}
@@ -917,7 +917,7 @@ The general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muc
 This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
 
 Unsupervised graph-based clustering suggested that the division between complete and minimal media was dominant among time series of flavin autofluorescence. %(figure \ref{fig:EffectofMediaClusters}).
-I constructed an incomplete graph to represent the pairwise similarity between time series based on the \emph{catch22} feature vectors.
+I constructed an incomplete graph to represent the pairwise similarity between time series based on the \textit{catch22} feature vectors.
 Then, I identified communities in the resulting network using the general Louvain algorithm.
 When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to complete and minimal media groups (figure \ref{fig:EffectofMediaClusters}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
 % (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
@@ -928,7 +928,7 @@ Such results suggested that unsupervised graph-based clustering may have potenti
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{10m_EffectofMediaClusters}
-  \caption{Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \emph{catch22} vectors close to labels defined by media.}
+  \caption{Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors close to labels defined by media.}
   \label{fig:EffectofMediaClusters}
 \end{figure}
 
@@ -939,7 +939,7 @@ However, this ability to distinguish the data sources may have been because the 
   \centering
   \includegraphics[width=0.6\textwidth]{10m_DistanceMatrixBaumgartner}
   \caption{Graph-based clustering was able to partition minimal media time series, complete media time series, and time series from \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
-    This distance matrix is based on cosine distances between \emph{catch22} feature vectors for pairs of time series.  Distances between 0 and 1 (legend, right) are represented as colours.}
+    This distance matrix is based on cosine distances between \textit{catch22} feature vectors for pairs of time series.  Distances between 0 and 1 (legend, right) are represented as colours.}
   \label{fig:DistanceMatrixBaumgartner}
 \end{figure}
 
@@ -971,7 +971,7 @@ However, this ability to distinguish the data sources may have been because the 
 UMAP \parencite{mcinnesUMAPUniformManifold2020} is a dimension reduction technique that can be used to visualise data, and it preserves the distances between points.
 I used UMAP to see if there were intrinsic structures in my datasets, and whether these structures found by such as unsupervised method corresponded to labels, whether oscillatory vs non-oscillatory or labels that distinguish cells from different strains or nutrient conditions.
 
-I used \emph{catch22} as features
+I used \textit{catch22} as features
 
 % Copied from org note: UMAP to discover structures in flavin datasets
 
@@ -1147,8 +1147,8 @@ In mathematical terms, cross-correlation is defined as:
 
 [INSERT EQUATIONS HERE]
 
-In a biological context, cross-correlation has been used to investigate how fluctuations in transcription levels influence fluctuations in protein expression in \emph{E. coli} [CHECK CITATION AGAIN TO VERIFY IF TRUE] \parencite{dunlopRegulatoryActivityRevealed2008},
-and to investigate the relationship between instantaneous growth rate and the expression of \emph{lac} genes OR of enzymes in central metabolism across a population of \emph{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
+In a biological context, cross-correlation has been used to investigate how fluctuations in transcription levels influence fluctuations in protein expression in \textit{E. coli} [CHECK CITATION AGAIN TO VERIFY IF TRUE] \parencite{dunlopRegulatoryActivityRevealed2008},
+and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
 Importantly, these studies are derived from single-cell microfluidics experiments with time-lapse microscopy, and therefore their treatment of a population of time series is useful for my case.
 
 Therefore, my use of cross-correlation is adapted from theirs so that it suits a population of time series, which is the thing that I have.

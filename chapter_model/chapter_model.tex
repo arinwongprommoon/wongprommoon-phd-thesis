@@ -43,15 +43,15 @@ Then, they used these activities as coefficients for FBA on a modified thermodyn
 Additionally, \textcite{cesurGenomeWideAnalysisYeast} constructed a different FBA model for each YMC phase based on transcriptomic and epigenetic data, using the GIMME algorithm, which excludes reactions that correspond to genes that are not expressed at certain time points.
 Both studies model behaviours at each phase of the YMC, rather than predicting timescale.
 
-An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}, in which they extend a genome-scale model of the cyanobacterium \emph{Synechococcus elongatus} PCC7942 to address the temporal order of intracellular synthesis reactions that optimises the growth rate of the cell, under resource constraints.
+An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}, in which they extend a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to address the temporal order of intracellular synthesis reactions that optimises the growth rate of the cell, under resource constraints.
 However, this model relies on an external oscillation --- namely, the light-dark cycle --- in contrast to the yeast metabolic cycle which is autonomously generated.
 Therefore, this study has limited applicability to my study.
 
-I use a genome-scale model of \emph{Saccharomyces cerevisiae} and perform flux balance analysis (FBA).
+I use a genome-scale model of \textit{Saccharomyces cerevisiae} and perform flux balance analysis (FBA).
 Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
 I use this model because it is the most recent, offering a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
 Here, I use models Yeast8.6.0 and ecYeast8.6.0, the latest version for which both original and enzyme-constrained variants are available.
-In addition, it has `pseudometabolites' defined by \emph{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes, making it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
+In addition, it has `pseudometabolites' defined by \textit{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes, making it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
@@ -71,9 +71,9 @@ ecYeast8 contains four formalisms relevant to my study:
         These pseudometabolites include lipids, proteins, carbohydrates, RNA, DNA, ions, and cofactors.
         This is in contrast to BiGG genome-scale models that have biomass reactions defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\milli\mol~\gram_{DW}^{-1}}.
   \item
-        The pseudometabolites are defined by `\emph{isa}' reactions, which group specific chemical species into classes of metabolites.
+        The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites.
         This accounts for some KEGG definitions of reactions requiring generic compounds and allows flexibility of biomass definition in different growth conditions.
-        These \emph{isa} reactions are defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\milli\mol~\gram_{DW}^{-1}}, and a pseudometabolite as a product.
+        These \textit{isa} reactions are defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\milli\mol~\gram_{DW}^{-1}}, and a pseudometabolite as a product.
         In effect, the abundances are shifted one reaction away from the biomass reaction.
   \item
         SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
@@ -158,7 +158,7 @@ Knowing these fractions are useful in computing the time it takes to synthesise 
 However, the mass fraction of each component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}, and it is computationally expensive to re-run GECKO each time the protein mass fraction varies.
 Therefore, I decided to compute the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
 
-\emph{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\milli\mol~\gram_{DW}^{-1}}.
+\textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\milli\mol~\gram_{DW}^{-1}}.
 Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023};
 the resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
 
