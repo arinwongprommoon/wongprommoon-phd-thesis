@@ -454,14 +454,43 @@ Therefore,
 A smaller A/B ratio (< 1) means that -- under these conditions -- synthesising biomass components in sequence saves more time.
 In this case, the ratio is about 0.7.
 
-% ------
-% NEXT STEPS:
-% - Headline ablation results ('robustness')
-The fact that this still holds true for auxotrophs and deletion strains supports experimental evidence that auxotrophs and deletion strains have YMCs.
+The fact that this still holds true for auxotrophs and deletion strains supports experimental evidence that auxotrophs and deletion strains have YMCs (figure~\ref{fig:model-ablation-strains}).
 
-[INSERT ABLATION BAR CHARTS: BY4741, BY4742, zwf1, tsa2]
-
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{ablation_by4741}
+   \caption{
+     BY4741
+   }
+   \label{fig:model-ablation-by4741}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{ablation_zwf1}
+   \caption{
+     zwf$\Delta$ in the BY4741 background.
+   }
+   \label{fig:model-ablation-zwf1}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{ablation_tsa2}
+   \caption{
+     tsa2$\Delta$ in the BY4742 background.  The ecYeast8 model does not include reactions that correspond to \textit{TSA1}.
+   }
+   \label{fig:model-ablation-tsa2}
+  \end{subfigure}
+  \caption{
+    Ablation barplots of auxotrophs and deletion strains.
+    For BY4741-background strains, supplements are simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
+    The same applied to BY4742-background strains, but lysine uptake replaces methionine uptake.
+  }
+  \label{fig:model-ablation-strains}
+\end{figure}
 % Adding supplements, e.g. amino acids, dNTPs/NTPs, pyruvate, glucose limitation?
+% Or do C/N grid heatmaps demonstrate this.
 
 % - Heatmap results
 % *** Leave this mostly in bullet points for now because the results are WIP/in flux
