@@ -376,7 +376,7 @@ Using the biomass reaction as the objective function, I optimise the model to ob
 
 \begin{equation}
   t = \frac{\ln 2}{\lambda}
-  \label{eq:model-timescale-01}
+  \label{eq:model-doubling-time}
 \end{equation}
 
 where $t$ is the doubling time and $\lambda$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
@@ -387,8 +387,8 @@ Doubling time is computed, taking into account the mass fraction of each biomass
 Specifically, the computation is:
 
 \begin{equation}
-  t_{i} = f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
-  \label{eq:model-timescale-02}
+  t_{i}^{\prime} = f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
+  \label{eq:model-ablated-time}
 \end{equation}
 
 where $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions), $t_{i}$ is the predicted time for synthesis of each biomass component, $f_{i}$ is the mass fraction of each biomass component, and $\lambda_{i}^{\prime}$ is optimal flux of the ablated biomass reaction.
@@ -398,10 +398,10 @@ For comparison, I computed estimates of the time for each biomass component, ass
 
 \begin{equation}
   t_{i} = f_{i} \cdot t
-  \label{eq:model-timescale-03}
+  \label{eq:model-proportional-time}
 \end{equation}
 
-where $t$ is the doubling time found in equation~\ref{eq:model-timescale-01}.
+where $t$ is the doubling time found in equation~\ref{eq:model-doubling-time}.
 
 \begin{figure}
   \centering
@@ -418,18 +418,39 @@ where $t$ is the doubling time found in equation~\ref{eq:model-timescale-01}.
   \includegraphics[width=.9\linewidth]{ablation_example_ratio.png}
   \caption{
     Comparing time scales derived from ablating components of the biomass reaction (blue) and from assuming that synthesis time is proportional to the mass fraction of the biomass component (red).
-    Times for each biomass component (lipid, protein, carbohydrate, DNA, RNA, cofactor, ion) were computed according to equations~\ref{eq:model-timescale-02}--\ref{eq:model-timescale-03}.
-    Blue under `all biomass' is the sum of times derived from ablation (other blue bars), while red under `all biomass' is derived from the flux of the original biomass reaction (equation~\ref{eq:model-timescale-01}).
+    Times for each biomass component (lipid, protein, carbohydrate, DNA, RNA, cofactor, ion) were computed according to equations~\ref{eq:model-ablated-time}--\ref{eq:model-proportional-time}.
+    Blue under `all biomass' is the sum of times derived from ablation (other blue bars), while red under `all biomass' is derived from the flux of the original biomass reaction (equation~\ref{eq:model-doubling-time}).
     As a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
   }
   \label{fig:model-ablate-times}
 \end{figure}
 
 And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
-A represents sum of times from focusing on each biomass component -- thus represents time predicted, assuming biomass components are synthesised in turn.
-B represents time of synthesis of protein component if time is assumed to be proportional to mass fraction.
-This is always protein as it accounts for $\approx$50\% of the mass fraction.
-B thus represents the limiting, slowest process
+A represents sum of times from focusing on each biomass component -- thus representing time predicted, assuming biomass components are synthesised in turn:
+
+\begin{equation}
+  A = \sum_{i} t_{i}^{\prime} = \sum f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
+  \label{eq:model-a}
+\end{equation}
+
+B represents greatest time of synthesis of the biomass component if time is assumed to be proportional to mass fraction.
+This is always protein as it accounts for $\approx$50\% of the mass fraction:
+
+\begin{equation}
+  B = \argmax_{i} t_{i} = t_{\mathrm{protein}} = f_{\mathrm{protein}} \cdot \frac{\ln 2}{\lambda_{0}}; \because \argmax_{i} f_{i} = f_{\mathrm{protein}}
+  \label{eq:model-b}
+\end{equation}
+
+B thus represents the limiting, slowest process.
+
+Therefore,
+
+\begin{equation}
+  r = \frac{A}{B} = (\sum_i \frac{f_i}{\lambda_i^\prime}) \cdot \frac{\lambda_0}{f_{\mathrm{protein}}} = (\frac{f_{\mathrm{lipid}}}{\lambda_{\mathrm{lipid}}^\prime} + \frac{f_{\mathrm{protein}}}{\lambda_{\mathrm{protein}}^\prime} + \ldots + \frac{f_{\mathrm{ion}}}{\lambda_{\mathrm{ion}}^\prime}) \cdot \frac{\lambda_0}{f_{\mathrm{protein}}}
+  \label{eq:model-ratio}
+\end{equation}
+
+
 A smaller A/B ratio (< 1) means that -- under these conditions -- synthesising biomass components in sequence saves more time.
 In this case, the ratio is about 0.7.
 
