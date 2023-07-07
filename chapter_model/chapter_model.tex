@@ -50,7 +50,7 @@ Therefore, this study has limited applicability to my study.
 I use a genome-scale model of \textit{Saccharomyces cerevisiae} and perform flux balance analysis (FBA).
 Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
 I use this model because it is the most recent, offering a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
-Here, I use models Yeast8.6.0 and ecYeast8.6.0, the latest version for which both original and enzyme-constrained variants are available.
+Here, I use models Yeast8.6.0 and ec\-Yeast\-8.6.0, the latest version for which both original and enzyme-constrained variants are available.
 In addition, it has `pseudometabolites' defined by \textit{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes, making it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
@@ -83,7 +83,7 @@ ecYeast8 contains four formalisms relevant to my study:
   \item
         GECKO was applied to Yeast8 to produce ecYeast8.  GECKO modifies the stoichiometric matrix of an input genome-scale metabolic model to account for enzyme abundances and kinetics.
         Specifically, it adds to enzyme-catalysed reactions enzyme species with a stoichiometric coefficient derived from its $k_{cat}$ value.
-        The formalism also adds reactions to model drawing enzymes from a pool, with bounds derived from enzyme abundances.  GECKO models the case where there is an upper limit of the amount of amino acids available to be allocated to enzyme production.
+        The formalism also adds reactions to model drawing enzymes from a pool.  GECKO models the case where there is an upper limit of the amount of amino acids available to be allocated to enzyme production.
 \end{enumerate}
 
 Here, I detail how I apply these formalisms for my study.
@@ -115,14 +115,14 @@ For example, if the model defines a reaction $R_{j}$ catalysed by $E_{i}$:
   \ce{ A + B ->[E_{i}] C + D }
 \end{equation}
 
-GECKO adds a term to the equation, modifying the stoichiometric matrex, to make it:
+GECKO adds a term to the equation, modifying the stoichiometric matrix, to make it:
 \begin{equation}
   \ce{ n_{ij}E_{i} + A + B -> C + D }
 \end{equation}
 with $n_{ij} = \frac{1}{k_{cat}^{ij}}$.
 This transformation, adding the enzyme as a pseudo-reactant, is based on the interpretation that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
 
-GECKO then also creates an overall enzyme pseudo-reaction $EU_{i}$: $\ce{ -> E_{i}}$, in order to preserve the mass balance of enzymes.  The flux $e_{i}$ of this pseudo-reaction is thus constrained: $0 \le e_{i} \le [E_{i}]$.
+% GECKO then also creates an overall enzyme pseudo-reaction $EU_{i}$: $\ce{ -> E_{i}}$, in order to preserve the mass balance of enzymes.  The flux $e_{i}$ of this pseudo-reaction is thus constrained: $0 \le e_{i} \le [E_{i}]$.
 
 Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes.  Namely:
 \begin{itemize}
@@ -135,20 +135,16 @@ Slightly different formalisms are applied to reversible reactions, isozymes, pro
 
 GECKO repeats this logic for all enzyme-catalysed reactions in the genome-scale model to create an enzyme-constrained model.
 GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of protein and associated pathways.
-To constrain enzyme levels in the model, GECKO iterates through each enzyme and defines upper bounds that correspond to literature values of enzyme properties.
-For the proteins that do not have literature values, the constraint is based on the protein mass fraction and a saturation factor.
-Then, GECKO scales the amino acid composition so as to reflect the total protein content.
+
+To constrain enzyme levels in the model, GECKO defines a pseudo-reaction $ER_{pool}$: $\varnothing \ce{ -> E_{pool} }$, with a flux $e_{pool} \le (P_{total} - P_{measured}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_DW^{-1}}, where $P$ represents protein fraction, $f$ the mass fraction of proteins, and $\sigma$ a parameter that represents the average saturation of enzymes.
 Subsequently, it changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
 experimental data justifies this assumption.
-
-% Alternatively, rather than constraining each enzyme, GECKO can impose a global constraint -- i.e. behave as if none of the proteins have literature values.
-% GECKO accomplishes this by introducing a pseudo-reaction $ER_{pool}$: $\ce{ -> E_{pool} }$, with a flux $e_{pool} \le (P_{total} - P_{measured}) \cdot f \cdot \sigma$, where $P$ represents protein fraction, $f$ the mass fraction of proteins, and $\sigma$ a parameter that represents the average saturation of enzymes.
-% It then replaces all other enzyme usage pseudo-reactions and replaces them with a global pseudo-reaction $ER_{i}$: $\ce{ MW_{i} E_{pool} -> E_{i} }$.
-% This approach is similar to FBA with molecular crowding.
-
 ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{total} = 0.5$, and $\sigma = 0.5$.
 Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates, but $f = 0.5$ is close to the model's mass fraction (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
 
+Then, GECKO defines enzyme usage pseudo-reactions of the form $ER_{i}$: $\ce{ MW_{i} E_{pool} -> E_{i} }$ for each enzyme, with $MW_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
+The flux of enzyme usage pseudo-reactions are defined in units of \SI{}{\milli\mole~\gram_{DW}^{-1}}.
+Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (moles) of each enzyme and therefore its catalytic activity.
 
 \subsection{Computing molecular weights of pseudoreactions}
 \label{subsec:model-yeast8-molweights}
@@ -170,7 +166,7 @@ Namely, I assumed that in reactions that produce the bulk metabolites, there is 
 
 \begin{equation}
 \label{eq:conservation-of-mass}
-    \sum_{s}(\text{molar mass}_{s})(\text{stoichiometric coefficient}_{s}) - \sum_{p}(\text{molar mass}_{p})(\text{stoichiometric coefficient}_{p})
+    \sum_{s}(\text{molar mass}_{s})(\text{stoichiometric coefficient}_{s}) \\ - \sum_{p}(\text{molar mass}_{p})(\text{stoichiometric coefficient}_{p})
 \end{equation}
 
 where $s = 1, ... (\text{number of substrates})$ represents substrates and $p = 1, ... (\text{number of products})$ represents products of the reaction in question.
@@ -232,7 +228,7 @@ To compute the molecular weight of the protein metabolite, I inspected reaction 
 In this reaction, the aminoacyl-tRNA reactants are represented in the form of the atoms that make up the aminoacyl residues plus \texttt{R} to represent the tRNA, and the tRNA products are represented as \texttt{RH}.
 For example, \texttt{Ala-tRNA(Ala)}, alanyl-tRNA, is represented as \texttt{C3H7NOR}.
 The protein pseudoreaction shows how different proportions of each aminoacyl-tRNA combine to form the cell's proteins, so it is safe to discard the \texttt{R} symbol that corresponds to the tRNA from the reaction.
-On doing so, the mass balance represented by \ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the protein metabolite.
+On doing so, the mass balance represented by equation~\ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the protein metabolite.
 
 Finally, the lipid metabolite is the least straightforward because some of the reactants do not have molecular weights specified.
 The lipid pseudoreaction is represented in reaction \texttt{r\_2108}:
@@ -267,7 +263,7 @@ Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbo
 \begin{table}[ht]
   \centering
     \begin{tabular}{llS}
-      ID & Reaction & {\makecell{Computed molecular\\ weight (g/mol)}} \\
+      ID & Reaction & {\makecell{Computed molecular\\ weight (\SI{}{\gram~\mole^{-1}})}} \\
       \hline
     \texttt{r\_3975} & \makecell{\texttt{palmitate} \\ \texttt{--> 0.255421 fatty acid backbone} \\ \texttt{0.256429 C16:0 chain}} & 742.54 \\
     \texttt{r\_3976} & \makecell{\texttt{palmitoleate} \\ \texttt{--> 0.253405 fatty acid backbone} \\ \texttt{0.254413 C16:1 chain}} & 744.56 \\
@@ -280,7 +276,7 @@ Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbo
 
 All species in these reactions except for \texttt{fatty acid backbone} have molecular weights specified, and thus I applied mass balance to find the molecular weight of \texttt{fatty acid backbone} from each reaction.
 However, the molecular weights computed from each equation are different, as shown in the table above.
-Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the average of the four weights (729.53 g/mol) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields 21.31 g/mol).
+Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the mean of the four weights (\SI{729.53}{\gram~\mole^{-1}}) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields \SI{21.31}{\gram~\mole^{-1}}).
 
 With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, I can now compute the molecular weight of \texttt{lipid} using mass balance.
 
@@ -350,13 +346,6 @@ I did this with two carbon sources to be investigated later, glucose and pyruvat
 
 \begin{figure}
   \centering
-
-  \caption{caption}
-  \label{fig:fig}
-\end{figure}
-
-\begin{figure}
-  \centering
   \includegraphics[width=.9\linewidth]{ecYeast8-glucose-saturation.png}
   \caption{Glucose saturation}
   \label{fig:model-saturation-glucose}
@@ -407,7 +396,7 @@ Specifically, the computation is:
 where $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions), $t_{i}$ is the predicted time for synthesis of each biomass component, $f_{i}$ is the mass fraction of each biomass component, and $\lambda_{i}^{\prime}$ is optimal flux of the ablated biomass reaction.
 $f_{i}$ for each biomass component is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass (table~\ref{tab:ecyeast8-mol-weights}).
 
-For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction [BUT, WHY?]:
+For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction:
 
 \begin{equation}
   t_{i} = f_{i} \cdot t
