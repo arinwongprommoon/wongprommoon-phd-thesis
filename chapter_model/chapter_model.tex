@@ -342,8 +342,6 @@ This produces a saturation curve that agrees with the theoretical basis of satur
 Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
 I did this with two carbon sources to be investigated later, glucose and pyruvate, and with ammonium as a nitrogen source.
 
-[TODO: REMOVE NON-WILD TYPE CURVES]
-
 \begin{figure}
   \centering
   \includegraphics[width=.9\linewidth]{ecYeast8-glucose-saturation.png}
@@ -405,7 +403,15 @@ For comparison, I computed estimates of the time for each biomass component, ass
 
 where $t$ is the doubling time found in equation~\ref{eq:model-timescale-01}.
 
-[INSERT BAR CHART: SHOWING FLUXES OF ORIGINAL BIOMASS REACTION AND THE SEVEN ABLATED ONES]
+\begin{figure}
+  \centering
+  \includegraphics[width=.9\linewidth]{ablation_example_fluxes.png}
+  \caption{
+    Growth rates, from fluxes of the biomass reaction, from the original wild type model ($\lambda_{0}$; leftmost bar) and from the ablated versions of the model ($\lambda_{i}^{\prime}$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
+  }
+  \label{fig:model-ablate-fluxes}
+\end{figure}
+
 
 \begin{figure}
   \centering
@@ -416,7 +422,7 @@ where $t$ is the doubling time found in equation~\ref{eq:model-timescale-01}.
     Blue under `all biomass' is the sum of times derived from ablation (other blue bars), while red under `all biomass' is derived from the flux of the original biomass reaction (equation~\ref{eq:model-timescale-01}).
     As a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
   }
-  \label{fig:model-ablate}
+  \label{fig:model-ablate-times}
 \end{figure}
 
 And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
