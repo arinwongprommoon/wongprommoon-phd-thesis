@@ -20,12 +20,12 @@ It is perhaps more feasible to construct coarse-grained models to answer specifi
 Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address the logic of the metabolic cycle.
 Specifically, why is it advantageous for the cell, and is it linked to resource allocation?
 
-\section{Flux balance analysis}
+\section{Introduction to flux balance analysis}
 \label{sec:model-fba}
 
 TODO: Short introduction to genome-scale metabolic models -- what they are, what they aim to do, flux balance analysis, and limitations.
 
-\section{Modelling temporal partitioning of biosynthesis}
+\section{Reviewing modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
 
 In this chapter, my research question with modelling the temporal partitioning of biosynthesis is:
@@ -59,10 +59,10 @@ An enzyme-constrained model fits the assumption that there is a fixed number of 
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} --- the latter of which imposes a ribosome capacity constraint and additionally imposes compartment constraints --- constrain the total sum of fluxes based on a defined total amount of enzyme.
 ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017}, which applies the enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
 
-In the next section, I will discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in other genome-scale metabolic models and because I take advantage of some of these formalisms.
-
-\section{Yeast8, ecYeast8, and their formalisms}
+\section{The Yeast8 and ecYeast8 models and their formalisms}
 \label{sec:model-yeast8}
+
+In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in other genome-scale metabolic models and because I take advantage of some of these formalisms.
 
 ecYeast8 contains four formalisms relevant to my study:
 \begin{enumerate}
@@ -87,6 +87,8 @@ ecYeast8 contains four formalisms relevant to my study:
 \end{enumerate}
 
 Here, I detail how I apply these formalisms for my study.
+% TODO: Use proper refs rather than hard-coding numbers.
+These all affect my study, but I detail in particular GECKO (item 4) and computing molecular weights of pseudometabolites (based on items 1 and 2).
 
 % FIXME: Delete this subsection?
 % It's mostly a duplicate of the appendix of the GECKO paper,
@@ -146,7 +148,7 @@ Then, GECKO defines enzyme usage pseudo-reactions of the form $ER_{i}$: $\ce{ MW
 The flux of enzyme usage pseudo-reactions are defined in units of \SI{}{\milli\mole~\gram_{DW}^{-1}}.
 Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (moles) of each enzyme and therefore its catalytic activity.
 
-\subsection{Computing molecular weights of pseudoreactions}
+\subsection{Computing molecular weights of pseudometabolites}
 \label{subsec:model-yeast8-molweights}
 
 In the yeast cell, biomass components (lipids, carbohydrates, proteins) are present in different fractions.
@@ -305,8 +307,8 @@ In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichio
 Plus, it has been reported that the sum of stoichiometric coefficients are not always verified \parencite{chanStandardizingBiomassReactions2017}.
 
 % Could move to 'results' part of this chapter?
-\subsection{Ablating pseudometabolites from the biomass reaction}
-\label{subsec:model-yeast8-pseudometabolites}
+\section{Ablating pseudometabolites from the biomass reaction}
+\label{sec:model-yeast8-pseudometabolites}
 
 To simulate producing each class of biomass component in turn,
 I take advantage of pseudometabolites in ecYeast8 to remove each of them in turn from the biomass reaction ---
@@ -331,39 +333,16 @@ To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of
 
 And I repeated this for the other pseudometabolites.
 
-\section{Exchange reaction saturation}
-\label{sec:model-saturation}
-
-In a later investigation, I study the effect of nutrient exchange reactions on growth rates.
-Therefore, I need to know the saturation of the exchange reactions --- i.e. the uptake goes increases, but at some point the growth rate reaches saturation.
-This follows \textcite{elsemmanWholecellModelingYeast2022}, in which they address the limitations of FBA in account for concentrations of substrates in the media by varying glucose uptake in the model and observe how the growth rate changes.
-This produces a saturation curve that agrees with the theoretical basis of saturation of glucose transporters [TODO: FACT-CHECKING THIS SENTENCE, AND RE-WRITE SO IT IS MORE SCIENTIFIC].
-
-Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
-I did this with two carbon sources to be investigated later, glucose and pyruvate, and with ammonium as a nitrogen source.
-
 \begin{figure}
   \centering
-  \includegraphics[width=.9\linewidth]{ecYeast8-glucose-saturation.png}
-  \caption{Glucose saturation}
-  \label{fig:model-saturation-glucose}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=.9\linewidth]{ecYeast8-pyruvate-saturation.png}
-  \caption{Pyruvate saturation}
-  \label{fig:model-saturation-pyruvate}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=.9\linewidth]{ecYeast8-ammonium-saturation.png}
+  \includegraphics[width=.9\linewidth]{ablation_example_fluxes.png}
   \caption{
-    Ammonium saturation.
-    Glucose uptake set to 16.89, optimal found by non-modified model.}
-  \label{fig:model-saturation-ammonium}
+    Growth rates, from fluxes of the biomass reaction, from the original wild type model ($\lambda_{0}$; leftmost bar) and from the ablated versions of the model ($\lambda_{i}^{\prime}$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
+  }
+  \label{fig:model-ablate-fluxes}
 \end{figure}
+
+[INSERT ENZYME USAGE FLUXES HERE]
 
 % Working title.
 % TODO: come up with a better one.
@@ -381,7 +360,7 @@ Using the biomass reaction as the objective function, I optimise the model to ob
 
 where $t$ is the doubling time and $\lambda$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
 
-I ablate components in biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{subsec:model-yeast8-pseudometabolites} in turn.
+I ablate components in biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{sec:model-yeast8-pseudometabolites} in turn.
 In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
 Doubling time is computed, taking into account the mass fraction of each biomass component -- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
 Specifically, the computation is:
@@ -402,16 +381,6 @@ For comparison, I computed estimates of the time for each biomass component, ass
 \end{equation}
 
 where $t$ is the doubling time found in equation~\ref{eq:model-doubling-time}.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=.9\linewidth]{ablation_example_fluxes.png}
-  \caption{
-    Growth rates, from fluxes of the biomass reaction, from the original wild type model ($\lambda_{0}$; leftmost bar) and from the ablated versions of the model ($\lambda_{i}^{\prime}$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
-  }
-  \label{fig:model-ablate-fluxes}
-\end{figure}
-
 
 \begin{figure}
   \centering
@@ -449,7 +418,6 @@ Therefore,
   r = \frac{A}{B} = (\sum_i \frac{f_i}{\lambda_i^\prime}) \cdot \frac{\lambda_0}{f_{\mathrm{protein}}} = (\frac{f_{\mathrm{lipid}}}{\lambda_{\mathrm{lipid}}^\prime} + \frac{f_{\mathrm{protein}}}{\lambda_{\mathrm{protein}}^\prime} + \ldots + \frac{f_{\mathrm{ion}}}{\lambda_{\mathrm{ion}}^\prime}) \cdot \frac{\lambda_0}{f_{\mathrm{protein}}}
   \label{eq:model-ratio}
 \end{equation}
-
 
 A smaller A/B ratio (< 1) means that -- under these conditions -- synthesising biomass components in sequence saves more time.
 In this case, the ratio is about 0.7.
@@ -492,6 +460,49 @@ The fact that this still holds true for auxotrophs and deletion strains supports
 % Adding supplements, e.g. amino acids, dNTPs/NTPs, pyruvate, glucose limitation?
 % Or do C/N grid heatmaps demonstrate this.
 
+\section{Effect of restricting the enzyme pool}
+\label{sec:model-pool}
+
+\section{Effect of carbon and nitrogen sources}
+\label{sec:model-exchange}
+
+\subsection{Exchange reaction saturation}
+\label{subsec:model-saturation}
+
+I study the effect of nutrient exchange reactions on growth rates.
+Therefore, I need to know the saturation of the exchange reactions --- i.e. the uptake goes increases, but at some point the growth rate reaches saturation.
+This follows \textcite{elsemmanWholecellModelingYeast2022}, in which they address the limitations of FBA in account for concentrations of substrates in the media by varying glucose uptake in the model and observe how the growth rate changes.
+This produces a saturation curve that agrees with the theoretical basis of saturation of glucose transporters [TODO: FACT-CHECKING THIS SENTENCE, AND RE-WRITE SO IT IS MORE SCIENTIFIC].
+
+Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
+I did this with two carbon sources to be investigated later, glucose and pyruvate, and with ammonium as a nitrogen source.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.9\linewidth]{ecYeast8-glucose-saturation.png}
+  \caption{Glucose saturation}
+  \label{fig:model-saturation-glucose}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.9\linewidth]{ecYeast8-pyruvate-saturation.png}
+  \caption{Pyruvate saturation}
+  \label{fig:model-saturation-pyruvate}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=.9\linewidth]{ecYeast8-ammonium-saturation.png}
+  \caption{
+    Ammonium saturation.
+    Glucose uptake set to 16.89, optimal found by non-modified model.}
+  \label{fig:model-saturation-ammonium}
+\end{figure}
+
+
+\subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
+\label{subsec:model-grid}
 % - Heatmap results
 % *** Leave this mostly in bullet points for now because the results are WIP/in flux
 I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
@@ -519,6 +530,8 @@ If both are low, there is a combinatorial effect.
 
 Taken together, this suggests that temporal partitioning is a strategy advantageous under growth-limiting conditions, and would explain why YMCs occur in these conditions, including during glucose starvation.
 
+\section{Conclusion}
+\label{subsec:model-conclusion}
 
 % TODO: Fix conclusion
 Therefore, I conclude that given a finite amount of enzymes, it is more efficient to partition synthesis of macromolecules temporally, and the time scale is at the same order of magnitude as the yeast metabolic cycle.
@@ -532,16 +545,3 @@ Furthermore, the timescale gleaned from this investigation may explain the discr
 % give some idea of explanation here
 From a biochemical perspective, [DISCUSS IMPLICATIONS FROM LOOKING AT FLUXES]
 
-% % AM I STILL DOING THIS??
-% \section{Modelling chemostat-based studies}
-% \label{sec:model-chemostat}
-% % - Metabolic responses to environment
-% % - Cell communication
-% % - Relating them to the single-cell yeast metabolic cycle
-
-% Cite \textcite{jonesCyberneticModelGrowth1999}.
-
-% \section{Coarse-grained, phenomenological model}
-% \label{sec:model-coarse}
-
-% % leads nicely to conclusion
