@@ -556,25 +556,32 @@ I did this with two carbon sources to be investigated later, glucose and pyruvat
 
 \begin{figure}
   \centering
-  \includegraphics[width=.9\linewidth]{ecYeast8-glucose-saturation.png}
-  \caption{Glucose saturation}
-  \label{fig:model-saturation-glucose}
-\end{figure}
-
-\begin{figure}
+  \begin{subfigure}[htpb]{0.4\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{ecYeast8-pyruvate-saturation.png}
-  \caption{Pyruvate saturation}
-  \label{fig:model-saturation-pyruvate}
-\end{figure}
+    \includegraphics[width=\linewidth]{ecYeast8-glucose-saturation.png}
+    \caption{Glucose saturation}
+    \label{fig:model-saturation-glucose}
+  \end{subfigure}
 
-\begin{figure}
+  \begin{subfigure}[htpb]{0.4\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{ecYeast8-ammonium-saturation.png}
+    \includegraphics[width=\linewidth]{ecYeast8-pyruvate-saturation.png}
+    \caption{Pyruvate saturation}
+    \label{fig:model-saturation-pyruvate}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.4\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ecYeast8-ammonium-saturation.png}
+    \caption{
+      Ammonium saturation.
+      Glucose uptake set to 16.89, optimal found by non-modified model.}
+    \label{fig:model-saturation-ammonium}
+  \end{subfigure}
   \caption{
-    Ammonium saturation.
-    Glucose uptake set to 16.89, optimal found by non-modified model.}
-  \label{fig:model-saturation-ammonium}
+    Insert caption here.
+  }
+  \label{fig:model-saturation}
 \end{figure}
 
 
