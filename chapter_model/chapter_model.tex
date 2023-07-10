@@ -105,11 +105,11 @@ GECKO imposes an additional constraint on the metabolic fluxes based on the conc
 As a simple example, for a reaction $R_{j}$ catalysed by enzyme $E_{i}$ (and $E_{i}$ only), the formalism imposes:
 
 \begin{equation}
-  v_{j} \le k_{cat}^{ij} \cdot [E_{i}]
+  v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]
   \label{eq:model-gecko-kcat}
 \end{equation}
 
-In other words, the flux through the reaction must not exceed $v_{max}$.
+In other words, the flux through the reaction must not exceed $v_{\mathrm{max}}$.
 Slightly different relationships are imposed for other types of enzymes, i.e. isozymes, promiscuous enzymes, and enzyme complexes.
 
 To apply this constraint, GECKO modifies reactions in the genome-scaled model it is applied to.
@@ -124,7 +124,7 @@ GECKO adds a term to the equation, modifying the stoichiometric matrix, to make 
   \ce{ n_{ij}E_{i} + A + B -> C + D }
   \label{eq:model-gecko-catalysed-formalism}
 \end{equation}
-with $n_{ij} = \frac{1}{k_{cat}^{ij}}$.
+with $n_{ij} = \frac{1}{k_{\mathrm{cat}}^{ij}}$.
 This transformation, adding the enzyme as a pseudo-reactant, is based on the interpretation that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
 
 % GECKO then also creates an overall enzyme pseudo-reaction $EU_{i}$: $\ce{ -> E_{i}}$, in order to preserve the mass balance of enzymes.  The flux $e_{i}$ of this pseudo-reaction is thus constrained: $0 \le e_{i} \le [E_{i}]$.
@@ -141,13 +141,34 @@ Slightly different formalisms are applied to reversible reactions, isozymes, pro
 GECKO repeats this logic for all enzyme-catalysed reactions in the genome-scale model to create an enzyme-constrained model.
 GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of protein and associated pathways.
 
-To constrain enzyme levels in the model, GECKO defines a pseudo-reaction $ER_{pool}$: $\varnothing \ce{ -> E_{pool} }$, with a flux $e_{pool} \le (P_{total} - P_{measured}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_DW^{-1}}, where $P$ represents protein fraction, $f$ the mass fraction of proteins, and $\sigma$ a parameter that represents the average saturation of enzymes.
-Subsequently, it changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
-experimental data justifies this assumption.
-ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{total} = 0.5$, and $\sigma = 0.5$.
-Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates, but $f = 0.5$ is close to the model's mass fraction (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
+To constrain enzyme levels in the model, GECKO defines a pseudo-reaction
 
-Then, GECKO defines enzyme usage pseudo-reactions of the form $ER_{i}$: $\ce{ MW_{i} E_{pool} -> E_{i} }$ for each enzyme, with $MW_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
+\begin{equation}
+  ER_{\mathrm{pool}}: \varnothing \ce{ -> E_{pool} }
+  \label{eq:model-gecko-enzyme-pool}
+\end{equation}
+
+with a flux $e_{\mathrm{pool}} \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_DW^{-1}}, where
+
+\begin{itemize}
+  \item $P$ represents protein fraction with respect to the dry weight of the cell,
+  \item $f$ represents the fraction of proteins that are enzymes, and
+  \item $\sigma$ is a parameter that represents the average saturation of enzymes.
+\end{itemize}
+
+ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
+Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates, but $f = 0.5$ is close to the model's mass fraction (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
+Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
+experimental data justifies this assumption.
+
+Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudo-reactions of the form
+
+\begin{equation}
+  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
+  \label{eq:model-gecko-enzyme-usage}
+\end{equation}
+
+with $MW_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
 The flux of enzyme usage pseudo-reactions are defined in units of \SI{}{\milli\mole~\gram_{DW}^{-1}}.
 Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (moles) of each enzyme and therefore its catalytic activity.
 
