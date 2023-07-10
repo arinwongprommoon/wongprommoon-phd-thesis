@@ -383,6 +383,8 @@ Investigate proteome allocation as sanity check.
   \label{fig:model-ablate-enz-use}
 \end{figure}
 
+TODO: Add bullet points to highlight features in this heatmap.
+
 % Working title.
 % TODO: come up with a better one.
 \section{Estimating timescale of biosynthesis}
@@ -501,6 +503,42 @@ The fact that this still holds true for auxotrophs and deletion strains supports
 
 \section{Effect of restricting the enzyme pool}
 \label{sec:model-pool}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
+   \caption{
+     Effect on ratio ($r$).
+   }
+   \label{fig:model-pool-ratio}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{epool_ec_gr}
+   \caption{
+     Effect on wild type growth rate ($\lambda_{0}$).
+   }
+   \label{fig:model-pool-growthrate}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{epool_ec_components}
+   \caption{
+     Effect on ablated growth rates ($\lambda_{i}^{\prime}$).
+   }
+   \label{fig:model-pool-ablated}
+  \end{subfigure}
+  \caption{
+    Constraining the proteome pool available for synthesis enzymes (decreasing $e_{\mathrm{pool}}$) leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $r$ ratio (\ref{fig:model-pool-ratio}).
+    Concurrently, the wild type growth rate ($\lambda_{0}$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\lambda_{i}^{\prime}$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}); these values determine the ratio according to equation~\ref{eq:model-ratio}.
+  }
+  \label{fig:model-pool}
+\end{figure}
+
+TODO: Add some text description, add differential calculus to show that the plots make sense mathematically.
+
 
 \section{Effect of carbon and nitrogen sources}
 \label{sec:model-exchange}
