@@ -21,13 +21,52 @@ However, for examples such as the yeast metabolic cycle, it is not feasible to r
 As a result, methods like Fourier analysis only provide poor resolution for characteristics such as the period of oscillations.
 % ----- end from synthetic oscillations report
 
-To discuss the process of analysing oscillatory time series in more detail, I will be using my data as an example and divide this chapter according to steps in the process.
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{example_dataframe}
+   \caption{
+     Example dataframe
+   }
+   \label{fig:analysis-example-dataframe}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{example_timeseries}
+   \caption{
+     Example time series
+   }
+   \label{fig:analysis-example-timeseries}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{example_images}
+   \caption{
+     Example images
+   }
+   \label{fig:analysis-example-images}
+  \end{subfigure}
+  \caption{
+    Data overview.
+    The segmentation \& data analysis software \textit{aliby} (see section~\ref{sec:methods-segmentation}) produces a dataframe for each fluorescence channel --- \ref{fig:analysis-example-dataframe} shows the flavin signals for one particular experiment.
+    Each row represents a cell and each column represents a time point.
+    To illustrate the flavin signals, some sample time series are plotted from the dataframe in \ref{fig:analysis-example-timeseries} --- here, the horizontal axis shows time and the vertical axis shows the mean intensity of the signal in the cell, represented as numbers in the dataframe.
+    Each data point derives from images, examples in \ref{fig:analysis-example-images}.
+    As discussed in section~\ref{sec:methods-segmentation},
+    image segmentation uses the brightfield images to define cell outlines, then \textit{aliby} overlays the cell outlines onto the fluorescent images to extract fluorescence intensity.
+    Specifically, this intensity is the mean intensity of pixels within the cell outline, subtracted by the background intensity, and is thus the numerical values represented in each data element in the dataframe.
+  }
+  \label{fig:analysis-data-overview}
+\end{figure}
+
+To discuss the process of analysing oscillatory time series in more detail, I will be using my data as an example and divide this chapter according to steps in the process (see figure~\ref{fig:analysis-data-overview}).
 My data consists of 100--1000 time series of recorded flavin intensity changes for each cell, indicating the yeast metabolic cycle.
 Some experiments include HTB2::mCherry strain cells, and I obtain both flavin intensity changes and mCherry intensity changes from each cell;
 the mCherry indicating the cell division cycle.
 In these time series, there is a new time point every 5 minutes, for a total of 100--300 time points.
 These data are stored as dataframes for each condition (strain and media conditions), with the time series as rows and time points as columns --
-in the case of HTB2::mCherry cells, the flavin and mCherry time series are in separate dataframes.
+in the case of HTB2::mCherry cells, the flavin and mCherry time series are in separate data tables.
 
 This chapter is divided into six sections, five of which correspond to a process and questions each process address:
 \begin{enumerate}
@@ -49,11 +88,18 @@ These criteria may be based on existing standards of practice or, for systems bi
 Often, these criteria can be arbitrary because there is an absence of existing standards of practice for the specific situation -- in this case, any decision is going to be a trade-off and needs justification.
 
 Three problems I occur in my data are: choosing data, time series filtering, and dealing with missing time points.
-They can best be illustrated in a heatmap of raw data from an experiment [DESCRIBE THE EXAMPLE EXPERIMENT] here:
+They can best be illustrated in a heatmap of raw data from an experiment [DESCRIBE THE EXAMPLE EXPERIMENT] here (figure~\ref{fig:analysis-example-heatmap}):
 
-[FIGURE: A HEATMAP BASED ON RAW DATA.  IT SHOULD CONTAIN SOME TRACES THAT DON'T FILL 80\% OF THE TIME COURSE -- SOME EXAMPLE ROWS SHOULD BE LABELLED  IT SHOULD CLEARLY SHOW A LONG-TERM TREND.  IT MAY HAVE MISSING TIME POINTS BECAUSE OF THE LIMITATIONS OF MERGER.  THE CAPTION MUST DESCRIBE THE COMPONENTS OF THE HEATMAP SO A READER CAN INTERPRET IT -- E.G. AXES, COLOUR SCHEME]
-
-[THIS FIGURE MAY HAVE SOME AUXILLARY FIGURES TO HELP EXPLAIN.  I CAN PICK ONE TIME SERIES OUT OF THE HEATMAP, REPRESENT IT AS A LINE PLOT, HIGHLIGHT THE FIRST COUPLE OF TIME POINTS, AND HAVE BRIGHTFIELD AND FLAVIN IMAGES THAT CORRESPOND TO THESE TIME POINTS.  USE ImageViewer TO PRODUCE THIS FIGURE.  I SHOULD HAVE EXPLAINED ENOUGH IN THE METHODS TO HAVE THIS MAKE SENSE.]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{example_dataframe_heatmap}
+  \caption{
+    Heatmap of example dataframe shown in figure~\ref{fig:analysis-example-dataframe}.
+    Each row represents a cell, each column represents a time point, and the colour of the pixel (colour bar, right) represents the fluorescence intensity.
+    Some cells are not present for the whole time course of the experiment, and errors in the segmentation pipeline produce missing time points seen as white pixels in the heatmap.
+  }
+  \label{fig:analysis-example-heatmap}
+\end{figure}
 
 The first step is choosing data.
 Some time series have few time points.
