@@ -595,7 +595,7 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
 % TODO: fill in captions properly before copying and modifying for pyruvate
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[t]{0.2\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_ratio}
     \caption{
@@ -604,7 +604,7 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
     \label{fig:model-grid-glc-ratio}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[t]{0.2\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_growthrate}
     \caption{
@@ -613,36 +613,43 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
     \label{fig:model-grid-glc-growthrate}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[t]{0.2\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_gradient_compare}
     \caption{
-      The gradients of growth rate with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
-      This heatmap shows the matrix of the magnitude of gradients of growth rate with respect to glucose exchange subtracted by the corresponding matrix with respect to ammonium exchange.
-      Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
-      Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
+      Differences in magnitude of gradients across axes ($|\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{glucose}}}| - |\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{ammonium}}}|$).
+      %Positive values (indigo) indicate glucose-limiting conditions, while negative values (beige) indicate ammonium-limiting conditions.
     }
     \label{fig:model-grid-glc-gradient-compare}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[t]{0.2\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
     \caption{
-      Ratio of carbohydrate synthesis time to protein synthesis time ($t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$, quantities defined in equation~\ref{eq:model-ablated-time}).
-      Contour shows region in which the ratio $r$ is greater than 1.
+      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$;
+      contour shows region in which the ratio $r$ is greater than 1.
     }
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
 
   \caption{
-    Effect of glucose and ammonium exchange rates in the ecYeast8 model on various quantities.
+    Effect of glucose ($R_{\mathrm{glucose}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) in the ecYeast8 model on various quantities.
     Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
     Grid lines (black) indicate saturation values.
   }
   \label{fig:model-grid-glc}
 \end{figure}
 
+% originally from caption, moved here to save space
+% TODO: format this a bit
+The gradients of growth rate at each pixel in~\ref{fig:model-grid-glc-growthrate} with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
+This heatmap shows the matrix of the magnitude of gradients of growth rate with respect to glucose exchange subtracted by the corresponding matrix with respect to ammonium exchange.
+Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
+Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
+
+Ratio of carbohydrate synthesis time to protein synthesis time ($t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$, quantities defined in equation~\ref{eq:model-ablated-time}).
+Contour shows region in which the ratio $r$ is greater than 1.
 
 \section{Conclusion}
 \label{subsec:model-conclusion}
