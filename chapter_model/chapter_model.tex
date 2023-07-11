@@ -460,6 +460,8 @@ Therefore,
   \label{eq:model-ratio}
 \end{equation}
 
+This expression means that the definition of the $r$ ratio is not trivial and depends on the $\lambda_{0}$ and the $\lambda_{i}^{\prime}$ values, which are independent of each other.
+
 A smaller A/B ratio (< 1) means that -- under these conditions -- synthesising biomass components in sequence saves more time.
 In this case, the ratio is about 0.7.
 
@@ -537,7 +539,48 @@ The fact that this still holds true for auxotrophs and deletion strains supports
   \label{fig:model-pool}
 \end{figure}
 
-TODO: Add some text description, add differential calculus to show that the plots make sense mathematically.
+
+Interpretation of figure...
+
+\begin{itemize}
+  \item Restricting $e_{\mathrm{pool}} \in [0, 2]$ to give realistic growth rates.
+  \item Growth rate varies linearly as $e_{\mathrm{pool}}$ varies.
+        However, the ratio is not constant (but climbs up in steps).
+        With higher $e_{\mathrm{pool}}$ values (less of an enzyme constraint), the ratio increases, indicating less advantage for sequential biosynthesis (what we want).
+        Here, ratio < 1, but we've seen ratios > 1 in certain nutrient conditions.
+  \item As $e_{\mathrm{pool}}$ increases, ablated flux all start out linear/linear-ish when the growth rate is still in the linear region.
+        But then the gradient of these lines change at various points, all going to a plateau at very high $e_{\mathrm{pool}}$ (not shown here).
+  \item Ablated flux doesn't always vary linearly as $e_{\mathrm{pool}}$ varies --- only protein and lipid are linear in this region
+        Perhaps this means that $e_{\mathrm{pool}}$ is limiting for these (expensive) components, and less so the case for the others.
+  \item This also confirms that ablated flux traces don't always have to increase linearly and are independent of the growth rate traces.
+\end{itemize}
+
+TODO: add differential calculus to show that the plots make sense mathematically.
+
+Other methods considered to minimise protein cost:
+\begin{itemize}
+  \item Parsimonious FBA.
+        This first uses FBA to compute optimal growth rate, fixes this value, then minimises sum of gene-associated reaction fluxes while maintaining optimal growth (either minimises the sum of fluxes or squared sum, depending on the package).
+        Rejected because it fixes the growth rate, but we want to see how constraints affect cell strategies as they vary along a spectrum.
+        And also because it relies on reducing the subset of genes that contribute to the solution --- it modifies the model and it also relies on good gene-protein annotations.
+  \item Regularised FBA.
+        \textcite{vijayakumarHybridFluxBalance2020} describe a quadratic program for solving a regularised bi-level FBA, i.e.\: $\max g^\intercal v - \frac{\sigma}{2}v^\intercal v$ where $g$ is the objective function, $v$ is the flux vector, and $\sigma$ is a regularisation parameter than can be tuned.
+        Rejected because it requires a quadratic solver, thus difficult and computationally expensive to implement.
+        And because the behaviour is not as expected, i.e.\ the growth rate does not change as the regularisation parameter $\sigma$ varies, even though we expected a trade-off between growth and reaction fluxes to change as this parameter varies.
+  \item Constrain the sum of absolute values of fluxes.
+        Namely, $\sum |v| < c$, where $c$ is a constant to be varied.
+        This makes sense for the Yeast8 (no enzyme constraint) model, and as $c$ decreases to 0, the original growth rate $\lambda_{0}$ and ablated growth rates $\lambda_{i}^{\prime}$ decreased to 0 linearly, while the $r$ ratio remains constant.  ADD PLOTS TO SHOW THIS?
+\end{itemize}
+
+These may have made sense for the Yeast8 (no enzyme constraint) model.
+But if applied to ecYeast8,
+there is potential double-/triple-counting of imposing constraints:
+\begin{enumerate}
+  \item constraints on enzyme usage imposed on the enzyme-usage pseudoreactions created by GECKO,
+  \item constraints on sum of the absolute values of fluxes.
+\end{enumerate}
+This will confuse interpretation.
+Therefore, I decide to vary $e_{\mathrm{pool}}$ to study proteomic constraints as this takes advantage of a formalism that already exists in ecYeast8, by virtue of GECKO, that is easy to interpret and modify.
 
 
 \section{Effect of carbon and nitrogen sources}
@@ -592,6 +635,8 @@ I did this with two carbon sources to be investigated later, glucose and pyruvat
 % - Heatmap results
 % *** Leave this mostly in bullet points for now because the results are WIP/in flux
 I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
+
+% IDEA: Add barchart grids?  As a sanity check & it is related to the C:P ratio heatmap.
 
 \begin{figure}
   \centering
@@ -676,23 +721,35 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
   \end{subfigure}
   \caption{
     Effect of pyruvate ($R_{\mathrm{pyruvate}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) in the ecYeast8 model on various quantities.
-    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{8.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{4.27}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
     Grid lines (black) indicate saturation values.
   }
   \label{fig:model-grid-pyr}
 \end{figure}
 
-
+More detail on how the quantities in the heatmaps are calculated...
 
 % originally from caption, moved here to save space
-% TODO: format this a bit
+% TODO: format this a bit, or organise into sensible bullet points.
 The gradients of growth rate at each pixel in~\ref{fig:model-grid-glc-growthrate} with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
 This heatmap shows the matrix of the magnitude of gradients of growth rate with respect to glucose exchange subtracted by the corresponding matrix with respect to ammonium exchange.
 Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
 Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
 
+Seems to divide the space into C-limited growth rate, N-limited growth rate, and neither-limited growth rate.
+With extreme cases.
+Red in ratio heatmap seems to correspond to the boundary between the C-limited and N-limited regions.
+Growth rate near max, i.e.\ C/N not limiting: when glucose or ammonium exchange increases (there is an additive effect), temporal partitioning is more advantageous
+N-limiting: as ammonium exchange increases, growth rate increases (decreasing $B$), and increasing $r$ implies $A$ increasing or staying the same.
+Protein synthesis time decreases compared to carbon synthesis time.
+
 Ratio of carbohydrate synthesis time to protein synthesis time ($t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$, quantities defined in equation~\ref{eq:model-ablated-time}).
 Contour shows region in which the ratio $r$ is greater than 1.
+
+The ratio > 1 part is around the boundary between C-limited growth rate and N-limited growth rate.
+So it means that if both C and N are (nearly) limiting, sequential biosynthesis is so slow that the ratio goes above 1.
+In the C-limited region, the C:P ratio is high (makes sense because when C is limiting, C takes long), and in the N-limited region, the C:P ratio is low (when N is limiting, P takes long).
+It thus makes sense that near the boundary between the regions, the C:P ratio takes intermediate values.
 
 \section{Conclusion}
 \label{subsec:model-conclusion}
