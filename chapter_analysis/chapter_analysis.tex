@@ -132,7 +132,7 @@ However, each method has its own caveats.
    \centering
    \includegraphics[width=\textwidth]{fft_butterworth}
    \caption{
-     Signal processed with high-pass butterworth filter of frequency \SI{1/350}{\minute^{-1}}.
+     Signal processed with high-pass butterworth filter of frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
    }
    \label{fig:analysis-filter-butterworth}
   \end{subfigure}
@@ -164,7 +164,7 @@ However, the Savitzky-Golay filter unnecessarily smooths data
 Subtracting a moving average relies on knowing a window size that approximates the expected oscillation period, gives no control over the signal frequencies, introduce artefacts in the frequency spectrum, and decreases the number of time points available (figure~\ref{fig:analysis-filter}).
 Such methods may distort the data in a way that affects conclusions.
 In contrast, defining a high- or low-pass filter offers direct control over frequencies, but the user must use a judgement call to define a critical frequency.
-In my case, I define the critical frequency for a high-pass filter as \SI{1/350}{\minute^{-1}} as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments.
+In my case, I define the critical frequency for a high-pass filter as \SI[parse-numbers=false]{1/350}{\minute^{-1}} as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments.
 Of course, this will exclude the possibility of metabolic cycles that go on for longer, but as I said, this is a trade-off I am willing to make so that I can extract the individual oscillations better.
 For subsequent analysis, I use the high-pass Butterworth filter defined above to process raw fluorescence time series.
 
