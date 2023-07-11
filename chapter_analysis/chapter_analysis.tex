@@ -118,10 +118,6 @@ In the analysis of biological rhythms, however, long-term trends are the element
 As an example, \textcite{zielinskiPeriodEstimationRhythm2022} offers several methods of detrending time series: polynomial detrending (including linear detrending), sliding-window detrending, ... [READ THE PAPER AND INSERT THE REST HERE].
 However, each method has its own caveats.
 
-% TODO:
-% - Erase titles of signal subplots, in favour of text in subfigure captions.
-% - Change time points to minutes
-% - Check window size of sliding-window -- it seems like it's using a window size of 80.
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.8\textwidth}
@@ -170,6 +166,7 @@ Such methods may distort the data in a way that affects conclusions.
 In contrast, defining a high- or low-pass filter offers direct control over frequencies, but the user must use a judgement call to define a critical frequency.
 In my case, I define the critical frequency for a high-pass filter as \SI{1/350}{\minute^{-1}} as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments.
 Of course, this will exclude the possibility of metabolic cycles that go on for longer, but as I said, this is a trade-off I am willing to make so that I can extract the individual oscillations better.
+For subsequent analysis, I use the high-pass Butterworth filter defined above to process raw fluorescence time series.
 
 Next, missing time points can pose a problem, especially when many analysis methods [WHICH?] are not made for this.
 In my case, these missing time points often arise because of errors in track joining [MORE ELABORATION PLEASE -- READ ALAN'S THESIS], but occur infrequently enough [EVIDENCE NEEDED] that I could just perform linear interpolation to fill in the data or discard the time series altogether.
@@ -177,15 +174,37 @@ However, there are methods that deal with missing time points.
 Most notable is the Lomb-Scargle periodogram (LSP) -- to be discussed in section ... -- which was developed for astronomical data that often has missing time points, corresponding to cloud cover, for example.
 Other methods that have been used in the biological time series literature include ... [FISH OUT SOME FROM ZIELINSKI ET AL. 2014, AND DESCRIBE THEM A BIT].
 
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{snr_illustration}
+   \caption{
+     To define the signal-to-noise ratio, a cut-off frequency is defined to divide the area under the Fourier spectrum: signal, to the left of the cut-off (yellow), and noise, to the right (pink).
+     The signal-to-noise ratio is thus defined as the signal area divided by the noise area.
+   }
+   \label{fig:analysis-snr-illustration}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
+   \caption{
+     The signal-to-noise ratio was computed for each processed signal within a dataset, and the distribution of these ratios within a dataset can indicate the overall quality of signals.
+   }
+   \label{fig:analysis-snr-histogram-example}
+  \end{subfigure}
+  \caption{
+    The signal-to-noise ratio as a measure of signal quality.
+  }
+  \label{fig:analysis-snr}
+\end{figure}
+
 Finally, I discuss a way to evaluate the quality of a (processed) dataset -- specifically, computing a signal-to-noise ratio.
-[PROBABLY MAKES SENSE TO DO A MINI-LITERATURE REVIEW OF THE SIGNAL-TO-NOISE RATIO CONCEPT, ESPECIALLY IN THE CONTEXT OF ENGINEERING].
-Here, I define a cut-off frequency between signal and noise, based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
-[I BASED THIS OFF A POST ON STACKOVERFLOW -- ONE OF THE GIT COMMIT MESSAGES HAS TO HAVE MENTIONED THIS.  IF THIS STACKOVERFLOW POST MENTIONS SOME PUBLICATION, CITE IT, LIFT WORDS FROM IT.]
-Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise [EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.]
-
-[FIGURE: SINGLE TIME SERIES, FOURIER SPECTRUM OF THIS TIME SERIES, WITH A LINE DIVIDING SIGNAL (S) AND NOISE (N), AND AN EQUATION SNR = S/N SOMEWHERE.]
-
-[FIGURE: EXAMPLE HISTOGRAM OF SNRs FROM A COUPLE OF EXPERIMENTS.  STEAL FROM ONE OF MY LAB PRESENTATIONS.]
+The signal-to-noise ratio compares the level of a desired signal to background noise and serves as a measure of quality in signal processing.
+It takes various definitions depending on how the signal and noise are defined.
+In my case, I base my definition on the frequency domain of the signal.
+I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
+Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise [EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
 
 (Add some kind of take-home or conclusion of the section here...)
 
