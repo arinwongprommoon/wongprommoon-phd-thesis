@@ -108,6 +108,9 @@ Here, I choose time series that have points present in at least 80\% of the tota
 This is an arbitrary cut-off, but it ensures that my time series have enough oscillations for further analysis, such as characterisation of the frequencies of these oscillations.
 Otherwise, short, and likely uninformative, time series can `pollute' algorithms that operate on the population of time series, confounding the analysis.
 
+% Probably overkill?
+%[FIGURE: SHOW LONG-TERM TRENDS.  DRAW A MEAN+STD ERR PLUS A COUPLE OF RAW TIME SERIES.]
+
 Next, the data must be filtered to remove long-term trends.
 Depending on the scientific question, such long-term trends can be useful:
 for example, in climate science, if there is a time series of atmospheric \ce{CO2} over a period of decades, we would like to filter out the annual (seasonal) cycles and look at the long-term changes over time.
@@ -115,16 +118,58 @@ In the analysis of biological rhythms, however, long-term trends are the element
 As an example, \textcite{zielinskiPeriodEstimationRhythm2022} offers several methods of detrending time series: polynomial detrending (including linear detrending), sliding-window detrending, ... [READ THE PAPER AND INSERT THE REST HERE].
 However, each method has its own caveats.
 
-[FIGURE: SHOW LONG-TERM TRENDS.  DRAW A MEAN+STD ERR PLUS A COUPLE OF RAW TIME SERIES.]
+% TODO:
+% - Erase titles of signal subplots, in favour of text in subfigure captions.
+% - Change time points to minutes
+% - Check window size of sliding-window -- it seems like it's using a window size of 80.
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_raw}
+   \caption{
+     Raw signal
+   }
+   \label{fig:analysis-filter-raw}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_butterworth}
+   \caption{
+     Signal processed with high-pass butterworth filter of frequency \SI{1/350}{\minute^{-1}}.
+   }
+   \label{fig:analysis-filter-butterworth}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_slidingwindow}
+   \caption{
+     Signal processed by subtracting moving average with window size 30.
+   }
+   \label{fig:analysis-filter-slidingwindow}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_savgol}
+   \caption{
+     Signal processed with Savitzky-Golay filter (window size 7, polynomial order 3).
+   }
+   \label{fig:analysis-filter-savgol}
+  \end{subfigure}
+  \caption{
+    Different filtering methods result in different effects to both the signal (left panels) and the Fourier spectrum of the signal (right panels).
+  }
+  \label{fig:analysis-filter}
+\end{figure}
 
 In the process of finding a way to filter my time series, I have considered two methods: sliding-window methods (such as using a Savitzky-Golay filter) and a high/low-pass filter.
 Sliding-window methods are common in the single-cell biological rhythm literature; for example... [EITHER (A) VOMIT A LIST OF CITATIONS AND LEAVE IT THERE, OR (B) MENTION A COUPLE AND DESCRIBE IN A BIT MORE DETAIL, GROUP SAVITZKY-GOLAY FILTERS, PUBLICATIONS THAT USE STUPIDER METHODS, ETC.  I'M SURE HEINEMANN'S PUBLICATIONS USE THEM, AND I'M SURE THERE WERE A COUPLE USED IN JOURNAL CLUBS THAT I'VE COMMENTED IN MY NOTES HAVING USED STUPID METHODS.]
-However, these methods unnecessarily smooth data, therefore distorting the data and affecting conclusions, and give no control over the frequencies and introduce artefacts in the frequency spectrum (figure ...)
+However, the Savitzky-Golay filter unnecessarily smooths data
+Subtracting a moving average relies on knowing a window size that approximates the expected oscillation period, gives no control over the signal frequencies, introduce artefacts in the frequency spectrum, and decreases the number of time points available (figure~\ref{fig:analysis-filter}).
+Such methods may distort the data in a way that affects conclusions.
 In contrast, defining a high- or low-pass filter offers direct control over frequencies, but the user must use a judgement call to define a critical frequency.
-In my case, I define the critical frequency for a high-pass filter as 1/350 min-1 [PROPERLY FORMAT UNITS PLEASE] as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments.
+In my case, I define the critical frequency for a high-pass filter as \SI{1/350}{\minute^{-1}} as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments.
 Of course, this will exclude the possibility of metabolic cycles that go on for longer, but as I said, this is a trade-off I am willing to make so that I can extract the individual oscillations better.
-
-[FIGURE: SHOW HOW SLIDING WINDOW AND HIGH-PASS FILTER AFFECT TIME SERIES DIFFERENTLY.  SHOW RAW TIME SERIES AND FFT, AND SHOW PROCESSED TIME SERIES AND FFTS.  FOR HIGH-PASS FILTER, ALSO DRAW A VERTICAL LINE TO SHOW THE CRITICAL FREQUENCY ON THE FFT.  ALSO ADD A FIGURE SIMILAR TO THE ONE IN THE scipy DOCUMENTATION ON THE HIGH-PASS FILTER TO SHOW THAT THE RELEVANT FREQUENCIES HAVE BEEN DESTROYED.]
 
 Next, missing time points can pose a problem, especially when many analysis methods [WHICH?] are not made for this.
 In my case, these missing time points often arise because of errors in track joining [MORE ELABORATION PLEASE -- READ ALAN'S THESIS], but occur infrequently enough [EVIDENCE NEEDED] that I could just perform linear interpolation to fill in the data or discard the time series altogether.
