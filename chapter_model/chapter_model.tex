@@ -554,6 +554,7 @@ This produces a saturation curve that agrees with the theoretical basis of satur
 Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
 I did this with two carbon sources to be investigated later, glucose and pyruvate, and with ammonium as a nitrogen source.
 
+% TODO: Check that ammonium saturation really is at 1.45, as used in the grid section.
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.4\textwidth}
@@ -597,33 +598,47 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
   \begin{subfigure}[htpb]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_ratio}
-    \caption{ratio}
+    \caption{
+      Ratio ($r$)
+    }
     \label{fig:model-grid-glc-ratio}
   \end{subfigure}
 
   \begin{subfigure}[htpb]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_growthrate}
-    \caption{growthrate}
+    \caption{
+      Growth rate based on unmodified biomass reaction ($\lambda_{0}$)
+    }
     \label{fig:model-grid-glc-growthrate}
   \end{subfigure}
 
   \begin{subfigure}[htpb]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_gradient_compare}
-    \caption{gradient compare}
+    \caption{
+      The gradients of growth rate with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
+      This heatmap shows the matrix of the magnitude of gradients of growth rate with respect to glucose exchange subtracted by the corresponding matrix with respect to ammonium exchange.
+      Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
+      Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
+    }
     \label{fig:model-grid-glc-gradient-compare}
   \end{subfigure}
 
   \begin{subfigure}[htpb]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
-    \caption{carb to protein}
+    \caption{
+      Ratio of carbohydrate synthesis time to protein synthesis time ($t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$, quantities defined in equation~\ref{eq:model-ablated-time}).
+      Contour shows region in which the ratio $r$ is greater than 1.
+    }
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
 
   \caption{
-    Insert caption here.
+    Effect of glucose and ammonium exchange rates in the ecYeast8 model on various quantities.
+    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+    Grid lines (black) indicate saturation values.
   }
   \label{fig:model-grid-glc}
 \end{figure}
