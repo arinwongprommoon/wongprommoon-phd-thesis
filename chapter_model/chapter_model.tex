@@ -467,7 +467,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{ablation_by4741}
    \caption{
@@ -475,7 +475,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    }
    \label{fig:model-ablation-by4741}
   \end{subfigure}
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{ablation_zwf1}
    \caption{
@@ -483,7 +483,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    }
    \label{fig:model-ablation-zwf1}
   \end{subfigure}
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{ablation_tsa2}
    \caption{
@@ -506,7 +506,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
    \caption{
@@ -514,7 +514,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    }
    \label{fig:model-pool-ratio}
   \end{subfigure}
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr}
    \caption{
@@ -522,7 +522,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    }
    \label{fig:model-pool-growthrate}
   \end{subfigure}
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components}
    \caption{
@@ -557,21 +557,21 @@ I did this with two carbon sources to be investigated later, glucose and pyruvat
 % TODO: Check that ammonium saturation really is at 1.45, as used in the grid section.
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ecYeast8-glucose-saturation.png}
     \caption{Glucose saturation}
     \label{fig:model-saturation-glucose}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ecYeast8-pyruvate-saturation.png}
     \caption{Pyruvate saturation}
     \label{fig:model-saturation-pyruvate}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{0.4\textwidth}
+  \begin{subfigure}[htpb]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ecYeast8-ammonium-saturation.png}
     \caption{
@@ -595,16 +595,15 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
 % TODO: fill in captions properly before copying and modifying for pyruvate
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.2\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_ratio}
     \caption{
       Ratio ($r$)
     }
     \label{fig:model-grid-glc-ratio}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.2\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_growthrate}
     \caption{
@@ -612,8 +611,7 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
     }
     \label{fig:model-grid-glc-growthrate}
   \end{subfigure}
-
-  \begin{subfigure}[t]{0.2\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_gradient_compare}
     \caption{
@@ -621,9 +619,8 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
       %Positive values (indigo) indicate glucose-limiting conditions, while negative values (beige) indicate ammonium-limiting conditions.
     }
     \label{fig:model-grid-glc-gradient-compare}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.2\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
     \caption{
@@ -632,7 +629,6 @@ I aim to assess the effect of carbon and nitrogen source uptake on this ratio.
     }
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
-
   \caption{
     Effect of glucose ($R_{\mathrm{glucose}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) in the ecYeast8 model on various quantities.
     Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.45}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
