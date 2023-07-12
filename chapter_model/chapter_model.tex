@@ -57,7 +57,7 @@ Traditional genome-scale models assume that the uptake rate of carbon source lim
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
 An enzyme-constrained model fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} --- the latter of which imposes a ribosome capacity constraint and additionally imposes compartment constraints --- constrain the total sum of fluxes based on a defined total amount of enzyme.
-ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017}, which applies the enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
+ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017}, specifically GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, which applies the enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
 \label{sec:model-yeast8}
@@ -148,7 +148,7 @@ To constrain enzyme levels in the model, GECKO defines a pseudo-reaction
   \label{eq:model-gecko-enzyme-pool}
 \end{equation}
 
-with a flux $e_{\mathrm{pool}} \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_DW^{-1}}, where
+with a flux $e_{\mathrm{pool}} \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
 
 \begin{itemize}
   \item $P$ represents protein fraction with respect to the dry weight of the cell,
@@ -177,8 +177,11 @@ Taken together, the modelled cell thus has an enzyme pool in terms of a mass fra
 
 In the yeast cell, biomass components (lipids, carbohydrates, proteins) are present in different fractions.
 Knowing these fractions are useful in computing the time it takes to synthesise each biomass component (to be discussed later).
-However, the mass fraction of each component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}, and it is computationally expensive to re-run GECKO each time the protein mass fraction varies.
+As discussed in section~\ref{sec:model-yeast8}, these fractions are represented in the biomass reaction.
+However, the mass fraction of each component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
+It is not straightforward to implement these changes as stoichiometric coefficients of individual species that define biomass, because there is limited detailed information for the mass fractions of such species as conditions vary, and because of the many combinations of lipid backbones and acyl chains.
 Therefore, I decided to compute the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
+Similar calculations were performed by \parencite{takhaveevTemporalSegregationBiosynthetic2023}.
 
 \textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\milli\mol~\gram_{DW}^{-1}}.
 Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023};
@@ -197,7 +200,7 @@ Namely, I assumed that in reactions that produce the bulk metabolites, there is 
   \end{aligned}
 \end{equation}
 
-where $s = 1, ... (\text{number of substrates})$ represents substrates and $p = 1, ... (\text{number of products})$ represents products of the reaction in question.
+where $s = 1, ...$ \emph{(number of substrates)} represents substrates and $p = 1, ...$ \emph{(number of products)} represents products of the reaction in question.
 
 To compute the molecular weight of the carbohydrate metabolite, I inspected reaction \texttt{r\_4048}:
 
@@ -401,8 +404,9 @@ Investigate proteome allocation as sanity check (figure~\ref{fig:model-ablate-en
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-I used the ecYeast8.6.0 model with glucose uptake restricted to within [0, 16.89], as the optimal value found by the non-modified model.
-This value agrees with theoretical saturation rates of 16--19 \SI{}{\milli\mol~\gram_{DW}^{-1}}.
+I used the ecYeast8.6.0 model with glucose uptake restricted to within [0, 16.89]
+This number is based on the glucose uptake rate from using the non-modified model to optimise growth rate.
+This value agrees with theoretical saturation rates of 16--19 \SI{}{\milli\mol~\gram_{DW}^{-1}} \parencite{blankTCACycleActivity2004}.
 Using the biomass reaction as the objective function, I optimise the model to obtain the predicted growth rate, and computed the doubling time based on this growth rate as follows:
 
 \begin{equation}
@@ -554,7 +558,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
 Interpretation of figure~\ref{fig:model-pool}...
 
 \begin{itemize}
-  \item Restricting $e_{\mathrm{pool}} \in [0, 2]$ to give realistic growth rates.
+  \item Decide on restricting $e_{\mathrm{pool}} \in [0, 2]$ to give realistic growth rates.
   \item Growth rate varies linearly as $e_{\mathrm{pool}}$ varies.
   \item However, the ratio is not constant, but climbs up in steps --- derivation to follow.
         With higher $e_{\mathrm{pool}}$ values (less of a constraint on the enzyme pool), the ratio increases, indicating less advantage for sequential biosynthesis.
