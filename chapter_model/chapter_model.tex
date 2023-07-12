@@ -682,7 +682,7 @@ This shows:
   \item The maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}}.
         The glucose value agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which uses latest published version of GECKO to create the ecYeast7 model to predict maximum growth rates on various carbon sources, and also agrees with my experimental observations.
         This study did not predict growth rate on pyruvate, but a lower maximum growth rate on a non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
-  \item The growth rate saturation point for ammonium is determined by the maximal growth rate determines by each carbon source.
+  \item The growth rate saturation point for ammonium is determined by the maximal growth rate determined by each carbon source.
 \end{itemize}
 
 \subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
@@ -813,24 +813,24 @@ This shows:
 
 On the gradients...
 \begin{itemize}
-  \item The gradients of growth rate at each pixel in~\ref{fig:model-grid-glc-growthrate} with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
+  \item Explanation: The gradients of growth rate at each pixel in~\ref{fig:model-grid-glc-growthrate} with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
         The heatmap shows the matrix of the magnitude of gradients of growth rate with respect to glucose exchange subtracted by the corresponding matrix with respect to ammonium exchange.
         Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
         Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
   \item This seems to divide the space into C-limited growth rate, N-limited growth rate, and neither-limited growth rate.
-        Pyruvate seems to represent an extreme case of the glucose plots.
   \item Where $r > 1$ seems to correspond to the boundary between the C-limited and N-limited regions.
   \item Growth rate near max, i.e.\ C/N not limiting: when glucose or ammonium exchange increases (there is an additive effect), temporal partitioning is more advantageous.
-  \item In the N-limiting region: as ammonium exchange increases, growth rate increases (decreasing $B$), and increasing $r$ implies $A$ increasing or staying the same.
-        Protein synthesis time decreases compared to carbon synthesis time.
-  \item In the C-limiting region: as glucose exchange increases, growth rate increases (decreasing $B$), but $r$ stays roughly the same.
-        This implies decreasing $A$, which is explained by a decrease of the time it takes to synthesis carbohydrates.
+  \item In the N-limiting region (beige): as ammonium exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{protein}}$ decreases (implying increasing $\lambda_{\mathrm{protein}}^{\prime}$).
+        Because $r$ increases, this means that the increase in $\lambda_{0}$ `overpowers' the increase in $\lambda_{\mathrm{protein}}^{\prime}$ [SPACE FOR SOME MATHS?].
+  \item In the C-limiting region (purple): as glucose exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{carbohydrate}}$ decreases (implying increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$).
+        Because $r$ stays the same, this means that the increase in $\lambda_{\mathrm{carbohydrate}}^{\prime}$ compensates for the increase in $\lambda_{0}$ [SPACE FOR SOME MATHS?].
+  \item Pyruvate seems to represent an extreme case of the glucose plots.
+        The main difference is with the carbon source axis -- here, the behaviour is more similar to the ammonium axis.
+        This can be explained by the fact the the pyruvate saturation curve looks similar to the ammonium one.
 \end{itemize}
 
 On the C:P ratios...
 \begin{itemize}
-  \item Ratio of carbohydrate synthesis time to protein synthesis time ($t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$, quantities defined in equation~\ref{eq:model-ablated-time}).
-        Contour shows region in which the ratio $r$ is greater than 1.
   \item The ratio > 1 part is around the boundary between C-limited growth rate and N-limited growth rate.
         So it means that if both C and N are (nearly) limiting, sequential biosynthesis is so slow that the ratio goes above 1.
   \item In the C-limited region, the C:P ratio is high (makes sense because when C is limiting, C takes long), and in the N-limited region, the C:P ratio is low (when N is limiting, P takes long).
