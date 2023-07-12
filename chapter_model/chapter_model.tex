@@ -690,16 +690,6 @@ This shows:
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\linewidth]{ablation_heatmap_01_barcharts_adapted}
-  \caption{
-    Effect of glucose and ammonium exchange rates (in units of \SI{}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}) on times to synthesise each biomass component ($t_{i}$).
-    Bar charts show these times for each biomass component in hours.
-  }
-  \label{fig:model-barchartgrid}
-\end{figure}
-
-\begin{figure}
-  \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_ratio}
@@ -716,6 +706,7 @@ This shows:
     }
     \label{fig:model-grid-glc-growthrate}
   \end{subfigure}
+
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_gradient_compare}
@@ -727,21 +718,37 @@ This shows:
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
+    \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb}
+    \caption{
+      $t_{\mathrm{carbohydrate}}^{\prime}$
+    }
+    \label{fig:model-grid-glc-carb}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ec_grid_glc_amm_prot}
+    \caption{
+      $t_{\mathrm{protein}}^{\prime}$
+    }
+    \label{fig:model-grid-glc-prot}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
     \caption{
-      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$;
-      contour shows region in which the ratio $r$ is greater than 1.
+      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$
     }
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of glucose ($R_{\mathrm{glucose}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) in the ecYeast8 model on various quantities.
+    Effect of glucose ($R_{\mathrm{glucose}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) on various quantities.
     Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.69}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.48}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
-    Grid lines (black) indicate saturation values.
+    Black straight lines indicate saturation values.
+    Contours show region in which ratio $r > 1$.
   }
   \label{fig:model-grid-glc}
 \end{figure}
-
 
 \begin{figure}
   \centering
@@ -761,28 +768,45 @@ This shows:
     }
     \label{fig:model-grid-pyr-growthrate}
   \end{subfigure}
+
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_gradient_compare}
     \caption{
       Differences in magnitude of gradients across axes ($|\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{pyruvate}}}| - |\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{ammonium}}}|$).
-      %Positive values (indigo) indicate pyruvate-limiting conditions, while negative values (beige) indicate ammonium-limiting conditions.
     }
     \label{fig:model-grid-pyr-gradient-compare}
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
+    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb}
+    \caption{
+      $t_{\mathrm{carbohydrate}}^{\prime}$
+    }
+    \label{fig:model-grid-pyr-carb}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_prot}
+    \caption{
+      $t_{\mathrm{protein}}^{\prime}$
+    }
+    \label{fig:model-grid-pyr-prot}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb_to_prot}
     \caption{
-      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$;
-      contour shows region in which the ratio $r$ is greater than 1.
+      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$
     }
     \label{fig:model-grid-pyr-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of pyruvate ($R_{\mathrm{pyruvate}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) in the ecYeast8 model on various quantities.
+    Effect of pyruvate ($R_{\mathrm{pyruvate}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) on various quantities.
     Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{4.44}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.00}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
-    Grid lines (black) indicate saturation values.
+    Black straight lines indicate saturation values.
+    Contours show region in which ratio $r > 1$.
   }
   \label{fig:model-grid-pyr}
 \end{figure}
