@@ -171,8 +171,8 @@ For subsequent analysis, I use the high-pass Butterworth filter defined above to
 Next, missing time points can pose a problem, especially when many analysis methods [WHICH?] are not made for this.
 In my case, these missing time points often arise because of errors in track joining [MORE ELABORATION PLEASE -- READ ALAN'S THESIS], but occur infrequently enough [EVIDENCE NEEDED] that I could just perform linear interpolation to fill in the data or discard the time series altogether.
 However, there are methods that deal with missing time points.
-Most notable is the Lomb-Scargle periodogram (LSP) -- to be discussed in section ... -- which was developed for astronomical data that often has missing time points, corresponding to cloud cover, for example.
-Other methods that have been used in the biological time series literature include ... [FISH OUT SOME FROM ZIELINSKI ET AL. 2014, AND DESCRIBE THEM A BIT].
+Most notable is the Lomb-Scargle periodogram (LSP) -- to be discussed in section~\ref{sec:analysis-characterisation} -- which was developed for astronomical data that often has missing time points, corresponding to cloud cover, for example.
+%Other methods that have been used in the biological time series literature include ... [FISH OUT SOME FROM ZIELINSKI ET AL. 2014, AND DESCRIBE THEM A BIT].
 
 \begin{figure}
   \centering
@@ -206,17 +206,25 @@ In my case, I base my definition on the frequency domain of the signal.
 I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
 Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise [EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
 
-(Add some kind of take-home or conclusion of the section here...)
+To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
+For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
 
 \section{Classification: is my time series oscillatory?}
 \label{sec:analysis-classification}
 
 To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
-However, there are challenges with classification of noisy biological time series with relatively few time points.
-In addition, such a classification task necessarily needs a cut-off somewhere, thus requiring judgement calls.
-You'd see this crop up in this section multiple times when I discuss my methods and I reveal different angles of approaching this.
-
-[A PARAGRAPH ON RHYTHMICITY TESTS -- BASE THIS OFF ZIELINSKI ET AL. 2014/2022.  START FROM eJTK.  THIS SHOULD BE A MINI-REVIEW.]
+% However, there are challenges with classification of noisy biological time series with relatively few time points.
+% In addition, such a classification task necessarily needs a cut-off somewhere, thus requiring judgement calls.
+% You'd see this crop up in this section multiple times when I discuss my methods and I reveal different angles of approaching this.
+Determining whether a time series is oscillatory, or rhythmicity detection, is technically difficult for several reasons.
+From a signal processing perspective, any time-dependent signal can be decomposed into a combination of sinusoids of different frequencies.
+Noise typically manifests as high-frequency components while trends manifests as low-frequency components --- the filtering methods in section~\ref{sec:analysis-cleaning} arise because of this fact.
+It is thus more reasonable to detect the presence of a frequency within the range of interest.
+However, this depends on knowing an expected range of frequencies.
+When studying the circadian rhythm, this is often the case: studies expect rhythms of around \SI{24}{\hour} and \textcite{zielinskiStrengthsLimitationsPeriod2014} uses the range of \SIrange{16}{32}{\hour} for rhythmicity detection.
+This method is less useful when the frequency of oscillations is unknown or known to be in a wide range of frequencies, as is the case for the yeast metabolic cycle.
+Furthermore, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity \parencite{zielinskiStrengthsLimitationsPeriod2014}, therefore such a classification method requires a subjective definition of whether each time series is oscillatory.
+In other words, this is similar to the requirement of a training data set with human-defined labels, and thus a human-defined failure rate, for supervised machine learning.
 
 In this section, I will discuss my use of spectral methods, model-fitting methods, and machine learning methods.
 
@@ -242,13 +250,46 @@ The classification was based on controlling the false discovery rate for identif
 In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
 
-I developed a classifier based on \textcite{glynnDetectingPeriodicPatterns2006} to classify time series of flavin autofluorescence.
+I developed a classifier based on \textcite{glynnDetectingPeriodicPatterns2006} to classify time series of flavin autofluorescence as follows:
+
+\begin{enumerate}
+\item Let the data have $\mathcal{G}$ cells.
+Let cell $g = 1, \dots{}, \mathcal{G}$ have a time series with $N_{g}$ time points.
+The time series is thus denoted $Y_{g}(t) = y_{g}(t_{1}), \dots{}, y_{g}(t_{N_{g}})$.
+\item For each time series, I define a range of test frequencies linearly from $\frac{1}{N_{g}}$ to the Nyquist limit (i.e. half the rate of image acquisition, \SI{0.2}{\minute^{-1}}, in this case).
+
+With this definition, I compute the classical periodogram for each time series:
+  \begin{equation}
+    P_{g}(\omega) = \frac{N_{g}}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} Y_{g} e^{-2\pi it}dt \right|, % check constants, etc
+    \label{eq:normalised-periodogram}
+  \end{equation}
+        where $\sigma^{2}$ is the sample variance of $Y_{g}$.
+        In this equation, the periodogram is normalised by the coefficient $N_{g}/2\sigma^{2}$ so that the area under the periodogram is constant across all time series.
+        The Lomb-Scargle periodogram is equivalent to the classical periodogram if the time points are equally spaced \parencite{lombLeastsquaresFrequencyAnalysis1976}, as is the case for the vast majority of my data.
+\item For each cell $g$, I denote the peak $h_{g} = \max_{j}P_{g}(\omega)$.
+I define an effective number of independent frequencies $M = f_{max}N_{g}$ for each time series, where $f_{max}$ is the Nyquist limit \parencite{vanderplasUnderstandingLombScarglePeriodogram2018}.
+  I then calculate the $p$-value of testing the null hypothesis that such a peak is due to chance:
+  \begin{equation}
+    p_{g} = 1 - (1 - e^{-h_{g}})^M
+    \label{eq:lsp-pval}
+  \end{equation}
+  This formula is based on the exponential distribution of the power at a given frequency in the periodogram \parencite{scargleStudiesAstronomicalTime1982}.
+\item I order the cells by $p$-values: $p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(\mathcal{G})}$.
+  To control the false discovery rate \parencite{benjaminiControllingFalseDiscovery1995}, I find $\hat{k}$ according to:
+  \begin{equation}
+    \hat{k} = \arg\max_{1 \leq k \leq \mathcal{G}}\{k : p_{(k)} \leq qk/\mathcal{G}\}
+    \label{eq:lsp-khat}
+  \end{equation}
+  where $q$ is a defined false discovery rate.
+\item Cells whose $p$-values correspond to $p_{(1)}, p_{(2)}, \dots, p_{(\hat{k})}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
+\end{enumerate}
+
 %I then compared the classification results against manual classification of these time series into oscillating and non-oscillating.
 The classifier was able to rank the time series by quality of oscillation (figure \ref{fig:ClassifierBestWorstTS}).
 The peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation (figure \ref{fig:ClassifierBestWorstPS}).
 By eye, birth events coincided with peaks of some higher-quality oscillations.
 However, this was also true for some oscillations ranked as lower-quality.
-% [COMMENTED -- don't think this sentence is really consequential, and the proposed plot doesn't add much] Additionally, higher-quality oscillations do not seem to be associated with imaging positons/flavin LED exposure times. % FIGURE: scatter plot, horizontal axis is rank, vertical axis is imaging position
+% [COMMENTED -- don't think this sentence is really consequential, and the proposed plot doesn't add much] Additionally, higher-quality oscillations do not seem to be associated with imaging positions/flavin LED exposure times. % FIGURE: scatter plot, horizontal axis is rank, vertical axis is imaging position
 % Wee bit of discussion (plus a plot to illustrate my point).  Deeper discussion about multiple main frequencies is in discussion, and has references to literature.
 These oscillations were ranked as low-quality because the Fourier transform identified multiple main frequencies, and thus lowered the peak of the normalised periodogram.
 Thus, a Fourier-based method may not adequately provide the information for a reliable ranking of oscillation quality.
@@ -256,29 +297,29 @@ Thus, a Fourier-based method may not adequately provide the information for a re
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{10m_ClassifierBestWorstTS}
-  \caption{Classifier ranks time series by quality of oscillation.
+  \caption{
+    Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation.
     Left column shows `best' five and right column shows `worst' five.
-    Blue: flavin autofluorescence, red: automatically identified birth}
+    Blue solid lines: flavin autofluorescence, red dashes: birth event automatically identified by \textit{BABY}.
+  }
   \label{fig:ClassifierBestWorstTS}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{10m_ClassifierBestWorstPS}
-  \caption{Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations.
-    Lines: normalised classical periodograms of time series in figure \ref{fig:ClassifierBestWorstTS}.}
+  \caption{
+    Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations.
+    Blue solid lines: normalised classical periodograms of time series in figure \ref{fig:ClassifierBestWorstTS}.
+  }
   \label{fig:ClassifierBestWorstPS}
 \end{figure}
 
-Currently, the oscillation classifier has limited use.
-It is difficult to characterise the time series of flavin autofluorescence using standard methods based on the data available.
-The peak of the normalised classical periodogram inadequately captures the quality of the oscillations.
-
-The oscillation classifier has one tuning parameter, the false discovery rate, and its value affects the proportion of time series classed as oscillating.
-
-A reliable ground truth is needed to optimise the value of the false discovery rate so that the classification accuracy is maximised.
-Because none of the experiments performed were ones from which oscillations were not expected, I lacked a reliable ground truth for the presence of oscillations.
+The classifier has multiple caveats.
+It one tuning parameter, the false discovery rate, and its value affects the proportion of time series classed as oscillating.
 I resorted to subjective judgements of whether a time series exhibited oscillations, and thus any optimised false discovery rate would have low reliability.
+A reliable ground truth is needed to optimise the value of the false discovery rate so that the classification accuracy is maximised.
+Such a ground truth would ideally be from an experiment that is expected to give rise to time series that are not oscillatory.
 
 \subsection{Rhythmicity detection using model fitting}
 \label{subsec:analysis-classification-ar}
@@ -290,6 +331,10 @@ This autoregressive model thus `smooths' the time series.
 In this publication, they use this paradigm to classify synthetic oscillations produced from a stochastic model of gene expression [CHECK IF ACCURATE.  AND LIFTING THE FIGURE FROM THEIR PAPER THAT SHOWS THIS WILL BE HELPFUL].
 Specifically, the presence of a peak in the periodogram suggests that the time series is oscillatory.
 And because the periodogram is produced from a analytical solution, you can compute the period and quantitfy the quality of the oscillation from this periodogram more easily than from a Fourier spectrum created from noisy data.
+
+Based on this, I developed an algorithm as follows:
+
+[INSERT MATHS HERE]
 
 [FIGURE: EXAMPLE -- TIME SERIES ON THE LEFT, WITH SMOOTHED TIME SERIES, AND AR PERIODOGRAM ON THE RIGHT.]
 
