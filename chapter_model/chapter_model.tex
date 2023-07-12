@@ -607,46 +607,83 @@ Therefore, I decide to vary $e_{\mathrm{pool}}$ to study proteomic constraints a
 \subsection{Exchange reaction saturation}
 \label{subsec:model-saturation}
 
-I study the effect of nutrient exchange reactions on growth rates.
-Therefore, I need to know the saturation of the exchange reactions --- i.e. the uptake goes increases, but at some point the growth rate reaches saturation.
-This follows \textcite{elsemmanWholecellModelingYeast2022}, in which they address the limitations of FBA in account for concentrations of substrates in the media by varying glucose uptake in the model and observe how the growth rate changes.
-This produces a saturation curve that agrees with the theoretical basis of saturation of glucose transporters [TODO: FACT-CHECKING THIS SENTENCE].
+FBA models include nutrient exchange reactions to simulate the presence of certain nutrients in the growth medium.
+Because FBA models do not account for substrate concentrations, studying the effect of nutrient sources in FBA models involves constraining the flux of such exchange reactions to achieve validated growth rates, as performed by \textcite{elsemmanWholecellModelingYeast2022} to study the effect of glucose.
 
 Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
 I did this with two carbon sources, glucose and pyruvate, and with ammonium as a nitrogen source (figure~\ref{fig:model-saturation}).
 
-% TODO: Check that ammonium saturation really is at 1.45, as used in the grid section.
-% TODO: Remove headers on images, in favour of putting them in captions
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.6\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{ecYeast8-glucose-saturation.png}
-    \caption{Glucose exchange}
-    \label{fig:model-saturation-glucose}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.6\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{ecYeast8-pyruvate-saturation.png}
-    \caption{Pyruvate exchange}
-    \label{fig:model-saturation-pyruvate}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.6\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{ecYeast8-ammonium-saturation.png}
+    \includegraphics[width=\linewidth]{saturation_glc}
     \caption{
-      Ammonium exchange.
-      Glucose uptake set to 16.89, optimal found by non-modified model.}
-    \label{fig:model-saturation-ammonium}
+      Effect of glucose exchange on growth rate.
+      Growth rate saturation is at \SI{8.69}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+    }
+    \label{fig:model-saturation-glucose}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{saturation_diff_glc}
+    \caption{
+    }
+    \label{fig:model-saturation-diff-glucose}
   \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{saturation_pyr}
+    \caption{
+      Effect of pyruvate exchange on growth rate.
+      Growth rate saturation is at \SI{4.44}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+    }
+    \label{fig:model-saturation-pyruvate}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{saturation_diff_pyr}
+    \caption{
+    }
+    \label{fig:model-saturation-diff-pyruvate}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{saturation_amm}
+    \caption{
+      Effect of ammonium exchange on growth rate, with exchanges of carbon sources set to growth rate saturation based on figures~\ref{fig:model-saturation-glucose} and ~\ref{fig:model-saturation-pyruvate}.
+      Growth rate saturation is at \SI{1.48}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} in glucose, and
+      at \SI{1.00}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} in pyruvate.
+    }
+    \label{fig:model-saturation-ammonium}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{saturation_diff_amm}
+    \caption{
+    }
+    \label{fig:model-saturation-diff-ammonium}
+  \end{subfigure}
+
   \caption{
-    Effect of nutrient exchange reactions on the saturation of growth rate, predicted by the ecYeast8 model.
+    Effect of nutrient exchange reactions on growth rate, predicted by the ecYeast8 model (left panels).
+    To demonstrate how saturation values were found,
+    right panels (\ref{fig:model-saturation-diff-glucose},~\ref{fig:model-saturation-diff-pyruvate},~\ref{fig:model-saturation-diff-ammonium}) show discrete differences of growth rates with respect to exchange rates.
   }
   \label{fig:model-saturation}
 \end{figure}
 
+This shows:
+\begin{itemize}
+  \item The glucose saturation curve is similar to that predicted by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
+        The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
+  \item The maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}}.
+        The glucose value agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which uses latest published version of GECKO to create the ecYeast7 model to predict maximum growth rates on various carbon sources, and also agrees with my experimental observations.
+        This study did not predict growth rate on pyruvate, but a lower maximum growth rate on a non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
+  \item The growth rate saturation point for ammonium is determined by the maximal growth rate determines by each carbon source.
+\end{itemize}
 
 \subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
 \label{subsec:model-grid}
