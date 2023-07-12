@@ -330,14 +330,42 @@ This autoregressive model thus `smooths' the time series.
 \parencite{jiaFrequencyDomainAnalysis2021} describe an application of the autoregressive model, based on the fact that there is an analytical solution for the periodogram based on this model.
 In this publication, they use this paradigm to classify synthetic oscillations produced from a stochastic model of gene expression [CHECK IF ACCURATE.  AND LIFTING THE FIGURE FROM THEIR PAPER THAT SHOWS THIS WILL BE HELPFUL].
 Specifically, the presence of a peak in the periodogram suggests that the time series is oscillatory.
-And because the periodogram is produced from a analytical solution, you can compute the period and quantitfy the quality of the oscillation from this periodogram more easily than from a Fourier spectrum created from noisy data.
+And because the periodogram is produced from a analytical solution, you can compute the period and quantify the quality of the oscillation from this periodogram more easily than from a Fourier spectrum created from noisy data.
 
 Based on this, I developed an algorithm as follows:
 
 [INSERT MATHS HERE]
 
-[FIGURE: EXAMPLE -- TIME SERIES ON THE LEFT, WITH SMOOTHED TIME SERIES, AND AR PERIODOGRAM ON THE RIGHT.]
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{timeseries_example_for_ar}
+   \caption{
+     Example time series to illustrate the autoregressive model fitting method.
+     The original time series is shown in light purple, and the autoregressive model with order 4 is fitted to produce the time series shown in dark purple.
+     Birth events automatically defined by \textit{BABY} are shown in dashed vertical lines.
+   }
+   \label{fig:analysis-ar-timeseries}
+  \end{subfigure}
 
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{ar}
+   \caption{
+     The fitted model in~\ref{fig:analysis-ar-timeseries} leads to an analytical definition of a periodogram.
+     The presence of peaks indicate that the time series is oscillatory.
+     In this case, the peaks in the periodogram gives a good estimate of the most likely period of oscillation in the original time series.
+   }
+   \label{fig:analysis-ar-periodogram}
+  \end{subfigure}
+  \caption{
+    Fitting an autoregressive model to determine period.
+  }
+  \label{fig:analysis-ar}
+\end{figure}
+
+Figure~\ref{fig:analysis-ar} shows an example.
 In my investigations, very few time series within a dataset were classified as oscillatory using this method.
 The problem is that there are no parameters that I can adjust to change the `tolerance' for detecting rhythmicity.
 However, among the time series that it deems oscillatory, it guesses the frequency fairly well.
@@ -360,11 +388,11 @@ Alternatively, I can treat the order of the model as a parameter, and perform mo
 
 % DESCRIPTION OF DATA
 
-For this section, I used data from BY4741 cells under 10 g/L glucose, before any nutrient changes.
+For this section, I used data from BY4741 cells under \SI{10}{\gram~\litre^{-1}} glucose, before any nutrient changes.
 % Probably no need to go into so much detail.
 I removed the first 25 time points that is most likely cells adapting to microfluidic conditions.
 I also removed time points after time point 168, when nutrient switching occurred.
-I removed all time series with NaNs.
+I removed all time series with missing time points.
 In total, there are 294 cells, each with 118 time points, spaced 5 minutes apart.
 
 % DATA PROCESSING
@@ -373,17 +401,19 @@ In total, there are 294 cells, each with 118 time points, spaced 5 minutes apart
 
 Figure ... shows a clear downwards trend (which I can't explain biologically yet). If an SVM model is trained using time points as features, there is a risk that the model recognises this trend rather than the presence of oscillations.
 This plot highlights the risk: for some reason non-oscillating time series (hand-scored) tends to have a smaller gradient.
-I thus detrended the data by generating a moving average with a sliding window size of 45 time points, and then dividing each data point by the moving average. I chose 45 time points because that covers ~3 cell division cycles.
-However, there are caveats.
-If the cell division cycle length differs, this window length should change; a spectral method (FFT, autoregressive) could give me an idea of what this cell division cycle length is.
-Additionally, this decreases the number of time points --- there are now 98.
+% I thus detrended the data by generating a moving average with a sliding window size of 45 time points, and then dividing each data point by the moving average. I chose 45 time points because that covers ~3 cell division cycles.
+% However, there are caveats.
+% If the cell division cycle length differs, this window length should change; a spectral method (FFT, autoregressive) could give me an idea of what this cell division cycle length is.
+% Additionally, this decreases the number of time points --- there are now 98.
 
 As the dynamic range of each time series are different from each other, I scaled each time series.
-I used the standard scaler (\texttt{sklearn.preprocessing.StandardScaler()}), which makes each time series has mean 0 and standard deviation 1.
+I used the standard scaler (\texttt{sklearn.preprocessing.StandardScaler()}), which makes each time series has mean 0 and standard deviation 1:
+
+[INSERT MATHS OF THE STANDARD SCALER HERE]
 
 % LABELLING
 
-Based on the processed (range restricted, detrending, normalised) data, I manually scored the 294 time series as non-oscillatory (label '0') or oscillatory (label '1').
+Based on the processed data, I manually scored the 294 time series as non-oscillatory (label `0') or oscillatory (label `1').
 Here, there are 211 oscillatory time series (72\%) and 83 non-oscillatory time series (28\%).
 Thus, there is a slight class imbalance.
 
@@ -395,53 +425,17 @@ I chose 150 time series at random to be used as training data -- the rest become
 
 I explored several model architectures: a support vector machine (SVM) and a random forest (RF) architecture.
 
-I used an support vector classifier (SVC) with a radial bias kernel, using hyperparameters $C = 1$ and $\gamma = 1/(\mathrm{number of time points})$, and normalise features using the standard scaler.
-For featurisation, I explored using time points as features, the time series' Fourier spectrum as features, and using \texttt{catch22} features.
-I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
+First, I used an support vector classifier (SVC) with these hyperparameters:
+\begin{enumerate}
+  \item a radial bias kernel
+  \item $C = 1$ [TODO: explain parameter]
+  \item $\gamma = 1/N$, where $N$ is the number of time points.  [TODO: explain parameter]
+\end{enumerate}
 
-Using time points as features, the metrics show that precision and recall is better than random, and stratified
-five-fold cross-validation does not suggest overfitting (figure ...).
-
-% Replace this with a bar plot.
-% It's probably a good idea to combine all bar plots in this bit of the chapter into one figure with subfigures, so that it is easy to compare featurisation strategies.
-\texttt{
-     Precision 0.8127 Recall 0.7458\\
-     Precision 0.8127 Recall 0.7458\\
-     Precision 0.8036 Recall 0.7288\\
-     Precision 0.8410 Recall 0.7966\\
-     Precision 0.8966 Recall 0.8793\\
-}
-
-% Replace this with a bar plot
-\texttt{
-     Precision 0.5562 Recall 0.7458\\
-     Precision 0.5562 Recall 0.7458\\
-     Precision 0.5312 Recall 0.7288\\
-     Precision 0.5312 Recall 0.7288\\
-     Precision 0.5496 Recall 0.7414\\
-}
-
-Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
-features.
-However, there seems to be greater variation in these measures.
-
-% Replace this with a bar plot
-\texttt{
-     Precision 0.8700 Recall 0.8644\\
-     Precision 0.9005 Recall 0.8983\\
-     Precision 0.7676 Recall 0.7797\\
-     Precision 0.8857 Recall 0.8644\\
-     Precision 0.9517 Recall 0.9483\\
-}
-
-The spectra suggest that oscillatory cells exhibit a peak that is absent in non-oscillatory cells.
-The peak corresponds to a period of 70~80 minutes.
-This peak may explain the good precision \& recall scores.
-
-For my last strategy of featurisation,
-I employed the \textit{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} to compute vectors of features for each time series.
+For featurisation, I explored using time points as features, the time series' Fourier spectrum as features, and using \texttt{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019}.
+\texttt{catch22} is based on the \texttt{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} developed to compute vectors of features for time series.
 This toolbox contains 7701 features defined from across the time series analysis literature.
-I focused on the 22-feature \textit{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
+I focused on the 22-feature \texttt{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
 \textcite{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
 This feature set excludes features that are dependent on mean or spread.
 
@@ -481,21 +475,29 @@ This feature set excludes features that are dependent on mean or spread.
   \label{tab:catch22}
 \end{table}
 
-Precision and recall are best with this set of features.
+Additionally, as a control, I ... [DESCRIBE WHAT `RANDOM' MEANS HERE].
 
-% Replace this with a bar plot
-\texttt{
-     Precision 0.8550 Recall 0.8475\\
-     Precision 0.8628 Recall 0.8644\\
-     Precision 0.8983 Recall 0.8814\\
-     Precision 0.9525 Recall 0.9492\\
-     Precision 0.9832 Recall 0.9828\\
-}
+I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
 
-Feature vectors seem to suggest that feature 10 (9 on the plots as arrays start from zero, \texttt{FC\_LocalSimple\_mean3\_stderr}, mean error from a rolling 3-sample mean forecasting) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
-[EXPLAIN WTF IS FC\_Local...]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{precision_recall}
+  \caption{
+    Evaluation of featurisation strategies for a support vector classifier to classify oscillatory time series of flavin autofluorescence.
+    Precision and recall were used as evaluation metrics, and data points represent each of the five rounds of five-fold cross-validation.
+  }
+  \label{fig:analysis-precision-recall}
+\end{figure}
 
-[SOME FIGURES MAY BE USEFUL HERE.]
+Using time points as features, the metrics show that precision and recall is better than random, and stratified five-fold cross-validation does not suggest overfitting (figure~\ref{fig:analysis-precision-recall}).
+Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
+features.
+However, there seems to be greater variation in these measures.
+The spectra [INSERT PLOT?] suggest that oscillatory cells exhibit a peak that is absent in non-oscillatory cells.
+The peak corresponds to a period of 70--80 minutes.
+This peak may explain the good precision \& recall scores.
+Nevertheless, precision and recall are best with \texttt{catch22}.
+Feature vectors [INSERT PLOT?] seem to suggest that feature 10 (9 on the plots as arrays start from zero, \texttt{FC\_LocalSimple\_mean3\_stderr}, mean error from a rolling 3-sample mean forecasting) plays an important role in distinguishing the oscillatory and non-oscillatory time series. [EXPLAIN WTF IS FC\_Local...] [SOME FIGURES MAY BE USEFUL HERE.]
 
 % ADAPTATION OF SVM: PREDICT PROBABILITIES
 I extended the support vector classifier by using the \texttt{predict\_proba = True} option [PLEASE REPLACE THIS WITH AN ACTUAL, VERBOSE EXPLANATION] so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
