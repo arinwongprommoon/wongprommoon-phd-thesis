@@ -50,6 +50,7 @@
 \newcommand{\sndif}[2]{\frac{\mathrm{d} \,^{2} #1}{\mathrm{d} #2^{2}}}
 %% ordinary second differential.
 
+
 %%%%% Flux balance analysis
 
 \newcommand{\epool}{e_{\mathrm{pool}}}
@@ -62,28 +63,28 @@
 \newcommand{\gro}{\lambda_{0}}
 % growth rate, un-ablated
 
-\newcommand{\Tiabl}{t_{i}^{\prime}}
+\newcommand{\Tiabl}{t_{\mathrm{seq},i}}
 % ablated time, component unspecified
 
-\newcommand{\Tabl}[1]{t_{\mathrm{#1}^{\prime}}}
+\newcommand{\Tabl}[1]{t_{\mathrm{seq},\mathrm{#1}}}
 % ablated time, component specified
 
 \newcommand{\biomfrac}[1]{f_{\mathrm{#1}}}
 % biomass component fraction of dry cell mass, component specified
 
-\newcommand{\griabl}{\lambda_{i}^{\prime}}
+\newcommand{\griabl}{\lambda_{\mathrm{seq},i}}
 % growth rate, ablated, component unspecified
 
-\newcommand{\grabl}[1]{\lambda_{\mathrm{#1}}^{\prime}}
+\newcommand{\grabl}[1]{\lambda_{\mathrm{seq},\mathrm{#1}}}
 % growth rate, ablated, component specified
 
-\newcommand{\Tseq}{A}
+\newcommand{\Tseq}{T_{\mathrm{seq}}}
 % sequential time ('A')
 
-\newcommand{\Tpar}{B}
+\newcommand{\Tpar}{T_{\mathrm{par}}}
 % parallel time ('B')
 
-\newcommand{\ratioabl}{r}
+\newcommand{\ratioabl}{\tau_{\mathrm{seq}/\mathrm{par}}}
 % ablation ratio
 
 \newcommand{\exchrate}[1]{R_{\mathrm{#1}}}
