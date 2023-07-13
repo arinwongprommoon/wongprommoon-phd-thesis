@@ -536,26 +536,53 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
    \caption{
-     Effect on ratio ($\ratioabl$).
+     Effect on ratio ($\ratioabl$), $\epool^{\prime} \leq 2\epool$.
    }
    \label{fig:model-pool-ratio}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{epool_ec_ratio_20}
+   \caption{
+     Effect on ratio ($\ratioabl$), $\epool^{\prime} \leq 20\epool$.
+   }
+   \label{fig:model-pool-ratio-20}
   \end{subfigure}
+
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr}
    \caption{
-     Effect on wild type growth rate ($\gro$).
+     Effect on wild type growth rate ($\gro$), $\epool^{\prime} \leq 2\epool$.
    }
    \label{fig:model-pool-growthrate}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{epool_ec_gr_20}
+   \caption{
+     Effect on wild type growth rate ($\gro$), $\epool^{\prime} \leq 20\epool$.
+   }
+   \label{fig:model-pool-growthrate-20}
   \end{subfigure}
+
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components}
    \caption{
-     Effect on ablated growth rates ($\griabl$).
+     Effect on ablated growth rates ($\griabl$), $\epool^{\prime} \leq 2\epool$.
    }
    \label{fig:model-pool-ablated}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{epool_ec_components_20}
+   \caption{
+     Effect on ablated growth rates ($\griabl$), $\epool^{\prime} \leq 20\epool$.
+   }
+   \label{fig:model-pool-ablated-20}
   \end{subfigure}
+
   \caption{
     Constraining the proteome pool available for synthesis enzymes (decreasing $\epool$) leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio (\ref{fig:model-pool-ratio}).
     Concurrently, the wild type growth rate ($\gro$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}); these values determine the ratio according to equation~\ref{eq:model-ratio}.
