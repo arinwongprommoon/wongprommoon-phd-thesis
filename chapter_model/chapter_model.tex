@@ -621,13 +621,14 @@ Because FBA models do not account for substrate concentrations, studying the eff
 Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
 I did this with two carbon sources, glucose and pyruvate, and with ammonium as a nitrogen source (figure~\ref{fig:model-saturation}).
 
+% TODO: Remove the right panel figs
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{saturation_glc}
     \caption{
-      Effect of glucose exchange on growth rate.
+      Effect of glucose exchange on growth rate, with ammonium exchange flux unrestricted.
       Growth rate saturation is at \SI{8.69}{\mmolgdwh}.
     }
     \label{fig:model-saturation-glucose}
@@ -644,7 +645,7 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
   \centering
     \includegraphics[width=\linewidth]{saturation_pyr}
     \caption{
-      Effect of pyruvate exchange on growth rate.
+      Effect of pyruvate exchange on growth rate, with ammonium exchange flux unrestricted.
       Growth rate saturation is at \SI{4.44}{\mmolgdwh}.
     }
     \label{fig:model-saturation-pyruvate}
@@ -677,8 +678,9 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
 
   \caption{
     Effect of nutrient exchange reactions on growth rate, predicted by the ecYeast8 model (left panels).
-    To demonstrate how saturation values were found,
-    right panels (\ref{fig:model-saturation-diff-glucose},~\ref{fig:model-saturation-diff-pyruvate},~\ref{fig:model-saturation-diff-ammonium}) show discrete differences of growth rates with respect to exchange rates.
+    Saturation values were found by computing discrete differences of growth rates with respect to exchange rates
+    (right panels \ref{fig:model-saturation-diff-glucose},~\ref{fig:model-saturation-diff-pyruvate},~\ref{fig:model-saturation-diff-ammonium}),
+    and saturation was termed as where the differences dropped below a small tolerance value $\epsilon = \num{1e-8}$.
   }
   \label{fig:model-saturation}
 \end{figure}
