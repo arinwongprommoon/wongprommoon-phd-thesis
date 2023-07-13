@@ -70,11 +70,11 @@ ecYeast8 contains four formalisms relevant to my study:
   \item
         The biomass reaction is defined by having `pseudometabolites' as reactants and a biomass species as a product.
         These pseudometabolites include lipids, proteins, carbohydrates, RNA, DNA, ions, and cofactors.
-        This is in contrast to BiGG genome-scale models that have biomass reactions defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\milli\mol~\gram_{DW}^{-1}}.
+        This is in contrast to BiGG genome-scale models that have biomass reactions defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}.
   \item
         The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites.
         This accounts for some KEGG definitions of reactions requiring generic compounds and allows flexibility of biomass definition in different growth conditions.
-        These \textit{isa} reactions are defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\milli\mol~\gram_{DW}^{-1}}, and a pseudometabolite as a product.
+        These \textit{isa} reactions are defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}, and a pseudometabolite as a product.
         In effect, the abundances are shifted one reaction away from the biomass reaction.
   \item
         SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
@@ -170,7 +170,7 @@ Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudo-reactions 
 \end{equation}
 
 with $MW_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
-The flux of enzyme usage pseudo-reactions are defined in units of \SI{}{\milli\mole~\gram_{DW}^{-1}}.
+The flux of enzyme usage pseudo-reactions are defined in units of \SI{}{\mmolgdw}.
 Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (moles) of each enzyme and therefore its catalytic activity.
 
 \subsection{Computing molecular weights of pseudometabolites}
@@ -184,7 +184,7 @@ It is not straightforward to implement these changes as stoichiometric coefficie
 Therefore, I decided to compute the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
 Similar calculations were performed by \parencite{takhaveevTemporalSegregationBiosynthetic2023}.
 
-\textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\milli\mol~\gram_{DW}^{-1}}.
+\textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\mmolgdw}.
 Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023};
 the resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
 
@@ -333,7 +333,7 @@ In summary, the molecular weights of the bulk metabolites are:
 As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}.
 
 And thus the molecular weight of biomass is \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
-In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\milli\mol~\gram_{DW}^{-1}} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the slight deviation from 1000 could be explained by the SLIMEr formalism.
+In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the slight deviation from 1000 could be explained by the SLIMEr formalism.
 Plus, it has been reported that the sum of stoichiometric coefficients are not always verified \parencite{chanStandardizingBiomassReactions2017}.
 
 % Could move to 'results' part of this chapter?
@@ -367,7 +367,7 @@ And I repeated this for the other pseudometabolites.
   \centering
   \includegraphics[width=.9\linewidth]{ablation_example_fluxes.png}
   \caption{
-    Growth rates, from fluxes of the biomass reaction, from the original wild type model ($\lambda_{0}$; leftmost bar) and from the ablated versions of the model ($\lambda_{i}^{\prime}$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
+    Growth rates, from fluxes of the biomass reaction, from the original wild type model ($\gro$; leftmost bar) and from the ablated versions of the model ($\griabl$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
   }
   \label{fig:model-ablate-fluxes}
 \end{figure}
@@ -382,7 +382,7 @@ I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
     Each column shows the component that remains in each round of pseudometabolite ablation.
     Rows represent reactions, sorted by subsystem.
     Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in enzyme usage reaction ($ER_{i}$,~equation \ref{eq:model-gecko-enzyme-usage}) flux, representing more of the proteome allocated to the production of the relevant enzyme, while pink shows a decrease in flux, representing less of the proteome allocated to the enzyme.
-    Flux changes with magnitudes smaller than \SI{3d-6}{\milli\mole~\gram_{DW}^{-1}} are excluded to restrict the number of enzymes, of which there are more than \num{4000}, to aid display purposes.
+    Flux changes with magnitudes smaller than \SI{3d-6}{\mmolgdw} are excluded to restrict the number of enzymes, of which there are more than \num{4000}, to aid display purposes.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
@@ -408,17 +408,17 @@ Investigate proteome allocation as sanity check (figure~\ref{fig:model-ablate-en
 % Do I get the same ablation barcharts if glucose uptake is at saturation (i.e. 8.69)?
 % Judging by the ratio heatmaps later in the chapter, I think the answer is no, and
 % so maybe it makes sense to `max out' the glucose uptake for now.
-I used the ecYeast8.6.0 model with glucose uptake, defined by the bounds of its exchange reaction flux, restricted to within \SIrange{0}{16.89}{\milli\mol~\gram_{DW}^{-1}}.
+I used the ecYeast8.6.0 model with glucose uptake, defined by the bounds of its exchange reaction flux, restricted to within \SIrange{0}{16.89}{\mmolgdw}.
 The upper limit is based on the glucose uptake rate from using the non-modified model to optimise growth rate.
-This value agrees with theoretical saturation rates of \SIrange{16}{19}{\milli\mol~\gram_{DW}^{-1}} \parencite{blankTCACycleActivity2004}.
+This value agrees with theoretical saturation rates of \SIrange{16}{19}{\mmolgdw} \parencite{blankTCACycleActivity2004}.
 Using the biomass reaction as the objective function, I optimise the model to obtain the predicted growth rate, and computed the doubling time based on this growth rate as follows:
 
 \begin{equation}
-  t = \frac{\ln 2}{\lambda}
+  t_{0} = \frac{\ln 2}{\gro}
   \label{eq:model-doubling-time}
 \end{equation}
 
-where $t$ is the doubling time and $\lambda$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
+where $t_{0}$ is the doubling time and $\gro$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
 
 I ablate components in biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{sec:model-yeast8-pseudometabolites} in turn.
 In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
@@ -426,11 +426,11 @@ Doubling time is computed, taking into account the mass fraction of each biomass
 Specifically, the computation is:
 
 \begin{equation}
-  t_{i}^{\prime} = f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
+  \Tiabl = f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-ablated-time}
 \end{equation}
 
-where $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions), $t_{i}$ is the predicted time for synthesis of each biomass component, $f_{i}$ is the mass fraction of each biomass component, and $\lambda_{i}^{\prime}$ is optimal flux of the ablated biomass reaction.
+where $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions), $\Tiabl$ is the predicted time for synthesis of each biomass component, $f_{i}$ is the mass fraction of each biomass component, and $\griabl$ is optimal flux of the ablated biomass reaction.
 $f_{i}$ for each biomass component is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass (table~\ref{tab:ecyeast8-mol-weights}).
 
 For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction:
@@ -458,7 +458,7 @@ And as a summary value, the ratio between the total time predicted by ablation a
 A represents sum of times from focusing on each biomass component --- thus representing time predicted, assuming biomass components are synthesised in turn:
 
 \begin{equation}
-  A = \sum_{i} t_{i}^{\prime} = \sum f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
+  \Tseq = \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-a}
 \end{equation}
 
@@ -466,7 +466,7 @@ B represents greatest time of synthesis of the biomass component if time is assu
 This is always protein as it accounts for $\approx$50\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
 
 \begin{equation}
-  B = \argmax_{i} t_{i} = t_{\mathrm{protein}} = f_{\mathrm{protein}} \cdot \frac{\ln 2}{\lambda_{0}}; \because \argmax_{i} f_{i} = f_{\mathrm{protein}}
+  \Tpar = \argmax_{i} t_{i} = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro}; \because \argmax_{i} f_{i} = \biomfrac{protein}
   \label{eq:model-b}
 \end{equation}
 
@@ -475,13 +475,13 @@ B thus represents the limiting, slowest process.
 Therefore,
 
 \begin{equation}
-  r = \frac{A}{B} = (\sum_i \frac{f_i}{\lambda_i^\prime}) \cdot \frac{\lambda_0}{f_{\mathrm{protein}}} = (\frac{f_{\mathrm{lipid}}}{\lambda_{\mathrm{lipid}}^\prime} + \frac{f_{\mathrm{protein}}}{\lambda_{\mathrm{protein}}^\prime} + \ldots + \frac{f_{\mathrm{ion}}}{\lambda_{\mathrm{ion}}^\prime}) \cdot \frac{\lambda_0}{f_{\mathrm{protein}}}
+  \ratioabl = \frac{\Tseq}{\Tpar} = (\sum_i \frac{f_i}{\griabl}) \cdot \frac{\gro}{\biomfrac{protein}} = (\frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}}) \cdot \frac{\gro}{\biomfrac{protein}}
   \label{eq:model-ratio}
 \end{equation}
 
-This expression means that the definition of the $r$ ratio is not trivial and depends on the $\lambda_{0}$ and the $\lambda_{i}^{\prime}$ values, which are all independent of each other.
+This expression means that the definition of the $\ratioabl$ ratio is not trivial and depends on the $\gro$ and the $\griabl$ values, which are all independent of each other.
 
-A smaller A/B ratio (< 1) means that --- under these conditions --- synthesising biomass components in sequence saves more time.
+A smaller ratio (< 1) means that --- under these conditions --- synthesising biomass components in sequence saves more time.
 In figure~\ref{fig:model-ablate-times}, the ratio is 0.70.
 
 The fact that this still holds true for auxotrophs and deletion strains supports experimental evidence that auxotrophs and deletion strains have YMCs (figure~\ref{fig:model-ablation-strains}).
@@ -531,7 +531,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
    \caption{
-     Effect on ratio ($r$).
+     Effect on ratio ($\ratioabl$).
    }
    \label{fig:model-pool-ratio}
   \end{subfigure}
@@ -539,7 +539,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr}
    \caption{
-     Effect on wild type growth rate ($\lambda_{0}$).
+     Effect on wild type growth rate ($\gro$).
    }
    \label{fig:model-pool-growthrate}
   \end{subfigure}
@@ -547,13 +547,13 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components}
    \caption{
-     Effect on ablated growth rates ($\lambda_{i}^{\prime}$).
+     Effect on ablated growth rates ($\griabl$).
    }
    \label{fig:model-pool-ablated}
   \end{subfigure}
   \caption{
-    Constraining the proteome pool available for synthesis enzymes (decreasing $\epool$) leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $r$ ratio (\ref{fig:model-pool-ratio}).
-    Concurrently, the wild type growth rate ($\lambda_{0}$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\lambda_{i}^{\prime}$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}); these values determine the ratio according to equation~\ref{eq:model-ratio}.
+    Constraining the proteome pool available for synthesis enzymes (decreasing $\epool$) leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio (\ref{fig:model-pool-ratio}).
+    Concurrently, the wild type growth rate ($\gro$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}); these values determine the ratio according to equation~\ref{eq:model-ratio}.
   }
   \label{fig:model-pool}
 \end{figure}
@@ -593,7 +593,7 @@ Other methods considered to minimise protein cost:
   \item Constrain the sum of absolute values of fluxes.
     \begin{itemize}
       \item Namely, $\sum |v| < c$, where $c$ is a constant to be varied.
-      \item This makes sense for the Yeast8 (no enzyme constraint) model, and as $c$ decreases to 0, the original growth rate $\lambda_{0}$ and ablated growth rates $\lambda_{i}^{\prime}$ decreased to 0 linearly, while the $r$ ratio remains constant.
+      \item This makes sense for the Yeast8 (no enzyme constraint) model, and as $c$ decreases to 0, the original growth rate $\gro$ and ablated growth rates $\griabl$ decreased to 0 linearly, while the $\ratioabl$ ratio remains constant.
             ADD PLOTS TO SHOW THIS?
     \end{itemize}
 \end{itemize}
@@ -628,7 +628,7 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
     \includegraphics[width=\linewidth]{saturation_glc}
     \caption{
       Effect of glucose exchange on growth rate.
-      Growth rate saturation is at \SI{8.69}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+      Growth rate saturation is at \SI{8.69}{\mmolgdwh}.
     }
     \label{fig:model-saturation-glucose}
   \end{subfigure}%
@@ -645,7 +645,7 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
     \includegraphics[width=\linewidth]{saturation_pyr}
     \caption{
       Effect of pyruvate exchange on growth rate.
-      Growth rate saturation is at \SI{4.44}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+      Growth rate saturation is at \SI{4.44}{\mmolgdwh}.
     }
     \label{fig:model-saturation-pyruvate}
   \end{subfigure}%
@@ -662,8 +662,8 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
     \includegraphics[width=\linewidth]{saturation_amm}
     \caption{
       Effect of ammonium exchange on growth rate, with exchanges of carbon sources set to growth rate saturation based on figures~\ref{fig:model-saturation-glucose} and ~\ref{fig:model-saturation-pyruvate}.
-      Growth rate saturation is at \SI{1.48}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} in glucose, and
-      at \SI{1.00}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} in pyruvate.
+      Growth rate saturation is at \SI{1.48}{\mmolgdwh} in glucose, and
+      at \SI{1.00}{\mmolgdwh} in pyruvate.
     }
     \label{fig:model-saturation-ammonium}
   \end{subfigure}%
@@ -686,7 +686,7 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
 This shows:
 \begin{itemize}
   \item The glucose saturation curve is similar to that predicted by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
-        The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
+        The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\mmolgdwh} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
   \item The maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}}.
         The glucose value agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which uses latest published version of GECKO to create the ecYeast7 model to predict maximum growth rates on various carbon sources, and also agrees with my experimental observations.
         This study did not predict growth rate on pyruvate, but a lower maximum growth rate on a non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
@@ -702,7 +702,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_ratio}
     \caption{
-      Ratio ($r$)
+      Ratio ($\ratioabl$)
     }
     \label{fig:model-grid-glc-ratio}
   \end{subfigure}%
@@ -710,7 +710,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_growthrate}
     \caption{
-      Growth rate based on unmodified biomass reaction ($\lambda_{0}$)
+      Growth rate based on unmodified biomass reaction ($\gro$)
     }
     \label{fig:model-grid-glc-growthrate}
   \end{subfigure}
@@ -719,7 +719,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_gradient_compare}
     \caption{
-      Differences in magnitude of gradients across axes ($|\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{glucose}}}| - |\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{ammonium}}}|$).
+      Differences in magnitude of gradients across axes ($|\frac{\Delta \gro}{\Delta \exchrate{glucose}}| - |\frac{\Delta \gro}{\Delta \exchrate{ammonium}}|$).
       %Positive values (indigo) indicate glucose-limiting conditions, while negative values (beige) indicate ammonium-limiting conditions.
     }
     \label{fig:model-grid-glc-gradient-compare}
@@ -728,7 +728,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb}
     \caption{
-      $t_{\mathrm{carbohydrate}}^{\prime}$
+      $\Tabl{carbohydrate}$
     }
     \label{fig:model-grid-glc-carb}
   \end{subfigure}
@@ -737,7 +737,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_prot}
     \caption{
-      $t_{\mathrm{protein}}^{\prime}$
+      $\Tabl{protein}$
     }
     \label{fig:model-grid-glc-prot}
   \end{subfigure}%
@@ -745,15 +745,15 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
     \caption{
-      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$
+      $\Tabl{carbohydrate}/\Tabl{protein}$
     }
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of glucose ($R_{\mathrm{glucose}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) on various quantities.
-    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.69}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.48}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+    Effect of glucose ($\exchrate{glucose}$) and ammonium exchange rates ($\exchrate{ammonium}$) on various quantities.
+    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}.
     Black straight lines indicate saturation values.
-    Contours show region in which ratio $r > 1$.
+    Contours show region in which ratio $\ratioabl > 1$.
   }
   \label{fig:model-grid-glc}
 \end{figure}
@@ -764,7 +764,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_ratio}
     \caption{
-      Ratio ($r$)
+      Ratio ($\ratioabl$)
     }
     \label{fig:model-grid-pyr-ratio}
   \end{subfigure}%
@@ -772,7 +772,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_growthrate}
     \caption{
-      Growth rate based on unmodified biomass reaction ($\lambda_{0}$)
+      Growth rate based on unmodified biomass reaction ($\gro$)
     }
     \label{fig:model-grid-pyr-growthrate}
   \end{subfigure}
@@ -781,7 +781,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_gradient_compare}
     \caption{
-      Differences in magnitude of gradients across axes ($|\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{pyruvate}}}| - |\frac{\Delta \lambda_{0}}{\Delta R_{\mathrm{ammonium}}}|$).
+      Differences in magnitude of gradients across axes ($|\frac{\Delta \gro}{\Delta \exchrate{pyruvate}}| - |\frac{\Delta \gro}{\Delta \exchrate{ammonium}}|$).
     }
     \label{fig:model-grid-pyr-gradient-compare}
   \end{subfigure}%
@@ -789,7 +789,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb}
     \caption{
-      $t_{\mathrm{carbohydrate}}^{\prime}$
+      $\Tabl{carbohydrate}$
     }
     \label{fig:model-grid-pyr-carb}
   \end{subfigure}
@@ -798,7 +798,7 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_prot}
     \caption{
-      $t_{\mathrm{protein}}^{\prime}$
+      $\Tabl{protein}$
     }
     \label{fig:model-grid-pyr-prot}
   \end{subfigure}%
@@ -806,15 +806,15 @@ This shows:
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb_to_prot}
     \caption{
-      $t_{\mathrm{carbohydrate}}^{\prime}/t_{\mathrm{protein}}^{\prime}$
+      $\Tabl{carbohydrate}/\Tabl{protein}$
     }
     \label{fig:model-grid-pyr-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of pyruvate ($R_{\mathrm{pyruvate}}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) on various quantities.
-    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{4.44}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}} and ammonium saturation being at \SI{1.00}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}.
+    Effect of pyruvate ($\exchrate{pyruvate}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) on various quantities.
+    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh}.
     Black straight lines indicate saturation values.
-    Contours show region in which ratio $r > 1$.
+    Contours show region in which ratio $\ratioabl > 1$.
   }
   \label{fig:model-grid-pyr}
 \end{figure}
@@ -826,13 +826,13 @@ On the gradients...
         Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
         Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
   \item This seems to divide the space into C-limited growth rate, N-limited growth rate, and neither-limited growth rate.
-  \item Where $r > 1$ seems to correspond to the boundary between the C-limited and N-limited regions.
+  \item Where $\ratioabl > 1$ seems to correspond to the boundary between the C-limited and N-limited regions.
   \item Growth rate near max, i.e.\ C/N not limiting: when glucose or ammonium exchange increases (there is an additive effect), temporal partitioning is more advantageous.
-  \item In the N-limiting region (beige): as ammonium exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{protein}}$ decreases (implying increasing $\lambda_{\mathrm{protein}}^{\prime}$).
-        Because $r$ increases, this means that the increase in $\lambda_{0}$ `overpowers' the increase in $\lambda_{\mathrm{protein}}^{\prime}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
-  \item In the C-limiting region (purple): as glucose exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{carbohydrate}}$ decreases (implying increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$).
-        Because $r$ stays the same, this means that the increase in $\lambda_{\mathrm{carbohydrate}}^{\prime}$ compensates for the increase in $\lambda_{0}$ [SPACE FOR SOME MATHS?].
-  \item A greater `power' of increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$ over increasing $\lambda_{\mathrm{protein}}^{\prime}$ is also seen as $\epool$ increases (with $\lambda_{0}$ increasing linearly) in figure~\ref{fig:model-pool}.
+  \item In the N-limiting region (beige): as ammonium exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{protein}$ decreases (implying increasing $\grabl{protein}$).
+        Because $\ratioabl$ increases, this means that the increase in $\gro$ `overpowers' the increase in $\grabl{protein}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
+  \item In the C-limiting region (purple): as glucose exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{carbohydrate}$ decreases (implying increasing $\grabl{carbohydrate}$).
+        Because $\ratioabl$ stays the same, this means that the increase in $\grabl{carbohydrate}$ compensates for the increase in $\gro$ [SPACE FOR SOME MATHS?].
+  \item A greater `power' of increasing $\grabl{carbohydrate}$ over increasing $\grabl{protein}$ is also seen as $\epool$ increases (with $\gro$ increasing linearly) in figure~\ref{fig:model-pool}.
   \item Pyruvate seems to represent an extreme case of the glucose plots.
         The main difference is with the carbon source axis --- here, the behaviour is more similar to the ammonium axis.
         This can be explained by the fact the pyruvate saturation curve looks similar to the ammonium one.

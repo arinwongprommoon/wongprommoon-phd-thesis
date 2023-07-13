@@ -50,6 +50,41 @@
 \newcommand{\sndif}[2]{\frac{\mathrm{d} \,^{2} #1}{\mathrm{d} #2^{2}}}
 %% ordinary second differential.
 
-%%%%% My new commands
+%%%%% Flux balance analysis
 
 \newcommand{\epool}{e_{\mathrm{pool}}}
+% enzyme pool variable
+
+\newcommand{\mmolgdw}{\milli\mole~\gram_{DW}^{-1}}
+
+\newcommand{\mmolgdwh}{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}
+
+\newcommand{\gro}{\lambda_{0}}
+% growth rate, un-ablated
+
+\newcommand{\Tiabl}{t_{i}^{\prime}}
+% ablated time, component unspecified
+
+\newcommand{\Tabl}[1]{t_{\mathrm{#1}^{\prime}}}
+% ablated time, component specified
+
+\newcommand{\biomfrac}[1]{f_{\mathrm{#1}}}
+% biomass component fraction of dry cell mass, component specified
+
+\newcommand{\griabl}{\lambda_{i}^{\prime}}
+% growth rate, ablated, component unspecified
+
+\newcommand{\grabl}[1]{\lambda_{\mathrm{#1}}^{\prime}}
+% growth rate, ablated, component specified
+
+\newcommand{\Tseq}{A}
+% sequential time ('A')
+
+\newcommand{\Tpar}{B}
+% parallel time ('B')
+
+\newcommand{\ratioabl}{r}
+% ablation ratio
+
+\newcommand{\exchrate}[1]{R_{\mathrm{#1}}}
+% exchange rate of nutrient uptake
