@@ -196,9 +196,7 @@ Namely, I assumed that in reactions that produce the bulk metabolites, there is 
 
 \begin{equation}
 \label{eq:conservation-of-mass}
-  \begin{aligned}
-    \sum_{s}(\text{molar mass}_{s})(\text{stoichiometric coefficient}_{s}) \\ = \sum_{p}(\text{molar mass}_{p})(\text{stoichiometric coefficient}_{p})
-  \end{aligned}
+    \sum_{s}(\text{molar mass}_{s})(\text{stoichiometric coefficient}_{s}) = \sum_{p}(\text{molar mass}_{p})(\text{stoichiometric coefficient}_{p})
 \end{equation}
 
 where $s = 1, ...$ \emph{(number of substrates)} represents substrates and $p = 1, ...$ \emph{(number of products)} represents products of the reaction in question.
@@ -458,7 +456,7 @@ And as a summary value, the ratio between the total time predicted by ablation a
 A represents sum of times from focusing on each biomass component --- thus representing time predicted, assuming biomass components are synthesised in turn:
 
 \begin{equation}
-  \Tseq = \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
+  \Tseq \coloneqq \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-a}
 \end{equation}
 
@@ -466,7 +464,10 @@ B represents greatest time of synthesis of the biomass component if time is assu
 This is always protein as it accounts for $\approx$50\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
 
 \begin{equation}
-  \Tpar = \argmax_{i} t_{i} = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro}; \because \argmax_{i} f_{i} = \biomfrac{protein}
+  \begin{aligned}
+    \Tpar \coloneqq \argmax_{i} t_{i} = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro},\\
+    \because \argmax_{i} f_{i} = \biomfrac{protein}
+  \end{aligned}
   \label{eq:model-b}
 \end{equation}
 
@@ -475,7 +476,11 @@ B thus represents the limiting, slowest process.
 Therefore,
 
 \begin{equation}
-  \ratioabl = \frac{\Tseq}{\Tpar} = (\sum_i \frac{f_i}{\griabl}) \cdot \frac{\gro}{\biomfrac{protein}} = (\frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}}) \cdot \frac{\gro}{\biomfrac{protein}}
+  \begin{aligned}
+    \ratioabl \vcentcolon{}&= \frac{\Tseq}{\Tpar} \\
+    & = (\sum_i \frac{f_i}{\griabl}) \cdot \frac{\gro}{\biomfrac{protein}} \\
+    & = (\frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}}) \cdot \frac{\gro}{\biomfrac{protein}}
+    \end{aligned}
   \label{eq:model-ratio}
 \end{equation}
 
