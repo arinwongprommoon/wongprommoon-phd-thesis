@@ -17,13 +17,14 @@ It is difficult to develop a fine-grained model for the aspects of the YMC,
 especially if most of the molecular mechanisms are unclear
 and if the main read-outs of single-cell studies --- NAD(P)H and flavins autofluorescence --- are `aggregate' measures of several biochemical phenomena.
 It is perhaps more feasible to construct coarse-grained models to answer specific biological questions with the YMC.
-Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address the logic of the metabolic cycle.
-Specifically, why is it advantageous for the cell, and is it linked to resource allocation?
+Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address whether the logic of the metabolic cycle means an advantage for the cell in terms of growth and resource allocation?
+The specific question I aim to answer is whether a restriction on the proteome pool gives rise to temporal partitioning of synthesis of biomass components during growth, and whether this resource allocation strategy remains advantageous in different nutrient conditions and different strains.
+The broader question is if this strategy is indeed advantageous, whether the strategy explains aspects of the yeast metabolic cycle.
 
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
 
-TODO: Short introduction to genome-scale metabolic models -- what they are, what they aim to do, flux balance analysis, and limitations.
+TODO: Short introduction to genome-scale metabolic models -- what they are, what they aim to do, flux balance analysis, and limitations.  Consult \textcite{orthWhatFluxBalance2010}.
 
 \section{Reviewing modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
@@ -404,9 +405,12 @@ Investigate proteome allocation as sanity check (figure~\ref{fig:model-ablate-en
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-I used the ecYeast8.6.0 model with glucose uptake restricted to within [0, 16.89]
-This number is based on the glucose uptake rate from using the non-modified model to optimise growth rate.
-This value agrees with theoretical saturation rates of 16--19 \SI{}{\milli\mol~\gram_{DW}^{-1}} \parencite{blankTCACycleActivity2004}.
+% Do I get the same ablation barcharts if glucose uptake is at saturation (i.e. 8.69)?
+% Judging by the ratio heatmaps later in the chapter, I think the answer is no, and
+% so maybe it makes sense to `max out' the glucose uptake for now.
+I used the ecYeast8.6.0 model with glucose uptake, defined by the bounds of its exchange reaction flux, restricted to within \SIrange{0}{16.89}{\milli\mol~\gram_{DW}^{-1}}.
+The upper limit is based on the glucose uptake rate from using the non-modified model to optimise growth rate.
+This value agrees with theoretical saturation rates of \SIrange{16}{19}{\milli\mol~\gram_{DW}^{-1}} \parencite{blankTCACycleActivity2004}.
 Using the biomass reaction as the objective function, I optimise the model to obtain the predicted growth rate, and computed the doubling time based on this growth rate as follows:
 
 \begin{equation}
@@ -418,7 +422,7 @@ where $t$ is the doubling time and $\lambda$ is the growth rate, equivalent to t
 
 I ablate components in biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{sec:model-yeast8-pseudometabolites} in turn.
 In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
-Doubling time is computed, taking into account the mass fraction of each biomass component -- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
+Doubling time is computed, taking into account the mass fraction of each biomass component --- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
 Specifically, the computation is:
 
 \begin{equation}
@@ -450,8 +454,8 @@ where $t$ is the doubling time found in equation~\ref{eq:model-doubling-time}.
   \label{fig:model-ablate-times}
 \end{figure}
 
-And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure).
-A represents sum of times from focusing on each biomass component -- thus representing time predicted, assuming biomass components are synthesised in turn:
+And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure~\ref{fig:model-ablate-times}).
+A represents sum of times from focusing on each biomass component --- thus representing time predicted, assuming biomass components are synthesised in turn:
 
 \begin{equation}
   A = \sum_{i} t_{i}^{\prime} = \sum f_{i} \cdot \frac{\ln 2}{\lambda_{i}^{\prime}}
@@ -459,7 +463,7 @@ A represents sum of times from focusing on each biomass component -- thus repres
 \end{equation}
 
 B represents greatest time of synthesis of the biomass component if time is assumed to be proportional to mass fraction.
-This is always protein as it accounts for $\approx$50\% of the mass fraction:
+This is always protein as it accounts for $\approx$50\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
 
 \begin{equation}
   B = \argmax_{i} t_{i} = t_{\mathrm{protein}} = f_{\mathrm{protein}} \cdot \frac{\ln 2}{\lambda_{0}}; \because \argmax_{i} f_{i} = f_{\mathrm{protein}}
@@ -825,12 +829,13 @@ On the gradients...
   \item Where $r > 1$ seems to correspond to the boundary between the C-limited and N-limited regions.
   \item Growth rate near max, i.e.\ C/N not limiting: when glucose or ammonium exchange increases (there is an additive effect), temporal partitioning is more advantageous.
   \item In the N-limiting region (beige): as ammonium exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{protein}}$ decreases (implying increasing $\lambda_{\mathrm{protein}}^{\prime}$).
-        Because $r$ increases, this means that the increase in $\lambda_{0}$ `overpowers' the increase in $\lambda_{\mathrm{protein}}^{\prime}$ [SPACE FOR SOME MATHS?].
+        Because $r$ increases, this means that the increase in $\lambda_{0}$ `overpowers' the increase in $\lambda_{\mathrm{protein}}^{\prime}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $e_{\mathrm{pool}}$ INVESTIGATION].
   \item In the C-limiting region (purple): as glucose exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{carbohydrate}}$ decreases (implying increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$).
         Because $r$ stays the same, this means that the increase in $\lambda_{\mathrm{carbohydrate}}^{\prime}$ compensates for the increase in $\lambda_{0}$ [SPACE FOR SOME MATHS?].
+  \item A greater `power' of increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$ over increasing $\lambda_{\mathrm{protein}}^{\prime}$ is also seen as $e_{\mathrm{pool}}$ increases (with $\lambda_{0}$ increasing linearly) in figure~\ref{fig:model-pool}.
   \item Pyruvate seems to represent an extreme case of the glucose plots.
-        The main difference is with the carbon source axis -- here, the behaviour is more similar to the ammonium axis.
-        This can be explained by the fact the the pyruvate saturation curve looks similar to the ammonium one.
+        The main difference is with the carbon source axis --- here, the behaviour is more similar to the ammonium axis.
+        This can be explained by the fact the pyruvate saturation curve looks similar to the ammonium one.
 \end{itemize}
 
 On the C:P ratios...
@@ -846,17 +851,7 @@ On the C:P ratios...
 
 % TODO: convert to prose
 
-Interpretation of results...
 \begin{enumerate}
-  \item A smaller enzyme pool means that it is more advantageous for the cell to perform sequential biosynthesis of biomass components.
-  \item The advantage of sequential biosynthesis of biomass components is retained in deletion strains.
-  \item This balance between sequential and parallel synthesis of biomass components changes when nutrient conditions change --- particularly with carbon (glucose or pyruvate) and nitrogen (ammonium) source uptake changes.
-\end{enumerate}
-
-Discussion and relation to yeast metabolic cycle + literature...
-\begin{enumerate}
-  \item Results confirm temporal segregation of biosynthesis of biomass components, especially as a strategy under constraints on the size of the proteome available for the synthesis of enzymes.
-        Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
   \item The identity of enzymes used during synthesis of biomass components may explain some experimental observations.
         It is possible that the cell synthesises carbohydrate, DNA, and RNA after one another so that usage of  oxidative phosphorylation occur at around the same time.
         This may explain cycles in dissolved oxygen concentrations.
@@ -864,11 +859,20 @@ Discussion and relation to yeast metabolic cycle + literature...
   \item Proteins are the main limiting factor for biosynthesis, mostly owing to its large mass fraction.
         This is followed by carbohydrates and lipids.
         However, the biosynthesis time varies significantly as the nutrient conditions vary.
+  \item The advantage of sequential biosynthesis of biomass components is retained in auxotrophs and deletion strains, confirming the robustness (presence) sequential biomass synthesis as a resource allocation strategy, and thus may explain why the metabolic cycle is still present in such strains.
+        It is important to note that the advantage of sequential synthesis is retained even with nutrient supplements, which ensure a good growth rate.
+  \item A smaller enzyme pool means that it is more advantageous for the cell to perform sequential biosynthesis of biomass components.
+  \item This balance between sequential and parallel synthesis of biomass components changes when nutrient conditions change --- particularly with carbon (glucose or pyruvate) and nitrogen (ammonium) source uptake changes.
+        In particular, it is least advantageous when both carbon and nitrogen are limiting or near-limiting (of growth rate), and is most advantageous when neither are limiting or when only ammonium is limiting.
+        The patterns also reflect the differing saturation patterns of glucose and pyruvate.
   \item The degree of advantage of sequential biosynthesis in various conditions and the time scales predicted may explain why yeast cells perform metabolic cycling in certain nutrient conditions.
-        The model however does not explain why yeast cells continue to have metabolic cycles when abruptly starved of glucose --- although a better investigation would be switching of nutrient conditions, which FBA does not offer (it only looks at steady state).
-
+        The model may provide a \emph{weak} explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose.
+        If the glucose exchange is zero, the solution is infeasible, but if the glucose exchange is \emph{near} zero, the ratio is \emph{less than one}.
+        Although a better investigation would be \emph{switching} of nutrient conditions, which FBA is not built for: it only looks at steady state, and doesn't `remember' past states.
+  \item \emph{In summary:} Results confirm temporal segregation of biosynthesis of biomass components, especially as a strategy under constraints on the size of the proteome available for the synthesis of enzymes.
+        Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
 \end{enumerate}
 
 % Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
 % - How long does it take to replicate the genome?  It is biosynthesis of nucleotides + process of polymerising them.  There has to be super basic cell division cycle literature about this...
-% - Fatty acids: cell may use pentose phosphate pathawy and gluconeogenesis to route flow in a cycle to generate masses of NAD(P)H.  Check if the fluxes suggest this.
+% - Fatty acids: cell may use pentose phosphate pathway and gluconeogenesis to route flow in a cycle to generate masses of NAD(P)H.  Check if the fluxes suggest this.
