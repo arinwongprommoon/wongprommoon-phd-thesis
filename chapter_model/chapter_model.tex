@@ -149,7 +149,7 @@ To constrain enzyme levels in the model, GECKO defines a pseudo-reaction
   \label{eq:model-gecko-enzyme-pool}
 \end{equation}
 
-with a flux $e_{\mathrm{pool}} \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
+with a flux $\epool \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma$ in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
 
 \begin{itemize}
   \item $P$ represents protein fraction with respect to the dry weight of the cell,
@@ -552,7 +552,7 @@ The fact that this still holds true for auxotrophs and deletion strains supports
    \label{fig:model-pool-ablated}
   \end{subfigure}
   \caption{
-    Constraining the proteome pool available for synthesis enzymes (decreasing $e_{\mathrm{pool}}$) leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $r$ ratio (\ref{fig:model-pool-ratio}).
+    Constraining the proteome pool available for synthesis enzymes (decreasing $\epool$) leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $r$ ratio (\ref{fig:model-pool-ratio}).
     Concurrently, the wild type growth rate ($\lambda_{0}$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\lambda_{i}^{\prime}$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}); these values determine the ratio according to equation~\ref{eq:model-ratio}.
   }
   \label{fig:model-pool}
@@ -562,15 +562,15 @@ The fact that this still holds true for auxotrophs and deletion strains supports
 Interpretation of figure~\ref{fig:model-pool}...
 
 \begin{itemize}
-  \item Decide on restricting $e_{\mathrm{pool}} \in [0, 2]$ to give realistic growth rates.
-  \item Growth rate varies linearly as $e_{\mathrm{pool}}$ varies.
+  \item Decide on restricting $\epool \in [0, 2]$ to give realistic growth rates.
+  \item Growth rate varies linearly as $\epool$ varies.
   \item However, the ratio is not constant, but climbs up in steps --- derivation to follow.
-        With higher $e_{\mathrm{pool}}$ values (less of a constraint on the enzyme pool), the ratio increases, indicating less advantage for sequential biosynthesis.
+        With higher $\epool$ values (less of a constraint on the enzyme pool), the ratio increases, indicating less advantage for sequential biosynthesis.
         Here, ratio < 1, but we've seen ratios > 1 in certain nutrient conditions (fig~\ref{fig:model-grid-glc},~\ref{fig:model-grid-pyr}).
-  \item As $e_{\mathrm{pool}}$ increases, ablated flux all start out linear/linear-ish.
-        But then the gradient of these lines change at various points, all going to a plateau at very high $e_{\mathrm{pool}}$ (not shown here).
-  \item Ablated flux doesn't always vary linearly as $e_{\mathrm{pool}}$ varies --- only protein and lipid are linear in this region
-        Perhaps this means that $e_{\mathrm{pool}}$ is limiting for these (expensive) components, and less so the case for the others.
+  \item As $\epool$ increases, ablated flux all start out linear/linear-ish.
+        But then the gradient of these lines change at various points, all going to a plateau at very high $\epool$ (not shown here).
+  \item Ablated flux doesn't always vary linearly as $\epool$ varies --- only protein and lipid are linear in this region
+        Perhaps this means that $\epool$ is limiting for these (expensive) components, and less so the case for the others.
   \item This also confirms that ablated flux traces don't always have to increase linearly and are independent of the growth rate traces.
 \end{itemize}
 
@@ -606,7 +606,7 @@ there is potential double-/triple-counting of imposing constraints, i.e.\:
 \end{enumerate}
 This will confuse interpretation.
 
-Therefore, I decide to vary $e_{\mathrm{pool}}$ to study proteomic constraints as this takes advantage of a formalism that already exists in ecYeast8, by virtue of GECKO, that is easy to interpret and modify.
+Therefore, I decide to vary $\epool$ to study proteomic constraints as this takes advantage of a formalism that already exists in ecYeast8, by virtue of GECKO, that is easy to interpret and modify.
 
 
 \section{Effect of carbon and nitrogen sources}
@@ -829,10 +829,10 @@ On the gradients...
   \item Where $r > 1$ seems to correspond to the boundary between the C-limited and N-limited regions.
   \item Growth rate near max, i.e.\ C/N not limiting: when glucose or ammonium exchange increases (there is an additive effect), temporal partitioning is more advantageous.
   \item In the N-limiting region (beige): as ammonium exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{protein}}$ decreases (implying increasing $\lambda_{\mathrm{protein}}^{\prime}$).
-        Because $r$ increases, this means that the increase in $\lambda_{0}$ `overpowers' the increase in $\lambda_{\mathrm{protein}}^{\prime}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $e_{\mathrm{pool}}$ INVESTIGATION].
+        Because $r$ increases, this means that the increase in $\lambda_{0}$ `overpowers' the increase in $\lambda_{\mathrm{protein}}^{\prime}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
   \item In the C-limiting region (purple): as glucose exchange increases, growth rate ($\lambda_{0}$) increases (decreasing $B$) and $t_{\mathrm{carbohydrate}}$ decreases (implying increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$).
         Because $r$ stays the same, this means that the increase in $\lambda_{\mathrm{carbohydrate}}^{\prime}$ compensates for the increase in $\lambda_{0}$ [SPACE FOR SOME MATHS?].
-  \item A greater `power' of increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$ over increasing $\lambda_{\mathrm{protein}}^{\prime}$ is also seen as $e_{\mathrm{pool}}$ increases (with $\lambda_{0}$ increasing linearly) in figure~\ref{fig:model-pool}.
+  \item A greater `power' of increasing $\lambda_{\mathrm{carbohydrate}}^{\prime}$ over increasing $\lambda_{\mathrm{protein}}^{\prime}$ is also seen as $\epool$ increases (with $\lambda_{0}$ increasing linearly) in figure~\ref{fig:model-pool}.
   \item Pyruvate seems to represent an extreme case of the glucose plots.
         The main difference is with the carbon source axis --- here, the behaviour is more similar to the ammonium axis.
         This can be explained by the fact the pyruvate saturation curve looks similar to the ammonium one.
