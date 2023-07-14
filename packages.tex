@@ -82,9 +82,9 @@
 \DeclareSIUnit\molar{\mole\per\cubic\deci\metre}
 \DeclareSIUnit\Molar{\textsc{m}}
 \DeclareSIUnit\calorie{cal}
-% (I tried these, didn't work)
-%\DeclareSIUnit\mmolgdw{\milli\mole~\gram_{DW}^{-1}}
-%\DeclareSIUnit\mmolgdwh{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}
+% (Following two works on Ubuntu, but not on Arch)
+\DeclareSIUnit\mmolgdw{\milli\mole~\gram_{DW}^{-1}}
+\DeclareSIUnit\mmolgdwh{\milli\mole~\gram_{DW}^{-1}~\hour^{-1}}
 \sisetup{detect-all}
 
 %% Better fractions ie 1/2 with diagonal slash
