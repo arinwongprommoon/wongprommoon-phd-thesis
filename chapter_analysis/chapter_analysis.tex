@@ -325,16 +325,89 @@ Such a ground truth would ideally be from an experiment that is expected to give
 \label{subsec:analysis-classification-ar}
 
 The autoregressive model has been used before to characterise biological time series \parencite{zielinskiStrengthsLimitationsPeriod2014}.
-This model is based on the assumption that each data point in the time series can be expressed as a linear combination of $N$ data points that precede it -- $N$ thus representing the order of the model.
+This model is based on the assumption that each data point in the time series can be expressed as a linear combination of $P$ data points that precede it --- $P$ thus representing the order of the model.
 This autoregressive model thus `smooths' the time series.
+
 \parencite{jiaFrequencyDomainAnalysis2021} describe an application of the autoregressive model, based on the fact that there is an analytical solution for the periodogram based on this model.
-In this publication, they use this paradigm to classify synthetic oscillations produced from a stochastic model of gene expression [CHECK IF ACCURATE.  AND LIFTING THE FIGURE FROM THEIR PAPER THAT SHOWS THIS WILL BE HELPFUL].
-Specifically, the presence of a peak in the periodogram suggests that the time series is oscillatory.
-And because the periodogram is produced from a analytical solution, you can compute the period and quantify the quality of the oscillation from this periodogram more easily than from a Fourier spectrum created from noisy data.
+This publication describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
+Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series.
+I implemented this algorithm, described by \textcite{jiaFrequencyDomainAnalysis2020}, as follows:
 
-Based on this, I developed an algorithm as follows:
+\begin{enumerate}
+  \item The algorithm relies on fitting a single time series $n(0), n(1), \ldots , n(M-1)$ with an autoregressive model $\mathrm{AR}(P)$ with order $P$:
+        \begin{equation}
+          \label{eq:ar-model}
+          \phi_{0}n_{t} + \phi_{1}n_{t-1} + \phi_{2}n_{t-2} + \ldots + \phi_{P}n_{t-P} = \theta_{0}\epsilon_{t}
+        \end{equation}
+        where $\epsilon_{t}$ is a white noise satisfying $\langle \epsilon_{t} \rangle = 0$,
+        $\phi_{0} = 1$, and
+        $\phi_{1}, \ldots , \phi_{P}$ are real numbers such that the complex zeros of the polynomial $\Phi (z) = \sum_{k=0}^{P} \phi_{k}z^{k}$ lie outside the unit circle.
+  \item The sample mean of the time series is estimated by:
+        \begin{equation}
+          \label{eq:ar-mean}
+          \langle n \rangle = \frac{1}{M} \sum_{k=0}^{M-1}n(k)
+        \end{equation}
+  \item The sample autocorrelation function is estimated as:
+        \begin{equation}
+          \label{eq:ar-acf}
+          R_{i} = \frac{1}{M} \sum_{k=0}^{M-1-i}(n(k) - \langle n \rangle)(n(k+i) - \langle n \rangle)
+        \end{equation}
+  \item The coefficients $\phi_{1}, \ldots , \phi_{P}$ are estimated by solving the Yule-Walker equation:
+        \begin{equation}
+          \label{eq:ar-yule-walker}
+          \begin{bmatrix}
+            R_{0} & R_{1} & \dots & R_{P-1} \\
+            R_{1} & R_{0} & \dots & R_{P-2} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            R_{P-1} & R_{P-2} & \dots & R_{0}
+          \end{bmatrix}
+          \begin{bmatrix}
+            \phi_{1} \\
+            \phi_{2} \\
+            \vdots \\
+            \phi_{P}
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+            R_{1} \\
+            R_{2} \\
+            \vdots \\
+            R_{P}
+          \end{bmatrix}
+        \end{equation}
+  \item The parameter $\theta_{0}$ is estimated as:
+        \begin{equation}
+          \label{eq:ar-noise-param}
+          \theta_{0}^{2} = R_{0} - \sum_{k=1}^{P}\theta_{k}R_{k}
+        \end{equation}
+  \item The order $P$ is determined by minimising the Akaike information criterion:
+        \begin{equation}
+          \label{eq:ar-aic}
+          \mathrm{AIC}(P) = \log \theta_{0}^{2}(P) + 2 \frac{P}{M}
+        \end{equation}
+        where $\theta_{0}(P)$ is the estimated $\theta_{0}$ (equation~\ref{eq:ar-noise-param}) for a specific $P$.
+        In this step, $P$ is varied with $1 \leq P \leq 3 \sqrt{M}$, and the optimum order ($P$) is the one that gives the smallest value of $\mathrm{AIC}(P)$
+   \item The power spectrum is thus estimated analytically using the parameters found in earlier steps by:
+        \begin{equation}
+          \label{eq:ar-power-spectrum}
+          G(\xi) = \frac{1}{2 \pi} \cdot \frac{\theta_{0}^{2}}{|\sum_{k=0}^{P}\phi_{k}\me^{-ik\xi}|^{2}}, -\pi \leq \xi \leq \pi
+        \end{equation}
+        where $\xi$ represents frequency.
+\end{enumerate}
 
-[INSERT MATHS HERE]
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
+  \caption{
+    Power spectra (a) analytically derived from fitting an autoregressive model to time series (b) can be divided into four types.
+    Type I lacks a local maximum and is denoted as lacking oscillations.
+    Figure adapted from \textcite{jiaFrequencyDomainAnalysis2020}.
+  }
+  \label{fig:analysis-ar-classification}
+\end{figure}
+
+The resulting power spectra fell into four categories: one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (fig~\ref{fig:analysis-ar-classification}).
+This method thus makes it easy to compute the frequency of the oscillation from the location of the peak and quality of the oscillation from the height of the peak, as opposed to a Fourier spectrum computed base on noisy data.
 
 \begin{figure}
   \centering
@@ -365,7 +438,7 @@ Based on this, I developed an algorithm as follows:
   \label{fig:analysis-ar}
 \end{figure}
 
-Figure~\ref{fig:analysis-ar} shows an example.
+Figure~\ref{fig:analysis-ar} shows an example of the autoregressive model method performed on my time series data of flavin autofluorescence.
 In my investigations, very few time series within a dataset were classified as oscillatory using this method.
 The problem is that there are no parameters that I can adjust to change the `tolerance' for detecting rhythmicity.
 However, among the time series that it deems oscillatory, it guesses the frequency fairly well.
