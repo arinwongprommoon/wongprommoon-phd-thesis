@@ -7,6 +7,7 @@
 - islay:19979 (2021-06-09), 20212 (2021-09-03): Causton strains
 ** To use: experimental
 - islay:26643 (2022-05-19): Delft + 20 g/L glucose
+- Or whatever else that I've already labelled for Ritesh.
 ** To use: synthetic
 - As ground truths for classifier: white/Gaussian noise, harmonic oscillator, FitzHugh-Nagumo oscillator
   - ~skeletons/projects/arin-synthetic-oscillators/synthetic.py~: ~white_noise~, ~sinusoid~ or ~harmonic~, ~fitzhugh_nagumo~ plus noise from ~white_noise~ or ~gillespie_noise~.
