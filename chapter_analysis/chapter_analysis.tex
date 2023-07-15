@@ -508,7 +508,7 @@ Thus, there is a slight class imbalance.
 
 % SPLITTING
 
-I chose 150 time series at random to be used as training data -- the rest becomes testing data.
+I chose 150 time series at random to be used as training data --- the rest becomes testing data.
 
 % FEATURISATION
 
@@ -564,12 +564,12 @@ I explored several model architectures: a support vector machine (SVM) and a ran
 
 First, I used an support vector classifier (SVC) with these hyperparameters:
 \begin{enumerate}
-  \item a radial bias kernel
-  \item $C = 1$ [TODO: explain parameter]
-  \item $\gamma = 1/N$, where $N$ is the number of time points.  [TODO: explain parameter]
+  \item A radial bias kernel.
+  \item The kernel coefficient $\gamma = 1/N$, where $N$ is the number of features.
+  \item The regularisation parameter $C = 1$.  The strength of regularisation is inversely proportional to $C$.
 \end{enumerate}
 
-Additionally, as a control, I ... [DESCRIBE WHAT `RANDOM' MEANS HERE].
+Additionally, as a control, I randomly assigned time series to the oscillatory and non-oscillatory categories and used their time series as features.
 
 I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
 
@@ -583,34 +583,143 @@ I then evaluated the model using stratified five-fold cross-validation, using pr
   \label{fig:analysis-precision-recall}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_testing_featurevector_0}
+   \caption{
+   }
+   \label{fig:analysis-svc-fft-0}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_testing_featurevector_1}
+   \caption{
+   }
+   \label{fig:analysis-svc-fft-1}
+  \end{subfigure}
+  \caption{
+    Fourier spectra of cells in testing set classified as non-oscillatory (class 0,~\ref{fig:analysis-svc-fft-0}) and oscillatory (class 1,~\ref{fig:analysis-svc-fft-1}) by an SVC.
+    Rows represent each cell, each used as an observation for the model.
+    Columns represent each discrete frequency, used as a features for the model.
+    Shades of red represent the power at each discrete frequency, used as feature values.
+  }
+  \label{fig:analysis-svc-fft}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{catch22_training_featurevector_mean}
+  \caption{
+    Mean values of each \texttt{catch22} feature across each cell classified as non-oscillatory (class 0) or oscillatory (class 1) by an SVC from the testing set.
+    The horizontal axis shows each \texttt{catch22} feature from 0 to 21, and the vertical axis shows the mean value of each feature across cells within an identified class.
+  }
+  \label{fig:analysis-svc-catch22}
+\end{figure}
+
 Using time points as features, the metrics show that precision and recall is better than random, and stratified five-fold cross-validation does not suggest overfitting (figure~\ref{fig:analysis-precision-recall}).
 Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
 features.
 However, there seems to be greater variation in these measures.
-The spectra [INSERT PLOT?] suggest that oscillatory cells exhibit a peak that is absent in non-oscillatory cells.
+The spectra (figure~\ref{fig:analysis-svc-fft}) suggest that oscillatory cells exhibit a peak, corresponding to features 6--7, that is absent in non-oscillatory cells.
 The peak corresponds to a period of 70--80 minutes.
 This peak may explain the good precision \& recall scores.
 Nevertheless, precision and recall are best with \texttt{catch22}.
-Feature vectors [INSERT PLOT?] seem to suggest that feature 10 (9 on the plots as arrays start from zero, \texttt{FC\_LocalSimple\_mean3\_stderr}, mean error from a rolling 3-sample mean forecasting) plays an important role in distinguishing the oscillatory and non-oscillatory time series. [EXPLAIN WTF IS FC\_Local...] [SOME FIGURES MAY BE USEFUL HERE.]
+Feature vectors seem to suggest that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9 in figure~\ref{fig:analysis-svc-catch22}) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
+This feature is defined as the mean error from a rolling 3-sample mean forecasting.
+
+[CONFIRM IMPORTANCE VIA RECURSIVE FEATURE ELIMINATION, USING RANDOM FOREST?]
 
 % ADAPTATION OF SVM: PREDICT PROBABILITIES
-I extended the support vector classifier by using the \texttt{predict\_proba = True} option [PLEASE REPLACE THIS WITH AN ACTUAL, VERBOSE EXPLANATION] so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
 
-The distribution of probabilities falls in a U-shape, which is good.
+% Include result from randomly assigning labels as a control?
+% This should give a `hill' in the middle.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{classifier_histogram_probabilities_adapted}
+  \caption{
+    Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC.
+  }
+  \label{fig:analysis-svc-proba-histogram}
+\end{figure}
 
-[FIGURE: U-SHAPE HISTOGRAM FROM AC2022 POSTER.  ALSO INCLUDE THE RESULT FROM RANDOMLY ASSIGNING LABELS, WHICH SHOULD NOT GIVE A U-SHAPE, AS A CONTROL TO SHOW THAT THE MODEL IS ACTUALLY GOOD].
 
-In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by examples.
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{proba_00}
+    \caption{
+      0\%
+    }
+    \label{fig:analysis-svc-proba-00}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{proba_21}
+    \caption{
+      21\%
+    }
+    \label{fig:analysis-svc-proba-21}
+  \end{subfigure}
 
-[FIGURE: GALLERY OF TIME SERIES WITH 0\%, 20\% ... 100\% PROBABILITY OF OSCILLATION]
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{proba_38}
+    \caption{
+      38\%
+    }
+    \label{fig:analysis-svc-proba-38}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{proba_61}
+    \caption{
+      61\%
+    }
+    \label{fig:analysis-svc-proba-61}
+  \end{subfigure}
 
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{proba_88}
+    \caption{
+      88\%
+    }
+    \label{fig:analysis-svc-proba-88}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{proba_99}
+    \caption{
+      99\%
+    }
+    \label{fig:analysis-svc-proba-99}
+  \end{subfigure}
+  \caption{
+    Test set time series shown by probability that each is oscillatory, as determined by the SVC.
+  }
+  \label{fig:analysis-svc-proba-gallery}
+\end{figure}
+
+Using the \texttt{catch22} features, I extended the support vector classifier enabling probability estimates, so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
+Figure~\ref{fig:analysis-svc-proba-histogram} show that the distribution of probabilities falls in a U-shape, and this is good.
+In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by figure~\ref{fig:analysis-svc-proba-gallery}.
+
+[MORE EVALUATION? e.g. ROC curve, precision-recall curve.  MAYBE IT IS OVERKILL HERE.]
+
+In sum,
 % I mention modularity clustering before its appropriate section here.
 % I can create a reference to that section, or move this paragraph to that section and re-word it a bit so it fits the logical flow.
-The \texttt{catch22} features seem to function best so far.
-It makes sense -- given that I could plot cells in \texttt{catch22} feature space and perform modularity clustering, an SVM model based on drawing a `lane' between two clouds of points in \texttt{catch22} feature space should work.
-Furthermore, the publication that describes \texttt{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019} has tested the features' ability to categorise time series across multiple large datasets.
-
-(Better discussion here.  Sum up key points and discuss caveats.  Will probably be easier once I restructure this subsection.)
+% ------------------------------------
+the \texttt{catch22} features seem to function best so far.
+%It makes sense -- given that I could plot cells in \texttt{catch22} feature space and perform modularity clustering, an SVM model based on drawing a `lane' between two clouds of points in \texttt{catch22} feature space should work.
+%Furthermore,
+%\textcite{lubbaCatch22CAnonicalTimeseries2019} has tested the features' ability to categorise time series across multiple large datasets.
+A simple machine learning architecture is sufficient in classifying noisy biological time series into oscillatory and non-oscillatory categories, complete with probabilities.
+This method was also able to identify which time series feature was the most important in distinguishing between oscillatory and non-oscillatory time series.
 
 \section{Characterisation: I have one time series -- what properties does it have?}
 \label{sec:analysis-characterisation}
