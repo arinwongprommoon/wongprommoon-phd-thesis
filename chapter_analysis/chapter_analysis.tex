@@ -726,8 +726,9 @@ This method was also able to identify which time series feature was the most imp
 
 The importance of characterising my time series is that I can quantify how my yeast metabolic cycles respond to genetic and nutrient perturbations.
 Here, I discuss characterising periods, phases, and amplitudes of the oscillations.
-Note that I discuss many of the same non-machine learning methods as I did for the classification section -- such methods are often developed for characterisation but offer features that are useful for classification, but it makes more sense in my thesis to order it this way because you'd usually try to filter out the non-oscillatory time series before trying to grab properties of the oscillatory ones.
+%Note that I discuss many of the same non-machine learning methods as I did for the classification section -- such methods are often developed for characterisation but offer features that are useful for classification, but it makes more sense in my thesis to order it this way because you'd usually try to filter out the non-oscillatory time series before trying to grab properties of the oscillatory ones.
 Then I will discuss the merit of combining several methods, given the limitations of analysing noisy biological time series that I have found.
+% [THIS SENTENCE MAY GO]
 Characterisation is also intimately related to classification, in particular the machine learning methods: these methods can be adapted to tell apart different strains (presumably of different shapes) rather than telling apart oscillatory and non-oscillatory time series.
 
 % Literature review subsection
@@ -735,84 +736,74 @@ Characterisation is also intimately related to classification, in particular the
 \subsection{Periods, phases, amplitudes}
 \label{subsec:analysis-characterisation-quantities}
 
-% Copied from meeting with Zielinski.
+% Adapted from meeting with Zielinski.
 % TODO with this:
-% - adapt to prose
 % - support with evidence, e.g. discussion points from his paper and others
-Period
-\begin{itemize}
-\item Easy to obtain a fixed number from data because it is well-defined.
-\end{itemize}
 
-Shape
-\begin{itemize}
-\item Difficult to analyse and assign a meaningful quantitative measure.  Much easier to describe by eye.
-\begin{itemize}
-\item Often expressed as \emph{skewness} -- after treating one oscillation/peak as a distribution.  Such a peak can be obtained by averaging individual oscillations in a population.
-\end{itemize}
-\item My oscillations all have similar shapes: triangular \& symmetrical.
-\end{itemize}
+% PERIOD
+The period of an oscillatory time series is the easiest characteristic to compute a fixed number for because it is well-defined.
 
+% SHAPE
+The shape of oscillations in a time series is difficult to analyse and assign a meaningful quantitative measure to --- it is easier to describe the shape by eye.
+In the signal processing point of view, the shape of an oscillation is defined by a set of frequencies of sinusoids and their respective power values.
+In other words, to quantitatively describe the shape of an oscillation, a vector of values is needed, and any fixed-number representation necessarily removes some information about the shape.
+Alternatively, the shape can be expressed in terms of skewness, treating one oscillation as if it were a probability distribution [CITATION NEEDED].
 
-Phase
-\begin{itemize}
-\item Tricky to obtain a fixed number from data.  The phase angle obtained can often be noisy/varied.
-\begin{itemize}
-\item Period estimator will always give an error.
-\item Modular arithmetic needed.
-\item We need multiple replicates -- plot populations of time series and see if they overlap.
-\end{itemize}
-\item Need an original/reference phase, which I \emph{need to choose} and it is not always super clear.  There is usually damping compared to this.
-\item Phase depends on the period too.  It could be:
-\begin{itemize}
-\item Absolute (hours), or
-\item With respect to the period (radians).  Normally, use this one, unless I am interested in response to a treatment.
-\end{itemize}
-\end{itemize}
+% PHASE
+There are challenges in obtaining a fixed number of represent the phase of an oscillator time series based on the signal.
+Most importantly, the phase must be defined with respect to a human-defined reference, which may not be clear depending on the data.
+In addition, the phase angle can have uncertainty, particularly if the time series is noisy.
+There are period estimator methods [ELABORATE HERE], but they will always give an error range.
+Estimating the phase angle also requires multiple replicates as estimation methods rely on plotting populations of time series and seeing if they overlap.
+Modular arithmetic is also needed for such methods.
+In sum, more information is needed to estimate the phase compared to other methods.
+When a quantitative representation of the phase is obtained, it can be expressed in absolute terms (in units of time), or in relative terms with respect of the period (in radians).
 
-Amplitude
-\begin{itemize}
-\item Easier to do and easy to explain.
-\item Likely the least important characteristic.
-\item Fit a cosine.  Works if shape doesn't change a lot.  Bad if oscillations are skewed.
-\end{itemize}
+% AMPLITUDE
+The amplitude of the time series is easiest to compute and easiest to explain.
+Methods to estimate the amplitude relies on fitting a cosine to the signal.
+Such methods are adequate if the shape of the time series does not change by much, but are inadequate if oscillations are skewed, as the cosine function models symmetrical oscillations.
+However, the amplitude is likely the least important characteristic to study in the biological timekeeping field.
 
 Of these, finding the period is the easiest to do and most pertinent for my investigation of the yeast metabolic cycle, so I'm going to focus on this.
-Here is a review of some methods used in \textcite{zielinskiStrengthsLimitationsPeriod2014}
+\textcite{zielinskiStrengthsLimitationsPeriod2014} discuss four methods: FFT NLLS (insert full name here), MFourFit (insert full name here), MESA (insert full name here), and the Lomb-Scargle periodogram.
 
 % Copied from meeting with Zielinski.
 % I probably need to try out at least the first two
-FFT NLLS
-\begin{itemize}
-\item Try this first.  Common with circadian people.
-\item Enforces shapes.  Chooses number of sinusoids that fit the shape best, up to 5.  Then reports the best component.
-\item Has confidence intervals, e.g. relative amplitude error ($\leq$ 50\% is good).
-\item Skewness doesn't affect period.
-\end{itemize}
+% TODO: Convert to prose
+\begin{description}
+    \item [FFT NLLS]
+        \begin{itemize}
+            \item Commonly used in the circadian rhythm field, and therefore a good first-try.
+            \item Enforces shapes.  Chooses number of sinusoids that fit the shape best, up to 5.  Then reports the best component.
+            \item Has confidence intervals, e.g. relative amplitude error ($\leq$ 50\% is good).
+            \item Skewness does not affect period.
+        \end{itemize}
+    \item [MFourFit]
+        \begin{itemize}
+            \item Uses harmonics.  Can use the harmonics to describe shapes of oscillations.
+            \item Fits only 1 component, unlike FFT NLLS.  Period and phase interpreted from the main sinusoid component.
+            \item Enforces shapes.
+            \item Skewness does not affect period.
+        \end{itemize}
+    \item [MESA]
+        \begin{itemize}
+            \item Fit autoregressive model then gets period from it.
+            \item Scours periods, then selects model that does best.
+            \item Empirically does well and fast.
+            \item Is based on a very different principle than MFourFit, so if both methods agree on the value of the period, then we can be confident that we have the correct period.
+        \end{itemize}
+    \item [Lomb-Scargle periodogram]
+        \begin{itemize}
+            \item Fits one sinusoid, assumes a period.
+            \item Choose one that gives least error.
+        \end{itemize}
+\end{description}
 
-MFourFit
-\begin{itemize}
-\item Uses harmonics.  Can use the harmonics to describe shapes of oscillations.
-\item Fits only 1 component, unlike FFT NLLS.  Period and phase interpreted from the main sinusoid component.
-\item Enforces shapes.
-\item Skewness doesn't affect period.
-\end{itemize}
+For further detail, I discussed MESA in section~\ref{subsec:analysis-classification-ar} and the Lomb-Scargle periodogram in section~\ref{subsec:analysis-classification-spectral}.
 
-MESA
-\begin{itemize}
-\item Fit autoregressive model then gets period from it.
-\item Scours periods, then selects model that does best.
-\item Empirically does well and fast.
-\item Is based on a very different principle than MFourFit, so if both methods agree on the value of the period, then we can be confident that we have the correct period.
-\end{itemize}
-
-Lomb-Scargle periodogram
-\begin{itemize}
-\item Fits one sinusoid, assumes a period.
-\item Choose one that gives least error.
-\end{itemize}
-
-As I've already discussed the FFT and autoregressive model, I am now going to focus on the autocorrelation function.
+Another common period-estimation method relies on the autocorrelation function, and it was used in [INSERT SOME PUBLICATIONS HERE].
+Here, I am going to discuss adapting the autocorrelation function for my data.
 
 \subsection{Autocorrelation function}
 \label{subsec:analysis-characterisation-acf}
