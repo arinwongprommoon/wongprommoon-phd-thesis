@@ -849,6 +849,54 @@ The autocorrelation of a time series $x$ is thus the cross-correlation of the ti
 
 [TODO: CHECK IF CONSISTENT WITH CODE, AND ALSO ACCOUNT FOR MEAN OVER TIME OPTION]
 
+To model time series, I choose the harmonic oscillator and the FitzHugh-Nagumo oscillator because they are composed of simple equations with few parameters, well-characterised, and mimic the biological time series that I am interested in.
+The harmonic oscillator models the sinusoidal shape of flavin autofluorescence oscillations.
+The FitzHugh-Nagumo model \parencite{fitzhughImpulsesPhysiologicalStates1961} is a well-characterised relaxation oscillator originally developed to model excitable physiological systems, and gives asymmetrical oscillations.
+This oscillator models the shape of histone 2B abundance patterns that indicate the progress through the cell division cycle \parencite{garmendia-torresMultipleInputsEnsure2018}.
+
+The harmonic oscillator $y$ can be defined by:
+
+\begin{equation}
+  \sndif{y}{t} = -\omega^{2}y
+  \label{eq:harmonic}
+\end{equation}
+
+% First-order DEs redundant?
+or as a system of first-order differential equations:
+
+\begin{equation}
+  \begin{aligned}
+    \ndif{y}{t} &= v \\
+    \ndif{v}{t} &= -\omega^{2}y
+  \end{aligned}
+  \label{eq:harmonic-1o}
+\end{equation}
+
+where the sole parameter $\omega$ represents the angular frequency.
+The solution $y(t) = A \sin(\omega{}t + \phi)$ --- where $A$ is a constant representing amplitude and $\phi$ is a constant representing phase, both determined by initial conditions of the system --- defines a sinusoidal time series.
+
+The FitzHugh-Nagumo model is defined by in a system of first-order differential equations:
+
+\begin{equation}
+  \begin{aligned}
+    \ndif{v}{t} &= v - \frac{v^3}{3} - w + RI_{\mathrm{ext}} \\
+    \tau \ndif{w}{t} &= v + a - bw
+  \end{aligned}
+  \label{eq:fhn}
+\end{equation}
+
+where, in the context of the model being developed to model neuronal impulses:
+\begin{itemize}
+  \item $v$ represents the membrane voltage, and
+  \item $w$ represents the linear recovery variable;
+\end{itemize}
+
+and the parameters are $RI_{\mathrm{ext}}$ (external stimulus), $\tau$, $a$, and $b$.
+
+The solution $v(t)$ is taken as a model for histone 2B abundance patterns.
+
+TODO: Define noise.
+
 \subsubsection{Effect of noise parameters on the autocorrelation function}
 \label{subsubsec:analysis-characterisation-acf-sinusoid}
 
