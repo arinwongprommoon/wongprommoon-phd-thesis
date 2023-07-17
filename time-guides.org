@@ -7,8 +7,12 @@ Units: P (Pomodoro, approx 25 minute)
 - 1 book chapter: skimming 1 P.
 
 * Typing text
+- Converting a short section of bullet points to prose: 1 P.
 
-* Figures/etc.
+* Equations
+- 1 set of equations (loosely defined): 1 P.
+
+* Floats (figures/tables/etc.)
 - Adding a couple of already-made figures with simple legends: 2 P.
 - 1 table: 0.75-1 P. (yes, it takes that long)
 
