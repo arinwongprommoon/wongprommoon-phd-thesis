@@ -903,6 +903,10 @@ On the C:P ratios...
         The model may provide a \emph{weak} explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose.
         If the glucose exchange is zero, the solution is infeasible, but if the glucose exchange is \emph{near} zero, the ratio is \emph{less than one}.
         Although a better investigation would be \emph{switching} of nutrient conditions, which FBA is not built for: it only looks at steady state, and doesn't `remember' past states.
+  \item The model does not account for varying protein fractions (relative to cell dry mass) and other parameters that affect the size of $\epool$ during growth and division, and across different conditions.
+        For instance, \parencite{elsemmanWholecellModelingYeast2022} predicts that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
+        However, as I find that $\epool$ affects the growth rate, there may be a circular argument here, and there is no guarantee that parameter values will converge if the cyclical effects are fully accounted for.
+        Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, the model is perhaps sufficient.
   \item \emph{In summary:} Results confirm temporal segregation of biosynthesis of biomass components, especially as a strategy under constraints on the size of the proteome available for the synthesis of enzymes.
         Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
 \end{enumerate}
