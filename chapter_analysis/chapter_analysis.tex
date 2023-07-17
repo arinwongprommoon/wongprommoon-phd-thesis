@@ -814,7 +814,40 @@ I first do so with synthetic time series with known properties and adapt the met
 \subsubsection{Mathematical definitions}
 \label{subsubsec:analysis-characterisation-acf-maths}
 
-Insert content here
+The cross-correlation function used in this chapter is adapted from \textcite{pietschDeterminingGrowthRates2023}, as follows:
+
+\begin{enumerate}
+  \item Let the data have $M$ cells.
+        Each cell $i$ in the population of $M$ cells has a time series $x_{1}^{(i)}, \ldots x_{N}^{(i)}$ of quantity $x$ and a time series $y_{1}^{(i)}, \ldots y_{N}^{(i)}$ of quantity $y$.
+        Let both time series have a sampling interval of $\Delta t$.
+  \item The deviation from the population mean for each time series is computed:
+        \begin{equation}
+          \delta x_{t}^{(i)} = x_{i}^{(i)} - \frac{1}{M} \sum_{j}x_{t}^{(j)}
+          \label{eq:xcf-dmeans-x}
+        \end{equation}
+        \begin{equation}
+          \delta y_{t}^{(i)} = y_{i}^{(i)} - \frac{1}{M} \sum_{j}y_{t}^{(j)}
+          \label{eq:xcf-dmeans-y}
+        \end{equation}
+  \item Based on \textcite{kivietStochasticityMetabolismGrowth2014}, the cross-covariance of the two time series $x$ and $y$ at a time lag of $r\Delta t$, is thus given by:
+        \begin{equation}
+          C_{xy}^{(i)}(r\Delta t) =
+          \begin{cases}
+            \frac{1}{N-r} \sum_{t=1}^{N-r} \delta x_{t}^{(i)} \cdot \delta y_{t+r}^{(i)} & \text{if } r \geq 0 \\
+            C_{yx}^{(i)}(-r \Delta t) & \text{if } r < 0
+          \end{cases}
+          \label{eq:xcf-xcov}
+        \end{equation}
+    \item The cross-correlation is thus given, with normalising by the standard deviation, by:
+        \begin{equation}
+          R_{xy}^{(i)}(r \Delta t) = \frac{C_{xy}^{(i)}(r \Delta t)}{\sqrt{C_{xx}^{(i)}(0) C_{yy}^{(i)}(0)}}
+          \label{eq:xcf-xcf}
+        \end{equation}
+\end{enumerate}
+
+The autocorrelation of a time series $x$ is thus the cross-correlation of the time series with itself, i.e.\ $R_{xx}^{(i)}(r \Delta t)$.
+
+[TODO: CHECK IF CONSISTENT WITH CODE, AND ALSO ACCOUNT FOR MEAN OVER TIME OPTION]
 
 \subsubsection{Effect of noise parameters on the autocorrelation function}
 \label{subsubsec:analysis-characterisation-acf-sinusoid}
