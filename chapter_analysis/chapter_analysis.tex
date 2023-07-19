@@ -78,7 +78,7 @@ This chapter is divided into six sections, five of which correspond to a process
   \item Summary: bringing it all together in a pipeline.
 \end{enumerate}
 
-\section{Cleaning: choosing data, filtering, missing time points}
+\section[Cleaning]{Cleaning: choosing data, filtering, missing time points}
 \label{sec:analysis-cleaning}
 
 The first step of any data science pipeline is cleaning data, and of course there is the adage: 80\% of data science is cleaning data [CITATION NEEDED].
@@ -209,7 +209,7 @@ Again, this is a judgement call, and this is based on looking at several experim
 To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
 For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
 
-\section{Classification: is my time series oscillatory?}
+\section[Classification]{Classification: is my time series oscillatory?}
 \label{sec:analysis-classification}
 
 To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
@@ -721,7 +721,7 @@ the \texttt{catch22} features seem to function best so far.
 A simple machine learning architecture is sufficient in classifying noisy biological time series into oscillatory and non-oscillatory categories, complete with probabilities.
 This method was also able to identify which time series feature was the most important in distinguishing between oscillatory and non-oscillatory time series.
 
-\section{Characterisation: I have one time series -- what properties does it have?}
+\section[Characterisation]{Characterisation: I have one time series -- what properties does it have?}
 \label{sec:analysis-characterisation}
 
 The importance of characterising my time series is that I can quantify how my yeast metabolic cycles respond to genetic and nutrient perturbations.
@@ -1401,7 +1401,7 @@ Here, I consider combining the autocorrelation function and the Fourier transfor
 
 [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
 
-\section{Correlation: I have two signals from the same cell -- what are their relationships to each other?}
+\section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
 \label{sec:analysis-correlation}
 
 So far, we have only considered one type of time series from the yeast metabolic oscillator -- the flavin signal.
@@ -1492,7 +1492,7 @@ This method is used a lot in econometrics and climate science [CITATIONS NEEDED]
 
 (Add content when I figure out how to make this investigation work.)
 
-\section{Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?}
+\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?}
 \label{sec:analysis-clustering}
 
 % Literature review subsection
@@ -1519,7 +1519,7 @@ This thus takes advantage of single-cell microfluidics, as such a platform allow
 % - Supervised classification is going to be mostly killed because it belongs in a previous section, and I have better data than SM vs SC.
 % - Unsupervised clustering: the literature stays, but I'll try doing it on better data.  To add: UMAP.
 % ----------------------
-\subsection{Graph-based Clustering of Oscillations Based on Feature Vectors}
+\subsection{Graph-based clustering of oscillations based on feature vectors}
 \label{subsec:analysis-clustering-graphclustering}
 
 Thus, I converted each time series of flavin autofluorescence to a vector of features, and represented the vectors as nodes on a geometric graph.
