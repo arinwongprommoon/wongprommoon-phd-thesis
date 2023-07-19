@@ -461,15 +461,15 @@ where $t$ is the doubling time found in equation~\ref{eq:model-doubling-time}.
   \label{fig:model-ablate-times}
 \end{figure}
 
-And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (ratio = A/B, as on figure~\ref{fig:model-ablate-times}).
-A represents sum of times from focusing on each biomass component --- thus representing time predicted, assuming biomass components are synthesised in turn:
+And as a summary value, the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed (see figure~\ref{fig:model-ablate-times}).
+$\Tseq$ represents sum of times from focusing on each biomass component --- thus representing time predicted, assuming biomass components are synthesised in turn:
 
 \begin{equation}
   \Tseq \coloneqq \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-a}
 \end{equation}
 
-B represents greatest time of synthesis of the biomass component if time is assumed to be proportional to mass fraction.
+$\Tpar$ represents greatest time of synthesis of the biomass component if time is assumed to be proportional to mass fraction.
 This is always protein as it accounts for $\approx$50\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
 
 \begin{equation}
@@ -480,7 +480,7 @@ This is always protein as it accounts for $\approx$50\% of the mass fraction (ta
   \label{eq:model-b}
 \end{equation}
 
-B thus represents the limiting, slowest process.
+$\Tpar$ thus represents the limiting, slowest process.
 
 Therefore,
 
