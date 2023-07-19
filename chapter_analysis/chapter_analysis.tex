@@ -73,8 +73,8 @@ This chapter is divided into six sections, five of which correspond to a process
   \item Cleaning: choosing data, filtering confounding trends, dealing with missing time points.
   \item Classification: is my time series oscillatory?
   \item Characterisation: I have one time series -- what properties does it have?
-  \item Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?
   \item Correlation: I have two signals from the same cell -- what are their relationships to each other?
+  \item Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?
   \item Summary: bringing it all together in a pipeline.
 \end{enumerate}
 
@@ -1401,6 +1401,97 @@ Here, I consider combining the autocorrelation function and the Fourier transfor
 
 [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
 
+\section{Correlation: I have two signals from the same cell -- what are their relationships to each other?}
+\label{sec:analysis-correlation}
+
+So far, we have only considered one type of time series from the yeast metabolic oscillator -- the flavin signal.
+However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillator; certainly, in my experiments I record signals that monitor both.
+Investigating correlations between two paired time series, originating from the same cell, leads to an understanding of the relationship between the two oscillators.
+The most important being the phase relationship: does one oscillation lag behind the other, to what extent, and is this consistent across cells?
+
+\subsection{Cross-correlation}
+\label{sec:analysis-correlation-xcf}
+
+Cross-correlation, widely used in signal processing, is used to measure how similar two time series are as the displacement of one relative to the other is shifted across the length of the time series.
+To put it in the context of autocorrelation discussed earlier, autocorrelation is a special case of cross-correlation in which the two signals are identical.
+In mathematical terms, cross-correlation is defined as:
+
+[INSERT EQUATIONS HERE]
+
+In a biological context, cross-correlation has been used to investigate how fluctuations in transcription levels influence fluctuations in protein expression in \textit{E. coli} [CHECK CITATION AGAIN TO VERIFY IF TRUE] \parencite{dunlopRegulatoryActivityRevealed2008},
+and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
+Importantly, these studies are derived from single-cell microfluidics experiments with time-lapse microscopy, and therefore their treatment of a population of time series is useful for my case.
+
+Therefore, my use of cross-correlation is adapted from theirs so that it suits a population of time series, which is the thing that I have.
+
+[INSERT EQUATIONS HERE]
+
+As I did for my discussion of autocorrelation, I will start with the sinusoid and FitzHugh-Nagumo oscillators as simulations of my biological time series to show understanding of the methods,
+then move on to an example of a real dataset.
+
+% - Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
+
+% Copied from project: 'Modelling cross-correlation between sinusoids and relaxation oscillators',
+% or, my 'synthetic oscillations report'.
+% Currently doesn't really fit the thesis so much -- it comes with its own subsections, and this part can definitely be shorter.  Certainly, there shouldn't be a 'results' subsection.
+
+% (some text used to be here)
+
+\begin{enumerate}
+\item Cross-correlation between harmonic and FitzHugh-Nagumo oscillators
+\label{sec:orgd5cc0d1}
+
+\begin{enumerate}
+\item Without noise
+\label{sec:org2f425b6}
+
+Original time series
+\begin{center}
+\includegraphics[width=.9\linewidth]{sinusoid_and_fitzhughnagumo_nonoise.png}
+\end{center}
+
+Cross-correlation function, 400 signal pairs (each signal pair randomly phase-shifted)
+\begin{center}
+\includegraphics[width=.9\linewidth]{randomshift_sinusoid_fitzhughnagumo_xcf.png}
+\end{center}
+
+Shift of this function from the origin indicates the lag of one time series with respect to another.  This is the point of using cross-correlation, i.e. quantifying this lag across a population of time series.
+
+\item With Gaussian noise
+\label{sec:org8b120ec}
+
+Original time series
+\begin{center}
+\includegraphics[width=.9\linewidth]{sinusoid_and_fitzhughnagumo.png}
+\end{center}
+
+Cross-correlation function (each signal pair randomly phase-shifted)
+\begin{center}
+\includegraphics[width=.9\linewidth]{randomshift_sinusoid_fitzhughnagumo_noisy_xcf.png}
+\end{center}
+
+\item Compare with biological oscillator
+\label{sec:orgeeca8c5}
+
+Cross-correlation function between flavin autofluorescence oscillations and histone 2B levels, across a population of cells:
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{xcf.pdf}
+\end{center}
+\end{enumerate}
+\end{enumerate}
+
+\subsection{Granger Causality}
+\label{sec:analysis-correlation-granger}
+
+Granger causality is another method of assessing the relationship between two time series.
+It is a statistical hypothesis test used to answer the question of whether one time series is useful for predicting another [CITATION FOR GRANGER CAUSALITY TEST NEEDED] -- in other words, it evaluates precedence of one time series relative to another.
+The logic of the Granger causality test is that: given a time series X and a time series Y, if you can predict values of Y based on the values of X better than you can predict values of Y based on the past values of Y, then X Granger-causes Y.
+This method is used a lot in econometrics and climate science [CITATIONS NEEDED].
+[AND DO BIOLOGISTS USE IT?]
+
+(Add content when I figure out how to make this investigation work.)
+
 \section{Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?}
 \label{sec:analysis-clustering}
 
@@ -1526,97 +1617,6 @@ Discussion
 (Space for discussion according to the figure below.  For example, what can I conclude from this?)
 
 [FIGURE: GRID-SEARCH UMAP PARAMETERS.  THIS FIGURE SHOULD HAVE A 2D GRID OF UMAP PLOTS AS TWO OF THE PARAMETERS ARE VARIED.]
-
-\section{Correlation: I have two signals from the same cell -- what are their relationships to each other?}
-\label{sec:analysis-correlation}
-
-So far, we have only considered one type of time series from the yeast metabolic oscillator -- the flavin signal.
-However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillator; certainly, in my experiments I record signals that monitor both.
-Investigating correlations between two paired time series, originating from the same cell, leads to an understanding of the relationship between the two oscillators.
-The most important being the phase relationship: does one oscillation lag behind the other, to what extent, and is this consistent across cells?
-
-\subsection{Cross-correlation}
-\label{sec:analysis-correlation-xcf}
-
-Cross-correlation, widely used in signal processing, is used to measure how similar two time series are as the displacement of one relative to the other is shifted across the length of the time series.
-To put it in the context of autocorrelation discussed earlier, autocorrelation is a special case of cross-correlation in which the two signals are identical.
-In mathematical terms, cross-correlation is defined as:
-
-[INSERT EQUATIONS HERE]
-
-In a biological context, cross-correlation has been used to investigate how fluctuations in transcription levels influence fluctuations in protein expression in \textit{E. coli} [CHECK CITATION AGAIN TO VERIFY IF TRUE] \parencite{dunlopRegulatoryActivityRevealed2008},
-and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
-Importantly, these studies are derived from single-cell microfluidics experiments with time-lapse microscopy, and therefore their treatment of a population of time series is useful for my case.
-
-Therefore, my use of cross-correlation is adapted from theirs so that it suits a population of time series, which is the thing that I have.
-
-[INSERT EQUATIONS HERE]
-
-As I did for my discussion of autocorrelation, I will start with the sinusoid and FitzHugh-Nagumo oscillators as simulations of my biological time series to show understanding of the methods,
-then move on to an example of a real dataset.
-
-% - Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
-
-% Copied from project: 'Modelling cross-correlation between sinusoids and relaxation oscillators',
-% or, my 'synthetic oscillations report'.
-% Currently doesn't really fit the thesis so much -- it comes with its own subsections, and this part can definitely be shorter.  Certainly, there shouldn't be a 'results' subsection.
-
-% (some text used to be here)
-
-\begin{enumerate}
-\item Cross-correlation between harmonic and FitzHugh-Nagumo oscillators
-\label{sec:orgd5cc0d1}
-
-\begin{enumerate}
-\item Without noise
-\label{sec:org2f425b6}
-
-Original time series
-\begin{center}
-\includegraphics[width=.9\linewidth]{sinusoid_and_fitzhughnagumo_nonoise.png}
-\end{center}
-
-Cross-correlation function, 400 signal pairs (each signal pair randomly phase-shifted)
-\begin{center}
-\includegraphics[width=.9\linewidth]{randomshift_sinusoid_fitzhughnagumo_xcf.png}
-\end{center}
-
-Shift of this function from the origin indicates the lag of one time series with respect to another.  This is the point of using cross-correlation, i.e. quantifying this lag across a population of time series.
-
-\item With Gaussian noise
-\label{sec:org8b120ec}
-
-Original time series
-\begin{center}
-\includegraphics[width=.9\linewidth]{sinusoid_and_fitzhughnagumo.png}
-\end{center}
-
-Cross-correlation function (each signal pair randomly phase-shifted)
-\begin{center}
-\includegraphics[width=.9\linewidth]{randomshift_sinusoid_fitzhughnagumo_noisy_xcf.png}
-\end{center}
-
-\item Compare with biological oscillator
-\label{sec:orgeeca8c5}
-
-Cross-correlation function between flavin autofluorescence oscillations and histone 2B levels, across a population of cells:
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{xcf.pdf}
-\end{center}
-\end{enumerate}
-\end{enumerate}
-
-\subsection{Granger Causality}
-\label{sec:analysis-correlation-granger}
-
-Granger causality is another method of assessing the relationship between two time series.
-It is a statistical hypothesis test used to answer the question of whether one time series is useful for predicting another [CITATION FOR GRANGER CAUSALITY TEST NEEDED] -- in other words, it evaluates precedence of one time series relative to another.
-The logic of the Granger causality test is that: given a time series X and a time series Y, if you can predict values of Y based on the values of X better than you can predict values of Y based on the past values of Y, then X Granger-causes Y.
-This method is used a lot in econometrics and climate science [CITATIONS NEEDED].
-[AND DO BIOLOGISTS USE IT?]
-
-(Add content when I figure out how to make this investigation work.)
 
 \section{Summary}
 \label{sec:analysis-summary}
