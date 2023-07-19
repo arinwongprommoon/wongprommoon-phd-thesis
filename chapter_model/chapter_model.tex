@@ -17,9 +17,18 @@ It is difficult to develop a fine-grained model for the aspects of the YMC,
 especially if most of the molecular mechanisms are unclear
 and if the main read-outs of single-cell studies --- NAD(P)H and flavins autofluorescence --- are `aggregate' measures of several biochemical phenomena.
 It is perhaps more feasible to construct coarse-grained models to answer specific biological questions with the YMC.
-Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address whether the logic of the metabolic cycle means an advantage for the cell in terms of growth and resource allocation?
+
+Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address whether the logic of the metabolic cycle means an advantage for the cell in terms of growth and resource allocation.
+
 The specific question I aim to answer is whether a restriction on the proteome pool gives rise to temporal partitioning of synthesis of biomass components during growth, and whether this resource allocation strategy remains advantageous in different nutrient conditions and different strains.
 The broader question is if this strategy is indeed advantageous, whether the strategy explains aspects of the yeast metabolic cycle.
+
+% From 2023-07-13 meeting note
+Hypotheses:
+\begin{itemize}
+  \item If there is one limiting nutrient, sequential is good.
+  \item But if there are 2 limiting nutrients (e.g. C and N), parallel is good if the associated biomass components share a pathway.
+\end{itemize}
 
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
