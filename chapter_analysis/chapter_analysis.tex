@@ -1201,10 +1201,137 @@ Insert explanations here.
 
 Take home: parameters from fitting can be used to obtain noise properties.
 
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{26643_ts.png}
+    \caption{
+      Sample time series of flavin autofluorescence.
+    }
+    \label{fig:acf-sinusoid-biol-ts}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{fy4_26643_plots_06.png}
+    \caption{
+      Autocorrelation function across a population of time series of flavin autofluorescence.
+    }
+    \label{fig:acf-sinusoid-biol-acf}
+  \end{subfigure}
+
+  \caption{
+    Using the autocorrelation function to characterise oscillations in flavin autofluorescence.
+  }
+  \label{fig:acf-sinusoid-biol}
+\end{figure}
+
 \subsubsection{The autocorrelation function extended for use with FitzHugh-Nagumo oscillators}
 \label{subsubsec:analysis-characterisation-acf-fhn}
 
-Insert content here
+% TODO: Fish for figures.
+% They aren't in the version of the report that I used to seed this section,
+% but they may be in a more updated version of the report, or in some random org note.
+% Failing that, I'm sure there are figures in org resources.
+% Hopefully I won't have to regenerate them.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+  % TODO: Replace with FHN figure
+    \includegraphics[width=\linewidth]{gillespie_k5_d0p05_mean}
+    \caption{
+      Sample FitzHugh-Nagumo oscillators generated with parameters $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82.
+      Each was added with Gillespie noise generated with parameters $k_{0} = 5$ and $d_{0} = 0.05$.
+    }
+    \label{fig:acf-fhn-gillnoise-ts}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    % TODO: Replace with FNH figure
+    \includegraphics[width=\linewidth]{gillespie_k5_d0p05_acf}
+    \caption{
+      Autocorrelation function of~\ref{fig:acf-fhn-gillnoise-ts}.
+      Red line is defined by $y = e^{-2d_{0}T}$, where $T$ represents lag.
+    }
+    \label{fig:acf-fhn-gillnoise-acf}
+  \end{subfigure}
+
+  \caption{
+    The autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise.
+  }
+  \label{fig:acf-fhn}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    % TODO: Replace with FNH figure
+    \includegraphics[width=\linewidth]{acf_fit_example.png}
+    \caption{
+      Exponential decay functions of the form $y = (1-C)e^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
+    }
+    \label{fig:acf-fhn-noiseparams-fit}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    % TODO: Replace with FNH figure
+    \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
+    \caption{
+      The exponential fitting was performed across a range of $d_{0}$ while $k_{0}$ was held constant at 5.
+      The decay rates $D$ of the exponential fits scale linearly with $d_{0}$.
+    }
+    \label{fig:acf-fhn-noiseparams-noisetimescale}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    % TODO: Replace with FNH figure
+    \includegraphics[width=\linewidth]{birthrate_vs_ydispl.png}
+    \caption{
+      The exponential fitting was performed across a range of $k_{0}$ while $d_{0}$ was held constant at 0.05.
+      The y-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as the noise amplitude $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
+    }
+    \label{fig:acf-fhn-noiseparams-noiseamplitude}
+  \end{subfigure}
+
+  \caption{
+    Quantifying the effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
+  }
+  \label{fig:acf-fhn-noiseparams}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.9\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
+    \caption{
+      Sample time series of histone 2B abundance (pink).
+    }
+    \label{fig:acf-sinusoid-biol-ts}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_mCh_06.png}
+    \caption{
+      Autocorrelation function across a population of time series of histone 2B abundance.
+    }
+    \label{fig:acf-sinusoid-biol-acf}
+  \end{subfigure}
+
+  \caption{
+    Using the autocorrelation function to characterise oscillations in histone 2B abundance.
+  }
+  \label{fig:acf-sinusoid-biol}
+\end{figure}
+
+Insert explanations here.
 
 \subsubsection{Summary}
 \label{subsubsec:analysis-characterisation-acf-summary}
