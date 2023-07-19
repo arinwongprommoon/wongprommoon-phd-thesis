@@ -12,6 +12,8 @@
 #   Will over-estimate by about 24% (as of 2023-07-12).  Still useful to see
 #   trends.  I tried to get it to work with texcount output, but it's too much
 #   faff for what it's worth (i.e. a toy).
+# - I also named some 'dump' TEX files "chapter_*_*dump.tex", and they're
+#   counted as well.  They probably shouldn't be though.
 
 OPTION=$1
 
