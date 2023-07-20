@@ -1285,8 +1285,7 @@ My intention is to have it model oscillations of flavin fluorescence that act as
   \centering
   \begin{subfigure}[t]{0.7\textwidth}
   \centering
-  % TODO: Replace with FHN figure
-    \includegraphics[width=\linewidth]{gillespie_k5_d0p05_mean}
+    \includegraphics[width=\linewidth]{fhn_meanplot}
     \caption{
       Sample FitzHugh-Nagumo oscillators generated with parameters $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82.
       Each was added with Gillespie noise generated with parameters $k_{0} = 5$ and $d_{0} = 0.05$.
@@ -1296,8 +1295,7 @@ My intention is to have it model oscillations of flavin fluorescence that act as
 
   \begin{subfigure}[t]{0.7\textwidth}
   \centering
-    % TODO: Replace with FNH figure
-    \includegraphics[width=\linewidth]{gillespie_k5_d0p05_acf}
+    \includegraphics[width=\linewidth]{fhn_acf}
     \caption{
       Autocorrelation function of~\ref{fig:acf-fhn-gillnoise-ts}.
       Red line is defined by $y = e^{-2d_{0}T}$, where $T$ represents lag.
@@ -1315,18 +1313,24 @@ My intention is to have it model oscillations of flavin fluorescence that act as
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    % TODO: Replace with FNH figure
-    \includegraphics[width=\linewidth]{acf_fit_example.png}
+    \includegraphics[width=\linewidth]{fhn_expofit}
     \caption{
       Exponential decay functions of the form $y = (1-C)e^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
     }
     \label{fig:acf-fhn-noiseparams-fit}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{fhn_highnts_expofit}
+    \caption{
+      Similar to figure~\ref{fig:acf-fhn-noiseparams-fit}, but with a greater noise timescale, showing the limitations of this fitting with data using the FitzHugh-Nagumo oscillator as a base.
+    }
+    \label{fig:acf-fhn-noiseparams-fit-highnts}
   \end{subfigure}
 
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    % TODO: Replace with FNH figure
-    \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
+    \includegraphics[width=\linewidth]{fhn_deathrate_vs_decay.png}
     \caption{
       The exponential fitting was performed across a range of $d_{0}$ while $k_{0}$ was held constant at 5.
       The decay rates $D$ of the exponential fits scale linearly with $d_{0}$.
@@ -1335,8 +1339,7 @@ My intention is to have it model oscillations of flavin fluorescence that act as
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    % TODO: Replace with FNH figure
-    \includegraphics[width=\linewidth]{birthrate_vs_ydispl.png}
+    \includegraphics[width=\linewidth]{fhn_birthrate_vs_ydispl.png}
     \caption{
       The exponential fitting was performed across a range of $k_{0}$ while $d_{0}$ was held constant at 0.05.
       The y-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as the noise amplitude $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
