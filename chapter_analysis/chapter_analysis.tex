@@ -1360,6 +1360,7 @@ Note slightly different shape of oscillations here compared to sinusoid.
   \centering
   \begin{subfigure}[t]{0.9\textwidth}
   \centering
+  % TODO: Edit out the flavin bits
     \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
     \caption{
       Sample time series of histone 2B abundance (pink).
@@ -1400,15 +1401,15 @@ The autocorrelation function, in particular, has been used in the yeast metaboli
 
 Here, I consider combining the autocorrelation function and the Fourier transform, and will use this in my analysis of biological data.
 
-[FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
+% [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
 
-[FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
+% [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
 
 \section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
 \label{sec:analysis-correlation}
 
 So far, we have only considered one type of time series from the yeast metabolic oscillator -- the flavin signal.
-However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillator; certainly, in my experiments I record signals that monitor both.
+However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillators; certainly, in my experiments I record signals that monitor both.
 Investigating correlations between two paired time series, originating from the same cell, leads to an understanding of the relationship between the two oscillators.
 The most important being the phase relationship: does one oscillation lag behind the other, to what extent, and is this consistent across cells?
 
@@ -1417,17 +1418,13 @@ The most important being the phase relationship: does one oscillation lag behind
 
 Cross-correlation, widely used in signal processing, is used to measure how similar two time series are as the displacement of one relative to the other is shifted across the length of the time series.
 To put it in the context of autocorrelation discussed earlier, autocorrelation is a special case of cross-correlation in which the two signals are identical.
-In mathematical terms, cross-correlation is defined as:
-
-[INSERT EQUATIONS HERE]
 
 In a biological context, cross-correlation has been used to investigate how fluctuations in transcription levels influence fluctuations in protein expression in \textit{E. coli} [CHECK CITATION AGAIN TO VERIFY IF TRUE] \parencite{dunlopRegulatoryActivityRevealed2008},
 and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
 Importantly, these studies are derived from single-cell microfluidics experiments with time-lapse microscopy, and therefore their treatment of a population of time series is useful for my case.
 
 Therefore, my use of cross-correlation is adapted from theirs so that it suits a population of time series, which is the thing that I have.
-
-[INSERT EQUATIONS HERE]
+My implementation has already been described in section~\ref{subsubsec:analysis-characterisation-acf-maths}.
 
 As I did for my discussion of autocorrelation, I will start with the sinusoid and FitzHugh-Nagumo oscillators as simulations of my biological time series to show understanding of the methods,
 then move on to an example of a real dataset.
@@ -1440,49 +1437,81 @@ then move on to an example of a real dataset.
 
 % (some text used to be here)
 
-\begin{enumerate}
-\item Cross-correlation between harmonic and FitzHugh-Nagumo oscillators
-\label{sec:orgd5cc0d1}
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+  % TODO: Squish so that it is consistent with adjacent figure
+    \includegraphics[width=\linewidth]{sinusoid_and_fitzhughnagumo_nonoise.png}
+    \caption{
+      Sample FitzHugh-Nagumo oscillator (orange) generated with parameters $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82, and a sinusoid of frequency 0.026 (blue), adjusted so that its frequency is the same as that of the FitzHugh-Nagumo oscillator.
+    }
+    \label{fig:xcf-nonoise-ts}
+  \end{subfigure}%
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{randomshift_sinusoid_fitzhughnagumo_xcf.png}
+    \caption{
+      Cross-correlation function of the FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, based on 400 pairs of signal as in~\ref{fig:xcf-nonoise-ts}, each pair randomly phase-shifted.
+    }
+    \label{fig:xcf-nonoise-xcf}
+  \end{subfigure}
 
-\begin{enumerate}
-\item Without noise
-\label{sec:org2f425b6}
+  % TODO: Use Gillespie noise.  Maybe this figure already exists.
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{sinusoid_and_fitzhughnagumo.png}
+    \caption{
+      FitzHugh-Nagumo (orange) and sinusoid oscillators (blue), as in~\ref{fig:xcf-nonoise-ts}, but with Gaussian noise of standard deviation 0.03 added.
+    }
+    \label{fig:xcf-gausnoise-ts}
+  \end{subfigure}%
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{randomshift_sinusoid_fitzhughnagumo_noisy_xcf.png}
+    \caption{
+      Cross-correlation function of the FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, based on 400 pairs of signal as in~\ref{fig:xcf-gausnoise-ts}, each pair randomly phase-shifted.
+    }
+    \label{fig:xcf-gausnoise-xcf}
+  \end{subfigure}
 
-Original time series
-\begin{center}
-\includegraphics[width=.9\linewidth]{sinusoid_and_fitzhughnagumo_nonoise.png}
-\end{center}
-
-Cross-correlation function, 400 signal pairs (each signal pair randomly phase-shifted)
-\begin{center}
-\includegraphics[width=.9\linewidth]{randomshift_sinusoid_fitzhughnagumo_xcf.png}
-\end{center}
+  \caption{
+    Using the cross-correlation function to evaluate the shift of one synthetic time series relative to another with a different shape.
+  }
+  \label{fig:xcf}
+\end{figure}
 
 Shift of this function from the origin indicates the lag of one time series with respect to another.  This is the point of using cross-correlation, i.e. quantifying this lag across a population of time series.
 
-\item With Gaussian noise
-\label{sec:org8b120ec}
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.9\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
+    \caption{
+      Sample time series of flavin autofluorescence (purple) and histone 2B abundance (pink).
+    }
+    \label{fig:xcf-biol-ts}
+  \end{subfigure}
 
-Original time series
-\begin{center}
-\includegraphics[width=.9\linewidth]{sinusoid_and_fitzhughnagumo.png}
-\end{center}
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{xcf.pdf}
+    \caption{
+      Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
+    }
+    \label{fig:xcf-biol}
+  \end{subfigure}
 
-Cross-correlation function (each signal pair randomly phase-shifted)
-\begin{center}
-\includegraphics[width=.9\linewidth]{randomshift_sinusoid_fitzhughnagumo_noisy_xcf.png}
-\end{center}
+  \caption{
+    Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
+  }
+  \label{fig:xcf}
+\end{figure}
 
-\item Compare with biological oscillator
-\label{sec:orgeeca8c5}
-
-Cross-correlation function between flavin autofluorescence oscillations and histone 2B levels, across a population of cells:
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{xcf.pdf}
-\end{center}
-\end{enumerate}
-\end{enumerate}
+Can use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
 
 \subsection{Granger Causality}
 \label{sec:analysis-correlation-granger}
