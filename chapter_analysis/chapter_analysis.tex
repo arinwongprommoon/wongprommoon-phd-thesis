@@ -1616,36 +1616,62 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
 
 I used UMAP to see if there were intrinsic structures in my datasets, and whether these structures found by such as unsupervised method corresponded to labels, whether oscillatory vs non-oscillatory or labels that distinguish cells from different strains or nutrient conditions.
 
-I used \textit{catch22} as features
+The data for this section consists of flavin autofluorescence oscillation from one experiment with both BY4741 (background strain) and zwf1$\Delta$ (mutant strain) strains.
+I expected the zwf1$\Delta$ traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
+Therefore, I tried UMAP to see if it discovers a structure within the dataset that distinguishes between the two strains, or between oscillatory and non-oscillatory time series.
+Before using the dimensionality reduction technique, I used \textit{catch22} to featurise the data --- in other words, converting each time series into a vector of 22 dimensions for UMAP to project onto two dimensions.
 
-% Copied from org note: UMAP to discover structures in flavin datasets
+% TODO: Use different colours for each type of categorisation
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{Figure_15}
+    \caption{
+      Data points labelled by oscillatory/non-oscillatory classification, human-labelled.
+    }
+    \label{fig:umap-osc}
+  \end{subfigure}
 
-% Notes
-% 'labelling custom' refers to using manually-determined oscillatory (0) vs non-oscillatory (1) categories as labels
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{Figure_13}
+    \caption{
+      Data points labelled by strain.
+    }
+    \label{fig:umap-strain}
+  \end{subfigure}
 
-[FIGURES: 'figures 13-16' from \_resources/umap-figures]
+  \caption{
+    UMAP discovers structures in a dataset containing single-cell flavin autofluorescence time series from BY4741 and zwf1$\Delta$ strains.
+    The time series were featurised using \textit{catch22} and UMAP was used to compute a two-dimensional embedding
+    Each data point represents where on this two-dimensional embedding each time series is located, and the data points are coloured by categories that the corresponding time series belong to.
+  }
+  \label{fig:umap}
+\end{figure}
 
-Observations
-\begin{itemize}
-\item Using labels (strains, oscillation categories) to supervise UMAP works very well.
-\item Using catch22 as features doesn't seem to do much better than using raw time points as features.
-\item The most interesting plots are figures 13-16:
-\begin{itemize}
-\item Figure 15 shows that there are two clear clusters of non-oscillatory time series.  This suggests that unsupervised UMAP can discriminate some non-oscillatory time series from the rest.  It's possible that the non-oscillatory time series that cluster with the oscillatory ones may be 'borderline'.  Additionally, comparing this figure with figure 11 shows that using catch22 as features is superior to using time points as features in this context.  The reason these clusters exist in figure 15 and not figure 7 (the equivalent in the other dataset) may be because the BY4741-ZWF1 dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
-\item Comparing figure 15 with figure 13 shows that these non-oscillatory time series are mostly zwf1$\Delta$.  It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
-\item Figure 14 shows that there are three clusters among the zwf1$\Delta$ cells, despite supervised UMAP.  Perhaps these have different shapes.  Similarly, figure 16 shows three clusters of non-oscillatory time series; perhaps there are three main non-oscillatory shapes.
-\end{itemize}
-\end{itemize}
+In figure~\ref{fig:umap}, I set the hyperparameters so that the number of neighbours is 10, the largest dimension is 2 (thus, a two-dimensional map), a minimal distance of 0.05, and the Euclidean distance as the distance metric.
+Figure~\ref{fig:umap-osc} shows that there are two clear clusters of non-oscillatory time series.
+This suggests that unsupervised UMAP can discriminate some non-oscillatory time series from the rest.
+% Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
+It is possible that the non-oscillatory time series that cluster with the oscillatory ones may be `borderline'.
+The reason these clusters exist in this figure is likely because the BY4741-ZWF1 dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
+Comparing figure 15 with figure 13 shows that these non-oscillatory time series are mostly zwf1$\Delta$.
+It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
 
-Discussion
-\begin{itemize}
-\item May need to change the hyperparameters to see if different strains appear in different groups, but it seems to be doing well for some of the plots.
-\item Definitely need to visualise the time series associated with each node in the figures; this might reveal the logic behind the structures.  bokeh can be used (see \url{https://umap-learn.readthedocs.io/en/latest/basic\_usage.html}).
-\end{itemize}
+\begin{figure}
+  \centering
+    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
+    \caption{
+      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
+      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from zwf1$\Delta$ cells.
+    }
+  \label{fig:umap-gridsearch}
+\end{figure}
 
-(Space for discussion according to the figure below.  For example, what can I conclude from this?)
-
-[FIGURE: GRID-SEARCH UMAP PARAMETERS.  THIS FIGURE SHOULD HAVE A 2D GRID OF UMAP PLOTS AS TWO OF THE PARAMETERS ARE VARIED.]
+To assess the effect of changing the UMAP hyperparameters, I perform a grid search of two hyperparameters: the number of neighbours and the minimal distance (figure~\ref{fig:umap-gridsearch}).
+Using all \textit{catch22} features from the BY4741-zwf1$\Delta$ dataset as input vectors, non-oscillatory time series consistently organised themselves into groups distinct from the rest as the hyperparameters were varied.
+With the number of neighbours of 150 and minimum distance of 0.5, the BY4741 and zwf1$\Delta$ nodes seemed to separate well.
 
 \section{Summary}
 \label{sec:analysis-summary}
