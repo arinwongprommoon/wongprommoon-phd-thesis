@@ -1543,6 +1543,9 @@ And I can also ask the question of whether such differences conform to biologica
 Furthermore, clustering is important for a dataset from which we expect cell-to-cell heterogeneity.
 This thus takes advantage of single-cell microfluidics, as such a platform allows us to study such heterogeneity.
 
+The data for this section consists of flavin autofluorescence oscillation from one experiment with both BY4741 (background strain) and zwf1$\Delta$ (mutant strain) strains.
+I expected the zwf1$\Delta$ traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
+
 % \subsection{Machine learning approaches to clustering}
 % \label{subsec:analysis-clustering-ml}
 % - Featurisation -- decisions to make
@@ -1569,7 +1572,7 @@ This algorithm has a resolution parameter which specifies the scale of the clust
 Unsupervised graph-based clustering suggested that the division between complete and minimal media was dominant among time series of flavin autofluorescence. %(figure \ref{fig:EffectofMediaClusters}).
 I constructed an incomplete graph to represent the pairwise similarity between time series based on the \textit{catch22} feature vectors.
 Then, I identified communities in the resulting network using the general Louvain algorithm.
-When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to complete and minimal media groups (figure \ref{fig:EffectofMediaClusters}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
+When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to groups (figure \ref{fig:graphclustering}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
 % (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
 Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
 
@@ -1577,9 +1580,12 @@ Such results suggested that unsupervised graph-based clustering may have potenti
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.5\textwidth]{10m_EffectofMediaClusters}
-  \caption{Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors close to labels defined by media.}
-  \label{fig:EffectofMediaClusters}
+  \includegraphics[width=0.9\textwidth]{graphclustering}
+  \caption{
+    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
+    Red nodes correspond to BY4741, orange nodes correspond to zwf1$\Delta$.
+  }
+  \label{fig:graphclustering}
 \end{figure}
 
 \subsection{UMAP Based on Feature Vectors}
@@ -1614,11 +1620,7 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
         For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
 \end{itemize}
 
-I used UMAP to see if there were intrinsic structures in my datasets, and whether these structures found by such as unsupervised method corresponded to labels, whether oscillatory vs non-oscillatory or labels that distinguish cells from different strains or nutrient conditions.
-
-The data for this section consists of flavin autofluorescence oscillation from one experiment with both BY4741 (background strain) and zwf1$\Delta$ (mutant strain) strains.
-I expected the zwf1$\Delta$ traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
-Therefore, I tried UMAP to see if it discovers a structure within the dataset that distinguishes between the two strains, or between oscillatory and non-oscillatory time series.
+I tried UMAP to see if it discovers a structure within the dataset that distinguishes between the two strains, or between oscillatory and non-oscillatory time series.
 Before using the dimensionality reduction technique, I used \textit{catch22} to featurise the data --- in other words, converting each time series into a vector of 22 dimensions for UMAP to project onto two dimensions.
 
 % TODO: Use different colours for each type of categorisation
