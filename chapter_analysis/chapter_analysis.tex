@@ -1390,6 +1390,8 @@ My intention is to have it model periodic changes in histone 2B intensity levels
 
 My investigation aims to address a signal processing question.  Therefore, for the purposes of my investigation, it is not important that these oscillators function as an accurate model of the biological systems responsible for the biological oscillations observed.  Indeed, given that up to 50 flavoproteins may be responsible for flavin autofluorescence, a component of such a poorly biochemically characterised system like the yeast metabolic cycle, it is not feasible to find a mathematical model that accurately describes the biological oscillations.
 
+Discussion: FitzHugh-Nagumo oscillation is `skewed', therefore some methods quoted by \textcite{zielinskiStrengthsLimitationsPeriod2014} will not work.
+
 So long as the time series resemble the real oscillators of interest, the hope is that the conclusions from investigating our simple \& well-characterised models may answer questions on the behaviour and relationships between our real oscillators. [this sentence is a bit vague, but will revisit this after I weave together the story]  Potentially, this investigation can be extended to oscillators modelled by other systems of differential equations that describe other biological rhythms.
 
 \subsection{Combining methods to get a picture of periodicity}
@@ -1579,37 +1581,6 @@ Such results suggested that unsupervised graph-based clustering may have potenti
   \caption{Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors close to labels defined by media.}
   \label{fig:EffectofMediaClusters}
 \end{figure}
-
-Indeed, I found that the method was able to distinguish time series generated in my project from time series obtained by \textcite{baumgartnerFlavinbasedMetabolicCycles2018} (figure \ref{fig:DistanceMatrixBaumgartner}, table \ref{tab:ClusterBaumgartner})
-However, this ability to distinguish the data sources may have been because the data from different sources were processed in different ways.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.6\textwidth]{10m_DistanceMatrixBaumgartner}
-  \caption{Graph-based clustering was able to partition minimal media time series, complete media time series, and time series from \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
-    This distance matrix is based on cosine distances between \textit{catch22} feature vectors for pairs of time series.  Distances between 0 and 1 (legend, right) are represented as colours.}
-  \label{fig:DistanceMatrixBaumgartner}
-\end{figure}
-
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}[h]{rrrr}
-    & SM & SC & Baumgartner et al.\\
-    Cluster 1 & 1 & 11 & 141\\
-    Cluster 2 & 63 & 28 & 6\\
-    Cluster 3 & 56 & 22 & 8\\
-    Cluster 4 & 79 & 4 & 0\\
-    Cluster 5 & 44 & 4 & 1
-  \end{tabular}
-  \caption{Graph-based clustering is able to partition minimal media time series, complete media time series, and time series from \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.  Table shows one graph partition returned by the general Louvain algorithm.  The graph was constructed according to section [METHODS: HCTSA].  In this case, the default value for the resolution parameter was used.}
-  \label{tab:ClusterBaumgartner}
-\end{table}
-% Rand index?
-
-\subsection{Linear techniques}
-\label{subsec:analysis-clustering-pca}
-
-(Space for PCA and PCA-initiated t-SNE that I did while doing the UMAP project)
 
 \subsection{UMAP Based on Feature Vectors}
 \label{subsec:analysis-clustering-umap}
