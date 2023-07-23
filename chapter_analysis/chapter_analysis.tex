@@ -487,10 +487,10 @@ Such model evaluation is based on quantitative measures of how well the model ma
 % DESCRIPTION OF DATA
 
 For this section, I used data from BY4741 cells under \SI{10}{\gram~\litre^{-1}} glucose, before any nutrient changes.
-% Probably no need to go into so much detail.
-I removed the first 25 time points that is most likely cells adapting to microfluidic conditions.
-I also removed time points after time point 168, when nutrient switching occurred.
-I removed all time series with missing time points.
+% -----[Probably no need to go into so much detail.]-----
+% I removed the first 25 time points that is most likely cells adapting to microfluidic conditions.
+% I also removed time points after time point 168, when nutrient switching occurred.
+% I removed all time series with missing time points.
 In total, there are 294 cells, each with 118 time points, spaced 5 minutes apart.
 
 % DATA PROCESSING
@@ -519,14 +519,10 @@ As a result, each normalised time series has a mean of 0 and a standard deviatio
 Based on the processed data, I manually scored the 294 time series as non-oscillatory (label `0') or oscillatory (label `1').
 Here, there are 211 oscillatory time series (72\%) and 83 non-oscillatory time series (28\%).
 Thus, there is a slight class imbalance.
-
 % SPLITTING
-
 I chose 150 time series at random to be used as training data --- the rest becomes testing data.
-
 % FEATURISATION
-
-I explored three methods of featurisation: using time points as features, the time series' Fourier spectrum as features, and using \texttt{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019}.
+And, I explored three methods of featurisation: using time points as features, the time series' Fourier spectrum as features, and using \texttt{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019}.
 
 \texttt{catch22} is based on the \texttt{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} developed to compute vectors of features for time series.
 This toolbox contains 7701 features defined from across the time series analysis literature.
@@ -574,18 +570,13 @@ After featurisation, to account for the different dynamic ranges of each feature
 
 % MODELS
 
-I explored several model architectures: a support vector machine (SVM) and a random forest (RF) architecture.
-
+I explored support vector machine (SVM) and random forest (RF) model architectures.
 First, I used an support vector classifier (SVC) with these hyperparameters:
 \begin{enumerate}
   \item A radial bias kernel.
   \item The kernel coefficient $\gamma = 1/N$, where $N$ is the number of features.
   \item The regularisation parameter $C = 1$.  The strength of regularisation is inversely proportional to $C$.
 \end{enumerate}
-
-Additionally, as a control, I randomly assigned time series to the oscillatory and non-oscillatory categories and used their time series as features.
-
-I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
 
 \begin{figure}
   \centering
@@ -596,6 +587,13 @@ I then evaluated the model using stratified five-fold cross-validation, using pr
   }
   \label{fig:analysis-precision-recall}
 \end{figure}
+
+As a control, I randomly assigned time series to the oscillatory and non-oscillatory categories and used their time series as features.
+I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
+Using time points as features, the metrics show that precision and recall is better than random, and stratified five-fold cross-validation does not suggest overfitting (figure~\ref{fig:analysis-precision-recall}).
+Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
+features.
+However, there seems to be greater variation in these measures.
 
 \begin{figure}
   \centering
@@ -623,6 +621,10 @@ I then evaluated the model using stratified five-fold cross-validation, using pr
   \label{fig:analysis-svc-fft}
 \end{figure}
 
+The spectra (figure~\ref{fig:analysis-svc-fft}) suggest that oscillatory cells exhibit a peak, corresponding to features 6--7, that is absent in non-oscillatory cells.
+The peak corresponds to a period of 70--80 minutes.
+This peak may explain the good precision \& recall scores.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{catch22_training_featurevector_mean}
@@ -633,13 +635,6 @@ I then evaluated the model using stratified five-fold cross-validation, using pr
   \label{fig:analysis-svc-catch22}
 \end{figure}
 
-Using time points as features, the metrics show that precision and recall is better than random, and stratified five-fold cross-validation does not suggest overfitting (figure~\ref{fig:analysis-precision-recall}).
-Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
-features.
-However, there seems to be greater variation in these measures.
-The spectra (figure~\ref{fig:analysis-svc-fft}) suggest that oscillatory cells exhibit a peak, corresponding to features 6--7, that is absent in non-oscillatory cells.
-The peak corresponds to a period of 70--80 minutes.
-This peak may explain the good precision \& recall scores.
 Nevertheless, precision and recall are best with \texttt{catch22}.
 Feature vectors seem to suggest that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9 in figure~\ref{fig:analysis-svc-catch22}) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
 This feature is defined as the mean error from a rolling 3-sample mean forecasting.
@@ -719,7 +714,7 @@ This feature is defined as the mean error from a rolling 3-sample mean forecasti
 \end{figure}
 
 Using the \texttt{catch22} features, I extended the support vector classifier enabling probability estimates, so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
-Figure~\ref{fig:analysis-svc-proba-histogram} show that the distribution of probabilities falls in a U-shape, and this is good.
+Figure~\ref{fig:analysis-svc-proba-histogram} show that the distribution of probabilities falls in a U-shape; this distribution is desirable because it means that the classifier is for the most part `certain' whether a time series is oscillatory or not.
 In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by figure~\ref{fig:analysis-svc-proba-gallery}.
 
 [MORE EVALUATION? e.g. ROC curve, precision-recall curve.  MAYBE IT IS OVERKILL HERE.]
@@ -728,7 +723,7 @@ In sum,
 % I mention modularity clustering before its appropriate section here.
 % I can create a reference to that section, or move this paragraph to that section and re-word it a bit so it fits the logical flow.
 % ------------------------------------
-the \texttt{catch22} features seem to function best so far.
+the \texttt{catch22} features seem to function best.
 %It makes sense -- given that I could plot cells in \texttt{catch22} feature space and perform modularity clustering, an SVM model based on drawing a `lane' between two clouds of points in \texttt{catch22} feature space should work.
 %Furthermore,
 %\textcite{lubbaCatch22CAnonicalTimeseries2019} has tested the features' ability to categorise time series across multiple large datasets.
