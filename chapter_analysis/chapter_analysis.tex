@@ -738,13 +738,14 @@ Here, I discuss characterising periods, phases, and amplitudes of the oscillatio
 %Note that I discuss many of the same non-machine learning methods as I did for the classification section -- such methods are often developed for characterisation but offer features that are useful for classification, but it makes more sense in my thesis to order it this way because you'd usually try to filter out the non-oscillatory time series before trying to grab properties of the oscillatory ones.
 Then I will discuss the merit of combining several methods, given the limitations of analysing noisy biological time series that I have found.
 % [THIS SENTENCE MAY GO]
-Characterisation is also intimately related to classification, in particular the machine learning methods: these methods can be adapted to tell apart different strains (presumably of different shapes) rather than telling apart oscillatory and non-oscillatory time series.
+%Characterisation is also intimately related to classification, in particular the machine learning methods: these methods can be adapted to tell apart different strains (presumably of different shapes) rather than telling apart oscillatory and non-oscillatory time series.
 
 % Literature review subsection
 % STEAL IDEAS FROM: ZIELINSKI ET AL. 2014
 \subsection{Periods, phases, amplitudes}
 \label{subsec:analysis-characterisation-quantities}
 
+Three useful characteristics of a time series include its period, its phase relative to a reference, and its amplitude.
 % Adapted from meeting with Zielinski.
 % TODO with this:
 % - support with evidence, e.g. discussion points from his paper and others
@@ -754,15 +755,15 @@ The period of an oscillatory time series is the easiest characteristic to comput
 
 % SHAPE
 The shape of oscillations in a time series is difficult to analyse and assign a meaningful quantitative measure to --- it is easier to describe the shape by eye.
-In the signal processing point of view, the shape of an oscillation is defined by a set of frequencies of sinusoids and their respective power values.
+From the signal processing point of view, the shape of an oscillation is defined by a set of frequencies of sinusoids and their respective power values.
 In other words, to quantitatively describe the shape of an oscillation, a vector of values is needed, and any fixed-number representation necessarily removes some information about the shape.
-Alternatively, the shape can be expressed in terms of skewness, treating one oscillation as if it were a probability distribution [CITATION NEEDED].
+Alternatively, the shape can be expressed in terms of skewness, treating one oscillation as if it were a probability distribution. %[CITATION NEEDED].
 
 % PHASE
 There are challenges in obtaining a fixed number of represent the phase of an oscillator time series based on the signal.
 Most importantly, the phase must be defined with respect to a human-defined reference, which may not be clear depending on the data.
 In addition, the phase angle can have uncertainty, particularly if the time series is noisy.
-There are period estimator methods [ELABORATE HERE], but they will always give an error range.
+Phase estimation is part of period estimation methods that are based on fitting cosines to data (to be discussed later), and an error range will always be given.
 Estimating the phase angle also requires multiple replicates as estimation methods rely on plotting populations of time series and seeing if they overlap.
 Modular arithmetic is also needed for such methods.
 In sum, more information is needed to estimate the phase compared to other methods.
@@ -771,47 +772,64 @@ When a quantitative representation of the phase is obtained, it can be expressed
 % AMPLITUDE
 The amplitude of the time series is easiest to compute and easiest to explain.
 Methods to estimate the amplitude relies on fitting a cosine to the signal.
-Such methods are adequate if the shape of the time series does not change by much, but are inadequate if oscillations are skewed, as the cosine function models symmetrical oscillations.
+Such methods are adequate if the shape of the time series does not change by much across time, but are inadequate if oscillations are skewed, as the cosine function models symmetrical oscillations.
 However, the amplitude is likely the least important characteristic to study in the biological timekeeping field.
 
-Of these, finding the period is the easiest to do and most pertinent for my investigation of the yeast metabolic cycle, so I'm going to focus on this.
-\textcite{zielinskiStrengthsLimitationsPeriod2014} discuss four methods: FFT NLLS (insert full name here), MFourFit (insert full name here), MESA (insert full name here), and the Lomb-Scargle periodogram.
+Of these, finding the period is the easiest to do and most pertinent for my investigation of the yeast metabolic cycle, so I focus my further discussion on period estimation.
+\textcite{zielinskiStrengthsLimitationsPeriod2014} discuss several methods, including: FFT NLLS (non-linear least squares, described by \textcite{straumeLeastSquaresAnalysisFluorescence2002}), MFourFit \parencite{edwardsQuantitativeAnalysisRegulatory2010}, MESA (maximum entropy spectral analysis, described by \textcite{burgRelationshipMaximumEntropy1972}), and the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
 
-% Copied from meeting with Zielinski.
 % I probably need to try out at least the first two
-% TODO: Convert to prose
 \begin{description}
-    \item [FFT NLLS]
+    \item [FFT NLLS] \hfill \\
+
         \begin{itemize}
-            \item Commonly used in the circadian rhythm field, and therefore a good first-try.
-            \item Enforces shapes.  Chooses number of sinusoids that fit the shape best, up to 5.  Then reports the best component.
-            \item Has confidence intervals, e.g. relative amplitude error ($\leq$ 50\% is good).
-            \item Skewness does not affect period.
+          \item Is based on the assumption that the time series is best modelled by a sum of cosine functions, each with its own period, amplitude, and phase.
+                In general, five cosines are sufficient for most biological data.
+          \item First fits the data with one cosine and adjust the period, amplitude, and noise parameters using the non-linear least squares fitting algorithm.
+                The Fast Fourier Transform (FFT) can be performed to find a good set of initial parameters.
+                Subsequent cosines are added and their parameters found using the same process until new cosines do not significantly improve the fit.
+          \item The confidence levels of the parameters are found by varying the parameter values until the resulting fit significantly differs from the best-fit model.
+                These can be expressed in terms relative to the original best-fit parameter values.
+          \item The period of the time series is reported as the period of the cosine that gives the best fit and is within the expected range of periods.
+                Skewness does not affect period.
         \end{itemize}
-    \item [MFourFit]
+
+    \item [MFourFit] \hfill \\
+
         \begin{itemize}
-            \item Uses harmonics.  Can use the harmonics to describe shapes of oscillations.
-            \item Fits only 1 component, unlike FFT NLLS.  Period and phase interpreted from the main sinusoid component.
-            \item Enforces shapes.
-            \item Skewness does not affect period.
+          \item Is based on fitting one principal cosine and up to four additional cosines, as a way to reduce model complexity.
+                Each cosine has a period, amplitude, and phase parameter, but the phase parameters of each additional cosine is define as a fraction $\frac{1}{2}, \frac{1}{3}, \ldots \frac{1}{5}$ of the principal cosine.  These harmonics describe the shape of oscillations.
+          \item This algorithm does not directly estimate a period, but varies its estimating of the period within a range of user-defined values.
+                The algorithm evaluates the fit by computing the sum of squared differences between the model and the data, and the model is chosen based on the best fit.
+          \item This algorithm always returns a period even if the time series is not oscillatory.
+                It also assumes knowledge of the shape, and skewness does not affect period.
         \end{itemize}
-    \item [MESA]
+
+    \item [MESA] \hfill \\
+
         \begin{itemize}
-            \item Fit autoregressive model then gets period from it.
-            \item Scours periods, then selects model that does best.
-            \item Empirically does well and fast.
-            \item Is based on a very different principle than MFourFit, so if both methods agree on the value of the period, then we can be confident that we have the correct period.
+          \item Unlike previous curve-fitting methods, MESA fits an autoregressive model to the data then gets period from it.
+                The autoregressive model assumes that each data point can be expressed as the linear combination of a defined number of time points before it (the order), plus noise.
+                This fitted model leads to an analytical expression of the frequency spectrum, and the period can be found from this expression.
+          \item Choosing the best order can be a form of model selection.
+          \item Does not assume a shape of the waveform, and is more precise that Fourier-based methods, but lacks a confidence measure.
+                Empirically does well and fast.
+                It is based on a very different principle than MFourFit, so if both methods agree on the value of the period, then we can be confident that we have the correct period.
         \end{itemize}
-    \item [Lomb-Scargle periodogram]
+
+    \item [Lomb-Scargle periodogram] \hfill \\
+
         \begin{itemize}
             \item Fits one sinusoid, assumes a period.
             \item Choose one that gives least error.
+            \item Can be used with data with time points that are not evenly spaced
         \end{itemize}
+
 \end{description}
 
 For further detail, I discussed MESA in section~\ref{subsec:analysis-classification-ar} and the Lomb-Scargle periodogram in section~\ref{subsec:analysis-classification-spectral}.
 
-Another common period-estimation method relies on the autocorrelation function, and it was used in [INSERT SOME PUBLICATIONS HERE].
+Another common period-estimation method relies on the autocorrelation function, and it was used in \textcite{papagiannakisAutonomousMetabolicOscillations2017}.
 Here, I am going to discuss adapting the autocorrelation function for my data.
 
 \subsection{Autocorrelation function}
