@@ -845,15 +845,18 @@ The cross-correlation function used in this chapter is adapted from \textcite{pi
 
 \begin{enumerate}
   \item Let the data have $M$ cells.
-        Each cell $i$ in the population of $M$ cells has a time series $x_{1}^{(i)}, \ldots x_{N}^{(i)}$ of quantity $x$ and a time series $y_{1}^{(i)}, \ldots y_{N}^{(i)}$ of quantity $y$.
+        Each cell $i$ in the population of $M$ cells has a time series $x_{1}^{(i)}, \ldots , x_{j}^{(i)}, \ldots , x_{N}^{(i)}$ of quantity $x$ and a time series $y_{1}^{(i)}, \ldots , y_{j}^{(i)}, \ldots , y_{N}^{(i)}$ of quantity $y$.
         Let both time series have a sampling interval of $\Delta t$.
-  \item The deviation from the population mean for each time series is computed:
+  \item The deviation from the population mean for each time series is computed.
+        This population mean is calculated over replicates at each time point.
+        The caveat of this calculation is that the signals \emph{must} be out-of-phase.
+        Otherwise, the underlying signal will be subtracted from all time series and the cross-correlation of noise will be computed --- this is undesired.
         \begin{equation}
-          \delta x_{t}^{(i)} = x_{i}^{(i)} - \frac{1}{M} \sum_{j}x_{t}^{(j)}
+          \delta x_{t}^{(i)} = x_{t}^{(i)} - \frac{1}{M} \sum_{j}x_{t}^{(j)}
           \label{eq:xcf-dmeans-x}
         \end{equation}
         \begin{equation}
-          \delta y_{t}^{(i)} = y_{i}^{(i)} - \frac{1}{M} \sum_{j}y_{t}^{(j)}
+          \delta y_{t}^{(i)} = y_{t}^{(i)} - \frac{1}{M} \sum_{j}y_{t}^{(j)}
           \label{eq:xcf-dmeans-y}
         \end{equation}
   \item Based on \textcite{kivietStochasticityMetabolismGrowth2014}, the cross-covariance of the two time series $x$ and $y$ at a time lag of $r\Delta t$, is thus given by:
@@ -873,8 +876,6 @@ The cross-correlation function used in this chapter is adapted from \textcite{pi
 \end{enumerate}
 
 The autocorrelation of a time series $x$ is thus the cross-correlation of the time series with itself, i.e.\ $R_{xx}^{(i)}(r \Delta t)$.
-
-[TODO: CHECK IF CONSISTENT WITH CODE, AND ALSO ACCOUNT FOR MEAN OVER TIME OPTION]
 
 To model time series, I choose the harmonic oscillator and the FitzHugh-Nagumo oscillator because they are composed of simple equations with few parameters, well-characterised, and mimic the biological time series that I am interested in.
 The harmonic oscillator models the sinusoidal shape of flavin autofluorescence oscillations.
