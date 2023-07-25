@@ -1118,7 +1118,7 @@ Third and finally, to investigate the effect of Gillespie noise, I generated Gil
 The autocorrelation function is given by figure~\ref{fig:acf-sinusoids-gillnoise-acf}.
 This gave the following mean across replicates and autocorrelation function.
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
-The exponential decay function $y = \me^{-2d_{0}T}$, where \(T\) represents lag, should in theory fit the median autocorrelation function, and I demonstrate that it is the case.
+The exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag, should in theory fit the median autocorrelation function, and I demonstrate that it is the case.
 In addition, the oscillations in the autocorrelation function should occur every period of the sinusoid, similar to the other noise cases.
 
 \begin{figure}
@@ -1305,6 +1305,8 @@ My intention is to have it model oscillations of flavin fluorescence that act as
 \subsubsection{The autocorrelation function extended for use with FitzHugh-Nagumo oscillators}
 \label{subsubsec:analysis-characterisation-acf-fhn}
 
+Subsequently, I aim to extend the use of the autocorrelation function in quantifying the noise parameters of oscillatory signals from sinusoid signals to signals modelled by the FitzHugh-Nagumo oscillator.
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.7\textwidth}
@@ -1322,7 +1324,7 @@ My intention is to have it model oscillations of flavin fluorescence that act as
     \includegraphics[width=\linewidth]{fhn_acf}
     \caption{
       Autocorrelation function of~\ref{fig:acf-fhn-gillnoise-ts}.
-      Red line is defined by $y = e^{-2d_{0}T}$, where $T$ represents lag.
+      Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents lag.
     }
     \label{fig:acf-fhn-gillnoise-acf}
   \end{subfigure}
@@ -1339,7 +1341,7 @@ My intention is to have it model oscillations of flavin fluorescence that act as
   \centering
     \includegraphics[width=\linewidth]{fhn_expofit}
     \caption{
-      Exponential decay functions of the form $y = (1-C)e^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
+      Exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
     }
     \label{fig:acf-fhn-noiseparams-fit}
   \end{subfigure}%
@@ -1377,8 +1379,11 @@ My intention is to have it model oscillations of flavin fluorescence that act as
   \label{fig:acf-fhn-noiseparams}
 \end{figure}
 
-Autocorrelation function, lag axis scaled by period.
-Note slightly different shape of oscillations here compared to sinusoid.
+My investigation used the same methods as in the previous section (\ref{subsubsec:analysis-characterisation-acf-sinusoid}).
+Notably, the shape of the autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise differed slightly to the sinusoid case --- namely, the waves are more pointed (figure~\ref{fig:acf-fhn-gillnoise-acf}).
+In addition, fitting the exponential decay function $y = \me^{-2d_{0}T}$ to the autocorrelation function was less reliable, particularly with high noise timescales (figure~\ref{fig:acf-fhn-noiseparams-fit-highnts}).
+As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produces a greater range of uncertainty (figure~\ref{fig:acf-fhn-noiseparams-noisetimescale}).
+However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remains as reliable as the sinusoid oscillator case (figure~\ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
 \begin{figure}
   \centering
@@ -1407,25 +1412,39 @@ Note slightly different shape of oscillations here compared to sinusoid.
   \label{fig:acf-fhn-biol}
 \end{figure}
 
-My intention is to have it model periodic changes in histone 2B intensity levels and yeast cells progress through the cell division cycle.
+My intention is to have the FitzHugh-Nagumo oscillator model periodic changes in histone 2B intensity levels and yeast cells progress through the cell division cycle (figure~\ref{fig:acf-fhn-biol}).
 
 \subsubsection{Summary}
 \label{subsubsec:analysis-characterisation-acf-summary}
 
-My investigation aims to address a signal processing question.  Therefore, for the purposes of my investigation, it is not important that these oscillators function as an accurate model of the biological systems responsible for the biological oscillations observed.  Indeed, given that up to 50 flavoproteins may be responsible for flavin autofluorescence, a component of such a poorly biochemically characterised system like the yeast metabolic cycle, it is not feasible to find a mathematical model that accurately describes the biological oscillations.
+My investigation aims to address a signal processing question.
+Therefore, for the purposes of my investigation, it is not important that these oscillators function as an accurate model of the biological systems responsible for the biological oscillations observed.
+Indeed, given that 47 flavoproteins are responsible for flavin autofluorescence, a component of such a poorly biochemically characterised system like the yeast metabolic cycle, it is not feasible to find a mathematical model that accurately describes the biological oscillations.
 
-Discussion: FitzHugh-Nagumo oscillation is `skewed', therefore some methods quoted by \textcite{zielinskiStrengthsLimitationsPeriod2014} will not work.
+The methods developed for the biological timekeeping field, especially circadian rhythms, tend to symmetrical, sinusoidal time series.
+However, many such methods do not suit skewed oscillations such as the FitzHugh-Nagumo oscillator, which models histone 2B abundance changes in the cell division cycle, therefore other methods must be used.
+The autocorrelation function has previously been used to evaluate the periodicity of time series in the yeast metabolic cycle, and here I show that this function can additionally be used to quantify noise properties of the time series.
+However, this function has limited ability of quantify the noise timescale of the FitzHugh-Nagumo oscillator.
 
-So long as the time series resemble the real oscillators of interest, the hope is that the conclusions from investigating our simple \& well-characterised models may answer questions on the behaviour and relationships between our real oscillators. [this sentence is a bit vague, but will revisit this after I weave together the story]  Potentially, this investigation can be extended to oscillators modelled by other systems of differential equations that describe other biological rhythms.
+Potentially, this investigation can be extended to oscillators modelled by other systems of differential equations that describe other biological rhythms.
 
 \subsection{Combining methods to get a picture of periodicity}
 \label{subsec:analysis-characterisation-combined}
 
-As each method comes with own advantages and limitations -- especially apparent when we're dealing with noisy biological data -- it is useful to use several methods in concert get an idea of the periodicity (or other properties) of the oscillations.
-For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator.
-The autocorrelation function, in particular, has been used in the yeast metabolic cycle literature, e.g. \textcite{papagiannakisAutonomousMetabolicOscillations2017}.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\linewidth]{potvin-trottierSynchronousLongtermOscillations2016_1e_adapted}
+  \caption{
+    Autocorrelation function (main) and power spectral density (upper-right inset) calculated over \num{8694} cell divisions' worth of time series of cellular YFP concentration controlled by a YFP-expressing repressilator.
+    From the autocorrelation function, the average period of the oscillations is 5.6 generations, and the peak frequency of the power spectral density agrees.
+    Adapted from \textcite{potvin-trottierSynchronousLongtermOscillations2016}.
+  }
+  \label{fig:acf-fft-example}
+\end{figure}
 
-Here, I consider combining the autocorrelation function and the Fourier transform, and will use this in my analysis of biological data.
+As each method comes with own advantages and limitations --- especially apparent with noisy biological data --- it is useful to use several methods in concert get an idea of the periodicity of the oscillations, or other properties.
+For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator (figure~\ref{fig:acf-fft-example}).
+Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
 
 % [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
 
