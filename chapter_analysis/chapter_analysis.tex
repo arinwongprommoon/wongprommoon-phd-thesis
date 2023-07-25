@@ -1092,7 +1092,7 @@ Gaussian or Gillespie noise was added to the synthetic oscillatory time series b
     \includegraphics[width=\linewidth]{gillespie_k5_d0p05_acf}
     \caption{
       Autocorrelation function of~\ref{fig:acf-sinusoids-gillnoise-ts}.
-      Red line is defined by $y = e^{-2d_{0}T}$, where $T$ represents lag, which should in theory fit the median autocorrelation function.
+      Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents lag, which should in theory fit the median autocorrelation function.
     }
     \label{fig:acf-sinusoids-gillnoise-acf}
   \end{subfigure}
@@ -1103,26 +1103,23 @@ Gaussian or Gillespie noise was added to the synthetic oscillatory time series b
   \label{fig:acf-sinusoids}
 \end{figure}
 
-Need to make sure that we understand the autocorrelation function, so we start from the simplest case: the sinusoid.
-Want to understand what processes control the shape of autocorrelation and cross correlation functions.
+To build understanding of the autocorrelation function on noisy time series, I start from the simple case of using the sinusoid as the input time series.
 
-As the underlying dynamic process is stationary with a constant mean, we can modify our calculation of the autocorrelation function so that the mean is calculated over time and replicates.
-Random initial phase sampled from the distribution \(Unif[0,2\pi)\).
+First, I generated a population of 400 out-of-phase sinusoids of the same frequency (figure~\ref{fig:acf-sinusoids-nonoise-ts}), and computed the autocorrelation function across the population (figure~\ref{fig:acf-sinusoids-nonoise-acf}).
+The phase of each sinusoid was randomised, sampled from the uniform distribution \(Unif[0,2\pi)\).
+As expected from the theoretical definitions, each autocorrelation function, corresponding to each time series, resembles a cosine with an amplitude of 1 and the same period as the sinusoids.
+% [Show working -- i.e. the mathematical derivations that make me expect this?]
 
-Autocorrelation functions of out-of-phase sinusoids resemble a cosine wave with an amplitude of 1, which is how they should be in theory.
-As a check, each oscillation of the autocorrelation function corresponds to the period of the source oscillations.
+Second, to investigate the effect of Gaussian noise, I added Gaussian noise with standard deviation 3.0 (figure~\ref{fig:acf-sinusoids-gausnoise-ts}).
+Here, the amplitude of the autocorrelation functions (figure~\ref{fig:acf-sinusoids-gausnoise-acf}) are decreased and the variation between each time series' autocorrelation function is increased.
+At higher lag times, this variation is greater because there is fewer data that is used to compute the autocorrelation function.
 
-To emphasise the effect of noise, here I repeat the analysis with Gaussian noise with standard deviation 3.0.
-Here, the amplitude of the autocorrelation functions are decreased and the variation between each time series' autocorrelation function is increased.
-And at higher lag times, this variation is greater because there is less data that is used.
-
-Simulate Gillespie noise using a birth-death process, then add to oscillator.
-I performed 100 replicates of a sinusoid of frequency 0.03 with different phases.
-I then generated 100 trajectories to Gillespie noise as described above, and added them together to produce the simulated replicates.
+Third and finally, to investigate the effect of Gillespie noise, I generated Gillespie noise using the birth-death process and parameters $k_{0} = 5$, $d_{0} = 0.05$, then added the noise to a population of 100 sinusoids, out-of-phase (figure~\ref{fig:acf-sinusoids-gillnoise-ts}).
+The autocorrelation function is given by figure~\ref{fig:acf-sinusoids-gillnoise-acf}.
 This gave the following mean across replicates and autocorrelation function.
-As a check, I drew an exponential decay function (\(y = e^{-2d_{0}T}\), where \(T\) represents lag) to the autocorrelation function.
-The exponential function should fit the median autocorrelation function.
-In addition, the oscillations in the autocorrelation function should occur every period of the sinusoid, as already shown above.
+% [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
+The exponential decay function $y = \me^{-2d_{0}T}$, where \(T\) represents lag, should in theory fit the median autocorrelation function, and I demonstrate that it is the case.
+In addition, the oscillations in the autocorrelation function should occur every period of the sinusoid, similar to the other noise cases.
 
 \begin{figure}
   \centering
@@ -1162,7 +1159,7 @@ In addition, the oscillations in the autocorrelation function should occur every
 
   \caption{
     Effect of death rate ($d_{0}$) of Gillespie noise on the autocorrelation function.
-    Red lines on bottom figures (autocorrelation functions) are defined by $y = e^{-2d_{0}T}$, where $T$ represents lag.
+    Red lines on bottom figures (autocorrelation functions) are defined by $y = \me^{-2d_{0}T}$, where $T$ represents lag.
   }
   \label{fig:acf-noisetimescale}
 \end{figure}
@@ -1173,7 +1170,7 @@ In addition, the oscillations in the autocorrelation function should occur every
   \centering
     \includegraphics[width=\linewidth]{acf_fit_example.png}
     \caption{
-      Exponential decay functions of the form $y = (1-C)e^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
+      Exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
     }
     \label{fig:acf-noisetimescale-effect-fit}
   \end{subfigure}%
@@ -1193,13 +1190,16 @@ In addition, the oscillations in the autocorrelation function should occur every
   \label{fig:acf-noisetimescale-effect}
 \end{figure}
 
-Varying timescale of noise.
+It is now established that if the sinusoids have Gillespie noise, the noise parameters affect the shape of the autocorrelation function of the population of sinusoids.
+Therefore, I investigate the effect of the timescale of noise and the amplitude of noise on the shape of the autocorrelation function.
 
-Higher death rate seems to decrease the decay timescale for the autocorrelation function.
-Lower death rate seems to introduce long-term trends in the simulated signals.
-It also increase the decay timescale for the autocorrelation function and increases the variation between autocorrelation functions between replicates.
-In theory, the decay rate $D$ should scale linearly with the death rate $d_{0}$.  Sweeping across values of $d_{0}$, I confirm that is the case.
-This figure thus summarises the effect of death rate in decay timescale.
+To investigate the effect of the timescale of noise, defined by $\tau = 1/d_{0}$, I varied the death rate parameter $d_{0}$ when generating Gillespie noise that is to be added to the sinusoids (figure~\ref{fig:acf-noisetimescale}).
+A higher death rate decreases the decay timescale of the autocorrelation function, while a lower death rate introduces long-term trends in the simulated signals.
+A lower death rate also increases the decay timescale for the autocorrelation function and increases the variation between autocorrelation functions between replicates.
+In theory, the decay rate $D$ of the autocorrelation function should scale linearly with the death rate $d_{0}$.
+To confirm this, I fit exponential decay functions of the form $y = (1-C)\me^{-DT}+C$ to the mean autocorrelation, the peaks of this mean function, and the troughs of these functions using non-linear least squares fitting (figure~\ref{fig:acf-noisetimescale-effect-fit}).
+Then, I found the best-fit parameter $D$ for each value of $d_{0}$ (figure~\ref{fig:acf-noisetimescale-effect-relationship}).
+In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelation function; conversely, if $D$ can be estimated from the autocorrelation function, then the noise timescale $\tau$ of the time series can be estimated.
 
 
 \begin{figure}
@@ -1247,30 +1247,30 @@ This figure thus summarises the effect of death rate in decay timescale.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.45\linewidth]{birthrate_vs_ydispl.png}
+  \includegraphics[width=0.7\linewidth]{birthrate_vs_ydispl.png}
   \caption{
     Quantifying the effect of Gillespie noise amplitude on the autocorrelation function.
     Exponential decay functions of the form $y = (1-C)e^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares (as in~\ref{fig:acf-noisetimescale-effect-fit}).
     The exponential fitting was performed across a range of $k_{0}$ while $d_{0}$ was held constant at 0.05.
-    The y-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as the noise amplitude $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
   }
   \label{fig:acf-noiseamplitude-effect}
 \end{figure}
 
-Varying amplitude of noise.
 
-Lower birth rate decreases the amplitude of noise.
-It also makes the autocorrelation function more robust and decreases the variation between replicates.
-Higher birth rate increases the amplitude of noise.
+To investigate the effect of the amplitude of noise, defined by $A = \sqrt{k_{0}/d_{0}}$, I varied the birth rate parameter $k_{0}$ while keeping the death rate parameter $d_{0}$ constant when generating Gillespie noise that is to be added to the sinusoids (figure~\ref{fig:acf-noiseamplitude}).
+A lower birth rate decreases the amplitude of noise.
+It also makes the autocorrelation function more robust --- in other words, it decreases the variation between replicates.
+Conversely, a higher birth rate increases the amplitude of noise.
 It also makes the autocorrelation function less robust and increases the variation between replicates.
-Similar to previously, I fit \(y = (1-C)e^{-kT}+C\), using non-linear least squares, to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions.
-To show that the amplitude of the oscillations in the autocorrelation function decreases as the birth rate increases, I plotted the fitted \(C\) (y-displacement) parameters against the noise amplitude \(k_{0}/d_{0}\).
+Similar to previously, I fit exponential decay functions of the form $y = (1-C)\me^{-DT}+C$ to the autocorrelation function, but now I find the best-fit values of the y-displacement parameter $C$ with respect to $k_{0}/d_{0}$ (figure~\ref{fig:acf-noiseamplitude-effect}).
+The y-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as the noise amplitude $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
+In sum, the birth rate $d_{0}$ controls the y-displacement parameter $C$ of the autocorrelation function, which is a proxy for the function's amplitude.
+Conversely, if $C$ can be estimated from the autocorrelation function, then the noise amplitude $A$ of the time series can be estimated.
 
-If a population of replicate oscillatory time series is modelled with the sum of sinusoids and Gillespie noise, then the birth rate and death rate can control the shape of the autocorrelation function.  The death rate controls the timescale of noise and thus how fast the autocorrelation decays as lag increases.  The birth rate controls the amplitude of noise and thus controls how robust the autocorrelation function is.  Knowing these relationships, one can deduce noise parameters from the autocorrelation functions of real signals.
+To conclude, if a population of replicate oscillatory time series is modelled with the sum of sinusoids and Gillespie noise, then the birth rate and death rate can control the shape of the autocorrelation function.
+The death rate controls the timescale of noise and thus how fast the autocorrelation decays as lag increases.
+The birth rate controls the amplitude of noise and thus controls how robust the autocorrelation function is.
 
-Gillespie noise seems to model the noise I observe in experiments better than white noise, and I can even tune the parameters to create a better fit.
-
-Take home: parameters from fitting can be used to obtain noise properties.
 
 \begin{figure}
   \centering
@@ -1298,16 +1298,12 @@ Take home: parameters from fitting can be used to obtain noise properties.
   \label{fig:acf-sinusoid-biol}
 \end{figure}
 
-My intention is to have it model oscillations of flavin fluorescence that act as a proxy for the yeast metabolic cycle.
+Knowing these relationships, one can deduce noise parameters from the autocorrelation functions of real signals.
+My intention is to have it model oscillations of flavin fluorescence that act as a proxy for the yeast metabolic cycle (figure~\ref{fig:acf-sinusoid-biol}).
+
 
 \subsubsection{The autocorrelation function extended for use with FitzHugh-Nagumo oscillators}
 \label{subsubsec:analysis-characterisation-acf-fhn}
-
-% TODO: Fish for figures.
-% They aren't in the version of the report that I used to seed this section,
-% but they may be in a more updated version of the report, or in some random org note.
-% Failing that, I'm sure there are figures in org resources.
-% Hopefully I won't have to regenerate them.
 
 \begin{figure}
   \centering
@@ -1393,7 +1389,7 @@ Note slightly different shape of oscillations here compared to sinusoid.
     \caption{
       Sample time series of histone 2B abundance (pink).
     }
-    \label{fig:acf-sinusoid-biol-ts}
+    \label{fig:acf-fhn-biol-ts}
   \end{subfigure}
 
   \begin{subfigure}[t]{0.7\textwidth}
@@ -1402,13 +1398,13 @@ Note slightly different shape of oscillations here compared to sinusoid.
     \caption{
       Autocorrelation function across a population of time series of histone 2B abundance.
     }
-    \label{fig:acf-sinusoid-biol-acf}
+    \label{fig:acf-fhn-biol-acf}
   \end{subfigure}
 
   \caption{
     Using the autocorrelation function to characterise oscillations in histone 2B abundance.
   }
-  \label{fig:acf-sinusoid-biol}
+  \label{fig:acf-fhn-biol}
 \end{figure}
 
 My intention is to have it model periodic changes in histone 2B intensity levels and yeast cells progress through the cell division cycle.
