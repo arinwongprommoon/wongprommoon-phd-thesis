@@ -1453,34 +1453,24 @@ Thus, in my subsequent analysis of biological data, I combine the autocorrelatio
 \section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
 \label{sec:analysis-correlation}
 
-So far, we have only considered one type of time series from the yeast metabolic oscillator -- the flavin signal.
-However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillators; certainly, in my experiments I record signals that monitor both.
+So far, I have considered one type of time series from the yeast metabolic oscillator at a time.
+However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillators
+In my experiments I record signals that monitor both.
 Investigating correlations between two paired time series, originating from the same cell, leads to an understanding of the relationship between the two oscillators.
 The most important being the phase relationship: does one oscillation lag behind the other, to what extent, and is this consistent across cells?
 
-\subsection{Cross-correlation}
-\label{sec:analysis-correlation-xcf}
+% [COMMENTED OUT BECAUSE IT IS THE SOLE SUBSECTION]
+% \subsection{Cross-correlation}
+% \label{subsec:analysis-correlation-xcf}
 
-Cross-correlation, widely used in signal processing, is used to measure how similar two time series are as the displacement of one relative to the other is shifted across the length of the time series.
-To put it in the context of autocorrelation discussed earlier, autocorrelation is a special case of cross-correlation in which the two signals are identical.
-
-In a biological context, cross-correlation has been used to investigate how fluctuations in transcription levels influence fluctuations in protein expression in \textit{E. coli} [CHECK CITATION AGAIN TO VERIFY IF TRUE] \parencite{dunlopRegulatoryActivityRevealed2008},
+In signal processing, cross-correlation is used to measure how similar two time series are, as the displacement of one relative to the other is shifted across the length of the time series.
+In a biological context, cross-correlation has been used to investigate the relationship between the expression levels of two genes in a model feed-forward loop \parencite{dunlopRegulatoryActivityRevealed2008},
 and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
-Importantly, these studies are derived from single-cell microfluidics experiments with time-lapse microscopy, and therefore their treatment of a population of time series is useful for my case.
-
-Therefore, my use of cross-correlation is adapted from theirs so that it suits a population of time series, which is the thing that I have.
+Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employs a single-cell microfluidics experiment with time-lapse microscopy, and therefore their treatment of a population of time series is useful for my case.
+Therefore, my use of cross-correlation is adapted from theirs so that it suits a population of time series.
 My implementation has already been described in section~\ref{subsubsec:analysis-characterisation-acf-maths}.
 
-As I did for my discussion of autocorrelation, I will start with the sinusoid and FitzHugh-Nagumo oscillators as simulations of my biological time series to show understanding of the methods,
-then move on to an example of a real dataset.
-
-% - Cross-correlation: start from the basic definitions, then extend to population-level cross-correlation as used by Kiviet et al. (2014)
-
-% Copied from project: 'Modelling cross-correlation between sinusoids and relaxation oscillators',
-% or, my 'synthetic oscillations report'.
-% Currently doesn't really fit the thesis so much -- it comes with its own subsections, and this part can definitely be shorter.  Certainly, there shouldn't be a 'results' subsection.
-
-% (some text used to be here)
+As in my discussion of autocorrelation (section~\ref{subsec:analysis-characterisation-acf}), I will start with the sinusoid and FitzHugh-Nagumo oscillators as simulations of my biological time series to show understanding of the methods, then apply the understand to a real dataset.
 
 \begin{figure}
   \centering
@@ -1528,8 +1518,14 @@ then move on to an example of a real dataset.
   \label{fig:xcf}
 \end{figure}
 
-Shift of this function from the origin indicates the lag of one time series with respect to another.  This is the point of using cross-correlation, i.e. quantifying this lag across a population of time series.
+First, I generated a population of 400 FitzHugh-Nagumo oscillators and a population of 400 sinusoids so that they have the same period as the FitzHugh-Nagumo oscillator, but shifted in phase (figure~\ref{fig:xcf-nonoise-ts}).
+This simulates flavin autofluorescence oscillations and oscillations in histone 2B abundance both being at the same frequency, owing to the coupling between the metabolic cycle and the cell division cycle, but may be out of phase.
+The cross-correlation function of each FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, across the population, was computed (figure~\ref{fig:xcf-nonoise-xcf}).
+If the two types of oscillators are in phase (i.e.\ the peaks coincide), the cross-correlation at lag 0 should be 1.
+However, as the two oscillators are shifted in phase relative to each other, this peak of the cross-correlation function is shifted to the right, and the $x$-position of this peak thus indicates the average time by which the FitzHugh-Nagumo oscillator is shifted forward relative to the sinusoid oscillator, across the population.
+As before, I added noise (figure~\ref{fig:xcf-gausnoise-ts}) to investigate the effect on the cross-correlation function (figure~\ref{fig:xcf-gausnoise-xcf}).
 
+% TODO: Replace with pyruvate?  More dramatic.
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.9\textwidth}
@@ -1543,20 +1539,21 @@ Shift of this function from the origin indicates the lag of one time series with
 
   \begin{subfigure}[t]{0.7\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{xcf.pdf}
+    \includegraphics[width=\linewidth]{xcf_edit.pdf}
     \caption{
       Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
     }
-    \label{fig:xcf-biol}
+    \label{fig:xcf-biol-xcf}
   \end{subfigure}
 
   \caption{
     Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
   }
-  \label{fig:xcf}
+  \label{fig:xcf-biol}
 \end{figure}
 
-Can use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
+I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
+Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
 
 % \subsection{Granger Causality}
 % \label{sec:analysis-correlation-granger}
@@ -1599,7 +1596,7 @@ I expected the zwf1$\Delta$ traces to show different properties, as it is a stra
 % - Supervised classification is going to be mostly killed because it belongs in a previous section, and I have better data than SM vs SC.
 % - Unsupervised clustering: the literature stays, but I'll try doing it on better data.  To add: UMAP.
 % ----------------------
-\subsection{Graph-based clustering of oscillations based on feature vectors}
+\subsection{Graph-based clustering}
 \label{subsec:analysis-clustering-graphclustering}
 
 Thus, I converted each time series of flavin autofluorescence to a vector of features, and represented the vectors as nodes on a geometric graph.
@@ -1631,7 +1628,7 @@ Such results suggested that unsupervised graph-based clustering may have potenti
   \label{fig:graphclustering}
 \end{figure}
 
-\subsection{UMAP Based on Feature Vectors}
+\subsection{UMAP}
 \label{subsec:analysis-clustering-umap}
 
 % TODO: repeat with better datasets
