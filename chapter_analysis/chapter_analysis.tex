@@ -1759,22 +1759,21 @@ With the number of neighbours of 150 and minimum distance of 0.5, the BY4741 and
 
 \section{Summary}
 \label{sec:analysis-summary}
-% - Justification of each steps of my pipeline
 
-% I expect this will be improved when I go through the whole analysis again and get good take-home messages in my head.
-I've described the way that I process my single-cell time series data, broken down into five main steps: cleaning data, classification of oscillatory time series, characterisation of features of oscillatory time series, clustering of similar time series in a large dataset, and correlation of two related time series.
-This can form an analysis workflow which can be adapted to other biological rhythms or analysis of large datasets of time series in general.
-And this can be an interesting software engineering question to bring it all together.
+In this chapter, I describe the process of analysing populations of single-cell data of flavin autofluorescence oscillation and of histone 2B localisation time series, broken down into five main steps.
+These steps consist of: cleaning data, classification of oscillatory time series, characterisation of features of oscillatory time series, correlation of two related time series, and clustering of similar time series in a dataset.
 
-In each step of the way, there are several methods to choose from, each with its own merits and caveats -- mostly because there doesn't seem to be an agreed-upon standardised way to solve problems.
-This is particularly highlighted in the many `judgement calls'.
+In each step, there are several methods to choose from, each with its own merits and caveats, and judgement calls must be made.
+Additionally, combining different methods to answer the same time series question is often needed to provide a good picture of the quantity being measured.
 In cleaning data, the analyst must decide on a threshold to filter out useless data from the useful ones, but without compromising on the size of the resulting dataset so the remaining dataset is still useful.
-In classification of oscillatory time series: rhythmicity detection inevitably hinges upon defining a threshold between `oscillatory' and `non-oscillatory'.
-Furthermore, it is difficult to do this with noisy and relatively short (on the order of 10 oscillations, rather than 1000) time series.
-Characterisation of oscillatory time series is more `objective', but there are issues in the representation of properties like shape and phase.
-And the machine learning methods rely on supplying a training set, choosing appropriate featurisation methods, and tuning hyperparameters, as with any other machine learning method.
+In classification of oscillatory time series, rhythmicity detection depends upon defining a threshold that separates `oscillatory' from `non-oscillatory' time series.
+This is true whether or not the rhythmicity detection method relies on machine learning.
+Furthermore, it is difficult to do this with noisy and relatively short (on the order of 10 oscillations) time series.
+It is easier to numerically characterise some properties of oscillatory time series than others, but all methods give error intervals.
+And finally, clustering also depends on defining parameters that control the number of groups found in a dataset.
 
-Solving mathematical and computational problems for each task is an intellectual investigation in its own right (each can spin off to form its own thesis), and opens more questions than answers.
-And so future directions include things like using Bayesian method to classify oscillations, or whether better data or better featurisation helps.
-
-I illustrate the use of my analysis workflow in the next chapter, when I apply it to biological results.
+Solving mathematical and computational problems for each task is an intellectual investigation in its own right, and opens more questions than answers.
+%And so future directions include things like using Bayesian method to classify oscillations, or whether better data or better featurisation helps.
+Nevertheless, combining all five main steps can form a powerful analysis workflow that can be adapted to the analysis of other large datasets of time series, biological or not.
+I illustrate the use of such an example of an analysis workflow in chapter~\ref{ch:biology}, when I apply it to analyse biological results.
+Constructing an analysis workflow can be an interesting and challenging software engineering problem in its own right.
