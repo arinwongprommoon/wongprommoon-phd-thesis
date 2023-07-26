@@ -1606,10 +1606,51 @@ This value is defined as the number of edges between clusters minus the number o
 The general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
 This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
 
-In this section, I represented each time series with a vector of features using \textit{catch22}.
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graph_representation}
+    \caption{
+      \emph{Step 1: Graph representation.}
+      Each time series is represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
+      The cosine distances between each pair of vector is computed, and become the edge weights of a complete graph with each time series as a node.
+    }
+    \label{fig:analysis-clustering-modclust-graph}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{pruning}
+    \caption{
+      \emph{Step 2: Pruning.}
+      The complete graph is pruned by deleting edges, so that each node has at least $k$ neighbours.
+    }
+    \label{fig:analysis-clustering-modclust-prune}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
+    \caption{
+      \emph{Step 3: Modularity clustering.}
+      This process partitions the pruned graph into communities.
+      Figure adapted from \textcite{newmanModularityCommunityStructure2006}.
+    }
+    \label{fig:analysis-clustering-modclust-modclust}
+  \end{subfigure}
+
+  \caption{
+    Modularity clustering visualises natural groupings of time series.
+    Figure shows the process of preparing a dataset of time series for modularity clustering.
+  }
+  \label{fig:analysis-clustering-modclust}
+\end{figure}
+
+Figure~\ref{fig:analysis-clustering-modclust} illustrates the process by which I prepare the dataset for modularity clustering in this section.
+Here, I represented each time series with a vector of features using \textit{catch22}.
 I then computed the pairwise similarity between all pairs of time series using the cosine distance measure.
 Representing each vector as a node and each pairwise similarity as an edge weight produced a complete graph.
-Then, I pruned this complete graph to produce an incomplete graph by letting each node retain at least $k$ nearest neighbours, choosing $k = 5$ initially.
+Then, I pruned this complete graph to produce an incomplete graph by letting each node retain at least $k$ nearest neighbours, choosing $k = 10$ initially.
 Modularity clustering, specially the general Louvain algorithm, was then used to identify communities within the resulting network, and the resolution parameter could be tuned to control the number of clusters the algorithm finds.
 When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to groups (figure \ref{fig:graphclustering}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
 % (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
