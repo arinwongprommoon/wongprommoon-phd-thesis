@@ -1494,20 +1494,20 @@ As in my discussion of autocorrelation (section~\ref{subsec:analysis-characteris
   % TODO: Use Gillespie noise.  Maybe this figure already exists.
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{sinusoid_and_fitzhughnagumo.png}
+    \includegraphics[width=\linewidth]{sinusoid_and_fitzhughnagumo_gillnoise.png}
     \caption{
-      FitzHugh-Nagumo (orange) and sinusoid oscillators (blue), as in~\ref{fig:xcf-nonoise-ts}, but with Gaussian noise of standard deviation 0.03 added.
+      FitzHugh-Nagumo (orange) and sinusoid oscillators (blue), as in~\ref{fig:xcf-nonoise-ts}, but with Gillepsie noise ($d_{0} = 0.05$, $k_{0} = 5$).
     }
-    \label{fig:xcf-gausnoise-ts}
+    \label{fig:xcf-gillnoise-ts}
   \end{subfigure}%
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{randomshift_sinusoid_fitzhughnagumo_noisy_xcf.png}
+    \includegraphics[width=\linewidth]{randomshift_sinusoid_fitzhughnagumo_gillnoise_xcf.png}
     \caption{
-      Cross-correlation function of the FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, based on 400 pairs of signal as in~\ref{fig:xcf-gausnoise-ts}, each pair randomly phase-shifted.
+      Cross-correlation function of the FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, based on 400 pairs of signal as in~\ref{fig:xcf-gillnoise-ts}, each pair randomly phase-shifted.
     }
-    \label{fig:xcf-gausnoise-xcf}
+    \label{fig:xcf-gillnoise-xcf}
   \end{subfigure}
 
   \caption{
@@ -1521,7 +1521,8 @@ This simulates flavin autofluorescence oscillations and oscillations in histone 
 The cross-correlation function of each FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, across the population, was computed (figure~\ref{fig:xcf-nonoise-xcf}).
 If the two types of oscillators are in phase (i.e.\ the peaks coincide), the cross-correlation at lag 0 should be 1.
 However, as the two oscillators are shifted in phase relative to each other, this peak of the cross-correlation function is shifted to the right, and the $x$-position of this peak thus indicates the average time by which the FitzHugh-Nagumo oscillator is shifted forward relative to the sinusoid oscillator, across the population.
-As before, I added noise (figure~\ref{fig:xcf-gausnoise-ts}) to investigate the effect on the cross-correlation function (figure~\ref{fig:xcf-gausnoise-xcf}).
+As before, I added noise (figure~\ref{fig:xcf-gillnoise-ts}) to investigate the effect on the cross-correlation function (figure~\ref{fig:xcf-gillnoise-xcf}).
+This illustrates that the cross-correlation function can still find phase relationships between two types of oscillatory data, even if the noise is extreme.
 
 % TODO: Replace with pyruvate?  More dramatic.
 \begin{figure}
