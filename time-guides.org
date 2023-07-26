@@ -20,3 +20,5 @@ Units: P (Pomodoro, approx 25 minute)
 
 * Combined
 - Applying PS feedback to introduction: 8 h 48 min 27 s
+- First pass of methods (04/07 -- 05/07): 2 h 37 min 16 s
+- First pass of analysis (07/07 -- 26/07): 20 h 37 min 43 s
