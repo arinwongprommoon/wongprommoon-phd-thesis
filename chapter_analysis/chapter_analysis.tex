@@ -218,7 +218,7 @@ In my case, I base my definition on the frequency domain of the signal.
 I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.% (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
 Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise.
 
-[EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
+%[EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
 
 To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
 For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
@@ -342,7 +342,7 @@ The autoregressive model has been used before to characterise biological time se
 This model is based on the assumption that each data point in the time series can be expressed as a linear combination of $P$ data points that precede it --- $P$ thus representing the order of the model.
 This autoregressive model thus `smooths' the time series.
 
-\parencite{jiaFrequencyDomainAnalysis2021} describe an application of the autoregressive model, based on the fact that there is an analytical solution for the periodogram based on this model.
+\textcite{jiaFrequencyDomainAnalysis2021} describe an application of the autoregressive model, based on the fact that there is an analytical solution for the periodogram based on this model.
 This publication describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
 Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series.
 I implemented this algorithm, described by \textcite{jiaFrequencyDomainAnalysis2020}, as follows:
@@ -420,7 +420,7 @@ I implemented this algorithm, described by \textcite{jiaFrequencyDomainAnalysis2
   \label{fig:analysis-ar-classification}
 \end{figure}
 
-The resulting power spectra fell into four categories: one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (fig~\ref{fig:analysis-ar-classification}).
+The resulting power spectra fell into four categories: one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (figure~\ref{fig:analysis-ar-classification}).
 This method thus makes it easy to compute the frequency of the oscillation from the location of the peak and quality of the oscillation from the height of the peak, as opposed to a Fourier spectrum computed base on noisy data.
 
 \begin{figure}
@@ -456,9 +456,7 @@ Figure~\ref{fig:analysis-ar} shows an example of the autoregressive model method
 In my investigations, very few time series within a dataset were classified as oscillatory using this method.
 The problem is that there are no parameters that I can adjust to change the `tolerance' for detecting rhythmicity.
 However, among the time series that it deems oscillatory, it guesses the frequency fairly well.
-
-(Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.)
-
+%[Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.]
 Alternatively, I can treat the order of the model as a parameter, and perform model selection on it.
 
 % This subsection needs better re-organisation.
@@ -522,11 +520,11 @@ Thus, there is a slight class imbalance.
 % SPLITTING
 I chose 150 time series at random to be used as training data --- the rest becomes testing data.
 % FEATURISATION
-And, I explored three methods of featurisation: using time points as features, the time series' Fourier spectrum as features, and using \texttt{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019}.
+And, I explored three methods of featurisation: using time points as features, the time series' Fourier spectrum as features, and using \textit{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019}.
 
-\texttt{catch22} is based on the \texttt{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} developed to compute vectors of features for time series.
+\textit{catch22} is based on the \textit{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} developed to compute vectors of features for time series.
 This toolbox contains 7701 features defined from across the time series analysis literature.
-I focused on the 22-feature \texttt{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
+I focused on the 22-feature \textit{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
 \textcite{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
 This feature set excludes features that are dependent on mean or spread.
 
@@ -635,11 +633,11 @@ This peak may explain the good precision \& recall scores.
   \label{fig:analysis-svc-catch22}
 \end{figure}
 
-Nevertheless, precision and recall are best with \texttt{catch22}.
+Nevertheless, precision and recall are best with \textit{catch22}.
 Feature vectors seem to suggest that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9 in figure~\ref{fig:analysis-svc-catch22}) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
 This feature is defined as the mean error from a rolling 3-sample mean forecasting.
 
-[CONFIRM IMPORTANCE VIA RECURSIVE FEATURE ELIMINATION, USING RANDOM FOREST?]
+%[CONFIRM IMPORTANCE VIA RECURSIVE FEATURE ELIMINATION, USING RANDOM FOREST?]
 
 % ADAPTATION OF SVM: PREDICT PROBABILITIES
 
@@ -713,24 +711,24 @@ This feature is defined as the mean error from a rolling 3-sample mean forecasti
   \label{fig:analysis-svc-proba-gallery}
 \end{figure}
 
-Using the \texttt{catch22} features, I extended the support vector classifier enabling probability estimates, so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
+Using the \textit{catch22} features, I extended the support vector classifier enabling probability estimates, so that the model computes the probability that a time series is oscillatory, rather than assign one of two outputs.
 Figure~\ref{fig:analysis-svc-proba-histogram} show that the distribution of probabilities falls in a U-shape; this distribution is desirable because it means that the classifier is for the most part `certain' whether a time series is oscillatory or not.
 In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by figure~\ref{fig:analysis-svc-proba-gallery}.
 
-[MORE EVALUATION? e.g. ROC curve, precision-recall curve.  MAYBE IT IS OVERKILL HERE.]
+%[MORE EVALUATION? e.g. ROC curve, precision-recall curve.  MAYBE IT IS OVERKILL HERE.]
 
 In sum,
 % I mention modularity clustering before its appropriate section here.
 % I can create a reference to that section, or move this paragraph to that section and re-word it a bit so it fits the logical flow.
 % ------------------------------------
-the \texttt{catch22} features seem to function best.
+the \textit{catch22} features seem to function best.
 %It makes sense -- given that I could plot cells in \texttt{catch22} feature space and perform modularity clustering, an SVM model based on drawing a `lane' between two clouds of points in \texttt{catch22} feature space should work.
 %Furthermore,
 %\textcite{lubbaCatch22CAnonicalTimeseries2019} has tested the features' ability to categorise time series across multiple large datasets.
 A simple machine learning architecture is sufficient in classifying noisy biological time series into oscillatory and non-oscillatory categories, complete with probabilities.
 This method was also able to identify which time series feature was the most important in distinguishing between oscillatory and non-oscillatory time series.
 
-\section[Characterisation]{Characterisation: I have one time series -- what properties does it have?}
+\section[Characterisation]{Characterisation: I have one time series --- what properties does it have?}
 \label{sec:analysis-characterisation}
 
 The importance of characterising my time series is that I can quantify how my yeast metabolic cycles respond to genetic and nutrient perturbations.
