@@ -1566,7 +1566,7 @@ Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the his
 
 % (Add content when I figure out how to make this investigation work.)
 
-\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?}
+\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells --- what are their relationships to each other?}
 \label{sec:analysis-clustering}
 
 % Literature review subsection
@@ -1574,14 +1574,14 @@ Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the his
 % \label{subsec:analysis-clustering-literature}
 
 % mini-review -- IT'S PRETTY UNWIELDY AT THIS POINT, AND REFERENCES CONCEPTS NOT DISCUSSED TILL LATER
-Clustering of time series has been used to identify groupings within a set of time series \parencite{wangStructureBasedStatisticalFeatures2007}, including biological time series \parencite{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \parencite{tuLogicYeastMetabolic2005}.
+Clustering of time series has been used to identify groupings within a set of time series \parencite{wangStructureBasedStatisticalFeatures2007}, including fMRI signals \parencite{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \parencite{tuLogicYeastMetabolic2005}.
 However, \textcite{wangStructureBasedStatisticalFeatures2007} and \textcite{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
-Though \textcite{shafieiDopamineSignalingModulates2019} used modularity clustering \parencite{newmanModularityCommunityStructure2006}, the method was based on one time series feature, which may not adequately capture the characteristics of the time series.
+Though \textcite{shafieiDopamineSignalingModulates2019} used modularity clustering \parencite{newmanModularityCommunityStructure2006}, their method was based on one time series feature, which may not adequately capture the characteristics of the time series.
 
-For my investigation of the yeast metabolic cycle, clustering is important because it can discover structure in a dataset and can summarise the difference between the groups it finds.
-And I can also ask the question of whether such differences conform to biological groupings in the dataset -- if so, I can then ask the question of which time series features from each biological grouping is responsible for this.
-Furthermore, clustering is important for a dataset from which we expect cell-to-cell heterogeneity.
-This thus takes advantage of single-cell microfluidics, as such a platform allows us to study such heterogeneity.
+Clustering is important because it can discover structure in a dataset and can summarise the difference between the groups it finds.
+For my study of the yeast metabolic cycle, clustering would help address whether such differences conform to existing labels in the dataset, for example, cells grouped by strain or by nutrient condition.
+It could then identify the time series features that are responsible for distinguishing between groups.
+Furthermore, clustering is important for a dataset from which we expect cell-to-cell heterogeneity because it may discover subpopulations in the dataset.
 
 The data for this section consists of flavin autofluorescence oscillation from one experiment with both BY4741 (background strain) and zwf1$\Delta$ (mutant strain) strains.
 I expected the zwf1$\Delta$ traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
@@ -1599,9 +1599,6 @@ I expected the zwf1$\Delta$ traces to show different properties, as it is a stra
 \subsection{Graph-based clustering}
 \label{subsec:analysis-clustering-graphclustering}
 
-Thus, I converted each time series of flavin autofluorescence to a vector of features, and represented the vectors as nodes on a geometric graph.
-Such a geometric graph may function as a visualisation tool as well.
-
 % FIGURE: pipeline and options.  It's rather difficult to visualise what happens, so such a figure, like the one I often use in the lab presentations in the summer, will be helpful.  Though may be more impactful in the presentation rather than in this report.
 
 Modularity clustering is the problem of partitioning a graph into clusters in order to optimise a `modularity' value.
@@ -1609,14 +1606,16 @@ This value is defined as the number of edges between clusters minus the number o
 The general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
 This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
 
-Unsupervised graph-based clustering suggested that the division between complete and minimal media was dominant among time series of flavin autofluorescence. %(figure \ref{fig:EffectofMediaClusters}).
-I constructed an incomplete graph to represent the pairwise similarity between time series based on the \textit{catch22} feature vectors.
-Then, I identified communities in the resulting network using the general Louvain algorithm.
+In this section, I represented each time series with a vector of features using \textit{catch22}.
+I then computed the pairwise similarity between all pairs of time series using the cosine distance measure.
+Representing each vector as a node and each pairwise similarity as an edge weight produced a complete graph.
+Then, I pruned this complete graph to produce an incomplete graph by letting each node retain at least $k$ nearest neighbours, choosing $k = 5$ initially.
+Modularity clustering, specially the general Louvain algorithm, was then used to identify communities within the resulting network, and the resolution parameter could be tuned to control the number of clusters the algorithm finds.
 When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to groups (figure \ref{fig:graphclustering}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
 % (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
 Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
 
-% TODO: REPEAT INVESTIGATION WITH BETTER DATA
+% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
 
 \begin{figure}[htbp]
   \centering
@@ -1639,7 +1638,7 @@ Specifically, UMAP aims to find a manifold structure of the input observations a
 This embedding thus serve as coordinates to plot the data onto a low-dimension space so as to preserve any clustering of the data.
 
 UMAP has several caveats.
-It lacks strong interpretability, namely: dimensions do not mean anything, unlike in PCA.
+It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
 Additionally, it assumes that the data has a manifold structure.
 So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
 If more data are sampled, then the amount of structure from noise will tend to decrease.
@@ -1660,8 +1659,10 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
         For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
 \end{itemize}
 
-I tried UMAP to see if it discovers a structure within the dataset that distinguishes between the two strains, or between oscillatory and non-oscillatory time series.
-Before using the dimensionality reduction technique, I used \textit{catch22} to featurise the data --- in other words, converting each time series into a vector of 22 dimensions for UMAP to project onto two dimensions.
+I assessed whether UMAP discovers a structure within the BY4741 \& zwf1$\Delta$ dataset which distinguishes between the two strains, or between oscillatory and non-oscillatory time series.
+The dataset was labelled according to strain, or manually labelled for being oscillatory or non-oscillatory.
+These labels were not passed to the UMAP algorithm and only serves as a way to assess its performance after the algorithm was performed on the dataset.
+I used \textit{catch22} to featurise the data to produce input vectors for UMAP to project onto two dimensions.
 
 % TODO: Use different colours for each type of categorisation
 \begin{figure}
@@ -1697,9 +1698,9 @@ Figure~\ref{fig:umap-osc} shows that there are two clear clusters of non-oscilla
 This suggests that unsupervised UMAP can discriminate some non-oscillatory time series from the rest.
 % Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
 It is possible that the non-oscillatory time series that cluster with the oscillatory ones may be `borderline'.
-The reason these clusters exist in this figure is likely because the BY4741-ZWF1 dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
-Comparing figure 15 with figure 13 shows that these non-oscillatory time series are mostly zwf1$\Delta$.
-It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
+The reason these clusters exist in this figure is likely because the BY4741 \& zwf1$\Delta$ dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
+Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly zwf1$\Delta$.
+%It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
 
 \begin{figure}
   \centering
@@ -1712,7 +1713,7 @@ It makes sense because this set of cells have a large group of non-oscillatory f
 \end{figure}
 
 To assess the effect of changing the UMAP hyperparameters, I perform a grid search of two hyperparameters: the number of neighbours and the minimal distance (figure~\ref{fig:umap-gridsearch}).
-Using all \textit{catch22} features from the BY4741-zwf1$\Delta$ dataset as input vectors, non-oscillatory time series consistently organised themselves into groups distinct from the rest as the hyperparameters were varied.
+Non-oscillatory time series consistently organised themselves into groups distinct from the rest as the hyperparameters were varied.
 With the number of neighbours of 150 and minimum distance of 0.5, the BY4741 and zwf1$\Delta$ nodes seemed to separate well.
 
 \section{Summary}
