@@ -24,22 +24,18 @@ Dad and Mum, my brother Arun, and aunt Pinnapa.%
 \abstract{
   The yeast metabolic cycle (YMC) is a biological rhythm in budding yeast (\textit{Saccharomyces cerevisiae}).
   It entails oscillations in the concentrations and redox states of intracellular metabolites, oscillations in transcript levels, temporal partitioning of biosynthesis, and, in chemostats, oscillations in oxygen consumption.
-%  The YMC also responds to perturbations in nutrient media, generally being longer if nutrient quality is poor.
-%  The YMC has also been found to gate phases of the cell division cycle and to share regulatory mechanisms with other biological rhythms such as the circadian oscillator.
   Most studies on the YMC have been based on chemostat experiments, and
   it is unclear whether YMCs arise from interactions between cells or are generated independently by each cell.
-%  Furthermore, the molecular mechanism of the YMC is unclear.
-  Thus, I aim to characterise the YMC in single cells and its response to nutrient and genetic perturbations.
+  This thesis aims at characterising the YMC in single cells and its response to nutrient and genetic perturbations.
   Specifically, I use microfluidics to trap and separate yeast cells, then record the time-dependent intensity of flavin autofluorescence, a component of the YMC.
 
   Single-cell microfluidics produces a large amount of time series data.
   Noisy and short time series produced from biological experiments restrict the computational tools that are useful for analysis.
-  After considering the merits and caveats of such tools, I develop a method to filter time series, develop a machine learning model to classify whether time series are oscillatory, and develop a autocorrelation method to examine the periodicity of time series data.
+  I developed a method to filter time series, develop a machine learning model to classify whether time series are oscillatory, and develop a autocorrelation method to examine the periodicity of time series data.
 
   My experimental results show that yeast cells show oscillations in the fluorescence of flavins.
   Specifically, I show that in high glucose conditions, cells generate flavin oscillations asynchronously within a population, and these flavin oscillations couple with the cell division cycle.
-%  These properties still hold when cells are cultivated in pyruvate, but the quality of oscillations is impaired in glucose-limiting conditions.
-  I show that cells are able to individually reset the phase of their flavin oscillation, independently of the cell division cycle, in response to abrupt nutrient changes.
+  I show that cells can individually reset the phase of their flavin oscillations in response to abrupt nutrient changes, independently of the cell division cycle.
   I also show that deletion strains generate flavin oscillations that exhibit different behaviour from dissolved oxygen oscillations from chemostat conditions.
 
   Finally, I use flux balance analysis to address whether proteomic constraints in cellular me\-tab\-o\-lism mean that temporal partitioning of biosynthesis is advantageous for the yeast cell, and whether such partitioning explains the timing of the metabolic cycle.
