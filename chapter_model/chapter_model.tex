@@ -204,11 +204,11 @@ Additionally, I computed molecular weights for bulk metabolites that represent c
 Namely, I assumed that in reactions that produce the bulk metabolites, there is conservation of mass, and therefore:
 
 \begin{equation}
+  \sum_{s}m_{s}c_{s} = \sum_{p}m_{p}c_{p}
 \label{eq:conservation-of-mass}
-    \sum_{s}(\text{molar mass}_{s})(\text{stoichiometric coefficient}_{s}) = \sum_{p}(\text{molar mass}_{p})(\text{stoichiometric coefficient}_{p})
 \end{equation}
 
-where $s = 1, ...$ \emph{(number of substrates)} represents substrates and $p = 1, ...$ \emph{(number of products)} represents products of the reaction in question.
+where $m$ represents molar mass, $c$ represents stoichiometric coefficient, $s = 1, ...$ \emph{(number of substrates)} represents substrates, and $p = 1, ...$ \emph{(number of products)} represents products of the reaction in question.
 
 To compute the molecular weight of the carbohydrate metabolite, I inspected reaction \texttt{r\_4048}:
 
