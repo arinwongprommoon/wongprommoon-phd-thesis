@@ -388,12 +388,26 @@ I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
     The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
     Each column shows the component that remains in each round of pseudometabolite ablation.
     Rows represent reactions, sorted by subsystem.
-    Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in enzyme usage reaction ($ER_{i}$,~equation \ref{eq:model-gecko-enzyme-usage}) flux, representing more of the proteome allocated to the production of the relevant enzyme, while pink shows a decrease in flux, representing less of the proteome allocated to the enzyme.
+    Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in reaction flux, representing more of the proteome allocated to the production of the relevant enzyme, while pink shows a decrease in flux, representing less of the proteome allocated to the enzyme.
     Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are treated as $\epsilon$ flux, for the purpose of computing fold changes.
-    Fold changes smaller than 8 are excluded to restrict the number of reactions ($n = 968$) to aid display purposes.
+    Cases where $|\log_{2}(\mathrm{FC})| < 3$ are excluded to restrict the number of reactions ($n = 968$) to aid display purposes.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
+
+When the model prioritises a different biomass component in each round of ablation, the model partitions the limited proteome available for enzyme production differently.
+In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudo-reaction (defined in equation~\ref{eq:model-gecko-enzyme-usage}) is different from each other and the non-ablated case.
+Subsystem information provides a biologically relevant picture to these changes.
+More specifically, I match the flux carried by each enzyme usage pseudo-reaction to the enzyme-catalysed reaction that the enzyme is associated with.
+If an enzyme usage pseudo-reaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
+Then, the subsystem associated with each enzyme-catalysed reaction is taken.
+To emphasise changes in proteome allocation across rounds of ablation, I compute the fold change of fluxes relative to the non-ablated case.
+It is important to note that some reaction fluxes in some cases are zero, making the logarithm of fold change undefined.
+As a workaround, I defined a threshold small flux $\epsilon = $ \SI{1.11d-11}{\mmolgdwh}, which corresponds to one molecule per cell per hour --- the reasoning being that if a reaction is important enough for the yeast cell, the cell fires the reaction more than once in an hour, which is a substantial proportion of its doubling time.
+For the purposes of computing fold changes, fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are thus treated as $\epsilon$ flux.
+Therefore, extremely high ($> 15$) $\log_{2}(\mathrm{FC})$ likely indicates an original zero flux becoming non-zero in ablation, interpreted as an enzyme `switching-on', while extremely low ($< -20$) $\log_{2}(\mathrm{FC})$ likely indicates an original non-zero flux becoming zero in ablation, interpreted as an enzyme `switching-off'.
+
+Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes as described above.
 
 Investigate proteome allocation as sanity check (figure~\ref{fig:model-ablate-enz-use}):
 
