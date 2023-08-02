@@ -383,13 +383,14 @@ I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=.8\linewidth]{abl_vs_enz_use_plots_adapted}
+  \includegraphics[width=.8\linewidth]{div0_epsilon}
   \caption{
     The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
     Each column shows the component that remains in each round of pseudometabolite ablation.
     Rows represent reactions, sorted by subsystem.
     Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in enzyme usage reaction ($ER_{i}$,~equation \ref{eq:model-gecko-enzyme-usage}) flux, representing more of the proteome allocated to the production of the relevant enzyme, while pink shows a decrease in flux, representing less of the proteome allocated to the enzyme.
-    Flux changes with magnitudes smaller than \SI{3d-6}{\mmolgdw} are excluded to restrict the number of enzymes, of which there are 968, to aid display purposes.
+    Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are treated as $\epsilon$ flux, for the purpose of computing fold changes.
+    Fold changes smaller than 8 are excluded to restrict the number of reactions ($n = 968$) to aid display purposes.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
