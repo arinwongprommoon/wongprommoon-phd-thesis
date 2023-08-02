@@ -822,7 +822,7 @@ This shows:
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{ec_grid_glc_amm_growthrate}
+    \includegraphics[width=\linewidth]{ec_grid_glc_amm_gr}
     \caption{
       Growth rate based on unmodified biomass reaction ($\gro$)
     }
@@ -831,22 +831,12 @@ This shows:
 
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{ec_grid_glc_amm_gradient_compare}
-    \caption{
-      Differences in magnitude of gradients across axes ($|\frac{\Delta \gro}{\Delta \exchrate{glucose}}| - |\frac{\Delta \gro}{\Delta \exchrate{ammonium}}|$).
-      %Positive values (indigo) indicate glucose-limiting conditions, while negative values (beige) indicate ammonium-limiting conditions.
-    }
-    \label{fig:model-grid-glc-gradient-compare}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb}
     \caption{
       $\Tabl{carbohydrate}$
     }
     \label{fig:model-grid-glc-carb}
-  \end{subfigure}
-
+  \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_prot}
@@ -854,7 +844,8 @@ This shows:
       $\Tabl{protein}$
     }
     \label{fig:model-grid-glc-prot}
-  \end{subfigure}%
+  \end{subfigure}
+
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
@@ -868,6 +859,7 @@ This shows:
     Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}.
     Black straight lines indicate saturation values.
     Contours show region in which ratio $\ratioabl > 1$.
+    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{glucose}$ and $\exchrate{ammonium}$.
   }
   \label{fig:model-grid-glc}
 \end{figure}
@@ -884,7 +876,7 @@ This shows:
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_growthrate}
+    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_gr}
     \caption{
       Growth rate based on unmodified biomass reaction ($\gro$)
     }
@@ -893,21 +885,12 @@ This shows:
 
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_gradient_compare}
-    \caption{
-      Differences in magnitude of gradients across axes ($|\frac{\Delta \gro}{\Delta \exchrate{pyruvate}}| - |\frac{\Delta \gro}{\Delta \exchrate{ammonium}}|$).
-    }
-    \label{fig:model-grid-pyr-gradient-compare}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb}
     \caption{
       $\Tabl{carbohydrate}$
     }
     \label{fig:model-grid-pyr-carb}
-  \end{subfigure}
-
+  \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_prot}
@@ -915,7 +898,8 @@ This shows:
       $\Tabl{protein}$
     }
     \label{fig:model-grid-pyr-prot}
-  \end{subfigure}%
+  \end{subfigure}
+
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb_to_prot}
@@ -925,10 +909,11 @@ This shows:
     \label{fig:model-grid-pyr-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of pyruvate ($\exchrate{pyruvate}$) and ammonium exchange rates ($R_{{\mathrm{ammonium}}}$) on various quantities.
+    Effect of pyruvate ($\exchrate{pyruvate}$) and ammonium exchange rates ($\exchrate{ammonium}$) on various quantities.
     Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh}.
     Black straight lines indicate saturation values.
     Contours show region in which ratio $\ratioabl > 1$.
+    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{pyruvate}$ and $\exchrate{ammonium}$.
   }
   \label{fig:model-grid-pyr}
 \end{figure}
