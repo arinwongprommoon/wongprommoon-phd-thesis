@@ -946,6 +946,103 @@ On the C:P ratios...
   \item It thus makes sense that near the boundary between the regions, the C:P ratio takes intermediate values.
 \end{itemize}
 
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc16p89_pyrUnres_ammUnres_1.pdf}
+    \caption{
+      Rank of enzyme usage reactions in the low $\ratioabl$ case ($\exchrate{glucose}$ = \SI{16.89}{\mmolgdwh}).
+    }
+    \label{fig:model-rank-glc-lowratio-rank}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc01p69_pyrUnres_amm01p05_1.pdf}
+    \caption{
+      Rank of enzyme usage reactions in the high $\ratioabl$ case ($\exchrate{glucose}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{ammonium}$ = \SI{1.05}{\mmolgdwh}).
+    }
+    \label{fig:model-rank-glc-highratio-rank}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc16p89_pyrUnres_ammUnres_2.pdf}
+    \caption{
+      Pairwise Kendall's $\tau$-$b$ rank correlation coefficients for \ref{fig:model-rank-glc-lowratio-rank}.
+    }
+    \label{fig:model-rank-glc-lowratio-kendall}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc01p69_pyrUnres_amm01p05_2.pdf}
+    \caption{
+      Pairwise Kendall's $\tau$-$b$ rank correlation coefficients for \ref{fig:model-rank-glc-highratio-rank}.
+    }
+    \label{fig:model-rank-glc-highratio-kendall}
+  \end{subfigure}
+
+  \caption{
+    Proteome allocation favouring sequential and parallel biosynthesis strategies, with glucose as carbon source.
+    \textbf{(Top panels: \ref{fig:model-rank-glc-lowratio-rank}, \ref{fig:model-rank-glc-highratio-rank})} In the parallel case (no change to biomass equation), enzyme usage reactions are ranked, in descending order, by magnitude of flux and each assigned a colour.
+    When biomass components are ablated, the ranks change, as shown by how the order of colours change from column to column.
+    White indicates reactions that carry zero flux in the parallel case.
+    \textbf{(Bottom panels: \ref{fig:model-rank-glc-lowratio-kendall}, \ref{fig:model-rank-glc-highratio-kendall})} Kendall's $\tau$-$b$ rank correlation coefficient was computed for each pair of columns in the top panels to quantify the similarity between each case.
+  }
+  \label{fig:model-rank-glc}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr08p89_ammUnres_1.pdf}
+    \caption{
+      Rank of enzyme usage reactions in the low $\ratioabl$ case ($\exchrate{pyruvate}$ = \SI{8.89}{\mmolgdwh}).
+    }
+    \label{fig:model-rank-pyr-lowratio-rank}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr03p73_amm00p90_1.pdf}
+    \caption{
+      Rank of enzyme usage reactions in the high $\ratioabl$ case ($\exchrate{pyruvate}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{ammonium}$ = \SI{0.90}{\mmolgdwh}).
+    }
+    \label{fig:model-rank-pyr-highratio-rank}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr08p89_ammUnres_2.pdf}
+    \caption{
+      Pairwise Kendall's $\tau$-$b$ rank correlation coefficients for \ref{fig:model-rank-pyr-lowratio-rank}.
+    }
+    \label{fig:model-rank-pyr-lowratio-kendall}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr03p73_amm00p90_2.pdf}
+    \caption{
+      Pairwise Kendall's $\tau$-$b$ rank correlation coefficients for \ref{fig:model-rank-pyr-highratio-rank}.
+    }
+    \label{fig:model-rank-pyr-highratio-kendall}
+  \end{subfigure}
+
+  \caption{
+    Proteome allocation favouring sequential and parallel biosynthesis strategies, with pyruvate as carbon source.
+    \textbf{(Top panels: \ref{fig:model-rank-pyr-lowratio-rank}, \ref{fig:model-rank-pyr-highratio-rank})} In the parallel case (no change to biomass equation), enzyme usage reactions are ranked, in descending order, by magnitude of flux and each assigned a colour.
+    When biomass components are ablated, the ranks change, as shown by how the order of colours change from column to column.
+    White indicates reactions that carry zero flux in the parallel case.
+    \textbf{(Bottom panels: \ref{fig:model-rank-pyr-lowratio-kendall}, \ref{fig:model-rank-pyr-highratio-kendall})} Kendall's $\tau$-$b$ rank correlation coefficient was computed for each pair of columns in the top panels to quantify the similarity between each case.
+  }
+  \label{fig:model-rank-pyr}
+\end{figure}
+
+Insert discussion here about whether doubly-limiting regions, corresponding to high ratios, push the cell towards parallel or not.
+
+Also say something about enzyme usage fluxes being noisy, so take this with a grain of salt.
+Figure may or may not be useful.
+
 \section{Conclusion}
 \label{subsec:model-conclusion}
 
