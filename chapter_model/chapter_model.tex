@@ -412,17 +412,20 @@ Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes as d
 In particular, it shows:
 
 \begin{enumerate}
-  \item Increased fatty acid biosynthesis, fatty acid ester pathway, glycerolipid metabolism, steroid biosynthesis, terpenoid backbone biosynthesis when lipid is prioritised.
-        Decreased oxidative phosphorylation.
-  \item Small increases in amino acid metabolism and oxidative phosphorylation when protein is prioritised.
-        Pyruvate metabolism increases too.
-  \item Strong increase in fructose and mannose metabolism when carbohydrate is prioritised.
+  \item In most cases, enzymes are `switched-off', though lipid-prioritised biosynthesis is most similar to the parallel case.
+  \item Increased fatty acid biosynthesis, glycerolipid metabolism, glycerophospholipid metabolism, inositol phosphate metabolism, steroid biosynthesis, and terpenoid backbone biosynthesis when lipid is prioritised.
+        Decreases in amino acid metabolism, which varied depending on the amino acid.
+        Decreased oxidative phosphorylation and TCA cycle.
+  \item Small increases in amino acid metabolism, tRNA metabolism, and oxidative phosphorylation when protein is prioritised.
+        Decrease in glycine, serine, and threonine metabolism is strong in carbohydrate and ion, but weaker in DNA, RNA, and cofactor prioritisation.
+  \item Increase in fructose and mannose metabolism when carbohydrate is prioritised.
         Strong increase in riboflavin metabolism when cofactor is prioritised (riboflavin is a cofactor).
         Increase in pentose phosphate pathway, purine metabolism, and pyrimidine metabolism when RNA is prioritised.
         However, decrease in pentose phosphate pathway when DNA is prioritised.
   \item For carbohydrate, DNA, RNA, cofactor, ion, strong increases in glycolysis/gluconeogenesis and oxidative phosphorylation.
-  \item Main conclusion is enzyme usage flux changes are as expected.
 \end{enumerate}
+
+In sum, changes in allocation in rounds of ablation, by subsystem, is reasonable given the roles of the enzymes, and this visualisation confirms that the ablation is reasonable.
 
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
