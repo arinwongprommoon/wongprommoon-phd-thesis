@@ -30,7 +30,28 @@ Specifically, I aim to evaluate these hypotheses:
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
 
-TODO: Short introduction to genome-scale metabolic models -- what they are, what they aim to do, flux balance analysis, and limitations.  Consult \textcite{orthWhatFluxBalance2010}.
+Metabolic network reconstructions are mathematical representations of a metabolic pathway or a set of metabolic pathways in a living system.
+Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions, represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
+This information can be represented in a stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
+For example, if reaction $R_{1}$ is defined by \ce{1 M1 + 2 M2 -> 3 M3}, the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
+Metabolic network reconstructions may include `artificial' reactions that are not represented by true, singular chemical reaction in the strict sense, such as reactions that models substrates entering and leaving the biological system, or a reaction that models biomass formation (termed as a \emph{biomass reaction}).
+A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system catalysed by a gene-encoded enzyme.
+
+Flux balance analysis (FBA) is a mathematical method that finds the steady-state flow of metabolites through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
+Such flows are termed \emph{metabolic fluxes}, which represents the rate of chemical reactions.
+At its core, FBA is a method of solving a linear programming problem of find the flux values that optimise the output value of an objective function, subject to mathematical constraints.
+The objective function is given as a mathematical formulation of any number of reaction fluxes in the model.
+Most commonly, the objective function for an FBA problem is maximising the flux of a biomass reaction, optimising the growth rate of the cell.
+However, multiple objective functions are possible.
+The mathematical constraints for FBA are, in the most basic case, imposed by two things: the stoichiometric matrix, balancing reaction inputs and outputs, and upper/lower bounds on fluxes of each reaction.
+These constraints restrict the solution space for the FBA problem.
+
+FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to, for example, solving a set of differential equations that describe the kinetics of all biochemical reactions in such a system.
+However, FBA, in its most basic form, has several main limitations.
+It only gives a steady-state picture of metabolism, and therefore cannot be used to describe changes in fluxes levels over time, although dynamic FBA has been developed to solve this problem \parencite{mahadevanDynamicFluxBalance2002}.
+Additionally, it does not account for concentrations of metabolites.
+Nevertheless, there are many derivations of FBA to overcome these limitations and extend the method to answer additional modelling questions; however, these derivations are outside the scope of this thesis.
+
 
 \section{Reviewing modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
