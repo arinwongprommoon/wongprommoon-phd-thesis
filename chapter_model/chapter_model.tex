@@ -952,6 +952,26 @@ The reverse is true if $s_{\mathrm{glucose}} < s_{\mathrm{ammonium}}$.
 To visualise the extent to which either exchange rate limits each quantity of interest, I show the susceptibilities as arrows (figures~\ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glucose}}$ and $s_{\mathrm{ammonium}}$ as two components of the vector that defines these arrows.
 This way, horizontal arrows indicate a strong susceptibility to glucose and vertical arrows indicate a strong susceptibility to ammonium, while the arrows point towards increasing values of the quantity of interest.
 
+Figure~\ref{fig:model-grid-glc} shows that the region where $\ratioabl > 1$ corresponds a region around to the boundary between the glucose-limited and ammonium-limited regions.
+In contrast, when the growth rate is near its maximum where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, temporal partitioning becomes more advantageous.
+Where ammonium is limiting, as ammonium exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{protein}$ decreases (implying increasing $\grabl{protein}$).
+% I'm not too sure of this sentence...
+Because $\ratioabl$ increases, this means that the increase in $\gro$ `overpowers' the increase in $\grabl{protein}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
+Where glucose is limiting, as glucose exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{carbohydrate}$ decreases (implying increasing $\grabl{carbohydrate}$).
+% I'm not too sure of this sentence...
+Because $\ratioabl$ stays the same, this means that the increase in $\grabl{carbohydrate}$ compensates for the increase in $\gro$ [SPACE FOR SOME MATHS?].
+A greater `power' of increasing $\grabl{carbohydrate}$ over increasing $\grabl{protein}$ is also seen as $\epool$ increases (with $\gro$ increasing linearly) in figure~\ref{fig:model-pool}.
+
+Investigating $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$, recall that $\ratioabl > 1$ region is around the boundary between glucose-limited growth rate and ammonium-limited growth rate.
+So it means that if both glucose and nitrogen are (nearly) limiting, sequential biosynthesis is so slow that the ratio goes above 1.
+In the glucose-limited region, the $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ ratio is high --- this makes sense because when the carbon source is limiting, synthesis of carbohydrate takes long.
+Similarly, in the ammonium-limited region, the $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ ratio is low, i.e.\ when the nitrogen source is limiting, protein synthesis takes long.
+It thus makes sense that near the boundary between the regions, the C:P ratio takes intermediate values.
+
+However, it is important to note that glucose exchange limits carbohydrate synthesis time for virtually every nutrient condition.
+In contrast, ammonium exchange limits protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low, owing to the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
+This pattern could explain the more complicated patterns in $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ and $\ratioabl$ as both exchange reactions change in flux.
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
@@ -1006,33 +1026,8 @@ This way, horizontal arrows indicate a strong susceptibility to glucose and vert
   \label{fig:model-grid-pyr}
 \end{figure}
 
-
-On the gradients...
-\begin{itemize}
-  \item Explanation: The gradients of growth rate at each pixel in~\ref{fig:model-grid-glc-growthrate} with respect to horizontal (glucose exchange) and vertical (ammonium exchange) axes were computed.
-        The heatmap shows the matrix of the magnitude of gradients of growth rate with respect to glucose exchange subtracted by the corresponding matrix with respect to ammonium exchange.
-        Positive values (indigo) show a greater-magnitude glucose-axis gradient, thus indicating glucose-limiting conditions.
-        Negative values (beige) show a greater-magnitude, thus indicating ammonium-limiting conditions.
-  \item This seems to divide the space into C-limited growth rate, N-limited growth rate, and neither-limited growth rate.
-  \item Where $\ratioabl > 1$ seems to correspond to the boundary between the C-limited and N-limited regions.
-  \item Growth rate near max, i.e.\ C/N not limiting: when glucose or ammonium exchange increases (there is an additive effect), temporal partitioning is more advantageous.
-  \item In the N-limiting region (beige): as ammonium exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{protein}$ decreases (implying increasing $\grabl{protein}$).
-        Because $\ratioabl$ increases, this means that the increase in $\gro$ `overpowers' the increase in $\grabl{protein}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
-  \item In the C-limiting region (purple): as glucose exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{carbohydrate}$ decreases (implying increasing $\grabl{carbohydrate}$).
-        Because $\ratioabl$ stays the same, this means that the increase in $\grabl{carbohydrate}$ compensates for the increase in $\gro$ [SPACE FOR SOME MATHS?].
-  \item A greater `power' of increasing $\grabl{carbohydrate}$ over increasing $\grabl{protein}$ is also seen as $\epool$ increases (with $\gro$ increasing linearly) in figure~\ref{fig:model-pool}.
-  \item Pyruvate seems to represent an extreme case of the glucose plots.
-        The main difference is with the carbon source axis --- here, the behaviour is more similar to the ammonium axis.
-        This can be explained by the fact the pyruvate saturation curve looks similar to the ammonium one.
-\end{itemize}
-
-On the C:P ratios...
-\begin{itemize}
-  \item The ratio > 1 part is around the boundary between C-limited growth rate and N-limited growth rate.
-        So it means that if both C and N are (nearly) limiting, sequential biosynthesis is so slow that the ratio goes above 1.
-  \item In the C-limited region, the C:P ratio is high (makes sense because when C is limiting, C takes long), and in the N-limited region, the C:P ratio is low (when N is limiting, P takes long).
-  \item It thus makes sense that near the boundary between the regions, the C:P ratio takes intermediate values.
-\end{itemize}
+To investigate the effect on a non-fermentable carbon source, I repeated the investigation using pyruvate as the carbon source, and adjusted the saturation exchange rates accordingly: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh} (figure~\ref{fig:model-grid-pyr}).
+Overall, pyruvate seems to represent an extreme case of the glucose investigation; the changed behaviour of $\ratioabl$ with respect of pyruvate and ammonium exchange rates can be explained by a changed shape of the carbon-source saturation curve.
 
 \begin{figure}
   \centering
