@@ -452,7 +452,7 @@ Using the biomass reaction as the objective function, I optimise the model to ob
 
 where $t_{0}$ is the doubling time and $\gro$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
 
-I ablate components in biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{sec:model-yeast8-pseudometabolites} in turn.
+I ablate components in the biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{sec:model-yeast8-pseudometabolites} in turn.
 In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
 Doubling time is computed, taking into account the mass fraction of each biomass component --- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
 Specifically, the computation is:
@@ -908,6 +908,50 @@ For my subsequent investigation of the effect of carbon and nitrogen sources on 
   \label{fig:model-grid-glc}
 \end{figure}
 
+To assess the effect of carbon and nitrogen sources on biomass synthesis strategies, I first varied the upper flux bounds of exchange reactions that correspond to glucose exchange ($\exchrate{glucose}$) and ammonium exchange rate ($\exchrate{ammonium}$).
+Each of these bounds took 32 values from 0\% to 200\% saturation, with glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}, to produce a grid of \num{1024} conditions.
+At each combination of glucose and ammonium exchange, I ablated components in the biomass reaction according to section~\ref{sec:model-timescale} to obtain $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$.
+$\ratioabl$ indicated whether the sequential or parallel strategy is advantageous for each condition, while $\gro$ indicated which nutrient source was limiting in each condition.
+Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions, especially if the parallel biomass synthesis is favoured ($\ratioabl > 1$).
+Specifically, I chose carbohydrate and protein synthesis times within $\Tiabl$ because:
+
+\begin{enumerate}
+  \item Predicted synthesis times of these biomass components varied the most, of all biomass components, as the glucose and ammonium exchange rates were varied.
+  \item Each accounts for a large proportion of total biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:ecyeast8-mol-weights}).
+  \item Carbohydrate synthesis has a clear biochemical relationship with a fermentable or non-fermentable carbon source.
+        And, because amino acids contain amino groups, protein synthesis has a biochemical relationship with ammonium as a nitrogen source.
+\end{enumerate}
+
+And thus the ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how biomass synthesis times change as carbon and nitrogen source concentrations change, particularly in relation to sequential biosynthesis-favouring conditions and to parallel biosynthesis-favouring conditions.
+
+To determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I computed the susceptibility of the quantity with respect to each axis, carbon source or nitrogen source.
+Susceptibility with respect to each axis is given by:
+
+\begin{equation}
+  s_{i} = \frac{R_{i}}{y} \cdot \ndif{y}{R_{i}}
+  \label{eq:model-susceptibility}
+\end{equation}
+
+where $i$ indicates the axis, $y$ is the quantity of interest ($\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, $\Tabl{protein}$, or $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$) at each condition, and $R_{i}$ is the exchange rate --- in this case, either $\exchrate{glucose}$ or $\exchrate{ammonium}$.
+
+For computational use, the values of $R_{i}$ are equally-spaced discrete values from a vector with an interval $\Delta R_{i}$, and therefore the differential is approximated by central differences, given by the general formula:
+
+\begin{equation}
+  f_{i}^{\prime}(x) \approx \frac{\delta_{h}[f](x)}{2h} = \frac{f(x+h) - f(x-h)}{2h}
+  \label{eq:model-central-difference}
+\end{equation}
+
+where $f$ is the function of interest and $h$ is the interval size.
+
+Susceptibility gives an advantage over simply computing the differential of the quantity of interest with respect to the exchange rate, i.e. $\ndif{y}{R_{i}}$, because it accounts for the changing magnitude of $R_{i}$.
+At greater values of $R_{i}$, the susceptibility is decreased by a greater value with respect to $\ndif{y}{R_{i}}$.
+This accounts for how at such greater values of $R_{i}$, the proportional change in $R_{i}$ as it is increased or decreased by one step $\Delta R_{i}$ is smaller.
+
+At a specific nutrient condition, if $s_{\mathrm{glucose}} > s_{\mathrm{ammonium}}$ for a quantity of interest, then it means that the quantity is more susceptible to --- or limited by --- glucose exchange at this condition.
+The reverse is true if $s_{\mathrm{glucose}} < s_{\mathrm{ammonium}}$.
+To visualise the extent to which either exchange rate limits each quantity of interest, I show the susceptibilities as arrows (figures~\ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glucose}}$ and $s_{\mathrm{ammonium}}$ as two components of the vector that defines these arrows.
+This way, horizontal arrows indicate a strong susceptibility to glucose and vertical arrows indicate a strong susceptibility to ammonium, while the arrows point towards increasing values of the quantity of interest.
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
@@ -961,6 +1005,7 @@ For my subsequent investigation of the effect of carbon and nitrogen sources on 
   }
   \label{fig:model-grid-pyr}
 \end{figure}
+
 
 On the gradients...
 \begin{itemize}
