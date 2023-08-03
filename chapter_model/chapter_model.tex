@@ -20,15 +20,12 @@ It is perhaps more feasible to construct coarse-grained models to answer specifi
 
 Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address whether the logic of the metabolic cycle means an advantage for the cell in terms of growth and resource allocation.
 
-The specific question I aim to answer is whether a restriction on the proteome pool gives rise to temporal partitioning of synthesis of biomass components during growth, and whether this resource allocation strategy remains advantageous in different nutrient conditions and different strains.
-The broader question is if this strategy is indeed advantageous, whether the strategy explains aspects of the yeast metabolic cycle.
-
-% From 2023-07-13 meeting note
-Hypotheses:
-\begin{itemize}
-  \item If there is one limiting nutrient, sequential is good.
-  \item But if there are 2 limiting nutrients (e.g. C and N), parallel is good if the associated biomass components share a pathway.
-\end{itemize}
+Specifically, I aim to evaluate these hypotheses:
+\begin{enumerate}
+  \item A restriction on the proteome pool gives rise to temporal partitioning of biomass components during growth --- in other words, the cell prefers to synthesise biomass components in sequence rather than in parallel.
+  \item This resource allocation strategy remains advantageous in different nutrient conditions and different strains, explaining the robustness of the yeast metabolic cycle.
+  \item If there is a condition in which synthesising biomass components in parallel is advantageous, this advantage stems from the biomass components sharing similar levels of enzymes from the same pathways.
+\end{enumerate}
 
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
