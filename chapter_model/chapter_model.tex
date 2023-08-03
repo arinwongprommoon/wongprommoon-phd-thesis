@@ -1072,6 +1072,19 @@ Overall, pyruvate seems to represent an extreme case of the glucose investigatio
   \label{fig:model-rank-glc}
 \end{figure}
 
+In both the glucose/ammonium and pyruvate/ammonium investigations, I observe that the highest $\ratioabl$ occurs at the boundary at which both the carbon source and the nitrogen source are limiting.
+This leads to the hypothesis that the cell favours parallel biosynthesis of biomass components in such conditions, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
+
+To evaluate this hypothesis, I investigated how the enzyme usage fluxes change across each round of ablation in the glucose/ammonium exchange combinations that produce the lowest and greatest $\ratioabl$ (figure~\ref{fig:model-rank-glc}), and performed the same investigation for pyruvate/ammonium exchange combinations (figure~\ref{fig:model-rank-pyr}).
+As a visualisation aid, I ranked the enzyme usage reactions by magnitude of flux to emphasise of allocation of enzymes change in each condition, and computed the Kendall's $\tau$-b rank correlation coefficient to quantify the similarity between the enzyme usage flux vector between each pair of biomass component prioritisation situations.
+
+Figure~\ref{fig:model-rank-glc} suggests that in the low $\ratioabl$ condition, in which both glucose and ammonium are abundant, enzyme-available proteome allocation patterns for lipid- and protein-prioritised simulations most resemble the parallel case.
+In contrast, a set of enzymes that were originally synthesised in low levels in the parallel case became enzymes with the highest levels when carbohydrates, DNA, RNA, cofactors, or ions are prioritised.
+This separation of biomass component-prioritised simulations into two groups according to enzyme-available proteome allocation patterns confirms the advantage of sequential biosynthesis.
+Or, at least the lipids and proteins can be synthesised together, followed by the other components, or the order by which the two groups are synthesised can be reversed.
+The high $\ratioabl$ condition, in which both glucose and ammonium are near-limiting, paints the opposite picture.
+Here, allocation of the proteome to enzymes is similar across all situations, suggesting that parallel biosynthesis of biomass components may be advantageous in this situation.
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
@@ -1118,10 +1131,16 @@ Overall, pyruvate seems to represent an extreme case of the glucose investigatio
   \label{fig:model-rank-pyr}
 \end{figure}
 
-Insert discussion here about whether doubly-limiting regions, corresponding to high ratios, push the cell towards parallel or not.
+However, figure~\ref{fig:model-rank-pyr} suggests that the contrast between each biomass component is lessened when pyruvate is the carbon source.
 
-Also say something about enzyme usage fluxes being noisy, so take this with a grain of salt.
-Figure may or may not be useful.
+% Figure that shows enzyme usage fluxes being noisy may be very useful to illustrate this point...
+% I can fish them from older commits (and keep the arrows).
+% Also, this sentence is bloody long, but I'll deal with it in a grammar/proofreading edit.
+Upon investigation of all \num{1024} nutrient conditions in each carbon source-nitrogen source pair as defined in earlier in this section, it appears that the relationship between each of the exchange rate axes and any measure of similarity between ablation rounds based on enzyme usage reactions is not continuous.
+This is likely explained by the non-multiplicity of solutions in FBA.
+Namely, FBA finds the optimal value of the objective function, such as growth, but the flux vector that gives rise to this objective function may differ across each simulation or each linear optimisation solver.
+This is not a problem when ablation-related quantities were computed earlier in the section because they were all based on the fluxes of the objective function, defined as the biomass reaction, even if the biomass reaction itself was modified during ablation.
+In other words, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA renders any conclusion flawed.
 
 \section{Conclusion}
 \label{subsec:model-conclusion}
