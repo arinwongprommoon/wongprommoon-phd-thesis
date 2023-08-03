@@ -1145,33 +1145,36 @@ In other words, although choosing representative nutrient conditions leads to an
 \section{Conclusion}
 \label{subsec:model-conclusion}
 
-% TODO: convert to prose
+The identity of enzymes used during synthesis of biomass components may explain some experimental observations.
+It is possible that the cell synthesises carbohydrate, DNA, and RNA after one another so that usage of  oxidative phosphorylation occur at around the same time.
+This may explain cycles in dissolved oxygen concentrations.
+In addition, lipid biosynthesis often requires different enzymes than the other components, and this may explain cycling of lipid stores.
 
-\begin{enumerate}
-  \item The identity of enzymes used during synthesis of biomass components may explain some experimental observations.
-        It is possible that the cell synthesises carbohydrate, DNA, and RNA after one another so that usage of  oxidative phosphorylation occur at around the same time.
-        This may explain cycles in dissolved oxygen concentrations.
-        In addition, lipid biosynthesis often requires different enzymes than the other components, and this may explain cycling of lipid stores.
-  \item Proteins are the main limiting factor for biosynthesis, mostly owing to its large mass fraction.
-        This is followed by carbohydrates and lipids.
-        However, the biosynthesis time varies significantly as the nutrient conditions vary.
-  \item The advantage of sequential biosynthesis of biomass components is retained in auxotrophs and deletion strains, confirming the robustness (presence) sequential biomass synthesis as a resource allocation strategy, and thus may explain why the metabolic cycle is still present in such strains.
-        It is important to note that the advantage of sequential synthesis is retained even with nutrient supplements, which ensure a good growth rate.
-  \item A smaller enzyme pool means that it is more advantageous for the cell to perform sequential biosynthesis of biomass components.
-  \item This balance between sequential and parallel synthesis of biomass components changes when nutrient conditions change --- particularly with carbon (glucose or pyruvate) and nitrogen (ammonium) source uptake changes.
-        In particular, it is least advantageous when both carbon and nitrogen are limiting or near-limiting (of growth rate), and is most advantageous when neither are limiting or when only ammonium is limiting.
-        The patterns also reflect the differing saturation patterns of glucose and pyruvate.
-  \item The degree of advantage of sequential biosynthesis in various conditions and the time scales predicted may explain why yeast cells perform metabolic cycling in certain nutrient conditions.
-        The model may provide a \emph{weak} explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose.
-        If the glucose exchange is zero, the solution is infeasible, but if the glucose exchange is \emph{near} zero, the ratio is \emph{less than one}.
-        Although a better investigation would be \emph{switching} of nutrient conditions, which FBA is not built for: it only looks at steady state, and doesn't `remember' past states.
-  \item The model does not account for varying protein fractions (relative to cell dry mass) and other parameters that affect the size of $\epool$ during growth and division, and across different conditions.
-        For instance, \parencite{elsemmanWholecellModelingYeast2022} predicts that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
-        However, as I find that $\epool$ affects the growth rate, there may be a circular argument here, and there is no guarantee that parameter values will converge if the cyclical effects are fully accounted for.
-        Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, the model is perhaps sufficient.
-  \item \emph{In summary:} Results confirm temporal segregation of biosynthesis of biomass components, especially as a strategy under constraints on the size of the proteome available for the synthesis of enzymes.
-        Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
-\end{enumerate}
+Proteins are the main limiting factor for biosynthesis, mostly owing to its large mass fraction.
+This is followed by carbohydrates and lipids.
+However, the biosynthesis time varies significantly as the nutrient conditions vary.
+
+The advantage of sequential biosynthesis of biomass components is retained in auxotrophs and deletion strains, confirming the robustness (presence) sequential biomass synthesis as a resource allocation strategy, and thus may explain why the metabolic cycle is still present in such strains.
+It is important to note that the advantage of sequential synthesis is retained even with nutrient supplements, which ensure a good growth rate.
+
+A smaller enzyme pool means that it is more advantageous for the cell to perform sequential biosynthesis of biomass components.
+
+This balance between sequential and parallel synthesis of biomass components changes when nutrient conditions change --- particularly with carbon (glucose or pyruvate) and nitrogen (ammonium) source uptake changes.
+In particular, it is least advantageous when both carbon and nitrogen are limiting or near-limiting (of growth rate), and is most advantageous when neither are limiting or when only ammonium is limiting.
+The patterns also reflect the differing saturation patterns of glucose and pyruvate.
+
+The degree of advantage of sequential biosynthesis in various conditions and the time scales predicted may explain why yeast cells perform metabolic cycling in certain nutrient conditions.
+The model may provide a \emph{weak} explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose.
+If the glucose exchange is zero, the solution is infeasible, but if the glucose exchange is \emph{near} zero, the ratio is \emph{less than one}.
+Although a better investigation would be \emph{switching} of nutrient conditions, which FBA is not built for: it only looks at steady state, and doesn't `remember' past states.
+
+The model does not account for varying protein fractions (relative to cell dry mass) and other parameters that affect the size of $\epool$ during growth and division, and across different conditions.
+For instance, \parencite{elsemmanWholecellModelingYeast2022} predicts that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
+However, as I find that $\epool$ affects the growth rate, there may be a circular argument here, and there is no guarantee that parameter values will converge if the cyclical effects are fully accounted for.
+Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, the model is perhaps sufficient.
+
+In summary, results confirm temporal segregation of biosynthesis of biomass components, especially as a strategy under constraints on the size of the proteome available for the synthesis of enzymes.
+Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
 
 % Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
 % - How long does it take to replicate the genome?  It is biosynthesis of nucleotides + process of polymerising them.  There has to be super basic cell division cycle literature about this...
