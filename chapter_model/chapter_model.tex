@@ -388,8 +388,8 @@ I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
     The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
     Each column shows the component that remains in each round of pseudometabolite ablation.
     Rows represent reactions, sorted by subsystem.
-    Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in reaction flux, representing more of the proteome allocated to the production of the relevant enzyme, while pink shows a decrease in flux, representing less of the proteome allocated to the enzyme.
-    Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are treated as $\epsilon$ flux, for the purpose of computing fold changes.
+    Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in reaction flux, while pink shows a decrease in flux.
+    Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw} are treated as $\epsilon$ flux, for the purpose of computing fold changes.
     Cases where $|\log_{2}(\mathrm{FC})| < 3$ are excluded to restrict the number of reactions ($n = 968$) to aid display purposes.
   }
   \label{fig:model-ablate-enz-use}
@@ -406,10 +406,10 @@ It is important to note that some reaction fluxes in some cases are zero, making
 As a workaround, I defined a threshold small flux $\epsilon = $ \SI{1.11d-11}{\mmolgdwh}, which corresponds to one molecule per cell per hour --- the reasoning being that if a reaction is important enough for the yeast cell, the cell fires the reaction more than once in an hour, which is a substantial proportion of its doubling time.
 For the purposes of computing fold changes, fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are thus treated as $\epsilon$ flux.
 Therefore, extremely high ($> 15$) $\log_{2}(\mathrm{FC})$ likely indicates an original zero flux becoming non-zero in ablation, interpreted as an enzyme `switching-on', while extremely low ($< -20$) $\log_{2}(\mathrm{FC})$ likely indicates an original non-zero flux becoming zero in ablation, interpreted as an enzyme `switching-off'.
+Fold changes thus indicate changing priorities for the cell: a positive $\log_{2}(\mathrm{FC})$ represents more of the proteome allocated to the production of the relevant enzyme, while a negative $\log_{2}(\mathrm{FC})$ represents less of the proteome allocated to the production of the relevant enzyme.
 
 Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes as described above.
-
-Investigate proteome allocation as sanity check (figure~\ref{fig:model-ablate-enz-use}):
+In particular, it shows:
 
 \begin{enumerate}
   \item Increased fatty acid biosynthesis, fatty acid ester pathway, glycerolipid metabolism, steroid biosynthesis, terpenoid backbone biosynthesis when lipid is prioritised.
