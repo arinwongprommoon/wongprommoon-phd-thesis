@@ -685,8 +685,7 @@ Figure~\ref{fig:model-pool} shows the results of my investigation.
 I denote $\epool$ as the default enzyme-available proteome pool (INSERT EXACT VALUE HERE) and $\epool^{\prime}$.
 When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
 In this region, growth rate varies linearly as $\epool$ varies.
-However, the ratio is not constant, but climbs up in steps (figure~\ref{fig:model-pool-ratio}).
-With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the ratio increases, indicating less advantage for sequential biosynthesis.
+With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the ratio increases, indicating less advantage for sequential biosynthesis (figure~\ref{fig:model-pool-ratio}).
 As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
 But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
 This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
@@ -844,15 +843,13 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
   \label{fig:model-saturation}
 \end{figure}
 
-This shows:
-\begin{itemize}
-  \item The glucose saturation curve is similar to that predicted by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
-        The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\mmolgdwh} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
-  \item The maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}}.
-        The glucose value agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which uses latest published version of GECKO to create the ecYeast7 model to predict maximum growth rates on various carbon sources, and also agrees with my experimental observations.
-        This study did not predict growth rate on pyruvate, but a lower maximum growth rate on a non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
-  \item The growth rate saturation point for ammonium is determined by the maximal growth rate determined by each carbon source.
-\end{itemize}
+The glucose saturation curve (figure~\ref{fig:model-saturation-glucose}) is similar to that predicted by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
+The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\mmolgdwh} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
+In addition, the saturation curves show that the maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}} (figure~\ref{fig:model-saturation-pyruvate}).
+The glucose value agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which uses GECKO 2, the latest published version of GECKO, to create the ecYeast7 model to predict maximum growth rates on various carbon sources, and also agrees with my experimental observations.
+This paper did not predict growth rate on pyruvate, but a lower maximum growth rate on a non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
+Finally, the growth rate saturation point for ammonium is determined by the maximal growth rate determined by each carbon source (figure~\ref{fig:model-saturation-ammonium}).
+For my subsequent investigation of the effect of carbon and nitrogen sources on the model, I use the exchange rates found in this investigation as saturation values.
 
 \subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
 \label{subsec:model-grid}
