@@ -984,35 +984,52 @@ And thus the ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the pr
 
 To determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I computed the susceptibility of the quantity with respect to each axis, carbon source or nitrogen source.
 
-Susceptibility with respect to each axis is given by:
+Susceptibility at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ is given by:
 
 \begin{equation}
-  s_{i} = \frac{R_{i}}{y} \cdot \ndif{y}{R_{i}}
+  s_{i}(\exchrate{glc}, \exchrate{amm}) = \frac{R_{i}}{y(\exchrate{glc}, \exchrate{amm})} \cdot \pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}
   \label{eq:model-susceptibility}
 \end{equation}
 
-where $i$ indicates the axis, $y$ is the quantity of interest ($\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, $\Tabl{protein}$, or $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$) at each condition, and $R_{i}$ is the exchange rate --- in this case, either $\exchrate{glucose}$ or $\exchrate{ammonium}$.
+where:
+\begin{itemize}
+  \item $i$ indicates the axis: glucose (glc) or ammonium (amm)
+  \item $R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{ammonium}$).
+        An $(\exchrate{glc}, \exchrate{amm})$ pair defines a nutrient condition.
+  \item $y\exchrate{glc}, \exchrate{amm}$ represents the quantity of interest --- $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, $\Tabl{protein}$, or $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ --- at each nutrient condition
+\end{itemize}
 
-For computational use, the values of $R_{i}$ are equally-spaced discrete values from a vector with an interval $\Delta R_{i}$, and therefore the differential is approximated by central differences, given by the general formula:
+For computational use, the values of $R_{i}$ are equally-spaced discrete values from a vector with an interval $\Delta R_{i}$.
+The differential $\pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}$ is thus approximated by central differences:
 
 \begin{equation}
-  f_{i}^{\prime}(x) \approx \frac{\delta_{h}[f](x)}{2h} = \frac{f(x+h) - f(x-h)}{2h}
+  \begin{aligned}
+  \pdif{y(\exchrate{glc}, \exchrate{amm})}{\exchrate{glc}} &\approx \frac{y(\exchrate{glc} + \Delta \exchrate{glc}, \exchrate{amm}) - y(\exchrate{glc} - \Delta \exchrate{glc}, \exchrate{amm})}{2\Delta \exchrate{glc}}\\
+  \pdif{y(\exchrate{glc}, \exchrate{amm})}{\exchrate{amm}} &\approx \frac{y(\exchrate{glc}, \exchrate{amm} + \Delta \exchrate{amm}) - y(\exchrate{glc}, \exchrate{amm} - \Delta \exchrate{amm})}{2\Delta \exchrate{amm}}
+  \end{aligned}
   \label{eq:model-central-difference}
 \end{equation}
 
-where $f$ is the function of interest and $h$ is the interval size.
-
-Susceptibility gives an advantage over simply computing the differential of the quantity of interest with respect to the exchange rate, i.e. $\ndif{y}{R_{i}}$, because it accounts for the changing magnitude of $R_{i}$.
-At greater values of $R_{i}$, the susceptibility is decreased by a greater value with respect to $\ndif{y}{R_{i}}$.
+Susceptibility gives an advantage over simply computing the differential of the quantity of interest with respect to the exchange rate, i.e. $\pdif{y}{R_{i}}$, because it accounts for the changing magnitude of $R_{i}$.
+At greater values of $R_{i}$, the susceptibility is decreased by a greater value with respect to $\pdif{y}{R_{i}}$.
 This accounts for how at such greater values of $R_{i}$, the proportional change in $R_{i}$ as it is increased or decreased by one step $\Delta R_{i}$ is smaller.
+It also accounts for the different step sizes of $\exchrate{glc}$ and $\exchrate{amm}$, owing to the different saturation concentrations of the two nutrients.
 
-At a specific nutrient condition, if $s_{\mathrm{glucose}} > s_{\mathrm{ammonium}}$ for a quantity of interest, then it means that the quantity is more susceptible to --- or limited by --- glucose exchange at this condition.
-The reverse is true if $s_{\mathrm{glucose}} < s_{\mathrm{ammonium}}$.
-To visualise the extent to which either exchange rate limits each quantity of interest, I show the susceptibilities as arrows (figures~\ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glucose}}$ and $s_{\mathrm{ammonium}}$ as two components of the vector that defines these arrows.
+At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more susceptible to --- or more limited by --- glucose exchange at this condition.
+The reverse is true if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$.
+To visualise the extent to which each exchange rate limits each quantity of interest, I show the susceptibility values as arrows (figures~\ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glc}}$ and $s_{\mathrm{amm}}$ as two components of the vector that defines these arrows.
 This way, horizontal arrows indicate a strong susceptibility to glucose and vertical arrows indicate a strong susceptibility to ammonium, while the arrows point towards increasing values of the quantity of interest.
 
-Figure~\ref{fig:model-grid-glc} shows that the region where $\ratioabl > 1$ corresponds a region around to the boundary between the glucose-limited and ammonium-limited regions.
-In contrast, when the growth rate is near its maximum where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, temporal partitioning becomes more advantageous.
+Figures~\ref{fig:model-grid-glc-ratio} and~\ref{fig:model-grid-glc-growthrate} show that the region where $\ratioabl > 1$ corresponds to a region around the boundary between the region where glucose more limits growth rate and the region where ammonium more limits growth rate, plus a region where ammonium exchange is a saturation while glucose exchange is over saturation.
+In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous.
+
+To explain why there is a region in which $\ratioabl > 1$ when ammonium exchange is under saturation and glucose is over saturation, consider the definition of $\ratioabl$ in equation~\ref{eq:model-ratio}.
+If we assume...
+
+[INSERT THE REST OF THE RE-WRITE HERE]
+
+
+
 Where ammonium is limiting, as ammonium exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{protein}$ decreases (implying increasing $\grabl{protein}$).
 % I'm not too sure of this sentence...
 Because $\ratioabl$ increases, this means that the increase in $\gro$ `overpowers' the increase in $\grabl{protein}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
