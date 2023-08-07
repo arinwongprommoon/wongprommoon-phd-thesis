@@ -464,11 +464,12 @@ To emphasise changes in proteome allocation across rounds of ablation, I compute
 Some reaction fluxes in some cases are zero, making the logarithm of fold change undefined.
 As a workaround, I defined a threshold small flux $\epsilon = $ \SI{1.11d-11}{\mmolgdwh}, which corresponds to one molecule per cell per hour, assuming \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
 My justification for the threshold value is that if a reaction is important enough for the cell, the cell fires the reaction more than once in an hour, which is a substantial proportion of its doubling time.
-For the purposes of computing fold changes, fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are thus treated as $\epsilon$ flux.
-Therefore, extremely high ($> 10$) $\log_{2}(\mathrm{FC})$ likely indicates an original zero flux becoming non-zero in ablation, interpreted as an enzyme `switching-on', while extremely low ($< -10$) $\log_{2}(\mathrm{FC})$ likely indicates an original non-zero flux becoming zero in ablation, interpreted as an enzyme `switching-off'.
-Fold changes thus indicate changing priorities for the cell: a positive $\log_{2}(\mathrm{FC})$ represents more of the proteome allocated to the production of the relevant enzyme, while a negative $\log_{2}(\mathrm{FC})$ represents less of the proteome allocated to the production of the relevant enzyme.
+For the purposes of computing fold changes, fluxes with magnitude less than $\epsilon$, including zero flux, are thus treated as $\epsilon$ flux.
+Therefore, extremely high ($> 10$) $\log_{2}(\mathrm{FC})$ likely indicates an original zero flux becoming non-zero in ablation, interpreted as an enzyme `switching-on'.
+Extremely low ($< -10$) $\log_{2}(\mathrm{FC})$ likely indicates an original non-zero flux becoming zero in ablation, interpreted as an enzyme `switching-off'.
+Fold changes thus indicate the cell changing priorities: a positive $\log_{2}(\mathrm{FC})$ represents more of the proteome allocated to the production of the relevant enzyme, while a negative $\log_{2}(\mathrm{FC})$ represents less of the proteome allocated to the production of the relevant enzyme.
 
-Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes as described above.
+Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes calculated as described above.
 In particular, it shows:
 
 \begin{enumerate}
@@ -482,10 +483,10 @@ In particular, it shows:
         Strong increase in riboflavin metabolism when cofactor is prioritised (riboflavin is a cofactor).
         Increase in pentose phosphate pathway, purine metabolism, and pyrimidine metabolism when RNA is prioritised.
         However, decrease in pentose phosphate pathway when DNA is prioritised.
-  \item For carbohydrate, DNA, RNA, cofactor, ion, strong increases in glycolysis/gluconeogenesis and oxidative phosphorylation.
+  \item For carbohydrate, DNA, RNA, cofactor, ion, strong increases in glycolysis/glu\-co\-neo\-ge\-ne\-sis and oxidative phosphorylation.
 \end{enumerate}
 
-In sum, changes in allocation in rounds of ablation, by subsystem, is reasonable given the roles of the enzymes, and this visualisation confirms that the ablation is reasonable.
+In sum, changes in allocation in rounds of ablation, by subsystem, biologically relevant and is reasonable given the roles of the enzymes, and this visualisation confirms that the ablation is reasonable.
 
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
@@ -494,7 +495,7 @@ In sum, changes in allocation in rounds of ablation, by subsystem, is reasonable
 % Judging by the ratio heatmaps later in the chapter, I think the answer is no, and
 % so maybe it makes sense to `max out' the glucose uptake for now.
 I used the ecYeast8.6.0 model with glucose uptake, defined by the bounds of its exchange reaction flux, restricted to within \SIrange{0}{16.89}{\mmolgdw}.
-The upper limit is based on the glucose uptake rate from using the non-modified model to optimise growth rate.
+The upper limit is based on the glucose uptake rate found by FBA from using the wild type model to optimise growth rate.
 This value agrees with theoretical saturation rates of \SIrange{16}{19}{\mmolgdw} \parencite{blankTCACycleActivity2004}.
 Using the biomass reaction as the objective function, I optimise the model to obtain the predicted growth rate, and computed the doubling time based on this growth rate as follows:
 
@@ -503,11 +504,11 @@ Using the biomass reaction as the objective function, I optimise the model to ob
   \label{eq:model-doubling-time}
 \end{equation}
 
-where $t_{0}$ is the doubling time and $\gro$ is the growth rate, equivalent to the optimal flux of the biomass reaction.
+where $t_{0}$ is the doubling time and $\gro$ is the growth rate, equivalent to the optimised flux of the biomass reaction.
 
-I ablate components in the biomass reaction that have pseudoreactions associated with the `Growth' subsystem, as discussed in section~\ref{sec:model-yeast8-pseudometabolites} in turn.
+I ablate components in the biomass reaction in turn discussed in section~\ref{sec:model-yeast8-pseudometabolites}.
 In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
-Doubling time is computed, taking into account the mass fraction of each biomass component --- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
+Synthesis time is computed, taking into account the mass fraction of each biomass component --- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
 Specifically, the computation is:
 
 \begin{equation}
@@ -521,7 +522,7 @@ $f_{i}$ for each biomass component is computed by dividing the molecular weight 
 For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction:
 
 \begin{equation}
-  t_{i} = f_{i} \cdot t_{0}
+  \Tiprop = f_{i} \cdot t_{0}
   \label{eq:model-proportional-time}
 \end{equation}
 
@@ -532,17 +533,17 @@ where $t_{0}$ is the doubling time found in equation~\ref{eq:model-doubling-time
   \includegraphics[width=.9\linewidth]{ablation_example_ratio.png}
   \caption{
     Comparing time scales derived from ablating components of the biomass reaction (blue) and from assuming that synthesis time is proportional to the mass fraction of the biomass component (red).
-    For each biomass component (lipid, protein, carbohydrate, DNA, RNA, cofactor, ion), the time $\Tiabl$ was computed according to equation~\ref{eq:model-ablated-time} (blue bars apart from leftmost column), and the time $t_{i}$ was computed according to equation~\ref{eq:model-proportional-time} (red bars apart from leftmost column).
-    $\Tpar$ is defined as the greatest $t_{i}$ (equation~\ref{eq:model-b}).
+    For each biomass component, the time $\Tiabl$ was computed according to equation~\ref{eq:model-ablated-time} (blue bars apart from leftmost column), and the time $\Tiprop$ was computed according to equation~\ref{eq:model-proportional-time} (red bars apart from leftmost column).
+    $\Tpar$ is defined as the greatest $\Tiprop$ (equation~\ref{eq:model-b}).
     Blue under `all biomass' is $\Tseq$ (equation~\ref{eq:model-a}), the sum of times derived from ablation (other blue bars).
     Red under `all biomass' is the doubling time $t_{0}$ (equation~\ref{eq:model-doubling-time}).
   }
   \label{fig:model-ablate-times}
 \end{figure}
 
-Figure~\ref{fig:model-ablate-times} summarises the times $t_{0}$ along with $\Tiabl$ and $t_{i}$ for each biomass component.
+Figure~\ref{fig:model-ablate-times} summarises the times $t_{0}$ along with $\Tiabl$ and $\Tiprop$ for each biomass component.
 
-To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I devise a ratio $\ratioabl$ that represents ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time is computed, i.e.\
+To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I devise a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time, i.e.\
 
 \begin{equation}
   \ratioabl \coloneqq \frac{\Tseq}{\Tpar}
@@ -556,12 +557,12 @@ $\Tseq$ represents sum of times from focusing on each biomass component --- thus
   \label{eq:model-a}
 \end{equation}
 
-$\Tpar$ represents greatest time of synthesis of the biomass component if time is assumed to be proportional to mass fraction.
-This is always protein as it accounts for $\approx$50\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
+$\Tpar$ represents the time of synthesis of the biomass component that takes the most time, if time is assumed to be proportional to mass fraction.
+This is always protein as it accounts for 52.5\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
 
 \begin{equation}
   \begin{aligned}
-    \Tpar \coloneqq \argmax_{i} t_{i} = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro},\\
+    \Tpar \coloneqq \argmax_{i} \Tiprop = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro},\\
     \because \argmax_{i} f_{i} = \biomfrac{protein}
   \end{aligned}
   \label{eq:model-b}
@@ -574,13 +575,13 @@ Therefore,
 \begin{equation}
   \begin{aligned}
     \ratioabl &= \frac{\Tseq}{\Tpar} \\
-    & = (\sum_i \frac{f_i}{\griabl}) \cdot \frac{\gro}{\biomfrac{protein}} \\
+    & = \left( \sum_i \frac{f_i}{\griabl} \right) \cdot \frac{\gro}{\biomfrac{protein}} \\
     & = (\frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}}) \cdot \frac{\gro}{\biomfrac{protein}}
     \end{aligned}
   \label{eq:model-ratio}
 \end{equation}
 
-This expression means that the definition of the $\ratioabl$ ratio is not trivial and depends on the $\gro$ and the $\griabl$ values, which are all independent of each other.
+This expression means that the definition of the $\ratioabl$ ratio does not reduce to a trivial expression and depends on the $\gro$ and the $\griabl$ values, which are all independent of each other.
 This relationship between $\ratioabl$ and $\gro$ and $\griabl$ is further explored in section~\ref{sec:model-pool}.
 
 \begin{figure}
@@ -619,21 +620,21 @@ This relationship between $\ratioabl$ and $\gro$ and $\griabl$ is further explor
 % Adding supplements, e.g. amino acids, dNTPs/NTPs, pyruvate, glucose limitation?
 % Or do C/N grid heatmaps demonstrate this.
 
-$\ratioabl < 1$ means that synthesising biomass components in sequence saves more time, while $\ratioabl > 1$ indicated that parallel synthesis of biomass components is favoured as synthesising biomass components in sequence does not save time.
-In figure~\ref{fig:model-ablate-times}, the ratio is 0.70.
-The fact that this still holds true for auxotrophs and deletion strains supports experimental evidence that auxotrophs and deletion strains have YMCs (figure~\ref{fig:model-ablation-strains}).
+$\ratioabl < 1$ means that synthesising biomass components in sequence saves more time, while $\ratioabl > 1$ indicate that parallel synthesis of biomass components is favoured as synthesising biomass components in sequence does not save time.
+In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
+The fact that $\ratioabl < 1$ also holds for auxotrophs and deletion strains supports experimental evidence that auxotrophs and deletion strains have YMCs (figure~\ref{fig:model-ablation-strains}).
 
 \section{Effect of restricting the enzyme pool}
 \label{sec:model-pool}
 
-Evaluating the hypothesis of whether a restriction of the proteome pool favours sequential biosynthesis of biomass components has multiple approaches.
+There are multiple approaches to evaluate the hypothesis of whether a restriction of the proteome pool favours sequential biosynthesis of biomass components.
 Here, I discuss three commonly-used approaches --- parsimonious FBA, regularised FBA, and constraining the sum of absolute values of fluxes --- before justifying the use of directly varying a parameter in the ecYeast8 model to take advantage of GECKO.
 
-Parsimonious FBA \parencite{lewisOmicDataEvolved2010} first uses FBA to compute optimal growth rate, fixes this value, then minimises the sum of gene-associated reaction fluxes while maintaining optimal growth.
+Parsimonious FBA \parencite{lewisOmicDataEvolved2010} first uses FBA to compute the optimal growth rate, fixes this value, then minimises the sum of gene-associated reaction fluxes while maintaining optimal growth.
 Depending on the software package, this minimisation either minimises the sum of fluxes (COBRA, for MATLAB), the sum of the absolute values of each flux (\textit{cobrapy}, for the Python programming language) or squared sum (COBREXA, for the Julia programming language).
-I reject this approach because it fixes the growth rate, but I aim to see how constraints affect cell strategies as the constraints vary along a spectrum.
+I reject this approach because it fixes the growth rate, but I aim to see how constraints affect cell strategies including the growth rate as the constraints vary along a spectrum.
 Additionally, parsimonious FBA relies on reducing the subset of genes that contribute to the solution.
-In other words, it modifies the model and it also relies on good gene-protein annotations, the latter not being a guarantee.
+In other words, it modifies the model and it also relies on good gene-protein annotations, the latter not always guaranteed.
 
 Regularised FBA is defined as adding a regularisation parameter to the objective function.
 \textcite{vijayakumarHybridFluxBalance2020} describe a quadratic program for solving a regularised two-level FBA:
@@ -647,7 +648,8 @@ where $g$ is the objective function, $v$ is the flux vector, and $\sigma$ is a r
 
 I reject this approach because it requires a quadratic solver, making it difficult and computationally expensive to implement.
 % Add figure to show this unexpected behaviour?
-And because the behaviour is not as expected, i.e.\ the growth rate does not change as the regularisation parameter $\sigma$ varies, even though I expected a trade-off between growth and reaction fluxes to change as this parameter varies.
+Additionally, the behaviour is not as expected: the growth rate does not change as the regularisation parameter $\sigma$ varies.
+I expected a trade-off between growth and reaction fluxes and the balance between these two quantities to change as this parameter varies.
 
 Constraining the sum of absolute values of fluxes is simply defined as fixing
 
@@ -658,16 +660,17 @@ Constraining the sum of absolute values of fluxes is simply defined as fixing
 
 where $v_{i}$ represents each flux of each reaction, and $c$ is a constant to be varied.
 
-This is reasonable for the original Yeast8 model without the enzyme constraint, as opposed to ecYeast8.
+This is reasonable for the original Yeast8 model without the enzyme constraint (as opposed to ecYeast8).
 % ADD PLOTS TO SHOW THIS?
-As $c$ decreases to 0, the original growth rate $\gro$ and ablated growth rates $\griabl$ decreased to 0 linearly, while the $\ratioabl$ ratio remains constant.
-However, if this approaches is applied to ecYeast8,
-there is potential triple-counting of imposing constraints, i.e.\: additionally on
+As $c$ decreases to 0, the original growth rate $\gro$ and ablated growth rates $\griabl$ decrease to 0 because at $c$ values near 0, flux values, including that of the biomass reaction, can only take small values.
+However, if this approach is applied to ecYeast8,
+there is double imposition of constraints, i.e.\: on
 (a) constraints on enzyme usage imposed on the enzyme-usage pseudoreactions created by GECKO, and on
 (b) constraints on sum of the absolute values of fluxes.
 This will confuse interpretation.
 
-Therefore, I decide to vary $\epool$ to study proteomic constraints as this takes advantage of a formalism that already exists in ecYeast8, by virtue of GECKO, that is easy to interpret and modify.
+Therefore, I decide to vary the enzyme-available proteome pool to study proteomic constraints.
+This takes advantage of a formalism in ecYeast8 because of GECKO, that is easy to modify and interpret.
 
 \begin{figure}
   \centering
@@ -730,21 +733,22 @@ Therefore, I decide to vary $\epool$ to study proteomic constraints as this take
 \end{figure}
 
 To vary the enzyme-available proteome pool in the ecYeast8 model,
-I vary the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}) in order to change the flux available for enzyme usage pseudoreactions (equation~\ref{eq:model-gecko-enzyme-pool}).
-The logic of this is that with a smaller $\epool$, the sum total of fluxes of the enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to.
-This models the biological situation in which the cell has a smaller enzyme-available proteome pool, so the cell must decide which enzymes to allocate the greatest proportions of the pool to.
+I vary the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}) in order to change the flux available for enzyme usage pseudoreactions (equation~\ref{eq:model-gecko-enzyme-usage}).
+My reasoning is that with a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to.
+This models the biological situation in which the cell has a smaller enzyme-available proteome pool, so the cell must decide which enzymes to allocate the greatest proportions of the pool to, for enzyme synthesis.
 
 Figure~\ref{fig:model-pool} shows the results of my investigation.
-I denote $\epool$ as the default enzyme-available proteome pool (INSERT EXACT VALUE HERE) and $\epool^{\prime}$.
+% 0.103697326777848
+I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
 When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
-In this region, growth rate varies linearly as $\epool$ varies.
-With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the ratio increases, indicating less advantage for sequential biosynthesis (figure~\ref{fig:model-pool-ratio}).
+In this region, growth rate increases linearly as $\epool$ increases.
+With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
 As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
 But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
 This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
 % TODO: Come up with a better (biological) interpretation -- consult some org notes.
-Different components plateau at different $\epool^{\prime}$, with carbohydrate reaching a plateau first, followed by protein.
-This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because they are more `expensive' in terms of the amount of protein needed for the synthesis of related enzymes.
+The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
+This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
 
 To explain the increase in $\ratioabl$ as $\epool^{\prime}$ increases, I consider the behaviour of $\gro$ and $\griabl$ values with respect to $\epool^{\prime}$ in intervals.
 As a simplification, I express the size of $\epool^{\prime}$ in multiples of the original $\epool$ and denote the size of $\epool^{\prime}$ as $x$.
@@ -770,7 +774,7 @@ We thus obtain:
 
 Consider $0 \leq x \leq 0.5$.
 In this region of $x$, let $\gro = k_{0}x$ and $\griabl = k_{i}x$, where constants $k_{0}, k_{i} > 0$.
-This models observations in figure~\ref{fig:model-pool}.
+This models how these values initially increase linearly in figure~\ref{fig:model-pool}.
 Equation~\ref{eq:model-ratio-diff} thus becomes:
 \begin{equation}
   \begin{aligned}
@@ -798,7 +802,7 @@ Equation~\ref{eq:model-ratio-diff} thus becomes:
   \label{eq:model-ratio-diff-midx}
 \end{equation}
 
-As $f_{i}, c_{i}, m_{i} > 0$ for all biomass components $i$, and $k_{0} > 0$, $\ndif{\ratioabl(x)}{x} > 0$ regardless of the specific values that these constants take.
+As $f_{i}, c_{i}, m_{i} > 0$ for all biomass components $i$, and $k_{0} > 0$, we get $\ndif{\ratioabl(x)}{x} > 0$ regardless of the values that these constants take.
 Because $k_{0}$ does not change over the region of $x$ considered, $m_{i}$, $c_{i}$, and $x$ values thus determine the magnitude of $\ndif{\ratioabl(x)}{x}$.
 If within a region of $x$, $m_{i}$ and $c_{i}$ values remain constant for all $i$, then as $x$ increases, $\ndif{\ratioabl(x)}{x}$ should decrease --- this is certainly the case, as can be observed in figure~\ref{fig:model-pool}.
 
@@ -826,10 +830,10 @@ Finally, as all $\griabl$ trajectories become flat at $x > 15$, $\ndif{\ratioabl
 \subsection{Exchange reaction saturation}
 \label{subsec:model-saturation}
 
-FBA models include nutrient exchange reactions to simulate the presence of certain nutrients in the growth medium.
-Because FBA models do not account for substrate concentrations, studying the effect of nutrient sources in FBA models involves constraining the flux of such exchange reactions to achieve validated growth rates, as performed by \textcite{elsemmanWholecellModelingYeast2022} to study the effect of glucose.
+Genome-scale FBA models typically include nutrient exchange reactions to simulate the presence of certain nutrients in the growth medium.
+Because FBA does not account for substrate concentrations, studying the effect of nutrient sources using FBA involves constraining the flux of exchange reactions so that simulated growth rate match experimental observations, as performed by \textcite{elsemmanWholecellModelingYeast2022} to study the effect of glucose.
 
-Using the ecYeast8.6.0 model, I varied the flux bounds of exchange reaction and recorded how it affects predicted growth rate.
+Using the ecYeast8.6.0 model, I varied the flux bounds of some exchange reactions and recorded how they affected simulated growth rate.
 I did this with two carbon sources, glucose and pyruvate, and with ammonium as a nitrogen source (figure~\ref{fig:model-saturation}).
 
 % TODO: Remove the right panel figs
@@ -889,19 +893,19 @@ I did this with two carbon sources, glucose and pyruvate, and with ammonium as a
 
   \caption{
     Effect of nutrient exchange reactions on growth rate, predicted by the ecYeast8 model (left panels).
-    Saturation values were found by computing discrete differences of growth rates with respect to exchange rates
+    Saturation values were found by computing differences of growth rates with respect to exchange rates
     (right panels \ref{fig:model-saturation-diff-glucose},~\ref{fig:model-saturation-diff-pyruvate},~\ref{fig:model-saturation-diff-ammonium}),
-    and saturation was termed as where the differences dropped below a small tolerance value $\epsilon = \num{1e-8}$.
+    and saturation was termed as the exchange rate at which the differences dropped below a small tolerance value $\epsilon = \num{1e-8}$.
   }
   \label{fig:model-saturation}
 \end{figure}
 
-The glucose saturation curve (figure~\ref{fig:model-saturation-glucose}) is similar to that predicted by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
+The growth saturation curve for glucose (figure~\ref{fig:model-saturation-glucose}) is similar to that simulated by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
 The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\mmolgdwh} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
 In addition, the saturation curves show that the maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}} (figure~\ref{fig:model-saturation-pyruvate}).
-The glucose value agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which uses GECKO 2, the latest published version of GECKO, to create the ecYeast7 model to predict maximum growth rates on various carbon sources, and also agrees with my experimental observations.
-This paper did not predict growth rate on pyruvate, but a lower maximum growth rate on a non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
-Finally, the growth rate saturation point for ammonium is determined by the maximal growth rate determined by each carbon source (figure~\ref{fig:model-saturation-ammonium}).
+The maximum growth rate on glucose agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which used GECKO 2 to create the ecYeast7 model to predict maximum growth rates on various carbon sources.
+This paper did not predict growth rate on pyruvate, but a lower maximum growth rate on the non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
+Finally, the growth rate saturation point for ammonium is determined by the maximal growth rate on the carbon source (figure~\ref{fig:model-saturation-ammonium}).
 For my subsequent investigation of the effect of carbon and nitrogen sources on the model, I use the exchange rates found in this investigation as saturation values.
 
 \subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
@@ -961,23 +965,25 @@ For my subsequent investigation of the effect of carbon and nitrogen sources on 
   \label{fig:model-grid-glc}
 \end{figure}
 
-To assess the effect of carbon and nitrogen sources on biomass synthesis strategies, I first varied the upper flux bounds of exchange reactions that correspond to glucose exchange ($\exchrate{glucose}$) and ammonium exchange rate ($\exchrate{ammonium}$).
-Each of these bounds took 32 values from 0\% to 200\% saturation, with glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}, to produce a grid of \num{1024} conditions.
+To assess the effect of carbon and nitrogen sources on biomass synthesis strategies, I first varied the upper flux bounds of exchange reactions that corresponded to glucose exchange ($\exchrate{glucose}$, or $\exchrate{glc}$) and to ammonium exchange rate ($\exchrate{ammonium}$, $\exchrate{glc}$).
+Each of these bounds took 32 equally-spaced values from 0\% to 200\% saturation, with glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}, to produce a grid of \num{1024} conditions.
 At each combination of glucose and ammonium exchange, I ablated components in the biomass reaction according to section~\ref{sec:model-timescale} to obtain $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$.
 $\ratioabl$ indicated whether the sequential or parallel strategy is advantageous for each condition, while $\gro$ indicated which nutrient source was limiting in each condition.
-Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions, especially if the parallel biomass synthesis is favoured ($\ratioabl > 1$).
-Specifically, I chose carbohydrate and protein synthesis times within $\Tiabl$ because:
+
+Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions, in particular, conditions in which parallel biomass synthesis is favoured ($\ratioabl > 1$).
+Specifically, I chose carbohydrate and protein synthesis times because:
 
 \begin{enumerate}
-  \item Predicted synthesis times of these biomass components varied the most, of all biomass components, as the glucose and ammonium exchange rates were varied.
-  \item Each accounts for a large proportion of total biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:ecyeast8-mol-weights}).
-  \item Carbohydrate synthesis has a clear biochemical relationship with a fermentable or non-fermentable carbon source.
+  \item Of all biomass components, predicted synthesis times of these biomass components varied the most as the glucose and ammonium exchange rates were varied.
+  \item Each accounts for a large proportion of biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:ecyeast8-mol-weights}).
+  \item Carbohydrate synthesis has a clear biochemical relationship with the level of a carbon source.
         And, because amino acids contain amino groups, protein synthesis has a biochemical relationship with ammonium as a nitrogen source.
 \end{enumerate}
 
-And thus the ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how biomass synthesis times change as carbon and nitrogen source concentrations change, particularly in relation to sequential biosynthesis-favouring conditions and to parallel biosynthesis-favouring conditions.
+And thus the ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how $\Tiabl$ values change as carbon and nitrogen source concentrations change.
 
 To determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I computed the susceptibility of the quantity with respect to each axis, carbon source or nitrogen source.
+
 Susceptibility with respect to each axis is given by:
 
 \begin{equation}
