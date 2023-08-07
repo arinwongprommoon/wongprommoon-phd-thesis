@@ -10,113 +10,133 @@
 % - use of the term 'flux', esp. 'flux through reaction'
 % FIXME: Check if g/mol units for molecular weights of biomass makes sense
 % (should it be g/mmol?)
-\chapter{Modelling the yeast metabolic cycle}
+\chapter{Modelling yeast biosynthesis strategies under constraints}
 \label{ch:model}
 
 It is difficult to develop a fine-grained model for the aspects of the YMC,
-especially if most of the molecular mechanisms are unclear
-and if the main read-outs of single-cell studies --- NAD(P)H and flavins autofluorescence --- are `aggregate' measures of several biochemical phenomena.
-It is perhaps more feasible to construct coarse-grained models to answer specific biological questions with the YMC.
+especially if the detailed molecular mechanisms are unclear
+and if the main read-outs from single-cell studies --- NAD(P)H and flavin autofluorescence --- are aggregate measures derived from several biochemical phenomena.
+It is perhaps more feasible to construct coarse-grained models to answer biological questions about the YMC.
 
-Here, I present using a genome-scale metabolic model and flux balance analysis (FBA) to address whether the logic of the metabolic cycle means an advantage for the cell in terms of growth and resource allocation.
+Here, I use a genome-scale metabolic model and flux balance analysis (FBA) to address whether cellular events in the metabolic cycle reflect a strategy in resource allocation to optimise growth.
 
 Specifically, I aim to evaluate these hypotheses:
 \begin{enumerate}
-  \item A restriction on the proteome pool gives rise to temporal partitioning of biomass components during growth --- in other words, the cell prefers to synthesise biomass components in sequence rather than in parallel.
-  \item This resource allocation strategy remains advantageous in different nutrient conditions and different strains, explaining the robustness of the yeast metabolic cycle.
-  \item If there is a condition in which synthesising biomass components in parallel is advantageous, this advantage stems from the biomass components sharing similar levels of enzymes from the same pathways.
+  \item A finite proteome pool gives rise to temporal partitioning of the synthesis of biomass components during growth: lipid, carbohydrate, amino acids, and nucleic acids.
+        In other words, as an adaption, the cell synthesises biomass components in sequence rather than in parallel.
+        This explains the timing of biosynthetic events in the phases of the yeast metabolic cycle.
+  \item This resource allocation strategy remains advantageous in many nutrient conditions and in deletion strains, explaining the robustness of the yeast metabolic cycle.
+  \item If there is a condition in which synthesising biomass components in parallel is advantageous, it is advantageous because the synthesis of biomass components share similar levels of enzymes from the same pathways.
 \end{enumerate}
 
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
 
-Metabolic network reconstructions are mathematical representations of a metabolic pathway or a set of metabolic pathways in a living system.
-Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions, represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
-This information can be represented in a stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
-For example, if reaction $R_{1}$ is defined by \ce{1 M1 + 2 M2 -> 3 M3}, the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
-Metabolic network reconstructions may include `artificial' reactions that are not represented by true, singular chemical reaction in the strict sense, such as reactions that models substrates entering and leaving the biological system, or a reaction that models biomass formation (termed as a \emph{biomass reaction}).
-A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system catalysed by a gene-encoded enzyme.
+Metabolic network reconstructions are mathematical representations of a set of metabolic pathways in a living system.
+Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions that are represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
+This information can be represented in a two-dimensional stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
+
+For example, if reaction $R_{1}$ is defined by:
+
+\begin{equation}
+  \ce{1 M1 + 2 M2 -> 3 M3}
+  \label{eq:model-example-chemical-reaction}
+\end{equation}
+
+the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
+
+Metabolic network reconstructions may include reactions that do not correspond to by true, singular reactions in the strict chemical sense, in which one or ore chemical species react to create a different set of chemical species as products.
+Such reactions may include reactions that model substrates entering and leaving the biological system.
+Additionally, many models include a reaction that models biomass formation from chemical species, termed as a \emph{biomass reaction}.
+A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system that is catalysed by a gene-encoded enzyme.
 
 Flux balance analysis (FBA) is a mathematical method that finds the steady-state flow of metabolites through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
-Such flows are termed \emph{metabolic fluxes}, which represents the rate of chemical reactions.
-At its core, FBA is a method of solving a linear programming problem of find the flux values that optimise the output value of an objective function, subject to mathematical constraints.
+Such flows are termed \emph{metabolic fluxes}, which represents rates of chemical reactions.
+At its core, FBA is a method of solving a linear programming problem of finding the flux values that optimise the output value of an objective function, subject to mathematical constraints.
 The objective function is given as a mathematical formulation of any number of reaction fluxes in the model.
-Most commonly, the objective function for an FBA problem is maximising the flux of a biomass reaction, optimising the growth rate of the cell.
+Most commonly, the objective function for an FBA problem is maximising the flux of a biomass reaction, thus optimising the growth rate of the cell.
 However, multiple objective functions are possible.
-The mathematical constraints for FBA are, in the most basic case, imposed by two things: the stoichiometric matrix, balancing reaction inputs and outputs, and upper/lower bounds on fluxes of each reaction.
+The mathematical constraints for FBA are, in the most basic case, imposed by two things:
+the stoichiometric matrix and reaction flux bounds.
+The stoichiometric matrix balances reaction inputs and outputs, while flux bounds impose upper and lower limits on the fluxes of each reaction.
 These constraints restrict the solution space for the FBA problem.
 
-FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to, for example, solving a set of differential equations that describe the kinetics of all biochemical reactions in such a system.
-However, FBA, in its most basic form, has several main limitations.
-It only gives a steady-state picture of metabolism, and therefore cannot be used to describe changes in fluxes levels over time, although dynamic FBA has been developed to solve this problem \parencite{mahadevanDynamicFluxBalance2002}.
+FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a set of differential equations that describe the kinetics of biochemical reactions in such a system.
+However, FBA, in its most basic form, has several limitations.
+It only gives a steady-state picture of metabolism, and therefore cannot be used to describe changes in fluxes over time.
+Although, dynamic FBA has been developed to solve this problem \parencite{mahadevanDynamicFluxBalance2002}.
 Additionally, it does not account for concentrations of metabolites.
-Nevertheless, there are many derivations of FBA to overcome these limitations and extend the method to answer additional modelling questions; however, these derivations are outside the scope of this thesis.
+Nevertheless, there are many derivatives of FBA to overcome these limitations and extend the method to answer additional modelling questions.
+However, these derivatives are outside the scope of this thesis.
 
 
 \section{Reviewing modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
 
-In this chapter, my research question with modelling the temporal partitioning of biosynthesis is:
-does a finite enzyme pool explain metabolic cycling or temporal segregation of biomass components --- lipids, carbohydrates, amino acids, nucleic acids --- in the YMC?
-If so, can the model predict the dependence of the time scale on nutrient conditions?
-Additionally, does such a time scale fit with that of the YMC?
-
-Previous studies have attempted to address differing metabolic requirements in each phase of the yeast metabolic cycle using flux balance analysis (FBA).
-\textcite{takhaveevTemporalSegregationBiosynthetic2023} showed that in different stages of the cell division cycle, the level of synthesis of each class of macromolecule is different.
-They blocked synthesis of each class of macromolecule and recorded the changes in single-cell NAD(P)H cycles, representing the YMC, to build a picture of the temporality of the biosynthesis of macromolecules over a cell division cycle.
-Then, they used these activities as coefficients for FBA on a modified thermodynamic-stoichiometric metabolic model at each time point to deduce biomass production rates.
+Previous studies have attempted to use PBA to model how each phase of the YMC has different metabolic requirements.
+\textcite{takhaveevTemporalSegregationBiosynthetic2023} showed that in different stages of the cell division cycle, the cell synthesises different components of its biomass at different levels.
+In the study, they blocked synthesis of each class of macromolecule and recorded the changes in single-cell NAD(P)H cycles, representing the YMC, to quantify the level of each class of macromolecule that the cell synthesises at each time point within a cell division cycle.
+Then, they used these activities as coefficients for a modified thermodynamic-stoichiometric metabolic model at each time point and used FBA to deduce biomass production rates.
 % Does not suggest that synthesis of each class of macromolecule excludes all others (which makes sense).
 % Rather, this study confirms that timescale of observed synthesis events matches simulations.
 % Do I even cite this?  It's so bad.
-Additionally, \textcite{cesurGenomeWideAnalysisYeast} constructed a different FBA model for each YMC phase based on transcriptomic and epigenetic data, using the GIMME algorithm, which excludes reactions that correspond to genes that are not expressed at certain time points.
+Additionally, \textcite{cesurGenomeWideAnalysisYeast} constructed a different FBA model for each YMC phase based on transcriptomic and epigenetic data, using the GIMME algorithm \parencite{beckerContextSpecificMetabolicNetworks2008}, which excludes reactions that correspond to genes that are not expressed at certain time points.
 Both studies model behaviours at each phase of the YMC, rather than predicting timescale.
 
-An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}, in which they extend a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to address the temporal order of intracellular synthesis reactions that optimises the growth rate of the cell, under resource constraints.
-However, this model relies on an external oscillation --- namely, the light-dark cycle --- in contrast to the yeast metabolic cycle which is autonomously generated.
-Therefore, this study has limited applicability to my study.
-
-I use a genome-scale model of \textit{Saccharomyces cerevisiae} and perform flux balance analysis (FBA).
-Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
-I use this model because it is the most recent, offering a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
-Here, I use models Yeast8.6.0 and ec\-Yeast\-8.6.0, the latest version for which both original and enzyme-constrained variants are available.
-In addition, it has `pseudometabolites' defined by \textit{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes, making it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
+An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}
+This study extended a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to find the order of intracellular synthesis reactions in time that optimises the growth rate of the cell, under resource constraints.
+However, the model relies on an external oscillation --- namely, the light-dark cycle.
+In contrast, the yeast metabolic cycle is autonomously generated.
+Therefore, it is difficult to extend their ideas to the study of the YMC.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
 An enzyme-constrained model fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
-Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} --- the latter of which imposes a ribosome capacity constraint and additionally imposes compartment constraints --- constrain the total sum of fluxes based on a defined total amount of enzyme.
-ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017}, specifically GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, which applies the enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
+Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} constrain the total sum of fluxes based on a defined total amount of enzyme.
+\textcite{elsemmanWholecellModelingYeast2022} additionally impose a ribosome capacity constraint and additionally imposes compartment constraints.
+
+In this chapter, I use a genome-scale model of \textit{Saccharomyces cerevisiae} and perform flux balance analysis (FBA).
+Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
+I use this model because it is the most recent, offering a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
+Here, I use the model ec\-Yeast\-8.6.0, the latest version for which both original and enzyme-constrained variants are available.
+ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017} --- specifically, GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, the latest published version of GECKO.
+GECKO applies an enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
+ec\-Yeast\-8.6.0 is the latest version created by GECKO 2.
+In addition, the model has `pseudometabolites' defined by \textit{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes.
+These formalisms make it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
 \label{sec:model-yeast8}
 
-In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in other genome-scale metabolic models and because I take advantage of some of these formalisms.
+In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in genome-scale metabolic models.
 
-ecYeast8 contains four formalisms relevant to my study:
+ecYeast8 contains four formalisms relevant to this chapter:
 \begin{enumerate}
   \item
         The biomass reaction is defined by having `pseudometabolites' as reactants and a biomass species as a product.
         These pseudometabolites include lipids, proteins, carbohydrates, RNA, DNA, ions, and cofactors.
-        This is in contrast to BiGG genome-scale models that have biomass reactions defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}.
+        This is in contrast to BiGG genome-scale models \parencite{norsigianBiGGModels20202020}.
+        In these models, biomass reactions have chemical species as reactants, and each has a stoichiometric coefficient that is equal to the species' abundance in units of \SI{}{\mmolgdw}.
   \item
         The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites.
-        This accounts for some KEGG definitions of reactions requiring generic compounds and allows flexibility of biomass definition in different growth conditions.
-        These \textit{isa} reactions are defined by having chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}, and a pseudometabolite as a product.
-        In effect, the abundances are shifted one reaction away from the biomass reaction.
+        These reactions account for how some KEGG definitions of reactions require generic compounds and these reactions also allows flexibility of biomass definition in different growth conditions.
+        The \textit{isa} reactions have chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}, and a pseudometabolite as a product.
+        In effect, the species abundance information is shifted one reaction away from the biomass reaction.
   \item
-        SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
-        This formalism, specifically for lipid metabolism, is needed because species of lipid backbones and acyl chain can combine to form lipids in more than a thousand ways, and the resulting lipid species are difficult to all be accounted for in a genome-scale metabolic model.
+        The models implements SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
+        This formalism is needed because species of lipid backbones and acyl chain can combine to form lipids in more than a thousand ways, and the resulting lipid species are difficult to all be represented in a genome-scale metabolic model.
         SLIMEr thus introduces reactions that split lipids into their basic components and lipid pseudoreactions to preserve the distribution of acyl chains.
-        The result is that the definitions of lipids are flexible.
+        As a result, the definitions of lipids are flexible.
   \item
         GECKO was applied to Yeast8 to produce ecYeast8.  GECKO modifies the stoichiometric matrix of an input genome-scale metabolic model to account for enzyme abundances and kinetics.
         Specifically, it adds to enzyme-catalysed reactions enzyme species with a stoichiometric coefficient derived from its $k_{cat}$ value.
-        The formalism also adds reactions to model drawing enzymes from a pool.  GECKO models the case where there is an upper limit of the amount of amino acids available to be allocated to enzyme production.
+        The formalism also adds reactions to model drawing enzymes from a pool.
+        GECKO simulates an upper limit of amino acids available for enzyme production.
 \end{enumerate}
 
-Here, I detail how I apply these formalisms for my study.
+Here, I detail how I apply these formalisms for this chapter.
 % TODO: Use proper refs rather than hard-coding numbers.
-These all affect my study, but I detail in particular GECKO (item 4) and computing molecular weights of pseudometabolites (based on items 1 and 2).
+In particular, I detail GECKO (item 4) and computing molecular weights of pseudometabolites (based on items 1 and 2).
 
 % FIXME: Delete this subsection?
 % It's mostly a duplicate of the appendix of the GECKO paper,
@@ -126,33 +146,37 @@ These all affect my study, but I detail in particular GECKO (item 4) and computi
 \subsection{GECKO}
 \label{subsec:model-yeast8-gecko}
 
-ecYeast8 is derived from Yeast8 by applying the GECKO formalism.
 In a conventional genome-scaled model, metabolic fluxes through reactions are constrained between a lower bound and an upper bound.
 This constraint narrows down the solution space when the objective function is optimised.
 GECKO imposes an additional constraint on the metabolic fluxes based on the concentration of the enzyme that catalyses the reaction.
-As a simple example, for a reaction $R_{j}$ catalysed by enzyme $E_{i}$ (and $E_{i}$ only), the formalism imposes:
+
+As a simple example, for a reaction $R_{j}$ catalysed by enzyme $E_{i}$ and $E_{i}$ only,
+
+\begin{equation}
+  \ce{ A + B ->[E_{i}] C + D }
+  \label{eq:model-gecko-catalysed}
+\end{equation}
+
+the formalism imposes:
 
 \begin{equation}
   v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]
   \label{eq:model-gecko-kcat}
 \end{equation}
 
+where $v_{j}$ is the flux of the reaction $R_{j}$, $k_{\mathrm{cat}}^{ij}$ is the catalytic constant of the enzyme $E_{i}$, and $[E_{i}]$ is the concentration of the enzyme $E_{i}$.
 In other words, the flux through the reaction must not exceed $v_{\mathrm{max}}$.
-Slightly different relationships are imposed for other types of enzymes, i.e. isozymes, promiscuous enzymes, and enzyme complexes.
 
 To apply this constraint, GECKO modifies reactions in the genome-scaled model it is applied to.
-For example, if the model defines a reaction $R_{j}$ catalysed by $E_{i}$:
-\begin{equation}
-  \ce{ A + B ->[E_{i}] C + D }
-  \label{eq:model-gecko-catalysed}
-\end{equation}
-
+For example, using equation~\ref{eq:model-gecko-catalysed},
 GECKO adds a term to the equation, modifying the stoichiometric matrix, to make it:
+
 \begin{equation}
   \ce{ n_{ij}E_{i} + A + B -> C + D }
   \label{eq:model-gecko-catalysed-formalism}
 \end{equation}
 with $n_{ij} = \frac{1}{k_{\mathrm{cat}}^{ij}}$.
+
 This transformation, adding the enzyme as a pseudo-reactant, is based on the interpretation that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
 
 % GECKO then also creates an overall enzyme pseudo-reaction $EU_{i}$: $\ce{ -> E_{i}}$, in order to preserve the mass balance of enzymes.  The flux $e_{i}$ of this pseudo-reaction is thus constrained: $0 \le e_{i} \le [E_{i}]$.
@@ -166,8 +190,7 @@ Slightly different formalisms are applied to reversible reactions, isozymes, pro
   \item Enzyme complexes are modelled as one reaction that uses all subunit proteins that all share the same $k_{cat}$ value.
 \end{itemize}
 
-GECKO repeats this logic for all enzyme-catalysed reactions in the genome-scale model to create an enzyme-constrained model.
-GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of protein and associated pathways.
+GECKO adds an enzyme as a pseudo-reactant for all enzyme-catalysed reactions in the genome-scale model to create an enzyme-constrained model.
 
 To constrain enzyme levels in the model, GECKO defines a pseudo-reaction
 
@@ -192,50 +215,59 @@ in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
 \end{itemize}
 
 ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
-Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates, but $f = 0.5$ is close to the model's mass fraction (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
+
+Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0 (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
 Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
 experimental data justifies this assumption.
 
-Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudo-reactions of the form
+Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
 
 \begin{equation}
   ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
   \label{eq:model-gecko-enzyme-usage}
 \end{equation}
 
-with $MW_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
-The flux of enzyme usage pseudo-reactions are defined in units of \SI{}{\mmolgdw}.
+with $\mathrm{MW}_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
+The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
+
 Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (moles) of each enzyme and therefore its catalytic activity.
+
+GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of protein and associated pathways.
 
 \subsection{Computing molecular weights of pseudometabolites}
 \label{subsec:model-yeast8-molweights}
 
 In the yeast cell, biomass components (lipids, carbohydrates, proteins) are present in different fractions.
-Knowing these fractions are useful in computing the time it takes to synthesise each biomass component (to be discussed later).
-As discussed in section~\ref{sec:model-yeast8}, these fractions are represented in the biomass reaction.
+Knowing these fractions are useful in computing the time it takes to synthesise each biomass component.
+These fractions are represented in the biomass reaction.
 However, the mass fraction of each component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
-It is not straightforward to implement these changes as stoichiometric coefficients of individual species that define biomass, because there is limited detailed information for the mass fractions of such species as conditions vary, and because of the many combinations of lipid backbones and acyl chains.
-Therefore, I decided to compute the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
-Similar calculations were performed by \parencite{takhaveevTemporalSegregationBiosynthetic2023}.
+It is not straightforward to implement these changes as stoichiometric coefficients of the chemical species that define biomass, because there is limited information for the mass fractions of such species as conditions vary, and because of the many combinations of lipid backbones and acyl chains.
+Therefore, I computed the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
+Similar calculations were performed by \textcite{takhaveevTemporalSegregationBiosynthetic2023}.
 
 \textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\mmolgdw}.
-Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023};
-the resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
+Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023}.
+The resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
 
-For this to be possible, I needed to compute molecular weights for bulk metabolites that represent macromolecules in the ecYeast8 model.
-The ecYeast8 model does not specify the molecular weights of these bulk metabolites.
-The bulk metabolites includes: lipids (\texttt{s\_1096}), proteins (\texttt{s\_3717}), carbohydrates (\texttt{s\_3718}), RNA (\texttt{s\_4049}), and DNA (\texttt{s\_3720}).
-Additionally, I computed molecular weights for bulk metabolites that represent cofactors (\texttt{s\_4205}), and ions (\texttt{s\_4206}), as they are part of the objective function too.
-Namely, I assumed that in reactions that produce the bulk metabolites, there is conservation of mass, and therefore:
+For this to be possible, I computed molecular weights for pseudometabolites that represent macromolecules and other biomass components in the ecYeast8 model, as
+the ecYeast8 model does not specify the molecular weights of these bulk metabolites.
+The pseudometabolites includes: lipids, proteins, carbohydrates, RNA, DNA, cofactors, and ions.
+Namely, I assumed that in reactions that produce the pseudometabolites, there is conservation of mass, and therefore:
 
 \begin{equation}
   \sum_{s}m_{s}c_{s} = \sum_{p}m_{p}c_{p}
 \label{eq:conservation-of-mass}
 \end{equation}
 
-where $m$ represents molar mass, $c$ represents stoichiometric coefficient, $s = 1, ...$ \emph{(number of substrates)} represents substrates, and $p = 1, ...$ \emph{(number of products)} represents products of the reaction in question.
+where:
+\begin{itemize}
+  \item $m$ represents molar mass
+  \item $c$ represents stoichiometric coefficient
+  \item $s = 1, ...$ \emph{(number of substrates)} represents substrates of the reaction in question
+  \item $p = 1, ...$ \emph{(number of products)} represents products.
+\end{itemize}
 
-To compute the molecular weight of the carbohydrate metabolite, I inspected reaction \texttt{r\_4048}:
+To compute the molecular weight of the carbohydrate pseudometabolite, I inspected the pseudoreaction \texttt{r\_4048} that creates it:
 
 \texttt{
   0.684535 (1->3)-beta-D-glucan + 0.228715 (1->6)-beta-D-glucan \\
@@ -243,25 +275,25 @@ To compute the molecular weight of the carbohydrate metabolite, I inspected reac
   --> carbohydrate
 }
 
-Here, the molecular weights of all species except for \texttt{carbohydrate}, the bulk metabolite, are represented in the model.
-Thus, equation \ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the carbohydrate metabolite.
+Here, the molecular weights of all species except for \texttt{carbohydrate}, the pseudometabolite, are represented in the model.
+Thus, equation \ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the carbohydrate pseudometabolite.
+The same process can be applied to compute the molecular weights of the DNA, RNA, cofactor, and ion pseudometabolites.
+This is because the equations similarly have reactants with molecular weights represented in the model and only the pseudometabolite, the sole product, does not have a molecular weight specified.
 
-The same process can be applied to compute the molecular weights of the DNA, RNA, cofactor, and ion metabolites as the equations similarly have reactants with molecular weights represented in the model and only the bulk metabolite, the sole product, as the metabolite with an unspecified molecular weight.
-The DNA molecular weight was computed from reaction \texttt{r\_4050}:
+The molecular weight of the DNA pseudometabolite was computed from reaction \texttt{r\_4050}:
 
 \texttt{
   0.0036 dAMP + 0.0024 dCMP + 0.0024 dGMP + 0.0036 dTMP \\
   --> DNA
 }
 
-The RNA molecular weight was computed from reaction \texttt{r\_4049}:
+The molecular weight of the RNA pseudometabolite was computed from reaction \texttt{r\_4049}:
 
 \texttt{
   0.0445348 AMP + 0.0432762 CMP + 0.0445348 GMP + 0.0579921 UMP \\
   --> RNA
 }
-
-The cofactor molecular weight was computed from reaction \texttt{r\_4598}:
+The molecular weight of the cofactor pseudometabolite was computed from reaction \texttt{r\_4598}:
 
 \texttt{
   0.00019 coenzyme A + 1e-05 FAD + 0.00265 NAD + 0.00015 NADH \\
@@ -270,7 +302,7 @@ The cofactor molecular weight was computed from reaction \texttt{r\_4598}:
   --> cofactor
 }
 
-And the ion molecular weight was computed from reaction \texttt{r\_4599}:
+And the molecular weight of the ion pseudometabolite was computed from reaction \texttt{r\_4599}:
 
 \texttt{
   3.04e-05 iron(2+) + 0.00363 potassium + 0.00397 sodium + 0.02 sulphate \\
@@ -280,7 +312,7 @@ And the ion molecular weight was computed from reaction \texttt{r\_4599}:
 }
 
 Other metabolites were less straightforward and required some judgement calls.
-To compute the molecular weight of the protein metabolite, I inspected reaction \texttt{r\_4047}:
+To compute the molecular weight of the protein pseudometabolite, I inspected reaction \texttt{r\_4047}:
 
 \texttt{
   0.57284 Ala-tRNA(Ala) + 0.200644 Arg-tRNA(Arg) + 0.126979 Asn-tRNA(Asn)\\
@@ -292,9 +324,9 @@ To compute the molecular weight of the protein metabolite, I inspected reaction 
 In this reaction, the aminoacyl-tRNA reactants are represented in the form of the atoms that make up the aminoacyl residues plus \texttt{R} to represent the tRNA, and the tRNA products are represented as \texttt{RH}.
 For example, \texttt{Ala-tRNA(Ala)}, alanyl-tRNA, is represented as \texttt{C3H7NOR}.
 The protein pseudoreaction shows how different proportions of each aminoacyl-tRNA combine to form the cell's proteins, so it is safe to discard the \texttt{R} symbol that corresponds to the tRNA from the reaction.
-On doing so, the mass balance represented by equation~\ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the protein metabolite.
+On doing so, the mass balance represented by equation~\ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the protein pseudometabolite.
 
-Finally, the lipid metabolite is the least straightforward because some of the reactants do not have molecular weights specified.
+Finally, the lipid pseudometabolite is the least straightforward because some of the reactants of the lipid pseudoreaction do not have molecular weights specified.
 The lipid pseudoreaction is represented in reaction \texttt{r\_2108}:
 
 \texttt{
@@ -339,12 +371,12 @@ Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbo
 \end{table}
 
 All species in these reactions except for \texttt{fatty acid backbone} have molecular weights specified, and thus I applied mass balance to find the molecular weight of \texttt{fatty acid backbone} from each reaction.
-However, the molecular weights computed from each equation are different, as shown in the table above.
+However, the molecular weights computed from each equation are different, as shown in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}.
 Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the mean of the four weights (\SI{729.53}{\gram~\mole^{-1}}) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields \SI{21.31}{\gram~\mole^{-1}}).
 
 With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, I can now compute the molecular weight of \texttt{lipid} using mass balance.
 
-In summary, the molecular weights of the bulk metabolites are:
+In summary, the molecular weights of the pseudometabolites are:
 \begin{table}[ht]
   \centering
   \begin{tabular}{lS}
@@ -364,9 +396,9 @@ In summary, the molecular weights of the bulk metabolites are:
 
 As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}.
 
-And thus the molecular weight of biomass is \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} in \textcite{takhaveevTemporalSegregationBiosynthetic2023} computed from a different genome-scale model.
-In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the slight deviation from 1000 could be explained by the SLIMEr formalism.
-Plus, it has been reported that the sum of stoichiometric coefficients are not always verified \parencite{chanStandardizingBiomassReactions2017}.
+Adding together values in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns} gives a the molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
+In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
+Plus, the sum of stoichiometric coefficients are not always verified \parencite{chanStandardizingBiomassReactions2017}.
 
 % Could move to 'results' part of this chapter?
 \section{Ablating pseudometabolites from the biomass reaction}
@@ -375,9 +407,9 @@ Plus, it has been reported that the sum of stoichiometric coefficients are not a
 To simulate producing each class of biomass component in turn,
 I take advantage of pseudometabolites in ecYeast8 to remove each of them in turn from the biomass reaction ---
 in other words, ablating pseudometabolites from the biomass reaction.
-Specifically, I exclude each pseudometabolite in turn in the objective function (biomass-generating reaction) and optimise the model.
+Specifically, I exclude each pseudometabolite in turn in the biomass reaction and optimise the model.
 
-Given the objective function:
+Consider the objective function, the biomass reaction:
 
 \texttt{
   47.5883 atp\_c + 47.5883 h2o\_c + lipid\_c + protein\_c + carbohydrate\_c\\
@@ -385,8 +417,8 @@ Given the objective function:
   --> 47.5883 adp\_c + biomass\_c + 47.5883 h\_c + 47.5883 pi\_c
 }
 
-There are seven pseudometabolites: lipids, proteins, carbohydrates, DNA, RNA, cofactor, and ion.
-To have the cell prioritise biosynthesis of lipids, I set the stoichiometries of all five classes except for lipids to zero in the above equation, giving:
+There are seven pseudometabolites: lipid, protein, carbohydrate, DNA, RNA, cofactor, and ion.
+To have the cell prioritise biosynthesis of lipids, I set the stoichiometric coefficients of all five classes except for lipids to zero in the above equation, giving:
 
 \texttt{
   47.5883 atp\_c + 47.5883 h2o\_c + lipid\_c + cofactor + ion \\
@@ -397,14 +429,14 @@ And I repeated this for the other pseudometabolites.
 
 \begin{figure}
   \centering
-  \includegraphics[width=.9\linewidth]{ablation_example_fluxes.png}
+  \includegraphics[width=.6\linewidth]{ablation_example_fluxes.png}
   \caption{
-    Growth rates, from fluxes of the biomass reaction, from the original wild type model ($\gro$; leftmost bar) and from the ablated versions of the model ($\griabl$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
+    Growth rates from the original (wild type) model ($\gro$; leftmost bar) and from the ablated versions of the model ($\griabl$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
   }
   \label{fig:model-ablate-fluxes}
 \end{figure}
 
-I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
+Optimising the objective function as each pseudometabolite is prioritised gives changed growth rates (figure~\ref{fig:model-ablate-fluxes}).
 
 \begin{figure}
   \centering
@@ -412,7 +444,7 @@ I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
   \caption{
     The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
     Each column shows the component that remains in each round of pseudometabolite ablation.
-    Rows represent reactions, sorted by subsystem.
+    Rows represent enzyme usage reactions, sorted by subsystem.
     Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in reaction flux, while pink shows a decrease in flux.
     Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw} are treated as $\epsilon$ flux, for the purpose of computing fold changes.
     Cases where $|\log_{2}(\mathrm{FC})| < 17$ are excluded to restrict the number of reactions ($n = 3897$) to aid display purposes.
@@ -421,14 +453,17 @@ I get modified growth rates as in figure~\ref{fig:model-ablate-fluxes}.
 \end{figure}
 
 When the model prioritises a different biomass component in each round of ablation, the model partitions the limited proteome available for enzyme production differently.
-In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudo-reaction (defined in equation~\ref{eq:model-gecko-enzyme-usage}) is different from each other and the non-ablated case.
-Subsystem information provides a biologically relevant picture to these changes.
-More specifically, I match the flux carried by each enzyme usage pseudo-reaction to the enzyme-catalysed reaction that the enzyme is associated with.
-If an enzyme usage pseudo-reaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
-Then, the subsystem associated with each enzyme-catalysed reaction is taken.
-To emphasise changes in proteome allocation across rounds of ablation, I compute the fold change of fluxes relative to the non-ablated case.
-It is important to note that some reaction fluxes in some cases are zero, making the logarithm of fold change undefined.
-As a workaround, I defined a threshold small flux $\epsilon = $ \SI{1.11d-11}{\mmolgdwh}, which corresponds to one molecule per cell per hour --- the reasoning being that if a reaction is important enough for the yeast cell, the cell fires the reaction more than once in an hour, which is a substantial proportion of its doubling time.
+In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in equation~\ref{eq:model-gecko-enzyme-usage}) is different from each other and from the non-ablated case.
+
+Subsystem information aids interpretation of these changes.
+Here, I match the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
+If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
+Then, the subsystem associated with each enzyme-catalysed reaction is taken from the gene-protein map, and noted.
+
+To emphasise changes in proteome allocation across rounds of ablation, I compute the $\log_{2}(\mathrm{FC})$ --- the base-2 logarithm of fold change --- of fluxes relative to the non-ablated case.
+Some reaction fluxes in some cases are zero, making the logarithm of fold change undefined.
+As a workaround, I defined a threshold small flux $\epsilon = $ \SI{1.11d-11}{\mmolgdwh}, which corresponds to one molecule per cell per hour, assuming \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
+My justification for the threshold value is that if a reaction is important enough for the cell, the cell fires the reaction more than once in an hour, which is a substantial proportion of its doubling time.
 For the purposes of computing fold changes, fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw}, including zero flux, are thus treated as $\epsilon$ flux.
 Therefore, extremely high ($> 10$) $\log_{2}(\mathrm{FC})$ likely indicates an original zero flux becoming non-zero in ablation, interpreted as an enzyme `switching-on', while extremely low ($< -10$) $\log_{2}(\mathrm{FC})$ likely indicates an original non-zero flux becoming zero in ablation, interpreted as an enzyme `switching-off'.
 Fold changes thus indicate changing priorities for the cell: a positive $\log_{2}(\mathrm{FC})$ represents more of the proteome allocated to the production of the relevant enzyme, while a negative $\log_{2}(\mathrm{FC})$ represents less of the proteome allocated to the production of the relevant enzyme.
