@@ -994,9 +994,9 @@ Susceptibility at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, wi
 where:
 \begin{itemize}
   \item $i$ indicates the axis: glucose (glc) or ammonium (amm)
-  \item $R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{ammonium}$).
+  \item $R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{amm}$).
         An $(\exchrate{glc}, \exchrate{amm})$ pair defines a nutrient condition.
-  \item $y\exchrate{glc}, \exchrate{amm}$ represents the quantity of interest --- $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, $\Tabl{protein}$, or $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ --- at each nutrient condition
+  \item $y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest --- $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, $\Tabl{protein}$, or $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ --- at each nutrient condition
 \end{itemize}
 
 For computational use, the values of $R_{i}$ are equally-spaced discrete values from a vector with an interval $\Delta R_{i}$.
@@ -1024,29 +1024,52 @@ Figures~\ref{fig:model-grid-glc-ratio} and~\ref{fig:model-grid-glc-growthrate} s
 In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous.
 
 To explain why there is a region in which $\ratioabl > 1$ when ammonium exchange is under saturation and glucose is over saturation, consider the definition of $\ratioabl$ in equation~\ref{eq:model-ratio}.
-If we assume...
+If we assume that $\frac{f_i}{\griabl}$ for $i$ other than carbohydrate and protein changes negligibly --- justified by the small $f_{i}$ values for these other biomass components --- we write:
 
-[INSERT THE REST OF THE RE-WRITE HERE]
+\begin{equation}
+  \ratioabl \approx (k + \frac{\biomfrac{protein}}{\grabl{protein}} + \frac{\biomfrac{carbohydrate}}{\grabl{carbohydrate}}) \cdot \frac{\gro}{\biomfrac{protein}}
+  \label{eq:model-ratio-assume}
+\end{equation}
 
+where $k$ is a constant.
 
+In the glucose-limiting region, as $\exchrate{glc}$ increases, under saturation,
+\begin{itemize}
+  \item $\gro$ increases,
+  \item $\grabl{carbohydrate}$ increases, and
+  \item $\grabl{protein}$ increases, while
+  \item $\ratioabl$ stays the same.
+\end{itemize}
 
-Where ammonium is limiting, as ammonium exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{protein}$ decreases (implying increasing $\grabl{protein}$).
-% I'm not too sure of this sentence...
-Because $\ratioabl$ increases, this means that the increase in $\gro$ `overpowers' the increase in $\grabl{protein}$ [SPACE FOR SOME MATHS?  I GET THE FEELING THAT SOMETHING COUNTER-INTUITIVE MAY BE HAPPENING HERE LIKE IN THE $\epool$ INVESTIGATION].
-Where glucose is limiting, as glucose exchange increases, growth rate ($\gro$) increases (decreasing $\Tpar$) and $\Tabl{carbohydrate}$ decreases (implying increasing $\grabl{carbohydrate}$).
-% I'm not too sure of this sentence...
-Because $\ratioabl$ stays the same, this means that the increase in $\grabl{carbohydrate}$ compensates for the increase in $\gro$ [SPACE FOR SOME MATHS?].
-A greater `power' of increasing $\grabl{carbohydrate}$ over increasing $\grabl{protein}$ is also seen as $\epool$ increases (with $\gro$ increasing linearly) in figure~\ref{fig:model-pool}.
+In the nitrogen-limiting region, as $\exchrate{amm}$ increases, under saturation,
+\begin{itemize}
+  \item $\gro$ increases,
+  \item $\grabl{carbohydrate}$ stays the same, and
+  \item $\grabl{protein}$ increases, while
+  \item $\ratioabl$ increases.
+\end{itemize}
 
-Investigating $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$, recall that $\ratioabl > 1$ region is around the boundary between glucose-limited growth rate and ammonium-limited growth rate.
-So it means that if both glucose and nitrogen are (nearly) limiting, sequential biosynthesis is so slow that the ratio goes above 1.
-In the glucose-limited region, the $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ ratio is high --- this makes sense because when the carbon source is limiting, synthesis of carbohydrate takes long.
-Similarly, in the ammonium-limited region, the $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ ratio is low, i.e.\ when the nitrogen source is limiting, protein synthesis takes long.
-It thus makes sense that near the boundary between the regions, the C:P ratio takes intermediate values.
+If the increases in $\grabl{carbohydrate}$ and $\grabl{protein}$ in the carbon-limiting case is just enough to balance the increase in $\gro$, then if there is no increase in $\grabl{carbohydrate}$ in the nitrogen-limiting case, then the combined effect of $\grabl{carbohydrate}$ and $\grabl{protein}$ no longer balance the increase in $\gro$ and thus explains why $\ratioabl$ increases.
 
-However, it is important to note that glucose exchange limits carbohydrate synthesis time for virtually every nutrient condition.
+If both nutrients are limiting, as $(\exchrate{glc}, \exchrate{amm})$ varies along the curve from $(0, 0)$ to $(\exchrate{glc, saturation}, \exchrate{amm, saturation})$ that goes through such conditions, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase, explaining why $\ratioabl$ remain roughly at the same high values greater than 1.
+Thus, the region where $\ratioabl > 1$ where both glucose and ammonium are near-limiting can be seen as where the behaviour of the glucose-limiting and ammonium-limiting cases meet.
+
+Next, I investigate $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
+
+Based on equation~\ref{eq:model-ablated-time},
+
+\begin{equation}
+  \frac{\Tabl{carbohydrate}}{\Tabl{protein}} = \frac{\biomfrac{carbohydrate}}{\biomfrac{protein}} \cdot \frac{\grabl{protein}}{\grabl{carbohydrate}}
+  \label{eq:model-carb-prot-ratio}
+\end{equation}
+
+In the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remains at a highvalue because, as $\exchrate{glc}$ increases in this region, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase.
+However, in the ammonium-limited region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increases as $\exchrate{amm}$ increases because then $\grabl{protein}$ increases while $\grabl{carbohydrate}$ remains constant.
+If both nutrients are limiting, as $(\exchrate{glc}, \exchrate{amm})$ varies along the curve from $(0, 0)$ to $(\exchrate{glc, saturation}, \exchrate{amm, saturation})$ that goes through such conditions, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase, explaining why $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remain roughly at the same.
+
+Considering $\Tabl{carbohydrate}$ and $\Tabl{protein}$, glucose exchange limits carbohydrate synthesis time for virtually every nutrient condition.
 In contrast, ammonium exchange limits protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low, owing to the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
-This pattern could explain the more complicated patterns in $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ and $\ratioabl$ as both exchange reactions change in flux.
+Taken together with the discussion above, these effects of nutrient exchange on protein and carbohydrate synthesis times thus explain the patterns of $\ratioabl$ and $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as both exchange reactions change in flux.
 
 \begin{figure}
   \centering
@@ -1103,7 +1126,9 @@ This pattern could explain the more complicated patterns in $\frac{\Tabl{carbohy
 \end{figure}
 
 To investigate the effect on a non-fermentable carbon source, I repeated the investigation using pyruvate as the carbon source, and adjusted the saturation exchange rates accordingly: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh} (figure~\ref{fig:model-grid-pyr}).
-Overall, pyruvate seems to represent an extreme case of the glucose investigation; the changed behaviour of $\ratioabl$ with respect of pyruvate and ammonium exchange rates can be explained by a changed shape of the carbon-source saturation curve.
+Overall, pyruvate seems to represent an extreme case of the glucose investigation.
+The previous discussion of how the quantities of interest vary as exchange rates vary applies.
+Though, the change of behaviour can be explained by how the growth saturation curve under pyruvate has a different shape from the growth saturation curve under glucose.
 
 \begin{figure}
   \centering
@@ -1155,13 +1180,14 @@ In both the glucose/ammonium and pyruvate/ammonium investigations, I observe tha
 This leads to the hypothesis that the cell favours parallel biosynthesis of biomass components in such conditions, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
 
 To evaluate this hypothesis, I investigated how the enzyme usage fluxes change across each round of ablation in the glucose/ammonium exchange combinations that produce the lowest and greatest $\ratioabl$ (figure~\ref{fig:model-rank-glc}), and performed the same investigation for pyruvate/ammonium exchange combinations (figure~\ref{fig:model-rank-pyr}).
-As a visualisation aid, I ranked the enzyme usage reactions by magnitude of flux to emphasise of allocation of enzymes change in each condition, and computed the Kendall's $\tau$-b rank correlation coefficient to quantify the similarity between the enzyme usage flux vector between each pair of biomass component prioritisation situations.
+As a visualisation aid, I ranked the enzyme usage reactions by magnitude of flux to emphasise how allocation of enzymes change in each round.
+I also computed the Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} to quantify how similar the enzyme usage flux vectors were between each pair of rounds.
 
 Figure~\ref{fig:model-rank-glc} suggests that in the low $\ratioabl$ condition, in which both glucose and ammonium are abundant, enzyme-available proteome allocation patterns for lipid- and protein-prioritised simulations most resemble the parallel case.
-In contrast, a set of enzymes that were originally synthesised in low levels in the parallel case became enzymes with the highest levels when carbohydrates, DNA, RNA, cofactors, or ions are prioritised.
-This separation of biomass component-prioritised simulations into two groups according to enzyme-available proteome allocation patterns confirms the advantage of sequential biosynthesis.
-Or, at least the lipids and proteins can be synthesised together, followed by the other components, or the order by which the two groups are synthesised can be reversed.
-The high $\ratioabl$ condition, in which both glucose and ammonium are near-limiting, paints the opposite picture.
+In contrast, a set of enzymes that originally had low usage fluxes in the parallel case became enzymes with the highest levels when carbohydrates, DNA, RNA, cofactors, or ions are prioritised.
+This separation of biomass components into two groups according to enzyme-available proteome allocation patterns can explain how sequential biosynthesis is advantageous.
+At least, the lipids and proteins can be synthesised together, followed by the other components; the order by which these two groups are synthesised can be reversed.
+The high $\ratioabl$ condition, in which both glucose and ammonium are near-limiting, gives the opposite picture.
 Here, allocation of the proteome to enzymes is similar across all situations, suggesting that parallel biosynthesis of biomass components may be advantageous in this situation.
 
 \begin{figure}
@@ -1214,46 +1240,49 @@ However, figure~\ref{fig:model-rank-pyr} suggests that the contrast between each
 
 % Figure that shows enzyme usage fluxes being noisy may be very useful to illustrate this point...
 % I can fish them from older commits (and keep the arrows).
-% Also, this sentence is bloody long, but I'll deal with it in a grammar/proofreading edit.
-Upon investigation of all \num{1024} nutrient conditions in each carbon source-nitrogen source pair as defined in earlier in this section, it appears that the relationship between each of the exchange rate axes and any measure of similarity between ablation rounds based on enzyme usage reactions is not continuous.
-This is likely explained by the non-multiplicity of solutions in FBA.
+Upon investigation of all \num{1024} nutrient conditions in each carbon source-nitrogen source pair, it appears that the relationship between exchange rate and any measure of similarity between ablation rounds that is based on enzyme usage reactions is not continuous.
+This is likely explained by the multiplicity of solutions in FBA.
 Namely, FBA finds the optimal value of the objective function, such as growth, but the flux vector that gives rise to this objective function may differ across each simulation or each linear optimisation solver.
-This is not a problem when ablation-related quantities were computed earlier in the section because they were all based on the fluxes of the objective function, defined as the biomass reaction, even if the biomass reaction itself was modified during ablation.
-In other words, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA renders any conclusion flawed.
+This is not a problem when ablation-related quantities were computed earlier in the section because they were based on the flux of the objective function, defined as the biomass reaction, even if the biomass reaction itself was modified during ablation.
+In other words, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may render any conclusion flawed.
 
 \section{Conclusion}
 \label{subsec:model-conclusion}
 
-The identity of enzymes used during synthesis of biomass components may explain some experimental observations.
-It is possible that the cell synthesises carbohydrate, DNA, and RNA after one another so that usage of  oxidative phosphorylation occur at around the same time.
+Enzyme-constrained models like GECKO are useful.
+However, an appropriate method of restricting fluxes must be used, given the formalisms built in the model.
+
+Ablation of components of the biomass reaction gives changes to enzyme allocation that are biologically relevant and also gives a way to estimate timescale of biosynthesis.
+Such timescales give rise to a $\ratioabl$ ratio that can be used to assess whether sequential or parallel biosynthesis of biomass components is favoured.
+
+A restricted proteome-available protein pool, as long as the growth rate remains realistic, makes sequential biosynthesis more advantageous.
+In addition, the advantage is retained in auxotrophs and deletion strains, confirming the robustness (presence) sequential biomass synthesis as a resource allocation strategy, and thus may explain why the metabolic cycle is still present in such strains.
+
+Nitrogen source availability affects protein synthesis time in the sequential case, while carbon source availability affects both carbohydrate and protein synthesis times.
+Both additively promote (wild type) growth rate.
+These effects explain why parallel biosynthesis is advantageous when carbon and nitrogen sources are both near-limiting or when the nitrogen source is near saturation while the glucose source is over saturation.
+
+When the cell prioritises biosynthesis of each biomass component, it allocates its proteome to enzymes differently, but the allocation is similar when the cell prioritises carbohydrates, DNA, RNA, cofactors, and ions.
+This could explain why parallel biosynthesis is advantageous in some conditions.
+However, the multiplicity of FBA solutions complicates analysis based of fluxes.
+
+How the cell changes its allocation of its proteome to subsystems may explain some experimental observations.
+It is possible that the cell synthesises carbohydrate, DNA, and RNA around the same time so that use of  oxidative phosphorylation occur at around the same time.
 This may explain cycles in dissolved oxygen concentrations.
 In addition, lipid biosynthesis often requires different enzymes than the other components, and this may explain cycling of lipid stores.
 
-Proteins are the main limiting factor for biosynthesis, mostly owing to its large mass fraction.
-This is followed by carbohydrates and lipids.
-However, the biosynthesis time varies significantly as the nutrient conditions vary.
-
-The advantage of sequential biosynthesis of biomass components is retained in auxotrophs and deletion strains, confirming the robustness (presence) sequential biomass synthesis as a resource allocation strategy, and thus may explain why the metabolic cycle is still present in such strains.
-It is important to note that the advantage of sequential synthesis is retained even with nutrient supplements, which ensure a good growth rate.
-
-A smaller enzyme pool means that it is more advantageous for the cell to perform sequential biosynthesis of biomass components.
-
-This balance between sequential and parallel synthesis of biomass components changes when nutrient conditions change --- particularly with carbon (glucose or pyruvate) and nitrogen (ammonium) source uptake changes.
-In particular, it is least advantageous when both carbon and nitrogen are limiting or near-limiting (of growth rate), and is most advantageous when neither are limiting or when only ammonium is limiting.
-The patterns also reflect the differing saturation patterns of glucose and pyruvate.
-
-The degree of advantage of sequential biosynthesis in various conditions and the time scales predicted may explain why yeast cells perform metabolic cycling in certain nutrient conditions.
+The degree of advantage of sequential biosynthesis in various nutrient conditions and the time scales predicted may explain why yeast cells show metabolic cycles in certain nutrient conditions.
 The model may provide a \emph{weak} explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose.
 If the glucose exchange is zero, the solution is infeasible, but if the glucose exchange is \emph{near} zero, the ratio is \emph{less than one}.
-Although a better investigation would be \emph{switching} of nutrient conditions, which FBA is not built for: it only looks at steady state, and doesn't `remember' past states.
+Though a better investigation would be \emph{switching} between nutrient conditions, which the most basic forms of FBA is not built for: it only looks at steady state, and does not `remember' past states.
 
 The model does not account for varying protein fractions (relative to cell dry mass) and other parameters that affect the size of $\epool$ during growth and division, and across different conditions.
-For instance, \parencite{elsemmanWholecellModelingYeast2022} predicts that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
-However, as I find that $\epool$ affects the growth rate, there may be a circular argument here, and there is no guarantee that parameter values will converge if the cyclical effects are fully accounted for.
-Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, the model is perhaps sufficient.
+For instance, \textcite{elsemmanWholecellModelingYeast2022} predict that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
+However, as I find that $\epool$ affects the growth rate, there may be a circular relationship, and there is no guarantee that parameter values will converge if I tune the $\epool^{\prime}$ to obtain a $\gro$ that in turn affects $\epool^{\prime}$.
+Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, my investigation is perhaps sufficient.
 
-In summary, results confirm temporal segregation of biosynthesis of biomass components, especially as a strategy under constraints on the size of the proteome available for the synthesis of enzymes.
-Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationale of the existence yeast metabolic cycle.
+In summary, results show that the yeast cell may synthesis its biomass components in sequence or in parallel, subject to proteomic and nutrient availability constraints.
+Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive as it gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally, and gives weight to the idea that this may be one of the rationales of the existence of the yeast metabolic cycle.
 
 % Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
 % - How long does it take to replicate the genome?  It is biosynthesis of nucleotides + process of polymerising them.  There has to be super basic cell division cycle literature about this...
