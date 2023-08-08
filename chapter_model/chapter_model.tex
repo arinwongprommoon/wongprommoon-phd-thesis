@@ -1238,10 +1238,55 @@ Here, allocation of the proteome to enzymes is similar across all situations, su
 
 However, figure~\ref{fig:model-rank-pyr} suggests that the contrast between each biomass component is lessened when pyruvate is the carbon source.
 
-% Figure that shows enzyme usage fluxes being noisy may be very useful to illustrate this point...
-% I can fish them from older commits (and keep the arrows).
-Upon investigation of all \num{1024} nutrient conditions in each carbon source-nitrogen source pair, it appears that the relationship between exchange rate and any measure of similarity between ablation rounds that is based on enzyme usage reactions is not continuous.
-This is likely explained by the multiplicity of solutions in FBA.
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ec_grid_glc_amm_cosine}
+    \caption{
+    }
+    \label{fig:model-noisy-glc-cosine}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_cosine}
+    \caption{
+    }
+    \label{fig:model-noisy-pyr-cosine}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ec_grid_glc_amm_kendall}
+    \caption{
+    }
+    \label{fig:model-noisy-glc-kendall}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{ec_grid_pyr_amm_kendall}
+    \caption{
+    }
+    \label{fig:model-noisy-pyr-kendall}
+  \end{subfigure}
+
+  \caption{
+    Measures of similarity between enzyme usage fluxes in rounds of ablation, when glucose and ammonium exchange are varied (left panels), and when pyruvate and ammonium exchange are varied (right panels).
+    \textbf{(Top panels)} Cosine distance between the vector of enzyme usage fluxes when protein is prioritised and the equivalent vector when carbohydrate is prioritised, computed for all nutrient conditions.
+    \textbf{(Bottom panels)} For each nutrient condition, the Kendall's $\tau$-$b$ rank correlation coefficient between the parallel case and each biomass-prioritised case was computed and the mean was found.
+    Higher mean correlations suggest an advantage to parallel biosynthesis.
+  }
+  \label{fig:model-noisy}
+\end{figure}
+
+Upon investigation of all \num{1024} nutrient conditions in each carbon source-nitrogen source pair, it appears that the relationship between exchange rate and any measure of similarity between ablation rounds that is based on enzyme usage reactions is not continuous (figure~\ref{fig:model-noisy}).
+This noise complicates drawing conclusions.
+Although, in the pyruvate/ammonium case, there is a general trend that suggests that proteome allocation when carbohydrates are prioritised and when proteins are prioritised are more similar in high-pyruvate high-ammonium conditions.
+There is also a trend that suggests, contrary to figure~\ref{fig:model-grid-pyr}, that parallel biosynthesis is more similar to ablated cases in high-pyruvate high-ammonium conditions, but not by a high degree.
+On the contrary, in the glucose/ammonium case, there is a general trend that suggests that, at high ammonium exchange rates, increasing glucose exchange rates lead to a greater difference between the enzyme usage flux vectors when carbohydrate is prioritised and when protein is prioritised.
+In all cases, there seems to be no clear relationship between the distance measures and whether $\ratioabl > 1$.
+
+The noise in figure~\ref{fig:model-noisy} is likely explained by the multiplicity of solutions in FBA.
 Namely, FBA finds the optimal value of the objective function, such as growth, but the flux vector that gives rise to this objective function may differ across each simulation or each linear optimisation solver.
 This is not a problem when ablation-related quantities were computed earlier in the section because they were based on the flux of the objective function, defined as the biomass reaction, even if the biomass reaction itself was modified during ablation.
 In other words, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may render any conclusion flawed.
