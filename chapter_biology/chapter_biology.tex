@@ -116,6 +116,67 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
   \label{fig:biology-highglc-sync}
 \end{figure}
 
+% Figure & discussion of BY4741.
+% Showing that YMCs occur in an auxotroph is important because it confirms that the YMC is robust (a lot of things must go wrong for it to go away) and likely an intrinsic cycle.
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{by4741_491_7.pdf}
+   \caption{
+    Heatmap shows the flavin fluorescence of each cell in a population over time.
+    Each row of pixels represents a cell.
+    Fluorescence is represented as colours (red--blue), and %with red indicating low signal and blue indicating high signal.
+    each budding event is indicated as a black pixel.
+    Signals are aligned by the first budding event.
+    % to show that
+    %(1) budding events synchronise with peaks in fluorescence, and
+    %(2) the cell division cycle varies between cells.
+   }
+   \label{fig:biology-by4741-sync-heatmap}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{by4741_491_6}
+   \caption{
+    Median flavin fluorescence signal across cells.% (n = 361).
+    %For each time point, the figure shows the median and interquartile range of the fluorescence at such time point across the population of cells.
+    %The oscillatory shape of the median signal confirms that synchrony between flavin oscillations and cell division cycle holds across a large population of cells.
+   }
+   \label{fig:biology-by4741-sync-median}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{by4741_491_13}
+   \caption{
+    Mean Fourier spectrum of flavin fluorescence across cells, indicating the duration of the metabolic cycle.
+    %All signals were passed through a high-pass Butterworth filter with a critical frequency of
+    %\SI[parse-numbers=false]{1/350}{\minute^{-1}}.
+    %to remove long-term trends to reveal oscillatory behaviour; see methods.
+   }
+   \label{fig:biology-by4741-sync-fourier}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.4\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{by4741_491_12}
+   \caption{
+     \textbf{(Main)} Median autocorrelation functions and interquartile ranges of flavin fluorescence (purple) and histone 2B levels (pink), %across population of cells,
+     along with \textbf{(inset)} the periods of each oscillator across cells as determined by the strongest frequency in each signal's Fourier spectrum.
+    %This figure indicates that the cells' metabolic cycles and cell division cycles are both consistently 90 minutes long.
+   }
+   \label{fig:biology-by4741-sync-acf}
+  \end{subfigure}
+
+  \caption{
+    The yeast metabolic cycle and cell division cycle synchronise within each cell in a population of cells under the same conditions (\SI{20}{\gram~\litre^{-1}} glucose).
+    %Subfigures X-X quantify the duration of the metabolic cycle, comparative to the duration of the cell division cycle in subfigure X.
+  }
+  \label{fig:biology-by4741-sync}
+\end{figure}
+
+Insert text about BY4741 here.
+
 
 \section[Abrupt nutrient changes]{Cells autonomously generate flavin oscillations, independently of the cell division cycle, in response to abrupt nutrient changes.}
 \label{sec:biology-abrupt}
@@ -176,6 +237,137 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
   }
   \label{fig:biology-starvation}
 \end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{starvation_raw_13-07-02.pdf}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-raw-1}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{starvation_raw_13-39-01.pdf}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-raw-2}
+  \end{subfigure}
+
+  \caption{
+    Histone 2B levels can get `stuck' at a high or a low level upon starvation.
+    High-pass filter not applied, but values normalised (elaborate more here) to get them on same axes.
+  }
+  \label{fig:biology-starvation-raw}
+\end{figure}
+
+Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_distribs_0360}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-distribs-0360}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_distribs_0420}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-distribs-0420}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_distribs_0480}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-distribs-0480}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_distribs_0540}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-distribs-0540}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_distribs_0600}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-distribs-0600}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_distribs_1000}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-distribs-1000}
+  \end{subfigure}
+
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-starvation-distribs}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{19972_ks_highlight}
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-starvation-ks}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_19972_gr}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-gr}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_19972_budprob}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-starvation-budprob}
+  \end{subfigure}
+
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-starvation-gr-budprob}
+\end{figure}
+
 
 
 \section{Effect of carbon source on YMC.}
@@ -261,6 +453,17 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
    \label{fig:biology-lowglc-single}
   \end{subfigure}
 
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{htb2mCherry_31492_12.pdf}
+   \caption{
+     Insert caption here.
+   }
+   \label{fig:biology-lowglc-acf}
+  \end{subfigure}
+
+
+  % TODO: Move some of the blabbing from the captions to the main text.
   \begin{subfigure}[t]{0.3\textwidth}
    \centering
    \includegraphics[width=\textwidth]{limiting_snr_edit.pdf}
@@ -292,6 +495,50 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
   }
   \label{fig:biology-lowglc}
 \end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_31492_gr}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-lowglc-gr}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_26643_gr}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-highglc-gr}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_31492_budprob}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-lowglc-budprob}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_26643_budprob}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-highglc-gr}
+  \end{subfigure}
+
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-lowglc-gr-budprob}
+\end{figure}
+
 
 
 \section[Potassium-deficient media]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- potassium-deficient media}
@@ -350,6 +597,107 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
   }
   \label{fig:biology-kdeficient}
 \end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{613_distribs_0300}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-distribs-0300}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{613_distribs_0360}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-distribs-0360}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{613_distribs_0420}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-distribs-0420}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{613_distribs_0480}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-distribs-0480}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{613_distribs_0700}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-distribs-0700}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.9\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{613_distribs_1080}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-distribs-1080}
+  \end{subfigure}
+
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-kdeficient-distribs}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{613_ks_highlight}
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-kdeficient-ks}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_613_gr}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-gr}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_613_budprob}
+   \caption{
+     Insert caption here
+   }
+   \label{fig:biology-kdeficient-budprob}
+  \end{subfigure}
+
+  \caption{
+    Insert caption here
+  }
+  \label{fig:biology-kdeficient-gr-budprob}
+\end{figure}
+
 
 
 \section[Deletion strains]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- deletion strains}
