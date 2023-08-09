@@ -37,7 +37,7 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
 
 \begin{figure}
   \centering
-    \includegraphics[width=.9\linewidth]{single_birth_plot_edit.pdf}
+    \includegraphics[width=1.0\linewidth]{single_birth_plot_edit.pdf}
     \caption{
       Oscillations of flavin fluorescence in the yeast metabolic cycle synchronise with events in the cell division cycle.
       Figure shows sample flavin fluorescence (purple, solid lines) and histone 2B (pink, dotted lines) level in a single FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} glucose.
@@ -237,7 +237,7 @@ Insert text about BY4741 here.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.9\textwidth}
+  \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
    \includegraphics[width=\textwidth]{starvation_raw_13-07-02.pdf}
    \caption{
@@ -245,7 +245,7 @@ Insert text about BY4741 here.
    \label{fig:biology-starvation-raw-1}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{0.9\textwidth}
+  \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
    \includegraphics[width=\textwidth]{starvation_raw_13-39-01.pdf}
    \caption{
@@ -363,8 +363,8 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
   \end{subfigure}
 
   \caption{
-    Glucose-starvation experiment.
     Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the glucose-starvation experiment, with 95\% confidence intervals shown (shaded).
+    Vertical lines (red) show changes in nutrient media.
   }
   \label{fig:biology-starvation-gr-budprob}
 \end{figure}
@@ -405,7 +405,7 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.9\textwidth}
+  \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
    \includegraphics[width=\textwidth]{pyruvate_single_birth_plot_edit.pdf}
    \caption{
@@ -429,7 +429,7 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
    \centering
    \includegraphics[width=\textwidth]{pyruvate_xcf_edit.pdf}
    \caption{
-    Cross-correlation between flavin and histone 2B signals (n = 561), indicating that histone levels peak 1 hour after flavin fluorescence peaks.
+    Cross-correlation between flavin and histone 2B signals, indicating that histone levels peak 1 hour after flavin fluorescence peaks.
    }
    \label{fig:biology-pyruvate-xcf}
   \end{subfigure}
@@ -443,11 +443,11 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.9\textwidth}
+  \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
    \includegraphics[width=\textwidth]{limiting_single_birth_plot_edit.pdf}
    \caption{
-     Oscillations of flavin fluorescence are noisier when cells are cultivated in \SI{10}{\milli\gram~\litre^{-1}} glucose while cells do not show growth and division.
+     Oscillations of flavin fluorescence are noisier when cells are cultivated in \SI{10}{\milli\gram~\litre^{-1}} glucose while cells show minimal growth or division.
      %Figure shows sample flavin fluorescence (purple) and histone 2B (pink) level in a single cell grown in \SI{10}{\milli\gram~\litre^{-1}}.
      %Vertical dashed lines (black) indicate budding.
    }
@@ -458,19 +458,18 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
    \centering
    \includegraphics[width=\textwidth]{htb2mCherry_31492_12.pdf}
    \caption{
-     Insert caption here.
+     Autocorrelation functions and periods determined by Fourier spectrum of flavin fluorescence and histone 2B levels.
+     This figure indicates that the cells' metabolic cycles are approximately 2 hours long, but the duration of the cell division cycle is not robust nor consistent across the population.
    }
    \label{fig:biology-lowglc-acf}
   \end{subfigure}
 
-
-  % TODO: Move some of the blabbing from the captions to the main text.
   \begin{subfigure}[t]{0.3\textwidth}
    \centering
    \includegraphics[width=\textwidth]{limiting_snr_edit.pdf}
    \caption{
-     Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{10}{\milli\gram~\litre^{-1}}, showing that most cells have noisy signals and thus implying low-amplitude metabolic cycles.
-     %Fourier spectra were computed for each cell's flavin time series and a cut-off frequency is defined; the signal-to-noise ratio is defined as the area under the spectrum to the left (lower frequencies, representing signal)
+     Signal-to-noise ratios, \SI{10}{\milli\gram~\litre^{-1}} glucose.
+     %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{10}{\milli\gram~\litre^{-1}}, showing that most cells have noisy signals and thus implying low-amplitude metabolic cycles.
    }
    \label{fig:biology-lowglc-snr}
   \end{subfigure}%
@@ -478,7 +477,8 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
    \centering
    \includegraphics[width=\textwidth]{pyruvate_snr_edit.pdf}
    \caption{
-    Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} pyruvate, showing that cells have higher-quality signals.
+     Signal-to-noise ratios, \SI{20}{\gram~\litre^{-1}} pyruvate.
+    %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} pyruvate, showing that cells have higher-quality signals.
    }
    \label{fig:biology-pyruvate-snr}
   \end{subfigure}%
@@ -486,13 +486,14 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
    \centering
    \includegraphics[width=\textwidth]{glucose_snr_edit.pdf}
    \caption{
-    Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} glucose, showing that cells have higher-quality signals.
+     Signal-to-noise ratios, \SI{20}{\gram~\litre^{-1}} glucose.
+    %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} glucose, showing that cells have higher-quality signals.
    }
    \label{fig:biology-highglc-snr}
   \end{subfigure}
 
   \caption{
-    When cultivated in growth-limiting (\SI{10}{\milli\gram~\litre^{-1}}) glucose, cells show lower-quality metabolic cycles with lower amplitudes.
+    When cultivated in growth-limiting (\SI{10}{\milli\gram~\litre^{-1}}) glucose, cells show lower-quality metabolic cycles with lower amplitudes, as suggested by the distributions of signal-to-noise ratios computed for each flavin time series (\ref{fig:biology-lowglc-snr},~\ref{fig:biology-pyruvate-snr},~\ref{fig:biology-highglc-snr}).
   }
   \label{fig:biology-lowglc}
 \end{figure}
@@ -521,7 +522,7 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
    \centering
    \includegraphics[width=\textwidth]{allstrains_31492_budprob}
    \caption{
-     Insert caption here
+     Growth rate
    }
    \label{fig:biology-lowglc-budprob}
   \end{subfigure}%
@@ -529,13 +530,14 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
    \centering
    \includegraphics[width=\textwidth]{allstrains_26643_budprob}
    \caption{
-     Insert caption here
+     Budding probability
    }
    \label{fig:biology-highglc-gr}
   \end{subfigure}
 
   \caption{
-    Insert caption here
+    Growth rates and budding probabilities of cells in limiting glucose (\SI{10}{\milli\gram~\litre^{-1}}) compared to high glucose \SI{20}{\gram~\litre^{-1}}.
+    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time, with 95\% confidence intervals shown (shaded).
   }
   \label{fig:biology-lowglc-gr-budprob}
 \end{figure}
@@ -574,11 +576,11 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.9\textwidth}
+  \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
    \includegraphics[width=\textwidth]{htb2mCherry_613_plots_single_htb2mCherry012_90_2_adapted.pdf}
    \caption{
-     Insert caption here
+     Flavin fluorescence and cell division cycles are maintained before, during, and after perfusion of potassium-deficient nutrient media (FY4 HTB2::mCherry).
    }
    \label{fig:biology-kdeficient-single}
   \end{subfigure}
@@ -699,8 +701,8 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
   \end{subfigure}
 
   \caption{
-    Potassium-deficiency experiment.
-    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the glucose-starvation experiment, with 95\% confidence intervals shown (shaded).
+    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the potassium-deficiency experiment, with 95\% confidence intervals shown (shaded).
+    Vertical lines (red) show changes in nutrient media.
   }
   \label{fig:biology-kdeficient-gr-budprob}
 \end{figure}
@@ -757,35 +759,35 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{zwf1egf_409_6.pdf}
    \caption{
-     Median flavin fluorescence signal across cells.%; each data point is the median of flavin fluorescence at each time point relative to the first birth.
-     The shape of the median signal suggests that the flavin oscillations in this deletion strain do not synchronise with the cell division cycle at a uniform frequency, in contrast to its BY4741 parental strain.
+     Median flavin fluorescence signal across cells,%; each data point is the median of flavin fluorescence at each time point relative to the first birth.
+     suggesting that flavin oscillations have some degree of synchrony with the cell division cycle, and oscillate at a period of approximately \SI{3}{\hour}.
    }
    \label{fig:biology-zwf1-median}
   \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{zwf1egf_409_12.pdf}
    \caption{
-    Autocorrelation function of flavin fluorescence across cells, confirms a lack of robust oscillations across the population of cells.
+    Autocorrelation function of flavin fluorescence across cells, suggesting an average oscillation of approximately \SI{3}{\hour}, but with low robustness.
    }
    \label{fig:biology-zwf1-median}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{zwf1egf_409_10.pdf}
    \caption{
-    Distribution of signal-to-noise ratios computed for each flavin time series derived from zwf1$\Delta$ cells, showing a wide distribution of quality of oscillation.
+    Distribution of signal-to-noise ratios computed for each flavin time series derived from zwf1$\Delta$ cells, showing a wide distribution of oscillation quality.
    }
    \label{fig:biology-zwf1-snr}
   \end{subfigure}%
 
   \caption{
-    zwf1$\Delta$ (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose do not robustly generate metabolic oscillations.
+    zwf1$\Delta$ (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose generate metabolic oscillations.
   }
   \label{fig:biology-zwf1}
 \end{figure}
@@ -793,29 +795,29 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{tsa1tsa2morgan_1649_6.pdf}
    \caption{
-     Median flavin fluorescence signal across cells (n = 413).%; each data point is the median of flavin fluorescence at each time point relative to the first birth.
-     The shape of the median signal suggests that the flavin oscillations in this deletion strain synchronise with the cell division cycle at a slower frequency, in contrast to its BY4742 parental strain.
+     Median flavin fluorescence signal across cells,%; each data point is the median of flavin fluorescence at each time point relative to the first birth.
+     suggesting that flavin oscillations has weak synchrony with the cell division cycle, and oscillate at a period of approximately \SI{3}{\hour}.
    }
    \label{fig:biology-tsa1tsa2-median}
   \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{tsa1tsa2morgan_1649_12.pdf}
    \caption{
-    Autocorrelation function of flavin fluorescence across cells, confirms that oscillations are less robust compared to wild type.
+    Autocorrelation function of flavin fluorescence across cells, showing a lack of oscillations at a regular frequency across the population, in contrast to more regular oscillations in the wild type.
    }
    \label{fig:biology-tsa1tsa2-median}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{tsa1tsa2morgan_1649_10.pdf}
    \caption{
-    Distribution of signal-to-noise ratios computed for each flavin time series derived from tsa1$\Delta$ tsa2$\Delta$ cells, showing a wide distribution of quality of oscillation.
+    Distribution of signal-to-noise ratios computed for each flavin time series derived from tsa1$\Delta$ tsa2$\Delta$ cells, showing that the quality of oscillations is comparable to growth in pyruvate.
    }
    \label{fig:biology-tsa1tsa2-snr}
   \end{subfigure}%
