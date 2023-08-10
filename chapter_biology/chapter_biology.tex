@@ -4,18 +4,25 @@
 % - Bullet points -> prose
 % - Notes/random ideas jotted down -> comments
 
-\chapter{Single-cell flavin-based yeast metabolic cycles}
+\chapter{Microfluidics and fluorescence microscopy for cellular metabolic cycles}
 \label{ch:biology}
 
-%\section{Relationship between the metabolic cycle and cell division cycle: synchrony and autonomy}
+There is a paucity of studies of the yeast metabolic cycle at the cellular level --- i.e.\ in which budding yeast cells are investigated in isolation rather than as a population.
+Previous population-level studies in the chemostat, by their very nature, fail to account for cell-to-cell heterogeneity and create cell density and environmental conditions that are far removed from the natural habitat of budding yeast.
 
-In this study, I show that yeast cells exhibit oscillations in the fluorescence of flavins that are consistent with previous descriptions of the yeast metabolic cycle.
-These oscillations synchronise with the cell division cycle in permissive conditions.
-Such flavin oscillations showed different behaviour in respiratory conditions.
-Additionally, I found that cells were able to autonomously reset the phase of their metabolic cycle, independently of the cell division cycle, in response to abrupt nutrient changes.
-Finally, I showed that deletion strains generated flavin oscillations that exhibited different behaviour from dissolved oxygen oscillations from chemostat conditions.
+Here, I use single-cell microfluidics to physically separate budding yeast cells and use fluorescence microscopy to monitor the yeast metabolic cycle and the cell division cycle.
+I do so in order to address the relationship between the metabolic and cell division cycle, and whether nutrient and genetic perturbations affect the metabolic cycle as was previously reported in chemostat-based studies.
+Specifically, I culture wild-type and engineered strains, including deletion strains, in microfluidic chambers that force the cells to physically separate.
+Each cell in a trap is monitored while it undergoes growth and cell division: brightfield images and images of flavin fluorescence are taken.
+In some experiments, I use the microfluidics set-up to create rapid changes in the nutrient medium at specified times to assess the cells' response.
 
-My results confirm that the metabolic cycle is an autonomous oscillator, independent of the cell division cycle, and responds to perturbations in the environment\ldots{}
+My aims in this chapter are:
+\begin{enumerate}
+  \item To confirm that flavin autofluorescence can be used to monitor the yeast metabolic cycle \parencite{baumgartnerFlavinbasedMetabolicCycles2018}, and to confirm autonomy of the metabolic oscillator from the cell division oscillator.
+  \item To show the robustness of the yeast metabolic cycle across nutrient conditions and deletion strains.
+  \item To address whether observations of the behaviour of the metabolic cycles of deletion strains in the chemostat can be recapitulated in single-cell conditions.
+        And, if behaviours differ, offer an explanation based on cell-to-cell heterogeneity.
+\end{enumerate}
 
 \section[Permissive conditions]{Single-cell flavin oscillations synchronise with cell division cycle in permissive conditions.}
 \label{sec:biology-sync}
@@ -831,6 +838,15 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
 
 \section{Discussion}
 \label{sec:biology-discussion}
+
+% [MOVED FROM BEGINNING]
+In this study, I show that yeast cells exhibit oscillations in the fluorescence of flavins that are consistent with previous descriptions of the yeast metabolic cycle.
+These oscillations synchronise with the cell division cycle in permissive conditions.
+Such flavin oscillations showed different behaviour in respiratory conditions.
+Additionally, I found that cells were able to autonomously reset the phase of their metabolic cycle, independently of the cell division cycle, in response to abrupt nutrient changes.
+Finally, I showed that deletion strains generated flavin oscillations that exhibited different behaviour from dissolved oxygen oscillations from chemostat conditions.
+
+My results confirm that the metabolic cycle is an autonomous oscillator, independent of the cell division cycle, and responds to perturbations in the environment\ldots{}
 
 \subsection{Interpretation of results}
 \label{subsec:biology-discussion-interpretation}
