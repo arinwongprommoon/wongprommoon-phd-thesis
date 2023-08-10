@@ -578,35 +578,28 @@ Though less robust, the metabolic cycles follow an approximately \SI{2.5}{\hour}
 % TODO: How are these linked to Papagiannakis et al.?  Am I getting the same conclusions?  Also -- space to discuss the 10-hour oscillations in chemostats in slow dilution rates.
 
 
-\section[Potassium-deficient media]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- potassium-deficient media}
+%\section[Potassium-deficient media]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- potassium-deficient media}
+\section{Metabolic cycles persist in potassium-deficient media}
 \label{sec:biology-potassium_deficient}
-\begin{itemize}
-\item \emph{Bottom line:} We found that\ldots{}
-\begin{itemize}
-\item Single-cell metabolic oscillations are generated in potassium-deficient media, but they are longer and are generated less reliably as in normal minimal media.  This is in contrast to what \textcite{oneillEukaryoticCellBiology2020} suggest: as potassium is gradually replaced with sodium in chemostat culture media, the amplitude of dissolved-oxygen oscillations decrease until they disappear altogether.
-\end{itemize}
-\item \emph{Importance of this section:}
-\begin{itemize}
-\item Attempt to show that the single-cell metabolic cycle and the chemostat metabolic cycle are the same cycle.
-\item Chemostat experiments obscure the behaviour of individual cells.  My experiments should produce a more detailed picture of how changes to the metabolic cycle affect the coarse-grained readouts in chemostat-based studies.
-\end{itemize}
-\end{itemize}
-\begin{itemize}
-\item \emph{Evidence:}
-\begin{itemize}
-\item Figures ...
-\item High-glucose experiment, but with all potassium in the media replaced with sodium.
-\end{itemize}
 
-\item \textbf{Missing analysis:}
-\begin{itemize}
-\item ...
-\end{itemize}
-\item \textbf{Missing experiments:}
-\begin{itemize}
-\item ...
-\end{itemize}
-\end{itemize}
+To address whether single-cell flavin traces from my microfluidics experiments recapitulate dissolved-oxygen yeast metabolic cycles in chemostats, I turn to several chemostat-based studies that demonstrate nutrient or genetic perturbations that severely affect the metabolic cycle.
+This is important in showing that the single-cell metabolic cycle and the chemostat metabolic cycle are the same cycle, or to prove otherwise.
+Chemostat experiments obscure the behaviour of individual cells.
+My single-cell microfluidics experiments should produce a more detailed picture of how changes to the metabolic cycle affect the coarse-grained readouts in chemostat-based studies.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{oneillEukaryoticCellBiology2020_4_adapted.png}
+  \caption{
+    Decreasing extracellular potassium (\ce{K+}) concentration shortens, then under \SI{1}{\milli\molar}, destroys metabolic oscillations in the chemostat.
+    Adapted from \textcite{oneillEukaryoticCellBiology2020}.
+  }
+  \label{fig:biology-kdeficient-oneill}
+\end{figure}
+
+First, I consider potassium-deficient media.
+\textcite{oneillEukaryoticCellBiology2020} suggest that as potassium is gradually replaced with sodium in chemostat culture media, the amplitude of dissolved-oxygen oscillations decrease until they disappear altogether (figure~\ref{fig:biology-kdeficient-oneill}).
+
 
 \begin{figure}
   \centering
@@ -624,6 +617,7 @@ Though less robust, the metabolic cycles follow an approximately \SI{2.5}{\hour}
    \includegraphics[width=\textwidth]{htb2mCherry_613_12.pdf}
    \caption{
      Autocorrelation functions and periods determined by Fourier spectrum of flavin fluorescence and histone 2B levels.
+     Only time points during potassium-deficiency were used in the calculations.
      This figure indicates that the cells' metabolic cycles and cell division cycles are both consistently 120 minutes long.
    }
    \label{fig:biology-kdeficient-acf}
@@ -634,6 +628,43 @@ Though less robust, the metabolic cycles follow an approximately \SI{2.5}{\hour}
   }
   \label{fig:biology-kdeficient}
 \end{figure}
+
+I cultured FY4 HTB2::mCherry cells with minimal media supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+The minimal media contains \ce{KH2PO4} as a potassium salt, so I prepared an alternative media formulation with the salt replaced with \ce{NaH2PO4} at the same molarity.
+During the microfluidics experiment, cells were grown on normal growth medium for \SI{6}{\hour} before being abruptly switched to potassium-free medium for \SI{10}{\hour} and then resumed to normal growth medium for \SI{6}{\hour}.
+In contrast to what \textcite{oneillEukaryoticCellBiology2020} would suggest, I observe that flavin metabolic oscillations are generated in potassium-deficient media, with synchronised cell division cycles (figure~\ref{fig:biology-kdeficient-single}).
+Such cycles are longer and generated less reliably as in the normal growth medium (figure~\ref{fig:biology-kdeficient-acf}).
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_613_gr}
+   \caption{
+     Growth rate
+   }
+   \label{fig:biology-kdeficient-gr}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_613_budprob}
+   \caption{
+     Budding probability
+   }
+   \label{fig:biology-kdeficient-budprob}
+  \end{subfigure}
+
+  \caption{
+    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the potassium-deficiency experiment, with 95\% confidence intervals shown (shaded).
+    Vertical lines (red) show changes in nutrient media.
+  }
+  \label{fig:biology-kdeficient-gr-budprob}
+\end{figure}
+
+In addition, although there was a sharp drop in growth rate in response to the abrupt change to the potassium-deficient medium (figure~\ref{fig:biology-kdeficient-gr}), the growth rate recovered soon after.
+The budding probability only showed a slight drop during potassium-deficiency (figure~\ref{fig:biology-kdeficient-budprob}), in contrast to a near-zero drop under glucose starvation (figure~\ref{fig:biology-starvation-budprob}).
 
 
 \begin{figure}
@@ -713,34 +744,16 @@ Though less robust, the metabolic cycles follow an approximately \SI{2.5}{\hour}
   \label{fig:biology-kdeficient-ks}
 \end{figure}
 
+% Conclusions are a bit iffy.  I probably need to think of new statistical tests.
+As for the glucose-starvation experiment, I then investigated how the distribution of growth rates, budding probability, raw HTB2::mCherry intensity, and raw flavin intensity changes over the course of the experiment (figures~\ref{fig:biology-kdeficient-distribs},~\ref{fig:biology-kdeficient-ks}), using the \SI{300}{\minute} time point as the pre-potassium-deficiency reference point.
+In contrast to the glucose-starvation experiment, the distribution of budding probability never showed a significant change from the pre-deficiency reference point throughout the experiment.
+Additionally, the growth rates changed distribution profile when the growth rates dropped in the initial response to potassium depletion, and again later in the potassium-deficient condition.
+Interestingly, the distribution of HTB2::mCherry intensities become more spread towards the end of the experiment, while the mean value of flavin intensity did not change as drastically at it did for the glucose-starvation experiment.
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.7\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{allstrains_613_gr}
-   \caption{
-     Growth rate
-   }
-   \label{fig:biology-kdeficient-gr}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.7\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{allstrains_613_budprob}
-   \caption{
-     Budding probability
-   }
-   \label{fig:biology-kdeficient-budprob}
-  \end{subfigure}
-
-  \caption{
-    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the potassium-deficiency experiment, with 95\% confidence intervals shown (shaded).
-    Vertical lines (red) show changes in nutrient media.
-  }
-  \label{fig:biology-kdeficient-gr-budprob}
-\end{figure}
-
+Taken together, my results suggest that even though there is an initial response to potassium depletion, cells resume growth, division, and generation of metabolic cycles soon after.
+Although the chemostat study suggests that metabolic cycles should not occur when potassium is depleted, I observe metabolic cycles in single-cell conditions, though at a longer period and with less robustness.
+My observations thus also show that the metabolic cycle is robust --- in other words, I showed that they still occur in a drastically changed nutrient condition.
+However, my observations also warrant a model to reconcile the apparent differences between the chemostat and single-cell investigations.
 
 
 \section[Deletion strains]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- deletion strains}
