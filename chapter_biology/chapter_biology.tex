@@ -27,20 +27,26 @@ My aims in this chapter are:
 \section[Permissive conditions]{Single-cell flavin oscillations synchronise with cell division cycle in permissive conditions.}
 \label{sec:biology-sync}
 
-\begin{itemize}
-\item \emph{Bottom line:} We observed oscillations in the fluorescence of flavins over time from single \textit{Saccharomyces cerevisiae} cells.  For a given cell, these oscillations peak when a bud forms.  However, there were some cases in which there was an oscillation without bud formation.
-\item \emph{Importance of this section:} We did this to confirm that we are looking at the yeast metabolic cycle and this is important because we use a different single-cell microfluidics setup from previous studies and we use flavin, a fluorescent compound that is less used as an indicator of the yeast metabolic cycle.  Specifically, our experiments aim to confirm the flavin oscillations described by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.  In addition, we show the use of a more informative cell division cycle marker and automated identification of budding events.
-\item \emph{Evidence:}
-\begin{itemize}
-\item Figures 1-2.
-\end{itemize}
+\begin{figure}
+  \centering
+    \includegraphics[width=0.5\linewidth]{garmendia-torresMultipleInputsEnsure2018_1_adapted.jpg}
+    \caption{
+      Engineering a fluorescent protein cassette fused to \textit{HTB2} (A) allows the identification of phases of the cell division cycle by modelling the fluorescent protein intensity changes over time as piecewise linear sections (B).
+      Adapted from \textcite{garmendia-torresMultipleInputsEnsure2018}.
+    }
+  \label{fig:biology-htb2}
+\end{figure}
 
-\item \textbf{Missing experiments:}
-\begin{itemize}
-\item Record NAD(P)H oscillations.  If possible, do it with flavin in the same cells.  If not, then compare these oscillations with the timing of birth events.  This experiment will strengthen the evidence that I am observing single-cell YMCs.  \textcite{baumgartnerFlavinbasedMetabolicCycles2018} didn't do this; maybe that's why they haven't had many citations.
-\item fas1$\Delta$ to verify the role of lipids and attempt to rescue with lipid sources (e.g. glycerol trihexanoate, glycerol trioctanoate). \emph{Will start another avenue of exploration entirely, i.e. what makes up the flavin signal in a cell}
-\end{itemize}
-\end{itemize}
+To replicate the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, I cultured FY4 HTB2::mCherry cells in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+These cells are prototrophic, owing to its FY4 background, allowing me to rule out the effects of certain nutrient supplements on the metabolic cycle.
+I engineered an insertion to the \textit{HTB2} gene to attach a fluorescent protein to histone 2B so that imaging of the fluorescence protein shows phases of the cell division cycle, as performed by ~\textcite{garmendia-torresMultipleInputsEnsure2018} (figure~\ref{fig:biology-htb2}).
+I chose mCherry as the fluorescent protein because the GFP emission spectrum overlaps with the flavin emission spectrum, and because mutual information does not show a significant difference between GFP and superfolder GFP traces (figure ...).
+Finally, I chose the high glucose concentration \SI{20}{\gram~\litre^{-1}} glucose as it is commonly used as a permissive growth condition for budding yeast cultivation experiments.
+
+Replicating a previous flavin-based microfluidics study to confirm that my experimental set-up monitors the yeast metabolic cycle is important.
+This is because I use a different single-cell microfluidics setup from previous studies and we use flavin, a fluorescent compound that is less used as an indicator of the yeast metabolic cycle.
+In addition, I aim to show the use of a more informative cell division cycle marker, compared to the more commonly used Whi5p, along with automated identification of budding events using \textit{BABY} \parencite{pietschDeterminingGrowthRates2023}.
+
 
 \begin{figure}
   \centering
@@ -53,9 +59,13 @@ My aims in this chapter are:
   \label{fig:biology-highglc-single}
 \end{figure}
 
-\begin{itemize}
-\item Histone 2B levels shows phases of the cell division cycle, the most obvious being S phase and anaphase, (\textcite{garmendia-torresMultipleInputsEnsure2018}) but traces are noisy.  BABY provides data that confirms timing of cell division cycle, i.e. budding times, volume and growth rate changes, cytokinesis.
-\end{itemize}
+In this experiment, I observed oscillations in the fluorescence of flavins over time from single cells (figure~\ref{fig:biology-highglc-single}).
+For a given cell, these oscillations peak when a bud forms, approximately during G2/M.
+This relationship between flavin oscillations and the cell division cycle indeed agrees with \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
+% ... elaborate further.  Do you expect this relationship, and why?  Use biological knowledge to explain.
+However, there were some cases in which there was an oscillation without cell division cycle progression or bud formation (figure ...).
+Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via NAD(P)H cycles, confirm that the metabolic cycle is generated autonomously from the cell division cycle.
+
 
 \begin{figure}
   \centering
@@ -85,14 +95,8 @@ My aims in this chapter are:
    \centering
    \includegraphics[width=\textwidth]{heatmap_edit.pdf}
    \caption{
-    Heatmap shows the flavin fluorescence of each cell in a population over time.
-    Each row of pixels represents a cell.
-    Fluorescence is represented as colours (red--blue), and %with red indicating low signal and blue indicating high signal.
-    each budding event is indicated as a black pixel.
-    Signals are aligned by the first budding event.
-    % to show that
-    %(1) budding events synchronise with peaks in fluorescence, and
-    %(2) the cell division cycle varies between cells.
+     Heatmap shows the flavin fluorescence (pixels on a red-blue scale) and budding events (black pixels) of each cell.
+     Signals are aligned by the first budding event.
    }
    \label{fig:biology-highglc-sync-heatmap}
   \end{subfigure}%
@@ -123,6 +127,35 @@ My aims in this chapter are:
   \label{fig:biology-highglc-sync}
 \end{figure}
 
+% TODO: Add references to chapter 3 re the analysis methods
+To quantify the period of the oscillators, I used several methods that confirm each other.
+First, I computed the Fourier spectrum of each flavin time series, originating from each cell.
+Only time series that had data points that filled all time points in the experiment were used, as the Fourier spectrum can only be calculated for such time series.
+The mean of these spectra across each time series was computed (figure~\ref{fig:biology-highglc-sync-fourier}), and the peak power suggests a \SI{94.33}{\minute} period of the metabolic oscillations.
+In addition, the peak power from the Fourier spectrum of each cell was determined and the distribution of such peaks was shown in a histogram to show the distribution of the periods across the population (figure~\ref{fig:biology-highglc-sync-acf} inset), additionally confirming a $\approx$\SI{90}{\minute} period.
+This computation was also repeated for the mCherry time series.
+Second, I computed the autocorrelation function of flavin time series and of mCherry time series across the population of cells, confirming a $\approx$\SI{90}{\minute} period for both time series (figure~\ref{fig:biology-highglc-sync-acf}).
+% [CITATIONS NEEDED]
+Taken together, these methods suggest that both the metabolic and cell division cycle of the prototrophic strain in high-glucose conditions occur at a period of approximately \SI{90}{\minute}, which agrees with the literature regarding the duration of the cell division cycle in such permissive growth conditions.
+
+To visualise the relationship between the metabolic cycle and the cell division cycle, I showed the flavin fluorescence and budding events in a heatmap.
+In figure~\ref{fig:biology-highglc-sync-heatmap},
+each row of pixels represents a cell.
+Fluorescence is represented as colours (red-blue), with red indicating low signal and blue indicating high signal.
+Each budding event is indicated as a black pixel.
+Signals are aligned by the first budding event to show that
+(a) budding events synchronise with peaks in fluorescence, and
+(b) the cell division cycle varies between cells.
+The heatmap shows that most first cell division cycles --- shown as the first interval between budding events --- are just under \SI{2}{\hour}, with cell-to-cell variations, agreeing with figure~\ref{fig:biology-highglc-sync-acf} (inset).
+It also shows that the budding events coincide with peaks in flavin fluorescence.
+Additionally, the median of the flavin signals aligned by the first birth event is computed (figure~\ref{fig:biology-highglc-sync-median}), and the oscillatory shape of the median confirms the synchrony between the metabolic cycle and budding events.
+
+To quantify the relationship between the metabolic cycle and the cell division cycle, I computed the cross-correlation function between the flavin and mCherry signals across the population (figure~\ref{fig:biology-highglc-sync-xcf}).
+This function shows that the mCherry signals are, on average, shifted by \SI{5}{\minute} relative to the flavin signals.
+
+Figure~\ref{fig:biology-highglc-sync} thus confirms that, consistently across a population of physically separated prototrophic cells, the metabolic cycle and the cell division cycle synchronise, with flavin intensity peaking as the cell forms a bud in G2/M phase.
+
+
 % Figure & discussion of BY4741.
 % Showing that YMCs occur in an auxotroph is important because it confirms that the YMC is robust (a lot of things must go wrong for it to go away) and likely an intrinsic cycle.
 \begin{figure}
@@ -148,7 +181,6 @@ My aims in this chapter are:
    }
    \label{fig:biology-by4741-sync-acf}
   \end{subfigure}
-
 
   \begin{subfigure}[htpb]{0.4\textwidth}
    \centering
@@ -847,6 +879,13 @@ Additionally, I found that cells were able to autonomously reset the phase of th
 Finally, I showed that deletion strains generated flavin oscillations that exhibited different behaviour from dissolved oxygen oscillations from chemostat conditions.
 
 My results confirm that the metabolic cycle is an autonomous oscillator, independent of the cell division cycle, and responds to perturbations in the environment\ldots{}
+
+% [COLLECTION OF MISSING EXPERIMENTS/CAVEATS/ETC]
+\textbf{Permissive conditions missing experiments:}
+\begin{itemize}
+\item Record NAD(P)H oscillations.  If possible, do it with flavin in the same cells.  If not, then compare these oscillations with the timing of birth events.  This experiment will strengthen the evidence that I am observing single-cell YMCs.  \textcite{baumgartnerFlavinbasedMetabolicCycles2018} didn't do this; maybe that's why they haven't had many citations.
+\item fas1$\Delta$ to verify the role of lipids and attempt to rescue with lipid sources (e.g. glycerol trihexanoate, glycerol trioctanoate). \emph{Will start another avenue of exploration entirely, i.e. what makes up the flavin signal in a cell}
+\end{itemize}
 
 \subsection{Interpretation of results}
 \label{subsec:biology-discussion-interpretation}
