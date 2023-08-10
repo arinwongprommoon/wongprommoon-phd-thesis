@@ -37,7 +37,7 @@ My aims in this chapter are:
   \label{fig:biology-htb2}
 \end{figure}
 
-To replicate the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, I cultured FY4 HTB2::mCherry cells in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+To replicate the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, I cultured FY4 HTB2::mCherry cells in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose, over \SI{24}{\hour} in the microfluidic device.
 These cells are prototrophic, owing to its FY4 background, allowing me to rule out the effects of certain nutrient supplements on the metabolic cycle.
 I engineered an insertion to the \textit{HTB2} gene to attach a fluorescent protein to histone 2B so that imaging of the fluorescence protein shows phases of the cell division cycle, as performed by ~\textcite{garmendia-torresMultipleInputsEnsure2018} (figure~\ref{fig:biology-htb2}).
 I chose mCherry as the fluorescent protein because the GFP emission spectrum overlaps with the flavin emission spectrum, and because mutual information does not show a significant difference between GFP and superfolder GFP traces (figure ...).
@@ -150,17 +150,13 @@ Figure~\ref{fig:biology-highglc-sync} thus confirms that, consistently across a 
 
 
 % Figure & discussion of BY4741.
-% Showing that YMCs occur in an auxotroph is important because it confirms that the YMC is robust (a lot of things must go wrong for it to go away) and likely an intrinsic cycle.
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.4\textwidth}
    \centering
    \includegraphics[width=\textwidth]{by4741_491_13}
    \caption{
-    Mean Fourier spectrum of flavin fluorescence across cells.%, indicating the duration of the metabolic cycle.
-    %All signals were passed through a high-pass Butterworth filter with a critical frequency of
-    %\SI[parse-numbers=false]{1/350}{\minute^{-1}}.
-    %to remove long-term trends to reveal oscillatory behaviour; see methods.
+    Mean Fourier spectrum of flavin fluorescence across cells.
    }
    \label{fig:biology-by4741-sync-fourier}
   \end{subfigure}%
@@ -168,9 +164,8 @@ Figure~\ref{fig:biology-highglc-sync} thus confirms that, consistently across a 
    \centering
    \includegraphics[width=\textwidth]{by4741_491_12}
    \caption{
-     \textbf{(Main)} Median autocorrelation function flavin fluorescence, %across population of cells,
+     \textbf{(Main)} Median autocorrelation function flavin fluorescence,
      along with \textbf{(inset)} the periods across cells as determined by the strongest frequency in each signal's Fourier spectrum.
-    %This figure indicates that the cells' metabolic cycles and cell division cycles are both consistently 90 minutes long.
    }
    \label{fig:biology-by4741-sync-acf}
   \end{subfigure}
@@ -189,9 +184,7 @@ Figure~\ref{fig:biology-highglc-sync} thus confirms that, consistently across a 
    \centering
    \includegraphics[width=\textwidth]{by4741_491_6}
    \caption{
-    Median flavin fluorescence signal across cells.% (n = 361).
-    %For each time point, the figure shows the median and interquartile range of the fluorescence at such time point across the population of cells.
-    %The oscillatory shape of the median signal confirms that synchrony between flavin oscillations and cell division cycle holds across a large population of cells.
+    Median flavin fluorescence signal across cells.
    }
    \label{fig:biology-by4741-sync-median}
   \end{subfigure}
@@ -203,7 +196,12 @@ Figure~\ref{fig:biology-highglc-sync} thus confirms that, consistently across a 
   \label{fig:biology-by4741-sync}
 \end{figure}
 
-Insert text about BY4741 here.
+To show that the metabolic cycle is robust, I performed a similar experiment on an auxotrophic strain, which has genetic mutations that make it unable to grow in media lacking certain nutrients.
+I cultured BY4741 cells in minimal medium supplemented with uracil and the amino acids required for this strain to grow, plus \SI{10}{\gram~\litre^{-1}} glucose.
+Showing that metabolic cycles occur in an auxotroph is important because it confirms that the YMC is robust --- a lot of things must be impaired for the cycle to disappear --- and thus likely an intrinsic cycle of budding yeast.
+Similar to FY4 HTB2::mCherry cells, BY4741 cells show robust, consistent oscillations in flavin fluorescence that peak upon budding (figure~\ref{fig:biology-by4741-sync}), although metabolic cycles have a period of $\approx$\SI{75}{\minute} in this case.
+The shorter period, implying a higher growth rate, may be explained by a lack of burden caused by a lack of an mCherry insertion, and by media supplements.
+% Discussion (probably in discussion section at the end): to be 'proper', I should perform an experiment with the BY4741 HTB2::mCherry I engineered.
 
 
 \section[Abrupt nutrient changes]{Cells autonomously generate flavin oscillations, independently of the cell division cycle, in response to abrupt nutrient changes.}
