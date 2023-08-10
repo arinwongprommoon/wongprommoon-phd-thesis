@@ -207,29 +207,11 @@ The shorter period, implying a higher growth rate, may be explained by a lack of
 \section[Abrupt nutrient changes]{Cells autonomously generate flavin oscillations, independently of the cell division cycle, in response to abrupt nutrient changes.}
 \label{sec:biology-abrupt}
 
-\begin{itemize}
-\item \emph{Bottom line:} We found that when cells grown in high (7.5 g/L) glucose were abruptly starved of glucose, their flavin oscillations reset phase.  These flavin oscillations under starvation continue without budding events or with sparse budding events.
-\item \emph{Importance of this section:}
-
-\begin{itemize}
-\item Many chemostat-based studies (citations needed) along with a modelling study (\textcite{krishnaMinimalPushPull2018}) suggest that a diffusible metabolite is responsible for the synchrony of the metabolic cycle across cells, while single-cell studies suggest that cells independently generate these oscillations.  I aim to confirm the conclusions from \textcite{papagiannakisAutonomousMetabolicOscillations2017}, but in flavin.
-\end{itemize}
-\item \emph{Evidence:}
-\begin{itemize}
-\item Figure 3.
-\item When cells are in high glucose, oscillations are asynchronous (confirms \textcite{papagiannakisAutonomousMetabolicOscillations2017,baumgartnerFlavinbasedMetabolicCycles2018}).
-\end{itemize}
-
-\item \textbf{Missing experiments:}
-\begin{itemize}
-\item Adding acetate, acetaldehyde, or ethanol in bulk.  See if it synchronises YMCs, as described in chemostats by \textcite{kuangMsn2RegulateExpression2017} and \textcite{krishnaMinimalPushPull2018} .  If so, this would start a discussion about what processes trigger resetting YMC phases and their biological explanations.
-\item Feast-and-famine, or glucose pulsing (\textcite{charvinForcedPeriodicExpression2009}).
-\end{itemize}
-\item \textbf{Missing discussion:}
-\begin{itemize}
-\item I observed no/weaker synchrony of oscillations between cells if the cells were grown in 10 g/L glucose.  Perhaps we can spin this as a result.  In any case, we need supplementary information to justify 7.5 g/L glucose when I used 20 g/L earlier.  This information can be Monod's Law experiments (e.g. by Hongpei) that suggests that 7.5 g/L is past saturation.
-\end{itemize}
-\end{itemize}
+To provide additional evidence that cells generate metabolic oscillations independent of the cell division cycle, I created a condition in which cells do not undergo cell division.
+Previously, \textcite{baumgartnerFlavinbasedMetabolicCycles2018} did so by treating cells with the cell division cycle inhibitor rapamycin, while \textcite{papagiannakisAutonomousMetabolicOscillations2017} treated cells with the mating pheromone alpha factor to induce arrest in G1.
+In contrast, I halt cell division cycles by changing nutrient conditions.
+Specifically, I take advantage of fast-switching in ALCATRAS by inducing abrupt starvation, similar to experiments described by \textcite{bagameryPutativeBetHedgingStrategy2020} that investigated the heterogeneity of cellular responses to starvation.
+In addition, such a starvation study would shed light to whether a diffusible metabolite is responsible for the synchrony of the metabolic cycle across cells, as suggested by some chemostat-based and modelling studies. % CITATION NEEDED -- consult introduction.
 
 \begin{figure}
   \centering
@@ -267,6 +249,44 @@ The shorter period, implying a higher growth rate, may be explained by a lack of
 
 \begin{figure}
   \centering
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_19972_gr}
+   \caption{
+     Growth rate
+   }
+   \label{fig:biology-starvation-gr}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.7\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{allstrains_19972_budprob}
+   \caption{
+     Budding probability
+   }
+   \label{fig:biology-starvation-budprob}
+  \end{subfigure}
+
+  \caption{
+    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the glucose-starvation experiment, with 95\% confidence intervals shown (shaded).
+    Vertical lines (red) show changes in nutrient media.
+  }
+  \label{fig:biology-starvation-gr-budprob}
+\end{figure}
+
+In this experiment, I cultured FY4 and HTB2::mCherry cells were grown in \SI{7.5}{\gram~\litre^{-1}} glucose for \SI{7}{\hour} before being abruptly switched to \SI{0}{\gram~\litre^{-1}} glucose for \SI{8}{\hour} and then resumed to \SI{7.5}{\gram~\litre^{-1}} glucose for \SI{7}{\hour} (figure~\ref{fig:biology-starvation}).
+When cells are in high glucose, oscillations are asynchronous, consistent with section~\ref{sec:biology-sync}, \textcite{papagiannakisAutonomousMetabolicOscillations2017} and \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
+I found that when cells grown in high glucose were abruptly starved of glucose, their flavin oscillations reset phase (figure~\ref{fig:biology-starvation-heatmap}).
+These flavin oscillations under starvation continue, while growth rate drops and budding events are sparse (figure~\ref{fig:biology-starvation-gr-budprob}).
+
+The results show that metabolic oscillations may be generated when cell division cycle is halted, providing strong evidence that the metabolic cycle is generated autonomously and independently of the cell division cycle.
+In addition, the results show that each cell can individually reset the phase of its metabolic cycle in response to abrupt changes in environmental conditions; similar phenomena have been observed upon bulk addition of carbon sources.
+Importantly, the results suggest that diffusion of signalling chemicals between cells is not required for generation of metabolic cycles.
+Combined with results from the previous section, my results give weight to the idea that the metabolic cycle responds to external conditions and create windows of opportunity for `firing' the cell division cycle that the cell can choose to not take if conditions are not favourable.
+
+
+\begin{figure}
+  \centering
   \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
    \includegraphics[width=\textwidth]{starvation_raw_13-07-02.pdf}
@@ -290,7 +310,10 @@ The shorter period, implying a higher growth rate, may be explained by a lack of
   \label{fig:biology-starvation-raw}
 \end{figure}
 
-Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
+On closer investigation of individual cell signals, I observe that histone 2B levels may remain at a high or low level upon starvation (figure~\ref{fig:biology-starvation-raw}).
+These observations suggests that the cell remains in G1 or G2, or proceeds in the cell division cycle until it reaches G1 or G2, upon starvation.
+% NEEDS MORE DISCUSSION, POSSIBLY A BIT MORE DATA ANALYSIS
+This sheds light on how the relationship between the cell division cycle and the metabolic cycle may diverge during starvation, pointing to cellular mechanisms that may be responsible.
 
 
 \begin{figure}
@@ -371,34 +394,16 @@ Insert text here.  Discussion: cell stuck in G1/G2 upon starvation.
   \label{fig:biology-starvation-ks}
 \end{figure}
 
+% This sentence is difficult to understand.  Deal with it during the editing phase.
+To extend information about the cell division cycle phase each cell is upon and during starvation across the population, I show the distribution of the raw HTB2::mCherry signals at time points of interest in the experiment (figure~\ref{fig:biology-starvation-distribs}).
+The distributions of growth rates, budding probability, and raw flavin intensity are also shown.
+To quantify how the distributions of these quantities change over time, I performed a two-tailed Kolmogorov-Smirnov test between a pre-starvation reference time each time point of interest over the course of the experiment (figure~\ref{fig:biology-starvation-ks}).
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.7\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{allstrains_19972_gr}
-   \caption{
-     Growth rate
-   }
-   \label{fig:biology-starvation-gr}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.7\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{allstrains_19972_budprob}
-   \caption{
-     Budding probability
-   }
-   \label{fig:biology-starvation-budprob}
-  \end{subfigure}
-
-  \caption{
-    Mean growth rate and budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the glucose-starvation experiment, with 95\% confidence intervals shown (shaded).
-    Vertical lines (red) show changes in nutrient media.
-  }
-  \label{fig:biology-starvation-gr-budprob}
-\end{figure}
-
+Consistent with figure~\ref{fig:biology-starvation-budprob}, the distribution of budding probability skews more towards zero during starvation, indicating sparse budding, and then budding resumes after starvation.
+During starvation, initially the distribution of HTB2::mCherry signals remain the same, but after approximately \SI{2}{\hour}, it becomes more spread out.
+This pattern suggests a delay in the effect of starvation on the progress of the cell division cycle as cell division cycles progress to their next available checkpoints.
+Interestingly, the distribution of flavin signals skews to lower values during starvation, before recovering after starvation, and this suggests a more reduced cellular oxidation state during starvation.
+% ...Needs more interpretation.  What does this suggest about the cell biology during starvation?  Is there a link to the literature?
 
 
 \section{Effect of carbon source on YMC.}
@@ -877,6 +882,22 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
 \item Record NAD(P)H oscillations.  If possible, do it with flavin in the same cells.  If not, then compare these oscillations with the timing of birth events.  This experiment will strengthen the evidence that I am observing single-cell YMCs.  \textcite{baumgartnerFlavinbasedMetabolicCycles2018} didn't do this; maybe that's why they haven't had many citations.
 \item fas1$\Delta$ to verify the role of lipids and attempt to rescue with lipid sources (e.g. glycerol trihexanoate, glycerol trioctanoate). \emph{Will start another avenue of exploration entirely, i.e. what makes up the flavin signal in a cell}
 \end{itemize}
+
+\textbf{Starvation missing experiments:}
+\begin{itemize}
+\item Adding acetate, acetaldehyde, or ethanol in bulk.  See if it synchronises YMCs, as described in chemostats by \textcite{kuangMsn2RegulateExpression2017} and \textcite{krishnaMinimalPushPull2018} .  If so, this would start a discussion about what processes trigger resetting YMC phases and their biological explanations.
+\item Feast-and-famine, or glucose pulsing (\textcite{charvinForcedPeriodicExpression2009}).
+\end{itemize}
+
+% Need to explain why 7.5 g/L in the experiment that is showcased.
+% Space to discuss contradictory results when cells start with 10 g/L glucose -- and hypothesise that if may be because the higher concentration allows greater stores, therefore retaining original behaviour for longer.
+% I think the glucose-sensing papers I cited in intro touch upon this.
+% Probably worth cracking open those experiments, showing the heatmap anyway, and see if the distribution/KS plots show us anything.
+\textbf{Starvation missing discussion:}
+\begin{itemize}
+  \item I observed no/weaker synchrony of oscillations between cells if the cells were grown in 10 g/L glucose.  Perhaps we can spin this as a result.  In any case, we need supplementary information to justify 7.5 g/L glucose when I used 20 g/L earlier.  This information can be Monod's Law experiments (e.g. by Hongpei) that suggests that 7.5 g/L is past saturation.
+\end{itemize}
+
 
 \subsection{Interpretation of results}
 \label{subsec:biology-discussion-interpretation}
