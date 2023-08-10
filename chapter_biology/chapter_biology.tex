@@ -412,24 +412,11 @@ Interestingly, the distribution of flavin signals skews to lower values during s
 \begin{itemize}
 \item \emph{Bottom line:} We found that\ldots{}
 \begin{itemize}
-\item When the cells were grown in a non-fermentable carbon source (20 g/L sodium pyruvate), the cells showed longer metabolic cycles and cell division cycles.  Though the longer cell division cycles were because of longer G1 phases but unchanged S/M phases.  Furthermore, the synchrony between the two oscillators remain, but there were more cases in which the flavin signal peaks without a budding event \textbf{(supplementary figures)}
-\begin{itemize}
-\item (Add statistical tests to reject the null hypothesis that the mean duration of metabolic cycles in pyruvate is equal to the mean duration of metabolic cycles in high glucose.)
-\end{itemize}
 \item When the cells were grown in limiting glucose that emulates conditions in a chemostat (10 mg/L glucose), the cells showed longer metabolic cycles and an absence of cell division.  Furthermore, the signals are of low amplitude and low quality, as evidenced by the low signal-to-noise ratios.
 \begin{itemize}
 \item (Add statistical tests to reject the null hypothesis that the distribution of SNRs are the same between the three nutrient conditions.)
 \end{itemize}
 \item In contrast to 20 g/L glucose in which metabolic cycles were asynchronous, in these conditions there is some degree of metabolic cycle synchrony between cells. \textbf{(add figures)}
-\end{itemize}
-\item \emph{Importance of this section:}
-\begin{itemize}
-\item Confirm \textcite{papagiannakisAutonomousMetabolicOscillations2017} but in flavin, extend in more carbon sources.  It is known that nutrient changes affect the YMC (citation needed).
-\item Limiting carbon sources emulate the chemostat.
-\end{itemize}
-\item \emph{Evidence:}
-\begin{itemize}
-\item Figures 4-5.
 \end{itemize}
 
 \item \textbf{Missing experiments:}
@@ -437,6 +424,10 @@ Interestingly, the distribution of flavin signals skews to lower values during s
 \item Raffinose.  This is a carbon source that \textcite{papagiannakisAutonomousMetabolicOscillations2017} did not use.  It is a trisaccharide and a common non-glucose pre-growth carbon source, certainly in Hxt- and sugar-related studies (Yu).  Yeast must secrete invertase to metabolise it and metabolism on this compound is slow.  So, growth on raffinose emulates a low-glucose concentration and the cell respires.  However, there is a risk that invertase is washed away in microfluidic experiments, so the growth rate should be tested first before subsequent experiments.
 \end{itemize}
 \end{itemize}
+
+
+To extend on the idea that the metabolic cycle responds to nutrient conditions and accordingly adjusts the cell's metabolism and cell division cycle, I performed experiments in which I culture cells in pyruvate and in a growth-limiting glucose concentration.
+These experiments are important as they confirm conclusions about varying nutrient conditions made by \textcite{papagiannakisAutonomousMetabolicOscillations2017}, but using flavin autofluorescence and in more carbon sources.
 
 \begin{figure}
   \centering
@@ -451,7 +442,7 @@ Interestingly, the distribution of flavin signals skews to lower values during s
    \label{fig:biology-pyruvate-single}
 
   \end{subfigure}
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{htb2mCherry_31594_12.pdf}
    \caption{
@@ -460,7 +451,7 @@ Interestingly, the distribution of flavin signals skews to lower values during s
    }
    \label{fig:biology-pyruvate-acf}
   \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{pyruvate_xcf_edit.pdf}
    \caption{
@@ -474,6 +465,19 @@ Interestingly, the distribution of flavin signals skews to lower values during s
   }
   \label{fig:biology-pyruvate}
 \end{figure}
+
+FY4 HTB2::mCherry cells were grown in minimal media supplemented with \SI{20}{\gram~\litre^{-1}} sodium pyruvate to provide a non-fermentable carbon source (20 g/L sodium pyruvate).
+In this condition, the cells showed longer metabolic cycles and cell division cycles, of approximately \SI{4}{\hour} (figure~\ref{fig:biology-pyruvate}).
+In addition, there were more cases in which the flavin signal peaks without a budding event (supplementary figure ...).
+Furthermore, the synchrony between the two oscillators remain, but with a longer lag of the cell division cycle with respect to the metabolic cycle (figure~\ref{fig:biology-pyruvate-xcf}).
+However, the flavin cycles seem to be less robust: cycles are not so regular over long periods of time, as evidenced by a lack of repeated oscillations in the cross-correlation function.
+Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G1 phases but unchanged S/M phases, as evidenced by the longer flat regions of the HTB2::mCherry signal.
+This observation is consistent with the knowledge on the cell division cycle, %[CITATION NEEDED]
+and it draws comparison with the discussion about the change in lengths of phases in the metabolic cycle. %[ELABORATE MORE -- CONSULT INTRO.  I'm thinking of the Mellor/Slavov & Botstein stuff]
+% THIS THEN WARRANTS DISCUSSION.
+
+% COULD DO:
+% (Add statistical tests to reject the null hypothesis that the mean duration of metabolic cycles in pyruvate is equal to the mean duration of metabolic cycles in high glucose.)
 
 
 \begin{figure}
@@ -885,7 +889,9 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
 
 \textbf{Starvation missing experiments:}
 \begin{itemize}
+% Discussion: other things can reset phase.
 \item Adding acetate, acetaldehyde, or ethanol in bulk.  See if it synchronises YMCs, as described in chemostats by \textcite{kuangMsn2RegulateExpression2017} and \textcite{krishnaMinimalPushPull2018} .  If so, this would start a discussion about what processes trigger resetting YMC phases and their biological explanations.
+% Discussion: this would also address chemostat/single-cell discrepancy.
 \item Feast-and-famine, or glucose pulsing (\textcite{charvinForcedPeriodicExpression2009}).
 \end{itemize}
 
