@@ -409,23 +409,6 @@ Interestingly, the distribution of flavin signals skews to lower values during s
 \section{Effect of carbon source on YMC.}
 \label{sec:biology-carbon}
 
-\begin{itemize}
-\item \emph{Bottom line:} We found that\ldots{}
-\begin{itemize}
-\item When the cells were grown in limiting glucose that emulates conditions in a chemostat (10 mg/L glucose), the cells showed longer metabolic cycles and an absence of cell division.  Furthermore, the signals are of low amplitude and low quality, as evidenced by the low signal-to-noise ratios.
-\begin{itemize}
-\item (Add statistical tests to reject the null hypothesis that the distribution of SNRs are the same between the three nutrient conditions.)
-\end{itemize}
-\item In contrast to 20 g/L glucose in which metabolic cycles were asynchronous, in these conditions there is some degree of metabolic cycle synchrony between cells. \textbf{(add figures)}
-\end{itemize}
-
-\item \textbf{Missing experiments:}
-\begin{itemize}
-\item Raffinose.  This is a carbon source that \textcite{papagiannakisAutonomousMetabolicOscillations2017} did not use.  It is a trisaccharide and a common non-glucose pre-growth carbon source, certainly in Hxt- and sugar-related studies (Yu).  Yeast must secrete invertase to metabolise it and metabolism on this compound is slow.  So, growth on raffinose emulates a low-glucose concentration and the cell respires.  However, there is a risk that invertase is washed away in microfluidic experiments, so the growth rate should be tested first before subsequent experiments.
-\end{itemize}
-\end{itemize}
-
-
 To extend on the idea that the metabolic cycle responds to nutrient conditions and accordingly adjusts the cell's metabolism and cell division cycle, I performed experiments in which I culture cells in pyruvate and in a growth-limiting glucose concentration.
 These experiments are important as they confirm conclusions about varying nutrient conditions made by \textcite{papagiannakisAutonomousMetabolicOscillations2017}, but using flavin autofluorescence and in more carbon sources.
 
@@ -466,7 +449,7 @@ These experiments are important as they confirm conclusions about varying nutrie
   \label{fig:biology-pyruvate}
 \end{figure}
 
-FY4 HTB2::mCherry cells were grown in minimal media supplemented with \SI{20}{\gram~\litre^{-1}} sodium pyruvate to provide a non-fermentable carbon source (20 g/L sodium pyruvate).
+FY4 HTB2::mCherry cells were grown in minimal media supplemented with \SI{20}{\gram~\litre^{-1}} sodium pyruvate to provide a non-fermentable carbon source.
 In this condition, the cells showed longer metabolic cycles and cell division cycles, of approximately \SI{4}{\hour} (figure~\ref{fig:biology-pyruvate}).
 In addition, there were more cases in which the flavin signal peaks without a budding event (supplementary figure ...).
 Furthermore, the synchrony between the two oscillators remain, but with a longer lag of the cell division cycle with respect to the metabolic cycle (figure~\ref{fig:biology-pyruvate-xcf}).
@@ -498,7 +481,7 @@ and it draws comparison with the discussion about the change in lengths of phase
    \includegraphics[width=\textwidth]{htb2mCherry_31492_12.pdf}
    \caption{
      Autocorrelation functions and periods determined by Fourier spectrum of flavin fluorescence and histone 2B levels.
-     This figure indicates that the cells' metabolic cycles are approximately 2 hours long, but the duration of the cell division cycle is not robust nor consistent across the population.
+     This figure indicates that the cells' metabolic cycles are approximately \SI{2.5}{\hour} long, but the duration of the cell division cycle is not robust nor consistent across the population.
    }
    \label{fig:biology-lowglc-acf}
   \end{subfigure}
@@ -538,13 +521,14 @@ and it draws comparison with the discussion about the change in lengths of phase
 \end{figure}
 
 
+% TODO: Plot on same axes, to strengthen comparison between conditions?
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{allstrains_31492_gr}
    \caption{
-     Insert caption here
+     Growth rate, low glucose
    }
    \label{fig:biology-lowglc-gr}
   \end{subfigure}%
@@ -552,7 +536,7 @@ and it draws comparison with the discussion about the change in lengths of phase
    \centering
    \includegraphics[width=\textwidth]{allstrains_26643_gr}
    \caption{
-     Insert caption here
+     Growth rate, high glucose
    }
    \label{fig:biology-highglc-gr}
   \end{subfigure}
@@ -561,7 +545,7 @@ and it draws comparison with the discussion about the change in lengths of phase
    \centering
    \includegraphics[width=\textwidth]{allstrains_31492_budprob}
    \caption{
-     Growth rate
+     Budding probability, low glucose
    }
    \label{fig:biology-lowglc-budprob}
   \end{subfigure}%
@@ -569,7 +553,7 @@ and it draws comparison with the discussion about the change in lengths of phase
    \centering
    \includegraphics[width=\textwidth]{allstrains_26643_budprob}
    \caption{
-     Budding probability
+     Budding probability, high glucose
    }
    \label{fig:biology-highglc-gr}
   \end{subfigure}
@@ -580,7 +564,18 @@ and it draws comparison with the discussion about the change in lengths of phase
   }
   \label{fig:biology-lowglc-gr-budprob}
 \end{figure}
+% COULD DO:
+%(Add statistical tests to reject the null hypothesis that the distribution of SNRs are the same between the three nutrient conditions.)
 
+Next, I performed an experiment with limiting glucose to emulate low-glucose conditions one may encounter in a chemostat.
+When FY4 HTB2::mCherry cells were grown in minimal media supplemented with \SI{10}{\milli\gram~\litre^{-1}} glucose, the cells showed longer metabolic cycles and an relative absence of cell division (figure~\ref{fig:biology-lowglc-single}).
+Figure~\ref{fig:biology-lowglc-gr-budprob} confirms that the growth rate and the budding probability of cells on limiting glucose is lower than on high glucose (\SI{20}{\gram~\litre^{-1}}).
+Furthermore, the flavin signals are of low amplitude and low quality, as evidenced by the low signal-to-noise ratios (figure~\ref{fig:biology-lowglc-snr}).
+Though less robust, the metabolic cycles follow an approximately \SI{2.5}{\hour} long period, but the duration of the cell division cycle is not robust nor consistent across the population (figure~\ref{fig:biology-lowglc-acf}); this gives an additional situation where the synchrony between the metabolic cycle and the cell division cycle is lost.
+
+% In contrast to 20 g/L glucose in which metabolic cycles were asynchronous, in these conditions there is some degree of metabolic cycle synchrony between cells. \textbf{(add figures)}
+
+% TODO: How are these linked to Papagiannakis et al.?  Am I getting the same conclusions?  Also -- space to discuss the 10-hour oscillations in chemostats in slow dilution rates.
 
 
 \section[Potassium-deficient media]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- potassium-deficient media}
@@ -904,6 +899,10 @@ My results confirm that the metabolic cycle is an autonomous oscillator, indepen
   \item I observed no/weaker synchrony of oscillations between cells if the cells were grown in 10 g/L glucose.  Perhaps we can spin this as a result.  In any case, we need supplementary information to justify 7.5 g/L glucose when I used 20 g/L earlier.  This information can be Monod's Law experiments (e.g. by Hongpei) that suggests that 7.5 g/L is past saturation.
 \end{itemize}
 
+\textbf{Carbon source missing experiments:}
+\begin{itemize}
+\item Raffinose.  This is a carbon source that \textcite{papagiannakisAutonomousMetabolicOscillations2017} did not use.  It is a trisaccharide and a common non-glucose pre-growth carbon source, certainly in Hxt- and sugar-related studies (Yu).  Yeast must secrete invertase to metabolise it and metabolism on this compound is slow.  So, growth on raffinose emulates a low-glucose concentration and the cell respires.  However, there is a risk that invertase is washed away in microfluidic experiments, so the growth rate should be tested first before subsequent experiments.
+\end{itemize}
 
 \subsection{Interpretation of results}
 \label{subsec:biology-discussion-interpretation}
