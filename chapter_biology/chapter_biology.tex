@@ -930,7 +930,7 @@ In chemostats, glucose is limiting \parencite{jonesCyberneticModelGrowth1999}.
 Synchrony of metabolic cycles between cells in respiring conditions may explain observations in chemostat as cells are near glucose starvation in these conditions.
 
 Single-cell metabolic cycles in zwf1$\Delta$ are inconsistent, and this may explain the absence of dissolved-oxygen oscillations in the chemostat.
-zwf1$\Delta$ affects many metabolic processes; most notably, it removes a major pathway of NAD(P)H generation from reduction of NAD(P)+.
+zwf1$\Delta$ affects many metabolic processes; most notably, it removes a major pathway of NAD(P)H generation from reduction of NAD(P)\textsuperscript{+}.
 The most abundant flavoproteins involve NAD(P)H redox, so it is reasonable to believe that flavin oscillations are affected.
 Perhaps zwf1$\Delta$ impairs the metabolic cycle in some way.
 A similar logic likely applies to tsa1$\Delta$ tsa2$\Delta$ --- perhaps the interaction between a more variable length of metabolic oscillations interacts with population synchrony, or lack thereof, in the chemostat.
@@ -941,50 +941,52 @@ Therefore, the difference between single-cell and chemostat traces warrant a mod
 My observations thus also highlight a weakness of chemostat experiments.
 
 
-\subsection{Caveats}
+\subsection{Study caveats and future directions}
 \label{subsec:biology-discussion-caveats}
 
-% [COLLECTION OF MISSING EXPERIMENTS/CAVEATS/ETC]
-\textbf{Permissive conditions missing experiments:}
-\begin{itemize}
-\item Record NAD(P)H oscillations.  If possible, do it with flavin in the same cells.  If not, then compare these oscillations with the timing of birth events.  This experiment will strengthen the evidence that I am observing single-cell YMCs.  \textcite{baumgartnerFlavinbasedMetabolicCycles2018} didn't do this; maybe that's why they haven't had many citations.
-\item fas1$\Delta$ to verify the role of lipids and attempt to rescue with lipid sources (e.g. glycerol trihexanoate, glycerol trioctanoate). \emph{Will start another avenue of exploration entirely, i.e. what makes up the flavin signal in a cell}
-\end{itemize}
+% Worth reading with the introduction to iron out any logical inconsistencies.
 
-\textbf{Starvation missing experiments:}
-\begin{itemize}
-% Discussion: other things can reset phase.
-\item Adding acetate, acetaldehyde, or ethanol in bulk.  See if it synchronises YMCs, as described in chemostats by \textcite{kuangMsn2RegulateExpression2017} and \textcite{krishnaMinimalPushPull2018} .  If so, this would start a discussion about what processes trigger resetting YMC phases and their biological explanations.
-% Discussion: this would also address chemostat/single-cell discrepancy.
-\item Feast-and-famine, or glucose pulsing (\textcite{charvinForcedPeriodicExpression2009}).
-\end{itemize}
+\subsubsection{Characteristics of the single-cell metabolic cycle}
+\label{subsec:biology-discussion-caveats-characteristics}
 
-% Need to explain why 7.5 g/L in the experiment that is showcased.
-% Space to discuss contradictory results when cells start with 10 g/L glucose -- and hypothesise that if may be because the higher concentration allows greater stores, therefore retaining original behaviour for longer.
-% I think the glucose-sensing papers I cited in intro touch upon this.
-% Probably worth cracking open those experiments, showing the heatmap anyway, and see if the distribution/KS plots show us anything.
-\textbf{Starvation missing discussion:}
-\begin{itemize}
-  \item I observed no/weaker synchrony of oscillations between cells if the cells were grown in 10 g/L glucose.  Perhaps we can spin this as a result.  In any case, we need supplementary information to justify 7.5 g/L glucose when I used 20 g/L earlier.  This information can be Monod's Law experiments (e.g. by Hongpei) that suggests that 7.5 g/L is past saturation.
-\end{itemize}
+Time series of NAD(P)H oscillations, especially if recorded alongside flavin in the same cells, would strengthen the evidence that the flavin autofluorescence oscillations in this chapter are equivalent to the single-cell metabolic oscillations described by previous microfluidics studies.
+However, due to technical limitations of the fluorescence microscope and image acquisition set-up, I have not been able to acquire such data.
+If I have time series of NAD(P)H oscillations, I would compare the timing of its peaks with that of flavin and budding events to make sure that the sequence of events is consistent with \textcite{papagiannakisAutonomousMetabolicOscillations2017} and \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
+Such data would also provide a novelty: two fluorophores that act as read-outs of the metabolic cycle have, to my knowledge, never been recorded from the same cell.
 
-\textbf{Carbon source missing experiments:}
-\begin{itemize}
-\item Raffinose.  This is a carbon source that \textcite{papagiannakisAutonomousMetabolicOscillations2017} did not use.  It is a trisaccharide and a common non-glucose pre-growth carbon source, certainly in Hxt- and sugar-related studies (Yu).  Yeast must secrete invertase to metabolise it and metabolism on this compound is slow.  So, growth on raffinose emulates a low-glucose concentration and the cell respires.  However, there is a risk that invertase is washed away in microfluidic experiments, so the growth rate should be tested first before subsequent experiments.
-\end{itemize}
+To explore the link between the components of the flavin signal of the cell and cycling of lipid stores as a proposed biochemical mechanism of the metabolic cycle, the fas1$\Delta$ strain may be studied.
+This is a good candidate because \textit{FAS1} codes for the most abundant flavoprotein, the beta subunit of fatty acid synthetase, which happens to have a role in lipid metabolism.
+The investigation may be complemented with a rescue experiment using lipid sources such as glycerol trihexanoate or glycerol trioctanoate.
+This avenue of exploration may lead to additional insight to the biochemical basis of the yeast metabolic cycle, which is still poorly characterised.
 
-\textbf{Deletion strain missing analysis:}
-\begin{itemize}
-\item Sub-populations, i.e. are there sub-populations that behave differently?  It seems like at least there is a group of cells that produce just noise and a group of cells that produce long-period oscillations, and these oscillations occur over a larger spread of periods than the wild-type -- I have done some analysis that could show the latter.  This model looks likely for zwf$\Delta$ judging by the signal-to-noise ratio histogram.  This is where time series featurisation and clustering (hierarchical, UMAP, etc.) may be useful.  But are there methods that don't rely on machine learning -- consult notes with Andrew Millar.
-\item A supplementary figure should try to show equivalence between FY4 and CEN.PK (and BY4741).  There should be an experiment in which I put FY4 and CEN.PK in the same conditions. \textcite{baumgartnerFlavinbasedMetabolicCycles2018} state that the two strains have equivalent metabolic cycles, so there is some precedent, but they didn't do a direct comparison.
-\end{itemize}
+To explore the conditions that make budding yeast cells reset their metabolic cycle phases, future experiments may include adding carbon sources in bulk, using the media-switching system of ALCATRAS.
+Such experiments could include acetate, acetaldehyde, or ethanol \parencite{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
+Insights from such experiments can be combined with that of the glucose-starvation experiment and may lead to a broader understanding of the control of the sequence of events in the metabolic cycle.
 
-\textbf{Deletion strain Missing experiments:}
-\begin{itemize}
-\item zwf1$\Delta$ in low glucose.  Problem: auxotrophic.  Need to engineer a deletion in CEN.PK, likely with CRISPR.
-\item Chemostat/turbidostat.  But we lack the expertise, and this is its own avenue entirely.  Chemostat vs single-cell equivalence can be its own PhD project.
-\end{itemize}
-% Also including limiting glucose as it approximates chemostat conditions (\textcite{jonesCyberneticModelGrowth1999}, and add other citations that say that chemostat is starvation).  If chemostat conditions mean starvation, I should look at microfluidic conditions that mimic that best.
+\subsubsection{Chemostat vs single-cell}
+\label{subsec:biology-discussion-caveats-chemostat}
+
+Further work can be done to address the discrepancies between the chemostat and single-cell microfluidics.
+Such work includes analysing sub-populations, additional nutrient conditions, or using different experimental hardwire entirely.
+
+Sub-populations that produce metabolic cycles of different properties likely explain the discrepancy between the chemostat and single-cell microfluidics.
+This model is likely for the zwf1$\Delta$ strain: the large spread of signal-to-noise ratios suggest that there can be a group of cells that produce noisy, low-amplitude metabolic cycles and another group that produce higher-quality and more robust metabolic cycles.
+In such a case, the time series featurisation and clustering as discussed on the previous chapter may be useful in defining subpopulations, especially with the large datasets I handle,
+% There are methods that don't rely on machine learning -- consult notes with Andrew Millar
+
+Low glucose conditions emulate the environmental conditions in the chemostat and may lead to long metabolic cycles, thus explaining why cycles with periods up to \SI{14}{\hour} have been observed.
+However, the glucose concentrations in chemostats are below the tolerance of measurement with current technologies, therefore the limiting concentration of \SI{10}{\milli\gram~\litre^{-1}} used in this chapter can be used.
+Experiments with deletion strains can then be performed under these low-glucose conditions to investigate whether such conditions lead to a closer equivalence between chemostat and single-cell studies, thus explaining the results from chemostat-based studies of the deletion strains.
+
+% Fact-check this!
+Additionally, feast-and-famine conditions have been modelled \parencite{jonesCyberneticModelGrowth1999} and observed \parencite{oneillEukaryoticCellBiology2020} in chemostat cultivation of yeast.
+Further experiments can therefore take advantage of the rapid media-switching capabilities of ALCATRAS, and include regular glucose pulsing: cells are fed with a glucose-limited medium for an amount of time, then switched on to the glucose-rich medium for \SI{10}{\minute}, and the cycle repeats.
+The interval between glucose pulses can be varied to investigate the effect of an external entraining mechanism on the system of coupled oscillators that defines the yeast metabolic cycle.
+This design would be similar to \textcite{charvinForcedPeriodicExpression2009}, which investigated the effect of intervals of glucose pulsing on the cell division and circadian cycles in budding yeast.
+A glucose pulsing experiment can thus also lead to an interesting mathematical modelling study.
+
+Finally, a turbidostat can be a middle-ground between chemostat and single-cell experiments and can be used to explore the chemostat-single cell discrepancy.
+Turbidostat experiments were not performed due to a lack of hardware and expertise in the research group.
 
 
 \subsection{Broader implications}
