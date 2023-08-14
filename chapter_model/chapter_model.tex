@@ -294,40 +294,79 @@ The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}
 
 Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (in moles) of each enzyme and therefore its catalytic activity.
 
-GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of protein and associated pathways.
+GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
 
 \subsection{Computing molecular weights of pseudometabolites}
 \label{subsec:model-yeast8-molweights}
 
-In the yeast cell, biomass components (lipids, carbohydrates, proteins) are present in different fractions.
-Knowing these fractions are useful in computing the time it takes to synthesise each biomass component.
-These fractions are represented in the biomass reaction.
-However, the mass fraction of each component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
-It is not straightforward to implement these changes as stoichiometric coefficients of the chemical species that define biomass, because there is limited information for the mass fractions of such species as conditions vary, and because of the many combinations of lipid backbones and acyl chains.
-Therefore, I computed the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
-Similar calculations were performed by \textcite{takhaveevTemporalSegregationBiosynthetic2023}.
-
-\textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\mmolgdw}.
-Therefore, I can treat each pseudometabolite as a chemical species and calculate its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023}.
-The resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
-
-For this to be possible, I computed molecular weights for pseudometabolites that represent macromolecules and other biomass components in the ecYeast8 model, as
-the ecYeast8 model does not specify the molecular weights of these bulk metabolites.
-The pseudometabolites include: lipids, proteins, carbohydrates, RNA, DNA, cofactors, and ions.
-Namely, I assumed that in reactions that produce the pseudometabolites, there is conservation of mass, and therefore:
+To compute the time it takes for the yeast cell to synthesise each biomass component, the mass fractions of each biomass component must be known.
+%In the yeast cell, biomass components (lipids, carbohydrates, proteins) are present in different fractions.
+%Knowing these fractions is useful in computing the time it takes to synthesise each biomass component.
+In genome-scale metabolic models, these mass fractions are represented in the biomass reaction, set as the objective function, which is defined as:
 
 \begin{equation}
-  \sum_{s}m_{s}c_{s} = \sum_{p}m_{p}c_{p}
+  \ce{f_{1}M1 + f_{2}M2 + ... + f_{n}M_{n} -> B}
+  \label{eq:model-biomass-reaction}
+\end{equation}
+
+where $M_{1} \ldots M_{n}$ represent the chemical species that make up the cell's biomass, the stoichiometric coefficients $f_{1} \ldots f_{n}$ represent the mass fraction of each species in units of \SI{}{\gram~\gram_{DW}^{-1}}, and $B$ represents biomass.
+If a chemical species $M_{i}$ has a mass fraction $f_{i}$, then \SI{1}{\gram} of cell dry weight has $f_{i}$ \SI{}{\gram} of chemical species $M_{i}$.
+
+However, the mass fraction of each biomass component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
+It is not straightforward to implement these changes as stoichiometric coefficients of the chemical species that define biomass, because there is limited information for the mass fractions of such species as conditions vary, and because of the many combinations of lipid backbones and acyl chains.
+
+Therefore, I computed the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model.%, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
+%Similar calculations were performed by \textcite{takhaveevTemporalSegregationBiosynthetic2023}.
+This is not as straightforward as taking the $f_{i}$ values from an objective function defined as in eq.\ \ref{eq:model-biomass-reaction}, because the objective function of Yeast8 does not conform to this format, and instead contains pseudometabolites.
+This formalism can be expressed as:
+
+\begin{equation}
+  \begin{aligned}
+    \ce{f_{1}M_{B,1} + ... + f_{n}M_{B,n} + f_{n+1}P1 + ... + f_{n+k}P_{k} &-> B}\\
+    \ce{f_{P_{1},1}M_{P_{1},1} + ... + f_{P_{1},n}M_{P_{1},n} &-> P1}\\
+    &\ldots\\
+    \ce{f_{P_{k},1}M_{P_{k},1} + ... + f_{P_{k},n}M_{P_{k},n} &-> P_{k}}
+    \label{eq:model-pseudometabolites}
+  \end{aligned}
+\end{equation}
+
+where each $M$ is a chemical species with a defined molecular weight, each $P$ is a pseudometabolite, and each $f$ is a stoichiometric coefficient.
+The objective function remains the reaction that produces $B$, but some chemical species $M_{B,1} \ldots M_{B,n}$ are retained in the objective function, while other chemical species are replaced by pseudometabolites $P_{1} \ldots P_{k}$.
+The reactions that produce $P_{1} \ldots P_{k}$ are \textit{isa} reactions.
+\textit{isa} reactions define pseudometabolites by having chemical species with known molecular weights as reactants, with their stoichiometric coefficients representing abundance in \SI{}{\mmolgdw}.
+In Yeast8, the objective function is defined as:
+
+\texttt{
+  47.5883 atp\_c + 47.5883 h2o\_c + lipid\_c + protein\_c + carbohydrate\_c\\
+  + dna\_c + rna\_c + cofactor + ion \\
+  --> 47.5883 adp\_c + biomass\_c + 47.5883 h\_c + 47.5883 pi\_c
+}
+
+Here, there are seven pseudometabolites: lipid, protein, carbohydrate, DNA, RNA, cofactor, and ion.
+
+As the ecYeast8 model does not specify the molecular weights of these pseudometabolites, in order to obtain the mass fraction of each biomass component represented by the pseudometabolites,
+I treated each pseudometabolite as a chemical species and calculated its molecular weight by assuming mass balance \parencite{chanStandardizingBiomassReactions2017, dinhQuantifyingPropagationParametric2022, takhaveevTemporalSegregationBiosynthetic2023}.
+Namely, I assumed that in reactions that produce the pseudometabolites, there is conservation of mass, and therefore:
+
+% To this end, I first computed molecular weights for pseudometabolites that represent macromolecules and other biomass components in the ecYeast8 model, as
+% the ecYeast8 model does not specify the molecular weights of these pseudometabolites.
+% The pseudometabolites include: lipids, proteins, carbohydrates, RNA, DNA, cofactors, and ions.
+% Namely, I assumed that in reactions that produce the pseudometabolites, there is conservation of mass, and therefore:
+
+\begin{equation}
+  \sum_{r = j}^{n_{r}}m_{r}c_{r} = \sum_{p = i}^{n_{p}}m_{p}c_{p}
 \label{eq:conservation-of-mass}
 \end{equation}
 
-where:
-\begin{itemize}
-  \item $m$ represents molar mass,
-  \item $c$ represents stoichiometric coefficient,
-  \item $s = 1, ...$ \emph{(number of substrates)} represents substrates of the reaction in question, and
-  \item $p = 1, ...$ \emph{(number of products)} represents products.
-\end{itemize}
+where
+$s = 1, \ldots n_{s}$ represents substrates of the reaction in question,
+$p = 1, \ldots n_{p}$ represents products.
+$m_{r}$ represents molar mass of reactant $r$,
+$m_{p}$ represents molar mass of product $p$,
+$c_{r}$ represents stoichiometric coefficient of reactant $r$, and
+$c_{p}$ represents stoichiometric coefficient of product $p$.
+
+The resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
 
 To compute the molecular weight of the carbohydrate pseudometabolite, I inspected the pseudoreaction \texttt{r\_4048} that creates it:
 
