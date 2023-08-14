@@ -368,49 +368,32 @@ $c_{p}$ represents stoichiometric coefficient of product $p$.
 
 The resulting molecular weight will thus represent the mass fraction of each biomass component in units of \SI{}{\gram~\gram_{DW}^{-1}}.
 
-To compute the molecular weight of the carbohydrate pseudometabolite, I inspected the pseudoreaction \texttt{r\_4048} that creates it:
 
-\texttt{
-  0.684535 (1->3)-beta-D-glucan + 0.228715 (1->6)-beta-D-glucan \\
-  + 0.330522 glycogen + 0.650171 mannan + 0.126456 trehalose \\
-  --> carbohydrate
-}
+\subsubsection{Carbohydrate, DNA, RNA, cofactor, and ion pseudometabolites}
+\label{subsubsec:model-yeast8-molweight-easy}
 
-Here, the molecular weights of all species except for \texttt{carbohydrate}, the pseudometabolite, are represented in the model.
-Thus, equation \ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the carbohydrate pseudometabolite.
-The same process can be applied to compute the molecular weights of the DNA, RNA, cofactor, and ion pseudometabolites.
-This is because the equations similarly have reactants with molecular weights represented in the model and only the pseudometabolite, the sole product, does not have a molecular weight specified.
+Computing the molecular weights of the carbohydrate, DNA, RNA, cofactor, and ion pseudometabolites is straightforward.
+This is because the equations similarly have reactants with molecular weights specified in the model and only the pseudometabolite, the sole product, does not have a molecular weight specified.
+In such cases, eq.\ \ref{eq:conservation-of-mass} can be applied directly, i.e.\ the molecular weight of the pseudometabolite is equal to $\sum_{r = j}^{n_{r}}m_{r}c_{r}$, where $m_{r}$ values are taken directly from the molecular weights specified in the model.
+The results for these pseudometabolites are shown in table~\ref{tab:ecyeast8-easy-rxns}
 
-The molecular weight of the DNA pseudometabolite was computed from reaction \texttt{r\_4050}:
+\begin{table}[ht]
+  \centering
+    \begin{tabular}{llS}
+      ID & Reaction & {\makecell{Computed molecular\\ weight (\SI{}{\gram~\mole^{-1}})}} \\
+      \hline
+      \texttt{r\_4048} & \makecell{\texttt{0.684535 (1->3)-beta-D-glucan} \\ \texttt{ + 0.228715 (1->6)-beta-D-glucan} \\ \texttt{+ 0.330522 glycogen + 0.650171 mannan} \\ \texttt{ + 0.126456 trehalose} \\ \texttt{--> carbohydrate}} & 350.37 \\
+    \texttt{r\_4050} & \makecell{\texttt{0.0036 dAMP + 0.0024 dCMP + 0.0024 dGMP} \\ \texttt{ + 0.0036 dTMP} \\ \texttt{--> DNA}} & 3.90 \\
+    \texttt{r\_4049} & \makecell{\texttt{0.0445348 AMP + 0.0432762 CMP} \\ \texttt{+ 0.0445348 GMP + 0.0579921 UMP} \\ \texttt{--> RNA}} & 64.04 \\
+    \texttt{r\_4598} & \makecell{\texttt{0.00019 coenzyme A + 1e-05 FAD} \\ \texttt{ + 0.00265 NAD + 0.00015 NADH} \\ \texttt{ + 0.00057 NADP(+) + 0.0027 NADPH} \\ \texttt{ + 0.00099 riboflavin + 1.2e-06 TDP} \\ \texttt{ + 6.34e-05 THF + 1e-06 heme a} \\ \texttt{--> cofactor}} & 4.83 \\    \texttt{r\_4599} & \makecell{\texttt{3.04e-05 iron(2+) + 0.00363 potassium} \\ \texttt{ + 0.00397 sodium + 0.02 sulphate} \\ \texttt{ + 0.00129 chloride + 0.00273 Mn(2+)} \\ \texttt{ + 0.000748 Zn(2+) + 0.000217 Ca(2+)} \\ \texttt{ + 0.00124254 Mg(2+) + 0.000659 Cu(2+)} \\ \texttt{--> ion}} & 2.48 \\
+    \end{tabular}
+    \caption{Straightforward cases of computing pseudometabolite molecular weights from pseudoreactions in ecYeast8}
+    \label{tab:ecyeast8-easy-rxns}
+\end{table}
 
-\texttt{
-  0.0036 dAMP + 0.0024 dCMP + 0.0024 dGMP + 0.0036 dTMP \\
-  --> DNA
-}
 
-The molecular weight of the RNA pseudometabolite was computed from reaction \texttt{r\_4049}:
-
-\texttt{
-  0.0445348 AMP + 0.0432762 CMP + 0.0445348 GMP + 0.0579921 UMP \\
-  --> RNA
-}
-The molecular weight of the cofactor pseudometabolite was computed from reaction \texttt{r\_4598}:
-
-\texttt{
-  0.00019 coenzyme A + 1e-05 FAD + 0.00265 NAD + 0.00015 NADH \\
-  + 0.00057 NADP(+) + 0.0027 NADPH + 0.00099 riboflavin \\
-  + 1.2e-06 TDP + 6.34e-05 THF + 1e-06 heme a \\
-  --> cofactor
-}
-
-And the molecular weight of the ion pseudometabolite was computed from reaction \texttt{r\_4599}:
-
-\texttt{
-  3.04e-05 iron(2+) + 0.00363 potassium + 0.00397 sodium + 0.02 sulphate \\
-  + 0.00129 chloride + 0.00273 Mn(2+) + 0.000748 Zn(2+) + 0.000217 Ca(2+) \\
-  + 0.00124254 Mg(2+) + 0.000659 Cu(2+) \\
-  --> ion
-}
+\subsubsection{Protein pseudometabolite}
+\label{subsubsec:model-yeast8-molweight-protein}
 
 Other metabolites were less straightforward and required some judgement calls.
 To compute the molecular weight of the protein pseudometabolite, I inspected reaction \texttt{r\_4047}:
@@ -422,12 +405,19 @@ To compute the molecular weight of the protein pseudometabolite, I inspected rea
   + ... + 0.330369 tRNA(Val) + protein
 }
 
-In this reaction, the aminoacyl-tRNA reactants are represented in the form of the atoms that make up the aminoacyl residues plus \texttt{R} to represent the tRNA, and the tRNA products are represented as \texttt{RH}.
-For example, \texttt{Ala-tRNA(Ala)}, alanyl-tRNA, is represented as \texttt{C3H7NOR}.
-The protein pseudoreaction shows how different proportions of each aminoacyl-tRNA combine to form the cell's proteins, so it is safe to discard the \texttt{R} symbol that corresponds to the tRNA from the reaction.
-Upon doing so, the mass balance represented by equation~\ref{eq:conservation-of-mass} can be applied to compute the molecular weight of the protein pseudometabolite.
+In Yeast8, aminoacyl-tRNA and tRNA species do not have molecular weights specified in the model.
+This is because their chemical formulas are incompletely specified in the model as the model uses \texttt{R} to represent the tRNA.
+For example, \texttt{Ala-tRNA(Ala)}, alanyl-tRNA, is represented as \texttt{C3H7NOR}, and \texttt{tRNA(Ala)} is represented as \texttt{RH}.
+As a consequence, the molecular weights of these species cannot be directly computed from the chemical formula.
+Because tRNAs are unmodified during translation, \texttt{R} can be ignored.
+In other words, I treated \texttt{R} as a chemical element of atomic mass 0 when computing $m_{r}$ for each reactant and $m_{p}$ for each product, leaving only $m_{p}$ for \texttt{protein} undefined.
+This $m_{p}$ can then be found by rearranging eq.\ \ref{eq:conservation-of-mass}, thus giving the molecular mass of the protein pseudometabolite.
 
-Finally, the lipid pseudometabolite is the least straightforward because some of the reactants of the lipid pseudoreaction do not have molecular weights specified.
+
+\subsubsection{Lipid pseudometabolite}
+\label{subsubsec:model-yeast8-molweight-lipid}
+
+Finally, the lipid pseudometabolite is the least straightforward because the model does not specifiy the molecular weights of some of the reactants of the lipid pseudoreaction.
 The lipid pseudoreaction is represented in reaction \texttt{r\_2108}:
 
 \texttt{
@@ -455,8 +445,7 @@ Reaction \texttt{r\_4063} specifies a lipid backbone pseudoreaction, in which \t
   --> lipid backbone
 }
 
-Within this reaction, all reactants have defined molecular weights except for \texttt{fatty acid backbone}.
-Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbone}:
+
 \begin{table}[ht]
   \centering
     \begin{tabular}{llS}
@@ -471,33 +460,45 @@ Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbo
     \label{tab:ecyeast8-fatty-acid-backbone-rxns}
 \end{table}
 
-All species in these reactions except for \texttt{fatty acid backbone} have molecular weights specified, and thus I applied mass balance to find the molecular weight of \texttt{fatty acid backbone} from each reaction.
-However, the molecular weights computed from each equation are different, as shown in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}.
-Since the differences are slight, and ultimately I am making a back-of-the-envelope calculation, I took the mean of the four weights (\SI{729.53}{\gram~\mole^{-1}}) as the molecular weight of \texttt{fatty acid backbone} for the purposes of computing the molecular weight of \texttt{lipid backbone} (which then yields \SI{21.31}{\gram~\mole^{-1}}).
+% TODO: Probably needs even more clarification
+The model specifies molecular weights for all species in the reaction that generates \texttt{lipid backbone}, expect for \texttt{fatty acid backbone}.
+To compute the molecular weight of \texttt{fatty acid backbone}, the reactions that produce this species must be used.
+Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbone} (table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}).
+The model specifies molecular weights for all species in these four reactions, except for \texttt{fatty acid backbone}.
+Therefore, using each chemical equation, the molecular weight of \texttt{fatty acid backbone} can be solved for by rearranging eq.\ \ref{eq:conservation-of-mass} with parameters defined to match each reaction.
+However, the molecular weights computed from each equation are different.% , as shown in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}.
+Because the differences are slight, %, and ultimately I am making a back-of-the-envelope calculation,
+I took the mean of the four weights to give \SI{729.53}{\gram~\mole^{-1}}.
+Subsequently, the molecular weight of \texttt{lipid backbone} was computed from this mean value and the molecular weights of other species involved in the production of \texttt{lipid backbone}, giving \SI{21.31}{\gram~\mole^{-1}}.
+With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, the molecular weight of \texttt{lipid} is thus the sum of the two.
 
-With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, I can now compute the molecular weight of \texttt{lipid} using mass balance.
 
-In summary, the molecular weights of the pseudometabolites are:
+\subsubsection{Summary}
+\label{subsubsec:model-yeast8-molweight-summary}
+
 \begin{table}[ht]
   \centering
-  \begin{tabular}{lS}
-    Metabolite & {Computed molecular weight (\SI{}{\gram~\mol^{-1}})} \\
+  \begin{tabular}{lSS}
+    Metabolite & {\makecell{Computed molecular weight\\ (\SI{}{\gram~\mol^{-1}})}} & {\makecell{Biomass composition\\ at growth rate \SI{0.375}{\hour^{-1}}\\ (\SI{}{\gram~\kilo\gram_{DW}^{-1}})}} \\
     \hline
-    Protein & 504.37 \\
-    Carbohydrate & 350.37 \\
-    RNA & 64.04 \\
-    Lipid & 31.57 \\
-    Cofactors & 4.83 \\
-    DNA & 3.90 \\
-    Ions & 2.48
+    Protein & 504.37 & 505.\\
+    Carbohydrate & 350.37 & 237.\\
+    RNA & 64.04 & 105.\\
+    Lipid & 31.57 & 57.\\
+    Cofactors & 4.83 & \\
+    DNA & 3.90 & 5. \\
+    Ions & 2.48 &
   \end{tabular}
-  \caption{Computed molecular weights of bulk metabolites in ecYeast8}
+  \caption{
+    Computed molecular weights of bulk metabolites in ecYeast8, compared to experimentally recorded biomass composition by \textcite{canelasVivoDatadrivenFramework2011}.
+  }
   \label{tab:ecyeast8-mol-weights}
 \end{table}
 
-As additional validation, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}.
+Table~\ref{tab:ecyeast8-mol-weights} summarises the molecular weight of the pseudometabolites.
+As validation of the calculations of molecular weights, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}.
 
-Adding together values in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns} gives a the molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
+Adding together values in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns} gives a  molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
 In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
 Plus, the sum of stoichiometric coefficients are not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
 
