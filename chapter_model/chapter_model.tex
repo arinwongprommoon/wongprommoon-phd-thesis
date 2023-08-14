@@ -44,7 +44,7 @@ Flux balance analysis (FBA) is a mathematical method that finds the steady-state
 These metabolic fluxes represent rates of chemical reactions.
 At its core, FBA is a method of solving a linear programming problem of finding the flux values that optimise the output value of an objective function, subject to biological constraints.
 
-Mathematically, the linear programming problem of FBA can be expressed as
+Mathematically, the linear programming problem of FBA can be expressed as:
 
 \begin{equation}
   \max \mathbf{c}^{\intercal} \mathbf{v}
@@ -72,7 +72,7 @@ These constraints restrict the solution space for the FBA problem.
 
 FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions that are difficult to construct and parametrise.
 
-\section{Modelling temporal partitioning of biosynthesis}
+\section{Modelling temporal scheduling of biosynthesis}
 \label{sec:model-temporal}
 
 Previous studies have attempted to use FBA to model how each phase of the YMC has different metabolic requirements.
@@ -84,7 +84,7 @@ Then, they used these activities as coefficients for a modified thermodynamic-st
 % Do I even cite this?  It's so bad.
 Additionally, \textcite{cesurGenomeWideAnalysisYeast} constructed a different FBA model for each YMC phase based on transcriptomic and epigenetic data.
 They did so using the GIMME algorithm \parencite{beckerContextSpecificMetabolicNetworks2008}, which excludes reactions that correspond to genes that are not expressed at certain time points.
-Both studies model behaviours at each phase of the YMC, rather than predicting timescale.
+Both studies model the metabolic state of the cell at each phase of the YMC, rather than predicting the time the cell takes to replicate or to synthesise biomass components.
 
 An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}.
 This study extended a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to find the temporal order of intracellular synthesis reactions which optimises the growth rate of the cell, under resource constraints.
@@ -98,18 +98,22 @@ An enzyme-constrained model fits the assumption that there is a fixed number of 
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} constrain the total sum of fluxes based on a defined total amount of enzyme.
 \textcite{elsemmanWholecellModelingYeast2022} additionally impose a ribosome capacity constraint and additionally imposes compartment constraints.
 
-In this chapter, I use a genome-scale model of \textit{Saccharomyces cerevisiae} and perform FBA.
-Specifically, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019}.
+In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate temporal scheduling of biomass components.
+To simulate the cell prioritising the synthesis of each biomass component, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
+To assess the advantage of sequential synthesis of biomass components over parallel synthesis of biomass components, I estimated the timescales for the synthesis of each biomass component based on the ablations, and compared them to timescales estimated based on the unmodified biomass reaction.
+To evaluate the hypothesis that a restricted proteome pool gives rise to sequential synthesis of biomass components, I varied the size of the proteome pool to observe its effects on the cell's preferred resource allocation strategy.
+Finally, to show how nutrient conditions affect the cell's preferred resource allocation strategy, I modelled changes in carbon and nitrogen source concentrations and investigated their effects on the quantities that explain the strategies.
+
+\section{The Yeast8 and ecYeast8 models and their formalisms}
+\label{sec:model-yeast8}
+
+To impose proteome constraints, I use the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019} and performed FBA.
 I use this model because it is recent, offering a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
 Here, I use the model ec\-Yeast\-8.6.0, the latest version for which both original and enzyme-constrained variants are available.
 ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017} --- specifically, GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, the latest published version of GECKO.
 GECKO applies an enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
-ec\-Yeast\-8.6.0 is the latest version created by GECKO 2.
-In addition, the model has `pseudometabolites' defined by \textit{isa} reactions \parencite{heavnerYeastExpandedReconstruction2012} that group specific chemical species in general classes.
-These formalisms make it easy to study each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
-
-\section{The Yeast8 and ecYeast8 models and their formalisms}
-\label{sec:model-yeast8}
+In addition, the model has `pseudometabolites' defined by reactions that group specific chemical species in general classes.
+These formalisms allow studying each class of biomass component (e.g. lipid, protein, carbohydrate) individually.
 
 In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in genome-scale metabolic models.
 
@@ -121,7 +125,7 @@ ecYeast8 contains four formalisms relevant to this chapter:
         This is in contrast to BiGG genome-scale models \parencite{norsigianBiGGModels20202020}.
         In these models, biomass reactions have chemical species as reactants, and each has a stoichiometric coefficient that is equal to the species' abundance in units of \SI{}{\mmolgdw}.
   \item
-        The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites.
+        The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites \parencite{heavnerYeastExpandedReconstruction2012}.
         These reactions account for how some KEGG definitions of reactions require generic compounds and these reactions also allows flexibility of biomass definition in different growth conditions.
         The \textit{isa} reactions have chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}, and a pseudometabolite as a product.
         In effect, the species abundance information is shifted one reaction away from the biomass reaction.
@@ -149,18 +153,72 @@ In particular, I detail GECKO (item 4) and computing molecular weights of pseudo
 \subsection{GECKO}
 \label{subsec:model-yeast8-gecko}
 
-In a conventional genome-scaled model, metabolic fluxes through reactions are constrained between a lower bound and an upper bound.
-This constraint narrows down the solution space when the objective function is optimised.
-GECKO imposes an additional constraint on the metabolic fluxes based on the concentration of the enzyme that catalyses the reaction.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\linewidth]{sanchezImprovingPhenotypePredictions2017_1b_adapted}
+  \caption{
+    GECKO extends the stoichiometric matrix of a genome-scale model.
+    The original stoichiometric matrix $\mathbf{S}$ includes metabolites $M_{1} \ldots M_{m}$ and reactions $v_{1} \ldots v_{n}$.
+    GECKO extends this matrix to include enzymes $E_{1} \ldots E_{p}$ and enzyme usage reactions $e_{1} \ldots e_{p}$.
+    The new stoichiometric matrix can be seen as four submatrices concatenated together: the upper right submatrix is $\mathbf{0}$, the lower left submatrix encodes kinetic information, and the lower right submatrix is $\mathbf{I}$.
+    Figure adapted from~\textcite{sanchezImprovingPhenotypePredictions2017}.
+  }
+  \label{fig:model-gecko}
+\end{figure}
 
-As a simple example, for a reaction $R_{j}$ catalysed by enzyme $E_{i}$ and $E_{i}$ only,
+In a conventional genome-scaled model, metabolic fluxes through reactions are constrained by lower and upper bounds.
+This constraint narrows down the solution space when the objective function is optimised.
+GECKO imposes an additional constraint on the metabolic fluxes based on the concentration of the enzyme that catalyses the reaction (figure~\ref{fig:model-gecko}).
+
+GECKO modifies the linear programming of FBA as defined by equations~\ref{eq:model-fba-objective} and~\ref{eq:model-fba-constraints} so that enzymes are expressed as metabolites that take part in reactions.
+In mathematical terms, this can be expressed as:
+
+\begin{equation}
+  \max \mathbf{c}^{\intercal} \mathbf{v}
+  \label{eq:model-gecko-fba-objective}
+\end{equation}
+
+subject to
+
+\begin{equation}
+  \begin{gathered}
+    \mathbf{S} \mathbf{v} = \mathbf{0}\\
+    v_{j,\mathrm{min}} \leq v_{j} \leq v_{j,\mathrm{max}}\\
+    v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]
+  \end{gathered}
+  \label{eq:model-gecko-fba-constraints}
+\end{equation}
+
+where $v_{j}$ is the flux of each reaction $R_{j}$ catalysed by enzyme $E_{i}$, $k_{\mathrm{cat}}^{ij}$ is the catalytic constant of the enzyme $E_{i}$ for reaction $R_{j}$, and $[E_{i}]$ represents the concentration of the enzyme $E_{i}$.
+Defining constraints in this way means that each $v_{j}$ must not exceed $v_{\mathrm{max}}$ for each enzyme $E_{i}$.
+Each enzyme $E_{i}$ may catalyse one or more reactions $R_{j}$.
+
+The constraints in eq.\ \ref{eq:model-gecko-fba-constraints} is imposed by extending the stoichiometric matrix $\mathbf{S}$ and flux vector $\mathbf{v}$.
+Specifically, $\mathbf{S}$ has additional rows to represent new metabolites that represent each enzyme $E_{i}$.
+The matrix $\mathbf{S}$ also has additional columns for new reactions $ER_{i}$ that model enzyme usage and for a new reaction $ER_{\mathrm{pool}}$ that models a limited proteome pool.
+Kinetic information in the form of $k_{\mathrm{cat}}^{ij}$ values are included as elements in the extended stoichiometric matrix.
+Finally, $\mathbf{v}$ has additional elements that correspond to the additional columns of $\mathbf{S}$.
+
+The constraint $v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]$ from eq.\ \ref{eq:model-gecko-fba-constraints} can be expressed as:
+
+\begin{equation}
+  \begin{gathered}
+    -\frac{1}{k_{\mathrm{cat}}^{ij}}v_{j} + e_{i} = 0\\
+    0 \leq e_{i} \leq [E_{i}]
+  \end{gathered}
+  \label{eq:model-gecko-fba-constraints-extended}
+\end{equation}
+
+where $e_{i}$ represents the flux of an enzyme usage reaction $ER_{i}$ associated with $E_{i}$.
+
+To illustrate what the modified stoichiometric means for each reaction, consider a simple example, a reaction $R_{j}$ catalysed by enzyme $E_{i}$:
 
 \begin{equation}
   \ce{ A + B ->[E_{i}] C + D }
   \label{eq:model-gecko-catalysed}
 \end{equation}
 
-the formalism imposes:
+For this reaction, GECKO imposes (see eq.\ \ref{eq:model-gecko-fba-constraints}):
 
 \begin{equation}
   v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]
@@ -168,21 +226,18 @@ the formalism imposes:
 \end{equation}
 
 where $v_{j}$ is the flux of the reaction $R_{j}$, $k_{\mathrm{cat}}^{ij}$ is the catalytic constant of the enzyme $E_{i}$, and $[E_{i}]$ is the concentration of the enzyme $E_{i}$.
-In other words, the flux through the reaction must not exceed $v_{\mathrm{max}}$.
 
-To apply this constraint, GECKO modifies reactions in the genome-scaled model it is applied to.
-For example, using equation~\ref{eq:model-gecko-catalysed},
+To apply this constraint, GECKO modifies reactions in the genome-scale model.
+For example, using eq.\ \ref{eq:model-gecko-catalysed},
 GECKO adds a term to the equation, modifying the stoichiometric matrix, to make it:
 
 \begin{equation}
   \ce{ n_{ij}E_{i} + A + B -> C + D }
   \label{eq:model-gecko-catalysed-formalism}
 \end{equation}
-with the stoichiometric coefficient $n_{ij} = \frac{1}{k_{\mathrm{cat}}^{ij}}$.
+with the stoichiometric coefficient $n_{ij} = 1/k_{\mathrm{cat}}^{ij}$.
 
-This transformation, adding the enzyme as a pseudo-reactant, is based on the interpretation that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
-
-% GECKO then also creates an overall enzyme pseudo-reaction $EU_{i}$: $\ce{ -> E_{i}}$, in order to preserve the mass balance of enzymes.  The flux $e_{i}$ of this pseudo-reaction is thus constrained: $0 \le e_{i} \le [E_{i}]$.
+This transformation, adding the enzyme as a pseudo-reactant, is based on the intuition that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
 
 Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes.
 Namely:
@@ -214,16 +269,18 @@ with a flux
 in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
 
 \begin{itemize}
-  \item $P$ represents protein fraction with respect to the dry weight of the cell,
-  \item $f$ represents the fraction of proteins that are enzymes, and
-  \item $\sigma$ is a parameter that represents the average saturation of enzymes.
+  \item $P_{\mathrm{total}}$ is the total protein fraction with respect to the dry weight of the cell
+  \item $P_{\mathrm{measured}}$ is the protein fraction of proteins whose weight are accounted for in the model, based on proteomic data.
+        If no proteomic data is used, as is the case in this chapter, $P_{\mathrm{measured}} = 0$.
+  \item $f$ represents the fraction of proteins that are enzymes
+  \item $\sigma$ is a parameter that represents the average saturation of enzymes
 \end{itemize}
 
 ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
 
 Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0 (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
 Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
-experimental data justifies this assumption.
+experimental data justifies this assumption \parencite{nissenFluxDistributionsAnaerobic1997}.
 
 Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
 
