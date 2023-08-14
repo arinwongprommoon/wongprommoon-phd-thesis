@@ -554,17 +554,24 @@ To quantify changes in proteome allocation across rounds of ablation, I compute 
 This is defined as:
 
 \begin{equation}
-  \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}}{e_{i, \mathrm{original}}} \right)
+  \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}^{\prime}}{e_{i, \mathrm{original}}^{\prime}} \right)
   \label{eq:model-foldchange}
 \end{equation}
 
-where $e_{i, \mathrm{original}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-fba-constraints-extended}) in the non-ablated case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
+where, to ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be defined for all $i$ and $j$,
 
-If $\log_{2}(\mathrm{FC_{i,j}}) > 0$, this indicates that the cell allocates more of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
-Conversely, if $\log_{2}(\mathrm{FC_{i,j}}) < 0$, the cell allocates less of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
+\begin{equation}
+  e^{\prime} =
+  \begin{cases}
+    \epsilon, & \text{if}\ |e|<\epsilon \\
+    e, & \text{otherwise}
+  \end{cases}
+  \label{eq:model-epsilon-round}
+\end{equation}
 
-To ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be calculated for all $i$ and $j$ so that changes in proteome allocation can be shown in Fig. \ref{fig:model-ablate-enz-use}, small $e_{i}$ values with magnitudes below a threshold $\epsilon$ were rounded to the threshold value.
-This rounding eliminates cases where $e_{i} = 0$, which would make $\log_{2}(\mathrm{FC}_{i,j})$ undefined.
+where $e$ is either $e_{i,j}$ or $e_{i, \mathrm{original}}$.
+Here, $e_{i, \mathrm{original}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-fba-constraints-extended}) in the non-ablated case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
+
 The value $\epsilon$ is defined as:
 
 \begin{equation}
@@ -579,8 +586,10 @@ The value $\epsilon$ is defined as:
 
 assuming a reasonable minimum reaction flux of \SI{1}{\molecule~\cell^{-1}~\hour^{-1}} and a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
 
-Therefore, if there is a case of enzyme expression switching on, evidenced by $e_{i, \mathrm{original}} = 0$, $e_{i,\mathrm{original}}$ would be replaced with $\epsilon$, and as a consequence, $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
-Conversely, if there is a case of an enzyme expression switching off, evidenced by $e_{i, j} = 0$, $e_{i,j}$ would be replaced with $\epsilon$, and as a consequence, $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
+If $\log_{2}(\mathrm{FC_{i,j}}) > 0$, this indicates that the cell allocates more of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
+Conversely, if $\log_{2}(\mathrm{FC_{i,j}}) < 0$, the cell allocates less of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
+In addition, if there is a case of enzyme expression switching on, evidenced by $e_{i, \mathrm{original}} = 0$, $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
+Conversely, if there is a case of an enzyme expression switching off, evidenced by $e_{i, j} = 0$, $e_{i,j}$ $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
 
 \begin{figure}
   \centering
@@ -588,10 +597,9 @@ Conversely, if there is a case of an enzyme expression switching off, evidenced 
   \caption{
     The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
     Each column shows the component that remains in each round of pseudometabolite ablation.
-    Rows represent enzyme usage reactions, sorted by subsystem.
-    Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in reaction flux, while pink shows a decrease in flux.
-    Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-10}{\mmolgdw} are treated as $\epsilon$ flux, for the purpose of computing fold changes.
-    Cases where $|\log_{2}(\mathrm{FC})| < 17$ are excluded to restrict the number of reactions ($n = 3897$) to aid display purposes.
+    Each row represents an enzyme, and rows are grouped by subsystem.
+    Colours represent $\log_{2}(\mathrm{FC})$ (Eq.\ \ref{eq:model-foldchange}) showing how enzyme usage fluxes (Eq.\ \ref{eq:model-gecko-enzyme-usage}) change in rounds of ablation: green shows an increase, while pink shows a decrease.
+    %Cases where $|\log_{2}(\mathrm{FC})| < 17$ are excluded to restrict the number of reactions ($n = 3897$) to aid display purposes.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
