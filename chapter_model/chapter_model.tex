@@ -1,27 +1,28 @@
 \chapter{Modelling yeast biosynthesis strategies under constraints}
 \label{ch:model}
 
-It is difficult to develop a fine-grained model for the aspects of the YMC,
-especially if the detailed molecular mechanisms are unclear
-and if the main read-outs from single-cell studies --- NAD(P)H and flavin autofluorescence --- are aggregate measures derived from several biochemical phenomena.
-It is perhaps more feasible to construct coarse-grained models to answer biological questions about the YMC.
+To better understand the mechanistic basis of the YMC, I sought to build a model of how the cyclic sequence of cellular events respond to extracellular nutrient conditions.
+However, it is challenging to develop a fine-grained model for the aspects of the YMC,
+especially if the detailed molecular mechanisms are unclear.
+Further complicating the development of a fine-grained model is the fact that the main read-outs from single-cell studies, NAD(P)H and flavin autofluorescence, are aggregate signals from several biochemical phenomena.
+Thus, it is more feasible to construct coarse-grained models to answer biological questions about the YMC.
 
 Here, I use a genome-scale metabolic model and flux balance analysis (FBA) to address whether cellular events in the metabolic cycle reflect a strategy in resource allocation that optimises growth.
 
 Specifically, I aim to evaluate these hypotheses:
 \begin{enumerate}
-  \item A finite proteome pool gives rise to temporal partitioning of the synthesis of biomass components during growth: lipid, carbohydrate, amino acids, and nucleic acids.
+  \item A finite proteome pool gives rise to sequential scheduling of the synthesis of biomass components during growth: lipid, carbohydrate, amino acids, and nucleic acids.
         In other words, as an adaption, the cell synthesises biomass components in sequence rather than in parallel.
-        This explains the timing of biosynthetic events in the phases of the yeast metabolic cycle.
-  \item This resource allocation strategy remains advantageous in many nutrient conditions and in deletion strains.
-        The retention of the advantage explains the robustness of the yeast metabolic cycle.
-  \item If there is a condition in which synthesising biomass components in parallel is advantageous, it is advantageous because the synthesis of biomass components share similar levels of enzymes from the same pathways.
+        This would explain the timing of biosynthetic events in the phases of the yeast metabolic cycle.
+  \item This resource allocation strategy remains advantageous in many nutrient conditions and deletion strains,
+        which would explain the robustness of the yeast metabolic cycle.
+  \item Synthesis of biomass components in parallel, as opposed to in sequence, may be advantageous if the processes of synthesising each biomass component share similar enzyme levels across biomass components.
 \end{enumerate}
 
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
 
-Metabolic network reconstructions are mathematical representations of a set of metabolic pathways in a living system.
+Metabolic network reconstructions are mathematical representations of a set of metabolic pathways in a living organism.
 Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions that are represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
 This information can be represented in a two-dimensional stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
 
@@ -34,30 +35,42 @@ For example, if reaction $R_{1}$ is defined by:
 
 the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
 
-Metabolic network reconstructions may include reactions that do not correspond to true, singular reactions in the strict chemical sense, in which one or more chemical species react then create a different set of chemical species as products.
-Such reactions may include reactions that model substrates entering and leaving the biological system.
-Additionally, many models include a reaction that models biomass formation from chemical species, termed as a \emph{biomass reaction}.
 A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system that is catalysed by a gene-encoded enzyme.
+In most of the reactions represented in a metabolic network reconstruction, one or more chemical species react to create a different set of chemical species as products.
+However, reactions in a metabolic network reconstruction may include processes that are not chemical reactions.
+Such processes may include exchange for nutrients, as well as a reaction that models biomass formation.
 
-Flux balance analysis (FBA) is a mathematical method that finds the steady-state flow of metabolites through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
-Such flows are termed \emph{metabolic fluxes}, which represents rates of chemical reactions.
-At its core, FBA is a method of solving a linear programming problem of finding the flux values that optimise the output value of an objective function, subject to mathematical constraints.
-The objective function is given as the task of minimising or maximising a mathematical expression that is based on a subset of fluxes.
-Most commonly, the objective function for an FBA problem is maximising the flux of a biomass reaction, thus optimising the growth rate of the cell.
-However, multiple objective functions are possible.
-The mathematical constraints for FBA are, in the most basic case, imposed by two things:
-the stoichiometric matrix and reaction flux bounds.
+Flux balance analysis (FBA) is a mathematical method that finds the steady-state flux of reactions through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
+These metabolic fluxes represent rates of chemical reactions.
+At its core, FBA is a method of solving a linear programming problem of finding the flux values that optimise the output value of an objective function, subject to biological constraints.
+
+Mathematically, the linear programming problem of FBA can be expressed as
+
+\begin{equation}
+  \max \mathbf{c}^{\intercal} \mathbf{v}
+  \label{eq:model-fba-objective}
+\end{equation}
+
+subject to
+
+\begin{equation}
+  \begin{gathered}
+    \mathbf{S} \mathbf{v} = \mathbf{0}\\
+    v_{i,\mathrm{min}} \leq v_{i} \leq v_{i,\mathrm{max}}
+  \end{gathered}
+  \label{eq:model-fba-constraints}
+\end{equation}
+
+where $\mathbf{c}$ is a vector of weights such that $\mathbf{c}^{\intercal} \mathbf{v}$ defines the objective function, $\mathbf{S}$ is the stoichiometric matrix, and $\mathbf{v}$ is the vector of fluxes. The expression $v_{i,\mathrm{min}}$ the lower bound and $v_{i,\mathrm{max}}$ represents the upper bound for each flux $v_{i}$ in $\mathbf{v}$.
+
+The objective function is given as the task of maximising a mathematical expression that is based on a subset of fluxes (equation~\ref{eq:model-fba-objective}).
+Most commonly, the objective function for an FBA problem is maximising the flux of the biomass reaction, thus optimising the growth rate of the cell.
+The constraints for FBA are, in the most basic case, imposed by two factors:
+the stoichiometric matrix and reaction flux bounds (equation~\ref{eq:model-fba-constraints}).
 The stoichiometric matrix balances reaction inputs and outputs, while flux bounds impose upper and lower limits on the fluxes of each reaction.
 These constraints restrict the solution space for the FBA problem.
 
-FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a set of differential equations that describe the kinetics of biochemical reactions in such a system.
-However, FBA, in its most basic form, has several limitations.
-It only gives a steady-state picture of metabolism, and therefore cannot be used to describe changes in fluxes over time.
-Although, dynamic FBA has been developed to solve this problem \parencite{mahadevanDynamicFluxBalance2002}.
-Additionally, it does not account for concentrations of metabolites.
-Nevertheless, there are many derivatives of FBA to overcome these limitations and extend the method to answer additional modelling questions.
-However, these derivatives are outside the scope of this thesis.
-
+FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions that are difficult to construct and parametrise.
 
 \section{Modelling temporal partitioning of biosynthesis}
 \label{sec:model-temporal}
@@ -1340,3 +1353,12 @@ It also gives weight to the idea that this may be one of the rationales of the e
 % Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
 % - How long does it take to replicate the genome?  It is biosynthesis of nucleotides + process of polymerising them.  There has to be super basic cell division cycle literature about this...
 % - Fatty acids: cell may use pentose phosphate pathway and gluconeogenesis to route flow in a cycle to generate masses of NAD(P)H.  Check if the fluxes suggest this.
+
+% <comment> Moved from end of sec:model-fba.  More appropriate as discussion re extensions to my work
+However, FBA, in its most basic form, has several limitations.
+It only gives a steady-state picture of metabolism, and therefore cannot be used to describe changes in fluxes over time.
+Although, dynamic FBA has been developed to solve this problem \parencite{mahadevanDynamicFluxBalance2002}.
+Additionally, it does not account for concentrations of metabolites.
+Nevertheless, there are many derivatives of FBA to overcome these limitations and extend the method to answer additional modelling questions.
+However, these derivatives are outside the scope of this thesis.
+% </comment>
