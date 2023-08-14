@@ -193,13 +193,13 @@ where $v_{j}$ is the flux of each reaction $R_{j}$ catalysed by enzyme $E_{i}$, 
 Defining constraints in this way means that each $v_{j}$ must not exceed $v_{\mathrm{max}}$ for each enzyme $E_{i}$.
 Each enzyme $E_{i}$ may catalyse one or more reactions $R_{j}$.
 
-The constraints in eq.\ \ref{eq:model-gecko-fba-constraints} is imposed by extending the stoichiometric matrix $\mathbf{S}$ and flux vector $\mathbf{v}$.
+The constraints in Eq.\ \ref{eq:model-gecko-fba-constraints} is imposed by extending the stoichiometric matrix $\mathbf{S}$ and flux vector $\mathbf{v}$.
 Specifically, $\mathbf{S}$ has additional rows to represent new metabolites that represent each enzyme $E_{i}$.
 The matrix $\mathbf{S}$ also has additional columns for new reactions $ER_{i}$ that model enzyme usage and for a new reaction $ER_{\mathrm{pool}}$ that models a limited proteome pool.
 Kinetic information in the form of $k_{\mathrm{cat}}^{ij}$ values are included as elements in the extended stoichiometric matrix.
 Finally, $\mathbf{v}$ has additional elements that correspond to the additional columns of $\mathbf{S}$.
 
-The constraint $v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]$ from eq.\ \ref{eq:model-gecko-fba-constraints} can be expressed as:
+The constraint $v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]$ from Eq.\ \ref{eq:model-gecko-fba-constraints} can be expressed as:
 
 \begin{equation}
   \begin{gathered}
@@ -218,7 +218,7 @@ To illustrate what the modified stoichiometric means for each reaction, consider
   \label{eq:model-gecko-catalysed}
 \end{equation}
 
-For this reaction, GECKO imposes (see eq.\ \ref{eq:model-gecko-fba-constraints}):
+For this reaction, GECKO imposes (see Eq.\ \ref{eq:model-gecko-fba-constraints}):
 
 \begin{equation}
   v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]
@@ -228,7 +228,7 @@ For this reaction, GECKO imposes (see eq.\ \ref{eq:model-gecko-fba-constraints})
 where $v_{j}$ is the flux of the reaction $R_{j}$, $k_{\mathrm{cat}}^{ij}$ is the catalytic constant of the enzyme $E_{i}$, and $[E_{i}]$ is the concentration of the enzyme $E_{i}$.
 
 To apply this constraint, GECKO modifies reactions in the genome-scale model.
-For example, using eq.\ \ref{eq:model-gecko-catalysed},
+For example, using Eq.\ \ref{eq:model-gecko-catalysed},
 GECKO adds a term to the equation, modifying the stoichiometric matrix, to make it:
 
 \begin{equation}
@@ -317,7 +317,7 @@ It is not straightforward to implement these changes as stoichiometric coefficie
 
 Therefore, I computed the mass fractions of each biomass component based on the stoichiometries of species in the Yeast8 model.%, as a back-of-the-envelope calculation for such a coarse-grained modelling effort.
 %Similar calculations were performed by \textcite{takhaveevTemporalSegregationBiosynthetic2023}.
-This is not as straightforward as taking the $f_{i}$ values from an objective function defined as in eq.\ \ref{eq:model-biomass-reaction}, because the objective function of Yeast8 does not conform to this format, and instead contains pseudometabolites.
+This is not as straightforward as taking the $f_{i}$ values from an objective function defined as in Eq.\ \ref{eq:model-biomass-reaction}, because the objective function of Yeast8 does not conform to this format, and instead contains pseudometabolites.
 This formalism can be expressed as:
 
 \begin{equation}
@@ -374,7 +374,7 @@ The resulting molecular weight will thus represent the mass fraction of each bio
 
 Computing the molecular weights of the carbohydrate, DNA, RNA, cofactor, and ion pseudometabolites is straightforward.
 This is because the equations similarly have reactants with molecular weights specified in the model and only the pseudometabolite, the sole product, does not have a molecular weight specified.
-In such cases, eq.\ \ref{eq:conservation-of-mass} can be applied directly, i.e.\ the molecular weight of the pseudometabolite is equal to $\sum_{r = j}^{n_{r}}m_{r}c_{r}$, where $m_{r}$ values are taken directly from the molecular weights specified in the model.
+In such cases, Eq.\ \ref{eq:conservation-of-mass} can be applied directly, i.e.\ the molecular weight of the pseudometabolite is equal to $\sum_{r = j}^{n_{r}}m_{r}c_{r}$, where $m_{r}$ values are taken directly from the molecular weights specified in the model.
 The results for these pseudometabolites are shown in table~\ref{tab:ecyeast8-easy-rxns}
 
 \begin{table}[ht]
@@ -411,7 +411,7 @@ For example, \texttt{Ala-tRNA(Ala)}, alanyl-tRNA, is represented as \texttt{C3H7
 As a consequence, the molecular weights of these species cannot be directly computed from the chemical formula.
 Because tRNAs are unmodified during translation, \texttt{R} can be ignored.
 In other words, I treated \texttt{R} as a chemical element of atomic mass 0 when computing $m_{r}$ for each reactant and $m_{p}$ for each product, leaving only $m_{p}$ for \texttt{protein} undefined.
-This $m_{p}$ can then be found by rearranging eq.\ \ref{eq:conservation-of-mass}, thus giving the molecular mass of the protein pseudometabolite.
+This $m_{p}$ can then be found by rearranging Eq.\ \ref{eq:conservation-of-mass}, thus giving the molecular mass of the protein pseudometabolite.
 
 
 \subsubsection{Lipid pseudometabolite}
@@ -465,7 +465,7 @@ The model specifies molecular weights for all species in the reaction that gener
 To compute the molecular weight of \texttt{fatty acid backbone}, the reactions that produce this species must be used.
 Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbone} (table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}).
 The model specifies molecular weights for all species in these four reactions, except for \texttt{fatty acid backbone}.
-Therefore, using each chemical equation, the molecular weight of \texttt{fatty acid backbone} can be solved for by rearranging eq.\ \ref{eq:conservation-of-mass} with parameters defined to match each reaction.
+Therefore, using each chemical equation, the molecular weight of \texttt{fatty acid backbone} can be solved for by rearranging Eq.\ \ref{eq:conservation-of-mass} with parameters defined to match each reaction.
 However, the molecular weights computed from each equation are different.% , as shown in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}.
 Because the differences are slight, %, and ultimately I am making a back-of-the-envelope calculation,
 I took the mean of the four weights to give \SI{729.53}{\gram~\mole^{-1}}.
@@ -520,6 +520,7 @@ Consider the objective function, the biomass reaction:
 }
 
 There are seven pseudometabolites: lipid, protein, carbohydrate, DNA, RNA, cofactor, and ion.
+
 To have the cell prioritise biosynthesis of lipids, I set the stoichiometric coefficients of all pseudometabolites except for lipids to zero in the above equation, giving:
 
 \texttt{
@@ -527,18 +528,59 @@ To have the cell prioritise biosynthesis of lipids, I set the stoichiometric coe
   --> 47.5883 adp\_c + biomass\_c + 47.5883 h\_c + 47.5883 pi\_c
 }
 
-And I repeated this for the other pseudometabolites.
+The model was optimised using FBA, with the modified reaction as the objective function.
+This process was repeated for the other pseudometabolites.
 
 \begin{figure}
   \centering
   \includegraphics[width=.6\linewidth]{ablation_example_fluxes.png}
   \caption{
-    Growth rates from the original (wild type) model ($\gro$; leftmost bar) and from the ablated versions of the model ($\griabl$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
+    %Growth rates from the original model ($\gro$; leftmost bar) and from the ablated versions of the model ($\griabl$, where $i$ represents each biomass components among lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions; other bars)
+    Growth rates from the original model (leftmost bar) and from the ablated versions of the model (other bars)
   }
   \label{fig:model-ablate-fluxes}
 \end{figure}
 
-Optimising the objective function as each pseudometabolite is prioritised gives changed growth rates (figure~\ref{fig:model-ablate-fluxes}).
+When the model prioritises a different biomass component in each round of ablation, the model partitions the limited proteome available for enzyme production differently.
+In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) is different from each other and from the non-ablated case.
+Optimising the objective function as each pseudometabolite is prioritised affects the predicted growth rates (Fig.\ \ref{fig:model-ablate-fluxes}).
+
+Subsystem information aids interpretation of these changes.
+Here, I match the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
+If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
+Then, the subsystem associated with each enzyme-catalysed reaction is taken from the gene-protein map, and noted.
+
+To quantify changes in proteome allocation across rounds of ablation, I compute the $\log_{2}(\mathrm{FC})$ of fluxes relative to the non-ablated case.
+This is defined as:
+
+\begin{equation}
+  \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}}{e_{i, \mathrm{original}}} \right)
+  \label{eq:model-foldchange}
+\end{equation}
+
+where $e_{i, \mathrm{original}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-fba-constraints-extended}) in the non-ablated case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
+
+If $\log_{2}(\mathrm{FC_{i,j}}) > 0$, this indicates that the cell allocates more of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
+Conversely, if $\log_{2}(\mathrm{FC_{i,j}}) < 0$, the cell allocates less of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
+
+To ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be calculated for all $i$ and $j$ so that changes in proteome allocation can be shown in Fig. \ref{fig:model-ablate-enz-use}, small $e_{i}$ values with magnitudes below a threshold $\epsilon$ were rounded to the threshold value.
+This rounding eliminates cases where $e_{i} = 0$, which would make $\log_{2}(\mathrm{FC}_{i,j})$ undefined.
+The value $\epsilon$ is defined as:
+
+\begin{equation}
+  \begin{aligned}
+    \epsilon &= \SI{1}{\molecule~\cell^{-1}~\hour^{-1}}\\
+             &= \frac{(\SI{1}{\molecule})}{(\SI{1}{\cell})(\SI{1}{\hour})} \cdot \frac{(\SI{1}{\cell})}{(\SI{15}{\pico\gram_{DW}})} \cdot \frac{(\SI{1}{\mol})}{(\SI{6.02214d23}{\molecule)}}\\
+             &= \SI{1.11d-13}{\mol~\gram_{DW}^{-1}~\hour^{-1}}\\
+             &= \SI{1.11d-10}{\mmolgdwh}\\
+  \end{aligned}
+  \label{eq:model-epsilon}
+\end{equation}
+
+assuming a reasonable minimum reaction flux of \SI{1}{\molecule~\cell^{-1}~\hour^{-1}} and a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
+
+Therefore, if there is a case of enzyme expression switching on, evidenced by $e_{i, \mathrm{original}} = 0$, $e_{i,\mathrm{original}}$ would be replaced with $\epsilon$, and as a consequence, $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
+Conversely, if there is a case of an enzyme expression switching off, evidenced by $e_{i, j} = 0$, $e_{i,j}$ would be replaced with $\epsilon$, and as a consequence, $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
 
 \begin{figure}
   \centering
@@ -548,28 +590,11 @@ Optimising the objective function as each pseudometabolite is prioritised gives 
     Each column shows the component that remains in each round of pseudometabolite ablation.
     Rows represent enzyme usage reactions, sorted by subsystem.
     Colours represent how the cell re-allocates its proteome to each enzyme: green shows an increase in reaction flux, while pink shows a decrease in flux.
-    Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-11}{\mmolgdw} are treated as $\epsilon$ flux, for the purpose of computing fold changes.
+    Fluxes with magnitude less than $\epsilon = $ \SI{1.11d-10}{\mmolgdw} are treated as $\epsilon$ flux, for the purpose of computing fold changes.
     Cases where $|\log_{2}(\mathrm{FC})| < 17$ are excluded to restrict the number of reactions ($n = 3897$) to aid display purposes.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
-
-When the model prioritises a different biomass component in each round of ablation, the model partitions the limited proteome available for enzyme production differently.
-In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in equation~\ref{eq:model-gecko-enzyme-usage}) is different from each other and from the non-ablated case.
-
-Subsystem information aids interpretation of these changes.
-Here, I match the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
-If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
-Then, the subsystem associated with each enzyme-catalysed reaction is taken from the gene-protein map, and noted.
-
-To emphasise changes in proteome allocation across rounds of ablation, I compute the $\log_{2}(\mathrm{FC})$ --- the base-2 logarithm of fold change --- of fluxes relative to the non-ablated case.
-Some reaction fluxes in some cases are zero, making the logarithm of fold change undefined.
-As a workaround, I defined a threshold small flux $\epsilon = $ \SI{1.11d-11}{\mmolgdwh}, which corresponds to one molecule per cell per hour, assuming \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
-My justification for the threshold value is that if a reaction is important enough for the cell, the cell fires the reaction more than once in an hour, which is a large proportion of its doubling time.
-For the purposes of computing fold changes, fluxes with magnitude less than $\epsilon$, including zero flux, are thus treated as $\epsilon$ flux.
-Therefore, extremely high $\log_{2}(\mathrm{FC})$ ($> 10$) likely indicates an original zero flux becoming non-zero in ablation, interpreted as an enzyme `switching-on'.
-Extremely low $\log_{2}(\mathrm{FC})$ ($< -10$) likely indicates an original non-zero flux becoming zero in ablation, interpreted as an enzyme `switching-off'.
-Fold changes thus indicate the cell changing priorities: a positive $\log_{2}(\mathrm{FC})$ represents more of the proteome allocated to the production of the relevant enzyme, while a negative $\log_{2}(\mathrm{FC})$ represents less of the proteome allocated to the production of the relevant enzyme.
 
 Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes calculated as described above.
 In particular, it shows:
