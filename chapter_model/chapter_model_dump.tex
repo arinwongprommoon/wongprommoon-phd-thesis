@@ -43,3 +43,22 @@ This will confuse interpretation.
 
 Therefore, I decide to vary the enzyme-available proteome pool to study proteomic constraints.
 This takes advantage of a GECKO formalism that is easy to modify and interpret.
+
+
+
+
+For computational use, the values of $R_{i}$ are equally-spaced discrete values from a vector with an interval $\Delta R_{i}$.
+The differential $\pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}$ is thus approximated by central differences:
+
+\begin{equation}
+  \begin{aligned}
+  \pdif{y(\exchrate{glc}, \exchrate{amm})}{\exchrate{glc}} &\approx \frac{y(\exchrate{glc} + \Delta \exchrate{glc}, \exchrate{amm}) - y(\exchrate{glc} - \Delta \exchrate{glc}, \exchrate{amm})}{2\Delta \exchrate{glc}}\\
+  \pdif{y(\exchrate{glc}, \exchrate{amm})}{\exchrate{amm}} &\approx \frac{y(\exchrate{glc}, \exchrate{amm} + \Delta \exchrate{amm}) - y(\exchrate{glc}, \exchrate{amm} - \Delta \exchrate{amm})}{2\Delta \exchrate{amm}}
+  \end{aligned}
+  \label{eq:model-central-difference}
+\end{equation}
+
+Susceptibility gives an advantage over simply computing the differential of the quantity of interest with respect to the exchange rate, i.e. $\pdif{y}{R_{i}}$, because it accounts for the changing magnitude of $R_{i}$.
+At greater values of $R_{i}$, the susceptibility is decreased by a greater value with respect to $\pdif{y}{R_{i}}$.
+This accounts for how at such high values of $R_{i}$, the proportional change in $R_{i}$ as it is increased or decreased by one step $\Delta R_{i}$ is smaller.
+It also accounts for the different step sizes of $\exchrate{glc}$ and $\exchrate{amm}$, owing to the different saturation concentrations of the two nutrients.

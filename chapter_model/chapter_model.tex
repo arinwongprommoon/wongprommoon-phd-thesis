@@ -1001,7 +1001,7 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb}
     \caption{
-      $\Tabl{carbohydrate}$
+      Predicted carbohydrate synthesis time ($\Tabl{carbohydrate}$)
     }
     \label{fig:model-grid-glc-carb}
   \end{subfigure}%
@@ -1009,7 +1009,7 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_prot}
     \caption{
-      $\Tabl{protein}$
+      Predicted protein synthesis time ($\Tabl{protein}$)
     }
     \label{fig:model-grid-glc-prot}
   \end{subfigure}
@@ -1018,28 +1018,25 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
   \centering
     \includegraphics[width=\linewidth]{ec_grid_glc_amm_carb_to_prot}
     \caption{
-      $\Tabl{carbohydrate}/\Tabl{protein}$
+      Ratio of carbohydrate synthesis time to protein synthesis time ($\Tabl{carbohydrate}/\Tabl{protein}$)
     }
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of glucose ($\exchrate{glucose}$) and ammonium exchange rates ($\exchrate{ammonium}$) on various quantities.
-    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}.
-    Black straight lines indicate saturation values.
+    Effect of glucose ($\exchrate{glc}$) and ammonium exchange rates ($\exchrate{amm}$) on various quantities.
+    Exchange rates are expressed in percentages of growth saturation from in Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
-    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{glucose}$ and $\exchrate{ammonium}$.
+    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{glc}$ and $\exchrate{amm}$.
   }
   \label{fig:model-grid-glc}
 \end{figure}
 
-To assess the effect of carbon and nitrogen sources on biomass synthesis strategies, I first varied the upper flux bounds of exchange reactions that corresponded to glucose exchange (denoted $\exchrate{glucose}$, or $\exchrate{glc}$) and to ammonium exchange rate (denoted $\exchrate{ammonium}$, or $\exchrate{glc}$).
-Each of these bounds took 32 equally-spaced values from 0\% to 200\% saturation, with glucose saturation being at \SI{8.69}{\mmolgdwh} and ammonium saturation being at \SI{1.48}{\mmolgdwh}, to produce a grid of \num{1024} conditions.
-At each combination of glucose and ammonium exchange, I ablated components in the biomass reaction according to section~\ref{sec:model-timescale} to obtain $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$.
-$\ratioabl$ indicated whether the sequential or parallel strategy is advantageous for each condition, while $\gro$ indicated which nutrient source was limiting in each condition.
-
+To assess the effect of glucose and ammonium concentration on biomass synthesis strategies, I ablated components in the biomass reaction in different nutrient conditions set by glucose and ammonium exchange
+to obtain $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$ (Fig.\ \ref{fig:model-grid-glc}).
+Whether $\ratioabl$ was less than or greater than 1 indicated whether the sequential or parallel strategy is advantageous for each condition. %, while $\gro$ indicated which nutrient source was limiting in each condition.
 Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions, in particular, conditions in which parallel biomass synthesis is favoured ($\ratioabl > 1$).
-Specifically, I chose carbohydrate and protein synthesis times because:
-
+The ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how $\Tiabl$ values change as carbon and nitrogen source concentrations change.
+This ratio between $\Tabl{carbohydrate}$ and $\Tabl{protein}$ is informative because:
 \begin{enumerate}
   \item Of all biomass components, predicted synthesis times of these biomass components varied the most as the glucose and ammonium exchange rates were varied.
   \item Each accounts for a large proportion of biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:ecyeast8-mol-weights}).
@@ -1047,11 +1044,7 @@ Specifically, I chose carbohydrate and protein synthesis times because:
         And, because amino acids contain amino groups, protein synthesis has a biochemical relationship with ammonium as a nitrogen source.
 \end{enumerate}
 
-And thus the ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how $\Tiabl$ values change as carbon and nitrogen source concentrations change.
-
-To determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I computed the susceptibility of the quantity with respect to each axis, carbon source or nitrogen source.
-
-Susceptibility at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ is given by:
+To determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I defined the sensitivity at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ as:
 
 \begin{equation}
   s_{i}(\exchrate{glc}, \exchrate{amm}) = \frac{R_{i}}{y(\exchrate{glc}, \exchrate{amm})} \cdot \pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}
@@ -1060,34 +1053,18 @@ Susceptibility at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, wi
 
 where:
 \begin{itemize}
-  \item $i$ indicates the axis: glucose (glc) or ammonium (amm)
+  \item $i$ indicates glucose (glc) or ammonium (amm)
   \item $R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{amm}$).
         An $(\exchrate{glc}, \exchrate{amm})$ pair defines a nutrient condition.
-  \item $y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest --- $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, $\Tabl{protein}$, or $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ --- at each nutrient condition
+  \item $y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest at each nutrient condition
 \end{itemize}
 
-For computational use, the values of $R_{i}$ are equally-spaced discrete values from a vector with an interval $\Delta R_{i}$.
-The differential $\pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}$ is thus approximated by central differences:
-
-\begin{equation}
-  \begin{aligned}
-  \pdif{y(\exchrate{glc}, \exchrate{amm})}{\exchrate{glc}} &\approx \frac{y(\exchrate{glc} + \Delta \exchrate{glc}, \exchrate{amm}) - y(\exchrate{glc} - \Delta \exchrate{glc}, \exchrate{amm})}{2\Delta \exchrate{glc}}\\
-  \pdif{y(\exchrate{glc}, \exchrate{amm})}{\exchrate{amm}} &\approx \frac{y(\exchrate{glc}, \exchrate{amm} + \Delta \exchrate{amm}) - y(\exchrate{glc}, \exchrate{amm} - \Delta \exchrate{amm})}{2\Delta \exchrate{amm}}
-  \end{aligned}
-  \label{eq:model-central-difference}
-\end{equation}
-
-Susceptibility gives an advantage over simply computing the differential of the quantity of interest with respect to the exchange rate, i.e. $\pdif{y}{R_{i}}$, because it accounts for the changing magnitude of $R_{i}$.
-At greater values of $R_{i}$, the susceptibility is decreased by a greater value with respect to $\pdif{y}{R_{i}}$.
-This accounts for how at such high values of $R_{i}$, the proportional change in $R_{i}$ as it is increased or decreased by one step $\Delta R_{i}$ is smaller.
-It also accounts for the different step sizes of $\exchrate{glc}$ and $\exchrate{amm}$, owing to the different saturation concentrations of the two nutrients.
-
-At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more susceptible to --- or more limited by --- glucose exchange at this condition.
+At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more sensitive to --- or more limited by --- glucose exchange at this condition.
 The reverse is true if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$.
-To visualise the extent to which each exchange rate limits each quantity of interest, I show the susceptibility values as arrows (figures~\ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glc}}$ and $s_{\mathrm{amm}}$ as two components of the vector that defines these arrows.
-This way, horizontal arrows indicate a strong susceptibility to glucose and vertical arrows indicate a strong susceptibility to ammonium, while the arrows point towards increasing values of the quantity of interest.
+To visualise the extent to which each exchange rate limits each quantity of interest, I show the sensitivity values as arrows (Figs.\ \ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glc}}$ and $s_{\mathrm{amm}}$ as two components of the vector that defines these arrows.
+Thus, horizontal arrows indicate a strong sensitivity to glucose and vertical arrows indicate a strong sensitivity to ammonium, while the arrows point towards increasing values of the quantity of interest.
 
-Figures~\ref{fig:model-grid-glc-ratio} and~\ref{fig:model-grid-glc-growthrate} show that the region where $\ratioabl > 1$ corresponds to a region around the boundary between the region where glucose more limits growth rate and the region where ammonium more limits growth rate, plus a region where ammonium exchange is a saturation while glucose exchange is over saturation.
+Figs.\ \ref{fig:model-grid-glc-ratio} and~\ref{fig:model-grid-glc-growthrate} show that the region where $\ratioabl > 1$ corresponds to a region around the boundary between the region where glucose more limits growth rate and the region where ammonium more limits growth rate, plus a region where ammonium exchange is a saturation while glucose exchange is over saturation.
 In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous.
 
 To explain why $\ratioabl > 1$ when ammonium exchange is under saturation and glucose is over saturation, consider equation~\ref{eq:model-ratio}.
@@ -1166,7 +1143,7 @@ Taken together with the discussion above, these effects of nutrient exchange on 
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb}
     \caption{
-      $\Tabl{carbohydrate}$
+      Predicted carbohydrate synthesis time ($\Tabl{carbohydrate}$)
     }
     \label{fig:model-grid-pyr-carb}
   \end{subfigure}%
@@ -1174,7 +1151,7 @@ Taken together with the discussion above, these effects of nutrient exchange on 
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_prot}
     \caption{
-      $\Tabl{protein}$
+      Predicted protein synthesis time ($\Tabl{protein}$)
     }
     \label{fig:model-grid-pyr-prot}
   \end{subfigure}
@@ -1183,16 +1160,15 @@ Taken together with the discussion above, these effects of nutrient exchange on 
   \centering
     \includegraphics[width=\linewidth]{ec_grid_pyr_amm_carb_to_prot}
     \caption{
-      $\Tabl{carbohydrate}/\Tabl{protein}$
+      Ratio of carbohydrate synthesis time to protein synthesis time ($\Tabl{carbohydrate}/\Tabl{protein}$)
     }
     \label{fig:model-grid-pyr-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of pyruvate ($\exchrate{pyruvate}$) and ammonium exchange rates ($\exchrate{ammonium}$) on various quantities.
-    Exchange rates are expressed in percentages of growth saturation values shown in~\ref{fig:model-saturation}: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh}.
-    Black straight lines indicate saturation values.
+    Effect of glucose ($\exchrate{pyr}$) and ammonium exchange rates ($\exchrate{amm}$) on various quantities.
+    Exchange rates are expressed in percentages of growth saturation from in Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
-    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{pyruvate}$ and $\exchrate{ammonium}$.
+    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{pyr}$ and $\exchrate{amm}$.
   }
   \label{fig:model-grid-pyr}
 \end{figure}
