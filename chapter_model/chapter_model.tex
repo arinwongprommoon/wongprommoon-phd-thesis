@@ -644,7 +644,22 @@ These results validate ablation of biomass components as a method to simulate se
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-In order to evaluate whether sequential or parallel synthesis of biomass components offers a time advantage during cell growth, I estimated the timescale of biosynthesis for either resource allocation strategy.
+% FIXME: DO feedback, after clarification
+\begin{figure}
+  \centering
+  \includegraphics[width=.9\linewidth]{ablation_example_adapted.png}
+  \caption{
+    Comparing time scales derived from ablating components of the biomass reaction (blue) and from assuming that synthesis time is proportional to the mass fraction of the biomass component (red).
+    % For each biomass component, the time $\Tiabl$ was computed according to equation~\ref{eq:model-ablated-time} (blue bars apart from leftmost column), and the time $\Tiprop$ was computed according to equation~\ref{eq:model-proportional-time} (red bars apart from leftmost column).
+    % $\Tpar$ is defined as the greatest $\Tiprop$ (equation~\ref{eq:model-b}).
+    % Blue under `all biomass' is $\Tseq$ (equation~\ref{eq:model-a}), the sum of times derived from ablation (other blue bars).
+    % Red under `all biomass' is the doubling time $t_{0}$ (equation~\ref{eq:model-doubling-time}).
+  }
+  \label{fig:model-ablate-times}
+\end{figure}
+
+
+To evaluate whether sequential or parallel synthesis of biomass components offers a time advantage during cell growth, I estimated the timescale of biosynthesis for either resource allocation strategy (Fig.\ \ref{fig:model-ablate-times}).
 
 Based on the objective function of the unmodified model, the doubling time is computed as follows:
 
@@ -700,34 +715,38 @@ For comparison, I computed estimates of the time for each biomass component, ass
   \label{eq:model-proportional-time}
 \end{equation}
 
-where $t_{0}$ is the doubling time found in equation~\ref{eq:model-doubling-time}.
+where $t_{0}$ is the doubling time found in Eq.\ \ref{eq:model-doubling-time}.
 
-To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I devise a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time, i.e.\
+To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I devise a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time.
+This is defined:
 
 \begin{equation}
   \ratioabl \coloneqq \frac{\Tseq}{\Tpar}
   \label{eq:model-ratio-simplified}
 \end{equation}
 
-$\Tseq$ represents sum of times from focusing on each biomass component --- thus representing time predicted, assuming biomass components are synthesised in turn:
+where $\Tseq$ represents the predicted growth time assuming sequential biosynthesis and $\Tpar$ represents the limiting biomass synthesis time assuming parallel biosynthesis.
+These quantities are defined:
 
 \begin{equation}
   \Tseq \coloneqq \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-a}
 \end{equation}
 
-$\Tpar$ represents the time of synthesis of the biomass component that takes the most time, if time is assumed to be proportional to mass fraction.
-This is always protein as it accounts for 52.5\% of the mass fraction (table~\ref{tab:ecyeast8-mol-weights}):
+% \begin{equation}
+%   \begin{aligned}
+%     \Tpar \coloneqq \argmax_{i} \Tiprop = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro},\\
+%     \because \argmax_{i} f_{i} = \biomfrac{protein}
+%   \end{aligned}
+%   \label{eq:model-b}
+% \end{equation}
 
 \begin{equation}
-  \begin{aligned}
-    \Tpar \coloneqq \argmax_{i} \Tiprop = \Tabl{protein} = \biomfrac{protein} \cdot \frac{\ln 2}{\gro},\\
-    \because \argmax_{i} f_{i} = \biomfrac{protein}
-  \end{aligned}
+  \Tpar \coloneqq \argmax_{i} \Tiprop
   \label{eq:model-b}
 \end{equation}
 
-$\Tpar$ thus represents the limiting, slowest process.
+As $\biomfrac{protein} = 0.525$, $\Tpar = \Tprop{protein}$.
 
 Therefore,
 
@@ -735,30 +754,16 @@ Therefore,
   \begin{aligned}
     \ratioabl &= \frac{\Tseq}{\Tpar} \\
     & = \left( \sum_i \frac{f_i}{\griabl} \right) \cdot \frac{\gro}{\biomfrac{protein}} \\
-    & = (\frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}}) \cdot \frac{\gro}{\biomfrac{protein}}
+    & = \left( \frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}} \right) \cdot \frac{\gro}{\biomfrac{protein}}
     \end{aligned}
   \label{eq:model-ratio}
 \end{equation}
 
-This expression means that the definition of the $\ratioabl$ ratio does not reduce to a trivial expression and depends on the $\gro$ and the $\griabl$ values, which are all independent of each other.
-This relationship between $\ratioabl$ and $\gro$ and $\griabl$ is explored in section~\ref{sec:model-pool}.
+The expression in Eq.\ \ref{eq:model-ratio} means that the definition of the $\ratioabl$ ratio does not reduce to a trivial expression and depends on the $\gro$ and the $\griabl$ values, which are all independent of each other.
+%This relationship between $\ratioabl$ and $\gro$ and $\griabl$ is explored in section~\ref{sec:model-pool}.
+A $\ratioabl < 1$ means that synthesising biomass components in sequence saves more time, favouring sequential biosynthesis.
+Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass components is favoured as synthesising biomass components in sequence does not save time.
 
-A $\ratioabl < 1$ means that synthesising biomass components in sequence saves more time, while $\ratioabl > 1$ indicates that parallel synthesis of biomass components is favoured as synthesising biomass components in sequence does not save time.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=.9\linewidth]{ablation_example_adapted.png}
-  \caption{
-    Comparing time scales derived from ablating components of the biomass reaction (blue) and from assuming that synthesis time is proportional to the mass fraction of the biomass component (red).
-    For each biomass component, the time $\Tiabl$ was computed according to equation~\ref{eq:model-ablated-time} (blue bars apart from leftmost column), and the time $\Tiprop$ was computed according to equation~\ref{eq:model-proportional-time} (red bars apart from leftmost column).
-    $\Tpar$ is defined as the greatest $\Tiprop$ (equation~\ref{eq:model-b}).
-    Blue under `all biomass' is $\Tseq$ (equation~\ref{eq:model-a}), the sum of times derived from ablation (other blue bars).
-    Red under `all biomass' is the doubling time $t_{0}$ (equation~\ref{eq:model-doubling-time}).
-  }
-  \label{fig:model-ablate-times}
-\end{figure}
-
-Figure~\ref{fig:model-ablate-times} summarises the variables discussed in this section.
 
 \begin{figure}
   \centering
@@ -788,17 +793,23 @@ Figure~\ref{fig:model-ablate-times} summarises the variables discussed in this s
   \end{subfigure}
   \caption{
     Comparing time scales from sequential and parallel biosynthesis in auxotrophs and deletion strains, as in figure~\ref{fig:model-ablate-times}.
-    For BY4741-background strains, supplements are simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
-    The same applied to BY4742-background strains, but lysine uptake replaces methionine uptake.
+    % For BY4741-background strains, supplements are simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
+    % The same applied to BY4742-background strains, but lysine uptake replaces methionine uptake.
   }
   \label{fig:model-ablation-strains}
 \end{figure}
 % Adding supplements, e.g. amino acids, dNTPs/NTPs, pyruvate, glucose limitation?
 % Or do C/N grid heatmaps demonstrate this.
 
-In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
-The relationship $\ratioabl < 1$ also holds for auxotrophs and deletion strains (figure~\ref{fig:model-ablation-strains}).
-This supports experimental evidence that shows that auxotrophs and deletion strains have YMCs.
+% In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
+To confirm that the advantage of the sequential biosynthesis strategy is retained in other strains, I extended the computation $\ratioabl$ and related quantities to models in which genes were deleted.
+In accordance with chapter 3, the BY4741 zwf1$\Delta$ and BY4742 tsa1$\Delta$ tsa2$\Delta$ strains were simulated.
+The deletions were made by restricting reaction fluxes that are associated with the deleted genes to zero.
+For BY4741-background strains, supplements are simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
+The same applied to BY4742-background strains, but lysine uptake replaces methionine uptake.
+Fig.\ \ref{fig:model-ablation-strains} shows that $\ratioabl < 1$ still holds for auxotrophs and deletion strains, suggesting that the sequential biosynthesis strategy remains advantageous.
+Assuming that temporal scheduling of the synthesis of biomass components during growth explains the timing of biosynthetic events in the yeast metabolic cycle, these observations supports results in chapter 3 which shows that auxotrophs and deletion strains have YMCs.
+
 
 \section{Effect of restricting the enzyme pool}
 \label{sec:model-pool}
