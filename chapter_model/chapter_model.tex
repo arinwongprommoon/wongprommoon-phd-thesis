@@ -814,58 +814,20 @@ Assuming that temporal scheduling of the synthesis of biomass components during 
 \section{Effect of restricting the enzyme pool}
 \label{sec:model-pool}
 
-There are multiple approaches to evaluate the hypothesis of whether a restriction of the proteome pool favours sequential biosynthesis of biomass components.
-Here, I discuss three commonly-used approaches --- parsimonious FBA, regularised FBA, and constraining the sum of absolute values of fluxes --- before justifying the use of directly varying a parameter in the ecYeast8 model to take advantage of GECKO.
+The yeast cell has a finite enzyme-available proteome pool, so it must decide which enzymes to allocate the greatest proportions of the pool to, for enzyme synthesis.
+In order to study this effect using the ecYeast8 model, a constraint on the proteome pool must be imposed, and I imposed this constraint by varying the enzyme-available proteome pool defined by the enzyme pool pseudoreaction (Eq.\ \ref{eq:model-gecko-enzyme-pool-flux}).
+To vary the enzyme-available proteome pool in the ecYeast8 model,
+I vary the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}) in order to change the flux available for enzyme usage pseudoreactions (equation~\ref{eq:model-gecko-enzyme-usage}).
+With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to, modelling the biological response to a restricted enzyme pool.
 
-Parsimonious FBA \parencite{lewisOmicDataEvolved2010} first uses FBA to compute the optimal growth rate, fixes this value, and then minimises the sum of gene-associated reaction fluxes while maintaining optimal growth.
-Depending on the software package, this minimisation either minimises the sum of fluxes (COBRA, for MATLAB), the sum of the absolute values of each flux (\textit{cobrapy}, for the Python programming language) or squared sum (COBREXA, for the Julia programming language).
-I reject this approach because it fixes the growth rate, but I aim to see how constraints affect cell strategies, including the growth rate, as the constraints vary along a spectrum.
-Additionally, parsimonious FBA relies on reducing the subset of genes that contribute to the solution.
-In other words, it modifies the model and it also relies on good gene-protein annotations, with the latter not always guaranteed.
-
-Regularised FBA is defined as adding a regularisation parameter to the objective function.
-\textcite{vijayakumarHybridFluxBalance2020} describe a quadratic program for solving a regularised two-level FBA:
-
-\begin{equation}
-  \max g^\intercal v - \frac{\sigma}{2}v^\intercal v
-  \label{eq:model-regularised-fba}
-\end{equation}
-
-where $g$ is the objective function, $v$ is the flux vector, and $\sigma$ is a regularisation parameter than can be tuned.
-
-I reject this approach because it requires a quadratic solver, making it difficult and computationally expensive to implement.
-% Add figure to show this unexpected behaviour?
-Additionally, the behaviour is not as expected when I implemented it: the growth rate does not change as the regularisation parameter $\sigma$ varies.
-I expected a trade-off between growth and reaction fluxes and the balance between these two quantities to change as this parameter varies.
-
-Constraining the sum of absolute values of fluxes is simply defined as fixing
-
-\begin{equation}
-  \sum_{i} |v_{i}| < c
-  \label{eq:model-constrain-sumfluxes}
-\end{equation}
-
-where $v_{i}$ represents each flux of each reaction, and $c$ is a constant to be varied.
-
-This is reasonable for the original Yeast8 model without the enzyme constraint (as opposed to ecYeast8).
-% ADD PLOTS TO SHOW THIS?
-As $c$ decreases to 0, the original growth rate $\gro$ and ablated growth rates $\griabl$ decrease to 0 because at $c$ values near 0, flux values, including that of the biomass reaction, can only take small values.
-However, if this approach is applied to ecYeast8,
-there is double imposition of constraints: on
-(a) constraints on enzyme usage imposed on the enzyme-usage pseudoreactions created by GECKO, and on
-(b) constraints on sum of the absolute values of fluxes.
-This will confuse interpretation.
-
-Therefore, I decide to vary the enzyme-available proteome pool to study proteomic constraints.
-This takes advantage of a GECKO formalism that is easy to modify and interpret.
-
+% TODO: Clarify what sort of changes need to be made, especially in the text.  I struggle to understand what the better alternative should be like, at the moment.
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
    \caption{
-     Effect on ratio ($\ratioabl$), $\epool^{\prime} \leq 2\epool$.
+     Effect on ratio ($\ratioabl$), $\epool^{\prime}/\epool \leq 2$.
    }
    \label{fig:model-pool-ratio}
   \end{subfigure}%
@@ -873,7 +835,7 @@ This takes advantage of a GECKO formalism that is easy to modify and interpret.
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_20_shrinkyaxis}
    \caption{
-     Effect on ratio ($\ratioabl$), $\epool^{\prime} \leq 20\epool$.
+     Effect on ratio ($\ratioabl$), $\epool^{\prime}/\epool \leq 20$.
    }
    \label{fig:model-pool-ratio-20}
   \end{subfigure}
@@ -882,7 +844,7 @@ This takes advantage of a GECKO formalism that is easy to modify and interpret.
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr}
    \caption{
-     Effect on wild type growth rate ($\gro$), $\epool^{\prime} \leq 2\epool$.
+     Effect on wild type growth rate ($\gro$), $\epool^{\prime}/\epool \leq 2$.
    }
    \label{fig:model-pool-growthrate}
   \end{subfigure}%
@@ -890,7 +852,7 @@ This takes advantage of a GECKO formalism that is easy to modify and interpret.
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr_20}
    \caption{
-     Effect on wild type growth rate ($\gro$), $\epool^{\prime} \leq 20\epool$.
+     Effect on wild type growth rate ($\gro$), $\epool^{\prime}/\epool \leq 20$.
    }
    \label{fig:model-pool-growthrate-20}
   \end{subfigure}
@@ -899,7 +861,7 @@ This takes advantage of a GECKO formalism that is easy to modify and interpret.
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components}
    \caption{
-     Effect on ablated growth rates ($\griabl$), $\epool^{\prime} \leq 2\epool$.
+     Effect on ablated growth rates ($\griabl$), $\epool^{\prime}/\epool \leq 2$.
    }
    \label{fig:model-pool-ablated}
   \end{subfigure}%
@@ -907,48 +869,46 @@ This takes advantage of a GECKO formalism that is easy to modify and interpret.
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components_20}
    \caption{
-     Effect on ablated growth rates ($\griabl$), $\epool^{\prime} \leq 20\epool$.
+     Effect on ablated growth rates ($\griabl$), $\epool^{\prime}/\epool \leq 20$
    }
    \label{fig:model-pool-ablated-20}
   \end{subfigure}
 
   \caption{
-    Constraining the proteome pool available for synthesis enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases (\ref{fig:model-pool-ratio}).
-    Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}).
-    These values determine the ratio according to equation~\ref{eq:model-ratio}.
+    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on $\ratioabl$ and growth rates.
+    % Constraining the proteome pool available for synthesis enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases (\ref{fig:model-pool-ratio}).
+    % Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}).
+    % These values determine the ratio according to equation~\ref{eq:model-ratio}.
   }
   \label{fig:model-pool}
 \end{figure}
 
-To vary the enzyme-available proteome pool in the ecYeast8 model,
-I vary the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}) in order to change the flux available for enzyme usage pseudoreactions (equation~\ref{eq:model-gecko-enzyme-usage}).
-My reasoning is that with a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to.
-This models the biological situation in which the cell has a smaller enzyme-available proteome pool, so the cell must decide which enzymes to allocate the greatest proportions of the pool to, for enzyme synthesis.
+Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available for enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases.
+Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (Fig.\ \ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (Fig.\ \ref{fig:model-pool-growthrate}).
+These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling changes in $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (appendix ...).
 
-Figure~\ref{fig:model-pool} shows the results of my investigation.
-% In full: 0.103697326777848
-I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
-When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
-In this region, growth rate increases linearly as $\epool$ increases.
-With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
-As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
-But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
-This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
-% TODO: Come up with a better (biological) interpretation -- consult some org notes.
-The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
-This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
-
-To explain the increase in $\ratioabl$ as $\epool^{\prime}$ increases, I consider the behaviour of $\gro$ and $\griabl$ values with respect to $\epool^{\prime}$ in intervals.
-As a simplification, I express the size of $\epool^{\prime}$ in multiples of the original $\epool$ and denote the size of $\epool^{\prime}$ as $x$.
+% Figure~\ref{fig:model-pool} shows the results of my investigation.
+% % In full: 0.103697326777848
+% I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
+% When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
+% In this region, growth rate increases linearly as $\epool$ increases.
+% With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
+% As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
+% But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
+% This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
+% % TODO: Come up with a better (biological) interpretation -- consult some org notes.
+% The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
+% This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
 
 Let $\ratioabl$, given by equation~\ref{eq:model-ratio}, depend on $x$:
 
 \begin{equation}
-  \label{eq:model-ratio-x}
   \ratioabl(x) = \left( \sum_i \frac{f_i}{\griabl(x)} \right) \cdot \frac{\gro(x)}{\biomfrac{protein}}
+  \label{eq:model-ratio-x}
 \end{equation}
 
-This expression takes into account how $\gro$ and $\griabl$ values vary with $x$, and how $f_{i}$ values are constants.
+where $x = \epool^{\prime}/\epool$.
+The expression in Eq.\ \ref{eq:model-ratio-x} takes into account how $\gro$ and $\griabl$ values vary with $x$, and how $f_{i}$ values are constants.
 
 We thus obtain:
 \begin{equation}
@@ -960,8 +920,10 @@ We thus obtain:
   \label{eq:model-ratio-diff}
 \end{equation}
 
-Consider $0 \leq x \leq 0.5$.
-In this region of $x$, let $\gro = k_{0}x$ and $\griabl = k_{i}x$, where constants $k_{0}, k_{i} > 0$.
+To explain the increase in $\ratioabl$ as $\epool^{\prime}$ increases, I consider the behaviour of $\gro$ and $\griabl$ values with respect to $\epool^{\prime}$ in intervals.
+
+With reference to Fig.\ \ref{fig:model-pool}, consider $0 \leq x \leq 0.5$.
+In this region of $x$, based on the observations in the figure, we model $\gro = k_{0}x$ and $\griabl = k_{i}x$, where constants $k_{0}, k_{i} > 0$.
 This models how these values initially increase linearly in figure~\ref{fig:model-pool}.
 Equation~\ref{eq:model-ratio-diff} thus becomes:
 \begin{equation}

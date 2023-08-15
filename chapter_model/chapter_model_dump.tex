@@ -1,0 +1,45 @@
+
+There are multiple approaches to evaluate the hypothesis of whether a restriction of the proteome pool favours sequential biosynthesis of biomass components.
+Here, I discuss three commonly-used approaches --- parsimonious FBA, regularised FBA, and constraining the sum of absolute values of fluxes --- before justifying the use of directly varying a parameter in the ecYeast8 model to take advantage of GECKO.
+
+Parsimonious FBA \parencite{lewisOmicDataEvolved2010} first uses FBA to compute the optimal growth rate, fixes this value, and then minimises the sum of gene-associated reaction fluxes while maintaining optimal growth.
+Depending on the software package, this minimisation either minimises the sum of fluxes (COBRA, for MATLAB), the sum of the absolute values of each flux (\textit{cobrapy}, for the Python programming language) or squared sum (COBREXA, for the Julia programming language).
+I reject this approach because it fixes the growth rate, but I aim to see how constraints affect cell strategies, including the growth rate, as the constraints vary along a spectrum.
+Additionally, parsimonious FBA relies on reducing the subset of genes that contribute to the solution.
+In other words, it modifies the model and it also relies on good gene-protein annotations, with the latter not always guaranteed.
+
+Regularised FBA is defined as adding a regularisation parameter to the objective function.
+\textcite{vijayakumarHybridFluxBalance2020} describe a quadratic program for solving a regularised two-level FBA:
+
+\begin{equation}
+  \max g^\intercal v - \frac{\sigma}{2}v^\intercal v
+  \label{eq:model-regularised-fba}
+\end{equation}
+
+where $g$ is the objective function, $v$ is the flux vector, and $\sigma$ is a regularisation parameter than can be tuned.
+
+I reject this approach because it requires a quadratic solver, making it difficult and computationally expensive to implement.
+% Add figure to show this unexpected behaviour?
+Additionally, the behaviour is not as expected when I implemented it: the growth rate does not change as the regularisation parameter $\sigma$ varies.
+I expected a trade-off between growth and reaction fluxes and the balance between these two quantities to change as this parameter varies.
+
+Constraining the sum of absolute values of fluxes is simply defined as fixing
+
+\begin{equation}
+  \sum_{i} |v_{i}| < c
+  \label{eq:model-constrain-sumfluxes}
+\end{equation}
+
+where $v_{i}$ represents each flux of each reaction, and $c$ is a constant to be varied.
+
+This is reasonable for the original Yeast8 model without the enzyme constraint (as opposed to ecYeast8).
+% ADD PLOTS TO SHOW THIS?
+As $c$ decreases to 0, the original growth rate $\gro$ and ablated growth rates $\griabl$ decrease to 0 because at $c$ values near 0, flux values, including that of the biomass reaction, can only take small values.
+However, if this approach is applied to ecYeast8,
+there is double imposition of constraints: on
+(a) constraints on enzyme usage imposed on the enzyme-usage pseudoreactions created by GECKO, and on
+(b) constraints on sum of the absolute values of fluxes.
+This will confuse interpretation.
+
+Therefore, I decide to vary the enzyme-available proteome pool to study proteomic constraints.
+This takes advantage of a GECKO formalism that is easy to modify and interpret.
