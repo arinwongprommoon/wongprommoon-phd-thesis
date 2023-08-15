@@ -887,103 +887,90 @@ Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available f
 Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (Fig.\ \ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (Fig.\ \ref{fig:model-pool-growthrate}).
 These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling changes in $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
 
-% Figure~\ref{fig:model-pool} shows the results of my investigation.
-% % In full: 0.103697326777848
-% I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
-% When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
-% In this region, growth rate increases linearly as $\epool$ increases.
-% With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
-% As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
-% But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
-% This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
-% % TODO: Come up with a better (biological) interpretation -- consult some org notes.
-% The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
-% This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
+% FIXME: Make this less like a lecture and link interpretations to hypotheses/etc.
+Figure~\ref{fig:model-pool} shows the results of my investigation.
+% In full: 0.103697326777848
+I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
+When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
+In this region, growth rate increases linearly as $\epool$ increases.
+With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
+As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
+But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
+This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
+% TODO: Come up with a better (biological) interpretation -- consult some org notes.
+The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
+This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
 
 
 \section{Effect of carbon and nitrogen sources}
 \label{sec:model-exchange}
 
-\subsection{Exchange reaction saturation}
+% FIXME: Be consistent in referring to exchange rate/saturation.  Come up with some phrase to use.
+\subsection{Saturation of exchange reactions}
 \label{subsec:model-saturation}
 
-Genome-scale metabolic models typically include nutrient exchange reactions to simulate the presence of certain nutrients in the growth medium.
-Because FBA does not account for substrate concentrations, studying the effect of nutrient sources using FBA involves constraining the flux of exchange reactions so that simulated growth rate match experimental observations, as performed by \textcite{elsemmanWholecellModelingYeast2022} to study the effect of glucose.
+To explore whether sequential synthesis of biomass components remains advantageous across nutrient conditions, in addition to across gene deletion strains, I investigate how changes in the concentrations of carbon and nitrogen sources affect the resource allocation strategy in yeast.
+I investigated ammonium as a nitrogen source as it is the form of nitrogen in minimal growth media, and investigates two carbon sources: glucose and pyruvate.
+Glucose is the preferred carbon source for budding yeast, while studying pyruvate would give an insight into a non-fermentable carbon source.
 
-Using the ecYeast8.6.0 model, I varied the flux bounds of some exchange reactions and recorded how they affected simulated growth rate.
-I did this with two carbon sources, glucose and pyruvate, and with ammonium as a nitrogen source (figure~\ref{fig:model-saturation}).
+In order to conduct this investigation using FBA, ranges of nutrient exchange fluxes that are suitable for the model need to be found.
+Genome-scale metabolic models include nutrient exchange reactions whose flux bounds can be unrestricted to simulate the presence of certain nutrients in the growth medium.
+% FIXME: This sentence
+In contrast to simulating the presence or absence of nutrients, simulating a certain concentration of a nutrient requires setting specific flux bounds.
+Because FBA does not account for substrate concentrations, the concentration of nutrients cannot directly be used to set flux bounds.
+Instead, studies constrain the flux of exchange reactions in such a way that the optimised growth rate matches experimental observations \parencite{elsemmanWholecellModelingYeast2022}.
+% TODO: Find other studies that did the same and cite them here.
 
-% TODO: Remove the right panel figs
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{saturation_glc}
     \caption{
-      Effect of glucose exchange on growth rate, with ammonium exchange flux unrestricted.
-      Growth rate saturation is at \SI{8.69}{\mmolgdwh}.
+      % Effect of glucose exchange on growth rate, with ammonium exchange flux unrestricted.
+      % Growth rate saturation is at \SI{8.69}{\mmolgdwh}.
     }
     \label{fig:model-saturation-glucose}
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{saturation_diff_glc}
-    \caption{
-    }
-    \label{fig:model-saturation-diff-glucose}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
     \includegraphics[width=\linewidth]{saturation_pyr}
     \caption{
-      Effect of pyruvate exchange on growth rate, with ammonium exchange flux unrestricted.
-      Growth rate saturation is at \SI{4.44}{\mmolgdwh}.
+      % Effect of pyruvate exchange on growth rate, with ammonium exchange flux unrestricted.
+      % Growth rate saturation is at \SI{4.44}{\mmolgdwh}.
     }
     \label{fig:model-saturation-pyruvate}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{saturation_diff_pyr}
-    \caption{
-    }
-    \label{fig:model-saturation-diff-pyruvate}
   \end{subfigure}
 
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{saturation_amm}
     \caption{
-      Effect of ammonium exchange on growth rate, with exchanges of carbon sources set to growth rate saturation based on figures~\ref{fig:model-saturation-glucose} and ~\ref{fig:model-saturation-pyruvate}.
-      Growth rate saturation is at \SI{1.48}{\mmolgdwh} in glucose, and
-      at \SI{1.00}{\mmolgdwh} in pyruvate.
+      % Effect of ammonium exchange on growth rate, with exchanges of carbon sources set to growth rate saturation based on figures~\ref{fig:model-saturation-glucose} and ~\ref{fig:model-saturation-pyruvate}.
+      % Growth rate saturation is at \SI{1.48}{\mmolgdwh} in glucose, and
+      % at \SI{1.00}{\mmolgdwh} in pyruvate.
     }
     \label{fig:model-saturation-ammonium}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{saturation_diff_amm}
-    \caption{
-    }
-    \label{fig:model-saturation-diff-ammonium}
   \end{subfigure}
 
   \caption{
-    Effect of nutrient exchange reactions on growth rate, predicted by the ecYeast8 model (left panels).
-    Saturation values were found by computing differences of growth rates with respect to exchange rates
-    (right panels \ref{fig:model-saturation-diff-glucose},~\ref{fig:model-saturation-diff-pyruvate},~\ref{fig:model-saturation-diff-ammonium}),
-    and saturation was termed as the exchange rate at which the differences dropped below a small tolerance value $\epsilon = \num{1e-8}$.
+    Effect of glucose (\ref{fig:model-saturation-glucose}), pyruvate (\ref{fig:model-saturation-pyruvate}), and ammonium (\ref{fig:model-saturation-ammonium}) exchange reactions on growth rate.
   }
   \label{fig:model-saturation}
 \end{figure}
 
-The growth saturation curve for glucose (figure~\ref{fig:model-saturation-glucose}) is similar to that simulated by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
-The saturation point is well below the maximal glucose consumption rate of \SIrange{16}{19}{\mmolgdwh} as determined by GC-MS-based metabolic flux ratio analysis \parencite{blankTCACycleActivity2004}.
-In addition, the saturation curves show that the maximum growth rate on glucose is \SI{0.38}{\hour^{-1}} while the maximum growth rate on pyruvate is \SI{0.25}{\hour^{-1}} (figure~\ref{fig:model-saturation-pyruvate}).
+The saturation point of exchange reactions functions as a useful reference for exchange reaction flux values.
+This saturation point is defined as the flux of an exchange reaction above which the objective function reaches its maximum.
+Fig.\ \ref{fig:model-saturation} shows growth saturation curves that illustrate the effect of glucose, pyruvate, and ammonium exchange rates on the growth rate.
+Simulation results show that the maximum growth rate on glucose (\SI{0.38}{\hour^{-1}}) is greater than the maximum growth rate on pyruvate (\SI{0.25}{\hour^{-1}}), and
+the growth rate saturation point for ammonium is determined by the maximal growth rate on the carbon source (Fig.\ \ref{fig:model-saturation-ammonium}).
+
+These growth saturation curves agree with similar studies.
+Specifically, the growth saturation curve for glucose (Fig.\ \ref{fig:model-saturation-glucose}) is similar to that simulated by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
 The maximum growth rate on glucose agrees with \textcite{domenzainReconstructionCatalogueGenomescale2022}, which used GECKO 2 to create the ecYeast7 model to predict maximum growth rates on various carbon sources.
-This paper did not predict growth rate on pyruvate, but a lower maximum growth rate on the non-fermentable carbon source compared to glucose agrees with the biochemical basis and is also consistent with my experimental observations.
-Finally, the growth rate saturation point for ammonium is determined by the maximal growth rate on the carbon source (figure~\ref{fig:model-saturation-ammonium}).
-For my subsequent investigation of the effect of carbon and nitrogen sources on the model, I use the exchange rates found in this investigation as saturation values.
+\textcite{domenzainReconstructionCatalogueGenomescale2022} did not simulate growth on pyruvate, but a lower maximum growth rate on pyruvate is consistent with my experimental observations.
+
 
 \subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
 \label{subsec:model-grid}
