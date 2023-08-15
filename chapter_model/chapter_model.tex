@@ -975,6 +975,9 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
 \subsection{Effect of carbon and nitrogen sources on biomass synthesis strategies}
 \label{subsec:model-grid}
 
+\subsubsection{Glucose and ammonium}
+\label{subsec:model-grid-glucose}
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
@@ -1137,6 +1140,9 @@ Considering $\Tabl{carbohydrate}$ and $\Tabl{protein}$, glucose exchange limits 
 In contrast, ammonium exchange limits protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low, owing to the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
 Taken together with the discussion above, these effects of nutrient exchange on protein and carbohydrate synthesis times thus explain the patterns of $\ratioabl$ and $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as both exchange reactions change in flux.
 
+\subsubsection{Pyruvate and ammonium}
+\label{subsec:model-grid-pyruvate}
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
@@ -1195,6 +1201,13 @@ To investigate the effect on a non-fermentable carbon source, I repeated the inv
 Overall, pyruvate seems to represent an extreme case of the glucose investigation.
 The previous discussion of how the quantities of interest vary as exchange rates vary applies.
 Though, the change of behaviour can be explained by how the growth saturation curve under pyruvate has a different shape from the growth saturation curve under glucose.
+
+
+\subsection{Relationship between proteome allocation and resource allocation strategy}
+\label{subsec:model-rank}
+
+\subsubsection{Glucose and ammonium}
+\label{subsec:model-rank-glucose}
 
 \begin{figure}
   \centering
@@ -1255,6 +1268,10 @@ This separation of biomass components into two groups according to enzyme-availa
 At least, the lipids and proteins can be synthesised together, followed by the other components; the order by which these two groups are synthesised can be reversed.
 The high $\ratioabl$ condition, in which both glucose and ammonium are near-limiting, gives the opposite picture.
 Here, allocation of the proteome to enzymes is similar across all situations, suggesting that parallel biosynthesis of biomass components may be advantageous in this situation.
+
+
+\subsubsection{Pyruvate and ammonium}
+\label{subsec:model-rank-pyruvate}
 
 \begin{figure}
   \centering
