@@ -506,6 +506,9 @@ Plus, the sum of stoichiometric coefficients are not always verified in genome-s
 \section{Ablating pseudometabolites from the biomass reaction}
 \label{sec:model-yeast8-pseudometabolites}
 
+\subsection{Definition of ablation}
+\label{sec:model-yeast8-pseudometabolites-def}
+
 To simulate producing each class of biomass component in turn,
 I take advantage of pseudometabolites in ecYeast8 to remove each of them in turn from the biomass reaction ---
 in other words, ablating pseudometabolites from the biomass reaction.
@@ -541,8 +544,13 @@ This process was repeated for the other pseudometabolites.
   \label{fig:model-ablate-fluxes}
 \end{figure}
 
+
+\subsection{Effect on allocation of proteome}
+\label{sec:model-yeast8-pseudometabolites-allocation}
+
+To evaluate whether ablation leads to changes of model behaviour that reflect cellular biochemistry, I quantified how proteome allocation to enzymes changes across rounds of ablation.
 When the model prioritises a different biomass component in each round of ablation, the model partitions the limited proteome available for enzyme production differently.
-In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) is different from each other and from the non-ablated case.
+In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) is different from each other and from the non-ablated case, in which all biomass components are synthesised in parallel.
 Optimising the objective function as each pseudometabolite is prioritised affects the predicted growth rates (Fig.\ \ref{fig:model-ablate-fluxes}).
 
 Subsystem information aids interpretation of these changes.
@@ -550,11 +558,11 @@ Here, I match the flux carried by each enzyme usage pseudoreaction to the enzyme
 If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
 Then, the subsystem associated with each enzyme-catalysed reaction is taken from the gene-protein map, and noted.
 
-To quantify changes in proteome allocation across rounds of ablation, I compute the $\log_{2}(\mathrm{FC})$ of fluxes relative to the non-ablated case.
+To quantify changes in proteome allocation across rounds of ablation, I compute the $\log_{2}(\mathrm{FC})$ of fluxes relative to the non-ablated, parallel case.
 This is defined as:
 
 \begin{equation}
-  \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}^{\prime}}{e_{i, \mathrm{original}}^{\prime}} \right)
+  \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}^{\prime}}{e_{i, \mathrm{par}}^{\prime}} \right)
   \label{eq:model-foldchange}
 \end{equation}
 
@@ -569,8 +577,8 @@ where, to ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be defined for all $i$ a
   \label{eq:model-epsilon-round}
 \end{equation}
 
-where $e$ is either $e_{i,j}$ or $e_{i, \mathrm{original}}$.
-Here, $e_{i, \mathrm{original}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-fba-constraints-extended}) in the non-ablated case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
+where $e$ is either $e_{i,j}$ or $e_{i, \mathrm{par}}$.
+Here, $e_{i, \mathrm{par}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-fba-constraints-extended}) in the non-ablated, parallel case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
 
 The value $\epsilon$ is defined as:
 
@@ -588,7 +596,7 @@ assuming a reasonable minimum reaction flux of \SI{1}{\molecule~\cell^{-1}~\hour
 
 If $\log_{2}(\mathrm{FC_{i,j}}) > 0$, this indicates that the cell allocates more of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
 Conversely, if $\log_{2}(\mathrm{FC_{i,j}}) < 0$, the cell allocates less of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
-In addition, if there is a case of enzyme expression switching on, evidenced by $e_{i, \mathrm{original}} = 0$, $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
+In addition, if there is a case of enzyme expression switching on, evidenced by $e_{i, \mathrm{par}} = 0$, $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
 Conversely, if there is a case of an enzyme expression switching off, evidenced by $e_{i, j} = 0$, $e_{i,j}$ $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
 
 \begin{figure}
@@ -600,7 +608,7 @@ Conversely, if there is a case of an enzyme expression switching off, evidenced 
     Each column shows the component that remains in each round of pseudometabolite ablation (labels on top).
     Each row represents an enzyme, and rows are grouped by subsystem (labels on left).
     Colours represent $\log_{2}(\mathrm{FC})$ (Eq.\ \ref{eq:model-foldchange}) showing how enzyme usage fluxes change in rounds of ablation: green shows an increase, while pink shows a decrease.
-    Rows in which $|\log_{2}(\mathrm{FC})| < 11$ for all biomass components are excluded to restrict the number of reactions ($n = 3897$) for visualisation.
+    Rows in which $|\log_{2}(\mathrm{FC})| < 11$ for all biomass components are excluded to restrict the number of reactions ($n = \num{3897}$) for visualisation.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
@@ -609,20 +617,29 @@ Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes calc
 In particular, it shows:
 
 \begin{enumerate}
-  \item In most cases, enzymes are `switched-off', though lipid-prioritised biosynthesis is most similar to the parallel case.
-  \item Increased fatty acid biosynthesis, glycerolipid metabolism, glycerophospholipid metabolism, inositol phosphate metabolism, steroid biosynthesis, and terpenoid backbone biosynthesis when lipid is prioritised.
-        Decreases in amino acid metabolism, which varied depending on the amino acid.
-        Decreased oxidative phosphorylation and TCA cycle.
-  \item Small increases in amino acid metabolism, tRNA metabolism, and oxidative phosphorylation when protein is prioritised.
-        Decrease in glycine, serine, and threonine metabolism is strong in carbohydrate and ion, but weaker in DNA, RNA, and cofactor prioritisation.
+  \item When any particular biomass component is prioritised, the cell de-allocates its proteome to most of its enzymes, as evidenced by $\log_{2}(\mathrm{FC}_{i,j}) < 0$ for most values of $i, j$.
+        However, there are cases in which there are strong increases in allocation, as shown by $\log_{2}(\mathrm{FC}_{i,j}) > 0$.
+        For example, when cofactors are prioritised, there are strong increases in biosynthesis of unsaturated fatty acids and in riboflavin metabolism.
+        Additionally, there are strong increases in oxidative phosphorylation when carbohydrate, DNA, RNA, cofactor, or ion is prioritised.
+  \item When the cell prioritises lipid biosynthesis, it exhibits the least change relative to the parallel (non-ablated case), compared to cases in which other biomass components are prioritised.
+        The changes include increases of fluxes in the subsystems of fatty acid biosynthesis, glycerolipid metabolism, glycerophospholipid metabolism, inositol phosphate metabolism, steroid biosynthesis, and terpenoid backbone.
+        Given that these subsystems are directly related to lipid metabolism, such changes are expected.
+        In addition, during lipid biosynthesis, the model shows decreases of fluxes in oxidative phosphorylation, the TCA cycle, and in amino acid metabolism, with fluxes varying depending on the amino acid.
+  \item When the cell prioritises protein biosynthesis, it shows small increases in fluxes associated with amino acid metabolism, tRNA metabolism, and oxidative phosphorylation.
+        Such increases are expected as these led to production of substrates that are required for translation.
+        Conversely, when other biomass components (carbohydrate, ion, DNA, RNA, and cofactor) are prioritised, there are decreases in fluxes in glycine, serine, and threonine metabolism.
+  \item When the cell prioritises carbohydrate biosynthesis, there is an increase in fructose metabolism, mannose metabolism, N-glycan biosynthesis, and starch and sucrose metabolism, in contrast to the other biomass components.
+        This is expected given that these reactions relate directly to pathways for synthesis of carbohydrates.
+  \item When the cell prioritises RNA biosynthesis, there are increases in the purine metabolism and pyrimidine metabolism subsystems, along with a mixed picture in the pentose phosphate pathway.
+        The increases are expected given the presence of purines and pyrimidines in RNA and the role of the pentose phosphate pathway in generating the precursors for these compounds.
+        However, these subsystems show weak decreases in flux when DNA is prioritised, though the enzyme usage flux profile overall is similar to when RNA is prioritised.
   \item Increase in fructose and mannose metabolism when carbohydrate is prioritised.
         Strong increase in riboflavin metabolism when cofactor is prioritised (riboflavin is a cofactor).
         Increase in pentose phosphate pathway, purine metabolism, and pyrimidine metabolism when RNA is prioritised.
-        However, decrease in pentose phosphate pathway when DNA is prioritised.
-  \item For carbohydrate, DNA, RNA, cofactor, ion, strong increases in glycolysis/glu\-co\-neo\-ge\-ne\-sis and oxidative phosphorylation.
 \end{enumerate}
 
-In sum, changes in allocation in rounds of ablation, by subsystem, is biologically relevant and is reasonable given the roles of the enzymes.
+Overall, Fig.\ \ref{fig:model-ablate-enz-use} thus shows that in each round of ablation, when each biomass component is prioritised, the cell re-allocated its limited proteome to enzymes that have roles related to the synthesis of each biomass component.
+These results validate ablation of biomass components as a method to simulate sequential synthesis of biomass components by the cell, as the changes of fluxes reflect cellular biochemistry.
 
 
 \section{Estimating timescale of biosynthesis}
