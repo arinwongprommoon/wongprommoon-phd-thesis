@@ -595,11 +595,12 @@ Conversely, if there is a case of an enzyme expression switching off, evidenced 
   \centering
   \includegraphics[width=.8\linewidth]{allocation_fc}
   \caption{
-    The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
-    Each column shows the component that remains in each round of pseudometabolite ablation.
-    Each row represents an enzyme, and rows are grouped by subsystem.
-    Colours represent $\log_{2}(\mathrm{FC})$ (Eq.\ \ref{eq:model-foldchange}) showing how enzyme usage fluxes (Eq.\ \ref{eq:model-gecko-enzyme-usage}) change in rounds of ablation: green shows an increase, while pink shows a decrease.
-    %Cases where $|\log_{2}(\mathrm{FC})| < 17$ are excluded to restrict the number of reactions ($n = 3897$) to aid display purposes.
+    $\log_{2}(\mathrm{FC})$ of enzyme usage reaction flux (Eq.\ \ref{eq:model-gecko-enzyme-usage}) in rounds of ablation, according to biomass component prioritised.
+    %The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
+    Each column shows the component that remains in each round of pseudometabolite ablation (labels on top).
+    Each row represents an enzyme, and rows are grouped by subsystem (labels on left).
+    Colours represent $\log_{2}(\mathrm{FC})$ (Eq.\ \ref{eq:model-foldchange}) showing how enzyme usage fluxes change in rounds of ablation: green shows an increase, while pink shows a decrease.
+    Rows in which $|\log_{2}(\mathrm{FC})| < 11$ for all biomass components are excluded to restrict the number of reactions ($n = 3897$) for visualisation.
   }
   \label{fig:model-ablate-enz-use}
 \end{figure}
