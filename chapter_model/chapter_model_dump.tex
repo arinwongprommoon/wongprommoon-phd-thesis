@@ -62,3 +62,49 @@ Susceptibility gives an advantage over simply computing the differential of the 
 At greater values of $R_{i}$, the susceptibility is decreased by a greater value with respect to $\pdif{y}{R_{i}}$.
 This accounts for how at such high values of $R_{i}$, the proportional change in $R_{i}$ as it is increased or decreased by one step $\Delta R_{i}$ is smaller.
 It also accounts for the different step sizes of $\exchrate{glc}$ and $\exchrate{amm}$, owing to the different saturation concentrations of the two nutrients.
+
+
+
+
+
+To explain why $\ratioabl > 1$ when ammonium exchange is under saturation and glucose is over saturation, consider equation~\ref{eq:model-ratio}.
+If we assume that $\frac{f_i}{\griabl}$ for $i$ other than carbohydrate and protein changes negligibly --- justified by the small $f_{i}$ values for these other biomass components --- we write:
+
+\begin{equation}
+  \ratioabl \approx (k + \frac{\biomfrac{protein}}{\grabl{protein}} + \frac{\biomfrac{carbohydrate}}{\grabl{carbohydrate}}) \cdot \frac{\gro}{\biomfrac{protein}}
+  \label{eq:model-ratio-assume}
+\end{equation}
+
+where $k$ is a constant.
+
+In the glucose-limiting region, as $\exchrate{glc}$ increases, under saturation,
+\begin{itemize}
+  \item $\gro$ increases,
+  \item $\grabl{carbohydrate}$ increases, and
+  \item $\grabl{protein}$ increases, while
+  \item $\ratioabl$ stays constant.
+\end{itemize}
+
+In the nitrogen-limiting region, as $\exchrate{amm}$ increases, under saturation,
+\begin{itemize}
+  \item $\gro$ increases,
+  \item $\grabl{carbohydrate}$ stays constant, and
+  \item $\grabl{protein}$ increases, while
+  \item $\ratioabl$ increases.
+\end{itemize}
+
+Based on the glucose-limiting region, the increases in $\grabl{carbohydrate}$ and $\grabl{protein}$ in the carbon-limiting case are just enough to balance the increase in $\gro$.
+Then, in the nitrogen-limiting case, if there is no increase in $\grabl{carbohydrate}$, then the combined effect of $\grabl{carbohydrate}$ and $\grabl{protein}$ no longer balance the increase in $\gro$.
+This thus explains why $\ratioabl$ increases in this case.
+
+If both nutrients are limiting, as $(\exchrate{glc}, \exchrate{amm})$ varies along the curve from $(0, 0)$ to $(\exchrate{glc, saturation}, \exchrate{amm, saturation})$ that goes through such conditions, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase, explaining why $\ratioabl$ remain roughly at the same high values greater than 1.
+Thus, the region where $\ratioabl > 1$ where both glucose and ammonium are near-limiting can be seen as where the behaviour of the glucose-limiting and ammonium-limiting cases meet.
+
+
+
+
+
+The model does not account for varying protein fractions and other parameters that affect the size of $\epool$ during growth and division, and across different conditions.
+For instance, \textcite{elsemmanWholecellModelingYeast2022} state that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
+However, because I find that $\epool$ affects the growth rate, there may be a circular relationship, and there is no guarantee that parameter values will converge if I tune the $\epool^{\prime}$ to obtain a $\gro$ that in turn affects $\epool^{\prime}$.
+Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, my investigation is perhaps sufficient.

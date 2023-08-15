@@ -327,7 +327,7 @@ Therefore, I computed the mass fractions of each biomass component based on thei
 Table~\ref{tab:ecyeast8-mol-weights} summarises the molecular weight of the pseudometabolites.
 As validation of the calculations of molecular weights, the ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}.
 
-Adding together values in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns} gives a  molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
+Adding together values in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns} gives a molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
 In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
 Plus, the sum of stoichiometric coefficients are not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
 
@@ -891,41 +891,9 @@ The reverse is true if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\m
 To visualise the extent to which each exchange rate limits each quantity of interest, I show the sensitivity values as arrows (Figs.\ \ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glc}}$ and $s_{\mathrm{amm}}$ as two components of the vector that defines these arrows.
 Thus, horizontal arrows indicate a strong sensitivity to glucose and vertical arrows indicate a strong sensitivity to ammonium, while the arrows point towards increasing values of the quantity of interest.
 
-Figs.\ \ref{fig:model-grid-glc-ratio} and~\ref{fig:model-grid-glc-growthrate} show that the region where $\ratioabl > 1$ corresponds to a region around the boundary between the region where glucose more limits growth rate and the region where ammonium more limits growth rate, plus a region where ammonium exchange is a saturation while glucose exchange is over saturation.
+Fig.\ \ref{fig:model-grid-glc-ratio} shows two regions of interest: where $\ratioabl > 1$, in which parallel biosynthesis is advantageous, and where $\ratioabl < 1$, where sequential biosynthesis is advantageous.
+Parallel biosynthesis is advantageous in in two circumstances: when both glucose and ammonium limit the growth rate, and when ammonium exchange is at saturation while glucose exchange is greater than saturation.
 In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous.
-
-To explain why $\ratioabl > 1$ when ammonium exchange is under saturation and glucose is over saturation, consider equation~\ref{eq:model-ratio}.
-If we assume that $\frac{f_i}{\griabl}$ for $i$ other than carbohydrate and protein changes negligibly --- justified by the small $f_{i}$ values for these other biomass components --- we write:
-
-\begin{equation}
-  \ratioabl \approx (k + \frac{\biomfrac{protein}}{\grabl{protein}} + \frac{\biomfrac{carbohydrate}}{\grabl{carbohydrate}}) \cdot \frac{\gro}{\biomfrac{protein}}
-  \label{eq:model-ratio-assume}
-\end{equation}
-
-where $k$ is a constant.
-
-In the glucose-limiting region, as $\exchrate{glc}$ increases, under saturation,
-\begin{itemize}
-  \item $\gro$ increases,
-  \item $\grabl{carbohydrate}$ increases, and
-  \item $\grabl{protein}$ increases, while
-  \item $\ratioabl$ stays constant.
-\end{itemize}
-
-In the nitrogen-limiting region, as $\exchrate{amm}$ increases, under saturation,
-\begin{itemize}
-  \item $\gro$ increases,
-  \item $\grabl{carbohydrate}$ stays constant, and
-  \item $\grabl{protein}$ increases, while
-  \item $\ratioabl$ increases.
-\end{itemize}
-
-Based on the glucose-limiting region, the increases in $\grabl{carbohydrate}$ and $\grabl{protein}$ in the carbon-limiting case are just enough to balance the increase in $\gro$.
-Then, in the nitrogen-limiting case, if there is no increase in $\grabl{carbohydrate}$, then the combined effect of $\grabl{carbohydrate}$ and $\grabl{protein}$ no longer balance the increase in $\gro$.
-This thus explains why $\ratioabl$ increases in this case.
-
-If both nutrients are limiting, as $(\exchrate{glc}, \exchrate{amm})$ varies along the curve from $(0, 0)$ to $(\exchrate{glc, saturation}, \exchrate{amm, saturation})$ that goes through such conditions, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase, explaining why $\ratioabl$ remain roughly at the same high values greater than 1.
-Thus, the region where $\ratioabl > 1$ where both glucose and ammonium are near-limiting can be seen as where the behaviour of the glucose-limiting and ammonium-limiting cases meet.
 
 Next, I investigate $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
 
@@ -1207,11 +1175,6 @@ In addition, lipid biosynthesis often requires different enzymes than the other 
 The extent to which sequential biosynthesis is advantageous in different nutrient conditions and the synthesis timescales predicted may explain why yeast cells show metabolic cycles in certain nutrient conditions.
 The model may provide a weak explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose: if the glucose exchange is near zero, the ratio is less than one.
 Though, a better investigation would account for switching between nutrient conditions, which the most basic forms of FBA is not built for --- it only looks at steady state, and does not `remember' past states.
-
-The model does not account for varying protein fractions and other parameters that affect the size of $\epool$ during growth and division, and across different conditions.
-For instance, \textcite{elsemmanWholecellModelingYeast2022} state that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
-However, because I find that $\epool$ affects the growth rate, there may be a circular relationship, and there is no guarantee that parameter values will converge if I tune the $\epool^{\prime}$ to obtain a $\gro$ that in turn affects $\epool^{\prime}$.
-Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, my investigation is perhaps sufficient.
 
 In summary, my results show that the yeast cell may synthesise its biomass components in sequence or in parallel, subject to proteomic and nutrient availability constraints.
 Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive.
