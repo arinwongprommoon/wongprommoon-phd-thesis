@@ -976,7 +976,6 @@ Though, the change of behaviour can be explained by how the growth saturation cu
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc16p89_pyrUnres_ammUnres_1.pdf}
     \caption{
-      Rank of enzyme usage reactions in the low $\ratioabl$ case ($\exchrate{glucose}$ = \SI{16.89}{\mmolgdwh}).
     }
     \label{fig:model-rank-glc-lowratio-rank}
   \end{subfigure}%
@@ -984,16 +983,25 @@ Though, the change of behaviour can be explained by how the growth saturation cu
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc01p69_pyrUnres_amm01p05_1.pdf}
     \caption{
-      Rank of enzyme usage reactions in the high $\ratioabl$ case ($\exchrate{glucose}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{ammonium}$ = \SI{1.05}{\mmolgdwh}).
     }
     \label{fig:model-rank-glc-highratio-rank}
   \end{subfigure}
 
+  \caption{
+    Changes in enzyme usage reaction flux in rounds of ablation, in a (\ref{fig:model-rank-glc-lowratio-rank}) low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}), and a (\ref{fig:model-rank-glc-highratio-rank}) high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}).
+    Columns show the biomass component prioritised.
+    In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
+    Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
+  }
+  \label{fig:model-rank-glc-rank}
+\end{figure}
+
+\begin{figure}
+  \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc16p89_pyrUnres_ammUnres_2.pdf}
     \caption{
-      Pairwise Kendall's $\tau$-b rank correlation coefficients for \ref{fig:model-rank-glc-lowratio-rank}.
     }
     \label{fig:model-rank-glc-lowratio-kendall}
   \end{subfigure}%
@@ -1001,29 +1009,25 @@ Though, the change of behaviour can be explained by how the growth saturation cu
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc01p69_pyrUnres_amm01p05_2.pdf}
     \caption{
-      Pairwise Kendall's $\tau$-b rank correlation coefficients for \ref{fig:model-rank-glc-highratio-rank}.
     }
     \label{fig:model-rank-glc-highratio-kendall}
   \end{subfigure}
 
   \caption{
-    Proteome allocation favouring sequential and parallel biosynthesis strategies, with glucose as carbon source.
-    \textbf{(Top panels: \ref{fig:model-rank-glc-lowratio-rank}, \ref{fig:model-rank-glc-highratio-rank})} In the parallel case (no change to biomass equation), enzyme usage reactions are ranked, in descending order, by magnitude of flux and each assigned a colour.
-    When biomass components are ablated, the ranks change, as shown by how the order of colours change from column to column.
-    White indicates reactions that carry zero flux in the parallel case.
-    \textbf{(Bottom panels: \ref{fig:model-rank-glc-lowratio-kendall}, \ref{fig:model-rank-glc-highratio-kendall})} Kendall's $\tau$-b rank correlation coefficient was computed for each pair of columns in the top panels to quantify the similarity between each case.
+    Pairwise Kendall's $\tau$-b rank correlation coefficient for each pair enzyme usage flux profiles represented in columns of Fig.\ \ref{fig:model-rank-glc-rank} of columns in the top panels to quantify the similarity between each case.
+    The computations were performed for a (\ref{fig:model-rank-glc-lowratio-kendall}) low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}), and a (\ref{fig:model-rank-glc-highratio-kendall}) high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}).
   }
-  \label{fig:model-rank-glc}
+  \label{fig:model-rank-glc-kendall}
 \end{figure}
 
 In both the glucose-ammonium and pyruvate-ammonium conditions, I observe that the highest $\ratioabl$ occurs at the boundary at which both the carbon source and the nitrogen source are limiting.
 This leads to the hypothesis that the cell favours parallel biosynthesis of biomass components in such conditions, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
 
-To evaluate this hypothesis, I investigated how the enzyme usage fluxes change across each round of ablation in the glucose-ammonium exchange combinations that produce the lowest and greatest $\ratioabl$ (figure~\ref{fig:model-rank-glc}), and performed the same investigation for pyruvate-ammonium exchange combinations (figure~\ref{fig:model-rank-pyr}).
+To evaluate this hypothesis, I investigated how the enzyme usage fluxes change across each round of ablation in the glucose-ammonium exchange combinations that produce the lowest and greatest $\ratioabl$ (Figs.\ \ref{fig:model-rank-glc-rank},~\ref{fig:model-rank-glc-kendall}), and performed the same investigation for pyruvate-ammonium exchange combinations (Figs.\ \ref{fig:model-rank-pyr-rank},~\ref{fig:model-rank-pyr-kendall}).
 As a visualisation aid, I ranked the enzyme usage reactions by magnitude of flux to emphasise how the allocation of enzymes changes in each round.
 I also computed the Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} to quantify how similar the enzyme usage flux vectors were between each pair of rounds.
 
-Figure~\ref{fig:model-rank-glc} suggests that in the low $\ratioabl$ condition, in which both glucose and ammonium are abundant, enzyme-available proteome allocation patterns for lipid- and protein-prioritised simulations most resemble the parallel case.
+Fig.\ \ref{fig:model-rank-glc-rank} suggests that in the low $\ratioabl$ condition, in which both glucose and ammonium are abundant, enzyme-available proteome allocation patterns for lipid- and protein-prioritised simulations most resemble the parallel case.
 In contrast, a set of enzymes that originally had low usage fluxes in the parallel case became enzymes with the highest levels when carbohydrates, DNA, RNA, cofactors, or ions are prioritised.
 This separation of biomass components into two groups according to enzyme-available proteome allocation patterns can explain how sequential biosynthesis is advantageous.
 At least, the lipids and proteins can be synthesised together, followed by the other components; the order by which these two groups are synthesised can be reversed.
@@ -1040,7 +1044,6 @@ Here, allocation of the proteome to enzymes is similar across all situations, su
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr08p89_ammUnres_1.pdf}
     \caption{
-      Rank of enzyme usage reactions in the low $\ratioabl$ case ($\exchrate{pyruvate}$ = \SI{8.89}{\mmolgdwh}).
     }
     \label{fig:model-rank-pyr-lowratio-rank}
   \end{subfigure}%
@@ -1048,16 +1051,25 @@ Here, allocation of the proteome to enzymes is similar across all situations, su
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr03p73_amm00p90_1.pdf}
     \caption{
-      Rank of enzyme usage reactions in the high $\ratioabl$ case ($\exchrate{pyruvate}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{ammonium}$ = \SI{0.90}{\mmolgdwh}).
     }
     \label{fig:model-rank-pyr-highratio-rank}
   \end{subfigure}
 
+  \caption{
+    Changes in enzyme usage reaction flux in rounds of ablation, in a (\ref{fig:model-rank-pyr-lowratio-rank}) low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}), and a (\ref{fig:model-rank-pyr-highratio-rank}) high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}).
+    Columns show the biomass component prioritised.
+    In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
+    Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
+  }
+  \label{fig:model-rank-pyr-rank}
+\end{figure}
+
+\begin{figure}
+  \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr08p89_ammUnres_2.pdf}
     \caption{
-      Pairwise Kendall's $\tau$-b rank correlation coefficients for \ref{fig:model-rank-pyr-lowratio-rank}.
     }
     \label{fig:model-rank-pyr-lowratio-kendall}
   \end{subfigure}%
@@ -1065,22 +1077,18 @@ Here, allocation of the proteome to enzymes is similar across all situations, su
   \centering
     \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr03p73_amm00p90_2.pdf}
     \caption{
-      Pairwise Kendall's $\tau$-b rank correlation coefficients for \ref{fig:model-rank-pyr-highratio-rank}.
     }
     \label{fig:model-rank-pyr-highratio-kendall}
   \end{subfigure}
 
   \caption{
-    Proteome allocation favouring sequential and parallel biosynthesis strategies, with pyruvate as carbon source.
-    \textbf{(Top panels: \ref{fig:model-rank-pyr-lowratio-rank}, \ref{fig:model-rank-pyr-highratio-rank})} In the parallel case (no change to biomass equation), enzyme usage reactions are ranked, in descending order, by magnitude of flux and each assigned a colour.
-    When biomass components are ablated, the ranks change, as shown by how the order of colours change from column to column.
-    White indicates reactions that carry zero flux in the parallel case.
-    \textbf{(Bottom panels: \ref{fig:model-rank-pyr-lowratio-kendall}, \ref{fig:model-rank-pyr-highratio-kendall})} Kendall's $\tau$-b rank correlation coefficient was computed for each pair of columns in the top panels to quantify the similarity between each case.
+    Pairwise Kendall's $\tau$-b rank correlation coefficient for each pair enzyme usage flux profiles represented in columns of Fig.\ \ref{fig:model-rank-pyr-rank} of columns in the top panels to quantify the similarity between each case.
+    The computations were performed for a (\ref{fig:model-rank-pyr-lowratio-kendall}) low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}), and a (\ref{fig:model-rank-pyr-highratio-kendall}) high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}).
   }
-  \label{fig:model-rank-pyr}
+  \label{fig:model-rank-pyr-kendall}
 \end{figure}
 
-However, figure~\ref{fig:model-rank-pyr} suggests that the contrast between each biomass component is lessened when pyruvate is the carbon source.
+However, Fig.\ \ref{fig:model-rank-pyr-rank} suggests that the contrast between each biomass component is lessened when pyruvate is the carbon source.
 
 \begin{figure}
   \centering
