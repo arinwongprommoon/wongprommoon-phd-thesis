@@ -487,7 +487,9 @@ With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} d
     Lipid & 31.57 & 57.\\
     Cofactors & 4.83 & \\
     DNA & 3.90 & 5. \\
-    Ions & 2.48 &
+    Ions & 2.48 & \\
+    \hline
+    Total & 961.57 & \\
   \end{tabular}
   \caption{
     Computed molecular weights of bulk metabolites in ecYeast8, compared to experimentally recorded biomass composition by \textcite{canelasVivoDatadrivenFramework2011}.
@@ -633,9 +635,6 @@ In particular, it shows:
   \item When the cell prioritises RNA biosynthesis, there are increases in the purine metabolism and pyrimidine metabolism subsystems, along with a mixed picture in the pentose phosphate pathway.
         The increases are expected given the presence of purines and pyrimidines in RNA and the role of the pentose phosphate pathway in generating the precursors for these compounds.
         However, these subsystems show weak decreases in flux when DNA is prioritised, though the enzyme usage flux profile overall is similar to when RNA is prioritised.
-  \item Increase in fructose and mannose metabolism when carbohydrate is prioritised.
-        Strong increase in riboflavin metabolism when cofactor is prioritised (riboflavin is a cofactor).
-        Increase in pentose phosphate pathway, purine metabolism, and pyrimidine metabolism when RNA is prioritised.
 \end{enumerate}
 
 Overall, Fig.\ \ref{fig:model-ablate-enz-use} thus shows that in each round of ablation, when each biomass component is prioritised, the cell re-allocated its limited proteome to enzymes that have roles related to the synthesis of each biomass component.
@@ -645,13 +644,9 @@ These results validate ablation of biomass components as a method to simulate se
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-% Do I get the same ablation barcharts if glucose uptake is at saturation (i.e. 8.69)?
-% Judging by the ratio heatmaps later in the chapter, I think the answer is no, and
-% so maybe it makes sense to `max out' the glucose uptake for now.
-I used the ecYeast8.6.0 model with glucose uptake, defined by the bounds of its exchange reaction flux, restricted to within \SIrange{0}{16.89}{\mmolgdw}.
-The upper limit is based on the glucose uptake rate found by FBA from using the wild type model to optimise growth rate.
-This value agrees with theoretical saturation rates of \SIrange{16}{19}{\mmolgdw} \parencite{blankTCACycleActivity2004}.
-Using the biomass reaction as the objective function, I optimise the model to obtain the predicted growth rate, and computed the doubling time based on this growth rate as follows:
+In order to evaluate whether sequential or parallel synthesis of biomass components offers a time advantage during cell growth, I estimated the timescale of biosynthesis for either resource allocation strategy.
+
+Based on the objective function of the unmodified model, the doubling time is computed as follows:
 
 \begin{equation}
   t_{0} = \frac{\ln 2}{\gro}
@@ -660,10 +655,7 @@ Using the biomass reaction as the objective function, I optimise the model to ob
 
 where $t_{0}$ is the doubling time and $\gro$ is the growth rate, equivalent to the optimised flux of the biomass reaction.
 
-I ablate components in the biomass reaction in turn as discussed in section~\ref{sec:model-yeast8-pseudometabolites}.
-In each round, the model is simulated, using the modified biomass reaction as the objective function, and the flux is recorded.
-Synthesis time is computed, taking into account the mass fraction of each biomass component --- i.e.\ if the component is a smaller fraction of the cell, it takes less time.
-Specifically, the computation is:
+Based on the growth rates computed in rounds of ablation (Fig.\ \ref{fig:model-ablate-fluxes}), the synthesis time of each biomass component is computed as follows:
 
 \begin{equation}
   \Tiabl = f_{i} \cdot \frac{\ln 2}{\griabl}
@@ -678,7 +670,28 @@ where:
   \item $\griabl$ is the optimal flux of the ablated biomass reaction.
 \end{itemize}
 
-$f_{i}$ for each biomass component is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass (table~\ref{tab:ecyeast8-mol-weights}).
+Eq.\ \ref{eq:model-ablated-time} differs from Eq.\ \ref{eq:model-doubling-time} in that $f_{i}$ acts as a scaling factor that takes into account that if a biomass component accounts for a smaller fraction of dry cell mass, biomass synthesis should take less time.
+This value $f_{i}$ for each biomass component (table~\ref{tab:model-biomfrac}) is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass (table~\ref{tab:ecyeast8-mol-weights}).
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{lS}
+    Metabolite & {$f_{i}$} \\
+    \hline
+    Protein & 0.52453 \\
+    Carbohydrate & 0.36438 \\
+    RNA & 0.06660 \\
+    Lipid & 0.03283 \\
+    Cofactors & 0.00502 \\
+    DNA & 0.00406 \\
+    Ions & 0.00258 \\
+  \end{tabular}
+  \caption{
+    $f_{i}$ values for each biomass component.
+  }
+  \label{tab:model-biomfrac}
+\end{table}
+
 
 For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction:
 
