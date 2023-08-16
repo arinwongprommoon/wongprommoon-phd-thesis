@@ -605,14 +605,12 @@ To vary the enzyme-available proteome pool in the ecYeast8 model,
 I vary the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}) in order to change the flux available for enzyme usage pseudoreactions (equation~\ref{eq:model-gecko-enzyme-usage}).
 With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to, modelling the biological response to a restricted enzyme pool.
 
-% TODO: Clarify what sort of changes need to be made, especially in the text.  I struggle to understand what the better alternative should be like, at the moment.
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
    \caption{
-     Effect on ratio ($\ratioabl$), $\epool^{\prime}/\epool \leq 2$.
    }
    \label{fig:model-pool-ratio}
   \end{subfigure}%
@@ -620,7 +618,6 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_20_shrinkyaxis}
    \caption{
-     Effect on ratio ($\ratioabl$), $\epool^{\prime}/\epool \leq 20$.
    }
    \label{fig:model-pool-ratio-20}
   \end{subfigure}
@@ -629,7 +626,6 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr}
    \caption{
-     Effect on wild type growth rate ($\gro$), $\epool^{\prime}/\epool \leq 2$.
    }
    \label{fig:model-pool-growthrate}
   \end{subfigure}%
@@ -637,7 +633,6 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
    \centering
    \includegraphics[width=\textwidth]{epool_ec_gr_20}
    \caption{
-     Effect on wild type growth rate ($\gro$), $\epool^{\prime}/\epool \leq 20$.
    }
    \label{fig:model-pool-growthrate-20}
   \end{subfigure}
@@ -646,7 +641,6 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components}
    \caption{
-     Effect on ablated growth rates ($\griabl$), $\epool^{\prime}/\epool \leq 2$.
    }
    \label{fig:model-pool-ablated}
   \end{subfigure}%
@@ -654,16 +648,14 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
    \centering
    \includegraphics[width=\textwidth]{epool_ec_components_20}
    \caption{
-     Effect on ablated growth rates ($\griabl$), $\epool^{\prime}/\epool \leq 20$
    }
    \label{fig:model-pool-ablated-20}
   \end{subfigure}
 
   \caption{
-    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on $\ratioabl$ and growth rates.
-    % Constraining the proteome pool available for synthesis enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases (\ref{fig:model-pool-ratio}).
-    % Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (\ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (\ref{fig:model-pool-growthrate}).
-    % These values determine the ratio according to equation~\ref{eq:model-ratio}.
+    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on \textbf{(\ref{fig:model-pool-ratio}, \ref{fig:model-pool-ratio-20})} $\ratioabl$, \textbf{(\ref{fig:model-pool-growthrate}, \ref{fig:model-pool-growthrate-20})} the growth rate, and \textbf{(\ref{fig:model-pool-ablated}, \ref{fig:model-pool-ablated-20})} the optimal flux of the ablated biomass reaction $\griabl$ in each round of ablation.
+    \textbf{(\ref{fig:model-pool-ratio})}, \textbf{(\ref{fig:model-pool-growthrate})}, and \textbf{(\ref{fig:model-pool-ablated})} show $\epool^{\prime}/\epool \leq 2$, while
+    \textbf{(\ref{fig:model-pool-ratio-20})}, \textbf{(\ref{fig:model-pool-growthrate-20})}, and \textbf{(\ref{fig:model-pool-ablated-20})} show $\epool^{\prime}/\epool \leq 20$, while
   }
   \label{fig:model-pool}
 \end{figure}
@@ -726,7 +718,7 @@ Instead, I constrain the flux of exchange reactions in such a way that the optim
   \end{subfigure}
 
   \caption{
-    Effect of glucose (\ref{fig:model-saturation-glucose}), pyruvate (\ref{fig:model-saturation-pyruvate}), and ammonium (\ref{fig:model-saturation-ammonium}) exchange reactions on growth rate.
+    Effect of glucose \textbf{(\ref{fig:model-saturation-glucose})}, pyruvate \textbf{(\ref{fig:model-saturation-pyruvate})}, and ammonium \textbf{(\ref{fig:model-saturation-ammonium})} exchange reactions on growth rate.
     The saturation point of exchange reactions is defined as the flux of an exchange reaction above which the objective function reaches its maximum.
   }
   \label{fig:model-saturation}
@@ -790,7 +782,7 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
     \label{fig:model-grid-glc-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of glucose ($\exchrate{glc}$) and ammonium exchange rates ($\exchrate{amm}$) on (\ref{fig:model-grid-glc-ratio}) $\ratioabl$, (\ref{fig:model-grid-glc-growthrate}) growth rate based on unmodified biomass reaction, $\gro$, (\ref{fig:model-grid-glc-carb}) predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ (\ref{fig:model-grid-glc-prot}) predicted protein synthesis time, $\Tabl{protein}$, and (\ref{fig:model-grid-glc-carb-to-prot}) ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
+    Effect of glucose and ammonium exchange rates on \textbf{(\ref{fig:model-grid-glc-ratio})} $\ratioabl$, \textbf{(\ref{fig:model-grid-glc-growthrate})} growth rate based on unmodified biomass reaction, $\gro$, \textbf{(\ref{fig:model-grid-glc-carb})} predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ \textbf{(\ref{fig:model-grid-glc-prot})} predicted protein synthesis time, $\Tabl{protein}$, and \textbf{(\ref{fig:model-grid-glc-carb-to-prot})} ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
     Exchange rates are expressed in percentages of growth saturation from Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
     Arrows overlaid on heatmaps indicate sensitivity of the quantity as a vector $(s_{\mathrm{glc}}, s_{\mathrm{amm}})$ (Eq.\ \ref{eq:model-susceptibility}).
@@ -901,7 +893,7 @@ In sum, the relationship between carbon and nitrogen source uptake and the synth
     \label{fig:model-grid-pyr-carb-to-prot}
   \end{subfigure}
   \caption{
-    Effect of pyruvate ($\exchrate{pyr}$) and ammonium exchange rates ($\exchrate{amm}$) on (\ref{fig:model-grid-pyr-ratio}) $\ratioabl$, (\ref{fig:model-grid-pyr-growthrate}) growth rate based on unmodified biomass reaction, $\gro$, (\ref{fig:model-grid-pyr-carb}) predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ (\ref{fig:model-grid-pyr-prot}) predicted protein synthesis time, $\Tabl{protein}$, and (\ref{fig:model-grid-pyr-carb-to-prot}) ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
+    Effect of pyruvate and ammonium exchange rates on \textbf{(\ref{fig:model-grid-pyr-ratio})} $\ratioabl$, \textbf{(\ref{fig:model-grid-pyr-growthrate})} growth rate based on unmodified biomass reaction, $\gro$, \textbf{(\ref{fig:model-grid-pyr-carb})} predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ \textbf{(\ref{fig:model-grid-pyr-prot})} predicted protein synthesis time, $\Tabl{protein}$, and \textbf{(\ref{fig:model-grid-pyr-carb-to-prot})} ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
     Exchange rates are expressed in percentages of growth saturation from Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
     Arrows overlaid on heatmaps indicate sensitivity of the quantity as a vector $(s_{\mathrm{pyr}}, s_{\mathrm{amm}})$ (Eq.\ \ref{eq:model-susceptibility}).
@@ -949,7 +941,7 @@ Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nu
   \end{subfigure}%
 
   \caption{
-    Changes in enzyme usage reaction flux in rounds of ablation, in a (\ref{fig:model-rank-glc-highratio-rank}) high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}), and (\ref{fig:model-rank-glc-lowratio-rank}) a low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}).
+    Changes in enzyme usage reaction flux in rounds of ablation, in  \textbf{(\ref{fig:model-rank-glc-highratio-rank})} a high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-glc-lowratio-rank})} a low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}).
     Columns show the biomass component prioritised.
     In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
     Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
@@ -976,7 +968,7 @@ Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nu
 
   \caption{
     Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair enzyme usage flux profiles represented in columns of Fig.\ \ref{fig:model-rank-glc-rank} of columns in the top panels to quantify the similarity between each case.
-    The computations were performed for a (\ref{fig:model-rank-glc-highratio-kendall}) high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}), and  (\ref{fig:model-rank-glc-lowratio-kendall}) a low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}).
+    The computations were performed for \textbf{(\ref{fig:model-rank-glc-highratio-kendall})} a high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-glc-lowratio-kendall})} a low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}).
   }
   \label{fig:model-rank-glc-kendall}
 \end{figure}
@@ -1014,7 +1006,7 @@ The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig
   \end{subfigure}
 
   \caption{
-    Changes in enzyme usage reaction flux in rounds of ablation, in a  (\ref{fig:model-rank-pyr-highratio-rank}) high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}), and (\ref{fig:model-rank-pyr-lowratio-rank}) a low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}).
+    Changes in enzyme usage reaction flux in rounds of ablation, in  \textbf{(\ref{fig:model-rank-pyr-highratio-rank})} a high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-pyr-lowratio-rank})} a low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}).
     Columns show the biomass component prioritised.
     In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
     Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
@@ -1041,7 +1033,7 @@ The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig
 
   \caption{
     Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair enzyme usage flux profiles represented in columns of Fig.\ \ref{fig:model-rank-pyr-rank} of columns in the top panels to quantify the similarity between each case.
-    The computations were performed for a (\ref{fig:model-rank-pyr-highratio-kendall}) high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}), and a (\ref{fig:model-rank-pyr-lowratio-kendall}) low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}).
+    The computations were performed for \textbf{(\ref{fig:model-rank-pyr-highratio-kendall})} a high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-pyr-lowratio-kendall})} a low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}).
   }
   \label{fig:model-rank-pyr-kendall}
 \end{figure}
@@ -1089,8 +1081,8 @@ This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 
 
   \caption{
     Measures of similarity between enzyme usage fluxes in different nutrient conditions.
-    Cosine distances between the between the vector of enzyme usage fluxes when protein is prioritised and the equivalent vector when carbohydrate is prioritised are shown \ref{fig:model-noisy-glc-cosine} for glucose-ammonium conditions and \ref{fig:model-noisy-pyr-cosine} pyruvate-ammonium conditions; smaller distances indicate a greater similarity between the two conditions.
-    Means of the set of Kendall's $\tau$-$b$ rank correlation coefficients between the parallel case and each biomass-prioritised case are shown \ref{fig:model-noisy-glc-kendall} for glucose-ammonium conditions and \ref{fig:model-noisy-pyr-kendall} pyruvate-ammonium conditions; larger means indicate a greater similarity between parallel biosynthesis and individual biomass component synthesis.
+    Cosine distances between the between the vector of enzyme usage fluxes when protein is prioritised and the equivalent vector when carbohydrate is prioritised are shown \textbf{(\ref{fig:model-noisy-glc-cosine})} for glucose-ammonium conditions and \textbf{(\ref{fig:model-noisy-pyr-cosine})} pyruvate-ammonium conditions; smaller distances indicate a greater similarity between the two conditions.
+    Means of the set of Kendall's $\tau$-$b$ rank correlation coefficients between the parallel case and each biomass-prioritised case are shown \textbf{(\ref{fig:model-noisy-glc-kendall})} for glucose-ammonium conditions and \textbf{(\ref{fig:model-noisy-pyr-kendall})} pyruvate-ammonium conditions; larger means indicate a greater similarity between parallel biosynthesis and individual biomass component synthesis.
     }
   \label{fig:model-noisy}
 \end{figure}
