@@ -732,20 +732,19 @@ This may indicate that the enzyme-available proteome pool is limiting for these 
 \section{Effect of carbon and nitrogen sources}
 \label{sec:model-exchange}
 
+To explore whether sequential synthesis of biomass components remains advantageous across nutrient conditions, I investigated how changes in the concentrations of nitrogen and carbon sources affect the resource allocation strategy in yeast.
+The nitrogen source of interest was ammonium as it is the form of nitrogen present in minimal growth media.
+The carbon sources of interest included glucose and pyruvate.
+Glucose was studied as it is the preferred carbon source for budding yeast, while pyruvate served as an example of a non-fermentable carbon source to investigate the effect of significant changes to central carbon metabolism on resource allocation strategies.
+
 % FIXME: Be consistent in referring to exchange rate/saturation.  Come up with some phrase to use.
 \subsection{Saturation of exchange reactions}
 \label{subsec:model-saturation}
 
-To explore whether sequential synthesis of biomass components remains advantageous across nutrient conditions, in addition to across gene deletion strains, I investigate how changes in the concentrations of carbon and nitrogen sources affect the resource allocation strategy in yeast.
-I investigated ammonium as a nitrogen source as it is the form of nitrogen in minimal growth media, and investigates two carbon sources: glucose and pyruvate.
-Glucose is the preferred carbon source for budding yeast, while studying pyruvate would give an insight into a non-fermentable carbon source.
-
-In order to conduct this investigation using FBA, ranges of nutrient exchange fluxes that are suitable for the model need to be found.
-Genome-scale metabolic models include nutrient exchange reactions whose flux bounds can be unrestricted to simulate the presence of certain nutrients in the growth medium.
-% FIXME: This sentence
-In contrast to simulating the presence or absence of nutrients, simulating a certain concentration of a nutrient requires setting specific flux bounds.
-Because FBA does not account for substrate concentrations, the concentration of nutrients cannot directly be used to set flux bounds.
-Instead, studies constrain the flux of exchange reactions in such a way that the optimised growth rate matches experimental observations \parencite{elsemmanWholecellModelingYeast2022}.
+Investigating the effect of carbon and nitrogen sources requires finding ranges of concentrations of each source to be used in an FBA problem that leads to biologically informative results.
+The saturation point of the nutrient, defined as the concentration of the nutrient at which the growth rate reaches its maximum, thus serves as a biologically relevant reference point.
+Although genome-scale metabolic models have nutrient exchange reactions that simulate the presence or absence of nutrients, the saturation point concentrations from experimental studies cannot be directly used as flux bounds for these reactions because FBA does not account for substrate concentrations.
+Instead, I constrain the flux of exchange reactions in such a way that the optimised growth rate matches experimental observations, as was performed in previous FBA-based studies \parencite{elsemmanWholecellModelingYeast2022}.
 % TODO: Find other studies that did the same and cite them here.
 
 
@@ -783,15 +782,16 @@ Instead, studies constrain the flux of exchange reactions in such a way that the
 
   \caption{
     Effect of glucose (\ref{fig:model-saturation-glucose}), pyruvate (\ref{fig:model-saturation-pyruvate}), and ammonium (\ref{fig:model-saturation-ammonium}) exchange reactions on growth rate.
+    The saturation point of exchange reactions is defined as the flux of an exchange reaction above which the objective function reaches its maximum.
   }
   \label{fig:model-saturation}
 \end{figure}
 
-The saturation point of exchange reactions functions as a useful reference for exchange reaction flux values.
-This saturation point is defined as the flux of an exchange reaction above which the objective function reaches its maximum.
-Fig.\ \ref{fig:model-saturation} shows growth saturation curves that illustrate the effect of glucose, pyruvate, and ammonium exchange rates on the growth rate.
-Simulation results show that the maximum growth rate on glucose (\SI{0.38}{\hour^{-1}}) is greater than the maximum growth rate on pyruvate (\SI{0.25}{\hour^{-1}}), and
-the growth rate saturation point for ammonium is determined by the maximal growth rate on the carbon source (Fig.\ \ref{fig:model-saturation-ammonium}).
+To model the effect of nutrient concentrations on growth rate, I created saturation curves that show how the effect of nutrient exchange flux on the objective function.
+These curves were created by varying the upper bounds of nutrient exchange reactions and optimising the model at each upper bound value.
+Figs.\ \ref{fig:model-saturation-glucose} and \ref{fig:model-saturation-pyruvate} show that the saturation curve of glucose exchange and of pyruvate exchange exhibited different shapes.
+In addition, the maximum growth rate on glucose (\SI{0.38}{\hour^{-1}}) was greater than the maximum growth rate on pyruvate (\SI{0.25}{\hour^{-1}}).
+Furthermore, the growth rate saturation point for ammonium was determined by the maximal growth rate on the carbon source (Fig.\ \ref{fig:model-saturation-ammonium}).
 
 These growth saturation curves agree with similar studies.
 Specifically, the growth saturation curve for glucose (Fig.\ \ref{fig:model-saturation-glucose}) is similar to that simulated by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
@@ -848,25 +848,16 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
     Effect of glucose ($\exchrate{glc}$) and ammonium exchange rates ($\exchrate{amm}$) on (\ref{fig:model-grid-glc-ratio}) $\ratioabl$, (\ref{fig:model-grid-glc-growthrate}) growth rate based on unmodified biomass reaction, $\gro$, (\ref{fig:model-grid-glc-carb}) predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ (\ref{fig:model-grid-glc-prot}) predicted protein synthesis time, $\Tabl{protein}$, and (\ref{fig:model-grid-glc-carb-to-prot}) ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
     Exchange rates are expressed in percentages of growth saturation from in Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
-    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{glc}$ and $\exchrate{amm}$.
+    Arrows overlaid on heatmaps indicate sensitivity of the quantity as a vector $(s_{\mathrm{glc}}, s_{\mathrm{amm}})$ (Eq.\ \ref{eq:model-susceptibility}).
   }
   \label{fig:model-grid-glc}
 \end{figure}
+% To visualise the extent to which each exchange rate limits each quantity of interest, I show the sensitivity values as arrows (Figs.\ \ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glc}}$ and $s_{\mathrm{amm}}$ as two components of the vector that defines these arrows.
+% Thus, horizontal arrows indicate a strong sensitivity to glucose and vertical arrows indicate a strong sensitivity to ammonium, while the arrows point towards increasing values of the quantity of interest.
 
-To assess the effect of glucose and ammonium concentration on biomass synthesis strategies, I ablated components in the biomass reaction in different nutrient conditions set by glucose and ammonium exchange
+To assess the effect of glucose and ammonium concentration on biomass synthesis strategies, I ablated components in the biomass reaction in different nutrient conditions set by glucose and ammonium exchange fluxes
 to obtain $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$ (Fig.\ \ref{fig:model-grid-glc}).
-Whether $\ratioabl$ was less than or greater than 1 indicated whether the sequential or parallel strategy is advantageous for each condition. %, while $\gro$ indicated which nutrient source was limiting in each condition.
-Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions, in particular, conditions in which parallel biomass synthesis is favoured ($\ratioabl > 1$).
-The ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how $\Tiabl$ values change as carbon and nitrogen source concentrations change.
-This ratio between $\Tabl{carbohydrate}$ and $\Tabl{protein}$ is informative because:
-\begin{enumerate}
-  \item Of all biomass components, predicted synthesis times of these biomass components varied the most as the glucose and ammonium exchange rates were varied.
-  \item Each accounts for a large proportion of biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:ecyeast8-mol-weights}).
-  \item Carbohydrate synthesis has a clear biochemical relationship with the level of a carbon source.
-        And, because amino acids contain amino groups, protein synthesis has a biochemical relationship with ammonium as a nitrogen source.
-\end{enumerate}
-
-To determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I defined the sensitivity at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ as:
+Additionally, to determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I defined the sensitivity at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ as:
 
 \begin{equation}
   s_{i}(\exchrate{glc}, \exchrate{amm}) = \frac{R_{i}}{y(\exchrate{glc}, \exchrate{amm})} \cdot \pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}
@@ -881,31 +872,45 @@ where:
   \item $y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest at each nutrient condition
 \end{itemize}
 
-At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more sensitive to --- or more limited by --- glucose exchange at this condition.
+At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more sensitive to glucose exchange at this condition.
 The reverse is true if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$.
-To visualise the extent to which each exchange rate limits each quantity of interest, I show the sensitivity values as arrows (Figs.\ \ref{fig:model-grid-glc} and~\ref{fig:model-grid-pyr}) with $s_{\mathrm{glc}}$ and $s_{\mathrm{amm}}$ as two components of the vector that defines these arrows.
-Thus, horizontal arrows indicate a strong sensitivity to glucose and vertical arrows indicate a strong sensitivity to ammonium, while the arrows point towards increasing values of the quantity of interest.
 
-Fig.\ \ref{fig:model-grid-glc-ratio} shows two regions of interest: where $\ratioabl > 1$, in which parallel biosynthesis is advantageous, and where $\ratioabl < 1$, where sequential biosynthesis is advantageous.
-Parallel biosynthesis is advantageous in in two circumstances: when both glucose and ammonium limit the growth rate, and when ammonium exchange is at saturation while glucose exchange is greater than saturation.
-In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous.
+Fig.\ \ref{fig:model-grid-glc-growthrate} divides the nutrient conditions into three regions according to the nutrients that limit growth rate as determined by sensitivity values: a glucose-limiting region, an ammonium-limiting region, and a region whether neither glucose nor ammonium is limiting.
+Fig.\ \ref{fig:model-grid-glc-ratio} shows that parallel biosynthesis is advantageous ($\ratioabl > 1$) in two circumstances: when both glucose and ammonium limit the growth rate, and when ammonium exchange is at saturation while glucose exchange is greater than saturation.
+In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous ($\ratioabl < 1$).
 
-Next, I investigate $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
+To determine whether changes in the synthesis time of biomass components are responsible for switching of scheduling strategies between sequential and parallel biosynthesis, I investigated how $\exchrate{glc}$ and $\exchrate{amm}$ affected $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
+Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions.
+The ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how $\Tiabl$ values change as nutrient conditions change.
+This ratio is informative because:
+\begin{enumerate}
+  \item Of all biomass components, predicted synthesis times of these biomass components varied the most as the glucose and ammonium exchange rates were varied.
+  \item Each accounts for a large proportion of biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:model-biomfrac}).
+  \item Carbohydrate synthesis has a clear biochemical relationship with the level of a carbon source.
+        Additionally, protein synthesis has a clear biochemical relationship with the level of ammonium as amino acids contain amino groups.
+\end{enumerate}
 
-Based on equation~\ref{eq:model-ablated-time},
+% Based on equation~\ref{eq:model-ablated-time}, consider:
 
-\begin{equation}
-  \frac{\Tabl{carbohydrate}}{\Tabl{protein}} = \frac{\biomfrac{carbohydrate}}{\biomfrac{protein}} \cdot \frac{\grabl{protein}}{\grabl{carbohydrate}}
-  \label{eq:model-carb-prot-ratio}
-\end{equation}
+% \begin{equation}
+%   \frac{\Tabl{carbohydrate}}{\Tabl{protein}} = \frac{\biomfrac{carbohydrate}}{\biomfrac{protein}} \cdot \frac{\grabl{protein}}{\grabl{carbohydrate}}
+%   \label{eq:model-carb-prot-ratio}
+% \end{equation}
 
-In the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remains at a high value because, as $\exchrate{glc}$ increases in this region, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase.
-However, in the ammonium-limited region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increases as $\exchrate{amm}$ increases because then $\grabl{protein}$ increases while $\grabl{carbohydrate}$ remains constant.
-If both nutrients are limiting, as $(\exchrate{glc}, \exchrate{amm})$ varies along the curve from $(0, 0)$ to $(\exchrate{glc, saturation}, \exchrate{amm, saturation})$ that goes through such conditions, both $\grabl{carbohydrate}$ and $\grabl{protein}$ increase, explaining why $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remain roughly at the same.
+Although there is no obvious relationship between $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ and $\ratioabl$ values (Fig.\ \ref{fig:model-grid-glc-carb-to-prot}),
+the interplay between how $\exchrate{glc}$ and $\exchrate{pyr}$ affect $\Tabl{carbohydrate}$ and $\Tabl{protein}$ explains the landscape of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ values.
+Fig.\ \ref{fig:model-grid-glc-carb-to-prot} shows that in the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ is at a constant high value because, as $\exchrate{glc}$ increases in this region, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decrease.
+However, in the ammonium-limited region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increases as $\exchrate{amm}$ increases because $\Tabl{protein}$ decreases while $\Tabl{carbohydrate}$ remains constant.
 
-Considering $\Tabl{carbohydrate}$ and $\Tabl{protein}$, glucose exchange limits carbohydrate synthesis time for virtually every nutrient condition.
-In contrast, ammonium exchange limits protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low, owing to the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
-Taken together with the discussion above, these effects of nutrient exchange on protein and carbohydrate synthesis times thus explain the patterns of $\ratioabl$ and $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as both exchange reactions change in flux.
+Consider the trajectory of $(\exchrate{glc}, \exchrate{amm})$ values from $(0, 0)$ to $(\exchrate{glc, sat}, \exchrate{amm, sat})$ that links conditions with the high $\ratioabl$ values, where $\exchrate{glc, sat}$ and $\exchrate{amm, sat}$ are saturation values of glucose and ammonium values respectively.
+This trajectory includes conditions in which both glucose and ammonium are limiting, and as the trajectory is followed, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decrease, explaining why $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remains roughly at the same value.
+
+The different effects of the exchange rates on $\Tabl{carbohydrate}$ and on $\Tabl{protein}$ as discussed above have a biological relevance.
+Fig.\ \ref{fig:model-grid-glc-carb} shows that glucose exchange limits carbohydrate synthesis time in all nutrient conditions (Fig.\ \ref{fig:model-grid-glc-carb}), and this observation can be explained by glucose being the sole carbon source for the cell.
+In contrast, Fig.\ \ref{fig:model-grid-glc-prot} shows that ammonium exchange limits protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low.
+This observation can be explained by the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
+% This sounds like a pain point to be emphasised.
+In sum, the relationship between carbon and nitrogen source uptake and the synthesis of carbohydrates and proteins determines how scheduling strategies change according to nutrient conditions.
 
 \subsubsection{Pyruvate and ammonium}
 \label{subsec:model-grid-pyruvate}
@@ -953,7 +958,7 @@ Taken together with the discussion above, these effects of nutrient exchange on 
     Effect of pyruvate ($\exchrate{pyr}$) and ammonium exchange rates ($\exchrate{amm}$) on (\ref{fig:model-grid-pyr-ratio}) $\ratioabl$, (\ref{fig:model-grid-pyr-growthrate}) growth rate based on unmodified biomass reaction, $\gro$, (\ref{fig:model-grid-pyr-carb}) predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ (\ref{fig:model-grid-pyr-prot}) predicted protein synthesis time, $\Tabl{protein}$, and (\ref{fig:model-grid-pyr-carb-to-prot}) ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
     Exchange rates are expressed in percentages of growth saturation from in Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
-    Arrows indicate susceptibility of the quantity displayed in the heatmap, relative to $\exchrate{pyr}$ and $\exchrate{amm}$.
+    Arrows overlaid on heatmaps indicate sensitivity of the quantity as a vector $(s_{\mathrm{pyr}}, s_{\mathrm{amm}})$ (Eq.\ \ref{eq:model-susceptibility}).
   }
   \label{fig:model-grid-pyr}
 \end{figure}
