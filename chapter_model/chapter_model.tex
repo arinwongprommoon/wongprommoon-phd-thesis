@@ -193,66 +193,65 @@ where $v_{j}$ is the flux of each reaction $R_{j}$ catalysed by enzyme $E_{i}$, 
 Defining constraints in this way means that each $v_{j}$ must not exceed $v_{\mathrm{max}}$ for each enzyme $E_{i}$.
 Each enzyme $E_{i}$ may catalyse one or more reactions $R_{j}$.
 
-The constraints in Eq.\ \ref{eq:model-gecko-fba-constraints} is imposed by extending the stoichiometric matrix $\mathbf{S}$ and flux vector $\mathbf{v}$.
-Specifically, $\mathbf{S}$ has additional rows to represent new metabolites that represent each enzyme $E_{i}$.
-The matrix $\mathbf{S}$ also has additional columns for new reactions $ER_{i}$ that model enzyme usage and for a new reaction $ER_{\mathrm{pool}}$ that models a limited proteome pool.
-Kinetic information in the form of $k_{\mathrm{cat}}^{ij}$ values are included as elements in the extended stoichiometric matrix.
-Finally, $\mathbf{v}$ has additional elements that correspond to the additional columns of $\mathbf{S}$.
+% The constraints in Eq.\ \ref{eq:model-gecko-fba-constraints} is imposed by extending the stoichiometric matrix $\mathbf{S}$ and flux vector $\mathbf{v}$.
+% Specifically, $\mathbf{S}$ has additional rows to represent new metabolites that represent each enzyme $E_{i}$.
+% The matrix $\mathbf{S}$ also has additional columns for new reactions $ER_{i}$ that model enzyme usage and for a new reaction $ER_{\mathrm{pool}}$ that models a limited proteome pool.
+% Kinetic information in the form of $k_{\mathrm{cat}}^{ij}$ values are included as elements in the extended stoichiometric matrix.
+% Finally, $\mathbf{v}$ has additional elements that correspond to the additional columns of $\mathbf{S}$.
 
-The constraint $v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]$ from Eq.\ \ref{eq:model-gecko-fba-constraints} can be expressed as:
+% The constraint $v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]$ from Eq.\ \ref{eq:model-gecko-fba-constraints} can be expressed as:
 
-\begin{equation}
-  \begin{gathered}
-    -\frac{1}{k_{\mathrm{cat}}^{ij}}v_{j} + e_{i} = 0\\
-    0 \leq e_{i} \leq [E_{i}]
-  \end{gathered}
-  \label{eq:model-gecko-fba-constraints-extended}
-\end{equation}
+% \begin{equation}
+%   \begin{gathered}
+%     -\frac{1}{k_{\mathrm{cat}}^{ij}}v_{j} + e_{i} = 0\\
+%     0 \leq e_{i} \leq [E_{i}]
+%   \end{gathered}
+%   \label{eq:model-gecko-fba-constraints-extended}
+% \end{equation}
 
-where $e_{i}$ represents the flux of an enzyme usage reaction $ER_{i}$ associated with $E_{i}$.
+% where $e_{i}$ represents the flux of an enzyme usage reaction $ER_{i}$ associated with $E_{i}$.
 
-To illustrate what the modified stoichiometric means for each reaction, consider a simple example, a reaction $R_{j}$ catalysed by enzyme $E_{i}$:
+To illustrate what the modified stoichiometric matrix means for each reaction, consider a simple example, a reaction $R_{j}$ catalysed by enzyme $E_{i}$:
 
 \begin{equation}
   \ce{ A + B ->[E_{i}] C + D }
   \label{eq:model-gecko-catalysed}
 \end{equation}
 
-For this reaction, GECKO imposes (see Eq.\ \ref{eq:model-gecko-fba-constraints}):
-
-\begin{equation}
-  v_{j} \leq k_{\mathrm{cat}}^{ij} \cdot [E_{i}]
-  \label{eq:model-gecko-kcat}
-\end{equation}
-
-where $v_{j}$ is the flux of the reaction $R_{j}$, $k_{\mathrm{cat}}^{ij}$ is the catalytic constant of the enzyme $E_{i}$, and $[E_{i}]$ is the concentration of the enzyme $E_{i}$.
-
-To apply this constraint, GECKO modifies reactions in the genome-scale model.
-For example, using Eq.\ \ref{eq:model-gecko-catalysed},
-GECKO adds a term to the equation, modifying the stoichiometric matrix, to make it:
+To apply the constraints described by Eq.\ \ref{eq:model-gecko-fba-constraints}, the chemical reaction in Eq.\ \ref{eq:model-gecko-catalysed} is modified by adding a term:
 
 \begin{equation}
   \ce{ n_{ij}E_{i} + A + B -> C + D }
   \label{eq:model-gecko-catalysed-formalism}
 \end{equation}
 with the stoichiometric coefficient $n_{ij} = 1/k_{\mathrm{cat}}^{ij}$.
+GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021}.
 
-This transformation, adding the enzyme as a pseudo-reactant, is based on the intuition that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
+This transformation, adding the enzyme as a pseudometabolite, is based on the intuition that the system uses some amount of enzyme at a specific time to catalyse the flux going through the reaction.
+%
+Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes, but these are beyond the scope of this chapter.
+% Namely:
+% \begin{itemize}
+%   \item Reversible reactions are modelled as the forward and reverse reactions separately.
+%   \item For isozymes, the original reaction is copied multiple times corresponding to the number of reactions that the isozyme catalyses.
+%         Each has an isozyme catalysing the reaction.
+%         In addition, there is an `arm' reaction to act as an intermediate between the substrate and the products.
+%   \item No actions are needed for promiscuous enzymes.
+%   \item Enzyme complexes are modelled as one reaction that uses all subunit proteins that all share the same $k_{cat}$ value.
+% \end{itemize}
 
-Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes.
-Namely:
-\begin{itemize}
-  \item Reversible reactions are modelled as the forward and reverse reactions separately.
-  \item For isozymes, the original reaction is copied multiple times corresponding to the number of reactions that the isozyme catalyses.
-        Each has an isozyme catalysing the reaction.
-        In addition, there is an `arm' reaction to act as an intermediate between the substrate and the products.
-  \item No actions are needed for promiscuous enzymes.
-  \item Enzyme complexes are modelled as one reaction that uses all subunit proteins that all share the same $k_{cat}$ value.
-\end{itemize}
+Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
 
-GECKO adds an enzyme as a pseudo-reactant for all enzyme-catalysed reactions in the genome-scale model to create an enzyme-constrained model.
+\begin{equation}
+  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
+  \label{eq:model-gecko-enzyme-usage}
+\end{equation}
 
-To constrain enzyme levels in the model, GECKO defines a pseudo-reaction
+where $\mathrm{MW}_{i}$ represents the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}, and $E_{\mathrm{pool}}$ is a pseudometabolite that represents the proteome pool available for enyzmes.
+The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
+GECKO takes enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
+
+To constrain overall enzyme levels in the model, GECKO defines a pseudo-reaction
 
 \begin{equation}
   ER_{\mathrm{pool}}: \varnothing \ce{ -> E_{pool} }
@@ -278,23 +277,13 @@ in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
 
 ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
 
-Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0 (to be discussed in section~\ref{subsec:model-yeast8-molweights}).
+Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0.
 Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
 experimental data justifies this assumption \parencite{nissenFluxDistributionsAnaerobic1997}.
 
-Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
+Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.
+The mass of each enzyme in the cell determines the amount (in moles) of each enzyme and therefore its catalytic activity.
 
-\begin{equation}
-  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
-  \label{eq:model-gecko-enzyme-usage}
-\end{equation}
-
-with $\mathrm{MW}_{i}$ being the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
-The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
-
-Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.  The mass of each enzyme in the cell determines the amount (in moles) of each enzyme and therefore its catalytic activity.
-
-GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021} and enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
 
 \subsection{Computing molecular weights of pseudometabolites}
 \label{subsec:model-yeast8-molweights}
@@ -407,7 +396,7 @@ where, to ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be defined for all $i$ a
 \end{equation}
 
 where $e$ is either $e_{i,j}$ or $e_{i, \mathrm{par}}$.
-Here, $e_{i, \mathrm{par}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-fba-constraints-extended}) in the non-ablated, parallel case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
+Here, $e_{i, \mathrm{par}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-enzyme-pool}) in the non-ablated, parallel case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
 
 The value $\epsilon$ is defined as:
 
