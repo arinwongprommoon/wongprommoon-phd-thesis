@@ -170,6 +170,27 @@ I took the mean of the four weights to give \SI{729.53}{\gram~\mole^{-1}}.
 Subsequently, the molecular weight of \texttt{lipid backbone} was computed from this mean value and the molecular weights of other species involved in the production of \texttt{lipid backbone}, giving \SI{21.31}{\gram~\mole^{-1}}.
 With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, the molecular weight of \texttt{lipid} is thus the sum of the two.
 
+Subsequently, the mass fraction of each biomass component is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass:
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{lS}
+    Metabolite & {$f_{i}$} \\
+    \hline
+    Protein & 0.52453 \\
+    Carbohydrate & 0.36438 \\
+    RNA & 0.06660 \\
+    Lipid & 0.03283 \\
+    Cofactors & 0.00502 \\
+    DNA & 0.00406 \\
+    Ions & 0.00258 \\
+  \end{tabular}
+  \caption{
+    $f_{i}$ values for each biomass component.
+  }
+  \label{tab:model-biomfrac}
+\end{table}
+
 
 \section{Mathematical explanation of the effect of restricting the enzyme pool}
 \label{append:model-pool}

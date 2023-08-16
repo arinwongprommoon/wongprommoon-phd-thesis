@@ -145,11 +145,7 @@ Here, I detail how I apply these formalisms for this chapter.
 % TODO: Use proper refs rather than hard-coding numbers.
 In particular, I detail GECKO (item 4) and computing molecular weights of pseudometabolites (based on items 1 and 2).
 
-% FIXME: Delete this subsection?
-% It's mostly a duplicate of the appendix of the GECKO paper,
-% and I wrote it just to make sure I understand it.
-% I haven't used it in discussion so far.
-% FIXME: CHECK FOR PLAGIARISM!!!
+
 \subsection{GECKO}
 \label{subsec:model-yeast8-gecko}
 
@@ -157,7 +153,7 @@ In particular, I detail GECKO (item 4) and computing molecular weights of pseudo
   \centering
   \includegraphics[width=0.9\linewidth]{sanchezImprovingPhenotypePredictions2017_1b_adapted}
   \caption{
-    GECKO extends the stoichiometric matrix of a genome-scale model.
+    Modifications to the stoichiometric matrix of a genome-scale model that GECKO imposes.
     The original stoichiometric matrix $\mathbf{S}$ includes metabolites $M_{1} \ldots M_{m}$ and reactions $v_{1} \ldots v_{n}$.
     GECKO extends this matrix to include enzymes $E_{1} \ldots E_{p}$ and enzyme usage reactions $e_{1} \ldots e_{p}$.
     The new stoichiometric matrix can be seen as four submatrices concatenated together: the upper right submatrix is $\mathbf{0}$, the lower left submatrix encodes kinetic information, and the lower right submatrix is $\mathbf{I}$.
@@ -363,7 +359,7 @@ This process was repeated for the other pseudometabolites.
 \end{figure}
 
 
-\subsection{Effect on allocation of proteome}
+\subsection{Effect of ablation on allocation of proteome to enzymes}
 \label{sec:model-yeast8-pseudometabolites-allocation}
 
 To evaluate whether ablation leads to changes of model behaviour that reflect cellular biochemistry, I quantified how proteome allocation to enzymes changes across rounds of ablation.
@@ -425,7 +421,7 @@ Conversely, if there is a case of an enzyme expression switching off, evidenced 
     %The cell changes how it allocates its proteome to enzymes when different components of its biomass are prioritised.
     Each column shows the component that remains in each round of pseudometabolite ablation (labels on top).
     Each row represents an enzyme, and rows are grouped by subsystem (labels on left).
-    Colours represent $\log_{2}(\mathrm{FC})$ (Eq.\ \ref{eq:model-foldchange}) showing how enzyme usage fluxes change in rounds of ablation: green shows an increase, while pink shows a decrease.
+    Colours represent $\log_{2}(\mathrm{FC})$ (defined in Eq.\ \ref{eq:model-foldchange}) showing how enzyme usage fluxes change in rounds of ablation: green shows an increase, while pink shows a decrease.
     Rows in which $|\log_{2}(\mathrm{FC})| < 11$ for all biomass components are excluded to restrict the number of reactions ($n = \num{3897}$) for visualisation.
   }
   \label{fig:model-ablate-enz-use}
@@ -460,16 +456,14 @@ These results validate ablation of biomass components as a method to simulate se
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-% FIXME: DO feedback, after clarification
+% FIXME: Is this figure actually needed??  Or does it just confuse people??
 \begin{figure}
   \centering
-  \includegraphics[width=.9\linewidth]{ablation_example_adapted.png}
+  \includegraphics[width=.7\linewidth]{ablation_example_adapted.png}
   \caption{
-    Comparing time scales derived from ablating components of the biomass reaction (blue) and from assuming that synthesis time is proportional to the mass fraction of the biomass component (red).
-    % For each biomass component, the time $\Tiabl$ was computed according to equation~\ref{eq:model-ablated-time} (blue bars apart from leftmost column), and the time $\Tiprop$ was computed according to equation~\ref{eq:model-proportional-time} (red bars apart from leftmost column).
-    % $\Tpar$ is defined as the greatest $\Tiprop$ (equation~\ref{eq:model-b}).
-    % Blue under `all biomass' is $\Tseq$ (equation~\ref{eq:model-a}), the sum of times derived from ablation (other blue bars).
-    % Red under `all biomass' is the doubling time $t_{0}$ (equation~\ref{eq:model-doubling-time}).
+    Estimated synthesis times of biomass components, from ablation (blue bars) and from scaling doubling time by mass fraction (red bars).
+    Bars under `all biomass' indicate (blue) $\Tseq$ (defined in Eq.\ \ref{eq:model-a}) and (red) the doubling time $t_{0}$ (defined in Eq.\ \ref{eq:model-doubling-time}).
+    Other bars indicate (blue) $\Tiabl$ (defined in Eq.\ \ref{eq:model-ablated-time}) and (red) $\Tiprop$ (defined in Eq.\ \ref{eq:model-proportional-time}); $\Tpar$ is the greatest $\Tiprop$.
   }
   \label{fig:model-ablate-times}
 \end{figure}
@@ -497,32 +491,11 @@ where:
 \begin{itemize}
   \item $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions),
   \item $\Tiabl$ is the predicted time for synthesis of each biomass component,
-  \item $f_{i}$ is the mass fraction of each biomass component, and
+  \item $f_{i}$ is the mass fraction of each biomass component (table~\ref{tab:model-biomfrac}), and
   \item $\griabl$ is the optimal flux of the ablated biomass reaction.
 \end{itemize}
 
 Eq.\ \ref{eq:model-ablated-time} differs from Eq.\ \ref{eq:model-doubling-time} in that $f_{i}$ acts as a scaling factor that takes into account that if a biomass component accounts for a smaller fraction of dry cell mass, biomass synthesis should take less time.
-This value $f_{i}$ for each biomass component (table~\ref{tab:model-biomfrac}) is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass (table~\ref{tab:ecyeast8-mol-weights}).
-
-\begin{table}[ht]
-  \centering
-  \begin{tabular}{lS}
-    Metabolite & {$f_{i}$} \\
-    \hline
-    Protein & 0.52453 \\
-    Carbohydrate & 0.36438 \\
-    RNA & 0.06660 \\
-    Lipid & 0.03283 \\
-    Cofactors & 0.00502 \\
-    DNA & 0.00406 \\
-    Ions & 0.00258 \\
-  \end{tabular}
-  \caption{
-    $f_{i}$ values for each biomass component.
-  }
-  \label{tab:model-biomfrac}
-\end{table}
-
 
 For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction:
 
@@ -537,7 +510,7 @@ To determine whether sequential biosynthesis of biomass components or parallel b
 This is defined:
 
 \begin{equation}
-  \ratioabl \coloneqq \frac{\Tseq}{\Tpar}
+  \ratioabl = \frac{\Tseq}{\Tpar}
   \label{eq:model-ratio-simplified}
 \end{equation}
 
@@ -545,7 +518,7 @@ where $\Tseq$ represents the predicted growth time assuming sequential biosynthe
 These quantities are defined:
 
 \begin{equation}
-  \Tseq \coloneqq \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
+  \Tseq = \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-a}
 \end{equation}
 
@@ -558,7 +531,7 @@ These quantities are defined:
 % \end{equation}
 
 \begin{equation}
-  \Tpar \coloneqq \argmax_{i} \Tiprop
+  \Tpar = \argmax_{i} \Tiprop
   \label{eq:model-b}
 \end{equation}
 
@@ -587,7 +560,6 @@ Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass compone
    \centering
    \includegraphics[width=\textwidth]{ablation_by4741}
    \caption{
-     BY4741
    }
    \label{fig:model-ablation-by4741}
   \end{subfigure}
@@ -595,7 +567,6 @@ Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass compone
    \centering
    \includegraphics[width=\textwidth]{ablation_zwf1}
    \caption{
-     zwf$\Delta$ in the BY4741 background.
    }
    \label{fig:model-ablation-zwf1}
   \end{subfigure}
@@ -603,19 +574,17 @@ Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass compone
    \centering
    \includegraphics[width=\textwidth]{ablation_tsa2}
    \caption{
-     tsa2$\Delta$ in the BY4742 background.  The ecYeast8 model does not include reactions that correspond to \textit{TSA1}.
    }
    \label{fig:model-ablation-tsa2}
   \end{subfigure}
   \caption{
-    Comparing time scales from sequential and parallel biosynthesis in auxotrophs and deletion strains, as in figure~\ref{fig:model-ablate-times}.
+    Estimated synthesis times of biomass components, from ablation (blue bars) and from scaling doubling time by mass fraction (red bars), for \textbf{(\ref{fig:model-ablation-by4741})} BY4741, \textbf{(\ref{fig:model-ablation-zwf1})} zwf$\Delta$ in the BY4741 background, and \textbf{(\ref{fig:model-ablation-tsa2})} tsa2$\Delta$ in the BY4742 background.
+    %The ecYeast8 model does not include reactions that correspond to \textit{TSA1}.
     % For BY4741-background strains, supplements are simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
     % The same applied to BY4742-background strains, but lysine uptake replaces methionine uptake.
   }
   \label{fig:model-ablation-strains}
 \end{figure}
-% Adding supplements, e.g. amino acids, dNTPs/NTPs, pyruvate, glucose limitation?
-% Or do C/N grid heatmaps demonstrate this.
 
 % In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
 To confirm that the advantage of the sequential biosynthesis strategy is retained in other strains, I extended the computation $\ratioabl$ and related quantities to models in which genes were deleted.
