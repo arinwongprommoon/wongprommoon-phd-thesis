@@ -126,3 +126,47 @@ This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime
 % TODO: Come up with a better (biological) interpretation -- consult some org notes.
 The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
 This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
+
+
+
+
+A restricted proteome-available protein pool, as long as the growth rate remains realistic, makes sequential biosynthesis more advantageous.
+In addition, the advantage is retained in auxotrophs and deletion strains, confirming the robustness (presence) of sequential biomass synthesis as a resource allocation strategy, and thus may explain why the metabolic cycle is still present in such strains.
+
+Nitrogen source availability affects protein synthesis time in the sequential case, while carbon source availability affects both carbohydrate and protein synthesis times.
+Both additively promote (wild type) growth rate.
+These effects explain why parallel biosynthesis is advantageous when carbon and nitrogen sources are both near-limiting or when the nitrogen source is near saturation while the glucose source is over saturation.
+Such patterns are dependent on the growth saturation curves on each nutrient source.
+
+When the cell prioritises biosynthesis of each biomass component, it allocates its proteome to enzymes differently, but the allocation is similar when the cell prioritises carbohydrates, DNA, RNA, cofactors, and ions.
+This could explain why parallel biosynthesis is advantageous in some conditions.
+However, the multiplicity of FBA solutions complicates analysis based of fluxes.
+
+How the cell changes its allocation of its proteome to subsystems may explain some experimental observations.
+It is possible that the cell synthesises carbohydrate, DNA, and RNA around the same time so that use of  oxidative phosphorylation occur at around the same time.
+This may explain cycles in dissolved oxygen concentrations.
+In addition, lipid biosynthesis often requires different enzymes than the other components, and this may explain cycling of lipid stores.
+
+
+
+The extent to which sequential biosynthesis is advantageous in different nutrient conditions and the synthesis timescales predicted may explain why yeast cells show metabolic cycles in certain nutrient conditions.
+The model may provide a weak explanation of why yeast cells continue to have metabolic cycles when abruptly starved of glucose: if the glucose exchange is near zero, the ratio is less than one.
+Though, a better investigation would account for switching between nutrient conditions, which the most basic forms of FBA is not built for --- it only looks at steady state, and does not `remember' past states.
+
+In summary, my results show that the yeast cell may synthesise its biomass components in sequence or in parallel, subject to proteomic and nutrient availability constraints.
+Although it is unrealistic to assume that synthesis of one class macromolecule excludes all others, this approach is still instructive.
+It gives a back-of-the-envelope calculation to support the notion that the cell partitions biosynthesis temporally
+It also gives weight to the idea that this may be one of the rationales of the existence of the yeast metabolic cycle.
+
+% Upon closer inspection of the times and fluxes... [INSERT RESULTS AND DISCUSSION HERE]
+% - How long does it take to replicate the genome?  It is biosynthesis of nucleotides + process of polymerising them.  There has to be super basic cell division cycle literature about this...
+% - Fatty acids: cell may use pentose phosphate pathway and gluconeogenesis to route flow in a cycle to generate masses of NAD(P)H.  Check if the fluxes suggest this.
+
+% <comment> Moved from end of sec:model-fba.  More appropriate as discussion re extensions to my work
+However, FBA, in its most basic form, has several limitations.
+It only gives a steady-state picture of metabolism, and therefore cannot be used to describe changes in fluxes over time.
+Although, dynamic FBA has been developed to solve this problem \parencite{mahadevanDynamicFluxBalance2002}.
+Additionally, it does not account for concentrations of metabolites.
+Nevertheless, there are many derivatives of FBA to overcome these limitations and extend the method to answer additional modelling questions.
+However, these derivatives are outside the scope of this thesis.
+% </comment>
