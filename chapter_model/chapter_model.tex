@@ -252,16 +252,12 @@ This pseudoreaction has a flux
 \end{equation}
 
 in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
-
-\begin{itemize}
-  \item $P_{\mathrm{total}}$ is the total protein fraction with respect to the dry weight of the cell
-  \item $P_{\mathrm{measured}}$ is the protein fraction of proteins whose weight are accounted for in the model, based on proteomic data.
-        If no proteomic data is used, as is the case in this chapter, $P_{\mathrm{measured}} = 0$.
-  \item $f$ represents the fraction of proteins that are enzymes
-  \item $\sigma$ is a parameter that represents the average saturation of enzymes
-\end{itemize}
-
+$P_{\mathrm{total}}$ is the total protein fraction with respect to the dry weight of the cell,
+$P_{\mathrm{measured}}$ is the protein fraction of proteins whose weight are accounted for in the model, based on proteomic data,
+$f$ represents the fraction of proteins that are enzymes, and
+$\sigma$ is a parameter that represents the average saturation of enzymes.
 ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
+If no proteomic data is used, as is the case in this chapter, $P_{\mathrm{measured}} = 0$.
 
 Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0.
 Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
@@ -489,13 +485,11 @@ Based on the growth rates computed in rounds of ablation (Fig.\ \ref{fig:model-a
   \label{eq:model-ablated-time}
 \end{equation}
 
-where:
-\begin{itemize}
-  \item $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions),
-  \item $\Tiabl$ is the predicted time for synthesis of each biomass component,
-  \item $f_{i}$ is the mass fraction of each biomass component (table~\ref{tab:model-biomfrac}), and
-  \item $\griabl$ is the optimal flux of the ablated biomass reaction.
-\end{itemize}
+where
+$i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions),
+$\Tiabl$ is the predicted time for synthesis of each biomass component,
+$f_{i}$ is the mass fraction of each biomass component (shown in table~\ref{tab:model-biomfrac}), and
+$\griabl$ is the optimal flux of the ablated biomass reaction.
 
 Eq.\ \ref{eq:model-ablated-time} differs from Eq.\ \ref{eq:model-doubling-time} in that $f_{i}$ acts as a scaling factor that takes into account that if a biomass component accounts for a smaller fraction of dry cell mass, biomass synthesis should take less time.
 
@@ -803,13 +797,11 @@ Additionally, to determine whether the carbon or nitrogen source is limiting for
   \label{eq:model-susceptibility}
 \end{equation}
 
-where:
-\begin{itemize}
-  \item $i$ indicates glucose (glc) or ammonium (amm)
-  \item $R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{amm}$).
-        An $(\exchrate{glc}, \exchrate{amm})$ pair defines a nutrient condition.
-  \item $y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest at each nutrient condition
-\end{itemize}
+where
+$i$ indicates glucose (glc) or ammonium (amm),
+$R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{amm}$),
+an $(\exchrate{glc}, \exchrate{amm})$ pair defines a nutrient condition, and
+$y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest at each nutrient condition.
 
 At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more sensitive to glucose exchange at this condition.
 The reverse is true if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$.
