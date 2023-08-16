@@ -108,3 +108,21 @@ The model does not account for varying protein fractions and other parameters th
 For instance, \textcite{elsemmanWholecellModelingYeast2022} state that growth rate affects proteome fractions ($f$) and the saturation factor ($\sigma$)
 However, because I find that $\epool$ affects the growth rate, there may be a circular relationship, and there is no guarantee that parameter values will converge if I tune the $\epool^{\prime}$ to obtain a $\gro$ that in turn affects $\epool^{\prime}$.
 Furthermore, the data on biomass component fractions are old, sparse, and coarse --- as a back-of-the-envelope calculation, my investigation is perhaps sufficient.
+
+
+
+
+
+% FIXME: Make this less like a lecture and link interpretations to hypotheses/etc.
+Figure~\ref{fig:model-pool} shows the results of my investigation.
+% In full: 0.103697326777848
+I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
+When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
+In this region, growth rate increases linearly as $\epool$ increases.
+With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
+As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
+But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
+This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
+% TODO: Come up with a better (biological) interpretation -- consult some org notes.
+The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
+This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.

@@ -710,23 +710,10 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
   \label{fig:model-pool}
 \end{figure}
 
-Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available for enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis, as evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases.
+Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available for enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis.
+This is evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases, within the range of $\epool^{\prime}$ that gives realistic growth rates (Fig.\ \ref{fig:model-pool-ratio}).
 Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (Fig.\ \ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (Fig.\ \ref{fig:model-pool-growthrate}).
 These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling changes in $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
-
-% FIXME: Make this less like a lecture and link interpretations to hypotheses/etc.
-Figure~\ref{fig:model-pool} shows the results of my investigation.
-% In full: 0.103697326777848
-I denote $\epool$ as the default enzyme-available proteome pool (\SI{0.104}{\gram~\gram_{DW}^{-1}}) and $\epool^{\prime}$ as the enzyme-available proteome pool I set in the model.
-When $0 \leq \epool^{\prime} \leq 2\epool$, the model gives realistic growth rates \SIrange{0}{0.8}{\hour^{-1}} (figure~\ref{fig:model-pool-growthrate}).
-In this region, growth rate increases linearly as $\epool$ increases.
-With higher $\epool^{\prime}$ values --- that is, less of a constraint on the enzyme pool --- the $\ratioabl$ ratio increases, thus indicating that sequential biosynthesis gives less of an advantage (figure~\ref{fig:model-pool-ratio}).
-As $\epool^{\prime}$ increases, ablated growth rates $\griabl$ increases linearly at low $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated}).
-But then, at higher $\epool^{\prime}$, these linear relationships decrease in gradient, all going to a plateau at very high $\epool^{\prime}$ (figure~\ref{fig:model-pool-ablated-20}).
-This behaviour shows that the relationship between $\griabl$ and $\epool^{\prime}$ is independent of the growth rate $\gro$ and of each other.
-% TODO: Come up with a better (biological) interpretation -- consult some org notes.
-The $\griabl$ of different components plateau at different $\epool^{\prime}$ sizes, with carbohydrate reaching a plateau first, followed by protein.
-This may indicate that the enzyme-available proteome pool is limiting for these components, which may be because the cell needs more enzyme mass to catalyse the reactions needed for the synthesis of these components.
 
 
 \section{Effect of carbon and nitrogen sources}
@@ -1143,25 +1130,19 @@ This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 
   \end{subfigure}
 
   \caption{
-    Measures of similarity between enzyme usage fluxes in rounds of ablation, when glucose and ammonium exchange are varied (left panels), and when pyruvate and ammonium exchange are varied (right panels).
-    \textbf{(Top panels)} Cosine distance between the vector of enzyme usage fluxes when protein is prioritised and the equivalent vector when carbohydrate is prioritised, computed for all nutrient conditions.
-    \textbf{(Bottom panels)} For each nutrient condition, the Kendall's $\tau$-$b$ rank correlation coefficient between the parallel case and each biomass-prioritised case was computed and the mean was found.
-    Higher mean correlations suggest an advantage to parallel biosynthesis.
-  }
+    Measures of similarity between enzyme usage fluxes in different nutrient conditions.
+    Cosine distances between the between the vector of enzyme usage fluxes when protein is prioritised and the equivalent vector when carbohydrate is prioritised are shown \ref{fig:model-noisy-glc-cosine} for glucose-ammonium conditions and \ref{fig:model-noisy-pyr-cosine} pyruvate-ammonium conditions; smaller distances indicate a greater similarity between the two conditions.
+    Means of the set of Kendall's $\tau$-$b$ rank correlation coefficients between the parallel case and each biomass-prioritised case are shown \ref{fig:model-noisy-glc-kendall} for glucose-ammonium conditions and \ref{fig:model-noisy-pyr-kendall} pyruvate-ammonium conditions; larger means indicate a greater similarity between parallel biosynthesis and individual biomass component synthesis.
+    }
   \label{fig:model-noisy}
 \end{figure}
 
-Upon investigation of all \num{1024} nutrient conditions in each carbon source-nitrogen source pair, it appears that the relationship between exchange rate and any measure of similarity between ablation rounds that is based on enzyme usage reactions is not continuous (figure~\ref{fig:model-noisy}).
-This noise complicates drawing conclusions.
-Although, in the pyruvate-ammonium case, there is a general trend that suggests that proteome allocation when carbohydrates are prioritised and when proteins are prioritised are more similar in high-pyruvate high-ammonium conditions.
-There is also a trend that suggests, contrary to figure~\ref{fig:model-grid-pyr}, that parallel biosynthesis is more similar to ablated cases in high-pyruvate high-ammonium conditions, but not by a high degree.
-On the contrary, in the glucose-ammonium case, there is a general trend that suggests that, at high ammonium exchange rates, increasing glucose exchange rates lead to a greater difference between the enzyme usage flux vectors when carbohydrate is prioritised and when protein is prioritised.
-In all cases, there seems to be no clear relationship between the distance measures and whether $\ratioabl > 1$.
-
-The noise in figure~\ref{fig:model-noisy} is likely explained by the multiplicity of solutions in FBA.
-This phenomenon means that FBA finds the optimal value of the objective function, such as growth, but the flux vector that gives rise to this objective function may differ across each simulation or each linear optimisation solver.
-This is not a problem when ablation-related quantities were computed earlier in the section because they were based on the flux of the objective function, defined as the biomass reaction, even if the biomass reaction itself was modified during ablation.
-In other words, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may render any conclusion flawed.
+The use of enzyme usage vectors to explain biomass synthesis scheduling strategies is called into question by the multiplicity of solutions in FBA.
+Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates and measures of similarity between enzyme usage fluxes when carbohydrate is prioritised and when protein is prioritised is not continuous.
+This observation is likely explained by the multiplicity of solutions in FBA.
+Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) would be equivalent across linear programming solvers.
+% I still don't like this sentence.
+In sum, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may render any conclusion flawed.
 
 
 \section{Conclusion}
