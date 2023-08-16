@@ -236,25 +236,15 @@ Slightly different formalisms are applied to reversible reactions, isozymes, pro
 %   \item Enzyme complexes are modelled as one reaction that uses all subunit proteins that all share the same $k_{cat}$ value.
 % \end{itemize}
 
-Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
-
-\begin{equation}
-  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
-  \label{eq:model-gecko-enzyme-usage}
-\end{equation}
-
-where $\mathrm{MW}_{i}$ represents the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}, and $E_{\mathrm{pool}}$ is a pseudometabolite that represents the proteome pool available for enyzmes.
-The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
-GECKO takes enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
-
-To constrain overall enzyme levels in the model, GECKO defines a pseudo-reaction
+To constrain overall enzyme levels in the model, GECKO defines a pseudoreaction
 
 \begin{equation}
   ER_{\mathrm{pool}}: \varnothing \ce{ -> E_{pool} }
   \label{eq:model-gecko-enzyme-pool}
 \end{equation}
 
-with a flux
+where $E_{\mathrm{pool}}$ is a pseudometabolite that represents the proteome pool available for enzymes.
+This pseudoreaction has a flux
 
 \begin{equation}
   \epool \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma
@@ -276,6 +266,18 @@ ecYeast8.6.0 assumes parameter values of: $f = 0.5$, $P_{\mathrm{total}} = 0.5$,
 Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0.
 Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
 experimental data justifies this assumption \parencite{nissenFluxDistributionsAnaerobic1997}.
+
+Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
+
+\begin{equation}
+  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
+  \label{eq:model-gecko-enzyme-usage}
+\end{equation}
+
+where $\mathrm{MW}_{i}$ represents the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
+The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
+GECKO takes enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
+
 
 Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.
 The mass of each enzyme in the cell determines the amount (in moles) of each enzyme and therefore its catalytic activity.
