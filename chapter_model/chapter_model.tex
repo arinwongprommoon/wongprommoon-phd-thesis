@@ -61,7 +61,7 @@ subject to
   \label{eq:model-fba-constraints}
 \end{equation}
 
-where $\mathbf{c}$ is a vector of weights such that $\mathbf{c}^{\intercal} \mathbf{v}$ defines the objective function, $\mathbf{S}$ is the stoichiometric matrix, and $\mathbf{v}$ is the vector of fluxes. The expression $v_{i,\mathrm{min}}$ the lower bound and $v_{i,\mathrm{max}}$ represents the upper bound for each flux $v_{i}$ in $\mathbf{v}$.
+where $\mathbf{c}$ is a vector of weights such that $\mathbf{c}^{\intercal} \mathbf{v}$ defines the objective function, $\mathbf{S}$ is the stoichiometric matrix, and $\mathbf{v}$ is the vector of fluxes. The expression $v_{i,\mathrm{min}}$ represents the lower bound and $v_{i,\mathrm{max}}$ represents the upper bound for each flux $v_{i}$ in $\mathbf{v}$.
 
 The objective function is given as the task of maximising a mathematical expression that is based on a subset of fluxes (equation~\ref{eq:model-fba-objective}).
 Most commonly, the objective function for an FBA problem is maximising the flux of the biomass reaction, thus optimising the growth rate of the cell.
@@ -98,11 +98,11 @@ An enzyme-constrained model fits the assumption that there is a fixed number of 
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} constrain the total sum of fluxes based on a defined total amount of enzyme.
 \textcite{elsemmanWholecellModelingYeast2022} additionally impose a ribosome capacity constraint and additionally imposes compartment constraints.
 
-In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate temporal scheduling of biomass components.
-To simulate the cell prioritising the synthesis of each biomass component, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
-To assess the advantage of sequential synthesis of biomass components over parallel synthesis of biomass components, I estimated the timescales for the synthesis of each biomass component based on the ablations, and compared them to timescales estimated based on the unmodified biomass reaction.
-To evaluate the hypothesis that a restricted proteome pool gives rise to sequential synthesis of biomass components, I varied the size of the proteome pool to observe its effects on the cell's preferred resource allocation strategy.
-Finally, to show how nutrient conditions affect the cell's preferred resource allocation strategy, I modelled changes in carbon and nitrogen source concentrations and investigated their effects on the quantities that explain the strategies.
+In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate two strategies of scheduling of the synthesis of biomass components: in sequence and in parallel.
+To simulate the cell prioritising the synthesis of each biomass component in sequence, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
+To assess the advantage of sequential synthesis over parallel synthesis, I estimated the synthesis time for each biomass component based on ablation, then compared these times predicted by the unmodified model.
+To show that sequential synthesis is an adaptation for a finite proteome pool, I varied the size of the enzyme-available proteome pool to observe its effect on the cell's preferred scheduling strategy.
+Finally, to show how nutrient conditions affect the cell's scheduling strategy, I modelled changes in carbon and nitrogen source concentrations, then observed how the changes affect allocation of the proteome to metabolic enzymes.
 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
 \label{sec:model-yeast8}
