@@ -846,7 +846,7 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
   \end{subfigure}
   \caption{
     Effect of glucose ($\exchrate{glc}$) and ammonium exchange rates ($\exchrate{amm}$) on (\ref{fig:model-grid-glc-ratio}) $\ratioabl$, (\ref{fig:model-grid-glc-growthrate}) growth rate based on unmodified biomass reaction, $\gro$, (\ref{fig:model-grid-glc-carb}) predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ (\ref{fig:model-grid-glc-prot}) predicted protein synthesis time, $\Tabl{protein}$, and (\ref{fig:model-grid-glc-carb-to-prot}) ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
-    Exchange rates are expressed in percentages of growth saturation from in Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
+    Exchange rates are expressed in percentages of growth saturation from Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
     Arrows overlaid on heatmaps indicate sensitivity of the quantity as a vector $(s_{\mathrm{glc}}, s_{\mathrm{amm}})$ (Eq.\ \ref{eq:model-susceptibility}).
   }
@@ -912,6 +912,7 @@ This observation can be explained by the fact that both carbon and nitrogen sour
 % This sounds like a pain point to be emphasised.
 In sum, the relationship between carbon and nitrogen source uptake and the synthesis of carbohydrates and proteins determines how scheduling strategies change according to nutrient conditions.
 
+
 \subsubsection{Pyruvate and ammonium}
 \label{subsec:model-grid-pyruvate}
 
@@ -956,17 +957,27 @@ In sum, the relationship between carbon and nitrogen source uptake and the synth
   \end{subfigure}
   \caption{
     Effect of pyruvate ($\exchrate{pyr}$) and ammonium exchange rates ($\exchrate{amm}$) on (\ref{fig:model-grid-pyr-ratio}) $\ratioabl$, (\ref{fig:model-grid-pyr-growthrate}) growth rate based on unmodified biomass reaction, $\gro$, (\ref{fig:model-grid-pyr-carb}) predicted carbohydrate synthesis time, $\Tabl{carbohydrate}$ (\ref{fig:model-grid-pyr-prot}) predicted protein synthesis time, $\Tabl{protein}$, and (\ref{fig:model-grid-pyr-carb-to-prot}) ratio of carbohydrate synthesis time to protein synthesis time, $\Tabl{carbohydrate}/\Tabl{protein}$.
-    Exchange rates are expressed in percentages of growth saturation from in Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
+    Exchange rates are expressed in percentages of growth saturation from Fig.\ \ref{fig:model-saturation}, with black straight lines indicate 100\% of saturation.
     Contours show regions in which $\ratioabl > 1$.
     Arrows overlaid on heatmaps indicate sensitivity of the quantity as a vector $(s_{\mathrm{pyr}}, s_{\mathrm{amm}})$ (Eq.\ \ref{eq:model-susceptibility}).
   }
   \label{fig:model-grid-pyr}
 \end{figure}
 
-To investigate the effect on a non-fermentable carbon source, I repeated the investigation using pyruvate as the carbon source, and adjusted the saturation exchange rates accordingly: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh} (figure~\ref{fig:model-grid-pyr}).
-Overall, pyruvate seems to represent an extreme case of the glucose investigation.
-The previous discussion of how the quantities of interest vary as exchange rates vary applies.
-Though, the change of behaviour can be explained by how the growth saturation curve under pyruvate has a different shape from the growth saturation curve under glucose.
+To investigate the effect of a non-fermentable carbon source on biomass synthesis strategies, I repeated the investigation using pyruvate as the carbon source, ablating components in the biomass reaction in different nutrient conditions.%, and adjusted the saturation exchange rates accordingly: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh} (figure~\ref{fig:model-grid-pyr}).
+
+Results show that the saturation behaviour of pyruvate controlled the effect of exchange rates on scheduling strategies.
+Fig.\ \ref{fig:model-grid-pyr} shows when pyruvate was the carbon source, the region of carbon source limitation was larger than when glucose was the carbon source.
+This observation reflected how the pyruvate saturation curve differed from the glucose saturation curve (Fig.\ \ref{fig:model-saturation}).
+Namely, as pyruvate exchange increased below saturation, the growth rate increased linearly: the growth rate reached half its maximum value when pyruvate exchange was half of its saturation value.
+In contrast, as glucose exchange increased below saturation, the growth rate did not increase linearly: the growth rate reached half its maximum value when glucose exchange was well below half of its saturation value.
+
+Fig.\ \ref{fig:model-grid-pyr} shows that the relationship between exchange rates and the quantities $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$ was similar to the glucose-ammonium case.
+In other words, when pyruvate was the carbon source, the relationship between carbon and nitrogen source uptake and the synthesis of carbohydrates and proteins still determined how scheduling strategies changed according to nutrient conditions.
+Parallel biosynthesis was advantageous in two conditions: when both pyruvate and ammonium limited the growth rate, and when ammonium exchange was at saturation while pyruvate exchange was greater than saturation (Fig.\ \ref{fig:model-grid-pyr-ratio}).
+In contrast, sequential biosynthesis was advantageous when neither pyruvate nor ammonium was limiting.
+$\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remained at high values when pyruvate is limiting or when pyruvate and ammonium were both limiting (Fig.\ \ref{fig:model-grid-pyr-carb-to-prot}).
+Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nutrient conditions varied could also be explained by how pyruvate exchange limited carbohydrate synthesis time (Fig.\ \ref{fig:model-grid-pyr-carb}) and by how both pyruvate and ammonium exchange limited protein synthesis time (Fig.\ \ref{fig:model-grid-pyr-prot}).
 
 
 \subsection{Relationship between proteome allocation and resource allocation strategy}
@@ -1025,8 +1036,8 @@ Though, the change of behaviour can be explained by how the growth saturation cu
   \label{fig:model-rank-glc-kendall}
 \end{figure}
 
-In both the glucose-ammonium and pyruvate-ammonium conditions, I observe that the highest $\ratioabl$ occurs at the boundary at which both the carbon source and the nitrogen source are limiting.
-This leads to the hypothesis that the cell favours parallel biosynthesis of biomass components in such conditions, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
+The investigation of the effect of carbon and nitrogen sources on scheduling strategies led to a new hypothesis: the cell favours parallel biosynthesis of biomass components when the carbon source and the nitrogen source are both limiting, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
+This hypothesis arose from the observation that, in both the glucose-ammonium and pyruvate-ammonium conditions, the highest $\ratioabl$ occurred at the boundary at which both the carbon source and the nitrogen source were limiting.
 
 To evaluate this hypothesis, I investigated how the enzyme usage fluxes change across each round of ablation in the glucose-ammonium exchange combinations that produce the lowest and greatest $\ratioabl$ (Figs.\ \ref{fig:model-rank-glc-rank},~\ref{fig:model-rank-glc-kendall}), and performed the same investigation for pyruvate-ammonium exchange combinations (Figs.\ \ref{fig:model-rank-pyr-rank},~\ref{fig:model-rank-pyr-kendall}).
 As a visualisation aid, I ranked the enzyme usage reactions by magnitude of flux to emphasise how the allocation of enzymes changes in each round.
