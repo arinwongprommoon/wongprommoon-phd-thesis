@@ -349,8 +349,8 @@ To have the cell prioritise biosynthesis of lipids, I set the stoichiometric coe
   --> 47.5883 adp\_c + biomass\_c + 47.5883 h\_c + 47.5883 pi\_c
 }
 
-The model was optimised using FBA, with the modified reaction as the objective function.
-This process was repeated for the other pseudometabolites.
+Using this modified reaction as the objective function, the model was optimised using FBA, and
+this process was repeated for the other pseudometabolites, resulting in different growth rates for each round of ablation (Fig.\ \ref{fig:model-ablate-fluxes}).
 
 \begin{figure}
   \centering
@@ -368,15 +368,9 @@ This process was repeated for the other pseudometabolites.
 \subsection{Effect of ablation on allocation of proteome to enzymes}
 \label{sec:model-yeast8-pseudometabolites-allocation}
 
-To evaluate whether ablation leads to changes of model behaviour that reflect cellular biochemistry, I quantified how proteome allocation to enzymes changes across rounds of ablation.
-When the model prioritises a different biomass component in each round of ablation, the model partitions the limited proteome available for enzyme production differently.
-In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) is different from each other and from the non-ablated case, in which all biomass components are synthesised in parallel.
-Optimising the objective function as each pseudometabolite is prioritised affects the predicted growth rates (Fig.\ \ref{fig:model-ablate-fluxes}).
-
-Subsystem information aids interpretation of these changes.
-Here, I match the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
-If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
-Then, the subsystem associated with each enzyme-catalysed reaction is taken from the gene-protein map, and noted.
+To assess whether ablation leads to metabolic changes that reflect cellular biochemistry, I quantified how proteome allocation to enzymes changes across rounds of ablation.
+When the model prioritised a different biomass component in each round of ablation, the model partitioned the limited proteome available for enzyme production differently.
+In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) was different from each other and from the non-ablated case, in which all biomass components were synthesised in parallel.
 
 To quantify changes in proteome allocation across rounds of ablation, I compute the $\log_{2}(\mathrm{FC})$ of fluxes relative to the non-ablated, parallel case.
 This is defined as:
@@ -397,27 +391,31 @@ where, to ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be defined for all $i$ a
   \label{eq:model-epsilon-round}
 \end{equation}
 
-where $e$ is either $e_{i,j}$ or $e_{i, \mathrm{par}}$.
+where $e^{\prime}$ is either $e_{i,j}^{\prime}$ or $e_{i, \mathrm{par}}^{\prime}$, $e$ is the corresponding $e_{i,j}$ or $e_{i, \mathrm{par}}$, and $\epsilon$ is the minimum flux of $\SI{1}{\molecule~\cell^{-1}} = \SI{1.11d-10}{\mmolgdw}$, computed assuming a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
 Here, $e_{i, \mathrm{par}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-enzyme-pool}) in the non-ablated, parallel case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
 
-The value $\epsilon$ is defined as:
+% The value $\epsilon$ is defined as:
 
-\begin{equation}
-  \begin{aligned}
-    \epsilon &= \SI{1}{\molecule~\cell^{-1}~\hour^{-1}}\\
-             &= \frac{(\SI{1}{\molecule})}{(\SI{1}{\cell})(\SI{1}{\hour})} \cdot \frac{(\SI{1}{\cell})}{(\SI{15}{\pico\gram_{DW}})} \cdot \frac{(\SI{1}{\mol})}{(\SI{6.02214d23}{\molecule)}}\\
-             &= \SI{1.11d-13}{\mol~\gram_{DW}^{-1}~\hour^{-1}}\\
-             &= \SI{1.11d-10}{\mmolgdwh}\\
-  \end{aligned}
-  \label{eq:model-epsilon}
-\end{equation}
+% \begin{equation}
+%   \begin{aligned}
+%     \epsilon &= \SI{1}{\molecule~\cell^{-1}~\hour^{-1}}\\
+%              &= \frac{(\SI{1}{\molecule})}{(\SI{1}{\cell})(\SI{1}{\hour})} \cdot \frac{(\SI{1}{\cell})}{(\SI{15}{\pico\gram_{DW}})} \cdot \frac{(\SI{1}{\mol})}{(\SI{6.02214d23}{\molecule)}}\\
+%              &= \SI{1.11d-13}{\mol~\gram_{DW}^{-1}~\hour^{-1}}\\
+%              &= \SI{1.11d-10}{\mmolgdwh}\\
+%   \end{aligned}
+%   \label{eq:model-epsilon}
+% \end{equation}
 
-assuming a reasonable minimum reaction flux of \SI{1}{\molecule~\cell^{-1}~\hour^{-1}} and a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
+% assuming a reasonable minimum reaction flux of \SI{1}{\molecule~\cell^{-1}~\hour^{-1}} and a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
 
-If $\log_{2}(\mathrm{FC_{i,j}}) > 0$, this indicates that the cell allocates more of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
-Conversely, if $\log_{2}(\mathrm{FC_{i,j}}) < 0$, the cell allocates less of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised.
-In addition, if there is a case of enzyme expression switching on, evidenced by $e_{i, \mathrm{par}} = 0$, $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
-Conversely, if there is a case of an enzyme expression switching off, evidenced by $e_{i, j} = 0$, $e_{i,j}$ $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
+If $\log_{2}(\mathrm{FC_{i,j}}) > 0$, the cell allocates more of its proteome to produce enzyme $E_{i}$ when biomass component $j$ is prioritised; the reverse is true if $\log_{2}(\mathrm{FC_{i,j}}) < 0$.
+In addition, if enzyme expression switches on ($e_{i, \mathrm{par}} = 0$), $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
+Conversely, if enzyme expression switches off ($e_{i, j} = 0$), $e_{i,j}$ $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
+
+Subsystem information aids interpretation of the changes in proteome allocation across rounds of ablation.
+Here, I matched the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
+If an enzyme usage pseudoreaction was associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
+Then, the subsystem associated with each enzyme-catalysed reaction was taken from the gene-protein map, and noted.
 
 \begin{figure}
   \centering
@@ -435,36 +433,33 @@ Conversely, if there is a case of an enzyme expression switching off, evidenced 
   \label{fig:model-ablate-enz-use}
 \end{figure}
 
-Figure~\ref{fig:model-ablate-enz-use} shows the subsystems and fold changes calculated as described above.
-In particular, it shows:
-
+To show that in each round of ablation, the cell re-allocated its finite proteome to enzymes with roles related to the synthesis of each biomass component, Fig.\ \ref{fig:model-ablate-enz-use} categorises fold changes by subsystem.
+Specifically, the figure shows:
 \begin{enumerate}
-  \item When any particular biomass component is prioritised, the cell de-allocates its proteome to most of its enzymes, as evidenced by $\log_{2}(\mathrm{FC}_{i,j}) < 0$ for most values of $i, j$.
-        However, there are cases in which there are strong increases in allocation, as shown by $\log_{2}(\mathrm{FC}_{i,j}) > 0$.
-        For example, when cofactors are prioritised, there are strong increases in biosynthesis of unsaturated fatty acids and in riboflavin metabolism.
-        Additionally, there are strong increases in oxidative phosphorylation when carbohydrate, DNA, RNA, cofactor, or ion is prioritised.
-  \item When the cell prioritises lipid biosynthesis, it exhibits the least change relative to the parallel (non-ablated case), compared to cases in which other biomass components are prioritised.
-        The changes include increases of fluxes in the subsystems of fatty acid biosynthesis, glycerolipid metabolism, glycerophospholipid metabolism, inositol phosphate metabolism, steroid biosynthesis, and terpenoid backbone.
-        Given that these subsystems are directly related to lipid metabolism, such changes are expected.
-        In addition, during lipid biosynthesis, the model shows decreases of fluxes in oxidative phosphorylation, the TCA cycle, and in amino acid metabolism, with fluxes varying depending on the amino acid.
-  \item When the cell prioritises protein biosynthesis, it shows small increases in fluxes associated with amino acid metabolism, tRNA metabolism, and oxidative phosphorylation.
-        Such increases are expected as these led to production of substrates that are required for translation.
-        Conversely, when other biomass components (carbohydrate, ion, DNA, RNA, and cofactor) are prioritised, there are decreases in fluxes in glycine, serine, and threonine metabolism.
-  \item When the cell prioritises carbohydrate biosynthesis, there is an increase in fructose metabolism, mannose metabolism, N-glycan biosynthesis, and starch and sucrose metabolism, in contrast to the other biomass components.
-        This is expected given that these reactions relate directly to pathways for synthesis of carbohydrates.
-  \item When the cell prioritises RNA biosynthesis, there are increases in the purine metabolism and pyrimidine metabolism subsystems, along with a mixed picture in the pentose phosphate pathway.
-        The increases are expected given the presence of purines and pyrimidines in RNA and the role of the pentose phosphate pathway in generating the precursors for these compounds.
-        However, these subsystems show weak decreases in flux when DNA is prioritised, though the enzyme usage flux profile overall is similar to when RNA is prioritised.
+  \item When any biomass component is prioritised, the cell de-allocated its proteome to most of its enzymes, as $\log_{2}(\mathrm{FC}_{i,j}) < 0$ for most values of $i, j$.
+        However, there were cases with strong increases in allocation ($\log_{2}(\mathrm{FC}_{i,j}) > 0$).
+        For example, when cofactors were prioritised, there were strong increases in biosynthesis of unsaturated fatty acids and in riboflavin metabolism.
+        Additionally, there were strong increases in oxidative phosphorylation when carbohydrate, DNA, RNA, cofactor, or ion was prioritised.
+  \item When the cell prioritised lipid biosynthesis, it showed the least change relative to the parallel (non-ablated case), compared to other biomass components.
+        The changes included increases of fluxes in the subsystems of fatty acid biosynthesis, glycerolipid metabolism, glycerophospholipid metabolism, inositol phosphate metabolism, steroid biosynthesis, and terpenoid backbone.
+        Given that these subsystems are directly related to lipid metabolism, such changes were expected.
+        In addition, during lipid biosynthesis, the model showed decreases of fluxes in oxidative phosphorylation, the TCA cycle, and in amino acid metabolism, with fluxes varying depending on the amino acid.
+  \item When the cell prioritised protein biosynthesis, it showed small increases in fluxes associated with amino acid metabolism, tRNA metabolism, and oxidative phosphorylation.
+        Such increases were expected as these led to production of substrates that are required for translation.
+        Conversely, when other biomass components (carbohydrate, ion, DNA, RNA, and cofactor) were prioritised, there were decreases in fluxes in glycine, serine, and threonine metabolism.
+  \item When the cell prioritises carbohydrate biosynthesis, there were increases in fructose metabolism, mannose metabolism, N-glycan biosynthesis, and starch and sucrose metabolism.
+        This was expected given that these reactions relate directly to pathways for synthesis of carbohydrates.
+  \item When the cell prioritised RNA biosynthesis, there were increases in the purine metabolism and pyrimidine metabolism subsystems, along with a mixed picture in the pentose phosphate pathway.
+        The increases were expected given the presence of purines and pyrimidines in RNA and the role of the pentose phosphate pathway in generating the precursors for these compounds.
+        However, these subsystems showed weak decreases in flux when DNA is prioritised, though the enzyme usage flux profile overall is similar to when RNA is prioritised.
 \end{enumerate}
 
-Overall, Fig.\ \ref{fig:model-ablate-enz-use} thus shows that in each round of ablation, when each biomass component is prioritised, the cell re-allocated its limited proteome to enzymes that have roles related to the synthesis of each biomass component.
-These results validate ablation of biomass components as a method to simulate sequential synthesis of biomass components by the cell, as the changes of fluxes reflect cellular biochemistry.
+Results thus validate ablation of biomass components as a method to simulate sequential synthesis of biomass components by the cell, as the changes of fluxes reflect cellular biochemistry.
 
 
 \section{Estimating timescale of biosynthesis}
 \label{sec:model-timescale}
 
-% FIXME: Is this figure actually needed??  Or does it just confuse people??
 \begin{figure}
   \centering
   \includegraphics[width=.7\linewidth]{ablation_example_adapted.png}
@@ -481,7 +476,7 @@ These results validate ablation of biomass components as a method to simulate se
 
 To evaluate whether sequential or parallel synthesis of biomass components offers a time advantage during cell growth, I estimated the timescale of biosynthesis for either resource allocation strategy (Fig.\ \ref{fig:model-ablate-times}).
 
-Based on the objective function of the unmodified model, the doubling time is computed as follows:
+Based on the objective function of the unmodified model, the doubling time was computed as follows:
 
 \begin{equation}
   t_{0} = \frac{\ln 2}{\gro}
@@ -490,7 +485,7 @@ Based on the objective function of the unmodified model, the doubling time is co
 
 where $t_{0}$ is the doubling time and $\gro$ is the growth rate, equivalent to the optimised flux of the biomass reaction.
 
-Based on the growth rates computed in rounds of ablation (Fig.\ \ref{fig:model-ablate-fluxes}), the synthesis time of each biomass component is computed as follows:
+Based on the growth rates computed in rounds of ablation (Fig.\ \ref{fig:model-ablate-fluxes}), the synthesis time of each biomass component was computed as follows:
 
 \begin{equation}
   \Tiabl = f_{i} \cdot \frac{\ln 2}{\griabl}
@@ -502,8 +497,7 @@ $i$ represents each of the biomass components (lipids, proteins, carbohydrates, 
 $\Tiabl$ is the predicted time for synthesis of each biomass component,
 $f_{i}$ is the mass fraction of each biomass component (shown in table~\ref{tab:model-biomfrac}), and
 $\griabl$ is the optimal flux of the ablated biomass reaction.
-
-Eq.\ \ref{eq:model-ablated-time} differs from Eq.\ \ref{eq:model-doubling-time} in that $f_{i}$ acts as a scaling factor that takes into account that if a biomass component accounts for a smaller fraction of dry cell mass, biomass synthesis should take less time.
+In Eq.\ \ref{eq:model-ablated-time}, $f_{i}$ functions as a scaling factor so that the synthesis time of a biomass component is proportional to the proportion of the biomass component in dry cell mass.
 
 For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction:
 
@@ -514,8 +508,7 @@ For comparison, I computed estimates of the time for each biomass component, ass
 
 where $t_{0}$ is the doubling time found in Eq.\ \ref{eq:model-doubling-time}.
 
-To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I devise a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time.
-This is defined:
+To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I defined a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time:
 
 \begin{equation}
   \ratioabl = \frac{\Tseq}{\Tpar}
@@ -523,10 +516,10 @@ This is defined:
 \end{equation}
 
 where $\Tseq$ represents the predicted growth time assuming sequential biosynthesis and $\Tpar$ represents the limiting biomass synthesis time assuming parallel biosynthesis.
-These quantities are defined:
+The quantities $\Tseq$ and $\Tpar$ are defined:
 
 \begin{equation}
-  \Tseq = \sum_{i} \Tiabl = \sum f_{i} \cdot \frac{\ln 2}{\griabl}
+  \Tseq = \sum_{i} \Tiabl %= \sum f_{i} \cdot \frac{\ln 2}{\griabl}
   \label{eq:model-a}
 \end{equation}
 
@@ -543,22 +536,24 @@ These quantities are defined:
   \label{eq:model-b}
 \end{equation}
 
-As $\biomfrac{protein} = 0.525$, $\Tpar = \Tprop{protein}$.
+Because $\biomfrac{protein} = 0.525$, $\Tpar = \Tprop{protein}$.
 
 Therefore,
 
 \begin{equation}
   \begin{aligned}
     \ratioabl &= \frac{\Tseq}{\Tpar} \\
-    & = \left( \sum_i \frac{f_i}{\griabl} \right) \cdot \frac{\gro}{\biomfrac{protein}} \\
+    & = \frac{\left( \sum_{i} \Tiabl \right)}{\left( \argmax_{i} \Tiprop \right)}\\
+    & = \frac{\left(  \sum_{i} f_{i} \cdot \frac{\ln 2}{\griabl} \right)}{\left( \biomfrac{protein} \cdot \frac{\ln 2}{\gro} \right)}\\
+    %& = \left( \sum_i \frac{f_i}{\griabl} \right) \cdot \frac{\gro}{\biomfrac{protein}} \\
     & = \left( \frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}} \right) \cdot \frac{\gro}{\biomfrac{protein}}
     \end{aligned}
   \label{eq:model-ratio}
 \end{equation}
 
-The expression in Eq.\ \ref{eq:model-ratio} means that the definition of the $\ratioabl$ ratio does not reduce to a trivial expression and depends on the $\gro$ and the $\griabl$ values, which are all independent of each other.
+The expression in Eq.\ \ref{eq:model-ratio} means that the definition of the $\ratioabl$ ratio does not reduce to a trivial expression and depends on the $\gro$ and the $\griabl$ values, which are independent of each other.
 %This relationship between $\ratioabl$ and $\gro$ and $\griabl$ is explored in section~\ref{sec:model-pool}.
-A $\ratioabl < 1$ means that synthesising biomass components in sequence saves more time, favouring sequential biosynthesis.
+A $\ratioabl < 1$ means that synthesising biomass components in sequence saves more time, and sequential biosynthesis is favoured.
 Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass components is favoured as synthesising biomass components in sequence does not save time.
 
 
@@ -569,64 +564,30 @@ Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass compone
   \caption[
     Estimated synthesis times of biomass components, for BY4741, zwf$\Delta$, and tsa2$\Delta$
   ]{
-    Estimated synthesis times of biomass components: from ablation and $\Tpar$, for wild-type (unmodified model) BY4741, zwf$\Delta$ in the BY4741 background, and tsa2$\Delta$ in the BY4742 background --- the ecYeast8 model does not include reactions that correspond to \textit{TSA1}.
-    For BY4741-background strains, nutrient supplements were simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
-    The same applied to BY4742-background strains, but lysine uptake replaced methionine uptake.
+    Estimated synthesis times of biomass components: from ablation and $\Tpar$, for wild-type (unmodified model) BY4741, zwf$\Delta$ in the BY4741 background, and tsa2$\Delta$ in the BY4742 background
   }
   \label{fig:model-ablation-strains}
 \end{figure}
 
 % In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
-To confirm that the advantage of the sequential biosynthesis strategy is retained in other strains, I extended the computation $\ratioabl$ and related quantities to models in which genes were deleted.
-In accordance with chapter 3, the BY4741 zwf1$\Delta$ and BY4742 tsa1$\Delta$ tsa2$\Delta$ strains were simulated.
-The deletions were made by restricting reaction fluxes that are associated with the deleted genes to zero.
-For BY4741-background strains, supplements are simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
-The same applied to BY4742-background strains, but lysine uptake replaces methionine uptake.
-Fig.\ \ref{fig:model-ablation-strains} shows that $\ratioabl < 1$ still holds for auxotrophs and deletion strains, suggesting that the sequential biosynthesis strategy remains advantageous.
-Assuming that temporal scheduling of the synthesis of biomass components during growth explains the timing of biosynthetic events in the yeast metabolic cycle, these observations supports results in chapter 3 which shows that auxotrophs and deletion strains have YMCs.
+To confirm that the advantage of the sequential biosynthesis strategy is retained in other genetic backgrounds, I extended the computation $\ratioabl$ and related quantities to models in which genes were deleted.
+To corroborate results from Chap.\ \ref{ch:biology}, the BY4741 zwf1$\Delta$ and BY4742 tsa2$\Delta$ strains were simulated --- the latter was substituted for tsa1$\Delta$ tsa2$\Delta$ because the ecYeast8 model did not include reactions that correspond to \textit{TSA1}.
+The deletions were made by restricting to zero reaction fluxes that are associated with the deleted genes in the model.
+For BY4741-background strains, supplements were simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
+The same applied to BY4742-background strains, but lysine uptake replaced methionine uptake.
+Fig.\ \ref{fig:model-ablation-strains} shows that $\ratioabl < 1$ still held for auxotrophs and deletion strains, suggesting that the sequential biosynthesis strategy remains advantageous.
+Assuming that temporal scheduling of the synthesis of biomass components during growth explains the timing of biosynthetic events in the yeast metabolic cycle, these observations supports results in Chap.\ \ref{ch:biology} which shows that auxotrophs and deletion strains have YMCs.
 
 
 \section{Effect of restricting the enzyme pool}
 \label{sec:model-pool}
 
-The yeast cell has a finite enzyme-available proteome pool, so it must decide which enzymes to allocate the greatest proportions of the pool to, for enzyme synthesis.
-In order to study this effect using the ecYeast8 model, a constraint on the proteome pool must be imposed, and I imposed this constraint by varying the enzyme-available proteome pool defined by the enzyme pool pseudoreaction (Eq.\ \ref{eq:model-gecko-enzyme-pool-flux}).
-To vary the enzyme-available proteome pool in the ecYeast8 model,
-I vary the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}) in order to change the flux available for enzyme usage pseudoreactions (equation~\ref{eq:model-gecko-enzyme-usage}).
+The yeast cell has a finite enzyme-available proteome pool, so it must decide which enzymes to allocate the greatest proportions of the pool to.
+To study this effect using the ecYeast8 model, I imposed a constraint on the enzyme-available proteome pool by varying the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}).
 With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to, modelling the biological response to a restricted enzyme pool.
 
 \begin{figure}
   \centering
-  % \begin{subfigure}[htpb]{0.45\textwidth}
-  %  \centering
-  %  \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
-  %  \caption{
-  %  }
-  %  \label{fig:model-pool-ratio}
-  % \end{subfigure}%
-  % \begin{subfigure}[htpb]{0.45\textwidth}
-  %  \centering
-  %  \includegraphics[width=\textwidth]{epool_ec_ratio_20_shrinkyaxis}
-  %  \caption{
-  %  }
-  %  \label{fig:model-pool-ratio-20}
-  % \end{subfigure}
-
-  % \begin{subfigure}[htpb]{0.45\textwidth}
-  %  \centering
-  %  \includegraphics[width=\textwidth]{epool_ec_gr}
-  %  \caption{
-  %  }
-  %  \label{fig:model-pool-growthrate}
-  % \end{subfigure}%
-  % \begin{subfigure}[htpb]{0.45\textwidth}
-  %  \centering
-  %  \includegraphics[width=\textwidth]{epool_ec_gr_20}
-  %  \caption{
-  %  }
-  %  \label{fig:model-pool-growthrate-20}
-  % \end{subfigure}
-
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{epool_ec_ratio_gr}
@@ -668,27 +629,25 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
 \end{figure}
 
 Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available for enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis.
-This is evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases, within the range of $\epool^{\prime}$ that gives realistic growth rates (Fig.\ \ref{fig:model-pool-ratio-growthrate}).
-Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (Fig.\ \ref{fig:model-pool-ratio-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (Fig.\ \ref{fig:model-pool-ratio-growthrate}).
-These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling changes in $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
+Within the range of $\epool^{\prime}$ that gives realistic growth rates, this is evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases (Fig.\ \ref{fig:model-pool-ratio-growthrate}).
+Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate.
+These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling the changes of $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
 
 
 \section{Effect of carbon and nitrogen sources}
 \label{sec:model-exchange}
 
-To explore whether sequential synthesis of biomass components remains advantageous across nutrient conditions, I investigated how changes in the concentrations of nitrogen and carbon sources affect the resource allocation strategy in yeast.
-The nitrogen source of interest was ammonium as it is the form of nitrogen present in minimal growth media.
-The carbon sources of interest included glucose and pyruvate.
-Glucose was studied as it is the preferred carbon source for budding yeast, while pyruvate served as an example of a non-fermentable carbon source to investigate the effect of significant changes to central carbon metabolism on resource allocation strategies.
+To explore whether sequential synthesis of biomass components remains advantageous across nutrient conditions, I investigated how changes in the concentrations of nitrogen (ammonium) and carbon sources (glucose and pyruvate) affected the resource allocation strategies.
+Ammonium is the form of nitrogen in minimal growth media.
+Glucose is the preferred carbon source for budding yeast, and as pyruvate is a non-fermentable carbon source, using it as a carbon source would show how substantial changes to central carbon metabolism affected resource allocation strategies.
 
-% FIXME: Be consistent in referring to exchange rate/saturation.  Come up with some phrase to use.
 \subsection{Saturation of exchange reactions}
 \label{subsec:model-saturation}
 
 Investigating the effect of carbon and nitrogen sources requires finding ranges of concentrations of each source to be used in an FBA problem that leads to biologically informative results.
 The saturation point of the nutrient, defined as the concentration of the nutrient at which the growth rate reaches its maximum, thus serves as a biologically relevant reference point.
-Although genome-scale metabolic models have nutrient exchange reactions that simulate the presence or absence of nutrients, the saturation point concentrations from experimental studies cannot be directly used as flux bounds for these reactions because FBA does not account for substrate concentrations.
-Instead, I constrain the flux of exchange reactions in such a way that the optimised growth rate matches experimental observations, as was performed in previous FBA-based studies \parencite{elsemmanWholecellModelingYeast2022}.
+Although genome-scale metabolic models have nutrient exchange reactions that simulate the presence or absence of nutrients, saturation points from experimental studies cannot be directly used as flux bounds for these reactions because FBA does not account for substrate concentrations.
+Instead, I constrained the flux of exchange reactions in such a way that the optimised growth rate matched experimental observations, as was performed in previous FBA-based studies \parencite{elsemmanWholecellModelingYeast2022}.
 % TODO: Find other studies that did the same and cite them here.
 
 
@@ -734,10 +693,10 @@ Instead, I constrain the flux of exchange reactions in such a way that the optim
 \end{figure}
 
 To model the effect of nutrient concentrations on growth rate, I created saturation curves that show how the effect of nutrient exchange flux on the objective function.
-These curves were created by varying the upper bounds of nutrient exchange reactions and optimising the model at each upper bound value.
-Figs.\ \ref{fig:model-saturation-glucose} and \ref{fig:model-saturation-pyruvate} show that the saturation curve of glucose exchange and of pyruvate exchange exhibited different shapes.
+%These curves were created by varying the upper bounds of nutrient exchange reactions and optimising the model at each upper bound value.
+Figs.\ \ref{fig:model-saturation-glucose} and \ref{fig:model-saturation-pyruvate} show that the saturation curves of glucose and pyruvate had different shapes.
 In addition, the maximum growth rate on glucose (\SI{0.38}{\hour^{-1}}) was greater than the maximum growth rate on pyruvate (\SI{0.25}{\hour^{-1}}).
-Furthermore, the growth rate saturation point for ammonium was determined by the maximal growth rate on the carbon source (Fig.\ \ref{fig:model-saturation-ammonium}).
+Furthermore, Fig.\ \ref{fig:model-saturation-ammonium} shows that the maximum growth rate on the carbon source sets the saturation point for ammonium.
 
 These growth saturation curves agree with similar studies.
 Specifically, the growth saturation curve for glucose (Fig.\ \ref{fig:model-saturation-glucose}) is similar to that simulated by \textcite{elsemmanWholecellModelingYeast2022} using another derivative of the Yeast8 model.
@@ -805,7 +764,7 @@ The maximum growth rate on glucose agrees with \textcite{domenzainReconstruction
 
 To assess the effect of glucose and ammonium concentration on biomass synthesis strategies, I ablated components in the biomass reaction in different nutrient conditions set by glucose and ammonium exchange fluxes
 to obtain $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$ (Fig.\ \ref{fig:model-grid-glc}).
-Additionally, to determine whether the carbon or nitrogen source is limiting for each of the quantities calculated, I defined the sensitivity at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ as:
+Additionally, to determine whether the carbon or nitrogen source is limiting for each of these quantities, I defined the sensitivity at each nutrient condition $(\exchrate{glc}, \exchrate{amm})$, with respect to each axis $i$ as:
 
 \begin{equation}
   s_{i}(\exchrate{glc}, \exchrate{amm}) = \frac{R_{i}}{y(\exchrate{glc}, \exchrate{amm})} \cdot \pdif{y(\exchrate{glc}, \exchrate{amm})}{R_{i}}
@@ -817,13 +776,13 @@ $i$ indicates glucose (glc) or ammonium (amm),
 $R_{i}$ indicates the exchange rate, glucose ($\exchrate{glc}$) or ammonium ($\exchrate{amm}$),
 an $(\exchrate{glc}, \exchrate{amm})$ pair defines a nutrient condition, and
 $y(\exchrate{glc}, \exchrate{amm})$ represents the quantity of interest at each nutrient condition.
+For a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then the quantity is more sensitive to glucose exchange in this condition.
+Conversely, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$, the quantity is more sensitive to ammonium exchange.
 
-At a specific nutrient condition $(\exchrate{glc}, \exchrate{amm})$, if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) > s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$ for a quantity of interest $y$, then it means that the quantity is more sensitive to glucose exchange at this condition.
-The reverse is true if $s_{\mathrm{glc}}(\exchrate{glc}, \exchrate{amm}) < s_{\mathrm{amm}}(\exchrate{glc}, \exchrate{amm})$.
-
-Fig.\ \ref{fig:model-grid-glc-growthrate} divides the nutrient conditions into three regions according to the nutrients that limit growth rate as determined by sensitivity values: a glucose-limiting region, an ammonium-limiting region, and a region whether neither glucose nor ammonium is limiting.
-Fig.\ \ref{fig:model-grid-glc-ratio} shows that parallel biosynthesis is advantageous ($\ratioabl > 1$) in two circumstances: when both glucose and ammonium limit the growth rate, and when ammonium exchange is at saturation while glucose exchange is greater than saturation.
-In contrast, when the growth rate is near its maximum, where neither glucose nor ammonium is limiting, when glucose or ammonium exchange increases, sequential biosynthesis becomes more advantageous ($\ratioabl < 1$).
+Fig.\ \ref{fig:model-grid-glc-growthrate} divides the nutrient conditions into three regions according to nutrient limitation: a glucose-limiting region, an ammonium-limiting region, and a region whether neither glucose nor ammonium is limiting.
+These regions are determined by $(s_{\mathrm{glc}}, s_{\mathrm{amm}})$ vectors.
+Fig.\ \ref{fig:model-grid-glc-ratio} shows that parallel biosynthesis was advantageous ($\ratioabl > 1$) in two circumstances: when both glucose and ammonium limited the growth rate, and when ammonium exchange was at saturation while glucose exchange is greater than saturation.
+In contrast, when the growth rate was near its maximum, where neither glucose nor ammonium was limiting, when glucose or ammonium exchange increased, sequential biosynthesis became more advantageous ($\ratioabl < 1$).
 
 To determine whether changes in the synthesis time of biomass components are responsible for switching of scheduling strategies between sequential and parallel biosynthesis, I investigated how $\exchrate{glc}$ and $\exchrate{amm}$ affected $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
 Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions.
@@ -844,16 +803,16 @@ This ratio is informative because:
 % \end{equation}
 
 Although there is no obvious relationship between $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ and $\ratioabl$ values (Fig.\ \ref{fig:model-grid-glc-carb-to-prot}),
-the interplay between how $\exchrate{glc}$ and $\exchrate{pyr}$ affect $\Tabl{carbohydrate}$ and $\Tabl{protein}$ explains the landscape of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ values.
-Fig.\ \ref{fig:model-grid-glc-carb-to-prot} shows that in the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ is at a constant high value because, as $\exchrate{glc}$ increases in this region, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decrease.
-However, in the ammonium-limited region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increases as $\exchrate{amm}$ increases because $\Tabl{protein}$ decreases while $\Tabl{carbohydrate}$ remains constant.
+the effect of $\exchrate{glc}$ and $\exchrate{pyr}$ on $\Tabl{carbohydrate}$ and $\Tabl{protein}$ explains the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
+Fig.\ \ref{fig:model-grid-glc-carb-to-prot} shows that in the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ was at a constant high value because, as $\exchrate{glc}$ increased in this region, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decrease.
+However, in the ammonium-limited region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increased as $\exchrate{amm}$ increased because $\Tabl{protein}$ decreased while $\Tabl{carbohydrate}$ remained constant.
 
-Consider the trajectory of $(\exchrate{glc}, \exchrate{amm})$ values from $(0, 0)$ to $(\exchrate{glc, sat}, \exchrate{amm, sat})$ that links conditions with the high $\ratioabl$ values, where $\exchrate{glc, sat}$ and $\exchrate{amm, sat}$ are saturation values of glucose and ammonium values respectively.
-This trajectory includes conditions in which both glucose and ammonium are limiting, and as the trajectory is followed, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decrease, explaining why $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remains roughly at the same value.
+Consider the trajectory of $(\exchrate{glc}, \exchrate{amm})$ values from $(0, 0)$ to $(\exchrate{glc, sat}, \exchrate{amm, sat})$ through conditions with high $\ratioabl$ values (Fig.\ \ref{fig:model-grid-glc-ratio}), where $\exchrate{glc, sat}$ and $\exchrate{amm, sat}$ are saturation values of glucose and ammonium values, respectively.
+This trajectory includes conditions in which both glucose and ammonium are limiting, and as the trajectory is followed, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decreased, explaining why $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remained roughly at the same value along this trajectory.
 
-The different effects of the exchange rates on $\Tabl{carbohydrate}$ and on $\Tabl{protein}$ as discussed above have a biological relevance.
-Fig.\ \ref{fig:model-grid-glc-carb} shows that glucose exchange limits carbohydrate synthesis time in all nutrient conditions (Fig.\ \ref{fig:model-grid-glc-carb}), and this observation can be explained by glucose being the sole carbon source for the cell.
-In contrast, Fig.\ \ref{fig:model-grid-glc-prot} shows that ammonium exchange limits protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low.
+The different effects of the exchange rates on $\Tabl{carbohydrate}$ and on $\Tabl{protein}$ has a biological relevance.
+Fig.\ \ref{fig:model-grid-glc-carb} shows that glucose exchange limited carbohydrate synthesis time in all nutrient conditions (Fig.\ \ref{fig:model-grid-glc-carb}), and this observation can be explained by glucose being the sole carbon source for the cell.
+In contrast, Fig.\ \ref{fig:model-grid-glc-prot} shows that ammonium exchange limited protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange is very low.
 This observation can be explained by the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
 % This sounds like a pain point to be emphasised.
 In sum, the relationship between carbon and nitrogen source uptake and the synthesis of carbohydrates and proteins determines how scheduling strategies change according to nutrient conditions.
@@ -912,20 +871,18 @@ In sum, the relationship between carbon and nitrogen source uptake and the synth
   \label{fig:model-grid-pyr}
 \end{figure}
 
-To investigate the effect of a non-fermentable carbon source on biomass synthesis strategies, I repeated the investigation using pyruvate as the carbon source, ablating components in the biomass reaction in different nutrient conditions.%, and adjusted the saturation exchange rates accordingly: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh} (figure~\ref{fig:model-grid-pyr}).
+To investigate the effect of a non-fermentable carbon source on biomass synthesis strategies, I repeated the investigation using pyruvate as the carbon source. %, ablating components in the biomass reaction in different nutrient conditions.%, and adjusted the saturation exchange rates accordingly: pyruvate saturation being at \SI{4.44}{\mmolgdwh} and ammonium saturation being at \SI{1.00}{\mmolgdwh} (figure~\ref{fig:model-grid-pyr}).
 
-Results show that the saturation behaviour of pyruvate controlled the effect of exchange rates on scheduling strategies.
-Fig.\ \ref{fig:model-grid-pyr} shows when pyruvate was the carbon source, the region of carbon source limitation was larger than when glucose was the carbon source.
-This observation reflected how the pyruvate saturation curve differed from the glucose saturation curve (Fig.\ \ref{fig:model-saturation}).
-Namely, as pyruvate exchange increased below saturation, the growth rate increased linearly: the growth rate reached half its maximum value when pyruvate exchange was half of its saturation value.
-In contrast, as glucose exchange increased below saturation, the growth rate did not increase linearly: the growth rate reached half its maximum value when glucose exchange was well below half of its saturation value.
+Results show that the saturation curve of pyruvate controlled the effect of exchange rates on scheduling strategies.
+Fig.\ \ref{fig:model-grid-pyr} shows that when pyruvate was the carbon source, the region of carbon source limitation was larger than when glucose was the carbon source.
+This observation reflected the different shapes of the pyruvate and glucose saturation curves (Fig.\ \ref{fig:model-saturation}): on glucose, the growth rate reached half of its maximum value when glucose exchange was well below half saturation, while on pyruvate the growth rate reach half of its maximum value when pyruvate exchange was half saturation.
 
-Fig.\ \ref{fig:model-grid-pyr} shows that the relationship between exchange rates and the quantities $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$ was similar to the glucose-ammonium case.
+Fig.\ \ref{fig:model-grid-pyr} shows that the relationships between exchange rates and the quantities $\ratioabl$, $\gro$, $\Tabl{carbohydrate}$, and $\Tabl{protein}$ were similar to the glucose-ammonium case.
 In other words, when pyruvate was the carbon source, the relationship between carbon and nitrogen source uptake and the synthesis of carbohydrates and proteins still determined how scheduling strategies changed according to nutrient conditions.
 Parallel biosynthesis was advantageous in two conditions: when both pyruvate and ammonium limited the growth rate, and when ammonium exchange was at saturation while pyruvate exchange was greater than saturation (Fig.\ \ref{fig:model-grid-pyr-ratio}).
 In contrast, sequential biosynthesis was advantageous when neither pyruvate nor ammonium was limiting.
 $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remained at high values when pyruvate is limiting or when pyruvate and ammonium were both limiting (Fig.\ \ref{fig:model-grid-pyr-carb-to-prot}).
-Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nutrient conditions varied could also be explained by how pyruvate exchange limited carbohydrate synthesis time (Fig.\ \ref{fig:model-grid-pyr-carb}) and by how both pyruvate and ammonium exchange limited protein synthesis time (Fig.\ \ref{fig:model-grid-pyr-prot}).
+Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nutrient conditions varied could also be explained by pyruvate exchange limiting carbohydrate synthesis time (Fig.\ \ref{fig:model-grid-pyr-carb}) and by both pyruvate and ammonium exchange limiting protein synthesis time (Fig.\ \ref{fig:model-grid-pyr-prot}).
 
 
 \subsection{Relationship between proteome allocation and resource allocation strategy}
@@ -989,15 +946,15 @@ Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nu
 \end{figure}
 
 The investigation of the effect of carbon and nitrogen sources on scheduling strategies led to a new hypothesis: the cell favours parallel biosynthesis of biomass components when the carbon source and the nitrogen source are both limiting, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
-This hypothesis arose from the observation that, in both the glucose-ammonium and pyruvate-ammonium conditions, the highest $\ratioabl$ occurred at the boundary at which both the carbon source and the nitrogen source were limiting.
+This hypothesis arose from the observation that the highest $\ratioabl$ occurred at the boundary at which both the carbon source and the nitrogen source were limiting.
 
-To evaluate the hypothesis, I compared the enzyme usage reaction flux vectors in rounds of ablation between a high $\ratioabl$ condition and a low $\ratioabl$ condition created by combinations of glucose and nitrogen exchange rates.
+To evaluate the hypothesis, I compared the enzyme usage reaction flux vectors in rounds of ablation between a high $\ratioabl$ condition and a low $\ratioabl$ condition created by combinations of glucose and ammonium exchange rates.
 Enzyme usage reaction flux vectors show how the cell allocates its finite proteome to enzymes when each biomass component is prioritised (section~\ref{sec:model-timescale}).
-To test whether similarities in proteome allocation to enzymes explain parallel biosynthesis, Fig.\ \ref{fig:model-rank-glc-highratio-rank} shows that when both glucose and ammonium are limiting, the allocation patterns are similar across rounds of ablation, thus explaining the advantage of parallel biosynthesis of biomass components.
-The similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall}, which shows that parallel biosynthesis exhibits relatively similar proteome allocation with the synthesis of individual biomass components.
-In contrast, Fig.\ \ref{fig:model-rank-glc-lowratio-rank} shows that when neither glucose nor ammonium limits growth, biomass components can be divided into two groups based on enzyme usage reaction flux vectors.
-These groups suggest an explanation for sequential biosynthesis: the cell decides to synthesise lipids and proteins together in one stage of its growth cycle, while synthesising carbohydrates, DNA, RNA, cofactors, and ions together in another stage.
-The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig:model-rank-glc-lowratio-kendall}, which shows that parallel biosynthesis exhibits different proteome allocation compared to the synthesis of individual biomass components.
+To test whether similarities in proteome allocation to enzymes explain parallel biosynthesis, Fig.\ \ref{fig:model-rank-glc-highratio-rank} shows that when both glucose and ammonium were limiting, the allocation patterns were similar across rounds of ablation, thus explaining the advantage of parallel biosynthesis of biomass components.
+This similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall}, which shows that parallel biosynthesis exhibited relatively similar proteome allocation with the synthesis of individual biomass components.
+In contrast, Fig.\ \ref{fig:model-rank-glc-lowratio-rank} shows that when neither glucose nor ammonium limited growth, biomass components could be divided into two groups based on enzyme usage reaction flux vectors.
+These groups suggest an explanation for sequential biosynthesis: the cell may synthesise lipids and proteins together in one stage of its growth cycle, while synthesising carbohydrates, DNA, RNA, cofactors, and ions together in another stage.
+The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig:model-rank-glc-lowratio-kendall}, which shows that parallel biosynthesis exhibited different proteome allocation compared to the synthesis of individual biomass components.
 
 
 \subsubsection{Pyruvate and ammonium}
@@ -1057,13 +1014,11 @@ The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig
   \label{fig:model-rank-pyr-kendall}
 \end{figure}
 
-However, Fig.\ \ref{fig:model-rank-pyr-rank} suggests that the contrast between each biomass component is lessened when pyruvate is the carbon source.
+To evaluate, in a different carbon source, whether parallel biosynthesis is also favoured when biomass components share metabolic pathways, I extended the comparison of enzyme usage reaction flux vectors in rounds of ablation to nutrient conditions created by pyruvate and ammonium exchange rates.
 
-To evaluate whether the hypothesis that parallel biosynthesis is favoured when biomass components share metabolic pathways in a different carbon source, I extended the comparison of enzyme usage reaction flux vectors in rounds of ablation to nutrient conditions created by pyruvate and ammonium exchange rates.
-
-Similar to the glucose-ammonium investigation, in the high $\ratioabl$ condition where pyruvate and ammonium are limiting, Figs.\ \ref{fig:model-rank-pyr-highratio-rank} and \ref{fig:model-rank-pyr-highratio-kendall} show that proteome allocation were similar across rounds of ablation, supporting parallel biosynthesis as a scheduling strategy.
-However, the results for the low $\ratioabl$ case suggest that grouping of biomass components explain sequential biosynthesis for only very low $\ratioabl$.
-Fig.\ \ref{fig:model-rank-pyr-lowratio-rank} shows that when pyruvate was the carbon source, the contrast of proteome allocation between biomass components in the low $\ratioabl$ condition is lessened compared to when glucose was the carbon source.
+Similar to the glucose-ammonium investigation, in the high $\ratioabl$ condition where pyruvate and ammonium were limiting, Figs.\ \ref{fig:model-rank-pyr-highratio-rank} and \ref{fig:model-rank-pyr-highratio-kendall} show that proteome allocation were similar across rounds of ablation, supporting parallel biosynthesis as a scheduling strategy.
+However, the results for the low $\ratioabl$ case suggest that grouping of biomass components explains sequential biosynthesis for only very low $\ratioabl$.
+Fig.\ \ref{fig:model-rank-pyr-lowratio-rank} shows that when pyruvate was the carbon source, the contrast of proteome allocation between biomass components in the low $\ratioabl$ condition was lessened compared to when glucose was the carbon source.
 This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 0.9$), compared to the $\ratioabl$ in the glucose-ammonium investigation ($\ratioabl = 0.7$).
 
 \begin{figure}
@@ -1109,11 +1064,11 @@ This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 
 \end{figure}
 
 The use of enzyme usage vectors to explain biomass synthesis scheduling strategies is called into question by the multiplicity of solutions in FBA.
-Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates and measures of similarity between enzyme usage fluxes when carbohydrate is prioritised and when protein is prioritised is not continuous.
+Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates and measures of similarity between enzyme usage fluxes when carbohydrate was prioritised and when protein was prioritised was not continuous.
 This observation is likely explained by the multiplicity of solutions in FBA.
-Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) would be equivalent across linear programming solvers.
+Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) is equivalent across linear programming solvers.
 % I still don't like this sentence.
-In sum, although choosing representative nutrient conditions leads to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may render any conclusion flawed.
+In sum, although choosing representative nutrient conditions led to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may render any conclusion flawed.
 
 
 \section{Conclusion}
