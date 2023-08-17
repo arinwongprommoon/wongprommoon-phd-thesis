@@ -49,7 +49,9 @@ As a result, methods like Fourier analysis only provide poor resolution for char
    }
    \label{fig:analysis-example-images}
   \end{subfigure}
-  \caption{
+  \caption[
+    Data overview
+  ]{
     Data overview.
     The segmentation \& data analysis software \textit{aliby} (see section~\ref{sec:methods-segmentation}) produces a dataframe for each fluorescence channel --- \ref{fig:analysis-example-dataframe} shows the flavin signals for one particular experiment.
     Each row represents a cell and each column represents a time point.
@@ -95,7 +97,9 @@ As context to illustrate my problem, figure~\ref{fig:analysis-example-heatmap} p
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{example_dataframe_heatmap}
-  \caption{
+  \caption[
+    Heatmap of example dataframe
+  ]{
     Heatmap of example dataframe shown in figure~\ref{fig:analysis-example-dataframe}.
     Each row represents a cell, each column represents a time point, and the colour of the pixel (colour bar, right) represents the fluorescence intensity.
     Some cells are not present for the whole time course of the experiment, and errors in the segmentation pipeline produce missing time points seen as white pixels in the heatmap.
@@ -156,7 +160,9 @@ Polynomial detrending assumes a polynomial-shaped underlying long, while methods
    }
    \label{fig:analysis-filter-savgol}
   \end{subfigure}
-  \caption{
+  \caption[
+    Different filtering methods
+  ]{
     Different filtering methods result in different effects to both the signal (left panels) and the Fourier spectrum of the signal (right panels).
   }
   \label{fig:analysis-filter}
@@ -311,7 +317,9 @@ Thus, a Fourier-based method may not adequately provide the information for a re
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{10m_ClassifierBestWorstTS}
-  \caption{
+  \caption[
+    Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation
+  ]{
     Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation.
     Left column shows `best' five and right column shows `worst' five.
     Blue solid lines: flavin autofluorescence, red dashes: birth event automatically identified by \textit{BABY}.
@@ -322,7 +330,9 @@ Thus, a Fourier-based method may not adequately provide the information for a re
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{10m_ClassifierBestWorstPS}
-  \caption{
+  \caption[
+    Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations
+  ]{
     Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations.
     Blue solid lines: normalised classical periodograms of time series in figure \ref{fig:ClassifierBestWorstTS}.
   }
@@ -412,7 +422,9 @@ I implemented this algorithm, described by \textcite{jiaFrequencyDomainAnalysis2
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
-  \caption{
+  \caption[
+    Power spectra analytically derived from fitting an autoregressive model to time series can be divided into four types
+  ]{
     Power spectra (a) analytically derived from fitting an autoregressive model to time series (b) can be divided into four types.
     Type I lacks a local maximum and is denoted as lacking oscillations.
     Figure adapted from \textcite{jiaFrequencyDomainAnalysis2020}.
@@ -559,7 +571,10 @@ This feature set excludes features that are dependent on mean or spread.
     \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \textcite{wangStructureBasedStatisticalFeatures2007}   \\
     \bottomrule \\
   \end{tabularx}
-  \caption{\textit{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
+  \caption[
+    \textit{catch22} features
+  ]{
+    \textit{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
   }
   \label{tab:catch22}
 \end{table}
@@ -579,7 +594,9 @@ First, I used an support vector classifier (SVC) with these hyperparameters:
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{precision_recall}
-  \caption{
+  \caption[
+    Featurisation strategies for a support vector classifier to classify oscillatory time series of flavin autofluorescence
+  ]{
     Evaluation of featurisation strategies for a support vector classifier to classify oscillatory time series of flavin autofluorescence.
     Precision and recall were used as evaluation metrics, and data points represent each of the five rounds of five-fold cross-validation.
   }
@@ -610,7 +627,9 @@ However, there seems to be greater variation in these measures.
    }
    \label{fig:analysis-svc-fft-1}
   \end{subfigure}
-  \caption{
+  \caption[
+    Fourier spectra of cells in testing set
+  ]{
     Fourier spectra of cells in testing set classified as non-oscillatory (class 0,~\ref{fig:analysis-svc-fft-0}) and oscillatory (class 1,~\ref{fig:analysis-svc-fft-1}) by an SVC.
     Rows represent each cell, each used as an observation for the model.
     Columns represent each discrete frequency, used as a features for the model.
@@ -626,7 +645,9 @@ This peak may explain the good precision \& recall scores.
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{catch22_training_featurevector_mean}
-  \caption{
+  \caption[
+    Mean values of each \texttt{catch22} feature across each cell
+  ]{
     Mean values of each \texttt{catch22} feature across each cell classified as non-oscillatory (class 0) or oscillatory (class 1) by an SVC from the testing set.
     The horizontal axis shows each \texttt{catch22} feature from 0 to 21, and the vertical axis shows the mean value of each feature across cells within an identified class.
   }
@@ -923,7 +944,10 @@ The solution $v(t)$ is taken as a model for histone 2B abundance patterns (figur
 \begin{figure}
   \centering
   \includegraphics[width=0.9\linewidth]{fitzhughnagumo_sample.png}
-  \caption{
+  \caption[
+    Sample time series based on the solution of the FitzHugh-Nagumo model
+  ]
+  {
     Sample time series based on the solution $v(t)$ of the FitzHugh-Nagumo model, with parameters
     $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82.
   }
@@ -1155,7 +1179,9 @@ In addition, the oscillations in the autocorrelation function should occur every
     \label{fig:acf-noisetimescale-lowd0-acf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Effect of death rate of Gillespie noise on the autocorrelation function.
+  ]{
     Effect of death rate ($d_{0}$) of Gillespie noise on the autocorrelation function.
     Red lines on bottom figures (autocorrelation functions) are defined by $y = \me^{-2d_{0}T}$, where $T$ represents lag.
   }
@@ -1236,7 +1262,9 @@ In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelatio
     \label{fig:acf-noiseamplitude-highk0-acf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Effect of birth rate of Gillespie noise on the autocorrelation function.
+  ]{
     Effect of birth rate ($k_{0}$) of Gillespie noise on the autocorrelation function.
     Red lines on bottom figures (autocorrelation functions) are defined by $y = e^{-2d_{0}T}$, where $T$ represents lag.
   }
@@ -1246,7 +1274,9 @@ In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelatio
 \begin{figure}
   \centering
   \includegraphics[width=0.7\linewidth]{birthrate_vs_ydispl.png}
-  \caption{
+  \caption[
+    Quantifying the effect of Gillespie noise amplitude on the autocorrelation function
+  ]{
     Quantifying the effect of Gillespie noise amplitude on the autocorrelation function.
     Exponential decay functions of the form $y = (1-C)e^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares (as in~\ref{fig:acf-noisetimescale-effect-fit}).
     The exponential fitting was performed across a range of $k_{0}$ while $d_{0}$ was held constant at 0.05.
@@ -1432,7 +1462,9 @@ Potentially, this investigation can be extended to oscillators modelled by other
 \begin{figure}
   \centering
   \includegraphics[width=0.5\linewidth]{potvin-trottierSynchronousLongtermOscillations2016_1e_adapted}
-  \caption{
+  \caption[
+    Autocorrelation function and power spectral density calculated time series of cellular YFP concentration
+  ]{
     Autocorrelation function (main) and power spectral density (upper-right inset) calculated over \num{8694} cell divisions' worth of time series of cellular YFP concentration controlled by a YFP-expressing repressilator.
     From the autocorrelation function, the average period of the oscillations is 5.6 generations, and the peak frequency of the power spectral density agrees.
     Adapted from \textcite{potvin-trottierSynchronousLongtermOscillations2016}.
@@ -1638,7 +1670,9 @@ This algorithm has a resolution parameter which specifies the scale of the clust
     \label{fig:analysis-clustering-modclust-modclust}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Modularity clustering visualises natural groupings of time series
+  ]{
     Modularity clustering visualises natural groupings of time series.
     Figure shows the process of preparing a dataset of time series for modularity clustering.
   }
@@ -1725,7 +1759,9 @@ I used \textit{catch22} to featurise the data to produce input vectors for UMAP 
     \label{fig:umap-strain}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    UMAP discovers structures in a dataset containing single-cell flavin autofluorescence time series from BY4741 and zwf1$\Delta$ strains
+  ]{
     UMAP discovers structures in a dataset containing single-cell flavin autofluorescence time series from BY4741 and zwf1$\Delta$ strains.
     The time series were featurised using \textit{catch22} and UMAP was used to compute a two-dimensional embedding
     Each data point represents where on this two-dimensional embedding each time series is located, and the data points are coloured by categories that the corresponding time series belong to.
@@ -1745,7 +1781,9 @@ Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that
 \begin{figure}
   \centering
     \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
-    \caption{
+    \caption[
+      Grid search of UMAP hyperparameters
+    ]{
       Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
       Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from zwf1$\Delta$ cells.
     }
