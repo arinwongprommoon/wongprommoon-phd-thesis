@@ -1,6 +1,23 @@
 \chapter{Insert appendix title here}
 \label{append:model}
 
+\section{Modifications of chemical reactions in GECKO for non-simple cases}
+\label{append:model-gecko}
+
+GECKO modifies chemical reactions in a genome-scale model so that enzymes are expressed as metabolites that take part in reactions.
+Section~\ref{subsec:model-yeast8-gecko} describes how this was performed for the simple case of a singular chemical reaction and one enzyme having a one-to-one association.
+Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes.
+Namely:
+\begin{itemize}
+  \item Reversible reactions are modelled as the forward and reverse reactions separately.
+  \item For isozymes, the original reaction is copied multiple times corresponding to the number of reactions that the isozyme catalyses.
+        Each has an isozyme catalysing the reaction.
+        In addition, there is an `arm' reaction to act as an intermediate between the substrate and the products.
+  \item No actions are needed for promiscuous enzymes.
+  \item Enzyme complexes are modelled as one reaction that uses all subunit proteins that all share the same $k_{cat}$ value.
+\end{itemize}
+
+
 \section{Computing molecular weights of pseudometabolites in ecYeast8}
 \label{append:model-molweights}
 
