@@ -597,34 +597,49 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.45\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
-   \caption{
-   }
-   \label{fig:model-pool-ratio}
-  \end{subfigure}%
-  \begin{subfigure}[htpb]{0.45\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{epool_ec_ratio_20_shrinkyaxis}
-   \caption{
-   }
-   \label{fig:model-pool-ratio-20}
-  \end{subfigure}
+  % \begin{subfigure}[htpb]{0.45\textwidth}
+  %  \centering
+  %  \includegraphics[width=\textwidth]{epool_ec_ratio_shrinkyaxis}
+  %  \caption{
+  %  }
+  %  \label{fig:model-pool-ratio}
+  % \end{subfigure}%
+  % \begin{subfigure}[htpb]{0.45\textwidth}
+  %  \centering
+  %  \includegraphics[width=\textwidth]{epool_ec_ratio_20_shrinkyaxis}
+  %  \caption{
+  %  }
+  %  \label{fig:model-pool-ratio-20}
+  % \end{subfigure}
+
+  % \begin{subfigure}[htpb]{0.45\textwidth}
+  %  \centering
+  %  \includegraphics[width=\textwidth]{epool_ec_gr}
+  %  \caption{
+  %  }
+  %  \label{fig:model-pool-growthrate}
+  % \end{subfigure}%
+  % \begin{subfigure}[htpb]{0.45\textwidth}
+  %  \centering
+  %  \includegraphics[width=\textwidth]{epool_ec_gr_20}
+  %  \caption{
+  %  }
+  %  \label{fig:model-pool-growthrate-20}
+  % \end{subfigure}
 
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{epool_ec_gr}
+   \includegraphics[width=\textwidth]{epool_ec_ratio_gr}
    \caption{
    }
-   \label{fig:model-pool-growthrate}
+   \label{fig:model-pool-ratio-growthrate}
   \end{subfigure}%
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{epool_ec_gr_20}
+   \includegraphics[width=\textwidth]{epool_ec_ratio_gr_20}
    \caption{
    }
-   \label{fig:model-pool-growthrate-20}
+   \label{fig:model-pool-ratio-growthrate-20}
   \end{subfigure}
 
   \begin{subfigure}[htpb]{0.45\textwidth}
@@ -645,16 +660,16 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
   \caption[
     Effect of the size of the proteome pool available for enzymes
   ]{
-    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on \textbf{(\ref{fig:model-pool-ratio}, \ref{fig:model-pool-ratio-20})} $\ratioabl$, \textbf{(\ref{fig:model-pool-growthrate}, \ref{fig:model-pool-growthrate-20})} the growth rate, and \textbf{(\ref{fig:model-pool-ablated}, \ref{fig:model-pool-ablated-20})} the optimal flux of the ablated biomass reaction $\griabl$ in each round of ablation.
-    \textbf{(\ref{fig:model-pool-ratio})}, \textbf{(\ref{fig:model-pool-growthrate})}, and \textbf{(\ref{fig:model-pool-ablated})} show $\epool^{\prime}/\epool \leq 2$, while
-    \textbf{(\ref{fig:model-pool-ratio-20})}, \textbf{(\ref{fig:model-pool-growthrate-20})}, and \textbf{(\ref{fig:model-pool-ablated-20})} show $\epool^{\prime}/\epool \leq 20$, while
+    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on \textbf{(\ref{fig:model-pool-ratio-growthrate}, \ref{fig:model-pool-ratio-growthrate-20})} $\ratioabl$, the growth rate, and \textbf{(\ref{fig:model-pool-ablated}, \ref{fig:model-pool-ablated-20})} the optimal flux of the ablated biomass reaction $\griabl$ in each round of ablation.
+    \textbf{(\ref{fig:model-pool-ratio-growthrate})} and \textbf{(\ref{fig:model-pool-ablated})} show $\epool^{\prime}/\epool \leq 2$, while
+    \textbf{(\ref{fig:model-pool-ratio-growthrate-20})} and \textbf{(\ref{fig:model-pool-ablated-20})} show $\epool^{\prime}/\epool \leq 20$.
   }
   \label{fig:model-pool}
 \end{figure}
 
 Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available for enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis.
-This is evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases, within the range of $\epool^{\prime}$ that gives realistic growth rates (Fig.\ \ref{fig:model-pool-ratio}).
-Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (Fig.\ \ref{fig:model-pool-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (Fig.\ \ref{fig:model-pool-growthrate}).
+This is evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases, within the range of $\epool^{\prime}$ that gives realistic growth rates (Fig.\ \ref{fig:model-pool-ratio-growthrate}).
+Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero (Fig.\ \ref{fig:model-pool-ratio-growthrate}) and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate (Fig.\ \ref{fig:model-pool-ratio-growthrate}).
 These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling changes in $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
 
 
