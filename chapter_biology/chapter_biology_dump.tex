@@ -10,6 +10,15 @@ and it draws comparison with the discussion about the change in lengths of phase
 %THIS THEN WARRANTS DISCUSSION.
 % </text>
 
+% <text> Move to discussion
+These discrepancies may be partly explained by the lack of information about cell-to-cell heterogeneity in the chemostat.
+Chemostat studies commonly state that they induce metabolic cycles by imposing glucose starvation in the culture for some time.
+In light of the glucose-starvation results in section~\ref{sec:biology-abrupt}, these metabolic cycles may be the combined effect of individual cells' response to starvation.
+A lack of dissolved oxygen oscillations in zwf1$\Delta$ with a growth rate similar to wild-type \parencite{tuCyclicChangesMetabolic2007} may be explained by a loss of ability to reset the phase of the metabolic cycle or a variety of metabolic cycle lengths.
+In addition, the M-shaped dissolved oxygen oscillations in tsa1$\Delta$ tsa2$\Delta$ may be explained by the combined effect of sub-populations that have different metabolic cycle periods.
+These ideas are additionally supported by how my metabolic cycles are far shorter than the periods of chemostat-based metabolic cycles.
+% </text>
+
 
 % OLD HISTOGRAMS / KSTEST
 
@@ -199,3 +208,39 @@ They interpret that entry into the pentose phosphate pathway, and thus productio
 Though, it is important to note that ALD6 and IDP2 can compensate this NADPH production \parencite{minardSourcesNADPHYeast2005}.
 
 The double deletion affects a pair of paralogous genes that are involved in redox metabolism (key player of metabolic cycle), linked to circadian rhythm (another biological rhythm), therefore it was targeted as a potentially important gene for the metabolic cycle.
+
+
+% DISCUSSION
+
+%This is consistent with \textcite{oneillEukaryoticCellBiology2020} and (add other citations here).
+Cross-correlation between flavin and mCherry signals further confirm the sequence of events while the two biological oscillations (metabolic cycle and cell division cycle) progress.
+This relationship is particularly obvious in pyruvate.
+Specifically, when the new bud forms, the mother cell's flavin fluorescence peaks.
+Subsequently, the cell synthesises new histones in S phase, then the cell enters anaphase --- characterised by the sharp drop in the mCherry signal --- as the flavin fluorescence is at its trough.
+
+This chapter additionally shows that cells individually generate metabolic cycles and individually adapt them in response to nutrient changes.
+The literature disputes whether metabolic oscillations arise from interactions between cells or whether cells individually generate oscillations.
+In my observations, even though the cells are physically separated in traps and nutrient media flows through them, single-cell flavin oscillations can synchronise and reset phase in certain conditions.
+Diffusible metabolites cannot be responsible.
+I thus conclude that each cell --- on its own --- can reset its metabolic cycle in response to nutrient changes.
+This conclusion does not mean that cells \emph{cannot} communicate with each other, but communication is \emph{not required}.
+
+Observations of the two oscillators during starvation piques curiosity about their mechanistic basis in such conditions.
+% TODO: Come up with new analysis to prove/disprove this.  Or link this with existing results.  It's still quite unclear to me.
+For the cell division cycle, the most likely explanation is if starvation occurs before START, cell remain in pause; if starvation occurs after START, cells go into pause.
+In contrast, the biochemical mechanism that the cell uses to reset the phase of its metabolic cycle, is unclear, and it owes to the poor characterisation of the biochemistry of the metabolic cycle in general.
+
+This chapter also attempts to reconcile chemostat and single-cell studies.
+In chemostats, glucose is limiting \parencite{jonesCyberneticModelGrowth1999}.
+Synchrony of metabolic cycles between cells in respiring conditions may explain observations in chemostat as cells are near glucose starvation in these conditions.
+
+Single-cell metabolic cycles in zwf1$\Delta$ are inconsistent, and this may explain the absence of dissolved-oxygen oscillations in the chemostat.
+zwf1$\Delta$ affects many metabolic processes; most notably, it removes a major pathway of NAD(P)H generation from reduction of NAD(P)\textsuperscript{+}.
+The most abundant flavoproteins involve NAD(P)H redox, so it is reasonable to believe that flavin oscillations are affected.
+Perhaps zwf1$\Delta$ impairs the metabolic cycle in some way.
+A similar logic likely applies to tsa1$\Delta$ tsa2$\Delta$ --- perhaps the interaction between a more variable length of metabolic oscillations interacts with population synchrony, or lack thereof, in the chemostat.
+Furthermore, the tsa1$\Delta$ tsa2$\Delta$ double deletion affects the peroxiredoxin-thioredoxin system, therefore affecting redox balance, likely in an extensive way.
+
+The fact that metabolic oscillations are present when the medium is potassium-free can be seen as more evidence that there is no straight one-to-one correspondence between dissolved-oxygen metabolic oscillations in the chemostat and single-cell flavin oscillations from single cells.
+Therefore, the difference between single-cell and chemostat traces warrant a model to explain the differences, likely involving subpopulations.
+My observations thus also highlight a weakness of chemostat experiments.
