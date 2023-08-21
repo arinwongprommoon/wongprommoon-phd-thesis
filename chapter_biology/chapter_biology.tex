@@ -28,6 +28,18 @@ Finally, to address whether single-cell metabolic cycles confirm findings from c
 
 \begin{figure}
   \centering
+    \includegraphics[width=1.0\linewidth]{single_birth_plot_edit.pdf}
+    \caption{
+      Oscillations of flavin fluorescence in the yeast metabolic cycle synchronise with events in the cell division cycle.
+      Figure shows sample flavin fluorescence (purple, solid lines) and histone 2B (pink, dotted lines) level in a single FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} glucose.
+      Vertical lines (black, dashed) indicate budding.
+    }
+  \label{fig:biology-highglc-single}
+\end{figure}
+
+
+\begin{figure}
+  \centering
     \includegraphics[width=0.5\linewidth]{garmendia-torresMultipleInputsEnsure2018_1_adapted.jpg}
     \caption{
       Engineering a fluorescent protein cassette fused to \textit{HTB2} (A) allows the identification of phases of the cell division cycle by modelling the fluorescent protein intensity changes over time as piecewise linear sections (B).
@@ -40,7 +52,7 @@ To show that metabolic cycles are generated autonomously and are coupled to the 
 Replicating results from a previous flavin-based microfluidics study is important to confirm that the microfluidics set-up I used truly monitored the yeast metabolic cycle, especially if the set-up differed from previous studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018}.
 
 Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms in GS/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
-The HTB2::mCherry insertion allows monitoring phases of the cell division cycle via imaging and quantifying the intensity of the inserted fluorescent protein \parencite{garmendia-torresMultipleInputsEnsure2018}, while also allowing monitoring flavin fluorescence by avoiding overlap of emission spectra.
+The HTB2::mCherry insertion allows monitoring phases of the cell division cycle via imaging and quantifying the intensity of the inserted fluorescent protein (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding overlap of emission spectra.
 
 As observed, oxidation of flavin upon budding was expected for these reasons:
 \begin{enumerate}
@@ -48,17 +60,6 @@ As observed, oxidation of flavin upon budding was expected for these reasons:
   \item NAD(P)H is in the reduced form when buds form \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
   \item The flavoprotein lipoamide dehydrogenase is in redox equilibrium with NAD(P)H \parencite{sianoNADHFlavinFluorescence1989}.
 \end{enumerate}
-
-\begin{figure}
-  \centering
-    \includegraphics[width=1.0\linewidth]{single_birth_plot_edit.pdf}
-    \caption{
-      Oscillations of flavin fluorescence in the yeast metabolic cycle synchronise with events in the cell division cycle.
-      Figure shows sample flavin fluorescence (purple, solid lines) and histone 2B (pink, dotted lines) level in a single FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} glucose.
-      Vertical lines (black, dashed) indicate budding.
-    }
-  \label{fig:biology-highglc-single}
-\end{figure}
 
 Fig.\ \ref{fig:biology-highglc-single} also shows that in some cases, a metabolic oscillation occurred without cell division cycle progression or bud formation.
 Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via NAD(P)H cycles, confirmed that the metabolic cycle is generated autonomously from the cell division cycle.
@@ -89,6 +90,12 @@ Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillati
   }
   \label{fig:biology-highglc-sync-spectral}
 \end{figure}
+
+To quantify the period of the oscillators, I used several time series analysis methods in concert.
+Fig.\ \ref{fig:biology-highglc-sync-spectral} shows that the mean Fourier spectrum and median autocorrelation function both suggest that flavin fluorescence oscillated at a period of $\approx$\SI{90}{\minute}.
+Fig.\ \ref{fig:biology-highglc-sync-acf} additionally shows that the cell division cycle proceeds at the same frequency, as evidenced by the autocorrelation function of mCherry.
+This periodicity agrees with the literature regarding the duration of the cell division cycle in such permissive growth conditions. % [CITATIONS NEEDED]
+
 
 \begin{figure}
   \centering
@@ -125,11 +132,6 @@ Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillati
   \label{fig:biology-highglc-sync-corr}
 \end{figure}
 
-To quantify the period of the oscillators, I used several time series analysis methods in concert.
-Fig.\ \ref{fig:biology-highglc-sync-spectral} shows that the mean Fourier spectrum and median autocorrelation function both suggest that flavin fluorescence oscillated at a period of $\approx$\SI{90}{\minute}.
-Fig.\ \ref{fig:biology-highglc-sync-acf} additionally shows that the cell division cycle proceeds at the same frequency, as evidenced by the autocorrelation function of mCherry.
-This periodicity agrees with the literature regarding the duration of the cell division cycle in such permissive growth conditions. % [CITATIONS NEEDED]
-
 % <text> Move this to fig caption(s)
 % In figure~\ref{fig:biology-highglc-sync-heatmap},
 % each row of pixels represents a cell.
@@ -139,21 +141,17 @@ This periodicity agrees with the literature regarding the duration of the cell d
 % </text>
 To visualise the relationship between the metabolic cycle and the cell division cycle,
 Fig.\ \ref{fig:biology-highglc-sync-corr} shows that
-(a) budding events synchronise with peaks in fluorescence, and
-(b) the cell division cycle varies between cells,
+budding events synchronise with peaks in fluorescence and
+that the cell division cycle varies between cells,
 but most are just under \SI{2}{\hour}, agreeing with Fig.\ \ref{fig:biology-highglc-sync-acf} (inset).
 The oscillatory shape of the median (Fig.\ \ref{fig:biology-highglc-sync-median}) further confirms the synchrony between the metabolic cycle and budding events.
 
-Finally, to quantify the relationship between the metabolic cycle and the cell division cycle, I computed the cross-correlation function between the flavin and mCherry signals across the population (figure~\ref{fig:biology-highglc-sync-xcf}).
+Finally, to quantify the relationship between the metabolic cycle and the cell division cycle, I computed the cross-correlation function between the flavin and mCherry signals across the population (Fig.\ \ref{fig:biology-highglc-sync-xcf}).
 This function shows that the mCherry signals are, on average, shifted by \SI{5}{\minute} relative to the flavin signals.
 
 
 \section[Abrupt nutrient changes]{Cells autonomously generate flavin oscillations, independently of the cell division cycle, in response to abrupt nutrient changes.}
 \label{sec:biology-abrupt}
-
-To provide additional evidence that cells generate metabolic oscillations independent of the cell division cycle, I created a condition in which cells do not undergo cell division.
-Specifically, I did so by inducing starvation: I cultured FY4 and HTB2::mCherry cells in \SI{7.5}{\gram~\litre^{-1}} glucose for \SI{7}{\hour} before being abruptly switched to \SI{0}{\gram~\litre^{-1}} glucose for \SI{8}{\hour} and then resumed to \SI{7.5}{\gram~\litre^{-1}} glucose for \SI{7}{\hour} (figure~\ref{fig:biology-starvation}).
-This abrupt induction of starvation is similar to experiments described by \textcite{bagameryPutativeBetHedgingStrategy2020} that showed the heterogeneity of cellular responses to starvation.
 
 \begin{figure}
   \centering
@@ -188,19 +186,22 @@ This abrupt induction of starvation is similar to experiments described by \text
   \label{fig:biology-starvation}
 \end{figure}
 
+To provide additional evidence that cells generate metabolic oscillations independent of the cell division cycle, I created a condition in which cells do not undergo cell division.
+Specifically, I did so by inducing starvation: I cultured FY4 and HTB2::mCherry cells in \SI{7.5}{\gram~\litre^{-1}} glucose for \SI{7}{\hour} before being abruptly switched to \SI{0}{\gram~\litre^{-1}} glucose for \SI{8}{\hour} and then resumed to \SI{7.5}{\gram~\litre^{-1}} glucose for \SI{7}{\hour} (Fig.\ \ref{fig:biology-starvation}).
+This abrupt induction of starvation is similar to experiments described by \textcite{bagameryPutativeBetHedgingStrategy2020} that showed the heterogeneity of cellular responses to starvation.
+
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.7\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{allstrains_19972_gr}
    \caption{
      Growth rate
    }
    \label{fig:biology-starvation-gr}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.7\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{allstrains_19972_budprob}
    \caption{
@@ -218,7 +219,7 @@ This abrupt induction of starvation is similar to experiments described by \text
 
 Fig.\ \ref{fig:biology-starvation} shows that when cells are in high glucose, oscillations were asynchronous, consistent with section~\ref{sec:biology-sync}, \textcite{papagiannakisAutonomousMetabolicOscillations2017} and \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
 When cells grown in high glucose were abruptly starved of glucose, their flavin oscillations reset phase.
-During starvation, these flavin oscillations continue, while growth rate drops and budding events are sparse (figure~\ref{fig:biology-starvation-gr-budprob}).
+During starvation, these flavin oscillations continue, while growth rate drops and budding events are sparse (Fig.\ \ref{fig:biology-starvation-gr-budprob}).
 
 % Does this paragraph belong in the discussion?
 The results show that metabolic oscillations may be generated when cell division cycle is halted, providing strong evidence that the metabolic cycle is generated autonomously and independently of the cell division cycle.
@@ -378,8 +379,8 @@ Additionally, a growth-limiting glucose concentration emulated low-glucose conce
 \end{figure}
 
 Fig.\ \ref{fig:biology-pyruvate} shows that FY4 HTB2::mCherry cells showed longer metabolic cycles and cell division cycles, of approximately \SI{4}{\hour}, when grown in minimal media supplemented with \SI{20}{\gram~\litre^{-1}} pyruvate.
-In addition, there were more cases in which the flavin signal peaks without a budding event (supplementary figure ...).
-Furthermore, the synchrony between the two oscillators remained, but with a longer lag of the cell division cycle with respect to the metabolic cycle (Fig.\ ~\ref{fig:biology-pyruvate-xcf}).
+In addition, there were more cases in which the flavin signal peaks without a budding event. %(supplementary figure ...).
+Furthermore, the synchrony between the two oscillators remained, but with a longer lag of the cell division cycle with respect to the metabolic cycle (Fig.\ \ref{fig:biology-pyruvate-xcf}).
 Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G1 phases but unchanged S/M phases, as evidenced by the longer flat regions of the HTB2::mCherry signal.
 However, the flavin cycles were not regular over long periods of time, as evidenced by a lack of repeated oscillations in the cross-correlation function.
 
@@ -413,43 +414,6 @@ However, the flavin cycles were not regular over long periods of time, as eviden
     Insert caption here.
   }
   \label{fig:biology-lowglc}
-\end{figure}
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.3\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{limiting_snr_edit.pdf}
-   \caption{
-     Signal-to-noise ratios, \SI{10}{\milli\gram~\litre^{-1}} glucose.
-     %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{10}{\milli\gram~\litre^{-1}}, showing that most cells have noisy signals and thus implying low-amplitude metabolic cycles.
-   }
-   \label{fig:biology-lowglc-snr}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.3\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{pyruvate_snr_edit.pdf}
-   \caption{
-     Signal-to-noise ratios, \SI{20}{\gram~\litre^{-1}} pyruvate.
-    %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} pyruvate, showing that cells have higher-quality signals.
-   }
-   \label{fig:biology-pyruvate-snr}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.3\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{glucose_snr_edit.pdf}
-   \caption{
-     Signal-to-noise ratios, \SI{20}{\gram~\litre^{-1}} glucose.
-    %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} glucose, showing that cells have higher-quality signals.
-   }
-   \label{fig:biology-highglc-snr}
-  \end{subfigure}
-
-  \caption{
-    Insert caption here.
-  }
-  \label{fig:biology-compare-snr}
 \end{figure}
 
 
@@ -496,6 +460,45 @@ However, the flavin cycles were not regular over long periods of time, as eviden
   }
   \label{fig:biology-lowglc-gr-budprob}
 \end{figure}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.3\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{limiting_snr_edit.pdf}
+   \caption{
+     Signal-to-noise ratios, \SI{10}{\milli\gram~\litre^{-1}} glucose.
+     %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{10}{\milli\gram~\litre^{-1}}, showing that most cells have noisy signals and thus implying low-amplitude metabolic cycles.
+   }
+   \label{fig:biology-lowglc-snr}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.3\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{pyruvate_snr_edit.pdf}
+   \caption{
+     Signal-to-noise ratios, \SI{20}{\gram~\litre^{-1}} pyruvate.
+    %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} pyruvate, showing that cells have higher-quality signals.
+   }
+   \label{fig:biology-pyruvate-snr}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.3\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{glucose_snr_edit.pdf}
+   \caption{
+     Signal-to-noise ratios, \SI{20}{\gram~\litre^{-1}} glucose.
+    %Distribution of signal-to-noise ratios computed for each flavin time series derived from cells cultivated in \SI{20}{\gram~\litre^{-1}} glucose, showing that cells have higher-quality signals.
+   }
+   \label{fig:biology-highglc-snr}
+  \end{subfigure}
+
+  \caption{
+    Insert caption here.
+  }
+  \label{fig:biology-compare-snr}
+\end{figure}
+
+
 
 Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells showed longer metabolic cycles when grown in minimal media supplemented with \SI{10}{\milli\gram~\litre^{-1}} glucose.
 Additionally, Fig.\ ~\ref{fig:biology-lowglc-gr-budprob} shows that the growth rate and the budding probability of cells on limiting glucose is lower than on high glucose (\SI{20}{\gram~\litre^{-1}}).
@@ -553,16 +556,15 @@ my single-cell microfluidics experiments could provide a bottom-up explanation o
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.7\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{allstrains_613_gr}
    \caption{
      Growth rate
    }
    \label{fig:biology-kdeficient-gr}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.7\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{allstrains_613_budprob}
    \caption{
@@ -580,9 +582,9 @@ my single-cell microfluidics experiments could provide a bottom-up explanation o
 
 
 To test whether potassium deficiency eliminates metabolic cycles, Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium (both media supplemented with \SI{20}{\gram~\litre^{-1}} as a carbon source).
-Such cycles were longer and generated less reliably as in the normal growth medium (figure~\ref{fig:biology-kdeficient-acf}).
+Such cycles were longer and generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
 In addition, to test whether potassium deficiency affected cell growth and division, Fig.\ \ref{fig:biology-kdeficient-gr} recovered soon after a sharp decrease upon the abrupt switch to the potassium-deficient median.
-Fig.\ \ref{fig:biology-kdeficient-budprob} further shows that the budding probability only showed a slight drop during potassium-deficiency, in contrast to a near-zero drop under glucose starvation (figure~\ref{fig:biology-starvation-budprob}).
+Fig.\ \ref{fig:biology-kdeficient-budprob} further shows that the budding probability only showed a slight drop during potassium-deficiency, in contrast to a near-zero drop under glucose starvation (Fig.\ \ref{fig:biology-starvation-budprob}).
 
 \begin{figure}
   \centering
@@ -686,7 +688,6 @@ Cells were pre-cultured in \SI{20}{\gram~\litre^{-1}} pyruvate over \SI{48}{\hou
 As the strain had an auxotrophic background, the required nutrient supplements were also added.
 %
 Figure~\ref{fig:biology-zwf1} shows that the zwf$\Delta$ showed oscillations of approximately \SI{3}{\hour}, but with low robustness and a wide distribution of signal-to-noise ratios, while the reference BY4741 strain showed robust flavin oscillations of approximately \SI{1.5}{\hour}.
-In addition, Fig.\ \ref{fig:biology-zwf1-snr} shows that there was a wide distribution of oscillation quality.
 These results conflict with the results from the chemostat-based study \parencite{tuCyclicChangesMetabolic2007} that suggests that metabolic cycles are abolished in this strain.
 
 
@@ -783,7 +784,7 @@ The distributions of flavin and mCherry signals during starvation provide some m
 This observation suggests that if starvation occurs before START... (OR REPLACE THIS WITH A CLEARER EXPLANATION ONCE I'VE INTERPRETED THE HEATMAPS)...
 However, the biochemical mechanism by which the cell uses to reset the phase of its metabolic cycle remains unclear.
 
-My observations chapter confirm that cells adapt their metabolic cycle to nutrient conditions:
+My observations confirm that cells adapt their metabolic cycle to nutrient conditions:
 the behaviour of the metabolic cycle changes when the cells are grown on low glucose or on pyruvate.
 A possible explanation is that nutrient conditions that favour respiration over fermentation --- and thus slower growth rate --- leads to slower YMCs.
 % Do the periods conform to those reported by \textcite{papagiannakisAutonomousMetabolicOscillations2017}?  If not, why?
