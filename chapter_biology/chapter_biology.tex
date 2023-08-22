@@ -195,17 +195,18 @@ This abrupt induction of starvation is similar to experiments described by \text
   \end{subfigure}%
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{allstrains_19972_budprob}
+   \includegraphics[width=\textwidth]{allstrains_19972_cumul}
    \caption{
    }
-   \label{fig:biology-starvation-budprob}
+   \label{fig:biology-starvation-cumul}
   \end{subfigure}
 
   \caption{
     \textbf{(\ref{fig:biology-starvation-gr})}
-    Mean growth rate and
-    \textbf{(\ref{fig:biology-starvation-budprob})}
-    budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the glucose-starvation experiment, with 95\% confidence intervals shown (shaded).
+    Mean growth rate (shading: 95\% confidence intervals) and
+    \textbf{(\ref{fig:biology-starvation-cumul})}
+    mean cumulative number of budding events per cell (shading: confidence intervals from bootstrapping, $n=30$)
+    of FY4 (blue) and HTB2::mCherry (orange) strains over time during the glucose-starvation experiment.
     Vertical lines (red) show changes in nutrient media.
   }
   \label{fig:biology-starvation-gr-budprob}
@@ -497,22 +498,22 @@ However, the flavin cycles were not regular over long periods of time, as eviden
 
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{allstrains_31492_budprob}
+   \includegraphics[width=\textwidth]{allstrains_31492_cumul}
    \caption{
    }
-   \label{fig:biology-lowglc-budprob}
+   \label{fig:biology-lowglc-cumul}
   \end{subfigure}%
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{allstrains_26643_budprob}
+   \includegraphics[width=\textwidth]{allstrains_26643_cumul}
    \caption{
    }
-   \label{fig:biology-highglc-budprob}
+   \label{fig:biology-highglc-cumul}
   \end{subfigure}
 
   \caption{
-    Mean growth rate of FY4 (blue) and HTB2::mCherry (orange) strains over time, with 95\% confidence intervals shown (shaded), for \textbf{(\ref{fig:biology-lowglc-gr})} the glucose-limiting condition (\SI{10}{\milli\gram~\litre^{-1}}) and \textbf{(\ref{fig:biology-highglc-gr})} the high glucose condition (\SI{20}{\gram~\litre^{-1}}).
-    Similarly, the budding probability of the same strains for \textbf{(\ref{fig:biology-lowglc-budprob})} the glucose-limiting condition and \textbf{(\ref{fig:biology-highglc-budprob})} the high glucose condition.
+    Mean growth rate of FY4 (blue) and HTB2::mCherry (orange) strains over time (shading: 95\% confidence intervals), for \textbf{(\ref{fig:biology-lowglc-gr})} the glucose-limiting condition (\SI{10}{\milli\gram~\litre^{-1}}) and \textbf{(\ref{fig:biology-highglc-gr})} the high glucose condition (\SI{20}{\gram~\litre^{-1}}).
+    Similarly, the mean cumulative number of budding events per cell (shading: confidence intervals from bootstrapping, $n=30$), of the same strains for \textbf{(\ref{fig:biology-lowglc-cumul})} the glucose-limiting condition and \textbf{(\ref{fig:biology-highglc-cumul})} the high glucose condition.
   }
   \label{fig:biology-lowglc-gr-budprob}
 \end{figure}
@@ -622,17 +623,18 @@ my single-cell microfluidics experiments could provide a bottom-up explanation o
   \end{subfigure}%
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{allstrains_613_budprob}
+   \includegraphics[width=\textwidth]{allstrains_613_cumul}
    \caption{
    }
-   \label{fig:biology-kdeficient-budprob}
+   \label{fig:biology-kdeficient-cumul}
   \end{subfigure}
 
   \caption{
     \textbf{(\ref{fig:biology-kdeficient-gr})}
-    Mean growth rate and
-    \textbf{(\ref{fig:biology-kdeficient-budprob})}
-    budding probability of FY4 (blue) and HTB2::mCherry (orange) strains over time during the potassium-deficient experiment, with 95\% confidence intervals shown (shaded).
+    Mean growth rate (shading: 95\% confidence intervals) and
+    \textbf{(\ref{fig:biology-kdeficient-cumul})}
+    mean cumulative number of budding events per cell (shading: confidence intervals from bootstrapping, $n=30$)
+    of FY4 (blue) and HTB2::mCherry (orange) strains over time during the potassium-deficient experiment.
     Vertical lines (red) show changes in nutrient media.
   }
   \label{fig:biology-kdeficient-gr-budprob}
@@ -642,7 +644,7 @@ my single-cell microfluidics experiments could provide a bottom-up explanation o
 To test whether potassium deficiency eliminates metabolic cycles, Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium (both media supplemented with \SI{20}{\gram~\litre^{-1}} as a carbon source).
 Such cycles were longer and generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
 In addition, to test whether potassium deficiency affected cell growth and division, Fig.\ \ref{fig:biology-kdeficient-gr} recovered soon after a sharp decrease upon the abrupt switch to the potassium-deficient median.
-Fig.\ \ref{fig:biology-kdeficient-budprob} further shows that the budding probability only showed a slight drop during potassium-deficiency, in contrast to a near-zero drop under glucose starvation (Fig.\ \ref{fig:biology-starvation-budprob}).
+Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the budding was unaffected during potassium-deficiency, in contrast to a pause under glucose starvation (Fig.\ \ref{fig:biology-starvation-cumul}).
 
 \begin{figure}
   \centering
