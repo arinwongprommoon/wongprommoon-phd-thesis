@@ -291,11 +291,11 @@ Combined with results from the previous section, my results suggest that the met
   \label{fig:biology-starvation-histogram}
 \end{figure}
 
-The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that, upon starvation, cell division cycles progress to the next gap phase (G1 or G2) while the metabolic cycle continues.
-To test this implication, Fig.\ \ref{fig:biology-starvation-raw} shows that cells may remain in G1 (Fig.\ \ref{fig:biology-starvation-raw-2}), as evidenced by low mCherry intensity, or G2 (Fig.\ \ref{fig:biology-starvation-raw-1}), as evidenced by high mCherry intensity.
-Extending this investigation across a population of cells, Fig.\ \ref{fig:biology-starvation-heatmap} shows that (INSERT INTERPRETATION OF NEW HEATMAP HERE...).
-
-(INSERT 1--2 PARAGRAPHS OF INTERPRETATION OF NEW HEATMAP)
+The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that, upon starvation, cell division cycles progress to the next gap phase (G\textsubscript{1} or G\textsubscript{2}) while the metabolic cycle continues.
+To test this implication, Fig.\ \ref{fig:biology-starvation-raw} shows that cells may remain in G\textsubscript{1} (Fig.\ \ref{fig:biology-starvation-raw-2}), as evidenced by low mCherry intensity, or G\textsubscript{2} (Fig.\ \ref{fig:biology-starvation-raw-1}), as evidenced by high mCherry intensity.
+Extending this investigation across a population of cells, Fig.\ \ref{fig:biology-starvation-histogram-mCherry} shows that the distribution of mCherry intensity becomes broader during starvation before resuming to a distribution resembling the initial condition upon restoration of glucose.
+This observation can be explained by a larger proportion of cells in G\textsubscript{2}, giving high mCherry intensity, in contrast to the usually short time cells spend in G\textsubscript{2} relative to the rest of the cell division cycle (Fig.\ \ref{fig:biology-htb2}).
+In contrast, Fig.\ \ref{fig:biology-starvation-histogram-flavin} suggests that during starvation, the distribution of flavin intensity becomes narrower, and this observation can be explained by lower-amplitude oscillations during starvation, consistent with \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
 
 
 \section{Metabolic cycles in different genetic backgrounds}
@@ -458,7 +458,7 @@ Additionally, a growth-limiting glucose concentration emulated low-glucose conce
 Fig.\ \ref{fig:biology-pyruvate} shows that FY4 HTB2::mCherry cells showed longer metabolic cycles and cell division cycles, of approximately \SI{4}{\hour}, when grown in minimal media supplemented with \SI{20}{\gram~\litre^{-1}} pyruvate.
 In addition, there were more cases in which the flavin signal peaks without a budding event. %(supplementary figure ...).
 Furthermore, the synchrony between the two oscillators remained, but with a longer lag of the cell division cycle with respect to the metabolic cycle (Fig.\ \ref{fig:biology-pyruvate-xcf}).
-Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G1 phases but unchanged S/M phases, as evidenced by the longer flat regions of the HTB2::mCherry signal.
+Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G\textsubscript{1} phases but unchanged S/M phases, as evidenced by the longer flat regions of the HTB2::mCherry signal.
 However, the flavin cycles were not regular over long periods of time, as evidenced by a lack of repeated oscillations in the cross-correlation function.
 
 % COULD DO:
@@ -656,12 +656,6 @@ my single-cell microfluidics experiments could provide a bottom-up explanation o
   \label{fig:biology-kdeficient-gr-budprob}
 \end{figure}
 
-
-To test whether potassium deficiency eliminates metabolic cycles, Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium (both media supplemented with \SI{20}{\gram~\litre^{-1}} as a carbon source).
-Such cycles were longer and generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
-In addition, to test whether potassium deficiency affected cell growth and division, Fig.\ \ref{fig:biology-kdeficient-gr} recovered soon after a sharp decrease upon the abrupt switch to the potassium-deficient median.
-Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the budding was unaffected during potassium-deficiency, in contrast to a pause under glucose starvation (Fig.\ \ref{fig:biology-starvation-cumul}).
-
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.8\textwidth}
@@ -688,7 +682,12 @@ Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the budding was unaf
   \label{fig:biology-kdeficient-histogram}
 \end{figure}
 
-(INSERT 1--2 PARAGRAPHS OF INTERPRETATION OF NEW HEATMAP)
+
+To test whether potassium deficiency eliminates metabolic cycles, Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium (both media supplemented with \SI{20}{\gram~\litre^{-1}} as a carbon source).
+Such cycles were longer and generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
+In addition, to test whether potassium deficiency affected cell growth and division, Fig.\ \ref{fig:biology-kdeficient-gr} recovered soon after a sharp decrease upon the abrupt switch to the potassium-deficient median.
+Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the budding was unaffected during potassium-deficiency, in contrast to a pause under glucose starvation (Fig.\ \ref{fig:biology-starvation-cumul}).
+Finally, in contrast to glucose starvation, Fig.\ \ref{fig:biology-kdeficient-histogram} suggests that progression through the metabolic and cell division cycles were largely unaffected when the cells were subject to the potassium-deficient medium --- i.e.\ the time spent in each phase was not affected.
 
 
 \begin{figure}
@@ -873,7 +872,7 @@ Results suggest that yeast cells independently generate the metabolic cycle whic
 this conclusion was evidenced by the observation that flavin cycles were asynchronous between cells and peaks coincide with bud formation.
 These observations were consistent with \textcite{papagiannakisAutonomousMetabolicOscillations2017} and \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
 
-Results in pyruvate additionally reveal that as the metabolic cycle lengthens, G1 lengthens but S/M stays the same length, suggesting a model in which a specific phase of the metabolic cycle gates entry into the cell division cycle.
+Results in pyruvate additionally reveal that as the metabolic cycle lengthens, G\textsubscript{1} lengthens but S/M stays the same length, suggesting a model in which a specific phase of the metabolic cycle gates entry into the cell division cycle.
 Importantly, metabolic cycles still occur even when cells do not divide.
 This holds true for `one-off' skipping of cell division and conditions in which cells pause cell division for long periods of time.
 
@@ -881,8 +880,9 @@ Results additionally show that the metabolic cycle and the cell division cycle c
 In particular, I observed that single-cell flavin oscillations could synchronise and reset phase in response to abrupt starvation, while the cell division cycle was paused.
 This observation also suggests that the metabolic cycle is individually generated across cells without the need of a diffusible metabolite as proposed by \textcite{krishnaMinimalPushPull2018}, as evidenced by the continued presence of metabolic cycles despite the cells being physically separated with nutrient media perfused across them.
 
-The distributions of flavin and mCherry signals during starvation provide some mechanistic basis for the decoupling between the two oscillators.
-This observation suggests that if starvation occurs before START... (OR REPLACE THIS WITH A CLEARER EXPLANATION ONCE I'VE INTERPRETED THE HEATMAPS)...
+The distributions of flavin and mCherry signals during starvation provide some mechanistic basis for the coupling or decoupling between the two oscillators.
+This observation suggests that if starvation occurs before START, the cell remains in the G\textsubscript{1} phase, otherwise, the cell proceeds through the cell division cycle until it pauses in the G\textsubscript{2} phase.
+Such observations strengthen the idea that the metabolic cycle independently gates the early (START) and the late (mitotic exit) phases of the cell division cycle \parencite{ozsezenInferenceHighLevelInteraction2019}.
 However, the biochemical mechanism by which the cell uses to reset the phase of its metabolic cycle remains unclear.
 
 My observations confirm that cells adapt their metabolic cycle to nutrient conditions:
