@@ -799,7 +799,7 @@ These results conflict with the results from the chemostat-based study \parencit
 
   \begin{subfigure}[t]{0.45\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{tsa1tsa2morgan_1649_13.pdf}
+   \includegraphics[width=\textwidth]{tsa1tsa2morgan_1649_fftrep_freq_edit.pdf}
    \caption{
    }
    \label{fig:biology-tsa1tsa2-fourier}
@@ -832,7 +832,7 @@ These results conflict with the results from the chemostat-based study \parencit
     Flavin fluorescence (blue, solid lines) levels in a single, representative tsa1$\Delta$ tsa2$\Delta$cell.
     Vertical lines (black, dashed) indicate budding events.
     \textbf{(\ref{fig:biology-tsa1tsa2-fourier})}
-    Mean Fourier spectrum of flavin fluorescence across cells.
+    Overlaid Fourier spectra of flavin fluorescence across cells ($n=212$).
     \textbf{(\ref{fig:biology-tsa1tsa2-acf})}
     Median autocorrelation function of flavin fluorescence time series, along with \textit{\textbf{(inset)}} the periods of each oscillator across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
     \textbf{(\ref{fig:biology-tsa1tsa2-median})}
@@ -852,10 +852,10 @@ To be consistent with zwf1$\Delta$, cells were pre-cultured and cultured in the 
 %
 % Is this because of a wide variety of oscillation frequencies?  Look at the FFT inset, or do additional investigations.
 
-Fig.\ \ref{fig:biology-tsa1tsa2} suggests that the auxotrophic tsa1$\Delta$ tsa2$\Delta$ strain does not reliably generate metabolic cycles.
-The median fluorescence signal aligned by first budding event (Fig.\ \ref{fig:biology-tsa1tsa2-median}) and the mean Fourier spectrum (Fig.\ \ref{fig:biology-tsa1tsa2-fourier}) suggest that a \SI{3}{\hour} oscillation is prominent in the population;
-however, the median autocorrelation function (Fig.\ \ref{fig:biology-tsa1tsa2-acf}) suggests that the oscillations are not at a consistent frequency across the population, in contrast to the BY4742 wild-type that shows robust \SI{1.5}{\hour} oscillations.
-Fig.\ \ref{fig:biology-tsa1tsa2-snr} additionally suggests that the loss of robust oscillations is not due to lower amplitudes or lower qualities of oscillations, as evidenced by signal-to-noise ratios comparable to the FY4 strain cultured in pyruvate (Fig.\ \ref{fig:biology-pyruvate-snr}; ADD STATISTICAL TEST HERE).
+Fig.\ \ref{fig:biology-tsa1tsa2} suggests that the metabolic cycles generated from the auxotrophic tsa1$\Delta$ tsa2$\Delta$ strain were not consistent, likely due to multiple periods.
+Specifically, the Fourier spectra (Fig.\ \ref{fig:biology-tsa1tsa2-fourier}) suggest that \SI{2.45}{\hour} and \SI{3.92}{\hour} oscillations were prominent in the population.
+These two prominent periods were obscured by the median fluorescence signal aligned by first budding event (Fig.\ \ref{fig:biology-tsa1tsa2-median}), which merely suggests that a \SI{3}{\hour} oscillation is prominent in the population, and by the median autocorrelation function (Fig.\ \ref{fig:biology-tsa1tsa2-acf}), which suggests that the oscillations are not at a consistent frequency across the population, in contrast to the BY4742 wild-type that shows robust \SI{1.5}{\hour} oscillations.
+Fig.\ \ref{fig:biology-tsa1tsa2-snr} additionally shows that the amplitudes and qualities of oscillations were retained, as evidenced by signal-to-noise ratios comparable to the FY4 strain cultured in pyruvate (Fig.\ \ref{fig:biology-pyruvate-snr}; ADD STATISTICAL TEST HERE).
 
 Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the zwf1$\Delta$ and tsa1$\Delta$ tsa2$\Delta$ deletion strains.
 These discrepancies warrant further explanation.
