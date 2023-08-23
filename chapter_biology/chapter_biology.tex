@@ -267,15 +267,14 @@ Combined with results from the previous section, my results suggest that the met
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.8\textwidth}
+  \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
    \includegraphics[width=\textwidth]{19972_distribs_flavin.png}
    \caption{
    }
    \label{fig:biology-starvation-histogram-flavin}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.8\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
    \includegraphics[width=\textwidth]{19972_distribs_mCherry.png}
    \caption{
@@ -283,9 +282,25 @@ Combined with results from the previous section, my results suggest that the met
    \label{fig:biology-starvation-histogram-mCherry}
   \end{subfigure}
 
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{26643_distribs_flavin.png}
+   \caption{
+   }
+   \label{fig:biology-highglc-histogram-flavin}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{26643_distribs_mCherry.png}
+   \caption{
+   }
+   \label{fig:biology-highglc-histogram-mCherry}
+  \end{subfigure}
+
   \caption{
     Distributions of \textbf{(\ref{fig:biology-starvation-histogram-flavin})} flavin and \textbf{(\ref{fig:biology-starvation-histogram-mCherry})} fluorescence over time, for the glucose-starvation experiment.
     Vertical lines (red, dashed), indicate times of medium changes.
+    As a control, distributions of \textbf{(\ref{fig:biology-highglc-histogram-flavin})} flavin and \textbf{(\ref{fig:biology-highglc-histogram-mCherry})} fluorescence over time are also shown.
     Trends in time series were not removed using high-pass Butterworth filter.
   }
   \label{fig:biology-starvation-histogram}
