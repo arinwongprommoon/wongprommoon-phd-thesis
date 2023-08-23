@@ -1,26 +1,30 @@
 \chapter{Microfluidics and fluorescence microscopy for cellular metabolic cycles}
 \label{ch:biology}
 
-To reconcile the evidence about the characteristics of the YMC from single-cell and chemostat experiments, I sought to use a single-cell experimental platform to address whether cellular metabolic cycles confirm chemostat-based studies.
+To reconcile the evidence about the characteristics of the yeast metabolic cycle (YMC) from single-cell and chemostat experiments, I sought to use a single-cell experimental platform to address whether cellular metabolic cycles confirm chemostat-based studies.
 
-There is a paucity of studies of the yeast metabolic cycle at the cellular level --- i.e.\ in which budding yeast cells are investigated in isolation rather than as a population.
-Previous population-level studies in the chemostat, by their very nature, fail to account for cell-to-cell heterogeneity and create cell density and environmental conditions that are far removed from the natural habitat of budding yeast.
+Few published studies have investigated the YMC in cells isolated from each other.
+Most studies instead have examined the YMC from a population of cells in a chemostat.
+However, such chemostat-based studies are unable to account for cell-to-cell heterogeneity.
+Furthermore, in such conditions, cell density and environmental conditions that are far removed from the natural habitat of budding yeast.
 
-Here, I use single-cell microfluidics to physically separate budding yeast cells and use fluorescence microscopy to monitor the yeast metabolic cycle and the cell division cycle.
+In this chapter, I use single-cell microfluidics to physically separate budding yeast cells.
+In these experiments, I use fluorescence microscopy to monitor the yeast metabolic cycle and the cell division cycle.
 
 Specifically, I aim to evaluate these hypotheses:
 \begin{enumerate}
   \item Yeast cells independently generate yeast metabolic cycles.
-        Each cell generates the metabolic cycle autonomously of other cellular oscillators and itself can phase-lock the cell division cycle.
-  \item The yeast metabolic cycle is retained in different nutrient and genetic perturbations, but characteristics of the oscillator change as an adaptation response.
-  \item Flavin autofluorescence read-outs of the yeast metabolic cycle in single cells recapitulate oscillations in dissolved oxygen from the yeast metabolic cycle in the chemostat.
-        If there are discrepancies between the two manifestations of the yeast metabolic cycle, cell-to-cell heterogeneity should explain them.
+        Each cell generates the metabolic cycle autonomously of other cellular oscillators, but the metabolic cycle can phase-lock the cell division cycle.
+  \item The yeast metabolic cycle is retained in different nutrient and genetic perturbations, but characteristics of the oscillator change in response.
+  \item Flavin autofluorescence of single yeast cells recapitulate oscillations in dissolved oxygen from the yeast metabolic cycle in the chemostat.
+        If there are discrepancies between these two manifestations of the yeast metabolic cycle, cell-to-cell heterogeneity should explain the discrepancies.
 \end{enumerate}
 
-In this chapter, I showed that metabolic cycles are generated autonomously and are coupled to the cell division cycle in permissive conditions, confirming previous single-cell studies.
-To induce decoupling between the two oscillators, confirming the independence and autonomy of the metabolic oscillator, I used fast nutrient switching to induce starvation.
-I further showed that the metabolic cycle was robust and adapted to nutrient and genetic perturbations.
-Finally, to address whether single-cell metabolic cycles confirm findings from chemostat-based experimental studies, I emulated situations known to affect dissolved-oxygen traces: potassium deficiency, and deletions of genes with roles in metabolic and biological timekeeping.
+In this chapter, I show that metabolic cycles are generated autonomously and are coupled to the cell division cycle in permissive conditions, confirming previous single-cell studies.
+To decouple the metabolic and cell division oscillators, confirming that the metabolic oscillator is independently and autonomously generated, I used fast nutrient switching to induce starvation.
+I further show that the metabolic cycle was robust across nutrient and genetic perturbations, but with changes to their oscillatory parameters.
+Finally, to address whether single-cell metabolic cycles confirmed findings from chemostat-based experimental studies, I emulated situations known to affect dissolved-oxygen traces.
+These situations included potassium deficiency and deletions of genes with roles in metabolism and biological timekeeping.
 
 
 %\section[Permissive conditions]{Single-cell flavin oscillations synchronise with cell division cycle in permissive conditions.}
@@ -33,7 +37,7 @@ Finally, to address whether single-cell metabolic cycles confirm findings from c
     \caption{
       Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} glucose.
       Vertical lines (black, dashed) indicate budding events.
-      Star ($\star$) shows a flavin oscillation without a corresponding cell division cycle.
+      Star ($\star$) indicates a flavin oscillation without a corresponding cell division cycle.
     }
   \label{fig:biology-highglc-single}
 \end{figure}
@@ -43,27 +47,27 @@ Finally, to address whether single-cell metabolic cycles confirm findings from c
   \centering
     \includegraphics[width=0.5\linewidth]{garmendia-torresMultipleInputsEnsure2018_1_adapted.jpg}
     \caption{
-      \textbf{(A)} Engineering a fluorescent protein cassette fused to \textit{HTB2} \textbf{(B)} allows the identification of phases of the cell division cycle by modelling the fluorescent protein intensity changes over time as piecewise linear sections.
+      \textbf{(A)} Engineering a fluorescent protein cassette fused to \textit{HTB2} \textbf{(B)} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
       Adapted from \textcite{garmendia-torresMultipleInputsEnsure2018}.
     }
   \label{fig:biology-htb2}
 \end{figure}
 
-To show that metabolic cycles are generated autonomously and are coupled to the cell division cycle, I replicated the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018} that supported these observations.
-Replicating results from a previous flavin-based microfluidics study is important to confirm that the microfluidics set-up I used truly monitored the yeast metabolic cycle, especially if the set-up differed from previous studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018}.
+To show that metabolic cycles are generated autonomously and are coupled to the cell division cycle, I replicated the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
+Replicating results from a previous flavin-based microfluidics study is important to confirm that my use of ALCATRAS \parencite{craneMicrofluidicSystemStudying2014} monitored the yeast metabolic cycle, especially given that the microfluidics set-up differed from previous studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018}.
 
-Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms in GS/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
-The HTB2::mCherry insertion allows monitoring phases of the cell division cycle via imaging and quantifying the intensity of the inserted fluorescent protein (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding overlap of emission spectra.
+Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms in G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+The HTB2::mCherry insertion allows monitoring phases of the cell division cycle through quantifying over time the intensity of the fluorescence of the inserted protein (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding the overlap of flavin and GFP emission spectra.
 
 As observed, oxidation of flavin upon budding was expected for these reasons:
 \begin{enumerate}
-  \item Flavin fluorescence peaks (oxidised form) and NAD(P)H fluorescence peaks (reduced form) at the same time in chemostat cultures \parencite{murrayRedoxRegulationRespiring2011}.
+  \item Flavin fluorescence peaks (becomes most oxidised) and NAD(P)H fluorescence peaks (becomes most reduced) at the same time in chemostat cultures \parencite{murrayRedoxRegulationRespiring2011}.
   \item NAD(P)H is in the reduced form when buds form \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
   \item The flavoprotein lipoamide dehydrogenase is in redox equilibrium with NAD(P)H \parencite{sianoNADHFlavinFluorescence1989}.
 \end{enumerate}
 
 Fig.\ \ref{fig:biology-highglc-single} also shows that in some cases, a metabolic oscillation occurred without cell division cycle progression or bud formation.
-Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via NAD(P)H cycles, confirmed that the metabolic cycle is generated autonomously from the cell division cycle.
+Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via cycles of NAD(P)H fluorescence, confirmed that the metabolic cycle is generated autonomously from the cell division cycle.
 
 
 \begin{figure}
@@ -99,16 +103,16 @@ Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillati
   \end{subfigure}
 
   \caption{
-    \textbf{(\ref{fig:biology-highglc-sync-fourier},~\ref{fig:biology-highglc-sync-fourier-2})} Mean Fourier spectrum of flavin fluorescence across cells; \textbf{(\ref{fig:biology-highglc-sync-acf},~\ref{fig:biology-highglc-sync-acf-2})} median autocorrelation functions of flavin fluorescence (blue) and histone 2B levels (orange) time series, along with \textit{\textbf{(insets)}} the periods of each oscillator across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
+    \textbf{(\ref{fig:biology-highglc-sync-fourier},~\ref{fig:biology-highglc-sync-fourier-2})} Mean Fourier spectrum of flavin fluorescence time series across cells; \textbf{(\ref{fig:biology-highglc-sync-acf},~\ref{fig:biology-highglc-sync-acf-2})} median autocorrelation functions of flavin fluorescence (blue) and histone 2B levels (orange) time series, along with \textit{\textbf{(insets)}} the periods of each oscillator across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
     Data are from FY4 HTB2::mCherry cells under \SI{20}{\gram~\litre^{-1}} glucose; two experiment repeats shown.
   }
   \label{fig:biology-highglc-sync-spectral}
 \end{figure}
 
-To quantify the period of the oscillators, I used several time series analysis methods in concert.
-Fig.\ \ref{fig:biology-highglc-sync-spectral} shows that the mean Fourier spectrum and median autocorrelation function both suggest that flavin fluorescence oscillated at a period of $\approx$\SI{90}{\minute}.
-Fig.\ \ref{fig:biology-highglc-sync-acf} additionally shows that the cell division cycle proceeds at the same frequency, as evidenced by the autocorrelation function of mCherry.
-This periodicity agrees with the literature regarding the duration of the cell division cycle in such permissive growth conditions. % [CITATIONS NEEDED]
+To quantify the period of the oscillators, I combined time series analysis methods.
+Fig.\ \ref{fig:biology-highglc-sync-spectral} shows that the mean Fourier spectrum and median autocorrelation function suggest that flavin fluorescence oscillated at a period of approximately \SI{90}{\minute}.
+Fig.\ \ref{fig:biology-highglc-sync-acf} additionally shows that the cell division cycle proceeded at the same frequency, as evidenced by the autocorrelation function of mCherry.
+The durations of the metabolic and cell division cycles agree with the previously reported duration of the cell division cycle in budding yeast \parencite{herskowitzLifeCycleBudding1988}.
 
 
 \begin{figure}
@@ -138,12 +142,12 @@ This periodicity agrees with the literature regarding the duration of the cell d
 
   \caption{
     \textbf{(\ref{fig:biology-highglc-sync-heatmap})}
-    Heatmap showing the flavin fluorescence (pixels on a red-blue scale) and budding events (black pixels) of each cell,
-    signals are aligned by the first budding event;
+    Heatmap showing the flavin fluorescence (pixels on a red-blue scale) and budding events (black pixels) of each cell over time,
+    signals are aligned by the first budding event.
     \textbf{(\ref{fig:biology-highglc-sync-median})}
-    median flavin fluorescence signal across cells, aligned to first budding event (two repeats: $n_{1}=361$, $n_{2}=144$); and
+    Median flavin fluorescence signal across cells, aligned to first budding event (two repeats: $n_{1}=361$, $n_{2}=144$).
     \textbf{(\ref{fig:biology-highglc-sync-xcf})}
-    median cross-correlation function between flavin and histone 2B signals (two repeats: $n_{1}=392$, $n_{2}=170$).
+    Median cross-correlation function between flavin and histone 2B signals (two repeats: $n_{1}=392$, $n_{2}=170$).
     Data are from FY4 HTB2::mCherry cells in \SI{20}{\gram~\litre^{-1}} glucose.
   }
   \label{fig:biology-highglc-sync-corr}
@@ -153,8 +157,8 @@ To visualise the relationship between the metabolic cycle and the cell division 
 Fig.\ \ref{fig:biology-highglc-sync-corr} shows that
 budding events synchronise with peaks in fluorescence and
 that the cell division cycle varies between cells,
-but most are just under \SI{2}{\hour}, agreeing with Fig.\ \ref{fig:biology-highglc-sync-acf} (inset).
-The oscillatory shape of the median (Fig.\ \ref{fig:biology-highglc-sync-median}) further confirms the synchrony between the metabolic cycle and budding events.
+with most just under \SI{2}{\hour}, agreeing with Fig.\ \ref{fig:biology-highglc-sync-acf} (inset).
+The oscillatory shape of the median flavin fluorescence time series when aligned to the first budding event (Fig.\ \ref{fig:biology-highglc-sync-median}) further confirms the synchrony between the metabolic cycle and budding events.
 
 Finally, to quantify the relationship between the metabolic cycle and the cell division cycle, I computed the cross-correlation function between the flavin and mCherry signals across the population (Fig.\ \ref{fig:biology-highglc-sync-xcf}).
 This function shows that the mCherry signals are, on average, shifted by \SI{5}{\minute} relative to the flavin signals.
