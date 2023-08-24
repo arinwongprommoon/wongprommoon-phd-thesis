@@ -10,59 +10,12 @@
 
 % - Zielinski et al. (2014) is a good starting point
 
-% From synthetic oscillations report
-In the time series analysis literature, there is a wealth of analysis methods that aim to find parameters pertaining to the periodicity of noisy time series and that aim to characterise the relationship between two signals.
-This is relevant for biological time series, especially because they are noisy due to both intrinsic and extrinsic noise sources, and because researchers often record multiple time series from the same system to study the relationship between such time series.
-One example is the yeast metabolic cycle, which is known to be a metabolic oscillator that is coupled with the cell division cycle oscillator.
-In this case, the two time series from this system consist of the level of metabolites to represent the metabolic oscillator and the activity of a component of the cell division cycle to represent the cell division cycle.
-
 The problem with applying classical time series analysis methods to biological time series lies with two properties of biological time series: they are noisy and they are often short.
 Classical methods such as Fourier analysis have been shown to be useful in characterising noisy biological time series when they are long, e.g.\ from neuron impulse recordings, which can include up to thousands of oscillations.
 However, for examples such as the yeast metabolic cycle, it is not feasible to record time series that include such a high number of oscillations.
 In this case, 5-10 oscillations are more realistic.
 As a result, methods like Fourier analysis only provide poor resolution for characteristics such as the period of oscillations.
 % ----- end from synthetic oscillations report
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.9\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{example_dataframe}
-   \caption{
-     Example dataframe
-   }
-   \label{fig:analysis-example-dataframe}
-  \end{subfigure}
-  \begin{subfigure}[htpb]{0.5\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{example_timeseries}
-   \caption{
-     Example time series
-   }
-   \label{fig:analysis-example-timeseries}
-  \end{subfigure}
-  \begin{subfigure}[htpb]{0.5\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{example_images}
-   \caption{
-     Example images
-   }
-   \label{fig:analysis-example-images}
-  \end{subfigure}
-  \caption[
-    Data overview
-  ]{
-    Data overview.
-    The segmentation \& data analysis software \textit{aliby} (see section~\ref{sec:methods-segmentation}) produces a dataframe for each fluorescence channel --- \ref{fig:analysis-example-dataframe} shows the flavin signals for one particular experiment.
-    Each row represents a cell and each column represents a time point.
-    To illustrate the flavin signals, some sample time series are plotted from the dataframe in \ref{fig:analysis-example-timeseries} --- here, the horizontal axis shows time and the vertical axis shows the mean intensity of the signal in the cell, represented as numbers in the dataframe.
-    Each data point derives from images, examples in \ref{fig:analysis-example-images}.
-    As discussed in section~\ref{sec:methods-segmentation},
-    image segmentation uses the brightfield images to define cell outlines, then \textit{aliby} overlays the cell outlines onto the fluorescent images to extract fluorescence intensity.
-    Specifically, this intensity is the mean intensity of pixels within the cell outline, subtracted by the background intensity, and is thus the numerical values represented in each data element in the dataframe.
-  }
-  \label{fig:analysis-data-overview}
-\end{figure}
 
 To discuss the process of analysing oscillatory time series in more detail, I will be using my data as an example and divide this chapter according to steps in the process (see figure~\ref{fig:analysis-data-overview}).
 My data consists of 100--1000 time series of recorded flavin intensity changes for each cell, indicating the yeast metabolic cycle.
@@ -79,33 +32,14 @@ This chapter is divided into six sections, five of which correspond to a process
   \item Characterisation: I have one time series -- what properties does it have?
   \item Correlation: I have two signals from the same cell -- what are their relationships to each other?
   \item Clustering: I have many time series (of the same signal) from many cells -- what are their relationships to each other?
-  \item Summary: bringing it all together in a pipeline.
+  %\item Summary: bringing it all together in a pipeline.
 \end{enumerate}
 
 \section[Cleaning]{Cleaning: choosing data, filtering, missing time points}
 \label{sec:analysis-cleaning}
 
-The first step of any data science pipeline is cleaning data.% , and of course there is the adage: 80\% of data science is cleaning data [CITATION NEEDED].
-Cleaning data is important because of `garbage in, garbage out': regardless of how cutting-edge the analysis methods are, if the input data is flawed, the data analyst cannot obtain good insights from the data.
-However, this step involves judgement calls: the analyst needs to decide on criteria to separate useful data from useless data.
-These criteria may be based on existing standards of practice or, for systems biology, knowledge of either the underlying biological processes or of the mathematical constraints.
-Often, these criteria can be arbitrary because there is an absence of existing standards of practice for the specific situation --- in this case, any decision is going to be a trade-off and needs justification.
-
 Three problems I occur in my data are: choosing data, time series filtering, and handling missing time points.
 As context to illustrate my problem, figure~\ref{fig:analysis-example-heatmap} presents raw data from an example experiment.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\textwidth]{example_dataframe_heatmap}
-  \caption[
-    Heatmap of example dataframe
-  ]{
-    Heatmap of example dataframe shown in figure~\ref{fig:analysis-example-dataframe}.
-    Each row represents a cell, each column represents a time point, and the colour of the pixel (colour bar, right) represents the fluorescence intensity.
-    Some cells are not present for the whole time course of the experiment, and errors in the segmentation pipeline produce missing time points seen as white pixels in the heatmap.
-  }
-  \label{fig:analysis-example-heatmap}
-\end{figure}
 
 The first step is choosing data.
 This is handled in the analysis pipeline \textit{aliby} by the \textit{picker} process, which removes time series that correspond to objects other than living cells and subsequently chooses time series that have time points present for at least 80\% of the total time points \parencite{munozgonzalezPhenotypingSingleCells2023}.
@@ -120,7 +54,6 @@ Missing time points arise from errors even after \textit{merger} runs, but are f
 
 Next, the data must be filtered to remove long-term trends.
 Depending on the scientific question, such long-term trends can be useful.
-For example, in climate science, if there is a time series of atmospheric \ce{CO2} over a period of decades, we would like to filter out the annual (seasonal) cycles and look at the long-term changes over time.
 In the analysis of biological rhythms, however, long-term trends are the element that must be removed to uncover the periodic behaviour of biological time series.
 As an example, \textcite{zielinskiPeriodEstimationRhythm2022} describes several methods of detrending time series: polynomial detrending (including cubic linear detrending), sliding-window detrending (termed as baseline detrending), and amplitude-and-baseline detrending (modifies sliding-window detrending by remove amplitude dampening).
 However, each method has its own caveats.
@@ -187,47 +120,6 @@ Defining a critical frequency in such a way will exclude the possibility of meta
 Thus, for subsequent analysis, I use the high-pass Butterworth filter defined above to process raw fluorescence time series.
 This is because using this method, I have more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set (to be discussed later in this section) and estimating the noise properties (to be discussed in section~\ref{subsec:analysis-characterisation-acf}).
 
-Next, missing time points can pose a problem, especially when many analysis methods assume evenly-spaced time series. %[WHICH?]
-The Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976} is a method developed for problems like this.
-Specifically, it was developed for astronomical data that often has missing time points, corresponding to cloud cover, for example.
-In my analysis, cases of missing time points are few and could be resolved by linear interpolation, so I will not discuss in detail methods to handle missing time points.
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{snr_illustration}
-   \caption{
-     To define the signal-to-noise ratio, a cut-off frequency is defined to divide the area under the Fourier spectrum: signal, to the left of the cut-off (yellow), and noise, to the right (pink).
-     The signal-to-noise ratio is thus defined as the signal area divided by the noise area.
-   }
-   \label{fig:analysis-snr-illustration}
-  \end{subfigure}
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
-   \caption{
-     The signal-to-noise ratio was computed for each processed signal within a dataset, and the distribution of these ratios within a dataset can indicate the overall quality of signals.
-   }
-   \label{fig:analysis-snr-histogram-example}
-  \end{subfigure}
-  \caption{
-    The signal-to-noise ratio as a measure of signal quality.
-  }
-  \label{fig:analysis-snr}
-\end{figure}
-
-Finally, I discuss a way to evaluate the quality of a (processed) dataset --- specifically, computing a signal-to-noise ratio.
-The signal-to-noise ratio compares the level of a desired signal to background noise and serves as a measure of quality in signal processing.
-It takes various definitions depending on how the signal and noise are defined.
-In my case, I base my definition on the frequency domain of the signal.
-I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.% (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
-Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise.
-
-%[EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
-
-To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
-For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
 
 \section[Classification]{Classification: is my time series oscillatory?}
 \label{sec:analysis-classification}
@@ -487,6 +379,7 @@ Alternatively, I can treat the order of the model as a parameter, and perform mo
 % (needed to make the rest of the section make sense)
 In machine learning, classification is defined as the process of identifying a category that a piece of input data belongs to.
 In the context of this section, the classification task is identifying whether a time series (input data) is oscillatory (belongs to one category of two) or non-oscillatory (belongs to the other category of two).
+
 When performing a classification task, input data is first converted to feature vectors in the process of featurisation.
 This process uses domain knowledge related to the type or origin of the data to define characteristics of the data that may be useful for classification.
 Each piece of input data has a label assigned to it to denote which category it belongs to.
@@ -540,45 +433,6 @@ I focused on the 22-feature \textit{catch22} subset of the original 7701 feature
 \textcite{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
 This feature set excludes features that are dependent on mean or spread.
 
-\begin{table}[htbp]
-  \small
-  \centering
-  \begin{tabularx}{\linewidth}{bbS}
-    \toprule
-    Feature name & Description \\
-    \midrule
-    \texttt{DN\_\-HistogramMode\_\-5} & Mode of z-scored distribution (5-bin histogram) \\
-    \texttt{DN\_\-HistogramMode\_\-10} & Mode of z-scored distribution (10-bin histogram) \\
-    \texttt{SB\_\-BinaryStats\_\-mean\_\-longstretch1} & Longest period of consecutive values above the mean  \\
-    \texttt{DN\_\-OutlierInclude\_\-p\_\-001\_\-mdrmd} & Time intervals between successive extreme events above the mean \\
-    \texttt{DN\_\-OutlierInclude\_\-n\_\-001\_\-mdrmd} & Time intervals between successive extreme events below the mean \\
-    \texttt{first\_\-1e\_\-ac} & First 1/e crossing of autocorrelation function \\
-    \texttt{firstMin\_\-acf} & First minimum of autocorrelation function \\
-    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-area\_\-5\_\-1} & Total power in lowest fifth of frequencies in the Fourier power spectrum \\
-    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} & Centroid of the Fourier power spectrum \\
-    \texttt{FC\_\-LocalSimple\_\-mean3\_\-stderr} & Mean error from a rolling 3-sample mean forecasting \\
-    \texttt{CO\_\-trev\_\-1\_\-num} & Time-reversibility statistic, $\langle(x_{t+1} - x_t)^3\rangle_t$ \\
-    \texttt{CO\_\-HistogramAMI\_\-even\_\-2\_\-5} & Automutual information, $m = 2, \tau = 5$ \\
-    \texttt{IN\_\-AutoMutualInfoStats\_\-40\_\-gaussian\_\-fmmi} & First minimum of the automutual information function \\
-    \texttt{MD\_\-hrv\_\-classic\_\-pnn40} & Proportion of successive differences exceeding $0.04\sigma$ \\
-    \texttt{SB\_\-BinaryStats\_\-diff\_\-longstretch0} & Longest period of successive incremental decreases \\
-    \texttt{SB\_\-MotifThree\_\-quantile\_\-hh} & Shannon entropy of two successive letters in equiprobable 3-letter symbolization \\
-    \texttt{FC\_\-LocalSimple\_\-mean1\_\-tauresrat} & Change in correlation length after iterative differencing \\
-    \texttt{CO\_\-Embed2\_\-Dist\_\-tau\_\-d\_\-expfit\_\-meandiff} & Exponential fit to successive distances in 2-d embedding space \\
-    \texttt{SC\_\-FluctAnal\_\-2\_\-dfa\_\-50\_\-1\_\-2\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with DFA (50\% sampling) \\
-    \texttt{SC\_\-FluctAnal\_\-2\_\-rsrangefit\_\-50\_\-1\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with linearly rescaled range fits \\
-    \texttt{SB\_\-TransitionMatrix\_\-3ac\_\-sumdiagcov} & Trace of covariance of transition matrix between symbols in 3-letter alphabet \\
-    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \textcite{wangStructureBasedStatisticalFeatures2007}   \\
-    \bottomrule \\
-  \end{tabularx}
-  \caption[
-    \textit{catch22} features
-  ]{
-    \textit{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
-  }
-  \label{tab:catch22}
-\end{table}
-
 After featurisation, to account for the different dynamic ranges of each feature, the features were scaled by computing the standard score, similar to equation~\ref{eq:analysis-stdscore}.
 
 % MODELS
@@ -610,37 +464,6 @@ Using the Fourier spectrum as features, precision and recall are comparative as 
 features.
 However, there seems to be greater variation in these measures.
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.7\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{fft_testing_featurevector_0}
-   \caption{
-   }
-   \label{fig:analysis-svc-fft-0}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.7\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{fft_testing_featurevector_1}
-   \caption{
-   }
-   \label{fig:analysis-svc-fft-1}
-  \end{subfigure}
-  \caption[
-    Fourier spectra of cells in testing set
-  ]{
-    Fourier spectra of cells in testing set classified as non-oscillatory (class 0,~\ref{fig:analysis-svc-fft-0}) and oscillatory (class 1,~\ref{fig:analysis-svc-fft-1}) by an SVC.
-    Rows represent each cell, each used as an observation for the model.
-    Columns represent each discrete frequency, used as a features for the model.
-    Shades of red represent the power at each discrete frequency, used as feature values.
-  }
-  \label{fig:analysis-svc-fft}
-\end{figure}
-
-The spectra (figure~\ref{fig:analysis-svc-fft}) suggest that oscillatory cells exhibit a peak, corresponding to features 6--7, that is absent in non-oscillatory cells.
-The peak corresponds to a period of 70--80 minutes.
-This peak may explain the good precision \& recall scores.
 
 \begin{figure}
   \centering
@@ -795,59 +618,6 @@ Such methods are adequate if the shape of the time series does not change by muc
 However, the amplitude is likely the least important characteristic to study in the biological timekeeping field.
 
 Of these, finding the period is the easiest to do and most pertinent for my investigation of the yeast metabolic cycle, so I focus my further discussion on period estimation.
-\textcite{zielinskiStrengthsLimitationsPeriod2014} discuss several methods, including: FFT NLLS (non-linear least squares, described by \textcite{straumeLeastSquaresAnalysisFluorescence2002}), MFourFit \parencite{edwardsQuantitativeAnalysisRegulatory2010}, MESA (maximum entropy spectral analysis, described by \textcite{burgRelationshipMaximumEntropy1972}), and the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
-
-% I probably need to try out at least the first two
-\begin{description}
-    \item [FFT NLLS] \hfill \\
-
-        \begin{itemize}
-          \item Is based on the assumption that the time series is best modelled by a sum of cosine functions, each with its own period, amplitude, and phase.
-                In general, five cosines are sufficient for most biological data.
-          \item First fits the data with one cosine and adjust the period, amplitude, and noise parameters using the non-linear least squares fitting algorithm.
-                The Fast Fourier Transform (FFT) can be performed to find a good set of initial parameters.
-                Subsequent cosines are added and their parameters found using the same process until new cosines do not significantly improve the fit.
-          \item The confidence levels of the parameters are found by varying the parameter values until the resulting fit significantly differs from the best-fit model.
-                These can be expressed in terms relative to the original best-fit parameter values.
-          \item The period of the time series is reported as the period of the cosine that gives the best fit and is within the expected range of periods.
-                Skewness does not affect period.
-        \end{itemize}
-
-    \item [MFourFit] \hfill \\
-
-        \begin{itemize}
-          \item Is based on fitting one principal cosine and up to four additional cosines, as a way to reduce model complexity.
-                Each cosine has a period, amplitude, and phase parameter, but the phase parameters of each additional cosine is define as a fraction $\frac{1}{2}, \frac{1}{3}, \ldots \frac{1}{5}$ of the principal cosine.  These harmonics describe the shape of oscillations.
-          \item This algorithm does not directly estimate a period, but varies its estimating of the period within a range of user-defined values.
-                The algorithm evaluates the fit by computing the sum of squared differences between the model and the data, and the model is chosen based on the best fit.
-          \item This algorithm always returns a period even if the time series is not oscillatory.
-                It also assumes knowledge of the shape, and skewness does not affect period.
-        \end{itemize}
-
-    \item [MESA] \hfill \\
-
-        \begin{itemize}
-          \item Unlike previous curve-fitting methods, MESA fits an autoregressive model to the data then gets period from it.
-                The autoregressive model assumes that each data point can be expressed as the linear combination of a defined number of time points before it (the order), plus noise.
-                This fitted model leads to an analytical expression of the frequency spectrum, and the period can be found from this expression.
-          \item Choosing the best order can be a form of model selection.
-          \item Does not assume a shape of the waveform, and is more precise that Fourier-based methods, but lacks a confidence measure.
-                Empirically does well and fast.
-                It is based on a very different principle than MFourFit, so if both methods agree on the value of the period, then we can be confident that we have the correct period.
-        \end{itemize}
-
-    \item [Lomb-Scargle periodogram] \hfill \\
-
-        \begin{itemize}
-            \item Fits one sinusoid, assumes a period.
-            \item Choose one that gives least error.
-            \item Can be used with data with time points that are not evenly spaced
-        \end{itemize}
-
-\end{description}
-
-For further detail, I discussed MESA in section~\ref{subsec:analysis-classification-ar} and the Lomb-Scargle periodogram in section~\ref{subsec:analysis-classification-spectral}.
-
 Another common period-estimation method relies on the autocorrelation function, and it was used in \textcite{papagiannakisAutonomousMetabolicOscillations2017}.
 Here, I am going to discuss adapting the autocorrelation function for my data.
 
@@ -908,16 +678,6 @@ The harmonic oscillator $y$ can be defined by:
   \label{eq:harmonic}
 \end{equation}
 
-% First-order DEs redundant?
-or as a system of first-order differential equations:
-
-\begin{equation}
-  \begin{aligned}
-    \ndif{y}{t} &= v \\
-    \ndif{v}{t} &= -\omega^{2}y
-  \end{aligned}
-  \label{eq:harmonic-1o}
-\end{equation}
 
 where the sole parameter $\omega$ represents the angular frequency.
 The solution $y(t) = A \sin(\omega{}t + \phi)$ defines a sinusoidal time series; $A$ is a constant representing amplitude and $\phi$ is a constant representing phase, both determined by initial conditions of the system.
@@ -963,64 +723,7 @@ Gaussian noise is the simple, first-approach case, and is generated by randomly 
 Gillespie noise emulates noise from biological systems and is generated using the direct method of the Gillespie algorithm \parencite{gillespieExactStochasticSimulation1977} on the birth-death process model.
 The Gillespie algorithm was developed for stochastic simulations of a biochemical system.
 
-To define the Gillespie algorithm, consider such a system with $M$ reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$ involving $N$ species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ in a fixed volume $V$ at thermal equilibrium.
-Let $X_{i}(t)$ represent the number of molecules of $S_{i}$ at time $t$, and the state vector
-
-\begin{equation}
-  \mathbf{X}(t) \coloneqq [X_{1}(t), \ldots , X_{N}(t)]
-  \label{eq:gillespie-statevector}
-\end{equation}
-
-thus gives the state of the system at any given time $t$.
-
-Each reaction $R_{j}$ is described by two quantities:
-\begin{enumerate}
-  \item A state-change vector $\mathbf{v}_{j} \coloneqq [v_{1,j}, \ldots , v_{N,j}]$ which defines how the stoichiometry of the system changes if the reaction occurs.
-        $v_{i,j}$ represents the change in the stoichiometry of $S_{i}$ when $R_{j}$ occurs.
-  \item A propensity function $a_{j}$, which gives the probability, given a the state $\mathbf{X}(t) = \mathbf{x}$, that one $R_{j}$ reaction occurs in the volume $V$ within the following short time interval $[t, t+dt)$.
-        % TODO: Verify this expression -- this is from Mona, but this exact form doesn't appear in Gillespie (1977), Gillespie (2007), or Wilkinson (2018).
-        This function is defined by
-        \begin{equation}
-          a_{j}(\mathbf{x})dt \coloneqq k_{j} \prod_{n=1}^{N}\mathbf{v_{n}}S_{n}
-          \label{eq:gillespie-propensity}
-        \end{equation}
-        where $k_{j}$ is the rate constant of reaction $R_{j}$.
-\end{enumerate}
-
-The Gillespie algorithm aims to estimate the state vector given the initial state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$.
-It does so by iteratively choosing the next reaction that occurs, based on its probability, and then choosing its firing time based on a probability distribution.
-Combining these simulations gives a trajectory of state vectors across the time course of interest.
-In detail, the direct Gillespie algorithm can be defined as stated in algorithm~\ref{alg:gillespie} \parencite{gillespieStochasticSimulationChemical2007}:
-
-\RestyleAlgo{ruled}
-\begin{algorithm}[htbp]
-  \SetAlgoLined
-  \KwIn{Stochastic model (with species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ and reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$, along with a state-change vector $\mathbf{v_{j}}$ and a rate constant $k_{i}$ for each reaction $R_{j}$); initial time $t_{0}$; and initial model state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$}
-  \KwOut{Trajectory of state vectors $\mathbf{X}(t)$, with $t$ taking discrete values in $[t_{0}, t_{\mathrm{max}}]$}
-  \While{$t < t_{\mathrm{max}}$}{
-    Calculate the propensities $a_{j}(\mathbf{x})$ based on the current state $\mathbf{x}$\;
-    Calculate the combined propensity $a_{0}(\mathbf{x}) = \sum_{j}a_{j}(\mathbf{x})$\;
-    Generate two random numbers $r_{1}$ and $r_{2}$, both from the uniform distribution $U(0,1)$\;
-    Choose the next reaction $R_{j}$, with $j$ given by the smallest integer that satisfies $\sum_{j^{\prime}}^{j}a_{j^{\prime}(\mathbf{x})} > r_{1}a_{0}(\mathbf{x})$\;
-    Calculate the time to the next reaction $\tau = \frac{1}{a_{0}(\mathbf{x})}\ln(\frac{1}{r_{2}})$\;
-    Simulate the next reaction by updating the state vector $\mathbf{x} \leftarrow \mathbf{x} + \mathbf{v_{j}}$ and store the new vector in $\mathbf{X}(t)$\;
-    Update the time by $t \leftarrow t + \tau$ and store the new time\;
-  }
-  \KwRet Trajectory of state vectors $\mathbf{X}(t)$ for a vector of times $t$\;
-  \caption{Direct method of the Gillespie algorithm}
-  \label{alg:gillespie}
-\end{algorithm}
-
-The birth-death process is a simple stochastic model used for the modelling of gene expression.
-The model describes a species that is produced at a linear birth rate $k_{0}$ and destroyed at a linear death rate $d_{0}$, and is defined by the system of equations~\ref{eq:birth-death-process}:
-
-\begin{equation}
-  \begin{aligned}
-    R_{1}: \varnothing \ce{ &->[k_{0}] P}\\
-    R_{2}: \ce{P &->[d_{0}]} \varnothing
-  \end{aligned}
-  \label{eq:birth-death-process}
-\end{equation}
+(INSERT SHORT SUMMARY HERE AND LINK TO APPENDIX)
 
 \begin{figure}
   \centering
@@ -1046,13 +749,6 @@ The model describes a species that is produced at a linear birth rate $k_{0}$ an
   \caption{Generation of Gillespie noise.}
   \label{fig:gillespie_noise}
 \end{figure}
-
-To produce Gillespie noise, a stochastic simulation employing the direct method of the Gillespie algorithm was performed on the birth-death process model with defined $k_{0}$ and $d_{0}$ parameters.
-The final time was defined in such a way that allows the trajectory of the amount of $P$ over time to reach a steady state (figure~\ref{fig:gillespie_trajectory}).
-This time varied depending on the $k_{0}$ and $d_{0}$ values, but the final time of \num{1500} was chosen as it was long enough to have the trajectory each steady state for the $k_{0}$ and $d_{0}$ values used in this study.
-The latter half of the trajectory was taken and then put on a grid with \num{1000} regularly-spaced time points, equal to the number of time points for the synthetic oscillators (harmonic and FitzHugh-Nagumo).
-The time series was then normalised by subtracting the mean ($k_{0}/d_{0}$) and then dividing by $\sqrt{1/d_{0}}$ to create a time series representing Gillespie noise with mean 0 and standard deviation $\sqrt{k_{0}}$ (figure~\ref{fig:gillespie_noise_samples}).
-This Gillespie noise thus has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$ --- in other words, the rate parameters of the birth-death process control the noise properties of this Gillespie noise.
 
 Gaussian or Gillespie noise was added to the synthetic oscillatory time series by computing element-wise sums.
 
@@ -1442,19 +1138,6 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
 
 My intention is to have the FitzHugh-Nagumo oscillator model periodic changes in histone 2B intensity levels and yeast cells progress through the cell division cycle (figure~\ref{fig:acf-fhn-biol}).
 
-\subsubsection{Summary}
-\label{subsubsec:analysis-characterisation-acf-summary}
-
-My investigation aims to address a signal processing question.
-Therefore, for the purposes of my investigation, it is not important that these oscillators function as an accurate model of the biological systems responsible for the biological oscillations observed.
-Indeed, given that 47 flavoproteins are responsible for flavin autofluorescence, a component of such a poorly biochemically characterised system like the yeast metabolic cycle, it is not feasible to find a mathematical model that accurately describes the biological oscillations.
-
-The methods developed for the biological timekeeping field, especially circadian rhythms, tend to symmetrical, sinusoidal time series.
-However, many such methods do not suit skewed oscillations such as the FitzHugh-Nagumo oscillator, which models histone 2B abundance changes in the cell division cycle, therefore other methods must be used.
-The autocorrelation function has previously been used to evaluate the periodicity of time series in the yeast metabolic cycle, and here I show that this function can additionally be used to quantify noise properties of the time series.
-However, this function has limited ability of quantify the noise timescale of the FitzHugh-Nagumo oscillator.
-
-Potentially, this investigation can be extended to oscillators modelled by other systems of differential equations that describe other biological rhythms.
 
 \subsection{Combining methods to get a picture of periodicity}
 \label{subsec:analysis-characterisation-combined}
@@ -1479,6 +1162,47 @@ Thus, in my subsequent analysis of biological data, I combine the autocorrelatio
 % [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
 
 % [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
+
+\subsection{New subsection for noise}
+\label{subsec:analysis-characterisation-noise}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{snr_illustration}
+   \caption{
+     To define the signal-to-noise ratio, a cut-off frequency is defined to divide the area under the Fourier spectrum: signal, to the left of the cut-off (yellow), and noise, to the right (pink).
+     The signal-to-noise ratio is thus defined as the signal area divided by the noise area.
+   }
+   \label{fig:analysis-snr-illustration}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
+   \caption{
+     The signal-to-noise ratio was computed for each processed signal within a dataset, and the distribution of these ratios within a dataset can indicate the overall quality of signals.
+   }
+   \label{fig:analysis-snr-histogram-example}
+  \end{subfigure}
+  \caption{
+    The signal-to-noise ratio as a measure of signal quality.
+  }
+  \label{fig:analysis-snr}
+\end{figure}
+
+Finally, I discuss a way to evaluate the quality of a (processed) dataset --- specifically, computing a signal-to-noise ratio.
+The signal-to-noise ratio compares the level of a desired signal to background noise and serves as a measure of quality in signal processing.
+It takes various definitions depending on how the signal and noise are defined.
+In my case, I base my definition on the frequency domain of the signal.
+I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.% (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
+Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise.
+
+%[EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
+
+To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
+For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
+
 
 \section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
 \label{sec:analysis-correlation}

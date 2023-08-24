@@ -1,0 +1,117 @@
+\chapter{Insert appendix title here}
+\label{append:analysis}
+
+\section{catch22}
+\label{append:analysis-catch22}
+
+\begin{table}[htbp]
+  \small
+  \centering
+  \begin{tabularx}{\linewidth}{bbS}
+    \toprule
+    Feature name & Description \\
+    \midrule
+    \texttt{DN\_\-HistogramMode\_\-5} & Mode of z-scored distribution (5-bin histogram) \\
+    \texttt{DN\_\-HistogramMode\_\-10} & Mode of z-scored distribution (10-bin histogram) \\
+    \texttt{SB\_\-BinaryStats\_\-mean\_\-longstretch1} & Longest period of consecutive values above the mean  \\
+    \texttt{DN\_\-OutlierInclude\_\-p\_\-001\_\-mdrmd} & Time intervals between successive extreme events above the mean \\
+    \texttt{DN\_\-OutlierInclude\_\-n\_\-001\_\-mdrmd} & Time intervals between successive extreme events below the mean \\
+    \texttt{first\_\-1e\_\-ac} & First 1/e crossing of autocorrelation function \\
+    \texttt{firstMin\_\-acf} & First minimum of autocorrelation function \\
+    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-area\_\-5\_\-1} & Total power in lowest fifth of frequencies in the Fourier power spectrum \\
+    \texttt{SP\_\-Summaries\_\-welch\_\-rect\_\-centroid} & Centroid of the Fourier power spectrum \\
+    \texttt{FC\_\-LocalSimple\_\-mean3\_\-stderr} & Mean error from a rolling 3-sample mean forecasting \\
+    \texttt{CO\_\-trev\_\-1\_\-num} & Time-reversibility statistic, $\langle(x_{t+1} - x_t)^3\rangle_t$ \\
+    \texttt{CO\_\-HistogramAMI\_\-even\_\-2\_\-5} & Automutual information, $m = 2, \tau = 5$ \\
+    \texttt{IN\_\-AutoMutualInfoStats\_\-40\_\-gaussian\_\-fmmi} & First minimum of the automutual information function \\
+    \texttt{MD\_\-hrv\_\-classic\_\-pnn40} & Proportion of successive differences exceeding $0.04\sigma$ \\
+    \texttt{SB\_\-BinaryStats\_\-diff\_\-longstretch0} & Longest period of successive incremental decreases \\
+    \texttt{SB\_\-MotifThree\_\-quantile\_\-hh} & Shannon entropy of two successive letters in equiprobable 3-letter symbolization \\
+    \texttt{FC\_\-LocalSimple\_\-mean1\_\-tauresrat} & Change in correlation length after iterative differencing \\
+    \texttt{CO\_\-Embed2\_\-Dist\_\-tau\_\-d\_\-expfit\_\-meandiff} & Exponential fit to successive distances in 2-d embedding space \\
+    \texttt{SC\_\-FluctAnal\_\-2\_\-dfa\_\-50\_\-1\_\-2\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with DFA (50\% sampling) \\
+    \texttt{SC\_\-FluctAnal\_\-2\_\-rsrangefit\_\-50\_\-1\_\-logi\_\-prop\_\-r1} & Proportion of slower timescale fluctuations that scale with linearly rescaled range fits \\
+    \texttt{SB\_\-TransitionMatrix\_\-3ac\_\-sumdiagcov} & Trace of covariance of transition matrix between symbols in 3-letter alphabet \\
+    \texttt{PD\_\-PeriodicityWang\_\-th0\_\-01} & Periodicity measure of \textcite{wangStructureBasedStatisticalFeatures2007}   \\
+    \bottomrule \\
+  \end{tabularx}
+  \caption[
+    \textit{catch22} features
+  ]{
+    \textit{catch22} features, adapted from \textcite{lubbaCatch22CAnonicalTimeseries2019}.
+  }
+  \label{tab:catch22}
+\end{table}
+
+
+\section{Gillespie noise}
+\label{append:analysis-gillespie}
+
+To define the Gillespie algorithm, consider such a system with $M$ reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$ involving $N$ species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ in a fixed volume $V$ at thermal equilibrium.
+Let $X_{i}(t)$ represent the number of molecules of $S_{i}$ at time $t$, and the state vector
+
+\begin{equation}
+  \mathbf{X}(t) \coloneqq [X_{1}(t), \ldots , X_{N}(t)]
+  \label{eq:gillespie-statevector}
+\end{equation}
+
+thus gives the state of the system at any given time $t$.
+
+Each reaction $R_{j}$ is described by two quantities:
+\begin{enumerate}
+  \item A state-change vector $\mathbf{v}_{j} \coloneqq [v_{1,j}, \ldots , v_{N,j}]$ which defines how the stoichiometry of the system changes if the reaction occurs.
+        $v_{i,j}$ represents the change in the stoichiometry of $S_{i}$ when $R_{j}$ occurs.
+  \item A propensity function $a_{j}$, which gives the probability, given a the state $\mathbf{X}(t) = \mathbf{x}$, that one $R_{j}$ reaction occurs in the volume $V$ within the following short time interval $[t, t+dt)$.
+        % TODO: Verify this expression -- this is from Mona, but this exact form doesn't appear in Gillespie (1977), Gillespie (2007), or Wilkinson (2018).
+        This function is defined by
+        \begin{equation}
+          a_{j}(\mathbf{x})dt \coloneqq k_{j} \prod_{n=1}^{N}\mathbf{v_{n}}S_{n}
+          \label{eq:gillespie-propensity}
+        \end{equation}
+        where $k_{j}$ is the rate constant of reaction $R_{j}$.
+\end{enumerate}
+
+The Gillespie algorithm aims to estimate the state vector given the initial state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$.
+It does so by iteratively choosing the next reaction that occurs, based on its probability, and then choosing its firing time based on a probability distribution.
+Combining these simulations gives a trajectory of state vectors across the time course of interest.
+In detail, the direct Gillespie algorithm can be defined as stated in algorithm~\ref{alg:gillespie} \parencite{gillespieStochasticSimulationChemical2007}:
+
+\RestyleAlgo{ruled}
+\begin{algorithm}[htbp]
+  \SetAlgoLined
+  \KwIn{Stochastic model (with species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ and reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$, along with a state-change vector $\mathbf{v_{j}}$ and a rate constant $k_{i}$ for each reaction $R_{j}$); initial time $t_{0}$; and initial model state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$}
+  \KwOut{Trajectory of state vectors $\mathbf{X}(t)$, with $t$ taking discrete values in $[t_{0}, t_{\mathrm{max}}]$}
+  \While{$t < t_{\mathrm{max}}$}{
+    Calculate the propensities $a_{j}(\mathbf{x})$ based on the current state $\mathbf{x}$\;
+    Calculate the combined propensity $a_{0}(\mathbf{x}) = \sum_{j}a_{j}(\mathbf{x})$\;
+    Generate two random numbers $r_{1}$ and $r_{2}$, both from the uniform distribution $U(0,1)$\;
+    Choose the next reaction $R_{j}$, with $j$ given by the smallest integer that satisfies $\sum_{j^{\prime}}^{j}a_{j^{\prime}(\mathbf{x})} > r_{1}a_{0}(\mathbf{x})$\;
+    Calculate the time to the next reaction $\tau = \frac{1}{a_{0}(\mathbf{x})}\ln(\frac{1}{r_{2}})$\;
+    Simulate the next reaction by updating the state vector $\mathbf{x} \leftarrow \mathbf{x} + \mathbf{v_{j}}$ and store the new vector in $\mathbf{X}(t)$\;
+    Update the time by $t \leftarrow t + \tau$ and store the new time\;
+  }
+  \KwRet Trajectory of state vectors $\mathbf{X}(t)$ for a vector of times $t$\;
+  \caption{Direct method of the Gillespie algorithm}
+  \label{alg:gillespie}
+\end{algorithm}
+
+The birth-death process is a simple stochastic model used for the modelling of gene expression.
+The model describes a species that is produced at a linear birth rate $k_{0}$ and destroyed at a linear death rate $d_{0}$, and is defined by the system of equations~\ref{eq:birth-death-process}:
+
+\begin{equation}
+  \begin{aligned}
+    R_{1}: \varnothing \ce{ &->[k_{0}] P}\\
+    R_{2}: \ce{P &->[d_{0}]} \varnothing
+  \end{aligned}
+  \label{eq:birth-death-process}
+\end{equation}
+
+
+To produce Gillespie noise, a stochastic simulation employing the direct method of the Gillespie algorithm was performed on the birth-death process model with defined $k_{0}$ and $d_{0}$ parameters.
+The final time was defined in such a way that allows the trajectory of the amount of $P$ over time to reach a steady state (figure~\ref{fig:gillespie_trajectory}).
+This time varied depending on the $k_{0}$ and $d_{0}$ values, but the final time of \num{1500} was chosen as it was long enough to have the trajectory each steady state for the $k_{0}$ and $d_{0}$ values used in this study.
+The latter half of the trajectory was taken and then put on a grid with \num{1000} regularly-spaced time points, equal to the number of time points for the synthetic oscillators (harmonic and FitzHugh-Nagumo).
+The time series was then normalised by subtracting the mean ($k_{0}/d_{0}$) and then dividing by $\sqrt{1/d_{0}}$ to create a time series representing Gillespie noise with mean 0 and standard deviation $\sqrt{k_{0}}$ (figure~\ref{fig:gillespie_noise_samples}).
+This Gillespie noise thus has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$ --- in other words, the rate parameters of the birth-death process control the noise properties of this Gillespie noise.
+
+
