@@ -329,7 +329,7 @@ This method thus makes it easy to compute the frequency of the oscillation from 
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.8\textwidth}
+  \begin{subfigure}[htpb]{0.6\textwidth}
    \centering
    \includegraphics[width=\textwidth]{timeseries_example_for_ar}
    \caption{
@@ -338,9 +338,8 @@ This method thus makes it easy to compute the frequency of the oscillation from 
      Birth events automatically defined by \textit{BABY} are shown in dashed vertical lines.
    }
    \label{fig:analysis-ar-timeseries}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.8\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.4\textwidth}
    \centering
    \includegraphics[width=\textwidth]{ar}
    \caption{
@@ -467,7 +466,7 @@ However, there seems to be greater variation in these measures.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{catch22_training_featurevector_mean}
+  \includegraphics[width=0.5\textwidth]{catch22_training_featurevector_mean}
   \caption[
     Mean values of each \texttt{catch22} feature across each cell
   ]{
@@ -489,7 +488,7 @@ This feature is defined as the mean error from a rolling 3-sample mean forecasti
 % This should give a `hill' in the middle.
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{classifier_histogram_probabilities_adapted}
+  \includegraphics[width=0.5\textwidth]{classifier_histogram_probabilities_adapted}
   \caption{
     Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC.
   }
@@ -727,7 +726,7 @@ The Gillespie algorithm was developed for stochastic simulations of a biochemica
 
 \begin{figure}
   \centering
-  \begin{subfigure}{0.9\textwidth}
+  \begin{subfigure}{0.4\textwidth}
     \centering
     \includegraphics[width=\linewidth]{gillespie}
     \caption{
@@ -969,7 +968,7 @@ In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelatio
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\linewidth]{birthrate_vs_ydispl.png}
+  \includegraphics[width=0.6\linewidth]{birthrate_vs_ydispl.png}
   \caption[
     Quantifying the effect of Gillespie noise amplitude on the autocorrelation function
   ]{
@@ -1043,7 +1042,7 @@ Subsequently, I aim to extend the use of the autocorrelation function in quantif
     \label{fig:acf-fhn-gillnoise-ts}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{fhn_acf}
     \caption{
@@ -1168,7 +1167,7 @@ Thus, in my subsequent analysis of biological data, I combine the autocorrelatio
 
 \begin{figure}
   \centering
-  \begin{subfigure}[htpb]{0.8\textwidth}
+  \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
    \includegraphics[width=\textwidth]{snr_illustration}
    \caption{
@@ -1176,8 +1175,8 @@ Thus, in my subsequent analysis of biological data, I combine the autocorrelatio
      The signal-to-noise ratio is thus defined as the signal area divided by the noise area.
    }
    \label{fig:analysis-snr-illustration}
-  \end{subfigure}
-  \begin{subfigure}[htpb]{0.8\textwidth}
+ \end{subfigure}%
+ \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
    \includegraphics[width=\textwidth]{pyruvate_snr_edit}
    \caption{
@@ -1363,7 +1362,7 @@ This algorithm has a resolution parameter which specifies the scale of the clust
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
     \includegraphics[width=\linewidth]{graph_representation}
     \caption{
