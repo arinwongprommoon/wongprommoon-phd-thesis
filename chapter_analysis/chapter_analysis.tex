@@ -161,27 +161,12 @@ This is because using this method, I obtain more control over the frequency comp
 \label{sec:analysis-classification}
 
 To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
-% However, there are challenges with classification of noisy biological time series with relatively few time points.
-% In addition, such a classification task necessarily needs a cut-off somewhere, thus requiring judgement calls.
-% You'd see this crop up in this section multiple times when I discuss my methods and I reveal different angles of approaching this.
-Determining whether a time series is oscillatory, or rhythmicity detection, is technically difficult for several reasons.
-From a signal processing perspective, any time-dependent signal can be decomposed into a combination of sinusoids of different frequencies.
-Noise typically manifests as high-frequency components while trends manifests as low-frequency components --- the filtering methods in section~\ref{sec:analysis-cleaning} arise because of this fact.
-It is thus more reasonable to detect the presence of a frequency within the range of interest.
-However, this depends on knowing an expected range of frequencies.
-When studying the circadian rhythm, this is often the case: studies expect rhythms of around \SI{24}{\hour} and \textcite{zielinskiStrengthsLimitationsPeriod2014} uses the range of \SIrange{16}{32}{\hour} for rhythmicity detection.
-This method is less useful when the frequency of oscillations is unknown or known to be in a wide range of frequencies, as is the case for the yeast metabolic cycle.
-Furthermore, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity \parencite{zielinskiStrengthsLimitationsPeriod2014}, therefore such a classification method requires a subjective definition of whether each time series is oscillatory.
-In other words, this is similar to the requirement of a training data set with human-defined labels, and thus a human-defined failure rate, for supervised machine learning.
+Determining whether a time series is oscillatory, or rhythmicity detection, is challenging because the task of defining the presence of an oscillation breaks down when the frequency domain is considered.
+Rhythmicity detection is best re-defined as identifying the presence of a frequency in a range of interest, excluding lower frequencies that contribute to trends, and higher frequencies that contribute to noise \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+However, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity; therefore, evaluating such a classification method requires a subjective definition of whether each time series is oscillatory.
 
-In this section, I will discuss my use of spectral methods, model-fitting methods, and machine learning methods.
+To determine the time series classification method that is most appropriate for my data, I compared a  spectral methods, a model-fitting method, and a machine learning method.
 
-% Literature review subsection
-
-% - Compare and contrast methods
-% - Highlight challenges with large datasets of noisy biological data
-% - Review existing methods first and then talk about the methods I tried, with results.
-%   FFT (already copied from 10m, to be re-written slightly), AR (steal figures from AC22 poster & presentations made in that time)
 
 \subsection{Rhythmicity detection using spectral methods}
 \label{subsec:analysis-classification-spectral}

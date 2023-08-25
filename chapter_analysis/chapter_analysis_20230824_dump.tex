@@ -232,3 +232,18 @@ However, sliding-window methods have caveats.
 Subtracting a moving average relies on knowing a window size that approximates the expected oscillation period, gives no control over the signal frequencies, introduce artefacts in the frequency spectrum, and decreases the number of time points available (figure~\ref{fig:analysis-filter-slidingwindow}).
 Such methods may distort the data in a way that affects conclusions.
 Additionally, if the time series is processed with such methods, it is not possible to restore the raw data.
+
+
+% However, there are challenges with classification of noisy biological time series with relatively few time points.
+% In addition, such a classification task necessarily needs a cut-off somewhere, thus requiring judgement calls.
+% You'd see this crop up in this section multiple times when I discuss my methods and I reveal different angles of approaching this.
+
+Determining whether a time series is oscillatory, or rhythmicity detection, is technically difficult for several reasons.
+From a signal processing perspective, any time-dependent signal can be decomposed into a combination of sinusoids of different frequencies.
+Noise typically manifests as high-frequency components while trends manifests as low-frequency components --- the filtering methods in section~\ref{sec:analysis-cleaning} arise because of this fact.
+It is thus more reasonable to detect the presence of a frequency within the range of interest.
+However, this depends on knowing an expected range of frequencies.
+When studying the circadian rhythm, this is often the case: studies expect rhythms of around \SI{24}{\hour} and \textcite{zielinskiStrengthsLimitationsPeriod2014} uses the range of \SIrange{16}{32}{\hour} for rhythmicity detection.
+This method is less useful when the frequency of oscillations is unknown or known to be in a wide range of frequencies, as is the case for the yeast metabolic cycle.
+Furthermore, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity \parencite{zielinskiStrengthsLimitationsPeriod2014}, therefore such a classification method requires a subjective definition of whether each time series is oscillatory.
+In other words, this is similar to the requirement of a training data set with human-defined labels, and thus a human-defined failure rate, for supervised machine learning.
