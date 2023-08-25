@@ -310,3 +310,42 @@ Here, I discuss characterising periods, phases, and amplitudes of the oscillatio
 Then I will discuss the merit of combining several methods, given the limitations of analysing noisy biological time series that I have found.
 % [THIS SENTENCE MAY GO]
 %Characterisation is also intimately related to classification, in particular the machine learning methods: these methods can be adapted to tell apart different strains (presumably of different shapes) rather than telling apart oscillatory and non-oscillatory time series.
+
+% Literature review subsection
+% STEAL IDEAS FROM: ZIELINSKI ET AL. 2014
+\subsection{Periods, phases, amplitudes}
+\label{subsec:analysis-characterisation-quantities}
+
+Three useful characteristics of a time series include its period, its phase relative to a reference, and its amplitude.
+% Adapted from meeting with Zielinski.
+% TODO with this:
+% - support with evidence, e.g. discussion points from his paper and others
+
+% PERIOD
+The period of an oscillatory time series is the easiest characteristic to compute a fixed number for because it is well-defined.
+
+% SHAPE
+The shape of oscillations in a time series is difficult to analyse and assign a meaningful quantitative measure to --- it is easier to describe the shape by eye.
+From the signal processing point of view, the shape of an oscillation is defined by a set of frequencies of sinusoids and their respective power values.
+In other words, to quantitatively describe the shape of an oscillation, a vector of values is needed, and any fixed-number representation necessarily removes some information about the shape.
+Alternatively, the shape can be expressed in terms of skewness, treating one oscillation as if it were a probability distribution. %[CITATION NEEDED].
+
+% PHASE
+There are challenges in obtaining a fixed number of represent the phase of an oscillator time series based on the signal.
+Most importantly, the phase must be defined with respect to a human-defined reference, which may not be clear depending on the data.
+In addition, the phase angle can have uncertainty, particularly if the time series is noisy.
+Phase estimation is part of period estimation methods that are based on fitting cosines to data (to be discussed later), and an error range will always be given.
+Estimating the phase angle also requires multiple replicates as estimation methods rely on plotting populations of time series and seeing if they overlap.
+Modular arithmetic is also needed for such methods.
+In sum, more information is needed to estimate the phase compared to other methods.
+When a quantitative representation of the phase is obtained, it can be expressed in absolute terms (in units of time), or in relative terms with respect of the period (in radians).
+
+% AMPLITUDE
+The amplitude of the time series is easiest to compute and easiest to explain.
+Methods to estimate the amplitude relies on fitting a cosine to the signal.
+Such methods are adequate if the shape of the time series does not change by much across time, but are inadequate if oscillations are skewed, as the cosine function models symmetrical oscillations.
+However, the amplitude is likely the least important characteristic to study in the biological timekeeping field.
+
+Of these, finding the period is the easiest to do and most pertinent for my investigation of the yeast metabolic cycle, so I focus my further discussion on period estimation.
+Another common period-estimation method relies on the autocorrelation function, and it was used in \textcite{papagiannakisAutonomousMetabolicOscillations2017}.
+Here, I am going to discuss adapting the autocorrelation function for my data.
