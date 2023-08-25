@@ -253,14 +253,14 @@ Alternatively, a more reliable ground truth could be provided by an experiment e
 \subsection{Rhythmicity detection using model fitting}
 \label{subsec:analysis-classification-ar}
 
-The autoregressive model has been used before to characterise biological time series \parencite{zielinskiStrengthsLimitationsPeriod2014}.
-This model is based on the assumption that each data point in the time series can be expressed as a linear combination of $P$ data points that precede it --- $P$ thus representing the order of the model.
-This autoregressive model thus `smooths' the time series.
+To identify an alternative method to classify oscillatory and non-oscillatory time series, I assessed the performance of a time series classification method based on the autoregressive model.
+%The autoregressive model has been used before to characterise biological time series \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+This type of model is based on the assumption that each data point in the time series can be expressed as a linear combination of $P$ data points that precede it, thus smoothing the time series.
+The advantage of the autoregressive model is that it leads to an analytical solution for the periodogram, thus potentially resolving the problem of a low-resolution periodogram based on the Fourier spectrum.
 
-\textcite{jiaFrequencyDomainAnalysis2021} describe an application of the autoregressive model, based on the fact that there is an analytical solution for the periodogram based on this model.
-This publication describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
+In particular, \textcite{jiaFrequencyDomainAnalysis2021} describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
 Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series.
-I implemented this algorithm, described by \textcite{jiaFrequencyDomainAnalysis2020}, as follows:
+This model-fitting can be described mathematically as follows:
 
 \begin{enumerate}
   \item The algorithm relies on fitting a single time series $n(0), n(1), \ldots , n(M-1)$ with an autoregressive model $\mathrm{AR}(P)$ with order $P$:
@@ -337,18 +337,17 @@ I implemented this algorithm, described by \textcite{jiaFrequencyDomainAnalysis2
   \label{fig:analysis-ar-classification}
 \end{figure}
 
-The resulting power spectra fell into four categories: one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (figure~\ref{fig:analysis-ar-classification}).
-This method thus makes it easy to compute the frequency of the oscillation from the location of the peak and quality of the oscillation from the height of the peak, as opposed to a Fourier spectrum computed base on noisy data.
+The resulting power spectra fell into four categories: one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
+This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
+% Change colour scheme to make it a bit less purple and more blue-orange, consistent with chapt 4?
 \begin{figure}
   \centering
+  % Remove birth events?  They are not needed to understand this and may confuse people.
   \begin{subfigure}[htpb]{0.6\textwidth}
    \centering
    \includegraphics[width=\textwidth]{timeseries_example_for_ar}
    \caption{
-     Example time series to illustrate the autoregressive model fitting method.
-     The original time series is shown in light purple, and the autoregressive model with order 4 is fitted to produce the time series shown in dark purple.
-     Birth events automatically defined by \textit{BABY} are shown in dashed vertical lines.
    }
    \label{fig:analysis-ar-timeseries}
   \end{subfigure}%
@@ -356,24 +355,28 @@ This method thus makes it easy to compute the frequency of the oscillation from 
    \centering
    \includegraphics[width=\textwidth]{ar}
    \caption{
-     The fitted model in~\ref{fig:analysis-ar-timeseries} leads to an analytical definition of a periodogram.
-     The presence of peaks indicate that the time series is oscillatory.
-     In this case, the peaks in the periodogram gives a good estimate of the most likely period of oscillation in the original time series.
    }
    \label{fig:analysis-ar-periodogram}
   \end{subfigure}
+
   \caption{
-    Fitting an autoregressive model to determine period.
+    \textbf{(\ref{fig:analysis-ar-timeseries})}
+    Sample time series (dark solid line), with a fitted autoregressive model (light solid line) of order 4 computed according to \textcite{jiaFrequencyDomainAnalysis2020}.
+    \textbf{(\ref{fig:analysis-ar-periodogram})}
+    Periodogram defined based on parameters of the autoregressive model.
+    % The presence of a peak of height greater than 1 indicates that the time series is oscillatory.
+    % Furthermore, the locations of peaks estimate the period of oscillation in the original time series.
   }
   \label{fig:analysis-ar}
 \end{figure}
 
-Figure~\ref{fig:analysis-ar} shows an example of the autoregressive model method performed on my time series data of flavin autofluorescence.
-In my investigations, very few time series within a dataset were classified as oscillatory using this method.
-The problem is that there are no parameters that I can adjust to change the `tolerance' for detecting rhythmicity.
-However, among the time series that it deems oscillatory, it guesses the frequency fairly well.
+Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory, as evidenced by a peak in the periodogram of height greater than 1.
+In addition, the periodogram correctly identifies a period of \SI{75.2}{\minute}.
+However, when extended across a dataset of time series, very few time series within a dataset were classified as oscillatory using this method.
+Unlike the classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}, the autoregressive model does not having a parameter that can be adjusted to change the expected proportion of a dataset to be classified as oscillatory --- in other words, the tolerance of detecting rhythmicity cannot be adjusted.
+Alternatively, the order of the model can be treated as a parameter, and model selection can be performed.
+Nevertheless, among the time series that the algorithm classifies as oscillatory, the algorithm accurately estimates the frequency of oscillations.
 %[Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.]
-Alternatively, I can treat the order of the model as a parameter, and perform model selection on it.
 
 % This subsection needs better re-organisation.
 % I've done some attempts by putting some headers in comments.
