@@ -302,3 +302,11 @@ However, there seems to be greater variation in these measures.
 Nevertheless, precision and recall are best with \textit{catch22}.
 Feature vectors seem to suggest that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9 in figure~\ref{fig:analysis-svc-catch22}) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
 This feature is defined as the mean error from a rolling 3-sample mean forecasting.
+
+
+The importance of characterising my time series is that I can quantify how my yeast metabolic cycles respond to genetic and nutrient perturbations.
+Here, I discuss characterising periods, phases, and amplitudes of the oscillations.
+%Note that I discuss many of the same non-machine learning methods as I did for the classification section -- such methods are often developed for characterisation but offer features that are useful for classification, but it makes more sense in my thesis to order it this way because you'd usually try to filter out the non-oscillatory time series before trying to grab properties of the oscillatory ones.
+Then I will discuss the merit of combining several methods, given the limitations of analysing noisy biological time series that I have found.
+% [THIS SENTENCE MAY GO]
+%Characterisation is also intimately related to classification, in particular the machine learning methods: these methods can be adapted to tell apart different strains (presumably of different shapes) rather than telling apart oscillatory and non-oscillatory time series.
