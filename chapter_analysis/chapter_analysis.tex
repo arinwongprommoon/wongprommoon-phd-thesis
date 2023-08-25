@@ -386,32 +386,10 @@ Nevertheless, among the time series that the algorithm classifies as oscillatory
 
 % [TODO] Worth re-doing the whole experiment using better data, e.g. the data I'm actually using in the biological results chapter.
 
-As an alternative to the mathematical methods previously discussed, I trained a machine learning model --- specifically, a support vector classifier --- to classify oscillatory and non-oscillatory time series and identify features in the time series that discriminate between the two classes.
-
-% OVERVIEW OF MACHINE LEARNING
-% (needed to make the rest of the section make sense)
-In machine learning, classification is defined as the process of identifying a category that a piece of input data belongs to.
-In this section, the classification task is identifying whether a time series (input data) is oscillatory (belongs to one category of two) or non-oscillatory (belongs to the other category of two).
-
-% Is this necessary?  It seems too basic.  Dump into appendix?
-A typical classification pipeline can be described by the following steps:
-\begin{enumerate}
-  \item \emph{Pre-processing of data:} Input data is cleaned or normalised.
-        For example, to classify oscillatory time series, the input time series may be normalised to give similar dynamic ranges.
-  \item \emph{Labelling:} Each piece of input data has a label assigned to it to denote which category it belongs to.
-        For example, to classify oscillatory time series, a human can subjective assign the label `0' for non-oscillatory time series and `1' for oscillatory time series, for a total of two categories.
-  \item \emph{Featurisation:} Input data converted to feature vectors in the process of featurisation.
-        This process uses domain knowledge related to the type or origin of the data to define characteristics of the data that may be useful for classification.
-  \item \emph{Train-test split:} The input data set is then randomly divided into a training data set and a test data set.
-  \item \emph{Training of model:} The machine learning model is then fit on the (featurised) training data set and its labels to fit parameters in the model.
-  \item \emph{Evaluation of model on test dataset:}
-        The model, trained on the training dataset, is used to predict the labels of data in the (featurised) test data set.
-        The performance of the model is then evaluated on the test data set.
-        This evaluation is based on computing quantities that express how well the model assigns labels to data, compared to the labels defined earlier.
-\end{enumerate}
-
+As an alternative to the mathematical methods previously discussed, I trained a machine learning model --- specifically, a support vector classifier --- to classify oscillatory and non-oscillatory time series and identify features in the time series that discriminate between the two classes (appendix \ref{append:analysis-ml}).
+%
 % DESCRIPTION OF DATA
-Following this pipeline, I trained a support vector classifier on flavin time series from BY4741 cells  under \SI{10}{\gram~\litre^{-1}} glucose.
+Specifically, I trained a support vector classifier on flavin time series from BY4741 cells  under \SI{10}{\gram~\litre^{-1}} glucose.
 The dataset had 294 time series of 118 time points each.
 
 % DATA PROCESSING
@@ -464,6 +442,7 @@ From this input data, 150 time series formed the training set.
 
 To determine the most effective way to featurise the data, I computed the precision and recall of support vector classifiers trained on data featurised using different methods.
 Precision and recall were chosen as evaluation metrics due to the class imbalance, and the support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 1$.
+
 Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} gave the best performance.
 %[CONFIRM IMPORTANCE VIA RECURSIVE FEATURE ELIMINATION, USING RANDOM FOREST?]
 Furthermore, Fig.\ \ref{fig:analysis-svc-catch22} suggests that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9) is important for the classifier.
