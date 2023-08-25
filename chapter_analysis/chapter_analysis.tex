@@ -171,19 +171,14 @@ To determine the time series classification method that is most appropriate for 
 \subsection{Rhythmicity detection using spectral methods}
 \label{subsec:analysis-classification-spectral}
 
-% Copied from 10m report
-% ----------------------
-% Minireview of studies about finding whether there is an oscillation in circadian time series (or other related time series) -- keep it relatively short.
-
-% Discussion about oscillatory behaviour vs periodic behaviour?
-
-\textcite{glynnDetectingPeriodicPatterns2006} describe a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
+In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test.
+This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
 This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \parencite{scargleStudiesAstronomicalTime1982}.
 The classification was based on controlling the false discovery rate for identification of oscillations.
 In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
 
-I developed a classifier based on \textcite{glynnDetectingPeriodicPatterns2006} to classify time series of flavin autofluorescence as follows:
+The classifier can be described mathematically as follows:
 
 \begin{enumerate}
 \item Let the data have $\mathcal{G}$ cells.
@@ -217,15 +212,8 @@ I define an effective number of independent frequencies $M = f_{max}N_{g}$ for e
 \item Cells whose $p$-values correspond to $p_{(1)}, p_{(2)}, \dots, p_{(\hat{k})}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
 \end{enumerate}
 
-%I then compared the classification results against manual classification of these time series into oscillating and non-oscillating.
-The classifier was able to rank the time series by quality of oscillation (figure \ref{fig:ClassifierBestWorstTS}).
-The peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation (figure \ref{fig:ClassifierBestWorstPS}).
-By eye, birth events coincided with peaks of some higher-quality oscillations.
-However, this was also true for some oscillations ranked as lower-quality.
-% [COMMENTED -- don't think this sentence is really consequential, and the proposed plot doesn't add much] Additionally, higher-quality oscillations do not seem to be associated with imaging positions/flavin LED exposure times. % FIGURE: scatter plot, horizontal axis is rank, vertical axis is imaging position
-% Wee bit of discussion (plus a plot to illustrate my point).  Deeper discussion about multiple main frequencies is in discussion, and has references to literature.
-These oscillations were ranked as low-quality because the Fourier transform identified multiple main frequencies, and thus lowered the peak of the normalised periodogram.
-Thus, a Fourier-based method may not adequately provide the information for a reliable ranking of oscillation quality.
+Subsequently, the peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation, and therefore, the time series can be rank according to the height of this peak.
+
 
 \begin{figure}[htbp]
   \centering
@@ -252,11 +240,15 @@ Thus, a Fourier-based method may not adequately provide the information for a re
   \label{fig:ClassifierBestWorstPS}
 \end{figure}
 
-The classifier has multiple caveats.
-It one tuning parameter, the false discovery rate, and its value affects the proportion of time series classed as oscillating.
-I resorted to subjective judgements of whether a time series exhibited oscillations, and thus any optimised false discovery rate would have low reliability.
-A reliable ground truth is needed to optimise the value of the false discovery rate so that the classification accuracy is maximised.
-Such a ground truth would ideally be from an experiment that is expected to give rise to time series that are not oscillatory.
+Fig.\ \ref{fig:ClassifierBestWorstTS} shows that the classifier correctly ranked high-quality oscillations, determined subjectively, as the highest-quality oscillations.
+However, the time series that it ranked as lowest-quality exhibited oscillations, albeit at a higher frequency, as informed, subjectively, by the coincidence of regular budding events with peaks in the oscillations.
+These oscillations were ranked as low-quality because the Fourier spectrum (Fig.\ \ref{fig:ClassifierBestWorstPS}) identified multiple main frequencies, and thus lowered the peak of the normalised periodogram.
+Thus, a Fourier-based method may not adequately provide the information for a reliable ranking of oscillation quality.
+
+Another caveat of this classifier lies in its sole tuning parameter, the false discovery rate, which affects the proportion of time series classed as oscillating.
+To optimise the false discovery rate, labels of whether a time series is oscillatory were needed; if the labels are human-defined, as was the case in this section, any optimised false discovery rate would have low reliability.
+Alternatively, a more reliable ground truth could be provided by an experiment expected to result in time series that are not oscillatory.
+
 
 \subsection{Rhythmicity detection using model fitting}
 \label{subsec:analysis-classification-ar}

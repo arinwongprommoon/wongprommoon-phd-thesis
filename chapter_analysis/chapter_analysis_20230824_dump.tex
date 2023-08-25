@@ -247,3 +247,11 @@ When studying the circadian rhythm, this is often the case: studies expect rhyth
 This method is less useful when the frequency of oscillations is unknown or known to be in a wide range of frequencies, as is the case for the yeast metabolic cycle.
 Furthermore, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity \parencite{zielinskiStrengthsLimitationsPeriod2014}, therefore such a classification method requires a subjective definition of whether each time series is oscillatory.
 In other words, this is similar to the requirement of a training data set with human-defined labels, and thus a human-defined failure rate, for supervised machine learning.
+
+%I then compared the classification results against manual classification of these time series into oscillating and non-oscillating.
+The classifier was able to rank the time series by quality of oscillation (Fig.\ \ref{fig:ClassifierBestWorstTS}).
+The peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation (Fig.\ \ref{fig:ClassifierBestWorstPS}).
+By eye, birth events coincided with peaks of some higher-quality oscillations.
+However, this was also true for some oscillations ranked as lower-quality.
+% [COMMENTED -- don't think this sentence is really consequential, and the proposed plot doesn't add much] Additionally, higher-quality oscillations do not seem to be associated with imaging positions/flavin LED exposure times. % FIGURE: scatter plot, horizontal axis is rank, vertical axis is imaging position
+% Wee bit of discussion (plus a plot to illustrate my point).  Deeper discussion about multiple main frequencies is in discussion, and has references to literature.
