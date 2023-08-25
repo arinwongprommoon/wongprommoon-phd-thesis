@@ -24,6 +24,7 @@ Specifically, I address:
 
 In this chapter, I will ... (REVISIT THIS AFTER I GO THROUGH EVERYTHING)
 
+
 \section{Analysing time series in a biological context}
 \label{sec:analysis-literature}
 
@@ -58,29 +59,23 @@ To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} ident
 Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two approaches to analysis of time series: on one end, relying on mathematical methods, and on the other end, a data science approach to time series classification tasks.
 
 
-\section[Cleaning]{Cleaning: choosing data, filtering, missing time points}
+\section[Cleaning]{Cleaning: choosing data, filtering out long-term trends}
 \label{sec:analysis-cleaning}
 
-Three problems I occur in my data are: choosing data, time series filtering, and handling missing time points.
-As context to illustrate my problem, figure~\ref{fig:analysis-example-heatmap} presents raw data from an example experiment.
+Biological time series often have long-term trends that are not useful and may confound analysis.
+In my study of the yeast metabolic cycle, such trends include slow, global changes in flavin autofluorescence, which must be removed to uncover the periodic behaviour of flavin autofluorescence that is a component of the metabolic cycle.
+To determine the detrending method that is most appropriate for my data, I compared a frequency filtering method, a sliding-window detrending method, and a polynomial detrending method.
 
-The first step is choosing data.
-This is handled in the analysis pipeline \textit{aliby} by the \textit{picker} process, which removes time series that correspond to objects other than living cells and subsequently chooses time series that have time points present for at least 80\% of the total time points \parencite{munozgonzalezPhenotypingSingleCells2023}.
-This is an arbitrary cut-off, but it ensures that my time series have enough oscillations for further analysis, such as characterisation of the frequencies of these oscillations.
-Otherwise, short, and likely uninformative, time series can `pollute' algorithms that operate on the population of time series, confounding the analysis.
-Some time series have missing time points.
-The \textit{merger} process in \textit{aliby} resolves errors in cell tracking across time points by merging short tracks previously identified in the pipeline as belonging to separate cells.
-Missing time points arise from errors even after \textit{merger} runs, but are few enough that simple linear interpolation can resolve the majority of cases.
+\textcite{zielinskiPeriodEstimationRhythm2022} describes several methods of detrending time series:
+% Clarify definitions -- this is currently like a shopping list.
+\begin{enumerate}
+  \item Polynomial detrending (including cubic linear detrending)
+  \item Sliding-window detrending (termed as baseline detrending)
+  \item Amplitude-and-baseline detrending (modifies sliding-window detrending by remove amplitude dampening)
+\end{enumerate}
 
-% Probably overkill?
-%[FIGURE: SHOW LONG-TERM TRENDS.  DRAW A MEAN+STD ERR PLUS A COUPLE OF RAW TIME SERIES.]
-
-Next, the data must be filtered to remove long-term trends.
-Depending on the scientific question, such long-term trends can be useful.
-In the analysis of biological rhythms, however, long-term trends are the element that must be removed to uncover the periodic behaviour of biological time series.
-As an example, \textcite{zielinskiPeriodEstimationRhythm2022} describes several methods of detrending time series: polynomial detrending (including cubic linear detrending), sliding-window detrending (termed as baseline detrending), and amplitude-and-baseline detrending (modifies sliding-window detrending by remove amplitude dampening).
 However, each method has its own caveats.
-Polynomial detrending assumes a polynomial-shaped underlying long, while methods based an sliding-window detrending necessitates discarding time points at the beginning and end of the time series and may introduce strong artefacts.
+Polynomial detrending assumes a polynomial-shaped underlying signal, while methods based an sliding-window detrending necessitates discarding time points at the beginning and end of the time series and may introduce strong artefacts.
 
 \begin{figure}
   \centering
@@ -88,60 +83,78 @@ Polynomial detrending assumes a polynomial-shaped underlying long, while methods
    \centering
    \includegraphics[width=\textwidth]{fft_raw}
    \caption{
-     Raw signal
    }
    \label{fig:analysis-filter-raw}
   \end{subfigure}
+
   \begin{subfigure}[htpb]{0.8\textwidth}
    \centering
    \includegraphics[width=\textwidth]{fft_butterworth}
    \caption{
-     Signal processed with high-pass butterworth filter of frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
    }
    \label{fig:analysis-filter-butterworth}
   \end{subfigure}
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{fft_slidingwindow}
-   \caption{
-     Signal processed by subtracting moving average with window size 30.
-   }
-   \label{fig:analysis-filter-slidingwindow}
-  \end{subfigure}
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{fft_savgol}
-   \caption{
-     Signal processed with Savitzky-Golay filter (window size 7, polynomial order 3).
-   }
-   \label{fig:analysis-filter-savgol}
-  \end{subfigure}
-  \caption[
-    Different filtering methods
-  ]{
-    Different filtering methods result in different effects to both the signal (left panels) and the Fourier spectrum of the signal (right panels).
+
+  \caption{
+    (Left panels) Time series and (right panels) Fourier spectra corresponding to
+    \textbf{(\ref{fig:analysis-filter-raw})}
+    a sample raw time series of flavin autofluorescence, and
+    \textbf{(\ref{fig:analysis-filter-butterworth})}
+    the time series processed by a high-pass Butterworth filter with a critical frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
   }
   \label{fig:analysis-filter}
 \end{figure}
 
-For filtering time series, I have considered sliding-window methods and methods that modify the frequency profile of the time series.
+To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Fig.\ \ref{fig:analysis-filter} shows how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
+Unlike sliding-window methods, defining a signal filter offers direct control over frequencies.
+The critical frequency in this case was defined to create a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
+Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
 
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_slidingwindow}
+   \caption{
+   }
+   \label{fig:analysis-slidingwindow-movavg}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_savgol}
+   \caption{
+   }
+   \label{fig:analysis-slidingwindow-savgol}
+  \end{subfigure}
+
+  \caption{
+    (Left panels) Raw time series with trends, (middle panels) processed time series, and (right panels) Fourier spectra to demonstrate
+    \textbf{(\ref{fig:analysis-slidingwindow-movavg})}
+    using a moving average (window size 30), and
+    \textbf{(\ref{fig:analysis-slidingwindow-savgol})}
+    using a Savitzky-Golay filter (window size 7, polynomial order 3)
+    to remove trends.
+  }
+  \label{fig:analysis-slidingwindow}
+\end{figure}
+
+To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method and the Savitzky-Golay filter.
 Sliding-window methods are common in detrending biological time series.
 For example, \textcite{cunyHighresolutionMassMeasurements2022} used a moving average: a constant, defined sliding window to smooth time series of yeast cell mass during growth.
 \textcite{papagiannakisAutonomousMetabolicOscillations2017} fitted a smoothing spline to their single-cell fluorescence data of the yeast metabolic cycle, then divided the data points by the smoothing spline to detrend their data; the specific mathematical method used to define the smoothing spline was unclear in their study.
+% Equations?
 The Savitzky-Golay filter is also common --- this method is based on fitting a sliding window of a defined number of time points with a polynomial of a defined order using least squares fitting.
-However, sliding-window methods have caveats.
-Subtracting a moving average relies on knowing a window size that approximates the expected oscillation period, gives no control over the signal frequencies, introduce artefacts in the frequency spectrum, and decreases the number of time points available (figure~\ref{fig:analysis-filter-slidingwindow}).
-Such methods may distort the data in a way that affects conclusions.
-Additionally, if the time series is processed with such methods, it is not possible to restore the raw data.
 
-Alternatively, I consider methods that modify the frequency profile of the time series.
-Defining a high- or low-pass filter offers direct control over frequencies, but the user must use a judgement call to define a critical frequency.
-In my case, I define the critical frequency for a high-pass Butterworth filter as \SI[parse-numbers=false]{1/350}{\minute^{-1}} as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments (figure~\ref{fig:analysis-filter-butterworth}).
-Defining a critical frequency in such a way will exclude the possibility of metabolic cycles that go on for longer; however, this is a trade-off I am willing to make so that I can extract the individual oscillations better.
+Fig.\ \ref{fig:analysis-slidingwindow-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
+In contrast, Fig.\ \ref{fig:analysis-slidingwindow-savgol} shows that the Savitzky-Golay filter ...(INSERT DISCUSSION HERE)...
+In sum, sliding-window methods were not ideal because they distorted the data in a way that affects conclusions, or removed noise information that may be useful.
+% Really?
+Importantly, it is not possible to restore the raw data when it is processed using such methods.
 
-Thus, for subsequent analysis, I use the high-pass Butterworth filter defined above to process raw fluorescence time series.
-This is because using this method, I have more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set (to be discussed later in this section) and estimating the noise properties (to be discussed in section~\ref{subsec:analysis-characterisation-acf}).
+Therefore, for subsequent analyses, I used the high-pass Butterworth filter defined above to process raw fluorescence time series.
+This is because using this method, I obtain more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set and estimating the noise properties.
 
 
 \section[Classification]{Classification: is my time series oscillatory?}

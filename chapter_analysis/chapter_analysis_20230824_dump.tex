@@ -163,3 +163,72 @@ the mCherry indicating the cell division cycle.
 In these time series, there is a new time point every 5 minutes, for a total of 100--300 time points.
 These data are stored as dataframes for each condition (strain and media conditions), with the time series as rows and time points as columns ---
 in the case of HTB2::mCherry cells, the flavin and mCherry time series are in separate data tables.
+
+
+Three problems I occur in my data are: choosing data, time series filtering, and handling missing time points.
+As context to illustrate my problem, figure~\ref{fig:analysis-example-heatmap} presents raw data from an example experiment.
+
+The first step is choosing data.
+This is handled in the analysis pipeline \textit{aliby} by the \textit{picker} process, which removes time series that correspond to objects other than living cells and subsequently chooses time series that have time points present for at least 80\% of the total time points \parencite{munozgonzalezPhenotypingSingleCells2023}.
+This is an arbitrary cut-off, but it ensures that my time series have enough oscillations for further analysis, such as characterisation of the frequencies of these oscillations.
+Otherwise, short, and likely uninformative, time series can `pollute' algorithms that operate on the population of time series, confounding the analysis.
+Some time series have missing time points.
+The \textit{merger} process in \textit{aliby} resolves errors in cell tracking across time points by merging short tracks previously identified in the pipeline as belonging to separate cells.
+Missing time points arise from errors even after \textit{merger} runs, but are few enough that simple linear interpolation can resolve the majority of cases.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_raw}
+   \caption{
+     Raw signal
+   }
+   \label{fig:analysis-filter-raw}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_butterworth}
+   \caption{
+     Signal processed with high-pass butterworth filter of frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
+   }
+   \label{fig:analysis-filter-butterworth}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_slidingwindow}
+   \caption{
+     Signal processed by subtracting moving average with window size 30.
+   }
+   \label{fig:analysis-filter-slidingwindow}
+  \end{subfigure}
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{fft_savgol}
+   \caption{
+     Signal processed with Savitzky-Golay filter (window size 7, polynomial order 3).
+   }
+   \label{fig:analysis-filter-savgol}
+  \end{subfigure}
+  \caption[
+    Different filtering methods
+  ]{
+    Different filtering methods result in different effects to both the signal (left panels) and the Fourier spectrum of the signal (right panels).
+  }
+  \label{fig:analysis-filter}
+\end{figure}
+
+For filtering time series, I have considered sliding-window methods and methods that modify the frequency profile of the time series.
+
+Alternatively, I consider methods that modify the frequency profile of the time series.
+Defining a high- or low-pass filter offers direct control over frequencies, but the user must use a judgement call to define a critical frequency.
+In my case, I define the critical frequency for a high-pass Butterworth filter as \SI[parse-numbers=false]{1/350}{\minute^{-1}} as this corresponds to the upper limit of reasonable durations of yeast metabolic cycles and cell division cycles that I have observed in my single-cell microfluidics experiments (figure~\ref{fig:analysis-filter-butterworth}).
+Defining a critical frequency in such a way will exclude the possibility of metabolic cycles that go on for longer; however, this is a trade-off I am willing to make so that I can extract the individual oscillations better.
+
+Thus, for subsequent analysis, I use the high-pass Butterworth filter defined above to process raw fluorescence time series.
+This is because using this method, I have more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set (to be discussed later in this section) and estimating the noise properties (to be discussed in section~\ref{subsec:analysis-characterisation-acf}).
+
+However, sliding-window methods have caveats.
+Subtracting a moving average relies on knowing a window size that approximates the expected oscillation period, gives no control over the signal frequencies, introduce artefacts in the frequency spectrum, and decreases the number of time points available (figure~\ref{fig:analysis-filter-slidingwindow}).
+Such methods may distort the data in a way that affects conclusions.
+Additionally, if the time series is processed with such methods, it is not possible to restore the raw data.
