@@ -255,3 +255,50 @@ By eye, birth events coincided with peaks of some higher-quality oscillations.
 However, this was also true for some oscillations ranked as lower-quality.
 % [COMMENTED -- don't think this sentence is really consequential, and the proposed plot doesn't add much] Additionally, higher-quality oscillations do not seem to be associated with imaging positions/flavin LED exposure times. % FIGURE: scatter plot, horizontal axis is rank, vertical axis is imaging position
 % Wee bit of discussion (plus a plot to illustrate my point).  Deeper discussion about multiple main frequencies is in discussion, and has references to literature.
+
+When performing a classification task, Each piece of input data has a label assigned to it to denote which category it belongs to.
+The input data set is then divided into a training data set and a test data set.
+The machine learning model is then fit on the training data set to fit parameters in the model, and then the performance of the model is evaluated on the test data set.
+Such model evaluation is based on quantitative measures of how well the model matches data to appropriate labels.
+
+% -----[Probably no need to go into so much detail.]-----
+% I removed the first 25 time points that is most likely cells adapting to microfluidic conditions.
+% I also removed time points after time point 168, when nutrient switching occurred.
+% I removed all time series with missing time points.
+In total, there are 294 cells, each with 118 time points, spaced 5 minutes apart.
+
+% Figure ... shows a clear downwards trend (which I can't explain biologically yet). If an SVM model is trained using time points as features, there is a risk that the model recognises this trend rather than the presence of oscillations.
+% This plot highlights the risk: for some reason non-oscillating time series (hand-scored) tends to have a smaller gradient.
+% I thus detrended the data by generating a moving average with a sliding window size of 45 time points, and then dividing each data point by the moving average. I chose 45 time points because that covers ~3 cell division cycles.
+% However, there are caveats.
+% If the cell division cycle length differs, this window length should change; a spectral method (FFT, autoregressive) could give me an idea of what this cell division cycle length is.
+% Additionally, this decreases the number of time points --- there are now 98.
+
+I explored support vector machine (SVM) and random forest (RF) model architectures.
+First, I used an support vector classifier (SVC) with these hyperparameters:
+\begin{enumerate}
+  \item A radial bias kernel.
+  \item The kernel coefficient $\gamma = 1/N$, where $N$ is the number of features.
+  \item The regularisation parameter $C = 1$.  The strength of regularisation is inversely proportional to $C$.
+\end{enumerate}
+
+And, I explored three methods of featurisation: using time points as features, the time series' Fourier spectrum as features, and using \textit{catch22} features \parencite{lubbaCatch22CAnonicalTimeseries2019}.
+
+\textit{catch22} is based on the \textit{hctsa} toolbox \parencite{fulcherHctsaComputationalFramework2017} developed to compute vectors of features for time series.
+This toolbox contains 7701 features defined from across the time series analysis literature.
+I focused on the 22-feature \textit{catch22} subset of the original 7701 features (table \ref{tab:catch22}).
+\textcite{lubbaCatch22CAnonicalTimeseries2019} selected these 22 features because they minimise redundancy while maintaining classification performance across 93 test datasets.
+This feature set excludes features that are dependent on mean or spread.
+
+After featurisation, to account for the different dynamic ranges of each feature, the features were scaled by computing the standard score, similar to equation~\ref{eq:analysis-stdscore}.
+
+As a control, I randomly assigned time series to the oscillatory and non-oscillatory categories and used their time series as features.
+I then evaluated the model using stratified five-fold cross-validation, using precision and recall as evaluation metrics.
+Using time points as features, the metrics show that precision and recall is better than random, and stratified five-fold cross-validation does not suggest overfitting (figure~\ref{fig:analysis-precision-recall}).
+Using the Fourier spectrum as features, precision and recall are comparative as with using time points as
+features.
+However, there seems to be greater variation in these measures.
+
+Nevertheless, precision and recall are best with \textit{catch22}.
+Feature vectors seem to suggest that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9 in figure~\ref{fig:analysis-svc-catch22}) plays an important role in distinguishing the oscillatory and non-oscillatory time series.
+This feature is defined as the mean error from a rolling 3-sample mean forecasting.
