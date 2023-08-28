@@ -965,35 +965,35 @@ Fig.\ \ref{fig:acf-sinusoid-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION H
 \subsubsection{The autocorrelation function extended for use with FitzHugh-Nagumo oscillators}
 \label{subsubsec:analysis-characterisation-acf-fhn}
 
-Subsequently, I aim to extend the use of the autocorrelation function in quantifying the noise parameters of oscillatory signals from sinusoid signals to signals modelled by the FitzHugh-Nagumo oscillator.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{fhn_meanplot}
     \caption{
-      Sample FitzHugh-Nagumo oscillators generated with parameters $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82.
-      Each was added with Gillespie noise generated with parameters $k_{0} = 5$ and $d_{0} = 0.05$.
     }
     \label{fig:acf-fhn-gillnoise-ts}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.6\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{fhn_acf}
     \caption{
-      Autocorrelation function of~\ref{fig:acf-fhn-gillnoise-ts}.
-      Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents lag.
     }
     \label{fig:acf-fhn-gillnoise-acf}
   \end{subfigure}
 
   \caption{
-    The autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise.
+    %The autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise.
+    \textbf{(\ref{fig:acf-fhn-gillnoise-ts})} Sample FitzHugh-Nagumo oscillators ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.05$), and 
+    \textbf{(\ref{fig:acf-fhn-gillnoise-acf})} its autocorrelation function.
+    Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
+    %
+    There were 100 repeats, randomly out-of-phase.
   }
   \label{fig:acf-fhn}
 \end{figure}
+
 
 \begin{figure}
   \centering
@@ -1001,7 +1001,6 @@ Subsequently, I aim to extend the use of the autocorrelation function in quantif
   \centering
     \includegraphics[width=\linewidth]{fhn_expofit}
     \caption{
-      Exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
     }
     \label{fig:acf-fhn-noiseparams-fit}
   \end{subfigure}%
@@ -1009,7 +1008,6 @@ Subsequently, I aim to extend the use of the autocorrelation function in quantif
   \centering
     \includegraphics[width=\linewidth]{fhn_highnts_expofit}
     \caption{
-      Similar to figure~\ref{fig:acf-fhn-noiseparams-fit}, but with a greater noise timescale, showing the limitations of this fitting with data using the FitzHugh-Nagumo oscillator as a base.
     }
     \label{fig:acf-fhn-noiseparams-fit-highnts}
   \end{subfigure}
@@ -1018,8 +1016,6 @@ Subsequently, I aim to extend the use of the autocorrelation function in quantif
   \centering
     \includegraphics[width=\linewidth]{fhn_deathrate_vs_decay.png}
     \caption{
-      The exponential fitting was performed across a range of $d_{0}$ while $k_{0}$ was held constant at 5.
-      The decay rates $D$ of the exponential fits scale linearly with $d_{0}$.
     }
     \label{fig:acf-fhn-noiseparams-noisetimescale}
   \end{subfigure}%
@@ -1027,52 +1023,61 @@ Subsequently, I aim to extend the use of the autocorrelation function in quantif
   \centering
     \includegraphics[width=\linewidth]{fhn_birthrate_vs_ydispl.png}
     \caption{
-      The exponential fitting was performed across a range of $k_{0}$ while $d_{0}$ was held constant at 0.05.
-      The y-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as the noise amplitude $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
     }
     \label{fig:acf-fhn-noiseparams-noiseamplitude}
   \end{subfigure}
 
   \caption{
-    Quantifying the effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
+    %Quantifying the effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
+    \textbf{(\ref{fig:acf-fhn-noiseparams-fit})}
+    Fitting exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, to the autocorrelation function, generated with $k_{0}=5$ and $d_{0}=0.05$, and
+    \textbf{(\ref{fig:acf-fhn-noiseparams-fit-highnts})}
+    with $k_{0}=5$ and $d_{0}=0.005$.
+    \textbf{(\ref{fig:acf-fhn-noiseparams-noisetimescale})}
+    The relationship between $d_{0}$ and the decay rate $D$ ($k_{0}=5$).
+    \textbf{(\ref{fig:acf-fhn-noiseparams-noiseamplitude})}
+    The relationship between $k_{0}/d_{0}$ and $y$-displacement $C$ of the exponential fit ($d_{0}=0.05$)
   }
   \label{fig:acf-fhn-noiseparams}
 \end{figure}
 
-My investigation used the same methods as in the previous section (\ref{subsubsec:analysis-characterisation-acf-sinusoid}).
-Notably, the shape of the autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise differed slightly to the sinusoid case --- namely, the waves are more pointed (figure~\ref{fig:acf-fhn-gillnoise-acf}).
-In addition, fitting the exponential decay function $y = \me^{-2d_{0}T}$ to the autocorrelation function was less reliable, particularly with high noise timescales (figure~\ref{fig:acf-fhn-noiseparams-fit-highnts}).
-As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produces a greater range of uncertainty (figure~\ref{fig:acf-fhn-noiseparams-noisetimescale}).
-However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remains as reliable as the sinusoid oscillator case (figure~\ref{fig:acf-fhn-noiseparams-noiseamplitude}).
+To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from oscillations of a different shape, I repeated the exponential fitting in section~\ref{subsubsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator.
+
+Fig.\ \ref{fig:acf-fhn-gillnoise-acf} shows that when the oscillator had a different shape, the shape of the autocorrelation function changed: i.e.\ the waves in the autocorrelation function were more pointed.
+In addition, fitting an exponential decay function to the autocorrelation function to estimate noise parameters was less reliable, particularly with high noise timescales (Fig.\ \ref{fig:acf-fhn-noiseparams-fit-highnts}).
+As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produced a greater range of uncertainty (Fig.\ \ref{fig:acf-fhn-noiseparams-noisetimescale}).
+However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
+
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.9\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
   % TODO: Edit out the flavin bits
     \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
     \caption{
-      Sample time series of histone 2B abundance (pink).
     }
     \label{fig:acf-fhn-biol-ts}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.7\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_mCh_06.png}
     \caption{
-      Autocorrelation function across a population of time series of histone 2B abundance.
     }
     \label{fig:acf-fhn-biol-acf}
   \end{subfigure}
 
   \caption{
-    Using the autocorrelation function to characterise oscillations in histone 2B abundance.
+    \textbf{(\ref{fig:acf-fhn-biol-ts})}
+    Sample time series of histone 2B abundance (pink).
+    \textbf{(\ref{fig:acf-fhn-biol-acf})}
+    Autocorrelation function across a population of time series of histone 2B abundance.
   }
   \label{fig:acf-fhn-biol}
 \end{figure}
 
-My intention is to have the FitzHugh-Nagumo oscillator model periodic changes in histone 2B intensity levels and yeast cells progress through the cell division cycle (figure~\ref{fig:acf-fhn-biol}).
+From the relationships shown in Figs.\ \ref{fig:acf-fhn-noiseparams-noisetimescale} and \ref{fig:acf-fhn-noiseparams-noiseamplitude}, noise parameters from the autocorrelation functions of real signals may be deduced.
+Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
 
 
 \subsection{Combining methods to get a picture of periodicity}
