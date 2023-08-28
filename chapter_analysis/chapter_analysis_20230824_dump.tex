@@ -375,3 +375,10 @@ In addition, the oscillations in the autocorrelation function should occur every
 
 It is now established that if the sinusoids have Gillespie noise, the noise parameters affect the shape of the autocorrelation function of the population of sinusoids.
 Therefore, I investigate the effect of the timescale of noise and the amplitude of noise on the shape of the autocorrelation function.
+
+
+% [Where is this theory from?]
+In theory, the decay rate $D$ of the autocorrelation function should scale linearly with the death rate $d_{0}$.
+To confirm this, I fit exponential decay functions of the form $y = (1-C)\me^{-DT}+C$ to the mean autocorrelation, the peaks of this mean function, and the troughs of these functions using non-linear least squares fitting (figure~\ref{fig:acf-noisetimescale-effect-fit}).
+Then, I found the best-fit parameter $D$ for each value of $d_{0}$ (figure~\ref{fig:acf-noisetimescale-effect-relationship}).
+In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelation function; conversely, if $D$ can be estimated from the autocorrelation function, then the noise timescale $\tau$ of the time series can be estimated.

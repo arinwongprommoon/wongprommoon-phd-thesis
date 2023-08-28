@@ -688,7 +688,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
     \label{fig:acf-sinusoids-nonoise-ts}
   \end{subfigure}%
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{sinusoids_outofphase_acf_corrected}
     \caption{
@@ -706,7 +706,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
     \label{fig:acf-sinusoids-gausnoise-ts}
   \end{subfigure}%
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{verynoisysinusoids_outofphase_acf}
     \caption{
@@ -714,7 +714,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
     \label{fig:acf-sinusoids-gausnoise-acf}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{gillespie_k5_d0p05_mean}
     \caption{
@@ -722,7 +722,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
     \label{fig:acf-sinusoids-gillnoise-ts}
   \end{subfigure}%
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{gillespie_k5_d0p05_acf}
     \caption{
@@ -742,7 +742,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
     \textbf{(\ref{fig:acf-sinusoids-gillnoise-acf})} its autocorrelation function.
     Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
     %
-    For each case, the frequency of the sinusoids were 0.03, and there were 100 repeats, randomly out-of-phase.
+    For each case, the frequency of the sinusoids was 0.03, and there were 100 repeats, randomly out-of-phase.
   }
   \label{fig:acf-sinusoids}
 \end{figure}
@@ -768,36 +768,32 @@ This figure thus suggests that the death rate $d_{0}$ parameter of Gillespie noi
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{gillespie_k5_d0p5_mean.png}
     \caption{
-      Sample sinusoids, with Gillespie noise ($k_{0} = 5$, $d_{0} = 0.5$).
     }
     \label{fig:acf-noisetimescale-highd0-ts}
   \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{gillespie_k5_d0p005_mean.png}
-    \caption{
-      Sample sinusoids, with Gillespie noise ($k_{0} = 5$, $d_{0} = 0.005$).
-    }
-    \label{fig:acf-noisetimescale-lowd0-ts}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{gillespie_k5_d0p5_acf.png}
     \caption{
-      Autocorrelation function of~\ref{fig:acf-noisetimescale-highd0-ts}.
     }
     \label{fig:acf-noisetimescale-highd0-acf}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.6\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{gillespie_k5_d0p005_mean.png}
+    \caption{
+    }
+    \label{fig:acf-noisetimescale-lowd0-ts}
   \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{gillespie_k5_d0p005_acf.png}
     \caption{
-      Autocorrelation function of~\ref{fig:acf-noisetimescale-lowd0-ts}.
     }
     \label{fig:acf-noisetimescale-lowd0-acf}
   \end{subfigure}
@@ -805,46 +801,56 @@ This figure thus suggests that the death rate $d_{0}$ parameter of Gillespie noi
   \caption[
     Effect of death rate of Gillespie noise on the autocorrelation function.
   ]{
-    Effect of death rate ($d_{0}$) of Gillespie noise on the autocorrelation function.
-    Red lines on bottom figures (autocorrelation functions) are defined by $y = \me^{-2d_{0}T}$, where $T$ represents lag.
+    %Effect of death rate ($d_{0}$) of Gillespie noise on the autocorrelation function.
+    \textbf{(\ref{fig:acf-noisetimescale-highd0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.5$), and 
+    \textbf{(\ref{fig:acf-noisetimescale-highd0-acf})} its autocorrelation function.
+    %
+    \textbf{(\ref{fig:acf-noisetimescale-lowd0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.005$), and 
+    \textbf{(\ref{fig:acf-noisetimescale-lowd0-acf})} its autocorrelation function.
+    %
+    Red lines are defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
+    %
+    For each case, the frequency of the sinusoids was 0.03, and there were 100 repeats, randomly out-of-phase.
   }
   \label{fig:acf-noisetimescale}
 \end{figure}
 
+
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
     \includegraphics[width=\linewidth]{acf_fit_example.png}
     \caption{
-      Exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, were fit to the mean autocorrelation function, the peaks of this mean function, and the troughs of these functions, using non-linear least squares.
     }
     \label{fig:acf-noisetimescale-effect-fit}
   \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
     \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
     \caption{
-      The exponential fitting was performed across a range of $d_{0}$ while $k_{0}$ was held constant at 5.
-      The decay rates $D$ of the exponential fits scale linearly with $d_{0}$.
     }
     \label{fig:acf-noisetimescale-effect-relationship}
   \end{subfigure}
 
   \caption{
-    Characterising the autocorrelation function to quantify the effect of Gillespie noise timescale.
+    %Characterising the autocorrelation function to quantify the effect of Gillespie noise timescale.
+    \textbf{(\ref{fig:acf-noisetimescale-effect-fit})} Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
+    \textbf{(\ref{fig:acf-noisetimescale-effect-relationship})} The relationship between $d_{0}$ and the decay rate $D$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
+    Here, $k_{0}$ was held constant at 5.
   }
   \label{fig:acf-noisetimescale-effect}
 \end{figure}
 
-To investigate the effect of the timescale of noise, defined by $\tau = 1/d_{0}$, I varied the death rate parameter $d_{0}$ when generating Gillespie noise that is to be added to the sinusoids (figure~\ref{fig:acf-noisetimescale}).
-A higher death rate decreases the decay timescale of the autocorrelation function, while a lower death rate introduces long-term trends in the simulated signals.
-A lower death rate also increases the decay timescale for the autocorrelation function and increases the variation between autocorrelation functions between replicates.
-In theory, the decay rate $D$ of the autocorrelation function should scale linearly with the death rate $d_{0}$.
-To confirm this, I fit exponential decay functions of the form $y = (1-C)\me^{-DT}+C$ to the mean autocorrelation, the peaks of this mean function, and the troughs of these functions using non-linear least squares fitting (figure~\ref{fig:acf-noisetimescale-effect-fit}).
-Then, I found the best-fit parameter $D$ for each value of $d_{0}$ (figure~\ref{fig:acf-noisetimescale-effect-relationship}).
-In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelation function; conversely, if $D$ can be estimated from the autocorrelation function, then the noise timescale $\tau$ of the time series can be estimated.
+To quantify the effect of the timescale of noise, defined by $\tau = 1/d_{0}$, I varied the death rate parameter $d_{0}$ when generating Gillespie noise that was to be added to the sinusoids.
 
+Fig.\ \ref{fig:acf-noisetimescale} suggests that a higher death rate decreased the decay timescale of the autocorrelation function (Fig.\ \ref{fig:acf-noisetimescale-highd0-ts}), while a lower death rate introduced long-term trends in the simulated signals (Fig.\ \ref{fig:acf-noisetimescale-highd0-ts}).
+A lower death rate also increased the decay timescale for the autocorrelation function and increased the variation between autocorrelation functions between replicates (Fig.\ \ref{fig:acf-noisetimescale-lowd0-acf}).
+
+To show how $d_{0}$ can be estimated from the autocorrelation function, I fit exponential decay functions of the form $y = (1-C)\me^{-DT}+C$ to the mean autocorrelation, the peaks of the mean function, and the troughs of the mean functions using non-linear least squares fitting, defining $C$ and $D$ as variable parameters (Fig.\ ~\ref{fig:acf-noisetimescale-effect-fit}).
+Subsequently, Fig.\ \ref{fig:acf-noisetimescale-effect-relationship} suggests that the decay rates $D$ of the autocorrelation function indeed increases linearly with $d_{0}$
+In other words, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelation function.
+Conversely, if $D$ can be estimated from the autocorrelation function, then the noise timescale $\tau$ of the time series can be estimated.
 
 \begin{figure}
   \centering
