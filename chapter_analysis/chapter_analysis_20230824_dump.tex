@@ -355,3 +355,23 @@ in the context of the model being developed to model neuronal impulses:
   \item $v$ represents the membrane voltage, and
   \item $w$ represents the linear recovery variable;
 \end{itemize}
+
+
+To build understanding of the autocorrelation function on noisy time series, I start from the simple case of using the sinusoid as the input time series.
+
+First, I generated a population of 400 out-of-phase sinusoids of the same frequency (figure~\ref{fig:acf-sinusoids-nonoise-ts}), and computed the autocorrelation function across the population (figure~\ref{fig:acf-sinusoids-nonoise-acf}).
+The phase of each sinusoid was randomised, sampled from the uniform distribution \(Unif[0,2\pi)\).
+As expected from the theoretical definitions, each autocorrelation function, corresponding to each time series, resembles a cosine with an amplitude of 1 and the same period as the sinusoids.
+
+Second, to investigate the effect of Gaussian noise, I added Gaussian noise with standard deviation 3.0 (figure~\ref{fig:acf-sinusoids-gausnoise-ts}).
+Here, the amplitude of the autocorrelation functions (figure~\ref{fig:acf-sinusoids-gausnoise-acf}) are decreased and the variation between each time series' autocorrelation function is increased.
+At higher lag times, this variation is greater because there is fewer data that is used to compute the autocorrelation function.
+
+Third and finally, to investigate the effect of Gillespie noise, I generated Gillespie noise using the birth-death process and parameters $k_{0} = 5$, $d_{0} = 0.05$, then added the noise to a population of 100 sinusoids, out-of-phase (figure~\ref{fig:acf-sinusoids-gillnoise-ts}).
+The autocorrelation function is given by figure~\ref{fig:acf-sinusoids-gillnoise-acf}.
+This gave the following mean across replicates and autocorrelation function.
+The exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag, should in theory fit the median autocorrelation function, and I demonstrate that it is the case.
+In addition, the oscillations in the autocorrelation function should occur every period of the sinusoid, similar to the other noise cases.
+
+It is now established that if the sinusoids have Gillespie noise, the noise parameters affect the shape of the autocorrelation function of the population of sinusoids.
+Therefore, I investigate the effect of the timescale of noise and the amplitude of noise on the shape of the autocorrelation function.
