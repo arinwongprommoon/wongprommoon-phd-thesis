@@ -23,10 +23,10 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [X] 30p1: add 'My'
 - [X] 32p4: add 'we propose'
 
-- [ ] 34p2: remove '-'
-- [ ] 37f1: cite Alan's thesis
-- [ ] 37p1: add 'the parents'
-- [ ] 38p3: fluorescent -> fluorescence
+- [X] 34p2: remove '-'
+- [X] 37f1: cite Alan's thesis
+- [X] 37p1: add 'the parents'
+- [X] 38p3: fluorescent -> fluorescence
 
 * Category 2
 Seem to be on to something, but no obvious path forward yet.

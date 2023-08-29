@@ -28,7 +28,7 @@ The \textit{S. cerevisiae} strains used in this thesis are described in table~\r
 \end{table}
 
 The minimal medium described by \parencite{verduynEffectBenzoicAcid1992} was used unless otherwise stated.
-This minimal medium does not contain riboflavin, thus minimising its effect on flavin autofluorescence imaging, and its composition is known and easily-controlled.
+This minimal medium does not contain riboflavin, thus minimising its effect on flavin autofluorescence imaging, and its composition is known and easily controlled.
 Specifically, the composition of the carbon source-limiting medium are described in tables~\ref{tab:methods-media-delft}--\ref{tab:methods-media-delft-vitamins}, and the media pH was adjusted to 6.0 before use using potassium hydroxide, or sodium hydroxide for potassium-free media.
 For auxotrophic strains, supplements were added according to table~\ref{tab:methods-media-auxotroph}.
 Then, a carbon source is added as appropriate to create the growth medium.
@@ -148,7 +148,7 @@ Subsequently, the cells were diluted so that the resulting culture had an OD\tex
     Overview of single-cell microfluidics set-up using the ALCATRAS system.
     Cells are loaded into chambers within devices, where they are trapped and separated (centre).
     The media composition the cells experience are controlled with syringe pumps (left).
-    Brightfield and fluorescent images are taken at regular intervals, and then processed using \textit{aliby} to provide time series of fluorescence intensity changes for each parent cell.
+    Brightfield and fluorescent images are taken at regular intervals, and then processed using \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023} to provide time series of fluorescence intensity changes for each parent cell.
   }
   \label{fig:methods-microfluidics}
 \end{figure}
@@ -156,7 +156,7 @@ Subsequently, the cells were diluted so that the resulting culture had an OD\tex
 ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared and for an experiment, one device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
 Cells were then loaded into the ALCATRAS chambers --- different chambers can house cells from different strains (figure~\ref{fig:methods-microfluidics}).
 Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
-As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after they bud.
+As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after the parents bud.
 There are two syringes that can contain different media, and in experiments that require different nutrient conditions at different times, the ALCATRAS system is programmed to switch between the two syringes.
 The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
 
@@ -179,7 +179,7 @@ I used \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an en
 
 \textit{aliby} tracks tiles that correspond to a trap across time-lapse images to account for expected spatial drifting in the microscope.
 It then uses \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells.
-\textit{aliby} then overlays the cell outlines onto the fluorescent (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
+\textit{aliby} then overlays the cell outlines onto the fluorescence (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
 The background fluorescence is also computed, based on the pixel intensity outside cell outlines, and is then subtracted from the cell fluorescence.
 Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 
