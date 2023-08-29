@@ -1,0 +1,60 @@
+#+title: Chapter Biology Feedback
+
+* Notes
+- Based on feedback/biology_methods_20230824_c2d06ba4_PS.pdf
+- Categorisation system/War plan taken from [[cite:&heardScientistGuideWriting2016]], along with notes on which category means.
+- Notation: XXpY/Z means page XX, paragraph Y, comment Z.  XXfY indicates figures.  Note to self: I should come up with a way for LaTeX to display line numbers.
+
+* Category 1
+Clear problems with straightforward solutions, e.g. grammar mistakes, reordering of sections, new title
+
+- [ ] 02p2: minor word corrections
+- [ ] 04p2: cite Charvin
+- [ ] 05p1: gene name for lipoamide dehydrogenase
+- [ ] 10p1: results -> data
+- [ ] 10p3: insert 'measurements of'
+- [ ] 18f1: concs in g/L
+  - [ ] also: apply this to all instances in main text
+- [ ] 20p1: put gene names in italic
+  - [ ] also: apply to rest of text
+  - [ ] also: apply to other chapters
+- [ ] 24p1: (split with cat 2,3) move earlier in section
+- [ ] 28p2: add 'may'
+- [ ] 30p1: add 'My'
+- [ ] 32p4: add 'we propose'
+- [ ] 34p2: remove '-'
+- [ ] 37f1: cite Alan's thesis
+- [ ] 37p1: add 'the parents'
+- [ ] 38p3: fluorescent -> fluorescence
+
+* Category 2
+Seem to be on to something, but no obvious path forward yet.
+Involve harder thought and more work.  Typically involve points of science rather than just wording or argument.  May require new techniques, reading more literature, or thinking about your work in a different way.
+
+** Clarify with Peter
+- [ ] 02p1: (clarify with Peter) 'synchrony in the chemostat'
+- [ ] 23f2: (clarify with Peter) 'is there a time scale or number of cycles issue?  are we comparing at similar points?'
+- [ ] 38p1: (clarify with Peter) 'might explain the reduction in growth rate' -- does this mean phototoxicity, and where should I discuss this in the text?
+
+** Does not involve code
+- [ ] 01p2: add citation
+- [ ] 02p2: add citation
+- [ ] 07f1: clarify if XCF shows delay or advance
+- [ ] 12p1: re-write/re-interpret slightly re G2/M
+- [ ] 14p1: fact-check and add short discussion re mitochondria in CEN.PK
+- [ ] 24p1: (split with cat 1,3) add 1-2 sentences about sodium being toxic, perhaps with ref/citation
+- [ ] 29p3: clarify how cycles change
+
+** Involves code
+- [ ] 11f1: discuss/investigate/invent a way to show memory of starvation in flavin signal
+- [ ] 19f2: plot SNRs on the same axes
+  - [ ] also: kstest2 and remove t-test
+- [ ] 22f1: kstest2
+  - [ ] also: remove t-test
+
+* Category 3
+'That idiot didn't get my point at all/didn't bother to read/etc.' (their words, not mine)
+Most of the time, these uncover unclear writing: e.g. point not made clearly, buried in uninteresting/confusing text.
+
+- [ ] 09f1: clarify/discuss mean growth rate & budding plot
+- [ ] 24p1: (split with cat 1,2) make it more obvious that I replaced potassium with sodium
