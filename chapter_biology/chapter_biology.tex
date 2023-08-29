@@ -34,7 +34,9 @@ These situations include potassium deficiency and deletions of genes with roles 
 \begin{figure}
   \centering
     \includegraphics[width=1.0\linewidth]{single_birth_plot_edit.pdf}
-    \caption{
+    \caption[
+      Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} glucose.
+    ]{
       Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} glucose.
       Vertical lines (black, dashed) indicate budding events.
       Star ($\star$) indicates a flavin oscillation without a corresponding cell division cycle.
@@ -46,7 +48,9 @@ These situations include potassium deficiency and deletions of genes with roles 
 \begin{figure}
   \centering
     \includegraphics[width=0.5\linewidth]{garmendia-torresMultipleInputsEnsure2018_1_adapted.jpg}
-    \caption{
+    \caption[
+      Engineering a fluorescent protein cassette fused to \textit{HTB2} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
+    ]{
       \textbf{(A)} Engineering a fluorescent protein cassette fused to \textit{HTB2} \textbf{(B)} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
       Adapted from \textcite{garmendia-torresMultipleInputsEnsure2018}.
     }
@@ -101,7 +105,11 @@ As observed, oxidation of flavin upon budding was expected for these reasons:
    \label{fig:biology-highglc-sync-acf-2}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Mean Fourier spectrum of flavin fluorescence time series across cells.
+    Median autocorrelation functions of flavin fluorescence and histone 2B levels time series, along with the periods of each oscillator across cells.
+    Data are from FY4 HTB2::mCherry cells under \SI{20}{\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-highglc-sync-fourier},~\ref{fig:biology-highglc-sync-fourier-2})} Mean Fourier spectrum of flavin fluorescence time series across cells. \textbf{(\ref{fig:biology-highglc-sync-acf},~\ref{fig:biology-highglc-sync-acf-2})} Median autocorrelation functions of flavin fluorescence (blue) and histone 2B levels (orange) time series, along with \textit{\textbf{(insets)}} the periods of each oscillator across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
     Data are from FY4 HTB2::mCherry cells under \SI{20}{\gram~\litre^{-1}} glucose; two experiment repeats shown.
   }
@@ -139,7 +147,12 @@ The duration of the cell division cycles agrees with previously reported values 
    \label{fig:biology-highglc-sync-xcf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Heatmap showing the flavin fluorescence and budding events of each cell over time.
+    Median flavin fluorescence signal across cells, aligned to first budding event.
+    Median cross-correlation function between flavin and histone 2B signals.
+    Data are from FY4 HTB2::mCherry cells in \SI{20}{\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-highglc-sync-heatmap})}
     Heatmap showing the flavin fluorescence (pixels on a red-blue scale) and budding events (black pixels) of each cell over time.
     Signals are aligned by the first budding event.
@@ -185,7 +198,11 @@ This function shows that the mCherry signal peaks are, on average, shifted by \S
    \label{fig:biology-starvation-heatmap}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell.
+    Heatmap showing the flavin fluorescence and budding events of each cell.
+    Data are from FY4 and HTB2::mCherry cells, subject to glucose starvation.
+  ]{
     \textbf{(\ref{fig:biology-starvation-single})}
     Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell.
     Vertical lines (black, dashed) indicate budding events.
@@ -260,7 +277,9 @@ Combined with results from the previous section, my results suggest that the met
    \label{fig:biology-starvation-raw-1}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Flavin fluorescence and histone 2B levels in two sample FY4 HTB2::mCherry cells in the glucose starvation experiment.
+  ]{
     Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in two sample FY4 HTB2::mCherry cells in the glucose starvation experiment.
     Vertical lines (black, dashed) indicates budding events.
     Shading (yellow) indicate glucose starvation.
@@ -304,7 +323,9 @@ Combined with results from the previous section, my results suggest that the met
    \label{fig:biology-highglc-histogram-mCherry}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Distributions of flavin and mCherry fluorescence over time, for the glucose-starvation experiment.
+  ]{
     Distributions of \textbf{(\ref{fig:biology-starvation-histogram-flavin})} flavin and \textbf{(\ref{fig:biology-starvation-histogram-mCherry})} mCherry fluorescence over time, for the glucose-starvation experiment.
     Vertical lines (red, dashed), indicate times of medium changes.
     As a control, distributions of \textbf{(\ref{fig:biology-highglc-histogram-flavin})} flavin and \textbf{(\ref{fig:biology-highglc-histogram-mCherry})} mCherry fluorescence over time for the high glucose (\SI{20}{\gram~\litre^{-1}}) experiment are also shown.
@@ -357,7 +378,13 @@ This observation can be explained by lower-amplitude oscillations during starvat
    \label{fig:biology-by4741-sync-median}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Mean Fourier spectrum of flavin fluorescence time series across cells.
+    Median autocorrelation function of flavin fluorescence time series, along with the periods across cells.
+    Heatmap showing the flavin fluorescence and budding events of each cell.
+    Median flavin fluorescence signal across cells, aligned to first budding event.
+    Data are from BY4741 cells in \SI{10}{\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-by4741-sync-fourier})} Mean Fourier spectrum of flavin fluorescence time series across cells.
     \textbf{(\ref{fig:biology-by4741-sync-acf})} Median autocorrelation function of flavin fluorescence time series, along with \textit{\textbf{(inset)}} the periods across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
     \textbf{(\ref{fig:biology-by4741-sync-heatmap})}
@@ -412,7 +439,12 @@ The shorter period may be explained by a lack of burden caused by a lack of an m
    \label{fig:biology-cenpk-sync-median}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Mean Fourier spectrum of flavin fluorescence across cells.
+    Median autocorrelation function of flavin fluorescence time series, along with the periods across cells.
+    Median flavin fluorescence signal across cells, aligned to first budding event.
+    Data are from CEN.PK113-7D cells in \SI{10}{\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-cenpk-sync-fourier})} Mean Fourier spectrum of flavin fluorescence across cells.
     \textbf{(\ref{fig:biology-cenpk-sync-acf})} Median autocorrelation function of flavin fluorescence time series, along with \textit{\textbf{(inset)}} the periods across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
     % \textbf{(\ref{fig:biology-cenpk-sync-heatmap})}
@@ -472,7 +504,12 @@ Additionally, a growth-limiting glucose concentration emulated low-glucose conce
    \label{fig:biology-pyruvate-xcf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} pyruvate.
+    Median autocorrelation functions of flavin fluorescence and histone 2B levels time series, along with the periods of each oscillator across cells.
+    Median cross-correlation function between flavin and histone 2B signals.
+    Data are from FY4 HTB2::mCherry cells in \SI{20}{\gram~\litre^{-1}} pyruvate.
+  ]{
     \textbf{(\ref{fig:biology-pyruvate-single})}
     Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{20}{\gram~\litre^{-1}} pyruvate.
     Vertical lines (black, dashed) indicate budding events.
@@ -512,7 +549,11 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
    }
    \label{fig:biology-lowglc-acf}
   \end{subfigure}
-  \caption{
+  \caption[
+    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{10}{\milli\gram~\litre^{-1}} glucose.
+    Median autocorrelation functions of flavin fluorescence and histone 2B levels time series, along with  the periods of each oscillator across cells.
+    Data are from FY4 HTB2::mCherry cells in \SI{10}{\milli\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-lowglc-single})}
     Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{10}{\milli\gram~\litre^{-1}} glucose.
     Vertical lines (black, dashed) indicate budding events.
@@ -641,7 +682,11 @@ Chemostat experiments obscure the behaviour of individual cells, and single-cell
    \label{fig:biology-kdeficient-acf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell.
+    Median autocorrelation functions of flavin fluorescence and histone 2B levels time series, along with  the periods of each oscillator across cells.
+    Data are from FY4 and HTB2::mCherry cells; autocorrelation functions only used time points from the potassium-deficient condition.
+  ]{
     \textbf{(\ref{fig:biology-kdeficient-single})}
     Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell.
     Vertical lines (black, dashed) indicate budding events.
@@ -710,7 +755,9 @@ Chemostat experiments obscure the behaviour of individual cells, and single-cell
    \label{fig:biology-kdeficient-histogram-mCherry}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Distributions of flavin and mCherry fluorescence over time, for the potassium-deficient experiment.
+  ]{
     Distributions of \textbf{(\ref{fig:biology-kdeficient-histogram-flavin})} flavin and \textbf{(\ref{fig:biology-kdeficient-histogram-mCherry})} mCherry fluorescence over time, for the potassium-deficient experiment.
     Vertical lines (red, dashed), indicate times of medium changes.
     Raw time series were used to calculate the distributions.
@@ -795,7 +842,14 @@ The investigation of deletion strains is important as they can lead to mechanist
    \label{fig:biology-zwf1-snr}
   \end{subfigure}%
 
-  \caption{
+  \caption[
+    Flavin fluorescence levels in a single, representative zwf1$\Delta$ cell.
+    Mean Fourier spectrum of flavin fluorescence across cells.
+    Median autocorrelation function of flavin fluorescence time series, along with the periods across cells.
+    Median flavin fluorescence signal across cells, aligned to first budding event.
+    Distribution of signal-to-noise ratios of flavin signals from cells.
+    Data are from zwf1$\Delta$ (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-zwf1-single})}
     Flavin fluorescence (blue, solid lines) levels in a single, representative zwf1$\Delta$ cell.
     Vertical lines (black, dashed) indicate budding events.
@@ -863,7 +917,14 @@ These results conflict with the results from the chemostat-based study \parencit
    \label{fig:biology-tsa1tsa2-snr}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Flavin fluorescence levels in a single, representative tsa1$\Delta$ tsa2$\Delta$cell.
+    Overlaid Fourier spectra of flavin fluorescence across cells.
+    Median autocorrelation function of flavin fluorescence time series, along with the periods across cells.
+    Median flavin fluorescence signal across cells, aligned to first budding event.
+    Distribution of signal-to-noise ratios of flavin signals from cells.
+    Data are from tsa1$\Delta$ tsa2$\Delta$ (BY4742) cells in \SI{10}{\gram~\litre^{-1}} glucose.
+  ]{
     \textbf{(\ref{fig:biology-tsa1tsa2-single})}
     Flavin fluorescence (blue, solid lines) levels in a single, representative tsa1$\Delta$ tsa2$\Delta$cell.
     Vertical lines (black, dashed) indicate budding events.
