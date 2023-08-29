@@ -395,3 +395,31 @@ Again, this is a judgement call, and this is based on looking at several experim
 
 To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
 For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
+
+
+So far, I have considered one type of time series from the yeast metabolic oscillator at a time.
+However, the yeast metabolic oscillator and the cell division cycle form part of a system of coupled oscillators
+In my experiments I record signals that monitor both.
+Investigating correlations between two paired time series, originating from the same cell, leads to an understanding of the relationship between the two oscillators.
+The most important being the phase relationship: does one oscillation lag behind the other, to what extent, and is this consistent across cells?
+
+As in my discussion of autocorrelation (section~\ref{subsec:analysis-characterisation-acf}), I will start with the sinusoid and FitzHugh-Nagumo oscillators as simulations of my biological time series to show understanding of the methods, then apply the understand to a real dataset.
+
+First, I generated a population of 400 FitzHugh-Nagumo oscillators and a population of 400 sinusoids so that they have the same period as the FitzHugh-Nagumo oscillator, but shifted in phase (figure~\ref{fig:xcf-nonoise-ts}).
+This simulates flavin autofluorescence oscillations and oscillations in histone 2B abundance both being at the same frequency, owing to the coupling between the metabolic cycle and the cell division cycle, but may be out of phase.
+The cross-correlation function of each FitzHugh-Nagumo oscillator with respect to the sinusoid oscillator, across the population, was computed (figure~\ref{fig:xcf-nonoise-xcf}).
+If the two types of oscillators are in phase (i.e.\ the peaks coincide), the cross-correlation at lag 0 should be 1.
+However, as the two oscillators are shifted in phase relative to each other, this peak of the cross-correlation function is shifted to the right, and the $x$-position of this peak thus indicates the average time by which the FitzHugh-Nagumo oscillator is shifted forward relative to the sinusoid oscillator, across the population.
+As before, I added noise (figure~\ref{fig:xcf-gillnoise-ts}) to investigate the effect on the cross-correlation function (figure~\ref{fig:xcf-gillnoise-xcf}).
+This illustrates that the cross-correlation function can still find phase relationships between two types of oscillatory data, even if the noise is extreme.
+
+% \subsection{Granger Causality}
+% \label{sec:analysis-correlation-granger}
+
+% Granger causality is another method of assessing the relationship between two time series.
+% It is a statistical hypothesis test used to answer the question of whether one time series is useful for predicting another [CITATION FOR GRANGER CAUSALITY TEST NEEDED] -- in other words, it evaluates precedence of one time series relative to another.
+% The logic of the Granger causality test is that: given a time series X and a time series Y, if you can predict values of Y based on the values of X better than you can predict values of Y based on the past values of Y, then X Granger-causes Y.
+% This method is used a lot in econometrics and climate science [CITATIONS NEEDED].
+% [AND DO BIOLOGISTS USE IT?]
+
+% (Add content when I figure out how to make this investigation work.)
