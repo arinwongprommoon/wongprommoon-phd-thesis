@@ -34,11 +34,11 @@ Involve harder thought and more work.  Typically involve points of science rathe
 
 ** Clarify with Peter
 (<2023-08-29>: Clarification now done)
-- [ ] 02p1: (clarify with Peter) 'synchrony in the chemostat'
+- [X] 02p1: (clarify with Peter) 'synchrony in the chemostat'
   - This argument may have been made in the introduction.  It's the argument about how cells oscillate but don't synchronise.  This argument isn't obvious here, in the numbered list.
 - [ ] 23f2: (clarify with Peter) 'is there a time scale or number of cycles issue?  are we comparing at similar points?'
   - This is about how O'Neill et al. monitored oscillations for longer or over more periods of oscillations, calling into question about how comparable it is to my study.  Though, he did a potassium ramp.  I can address this by framing it as a caveat of my/his study.
-- [ ] 38p1: (clarify with Peter) 'might explain the reduction in growth rate' -- does this mean phototoxicity, and where should I discuss this in the text?
+- [X] 38p1: (clarify with Peter) 'might explain the reduction in growth rate' -- does this mean phototoxicity, and where should I discuss this in the text?
   - Yes, and I should mention it in a sentence in the main text (of the biology chapter) when the first HTB2::mCherry growthrate/budding plot appears, as discussion/explanation of what happens.
 
 ** Does not involve code
@@ -49,7 +49,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [ ] 14p1: fact-check and add short discussion re mitochondria in CEN.PK
 - [ ] 24p1: (split with cat 1,3) add 1-2 sentences about sodium being toxic, perhaps with ref/citation
   - also:
-- [ ] 29p3: clarify how cycles change
+- [X] 29p3: clarify how cycles change
 
 ** Involves code
 - [ ] 11f1: discuss/investigate/invent a way to show memory of starvation in flavin signal
