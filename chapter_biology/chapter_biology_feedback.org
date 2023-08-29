@@ -33,9 +33,13 @@ Seem to be on to something, but no obvious path forward yet.
 Involve harder thought and more work.  Typically involve points of science rather than just wording or argument.  May require new techniques, reading more literature, or thinking about your work in a different way.
 
 ** Clarify with Peter
+(<2023-08-29>: Clarification now done)
 - [ ] 02p1: (clarify with Peter) 'synchrony in the chemostat'
+  - This argument may have been made in the introduction.  It's the argument about how cells oscillate but don't synchronise.  This argument isn't obvious here, in the numbered list.
 - [ ] 23f2: (clarify with Peter) 'is there a time scale or number of cycles issue?  are we comparing at similar points?'
+  - This is about how O'Neill et al. monitored oscillations for longer or over more periods of oscillations, calling into question about how comparable it is to my study.  Though, he did a potassium ramp.  I can address this by framing it as a caveat of my/his study.
 - [ ] 38p1: (clarify with Peter) 'might explain the reduction in growth rate' -- does this mean phototoxicity, and where should I discuss this in the text?
+  - Yes, and I should mention it in a sentence in the main text (of the biology chapter) when the first HTB2::mCherry growthrate/budding plot appears, as discussion/explanation of what happens.
 
 ** Does not involve code
 - [ ] 01p2: add citation
@@ -44,6 +48,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [ ] 12p1: re-write/re-interpret slightly re G2/M
 - [ ] 14p1: fact-check and add short discussion re mitochondria in CEN.PK
 - [ ] 24p1: (split with cat 1,3) add 1-2 sentences about sodium being toxic, perhaps with ref/citation
+  - also:
 - [ ] 29p3: clarify how cycles change
 
 ** Involves code
@@ -57,5 +62,14 @@ Involve harder thought and more work.  Typically involve points of science rathe
 'That idiot didn't get my point at all/didn't bother to read/etc.' (their words, not mine)
 Most of the time, these uncover unclear writing: e.g. point not made clearly, buried in uninteresting/confusing text.
 
-- [ ] 09f1: clarify/discuss mean growth rate & budding plot
+** Does not involve code
 - [ ] 24p1: (split with cat 1,2) make it more obvious that I replaced potassium with sodium
+  - Explaining the growth rate spike in this experiment:
+    - Intracellular potassium leaks out, leads to cell losing water.  So, volume might drop.  Makes sense if all cells do it at once.
+    - However, osmotic response should be faster (1-2 time points) than what is shown...
+
+** Involves code
+- [ ] 09f1: clarify/discuss mean growth rate & budding plot
+  - Make it clear whether I'm showing just the parent or parent + progeny.  Reminder that the 'proper' one is parent + progeny
+  - If have time, try Peter's Gaussian process code.
+  - Julian's preference: progeny (bud) volumes.
