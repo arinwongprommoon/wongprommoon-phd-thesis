@@ -22,8 +22,8 @@ Specifically, I aim to evaluate these hypotheses:
 
 In this chapter, I show that metabolic cycles are generated autonomously and are coupled to the cell division cycle in permissive conditions, confirming previous single-cell studies.
 To decouple the metabolic and cell division oscillators, confirming that the metabolic oscillator is independently and autonomously generated, I used fast nutrient switching to induce starvation.
-I further show that the metabolic cycle is robust across nutrient and genetic perturbations, but with changes to their oscillatory parameters.
-Finally, to address whether single-cell metabolic cycles confirm findings from chemostat-based experimental studies, I emulated situations known to affect dissolved-oxygen traces.
+I further show that the metabolic cycle is robust across nutrient and genetic perturbations, but with changes to its oscillatory parameters.
+Finally, to address whether single-cell metabolic cycles confirm findings from chemostat-based studies, I emulated situations known to affect dissolved-oxygen traces.
 These situations include potassium deficiency and deletions of genes with roles in metabolism and biological timekeeping.
 
 
@@ -61,7 +61,7 @@ To show that metabolic cycles are generated autonomously and are coupled to the 
 Replicating results from a previous flavin-based microfluidics study is important to confirm that my use of ALCATRAS \parencite{craneMicrofluidicSystemStudying2014} monitored the yeast metabolic cycle, especially given that the microfluidics set-up differed from previous studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018}.
 
 Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms in G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
-The HTB2::mCherry insertion allows monitoring phases of the cell division cycle through quantifying over time the intensity of the fluorescence of the inserted protein (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding the overlap of flavin and GFP emission spectra.
+The HTB2::mCherry insertion allows monitoring phases of the cell division cycle through quantifying over time the intensity of the fluorescence of the inserted protein \parencite{garmendia-torresMultipleInputsEnsure2018} (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding the overlap of flavin and GFP emission spectra.
 
 Fig.\ \ref{fig:biology-highglc-single} also shows that in some cases, a metabolic oscillation occurred without cell division cycle progression or bud formation.
 Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via cycles of NAD(P)H fluorescence, confirmed that the metabolic cycle is generated autonomously from the cell division cycle.
@@ -70,7 +70,7 @@ As observed, oxidation of flavin upon budding was expected for these reasons:
 \begin{enumerate}
   \item Flavin fluorescence peaks (becomes most oxidised) and NAD(P)H fluorescence peaks (becomes most reduced) at the same time in chemostat cultures \parencite{murrayRedoxRegulationRespiring2011}.
   \item NAD(P)H is in the reduced form when buds form \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
-  \item The flavoprotein lipoamide dehydrogenase is in redox equilibrium with NAD(P)H \parencite{sianoNADHFlavinFluorescence1989}.
+  \item The flavoprotein lipoamide dehydrogenase, coded by the gene \textit{LPD1}, is in redox equilibrium with NAD(P)H \parencite{sianoNADHFlavinFluorescence1989}.
 \end{enumerate}
 
 \begin{figure}
@@ -256,7 +256,7 @@ The results show that metabolic oscillations can be generated when the cell divi
 In addition, the results show that each cell can individually reset the phase of its metabolic cycle in response to abrupt changes in environmental conditions.
 Similar phenomena have been observed upon bulk addition of carbon sources \parencite{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
 Importantly, the results suggest that diffusion of signalling chemicals between cells is not required for generation of metabolic cycles.
-Combined with results from the previous section, my results suggest that the metabolic cycle responds to external conditions and create windows of opportunity for initiating the cell division cycle, if conditions are favourable for growth.
+Combined with results from the previous section, my data suggest that the metabolic cycle responds to external conditions and create windows of opportunity for initiating the cell division cycle, if conditions are favourable for growth.
 
 
 \begin{figure}
@@ -550,16 +550,16 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
    \label{fig:biology-lowglc-acf}
   \end{subfigure}
   \caption[
-    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{10}{\milli\gram~\litre^{-1}} glucose.
+    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{1d-2}{\gram~\litre^{-1}} glucose.
     Median autocorrelation functions of flavin fluorescence and histone 2B levels time series, along with  the periods of each oscillator across cells.
-    Data are from FY4 HTB2::mCherry cells in \SI{10}{\milli\gram~\litre^{-1}} glucose.
+    Data are from FY4 HTB2::mCherry cells in \SI{1d-2}{\gram~\litre^{-1}} glucose.
   ]{
     \textbf{(\ref{fig:biology-lowglc-single})}
-    Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{10}{\milli\gram~\litre^{-1}} glucose.
+    Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{1d-2}{\gram~\litre^{-1}} glucose.
     Vertical lines (black, dashed) indicate budding events.
     \textbf{(\ref{fig:biology-lowglc-acf})}
     Median autocorrelation functions of flavin fluorescence (blue) and histone 2B levels (orange) time series, along with \textit{\textbf{(inset)}} the periods of each oscillator across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
-    Data are from FY4 HTB2::mCherry cells in \SI{10}{\milli\gram~\litre^{-1}} glucose.
+    Data are from FY4 HTB2::mCherry cells in \SI{1d-2}{\gram~\litre^{-1}} glucose.
   }
   \label{fig:biology-lowglc}
 \end{figure}
@@ -599,7 +599,7 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
   \end{subfigure}
 
   \caption{
-    Mean growth rate of (shading: 95\% confidence intervals) FY4 (blue) and HTB2::mCherry (orange) strains over time, for \textbf{(\ref{fig:biology-lowglc-gr})} the glucose-limiting condition (\SI{10}{\milli\gram~\litre^{-1}}) and \textbf{(\ref{fig:biology-highglc-gr})} the high glucose condition (\SI{20}{\gram~\litre^{-1}}).
+    Mean growth rate of (shading: 95\% confidence intervals) FY4 (blue) and HTB2::mCherry (orange) strains over time, for \textbf{(\ref{fig:biology-lowglc-gr})} the glucose-limiting condition (\SI{1d-2}{\gram~\litre^{-1}}) and \textbf{(\ref{fig:biology-highglc-gr})} the high glucose condition (\SI{20}{\gram~\litre^{-1}}).
     Similarly, the mean cumulative number of budding events per cell (shading: confidence intervals from bootstrapping, $n=30$), of the same strains for \textbf{(\ref{fig:biology-lowglc-cumul})} the glucose-limiting condition and \textbf{(\ref{fig:biology-highglc-cumul})} the high glucose condition.
   }
   \label{fig:biology-lowglc-gr-budprob}
@@ -642,10 +642,10 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
   \label{fig:biology-compare-snr}
 \end{figure}
 
-Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells had longer metabolic cycles when grown in minimal media supplemented with \SI{10}{\milli\gram~\litre^{-1}} glucose.
+Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells had longer metabolic cycles when grown in minimal media supplemented with \SI{1d-2}{\gram~\litre^{-1}} glucose.
 Additionally, Fig.\ \ref{fig:biology-lowglc-gr-budprob} shows that the growth rate and the rate of bud formation of cells on limiting glucose was lower than on high glucose (\SI{20}{\gram~\litre^{-1}}).
 Furthermore, Fig.\ \ref{fig:biology-compare-snr} shows that the amplitude of the flavin oscillations in this glucose-limiting condition was low relative to other conditions, as evidenced by the lower signal-to-noise ratios. %(INSERT: statistical tests to reject the null hypothesis that the distribution of SNRs are the same between the three nutrient conditions.).
-Finally, Fig.\ \ref{fig:biology-lowglc-acf} shows that the metabolic cycle and the cell division cycle lost synchrony in limiting glucose.
+Finally, Fig.\ \ref{fig:biology-lowglc-acf} shows that measurements of the metabolic cycle and the cell division cycle lost synchrony in limiting glucose.
 This was evidenced by a \SI{2.5}{\hour} average metabolic cycle, though not robust, but an absence of consistent oscillations in mCherry intensity.
 This decoupling can be explained by a lack of cell division cycle events.
 
@@ -659,7 +659,7 @@ This decoupling can be explained by a lack of cell division cycle events.
 \label{sec:biology-potassium_deficient}
 
 To address whether single-cell flavin traces from microfluidic experiments recapitulate dissolved-oxygen yeast metabolic cycles in chemostats, I replicated conditions of chemostat-based studies in which nutrient or genetic perturbations severely affected the metabolic cycle.
-These nutrient conditions included potassium deficiency and deletion strains included zwf1$\Delta$ and tsa1$\Delta$ tsa2$\Delta$.
+These nutrient conditions included potassium deficiency and deletion strains included \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$}.
 Replicating conditions of chemostat-based studies is important in showing that the single-cell metabolic cycle and the chemostat metabolic cycle are the same cycle, or to prove otherwise.
 Chemostat experiments obscure the behaviour of individual cells, and single-cell microfluidics experiments can provide a bottom-up explanation of high-level observations of the metabolic cycle in the chemostat. Such single-cell experiments could address, for example, whether the cellular behaviour of the yeast metabolic cycle explains the changes in dissolved-oxygen oscillations.
 
@@ -798,7 +798,7 @@ However, my observations also warrant a model to reconcile the apparent differen
 % \item swe1$\Delta$: gene responsible for CDC processes (another biological rhythm) e.g. DNA repair.  Deletion shown to affect CDC-YMC coupling.
 % \item rim11$\Delta$: gene involved in circadian rhythm (another biological rhythm).  Deletion strain shown to have shorter YMCs.
 
-To continue the investigation of whether single-cell flavin-based metabolic cycles recapitulate dissolved-oxygen metabolic cycles, I investigated the zwf1$\Delta$ and tsa1$\Delta$ tsa2$\Delta$ deletion strains.
+To continue the investigation of whether single-cell flavin-based metabolic cycles recapitulate dissolved-oxygen metabolic cycles, I investigated the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} deletion strains.
 The investigation of deletion strains is important as they can lead to mechanistic explanations of the YMC.
 
 
@@ -843,15 +843,15 @@ The investigation of deletion strains is important as they can lead to mechanist
   \end{subfigure}%
 
   \caption[
-    Flavin fluorescence levels in a single, representative zwf1$\Delta$ cell.
+    Flavin fluorescence levels in a single, representative \textit{zwf1$\Delta$} cell.
     Mean Fourier spectrum of flavin fluorescence across cells.
     Median autocorrelation function of flavin fluorescence time series, along with the periods across cells.
     Median flavin fluorescence signal across cells, aligned to first budding event.
     Distribution of signal-to-noise ratios of flavin signals from cells.
-    Data are from zwf1$\Delta$ (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose.
+    Data are from \textit{zwf1$\Delta$} (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose.
   ]{
     \textbf{(\ref{fig:biology-zwf1-single})}
-    Flavin fluorescence (blue, solid lines) levels in a single, representative zwf1$\Delta$ cell.
+    Flavin fluorescence (blue, solid lines) levels in a single, representative \textit{zwf1$\Delta$} cell.
     Vertical lines (black, dashed) indicate budding events.
     \textbf{(\ref{fig:biology-zwf1-fourier})}
     Mean Fourier spectrum of flavin fluorescence across cells.
@@ -861,19 +861,19 @@ The investigation of deletion strains is important as they can lead to mechanist
     Median flavin fluorescence signal across cells, aligned to first budding event.
     \textbf{(\ref{fig:biology-zwf1-snr})}
     Distribution of signal-to-noise ratios of flavin signals from cells.
-    Data are from zwf1$\Delta$ (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose.
+    Data are from \textit{zwf1$\Delta$} (BY4741) cells in \SI{10}{\gram~\litre^{-1}} glucose.
   }
   \label{fig:biology-zwf1}
 \end{figure}
 
 
-To investigate whether the zwf1$\Delta$ strain shows abolition of the metabolic cycle in single-cell microfluidics, I used a zwf1$\Delta$ strain with the BY4741 background.
-Chemostat-based studies have suggested that in the zwf1$\Delta$ strain, metabolic cycles are abolished but with little change in growth rate \parencite{tuCyclicChangesMetabolic2007}.
+To investigate whether the \textit{zwf1$\Delta$} strain shows abolition of the metabolic cycle in single-cell microfluidics, I used a \textit{zwf1$\Delta$} strain with the BY4741 background.
+Chemostat-based studies have suggested that in the \textit{zwf1$\Delta$} strain, metabolic cycles are abolished but with little change in growth rate \parencite{tuCyclicChangesMetabolic2007}.
 % Move to methods?
 Cells were pre-cultured in \SI{20}{\gram~\litre^{-1}} pyruvate over \SI{48}{\hour} and then cultured in \SI{10}{\gram~\litre^{-1}} glucose in the microfluidic device because higher glucose concentrations disfavour growth in this strain.
 As the strain had an auxotrophic background, the required nutrient supplements were also added.
 %
-Figure~\ref{fig:biology-zwf1} shows that the zwf1$\Delta$ cells showed oscillations of approximately \SI{3}{\hour}, but with low robustness and a wide distribution of signal-to-noise ratios, while the reference BY4741 strain showed robust flavin oscillations of approximately \SI{1.5}{\hour}.
+Figure~\ref{fig:biology-zwf1} shows that the \textit{zwf1$\Delta$} cells showed oscillations of approximately \SI{3}{\hour}, but with low robustness and a wide distribution of signal-to-noise ratios, while the reference BY4741 strain showed robust flavin oscillations of approximately \SI{1.5}{\hour}.
 These results conflict with the results from the chemostat-based study \parencite{tuCyclicChangesMetabolic2007} that suggested that metabolic cycles are abolished in this strain.
 
 
@@ -918,15 +918,15 @@ These results conflict with the results from the chemostat-based study \parencit
   \end{subfigure}
 
   \caption[
-    Flavin fluorescence levels in a single, representative tsa1$\Delta$ tsa2$\Delta$cell.
+    Flavin fluorescence levels in a single, representative \textit{tsa1$\Delta$ tsa2$\Delta$}cell.
     Overlaid Fourier spectra of flavin fluorescence across cells.
     Median autocorrelation function of flavin fluorescence time series, along with the periods across cells.
     Median flavin fluorescence signal across cells, aligned to first budding event.
     Distribution of signal-to-noise ratios of flavin signals from cells.
-    Data are from tsa1$\Delta$ tsa2$\Delta$ (BY4742) cells in \SI{10}{\gram~\litre^{-1}} glucose.
+    Data are from \textit{tsa1$\Delta$ tsa2$\Delta$} (BY4742) cells in \SI{10}{\gram~\litre^{-1}} glucose.
   ]{
     \textbf{(\ref{fig:biology-tsa1tsa2-single})}
-    Flavin fluorescence (blue, solid lines) levels in a single, representative tsa1$\Delta$ tsa2$\Delta$cell.
+    Flavin fluorescence (blue, solid lines) levels in a single, representative \textit{tsa1$\Delta$ tsa2$\Delta$}cell.
     Vertical lines (black, dashed) indicate budding events.
     \textbf{(\ref{fig:biology-tsa1tsa2-fourier})}
     Overlaid Fourier spectra of flavin fluorescence across cells ($n=212$).
@@ -936,25 +936,25 @@ These results conflict with the results from the chemostat-based study \parencit
     Median flavin fluorescence signal across cells, aligned to first budding event.
     \textbf{(\ref{fig:biology-tsa1tsa2-snr})}
     Distribution of signal-to-noise ratios of flavin signals from cells.
-    Data are from tsa1$\Delta$ tsa2$\Delta$ (BY4742) cells in \SI{10}{\gram~\litre^{-1}} glucose.
+    Data are from \textit{tsa1$\Delta$ tsa2$\Delta$} (BY4742) cells in \SI{10}{\gram~\litre^{-1}} glucose.
   }
   \label{fig:biology-tsa1tsa2}
 \end{figure}
 
 
-To investigate whether the tsa1$\Delta$ tsa2$\Delta$ strain shows metabolic oscillations of a different waveform in single-cell microfluidics, I used a tsa1$\Delta$ tsa2$\Delta$ strain with the BY4742 background.
-Chemostat-based studies suggest that in the tsa1$\Delta$ tsa2$\Delta$ strain, metabolic cycles are shorter and exhibit an M-shaped dissolved oscillation trace due to an additional dip of oxygen consumption in the reductive-charging phase \parencite{caustonMetabolicCyclesYeast2015}.
+To investigate whether the \textit{tsa1$\Delta$ tsa2$\Delta$} strain shows metabolic oscillations of a different waveform in single-cell microfluidics, I used a \textit{tsa1$\Delta$ tsa2$\Delta$} strain with the BY4742 background.
+Chemostat-based studies suggest that in the \textit{tsa1$\Delta$ tsa2$\Delta$} strain, metabolic cycles are shorter and exhibit an M-shaped dissolved oscillation trace due to an additional dip of oxygen consumption in the reductive-charging phase \parencite{caustonMetabolicCyclesYeast2015}.
 % Move to methods?
-To be consistent with zwf1$\Delta$, cells were pre-cultured and cultured in the same conditions, but with the appropriate supplements for the auxotrophy of BY4742.
+To be consistent with \textit{zwf1$\Delta$}, cells were pre-cultured and cultured in the same conditions, but with the appropriate supplements for the auxotrophy of BY4742.
 %
 % Is this because of a wide variety of oscillation frequencies?  Look at the FFT inset, or do additional investigations.
 
-Fig.\ \ref{fig:biology-tsa1tsa2} suggests that the metabolic cycles generated from the auxotrophic tsa1$\Delta$ tsa2$\Delta$ strain were not consistent, likely due to multiple periods.
+Fig.\ \ref{fig:biology-tsa1tsa2} suggests that the metabolic cycles generated from the auxotrophic \textit{tsa1$\Delta$ tsa2$\Delta$} strain were not consistent, likely due to multiple periods.
 Specifically, the Fourier spectra (Fig.\ \ref{fig:biology-tsa1tsa2-fourier}) suggest that \SI{2.45}{\hour} and \SI{3.92}{\hour} oscillations were prominent in the population.
 These two prominent periods were obscured by the median fluorescence signal aligned by first budding event (Fig.\ \ref{fig:biology-tsa1tsa2-median}), which merely suggests that a \SI{3}{\hour} oscillation was prominent in the population, and by the median autocorrelation function (Fig.\ \ref{fig:biology-tsa1tsa2-acf}), which suggests that the oscillations were not at a consistent frequency across the population, in contrast to the BY4742 wild-type that showed robust \SI{1.5}{\hour} oscillations.
 Fig.\ \ref{fig:biology-tsa1tsa2-snr} additionally shows that the amplitudes and qualities of oscillations were retained, as evidenced by signal-to-noise ratios comparable to the FY4 strain cultured in pyruvate (Fig.\ \ref{fig:biology-pyruvate-snr}).%; ADD STATISTICAL TEST HERE).
 
-Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the zwf1$\Delta$ and tsa1$\Delta$ tsa2$\Delta$ deletion strains.
+Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} deletion strains.
 These discrepancies warrant further explanation.
 
 
@@ -964,9 +964,9 @@ These discrepancies warrant further explanation.
 \subsection{Interpretation of results}
 \label{subsec:biology-discussion-interpretation}
 
-This chapter confirms the presence of flavin-based single-cell metabolic cycles, and further confirm that they are autonomous and gate the cell division cycle across nutrient and genetic perturbations.
+This chapter confirms the presence of flavin-based single-cell metabolic cycles, and further confirm that they are autonomous and may gate the cell division cycle across nutrient and genetic perturbations.
 
-Results suggest that yeast cells independently generate the metabolic cycle which locks the cell division cycle in-phase.
+My results suggest that yeast cells independently generate the metabolic cycle which locks the cell division cycle in-phase.
 This conclusion was supported by the observation that flavin cycles were asynchronous between cells and peaks coincide with bud formation.
 These observations were consistent with \textcite{papagiannakisAutonomousMetabolicOscillations2017} and \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
 
@@ -974,7 +974,7 @@ Results in pyruvate additionally reveal that as the metabolic cycle lengthens, G
 Importantly, metabolic cycles still occurred even when cells did not divide.
 This holds true for one-off skipping of cell division and conditions in which cells pause cell division for long periods of time.
 
-Results additionally show that the metabolic cycle and the cell division cycle can be decoupled, reinforcing the idea that the metabolic cycle is autonomous from other cellular oscillators.
+My results additionally show that the metabolic cycle and the cell division cycle can be decoupled, reinforcing the idea that the metabolic cycle is autonomous from other cellular oscillators.
 In particular, I observed that single-cell flavin oscillations could synchronise and reset phase in response to abrupt starvation, while the cell division cycle was paused.
 This observation also suggests that the metabolic cycle is individually generated across cells without the need of a diffusible metabolite as proposed by \textcite{krishnaMinimalPushPull2018}.
 The conclusion that the metabolic cycle is generated independently across cells is evidenced by the continued presence of metabolic cycles during starvation even though the cells were physically separated, with nutrient media perfused across them.
@@ -990,20 +990,20 @@ the behaviour of the metabolic cycle changes when the cells are grown on low glu
 A possible explanation is that nutrient conditions that favour respiration over fermentation --- and thus slower growth rate --- leads to slower YMCs.
 % Do the periods conform to those reported by \textcite{papagiannakisAutonomousMetabolicOscillations2017}?  If not, why?
 
-Results suggest discrepancies between chemostat and single-cell studies of the metabolic cycle, in particular, with regards to potassium-deficient conditions and the zwf1$\Delta$ and tsa1$\Delta$ tsa2$\Delta$ deletion strains.
+My results suggest discrepancies between chemostat and single-cell studies of the metabolic cycle, in particular, with regards to potassium-deficient conditions and the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} deletion strains.
 Such discrepancies warrant models to explain the observations.
 
 I observed that metabolic cycles persist in potassium-deficient conditions, in contrast to \textcite{oneillEukaryoticCellBiology2020} which suggested that the oscillations disappear.
 The disappearance of dissolved oxygen cycles can alternatively be explained by a loss of synchrony in the population.
 
-I also observed that zwf1$\Delta$ exhibited metabolic cycles, though with varying amplitudes.
+I also observed that \textit{zwf1$\Delta$} exhibited metabolic cycles, though with varying amplitudes.
 This contrasts \textcite{tuCyclicChangesMetabolic2007}, which suggested that metabolic cycles in this strain were abolished
 To reconcile findings, a potential explanation is that cells lose synchrony or the ability to reset phase, while growth is still maintained.
 \textit{ZWF1} codes for glucose-6-phosphate dehydrogenase, which catalyses the first step of the pentose phosphate pathway involving the reduction of NADP\textsuperscript{+} to produce NADPH, a key metabolite in the YMC \parencite{nogaeIsolationCharacterizationZWF11990}.
-Thus, it is expected that the zwf1$\Delta$ deletion should affect a broad range of metabolic processes, including flavin oscillations, owing to the role of NAD(P)H redox in the function of the most abundant flavoproteins \parencite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
-However, some of the deleterious effects of zwf1$\Delta$ deletion may be compensated by \textit{ALD6} and \textit{IDP2} as they also catalyse reactions that produce NADPH \parencite{minardSourcesNADPHYeast2005}, therefore, explaining why growth is retained in the zwf1$\Delta$ strain.
+Thus, it is expected that the \textit{zwf1$\Delta$} deletion should affect a broad range of metabolic processes, including flavin oscillations, owing to the role of NAD(P)H redox in the function of the most abundant flavoproteins \parencite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
+However, some of the deleterious effects of \textit{zwf1$\Delta$} deletion may be compensated by \textit{ALD6} and \textit{IDP2} as they also catalyse reactions that produce NADPH \parencite{minardSourcesNADPHYeast2005}, therefore, explaining why growth is retained in the \textit{zwf1$\Delta$} strain.
 
-Results additionally suggest that tsa1$\Delta$ tsa2$\Delta$ exhibits a range of metabolic cycle frequencies.
+My results additionally suggest that \textit{tsa1$\Delta$ tsa2$\Delta$} exhibits a range of metabolic cycle frequencies.
 This observation can be reconciled with the M-shaped dissolved oxygen cycles described by \textcite{caustonMetabolicCyclesYeast2015} through a potential explanation: there are at least two substantial cell populations that each produce a different frequencies of metabolic oscillations, and the changed M-shaped waveform is the sum of the effect of individual cells.
 \textit{TSA1} and \textit{TSA2} are paralogous genes that are involved in redox metabolism.
 Specifically, these genes code for peroxiredoxins as part of the peroxiredoxin-thioredoxin system, which functions to reduce intracellular reactive oxygen species \parencite{wongCooperationYeastPeroxiredoxins2002}.
@@ -1025,7 +1025,7 @@ Time series of NAD(P)H oscillations, especially if recorded alongside flavin in 
 %However, due to technical limitations of the fluorescence microscope and image acquisition set-up, I have not been able to acquire such data.
 Such data would also provide a novelty: two fluorophores that act as read-outs of the metabolic cycle have, to my knowledge, never been recorded from the same cell.
 
-To explore the link between the components of flavin autofluorescence and cycling of storage lipids as a proposed biochemical mechanism of the metabolic cycle, the fas1$\Delta$ strain may be studied.
+To explore the link between the components of flavin autofluorescence and cycling of storage lipids as a proposed biochemical mechanism of the metabolic cycle, the \textit{fas1$\Delta$} strain may be studied.
 \textit{FAS1} codes for the most abundant flavoprotein, the beta subunit of fatty acid synthetase, which has a role in lipid metabolism \parencite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
 The investigation may be strengthened with a rescue experiment using lipid sources such as glycerol trihexanoate or glycerol trioctanoate.
 This avenue of exploration may lead to additional insight on the biochemical basis of the yeast metabolic cycle, which is still poorly characterised.
@@ -1041,7 +1041,7 @@ Insights from such experiments may lead to a broader understanding of the contro
 Additional nutrient conditions can be used to address the discrepancies between the chemostat and single-cell microfluidics, namely, low glucose conditions and feast-and-famine conditions.
 
 Low glucose conditions emulate conditions in the chemostat and may lead to long metabolic cycles, thus explaining why cycles with periods up to \SI{14}{\hour} have been observed in chemostats.
-However, the glucose concentrations in chemostats are below the tolerance of measurement with current technologies, therefore the limiting concentration of \SI{10}{\milli\gram~\litre^{-1}} used in this chapter can be used.
+However, the glucose concentrations in chemostats are below the tolerance of measurement with current technologies; therefore, I propose that the limiting concentration of \SI{1d-2}{\gram~\litre^{-1}} is used.
 Experiments with deletion strains can then be performed under these low-glucose conditions to investigate whether such conditions lead to a closer equivalence between chemostat and single-cell studies.
 
 Feast-and-famine conditions have been modelled in chemostat cultivation of yeast \parencite{jonesCyberneticModelGrowth1999}.

@@ -8,20 +8,21 @@
 * Category 1
 Clear problems with straightforward solutions, e.g. grammar mistakes, reordering of sections, new title
 
-- [ ] 02p2: minor word corrections
-- [ ] 04p2: cite Charvin
-- [ ] 05p1: gene name for lipoamide dehydrogenase
-- [ ] 10p1: results -> data
-- [ ] 10p3: insert 'measurements of'
-- [ ] 18f1: concs in g/L
-  - [ ] also: apply this to all instances in main text
-- [ ] 20p1: put gene names in italic
-  - [ ] also: apply to rest of text
-  - [ ] also: apply to other chapters
+- [X] 02p2: minor word corrections
+- [X] 04p2: cite Charvin
+- [X] 05p1: gene name for lipoamide dehydrogenase
+- [X] 10p1: results -> data
+- [X] 16p3: insert 'measurements of'
+- [X] 18f1: concs in g/L
+  - [X] also: apply this to all instances in main text
+- [X] 20p1: put gene names in italic
+  - [X] also: apply to rest of text
+  - [X] also: apply to other chapters
 - [ ] 24p1: (split with cat 2,3) move earlier in section
-- [ ] 28p2: add 'may'
-- [ ] 30p1: add 'My'
-- [ ] 32p4: add 'we propose'
+- [X] 28p2: add 'may'
+- [X] 30p1: add 'My'
+- [X] 32p4: add 'we propose'
+
 - [ ] 34p2: remove '-'
 - [ ] 37f1: cite Alan's thesis
 - [ ] 37p1: add 'the parents'
