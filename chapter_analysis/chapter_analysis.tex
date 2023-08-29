@@ -189,7 +189,7 @@ The time series is thus denoted $Y_{g}(t) = y_{g}(t_{1}), \dots{}, y_{g}(t_{N_{g
 With this definition, I compute the classical periodogram for each time series:
   \begin{equation}
     P_{g}(\omega) = \frac{N_{g}}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} Y_{g} e^{-2\pi it}dt \right|, % check constants, etc
-    \label{eq:normalised-periodogram}
+    \label{eq:normalised-periodogram-ar}
   \end{equation}
         where $\sigma^{2}$ is the sample variance of $Y_{g}$.
         In this equation, the periodogram is normalised by the coefficient $N_{g}/2\sigma^{2}$ so that the area under the periodogram is constant across all time series.
@@ -1079,7 +1079,8 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
 From the relationships shown in Figs.\ \ref{fig:acf-fhn-noiseparams-noisetimescale} and \ref{fig:acf-fhn-noiseparams-noiseamplitude}, noise parameters from the autocorrelation functions of real signals may be deduced.
 Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
 
-
+% Not sure how useful this subsection is...
+% And it's also a bit dangling
 \subsection{Combining methods to get a picture of periodicity}
 \label{subsec:analysis-characterisation-combined}
 
@@ -1096,9 +1097,9 @@ Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
   \label{fig:acf-fft-example}
 \end{figure}
 
-As each method comes with own advantages and limitations --- especially apparent with noisy biological data --- it is useful to use several methods in concert get an idea of the periodicity of the oscillations, or other properties.
-For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator (figure~\ref{fig:acf-fft-example}).
-Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
+Each periodicity-estimation method has a limited ability to estimate the period of short, noisy biological time series; therefore, it is often useful to combine several such methods to produce a picture of the periodicity of oscillatory time series.
+For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator (Fig.\ \ref{fig:acf-fft-example}).
+%Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
 
 % [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
 
@@ -1113,8 +1114,6 @@ Thus, in my subsequent analysis of biological data, I combine the autocorrelatio
    \centering
    \includegraphics[width=\textwidth]{snr_illustration}
    \caption{
-     To define the signal-to-noise ratio, a cut-off frequency is defined to divide the area under the Fourier spectrum: signal, to the left of the cut-off (yellow), and noise, to the right (pink).
-     The signal-to-noise ratio is thus defined as the signal area divided by the noise area.
    }
    \label{fig:analysis-snr-illustration}
  \end{subfigure}%
@@ -1122,27 +1121,61 @@ Thus, in my subsequent analysis of biological data, I combine the autocorrelatio
    \centering
    \includegraphics[width=\textwidth]{pyruvate_snr_edit}
    \caption{
-     The signal-to-noise ratio was computed for each processed signal within a dataset, and the distribution of these ratios within a dataset can indicate the overall quality of signals.
    }
    \label{fig:analysis-snr-histogram-example}
   \end{subfigure}
+
   \caption{
-    The signal-to-noise ratio as a measure of signal quality.
+    %The signal-to-noise ratio as a measure of signal quality.
+    \textbf{(\ref{fig:analysis-snr-illustration})}
+    Illustration of signal-to-noise ratio.
+    The signal-to-noise ratio is defined (Eqs.\ \ref{eq:normalised-periodogram}--\ref{eq:noise}) as the area under the periodogram below a cut-off frequency (yellow) divided by the area under the periodogram above a cut-off frequency (pink).
+    \textbf{(\ref{fig:analysis-snr-histogram-example})}
+    Histogram of signal-to-noise ratios from a sample experiment ($n=403$).
   }
   \label{fig:analysis-snr}
 \end{figure}
 
-Finally, I discuss a way to evaluate the quality of a (processed) dataset --- specifically, computing a signal-to-noise ratio.
-The signal-to-noise ratio compares the level of a desired signal to background noise and serves as a measure of quality in signal processing.
-It takes various definitions depending on how the signal and noise are defined.
-In my case, I base my definition on the frequency domain of the signal.
-I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.% (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
-Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise.
+To evaluate the quality of oscillatory time series in a dataset and to indirectly measure the amplitude of the oscillations, I computed a signal-to-noise ratio for each time series.
+Because the information about the amplitude of the oscillations was removed when they were filtered using the high-pass Butterworth filter, a different measure is needed.
+Assuming a constant noise introduced by the combination of intrinsic noise (stochasticity in biochemical processes) and extrinsic noise (variations introduced by measurement instruments), a low signal-to-noise ratio suggests a low oscillation amplitude, and the reverse is true for a high signal-to-noise ratio.
 
-%[EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
+The signal-to-noise ratio can be defined as follows:
 
-To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
-For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
+Given a time series $x(t) = x_{t_{1}}, x_{t_{2}}, \ldots, x_{t_{N}}$, the normalised classical periodogram (Fourier spectrum) is given by
+
+\begin{equation}
+  P(\omega) = \frac{N}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} x(t) e^{-2\pi it}dt \right|, % check constants, etc
+  \label{eq:normalised-periodogram}
+\end{equation}
+
+where $N$ is the number of time points in $x$ and $\sigma^{2}$ is the sample variance of $x$.
+The periodogram $P$ is defined as a function of the angular frequency $\omega$.
+
+A critical frequency $\omega_{c}$ is then defined to divide signal and noise --- that is, very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.
+
+The signal to noise ratio $r_{s/n}$ (Fig.\ \ref{fig:analysis-snr}) is thus defined as
+
+\begin{equation}
+  r_{s/n} = \frac{s}{n}
+  \label{eq:snr}
+\end{equation}
+
+where the signal $s$ is defined as
+
+\begin{equation}
+  s = \int_{0}^{\omega_{c}} P(\omega) d\omega
+  \label{eq:signal}
+\end{equation}
+
+and the noise $n$ is defined as
+
+\begin{equation}
+  n = \int_{\omega_{c}}^{\infty} P(\omega) d\omega
+  \label{eq:noise}
+\end{equation}
+
+In this thesis, I define $\omega_{c} = \SI[parse-numbers=false]{1/350}{\minute^{-1}}$ because this frequency is lower than the frequencies of all oscillations of flavin autofluorescence I observed in my experiments.
 
 
 \section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}

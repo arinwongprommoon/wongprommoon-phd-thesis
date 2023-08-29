@@ -382,3 +382,16 @@ In theory, the decay rate $D$ of the autocorrelation function should scale linea
 To confirm this, I fit exponential decay functions of the form $y = (1-C)\me^{-DT}+C$ to the mean autocorrelation, the peaks of this mean function, and the troughs of these functions using non-linear least squares fitting (figure~\ref{fig:acf-noisetimescale-effect-fit}).
 Then, I found the best-fit parameter $D$ for each value of $d_{0}$ (figure~\ref{fig:acf-noisetimescale-effect-relationship}).
 In sum, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelation function; conversely, if $D$ can be estimated from the autocorrelation function, then the noise timescale $\tau$ of the time series can be estimated.
+
+
+Finally, I discuss a way to evaluate the quality of a (processed) dataset --- specifically, computing a signal-to-noise ratio.
+The signal-to-noise ratio compares the level of a desired signal to background noise and serves as a measure of quality in signal processing.
+It takes various definitions depending on how the signal and noise are defined.
+In my case, I base my definition on the frequency domain of the signal.
+I define a cut-off frequency between signal and noise (figure~\ref{fig:analysis-snr}), based on the assumption that very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.% (and this is after filtering out the very low-frequency components that are the long-term trends I don't want).
+Again, this is a judgement call, and this is based on looking at several experiments' mean Fourier spectrum and defining a number that best separates signal and noise.
+
+%[EVIDENCE NEEDED -- PERHAPS PLOTS FROM SEVERAL EXPERIMENTS THAT PRODUCE DIFFERENT-FREQUENCY OSCILLATIONS.  OR THE MEAN FOURIER SPECTRUM OF SOME EXPERIMENT, OVERLAID WITH THE CUT-OFF LINE.]
+
+To summarise, choosing relevant and `clean' data is needed for all data pipelines, but time series data expected to be oscillatory needs filtering or detrending to separate the oscillations of interest from irrelevant trends in the data.
+For my data, I choose cells whose tracks are present for at least 80\% of the experiment, interpolate missing time points, and use a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}} to remove long-term trends and to preserve noise for quality evaluation using the signal-to-noise ratio measure.
