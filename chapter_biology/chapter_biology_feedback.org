@@ -73,3 +73,10 @@ Most of the time, these uncover unclear writing: e.g. point not made clearly, bu
   - Make it clear whether I'm showing just the parent or parent + progeny.  Reminder that the 'proper' one is parent + progeny
   - If have time, try Peter's Gaussian process code.
   - Julian's preference: progeny (bud) volumes.
+
+* Notes on tackling the more difficult bits
+Go in this order:
+- (No code) Itty-bitty stuff (cat 2)
+- (No code) Potassium-deficiency stuff
+- (Code) SNRs and kstest2 stuff
+- (Code) Growth rate stuff
