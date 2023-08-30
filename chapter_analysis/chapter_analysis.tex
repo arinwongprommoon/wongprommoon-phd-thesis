@@ -49,7 +49,7 @@ These recommendations include:
 \end{enumerate}
 
 Studies of biological rhythms have used the BioDare pipeline to quantify features of oscillations of fluorescence.
-These include using FFT-NLLS to calculate the period and amplitude error of fluorescence in mouse brain sections to determine the mechanistic basis of the synchronisation of the suprachiasmatic nucleus \parencite{hamnettVasoactiveIntestinalPeptide2019}, and using linear detrending of data followed by FFT-NLLS and spectral resampling to estimate the period and amplitude error of delayed fluorescence of chloroplasts in \textit{Kalancho\"{e} fedtschenkoi} leaves to determine whether phosphorylation of phosphoenolpyruvate affects robustness of circadian rhythms.
+These include using FFT-NLLS to calculate the period and amplitude error of fluorescence in mouse brain sections to determine the mechanistic basis of the synchronisation of the suprachiasmatic nucleus \parencite{hamnettVasoactiveIntestinalPeptide2019}, and using linear detrending of data followed by FFT-NLLS and spectral resampling to estimate the period and amplitude error of delayed fluorescence of chloroplasts in \textit{Kalancho\"{e} fedtschenkoi} leaves to determine whether phosphorylation of phosphoenolpyruvate affects robustness of circadian rhythms \parencite{boxallPhosphorylationPhosphoenolpyruvateCarboxylase2017}.
 
 As another example, \textcite{fulcherHctsaComputationalFramework2017} described a software pipeline, termed \textit{hctsa}, that computes over 7700 time series features for input time series.
 The resulting feature matrix --- a row for each time series and a column for each feature --- could then be used to identify sets of features that are useful to discriminate between sets of time series that corresponding to biological groups, or to identify clusters of time series based on their properties.
@@ -1282,42 +1282,23 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
 \section[Clustering]{Clustering: I have many time series (of the same signal) from many cells --- what are their relationships to each other?}
 \label{sec:analysis-clustering}
 
-% Literature review subsection
-% \subsection{(Literature)}
-% \label{subsec:analysis-clustering-literature}
+To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented graph-based clustering and dimension reduction methods; specifically, modularity clustering and UMAP.
+Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
+Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
 
-% mini-review -- IT'S PRETTY UNWIELDY AT THIS POINT, AND REFERENCES CONCEPTS NOT DISCUSSED TILL LATER
-Clustering of time series has been used to identify groupings within a set of time series \parencite{wangStructureBasedStatisticalFeatures2007}, including fMRI signals \parencite{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \parencite{tuLogicYeastMetabolic2005}.
-However, \textcite{wangStructureBasedStatisticalFeatures2007} and \textcite{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
-Though \textcite{shafieiDopamineSignalingModulates2019} used modularity clustering \parencite{newmanModularityCommunityStructure2006}, their method was based on one time series feature, which may not adequately capture the characteristics of the time series.
+% I don't like this sentence
+To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and zwf1$\Delta$ (mutant strain) strains.
+%I expected the zwf1$\Delta$ traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
 
-Clustering is important because it can discover structure in a dataset and can summarise the difference between the groups it finds.
-For my study of the yeast metabolic cycle, clustering would help address whether such differences conform to existing labels in the dataset, for example, cells grouped by strain or by nutrient condition.
-It could then identify the time series features that are responsible for distinguishing between groups.
-Furthermore, clustering is important for a dataset from which we expect cell-to-cell heterogeneity because it may discover subpopulations in the dataset.
-
-The data for this section consists of flavin autofluorescence oscillation from one experiment with both BY4741 (background strain) and zwf1$\Delta$ (mutant strain) strains.
-I expected the zwf1$\Delta$ traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
-
-% \subsection{Machine learning approaches to clustering}
-% \label{subsec:analysis-clustering-ml}
-% - Featurisation -- decisions to make
-% - Clustering approaches and algorithms -- compare and contrast
-% - Review existing methods first and then talk about the methods I tried, with results.
-
-% Copied from 10m report.
-% - Supervised classification is going to be mostly killed because it belongs in a previous section, and I have better data than SM vs SC.
-% - Unsupervised clustering: the literature stays, but I'll try doing it on better data.  To add: UMAP.
-% ----------------------
 \subsection{Graph-based clustering}
 \label{subsec:analysis-clustering-graphclustering}
 
-% FIGURE: pipeline and options.  It's rather difficult to visualise what happens, so such a figure, like the one I often use in the lab presentations in the summer, will be helpful.  Though may be more impactful in the presentation rather than in this report.
+Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
+% [ADD EQUATIONS]
+%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
+To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
+This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
 
-Modularity clustering is the problem of partitioning a graph into clusters in order to optimise a `modularity' value.
-This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
-The general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} is one method to solve this optimisation problem and define partitions for a graph.
-This algorithm has a resolution parameter which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
 
 \begin{figure}
   \centering
@@ -1325,9 +1306,6 @@ This algorithm has a resolution parameter which specifies the scale of the clust
   \centering
     \includegraphics[width=\linewidth]{graph_representation}
     \caption{
-      \emph{Step 1: Graph representation.}
-      Each time series is represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
-      The cosine distances between each pair of vector is computed, and become the edge weights of a complete graph with each time series as a node.
     }
     \label{fig:analysis-clustering-modclust-graph}
   \end{subfigure}
@@ -1336,8 +1314,6 @@ This algorithm has a resolution parameter which specifies the scale of the clust
   \centering
     \includegraphics[width=\linewidth]{pruning}
     \caption{
-      \emph{Step 2: Pruning.}
-      The complete graph is pruned by deleting edges, so that each node has at least $k$ neighbours.
     }
     \label{fig:analysis-clustering-modclust-prune}
   \end{subfigure}%
@@ -1345,9 +1321,6 @@ This algorithm has a resolution parameter which specifies the scale of the clust
   \centering
     \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
     \caption{
-      \emph{Step 3: Modularity clustering.}
-      This process partitions the pruned graph into communities.
-      Figure adapted from \textcite{newmanModularityCommunityStructure2006}.
     }
     \label{fig:analysis-clustering-modclust-modclust}
   \end{subfigure}
@@ -1355,24 +1328,35 @@ This algorithm has a resolution parameter which specifies the scale of the clust
   \caption[
     Modularity clustering visualises natural groupings of time series
   ]{
-    Modularity clustering visualises natural groupings of time series.
-    Figure shows the process of preparing a dataset of time series for modularity clustering.
+    Process of preparing a dataset of time series for modularity clustering.
+    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
+    Constructing a graph representation,
+    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
+    pruning the complete graph, and
+    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
+    modularity clustering.
+    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
   }
   \label{fig:analysis-clustering-modclust}
 \end{figure}
 
-Figure~\ref{fig:analysis-clustering-modclust} illustrates the process by which I prepare the dataset for modularity clustering in this section.
-Here, I represented each time series with a vector of features using \textit{catch22}.
-I then computed the pairwise similarity between all pairs of time series using the cosine distance measure.
-Representing each vector as a node and each pairwise similarity as an edge weight produced a complete graph.
-Then, I pruned this complete graph to produce an incomplete graph by letting each node retain at least $k$ nearest neighbours, choosing $k = 10$ initially.
-Modularity clustering, specially the general Louvain algorithm, was then used to identify communities within the resulting network, and the resolution parameter could be tuned to control the number of clusters the algorithm finds.
-When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to groups (figure \ref{fig:graphclustering}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
-% (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
-Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
+To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
+Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
+\begin{enumerate}
+  \item \emph{Constructing a graph representation:}
+        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
+        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
+        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
+  \item \emph{Pruning:}
+        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
+        Here, $k=10$.
+  \item \emph{Modularity clustering:}
+        Modularity clustering was performed on the graph to partition the pruned graph into communities.
+        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
+\end{enumerate}
+
 
 % TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
-
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\textwidth]{graphclustering}
@@ -1382,6 +1366,11 @@ Such results suggested that unsupervised graph-based clustering may have potenti
   }
   \label{fig:graphclustering}
 \end{figure}
+
+Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
+% This may change.
+Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
+
 
 \subsection{UMAP}
 \label{subsec:analysis-clustering-umap}

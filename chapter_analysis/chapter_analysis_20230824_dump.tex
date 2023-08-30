@@ -423,3 +423,21 @@ This illustrates that the cross-correlation function can still find phase relati
 % [AND DO BIOLOGISTS USE IT?]
 
 % (Add content when I figure out how to make this investigation work.)
+% mini-review -- IT'S PRETTY UNWIELDY AT THIS POINT, AND REFERENCES CONCEPTS NOT DISCUSSED TILL LATER
+
+Clustering of time series has been used to identify groupings within a set of time series \parencite{wangStructureBasedStatisticalFeatures2007}, including fMRI signals \parencite{shafieiDopamineSignalingModulates2019}, or even transcript cycling patterns in YMCs \parencite{tuLogicYeastMetabolic2005}.
+However, \textcite{wangStructureBasedStatisticalFeatures2007} and \textcite{tuLogicYeastMetabolic2005} employed $k$-means clustering, which requires the user to specify the number of clusters, and therefore may not reflect the underlying structure of the set of time series.
+Though \textcite{shafieiDopamineSignalingModulates2019} used modularity clustering \parencite{newmanModularityCommunityStructure2006}, their method was based on one time series feature, which may not adequately capture the characteristics of the time series.
+
+Clustering is important because it can discover structure in a dataset and can summarise the difference between the groups it finds.
+For my study of the yeast metabolic cycle, clustering would help address whether such differences conform to existing labels in the dataset, for example, cells grouped by strain or by nutrient condition.
+It could then identify the time series features that are responsible for distinguishing between groups.
+Furthermore, clustering is important for a dataset from which we expect cell-to-cell heterogeneity because it may discover subpopulations in the dataset.
+
+Figure~\ref{fig:analysis-clustering-modclust} illustrates the process by which I prepare the dataset for modularity clustering in this section.
+I then computed the pairwise similarity between all pairs of time series using the cosine distance measure.
+Representing each vector as a node and each pairwise similarity as an edge weight produced a complete graph.
+Then, I pruned this complete graph to produce an incomplete graph by letting each node retain at least $k$ nearest neighbours, choosing $k = 10$ initially.
+Modularity clustering, specially the general Louvain algorithm, was then used to identify communities within the resulting network, and the resolution parameter could be tuned to control the number of clusters the algorithm finds.
+When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to groups (figure \ref{fig:graphclustering}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
+% (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
