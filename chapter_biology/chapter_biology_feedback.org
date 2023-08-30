@@ -18,7 +18,7 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [X] 20p1: put gene names in italic
   - [X] also: apply to rest of text
   - [X] also: apply to other chapters
-- [ ] 24p1: (split with cat 2,3) move earlier in section
+- [X] 24p1: (split with cat 2,3) move earlier in section
 - [X] 28p2: add 'may'
 - [X] 30p1: add 'My'
 - [X] 32p4: add 'we propose'
@@ -36,7 +36,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 (<2023-08-29>: Clarification now done)
 - [X] 02p1: (clarify with Peter) 'synchrony in the chemostat'
   - This argument may have been made in the introduction.  It's the argument about how cells oscillate but don't synchronise.  This argument isn't obvious here, in the numbered list.
-- [ ] 23f2: (clarify with Peter) 'is there a time scale or number of cycles issue?  are we comparing at similar points?'
+- [X] 23f2: (clarify with Peter) 'is there a time scale or number of cycles issue?  are we comparing at similar points?'
   - This is about how O'Neill et al. monitored oscillations for longer or over more periods of oscillations, calling into question about how comparable it is to my study.  Though, he did a potassium ramp.  I can address this by framing it as a caveat of my/his study.
 - [X] 38p1: (clarify with Peter) 'might explain the reduction in growth rate' -- does this mean phototoxicity, and where should I discuss this in the text?
   - Yes, and I should mention it in a sentence in the main text (of the biology chapter) when the first HTB2::mCherry growthrate/budding plot appears, as discussion/explanation of what happens.
@@ -48,7 +48,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [X] 12p1: re-write/re-interpret slightly re G2/M
   - (Might come back to read this later)
 - [X] 14p1: fact-check and add short discussion re mitochondria in CEN.PK
-- [ ] 24p1: (split with cat 1,3) add 1-2 sentences about sodium being toxic, perhaps with ref/citation
+- [X] 24p1: (split with cat 1,3) add 1-2 sentences about sodium being toxic, perhaps with ref/citation
   - also:
 - [X] 29p3: clarify how cycles change
 
@@ -64,7 +64,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 Most of the time, these uncover unclear writing: e.g. point not made clearly, buried in uninteresting/confusing text.
 
 ** Does not involve code
-- [ ] 24p1: (split with cat 1,2) make it more obvious that I replaced potassium with sodium
+- [X] 24p1: (split with cat 1,2) make it more obvious that I replaced potassium with sodium
   - Explaining the growth rate spike in this experiment:
     - Intracellular potassium leaks out, leads to cell losing water.  So, volume might drop.  Makes sense if all cells do it at once.
     - However, osmotic response should be faster (1-2 time points) than what is shown...
@@ -77,7 +77,7 @@ Most of the time, these uncover unclear writing: e.g. point not made clearly, bu
 
 * Notes on tackling the more difficult bits
 Go in this order:
-- (No code) Itty-bitty stuff (cat 2)
-- (No code) Potassium-deficiency stuff
+- +(No code) Itty-bitty stuff (cat 2)+
+- +(No code) Potassium-deficiency stuff+
 - (Code) SNRs and kstest2 stuff
 - (Code) Growth rate stuff

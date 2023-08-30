@@ -668,6 +668,16 @@ These nutrient conditions included potassium deficiency and deletion strains inc
 Replicating conditions of chemostat-based studies is important in showing that the single-cell metabolic cycle and the chemostat metabolic cycle are the same cycle, or to prove otherwise.
 Chemostat experiments obscure the behaviour of individual cells, and single-cell microfluidics experiments can provide a bottom-up explanation of high-level observations of the metabolic cycle in the chemostat. Such single-cell experiments could address, for example, whether the cellular behaviour of the yeast metabolic cycle explains the changes in dissolved-oxygen oscillations.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{oneillEukaryoticCellBiology2020_4_adapted.png}
+  \caption{
+    Decreasing extracellular potassium (\ce{K+}) concentration shortens, then under \SI{1}{\milli\molar}, destroys metabolic oscillations in the chemostat.
+    Adapted from \textcite{oneillEukaryoticCellBiology2020}.
+  }
+  \label{fig:biology-kdeficient-oneill}
+\end{figure}
+
 
 \begin{figure}
   \centering
@@ -713,6 +723,12 @@ Chemostat experiments obscure the behaviour of individual cells, and single-cell
   \label{fig:biology-kdeficient-snr}
 \end{figure}
 
+
+To test whether potassium deficiency eliminates metabolic cycles, I treated cells with potassium-deficient minimal medium, replacing monopotassium phosphate (\ce{KH2PO4}) in the minimal medium with an equivalent molarity of monosodium phosphate (\ce{NaH2PO4}), as described in table~\ref{tab:methods-media-delft}, with both media supplemented with \SI{20}{\gram~\litre^{-1}} as a carbon source.
+\textcite{oneillEukaryoticCellBiology2020} suggested that, in chemostat cultures, as potassium in the nutrient medium is gradually replaced with sodium, the period and amplitude of dissolved-oxygen oscillations decrease until the oscillations disappear (Fig.\ \ref{fig:biology-kdeficient-oneill}).
+Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium.
+Such cycles were longer and were generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
+Furthermore, although the changes in the mean signal-to-noise ratio as the medium changed were significant (Fig.\ \ref{fig:biology-kdeficient-snr}; $\bar{x}_{\mathrm{before}} = 2.22$, $\bar{x}_{\mathrm{deficient}} = 2.44$, $\bar{x}_{\mathrm{after}} = 1.79$; Welch's $t$-test: deficient vs before $p = \num{0.015}$, deficient vs after $p = \num{1.26d-12}$), the differences were more subtle than in the glucose-starvation experiment.
 
 \begin{figure}
   \centering
@@ -771,29 +787,15 @@ Chemostat experiments obscure the behaviour of individual cells, and single-cell
 \end{figure}
 
 
-To test whether potassium deficiency eliminates metabolic cycles, Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium (both media supplemented with \SI{20}{\gram~\litre^{-1}} as a carbon source).
-Such cycles were longer and were generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
-Furthermore, although the changes in the mean signal-to-noise ratio as the medium changed were significant (Fig.\ \ref{fig:biology-kdeficient-snr}; $\bar{x}_{\mathrm{before}} = 2.22$, $\bar{x}_{\mathrm{deficient}} = 2.44$, $\bar{x}_{\mathrm{after}} = 1.79$; Welch's $t$-test: deficient vs before $p = \num{0.015}$, deficient vs after $p = \num{1.26d-12}$), the differences were more subtle than in the glucose-starvation experiment.
-
 In addition, to test whether potassium deficiency affected cell growth and division, Fig.\ \ref{fig:biology-kdeficient-gr} shows that growth rates recovered soon after a sharp decrease upon the abrupt switch to the potassium-deficient medium.
+This global response across cells is suggestive of an osmotic response as a result of intracellular potassium leaking out the cell, though the change and recovery of growth rate is slower than the change and recovery of cell volume in response to osmotic stress reported by \textcite{granadosDistributingTasksMultiple2017}.
 Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the rate of budding was unaffected during potassium-deficiency, in contrast to a pause under glucose starvation (Fig.\ \ref{fig:biology-starvation-cumul}).
 Finally, in contrast to glucose starvation, Fig.\ \ref{fig:biology-kdeficient-histogram} suggests that potassium deficiency did not affect the time each cell spent in each phase of the metabolic and cell division cycles as they progressed through growth.
 
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.7\textwidth]{oneillEukaryoticCellBiology2020_4_adapted.png}
-  \caption{
-    Decreasing extracellular potassium (\ce{K+}) concentration shortens, then under \SI{1}{\milli\molar}, destroys metabolic oscillations in the chemostat.
-    Adapted from \textcite{oneillEukaryoticCellBiology2020}.
-  }
-  \label{fig:biology-kdeficient-oneill}
-\end{figure}
-
-Results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after.
-My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition.
-This is in contrast to \textcite{oneillEukaryoticCellBiology2020}, which suggested that, in chemostat cultures, as potassium in the nutrient medium is gradually replaced with sodium, the amplitude of dissolved-oxygen oscillations decreases until the oscillations disappear altogether (Fig.\ \ref{fig:biology-kdeficient-oneill}).
-However, my observations also warrant a model to reconcile the apparent differences between the chemostat and single-cell investigations.
+My results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after.
+My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition, in contrast to \textcite{oneillEukaryoticCellBiology2020}.
+%Thus, my observations warrant a model to reconcile the apparent differences between the chemostat and single-cell investigations.
+Furthermore, the significance of the potassium-deficient, sodium-containing nutrient condition is highlighted by the toxicity of sodium ions for budding yeast \parencite{arinoAlkaliMetalCation2010,caseyEffectSaltsCofermentation2013,watcharawipasSodiumAcetateResponses2018}.
 
 
 %\section[Deletion strains]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- deletion strains}
@@ -1000,6 +1002,8 @@ Such discrepancies warrant models to explain the observations.
 
 I observed that metabolic cycles persist in potassium-deficient conditions, in contrast to \textcite{oneillEukaryoticCellBiology2020} which suggested that the oscillations disappear.
 The disappearance of dissolved oxygen cycles can alternatively be explained by a loss of synchrony in the population.
+However, while \textcite{oneillEukaryoticCellBiology2020} gradually replaced potassium with sodium over a longer period of time, my experiments included an abrupt potassium depletion but over a shorter period of time.
+Therefore, the carbohydrate or amino acid stores that \textcite{oneillEukaryoticCellBiology2020} proposed were responsible for metabolic oscillations may still have been sufficient to drive metabolic oscillations during potassium-deficiency in my experiment.
 
 I also observed that \textit{zwf1$\Delta$} exhibited metabolic cycles, though with varying amplitudes.
 This contrasts \textcite{tuCyclicChangesMetabolic2007}, which suggested that metabolic cycles in this strain were abolished
