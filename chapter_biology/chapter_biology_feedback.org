@@ -42,11 +42,12 @@ Involve harder thought and more work.  Typically involve points of science rathe
   - Yes, and I should mention it in a sentence in the main text (of the biology chapter) when the first HTB2::mCherry growthrate/budding plot appears, as discussion/explanation of what happens.
 
 ** Does not involve code
-- [ ] 01p2: add citation
-- [ ] 02p2: add citation
-- [ ] 07f1: clarify if XCF shows delay or advance
-- [ ] 12p1: re-write/re-interpret slightly re G2/M
-- [ ] 14p1: fact-check and add short discussion re mitochondria in CEN.PK
+- [X] 01p2: add citations
+- [X] 02p2: add citations
+- [X] 07f1: clarify if XCF shows delay or advance
+- [X] 12p1: re-write/re-interpret slightly re G2/M
+  - (Might come back to read this later)
+- [X] 14p1: fact-check and add short discussion re mitochondria in CEN.PK
 - [ ] 24p1: (split with cat 1,3) add 1-2 sentences about sodium being toxic, perhaps with ref/citation
   - also:
 - [X] 29p3: clarify how cycles change

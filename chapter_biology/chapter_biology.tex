@@ -3,8 +3,8 @@
 
 To reconcile the evidence about the characteristics of the yeast metabolic cycle (YMC) from single-cell and chemostat experiments, I sought to use a single-cell experimental platform to address whether cellular metabolic cycles confirm chemostat-based studies.
 
-Few published studies have investigated the YMC in cells isolated from each other.
-Most studies instead have examined the YMC from a population of cells in a chemostat.
+Few published studies have investigated the YMC in cells isolated from each other \parencite{silvermanMetabolicCyclingSingle2010,papagiannakisAutonomousMetabolicOscillations2017,baumgartnerFlavinbasedMetabolicCycles2018,ozsezenInferenceHighLevelInteraction2019}.
+Most studies instead have examined the YMC from a population of cells in a chemostat \parencite{tuLogicYeastMetabolic2005,tuCyclicChangesMetabolic2007,murrayRedoxRegulationRespiring2011,caustonMetabolicCyclesYeast2015,mellorMolecularBasisMetabolic2016,oneillEukaryoticCellBiology2020,amponsahPeroxiredoxinsCoupleMetabolism2021}.
 However, such chemostat-based studies are unable to account for cell-to-cell heterogeneity.
 Furthermore, in such conditions, cell density and environmental conditions are far removed from the natural habitat of budding yeast.
 
@@ -17,11 +17,11 @@ Specifically, I aim to evaluate these hypotheses:
         Each cell generates the metabolic cycle autonomously of other cellular oscillators, but the metabolic cycle can phase-lock the cell division cycle.
   \item The yeast metabolic cycle is retained in different nutrient and genetic perturbations, but characteristics of the cycle change in response.
   \item Flavin autofluorescence of single yeast cells recapitulate oscillations in dissolved oxygen in the chemostat.
-        If there are discrepancies between these two manifestations of the yeast metabolic cycle, the explanation should be individual cells continuing to generate the metabolic cycle but without synchrony between cells.
+        If there are discrepancies between these two manifestations of the yeast metabolic cycle, they may be explained by individual cells continuing to generate the metabolic cycle but without synchrony between cells.
         %cell-to-cell heterogeneity should explain the discrepancies.
 \end{enumerate}
 
-In this chapter, I show that metabolic cycles are generated autonomously and are coupled to the cell division cycle in permissive conditions, confirming previous single-cell studies.
+In this chapter, I show that metabolic cycles are generated autonomously and are coupled to the cell division cycle in permissive conditions, confirming previous single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017,ozsezenInferenceHighLevelInteraction2019}.
 To decouple the metabolic and cell division oscillators, confirming that the metabolic oscillator is independently and autonomously generated, I used fast nutrient switching to induce starvation.
 I further show that the metabolic cycle is robust across nutrient and genetic perturbations, but with changes to its oscillatory parameters.
 Finally, to address whether single-cell metabolic cycles confirm findings from chemostat-based studies, I emulated situations known to affect dissolved-oxygen traces.
@@ -61,7 +61,7 @@ These situations include potassium deficiency and deletions of genes with roles 
 To show that metabolic cycles are generated autonomously and are coupled to the cell division cycle, I replicated the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
 Replicating results from a previous flavin-based microfluidics study is important to confirm that my use of ALCATRAS \parencite{craneMicrofluidicSystemStudying2014} monitored the yeast metabolic cycle, especially given that the microfluidics set-up differed from previous studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018}.
 
-Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms in G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms shortly before G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
 The HTB2::mCherry insertion allows monitoring phases of the cell division cycle through quantifying over time the intensity of the fluorescence of the inserted protein \parencite{garmendia-torresMultipleInputsEnsure2018} (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding the overlap of flavin and GFP emission spectra.
 
 Fig.\ \ref{fig:biology-highglc-single} also shows that in some cases, a metabolic oscillation occurred without cell division cycle progression or bud formation.
@@ -174,7 +174,8 @@ with most just under \SI{2}{\hour}, agreeing with Fig.\ \ref{fig:biology-highglc
 The oscillatory shape of the median flavin fluorescence time series when aligned to the first budding event (Fig.\ \ref{fig:biology-highglc-sync-median}) further confirms the synchrony between the metabolic cycle and budding events.
 
 Finally, to quantify the relationship between the metabolic cycle and the cell division cycle, I computed the cross-correlation function between the flavin and mCherry signals across the population (Fig.\ \ref{fig:biology-highglc-sync-xcf}).
-This function shows that the mCherry signal peaks are, on average, shifted by \SI{5}{\minute} relative to the flavin signals, thus demonstrating the coincidence between peaks of flavin oscillations and mitosis.
+The flavin signal peaks, on average, precede the mCherry signal peaks by \SI{5}{\minute}, as evidenced by the location of the peak of the cross-correlation function that is closest to the vertical axis.
+The cross-correlation function thus demonstrates the coincidence between peaks of flavin oscillations and mitosis.
 
 
 %\section[Abrupt nutrient changes]{Cells autonomously generate flavin oscillations, independently of the cell division cycle, in response to abrupt nutrient changes.}
@@ -337,10 +338,10 @@ Combined with results from the previous section, my data suggest that the metabo
   \label{fig:biology-starvation-histogram}
 \end{figure}
 
-The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that, upon starvation, cell division cycles progress to the next gap phase (G\textsubscript{1} or G\textsubscript{2}) while the metabolic cycle continues.
-To test this implication, Fig.\ \ref{fig:biology-starvation-raw} shows that cells may remain in G\textsubscript{1} (Fig.\ \ref{fig:biology-starvation-raw-2}), as evidenced by low mCherry intensity, or in G\textsubscript{2} (Fig.\ \ref{fig:biology-starvation-raw-1}), as evidenced by high mCherry intensity.
+The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that, upon starvation, cell division cycles progress to the next gap phase (G\textsubscript{1} or G\textsubscript{2}/M) while the metabolic cycle continues.
+To test this implication, Fig.\ \ref{fig:biology-starvation-raw} shows that cells may remain in G\textsubscript{1} (Fig.\ \ref{fig:biology-starvation-raw-2}), as evidenced by low mCherry intensity, or in G\textsubscript{2}/M (Fig.\ \ref{fig:biology-starvation-raw-1}), as evidenced by high mCherry intensity.
 Extending this investigation across a population of cells, Fig.\ \ref{fig:biology-starvation-histogram-mCherry} shows that the distribution of mCherry intensity becomes broader during starvation before resuming to a distribution resembling the initial condition upon restoration of glucose.
-This observation can be explained by a larger proportion of cells in G\textsubscript{2}, giving high mCherry intensity, in contrast to the usually short time cells spend in G\textsubscript{2} relative to the rest of the cell division cycle (Fig.\ \ref{fig:biology-htb2}).
+This observation can be explained by a larger proportion of cells in G\textsubscript{2}/M, giving high mCherry intensity, in contrast to the usually short time cells spend in G\textsubscript{2}/M relative to the rest of the cell division cycle (Fig.\ \ref{fig:biology-htb2}).
 In contrast, Fig.\ \ref{fig:biology-starvation-histogram-flavin} suggests that during starvation, the distribution of flavin intensity became narrower.
 % I'm not sure how much I like this bit.
 This observation can be explained by lower-amplitude oscillations during starvation, which was evidenced by a lower signal-to-noise ratio ($\bar{x}_{\mathrm{before}} = 2.86$, $\bar{x}_{\mathrm{starvation}} = 2.17$, $\bar{x}_{\mathrm{after}} = 4.09$; Welch's $t$-test: starvation vs before $p = \num{0.009}$, starvation vs after $p = \num{2.5d-12}$).
@@ -464,6 +465,7 @@ FY4 and BY4741 both derive from the S288c background strain.
 To show that the metabolic cycle is generated from a budding yeast strain other than S288c background strains, I performed a similar experiment with the prototrophic CEN.PK strain grown in minimal medium.
 Showing that metabolic cycles additionally occur in a different genetic background is important to emphasise that the cycles are intrinsic to budding yeast.
 CEN.PK is an important background to consider because it harbours genetic differences relative to S288c that results in physiological differences, including biotin prototrophy and malate metabolism \parencite{nijkampNovoSequencingAssembly2012}.
+Furthermore, CEN.PK has greater mitochondrial stability and a better gene regulatory response to levels of oxygen, owing to the insertion mutation that deactivates the \textit{HAP1} gene in S288c \parencite{gaisneNaturalMutationSaccharomyces1999}.
 Fig.\ \ref{fig:biology-cenpk-sync} suggests that CEN.PK113-7D cells exhibited \SI{90}{\minute} flavin oscillations that were synchronised with budding events, similar to FY4 cells, thus further confirming the robustness of the metabolic cycle across genetic backgrounds.
 
 
@@ -527,8 +529,8 @@ Additionally, a growth-limiting glucose concentration emulated low-glucose conce
 
 Fig.\ \ref{fig:biology-pyruvate} shows that FY4 HTB2::mCherry cells had longer metabolic cycles and cell division cycles (approximately \SI{4}{\hour}) when grown in minimal media supplemented with \SI{20}{\gram~\litre^{-1}} pyruvate, compared to growth in high glucose.
 %In addition, there were more cases in which the flavin signal peaks without a budding event. %(supplementary figure ...).
-Furthermore, the synchrony between the two oscillators remained, but with a longer lag of the cell division cycle with respect to the metabolic cycle (Fig.\ \ref{fig:biology-pyruvate-xcf}).
-Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G\textsubscript{1} phases but unchanged S/M phases, as evidenced by the longer flat regions of the mCherry signal.
+Furthermore, the synchrony between the metabolic cycle and cell division cycle remained, but with a longer lag (\SI{60}{\minute}) of the mCherry signal peak with respect to the flavin signal peak (Fig.\ \ref{fig:biology-pyruvate-xcf}).
+Fig.\ ~\ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G\textsubscript{1} phases but unchanged S/M phases, as evidenced by the longer flat regions of the mCherry signal.
 %However, the flavin cycles were not regular over long periods of time, as evidenced by a lack of repeated oscillations in the cross-correlation function.
 
 % COULD DO:
@@ -553,16 +555,16 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
    \label{fig:biology-lowglc-acf}
   \end{subfigure}
   \caption[
-    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{1d-2}{\gram~\litre^{-1}} glucose.
+    Flavin fluorescence and histone 2B levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{0.010}{\gram~\litre^{-1}} glucose.
     Median autocorrelation functions of flavin fluorescence and histone 2B levels time series, along with  the periods of each oscillator across cells.
-    Data are from FY4 HTB2::mCherry cells in \SI{1d-2}{\gram~\litre^{-1}} glucose.
+    Data are from FY4 HTB2::mCherry cells in \SI{0.010}{\gram~\litre^{-1}} glucose.
   ]{
     \textbf{(\ref{fig:biology-lowglc-single})}
-    Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{1d-2}{\gram~\litre^{-1}} glucose.
+    Flavin fluorescence (blue, solid lines) and histone 2B (orange, dotted lines) levels in a single, representative FY4 HTB2::mCherry cell grown in \SI{0.010}{\gram~\litre^{-1}} glucose.
     Vertical lines (black, dashed) indicate budding events.
     \textbf{(\ref{fig:biology-lowglc-acf})}
     Median autocorrelation functions of flavin fluorescence (blue) and histone 2B levels (orange) time series, along with \textit{\textbf{(inset)}} the periods of each oscillator across cells as determined by the frequency with the greatest power in each signal's Fourier spectrum.
-    Data are from FY4 HTB2::mCherry cells in \SI{1d-2}{\gram~\litre^{-1}} glucose.
+    Data are from FY4 HTB2::mCherry cells in \SI{0.010}{\gram~\litre^{-1}} glucose.
   }
   \label{fig:biology-lowglc}
 \end{figure}
@@ -602,7 +604,7 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
   \end{subfigure}
 
   \caption{
-    Mean growth rate of (shading: 95\% confidence intervals) FY4 (blue) and HTB2::mCherry (orange) strains over time, for \textbf{(\ref{fig:biology-lowglc-gr})} the glucose-limiting condition (\SI{1d-2}{\gram~\litre^{-1}}) and \textbf{(\ref{fig:biology-highglc-gr})} the high glucose condition (\SI{20}{\gram~\litre^{-1}}).
+    Mean growth rate of (shading: 95\% confidence intervals) FY4 (blue) and HTB2::mCherry (orange) strains over time, for \textbf{(\ref{fig:biology-lowglc-gr})} the glucose-limiting condition (\SI{0.010}{\gram~\litre^{-1}}) and \textbf{(\ref{fig:biology-highglc-gr})} the high glucose condition (\SI{20}{\gram~\litre^{-1}}).
     Similarly, the mean cumulative number of budding events per cell (shading: confidence intervals from bootstrapping, $n=30$), of the same strains for \textbf{(\ref{fig:biology-lowglc-cumul})} the glucose-limiting condition and \textbf{(\ref{fig:biology-highglc-cumul})} the high glucose condition.
   }
   \label{fig:biology-lowglc-gr-budprob}
@@ -645,7 +647,7 @@ Figure~\ref{fig:biology-pyruvate-single} shows that the longer cell division cyc
   \label{fig:biology-compare-snr}
 \end{figure}
 
-Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells had longer metabolic cycles when grown in minimal media supplemented with \SI{1d-2}{\gram~\litre^{-1}} glucose.
+Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells had longer metabolic cycles when grown in minimal media supplemented with \SI{0.010}{\gram~\litre^{-1}} glucose.
 Additionally, Fig.\ \ref{fig:biology-lowglc-gr-budprob} shows that the growth rate and the rate of bud formation of cells on limiting glucose was lower than on high glucose (\SI{20}{\gram~\litre^{-1}}).
 Furthermore, Fig.\ \ref{fig:biology-compare-snr} shows that the amplitude of the flavin oscillations in this glucose-limiting condition was low relative to other conditions, as evidenced by the lower signal-to-noise ratios. %(INSERT: statistical tests to reject the null hypothesis that the distribution of SNRs are the same between the three nutrient conditions.).
 Finally, Fig.\ \ref{fig:biology-lowglc-acf} shows that measurements of the metabolic cycle and the cell division cycle lost synchrony in limiting glucose.
@@ -1044,7 +1046,7 @@ Insights from such experiments may lead to a broader understanding of the contro
 Additional nutrient conditions can be used to address the discrepancies between the chemostat and single-cell microfluidics, namely, low glucose conditions and feast-and-famine conditions.
 
 Low glucose conditions emulate conditions in the chemostat and may lead to long metabolic cycles, thus explaining why cycles with periods up to \SI{14}{\hour} have been observed in chemostats.
-However, the glucose concentrations in chemostats are below the tolerance of measurement with current technologies; therefore, I propose that the limiting concentration of \SI{1d-2}{\gram~\litre^{-1}} is used.
+However, the glucose concentrations in chemostats are below the tolerance of measurement with current technologies; therefore, I propose that the limiting concentration of \SI{0.010}{\gram~\litre^{-1}} is used.
 Experiments with deletion strains can then be performed under these low-glucose conditions to investigate whether such conditions lead to a closer equivalence between chemostat and single-cell studies.
 
 Feast-and-famine conditions have been modelled in chemostat cultivation of yeast \parencite{jonesCyberneticModelGrowth1999}.
