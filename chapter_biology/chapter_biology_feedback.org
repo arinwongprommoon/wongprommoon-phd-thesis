@@ -53,7 +53,10 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [X] 29p3: clarify how cycles change
 
 ** Involves code
-- [ ] 11f1: discuss/investigate/invent a way to show memory of starvation in flavin signal
+- [-] 11f1: discuss/investigate/invent a way to show memory of starvation in flavin signal
+  - This likely means showing that the behaviour of the signals after starvation is different from before starvation.  Somehow.  Maybe mutual information.
+  - [X] (Cop-out) Short clarification in text.
+  - [ ] Mutual information
 - [X] 19f2: plot SNRs on the same axes
   - [X] also: kstest2
 - [X] 22f1: kstest2
@@ -85,6 +88,8 @@ This will involve:
 - Waiting a couple of hours for the Gaussian Process to run.  Per experiment.
 
 The software is fairly well-written and well-documented (but the design..?), but I don't have time to debug all this...
+
+Alternative: add together ~postprocessing/dsignal/extraction_general_None_volume~ (parents) and ~postprocessing/dsignal/postprocessing_bud_metric_extraction_general_None_volume~ (progeny), using the indices of ~extraction/Flavin_bgsub/max/mean~ to select cells.  This solves the crux: the 'proper' volume is parent + progeny because while the CDC progresses, some of the increase in volume goes into the bud.
 
 
 * Notes on tackling the more difficult bits
