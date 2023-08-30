@@ -54,10 +54,11 @@ Involve harder thought and more work.  Typically involve points of science rathe
 
 ** Involves code
 - [ ] 11f1: discuss/investigate/invent a way to show memory of starvation in flavin signal
-- [ ] 19f2: plot SNRs on the same axes
-  - [ ] also: kstest2 and remove t-test
-- [ ] 22f1: kstest2
-  - [ ] also: remove t-test
+- [X] 19f2: plot SNRs on the same axes
+  - [X] also: kstest2
+- [X] 22f1: kstest2
+  - [X] also: remove t-test
+  - [X] also: glucose-starvation experiment (p.12)
 
 * Category 3
 'That idiot didn't get my point at all/didn't bother to read/etc.' (their words, not mine)
@@ -79,5 +80,5 @@ Most of the time, these uncover unclear writing: e.g. point not made clearly, bu
 Go in this order:
 - +(No code) Itty-bitty stuff (cat 2)+
 - +(No code) Potassium-deficiency stuff+
-- (Code) SNRs and kstest2 stuff
+- +(Code) SNRs and kstest2 stuff+
 - (Code) Growth rate stuff
