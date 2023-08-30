@@ -75,7 +75,7 @@ Most of the time, these uncover unclear writing: e.g. point not made clearly, bu
 
 ** Involves code
 - [-] 09f1: clarify/discuss mean growth rate & budding plot
-  - [X] Make it clear whether I'm showing just the parent or parent + progeny.  Reminder that the 'proper' one is parent + progeny
+  - [X] Make it clear whether I'm showing just the parent or parent + progeny.  Reminder that the 'proper' one is parent + progeny because parent volume hardly changes.
   - [ ] If have time, try Peter's Gaussian process code.
   - [ ] Julian's preference: progeny (bud) volumes.
 
