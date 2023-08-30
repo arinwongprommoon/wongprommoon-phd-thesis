@@ -71,10 +71,21 @@ Most of the time, these uncover unclear writing: e.g. point not made clearly, bu
     - However, osmotic response should be faster (1-2 time points) than what is shown...
 
 ** Involves code
-- [ ] 09f1: clarify/discuss mean growth rate & budding plot
-  - Make it clear whether I'm showing just the parent or parent + progeny.  Reminder that the 'proper' one is parent + progeny
-  - If have time, try Peter's Gaussian process code.
-  - Julian's preference: progeny (bud) volumes.
+- [-] 09f1: clarify/discuss mean growth rate & budding plot
+  - [X] Make it clear whether I'm showing just the parent or parent + progeny.  Reminder that the 'proper' one is parent + progeny
+  - [ ] If have time, try Peter's Gaussian process code.
+  - [ ] Julian's preference: progeny (bud) volumes.
+
+(Notes <2023-08-30>)
+This will involve:
+- Forking and then refactoring ~wela~ to coax it to the CookieCutter directory structure (so that I don't make a mess).
+- Fixing the hard-coded g2a_dict attribute so it can be used with the varied key names from different versions of aliby.
+- Fixing the wide_df() function so it uses pandas.DataFrame.pivot() properly.
+- Silencing output by setting verbose=False in find_gr()
+- Waiting a couple of hours for the Gaussian Process to run.  Per experiment.
+
+The software is fairly well-written and well-documented (but the design..?), but I don't have time to debug all this...
+
 
 * Notes on tackling the more difficult bits
 Go in this order:
