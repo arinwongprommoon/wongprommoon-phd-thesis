@@ -222,70 +222,8 @@ This type of model is based on the assumption that each data point in the time s
 The advantage of the autoregressive model is that it leads to an analytical solution for the periodogram, thus potentially resolving the problem of a low-resolution periodogram based on the Fourier spectrum.
 
 In particular, \textcite{jiaFrequencyDomainAnalysis2021} describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
-Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series.
-This model-fitting can be described mathematically as follows:
+Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series (section~\ref{subsec:methods-computational-ar}).
 
-\begin{enumerate}
-  \item The algorithm relies on fitting a single time series $n(0), n(1), \ldots , n(M-1)$ with an autoregressive model $\mathrm{AR}(P)$ with order $P$:
-        \begin{equation}
-          \label{eq:ar-model}
-          \phi_{0}n_{t} + \phi_{1}n_{t-1} + \phi_{2}n_{t-2} + \ldots + \phi_{P}n_{t-P} = \theta_{0}\epsilon_{t}
-        \end{equation}
-        where $\epsilon_{t}$ is a white noise satisfying $\langle \epsilon_{t} \rangle = 0$,
-        $\phi_{0} = 1$, and
-        $\phi_{1}, \ldots , \phi_{P}$ are real numbers such that the complex zeros of the polynomial $\Phi (z) = \sum_{k=0}^{P} \phi_{k}z^{k}$ lie outside the unit circle.
-  \item The sample mean of the time series is estimated by:
-        \begin{equation}
-          \label{eq:ar-mean}
-          \langle n \rangle = \frac{1}{M} \sum_{k=0}^{M-1}n(k)
-        \end{equation}
-  \item The sample autocorrelation function is estimated as:
-        \begin{equation}
-          \label{eq:ar-acf}
-          R_{i} = \frac{1}{M} \sum_{k=0}^{M-1-i}(n(k) - \langle n \rangle)(n(k+i) - \langle n \rangle)
-        \end{equation}
-  \item The coefficients $\phi_{1}, \ldots , \phi_{P}$ are estimated by solving the Yule-Walker equation:
-        \begin{equation}
-          \label{eq:ar-yule-walker}
-          \begin{bmatrix}
-            R_{0} & R_{1} & \dots & R_{P-1} \\
-            R_{1} & R_{0} & \dots & R_{P-2} \\
-            \vdots & \vdots & \ddots & \vdots \\
-            R_{P-1} & R_{P-2} & \dots & R_{0}
-          \end{bmatrix}
-          \begin{bmatrix}
-            \phi_{1} \\
-            \phi_{2} \\
-            \vdots \\
-            \phi_{P}
-          \end{bmatrix}
-          =
-          \begin{bmatrix}
-            R_{1} \\
-            R_{2} \\
-            \vdots \\
-            R_{P}
-          \end{bmatrix}
-        \end{equation}
-  \item The parameter $\theta_{0}$ is estimated as:
-        \begin{equation}
-          \label{eq:ar-noise-param}
-          \theta_{0}^{2} = R_{0} - \sum_{k=1}^{P}\theta_{k}R_{k}
-        \end{equation}
-  \item The order $P$ is determined by minimising the Akaike information criterion:
-        \begin{equation}
-          \label{eq:ar-aic}
-          \mathrm{AIC}(P) = \log \theta_{0}^{2}(P) + 2 \frac{P}{M}
-        \end{equation}
-        where $\theta_{0}(P)$ is the estimated $\theta_{0}$ (equation~\ref{eq:ar-noise-param}) for a specific $P$.
-        In this step, $P$ is varied with $1 \leq P \leq 3 \sqrt{M}$, and the optimum order ($P$) is the one that gives the smallest value of $\mathrm{AIC}(P)$
-   \item The power spectrum is thus estimated analytically using the parameters found in earlier steps by:
-        \begin{equation}
-          \label{eq:ar-power-spectrum}
-          G(\xi) = \frac{1}{2 \pi} \cdot \frac{\theta_{0}^{2}}{|\sum_{k=0}^{P}\phi_{k}\me^{-ik\xi}|^{2}}, -\pi \leq \xi \leq \pi
-        \end{equation}
-        where $\xi$ represents frequency.
-\end{enumerate}
 
 \begin{figure}
   \centering
