@@ -14,12 +14,13 @@ Here, I propose steps for the analysis of datasets of 100--1000 time series rela
 
 Specifically, I address:
 \begin{enumerate}
-  \item Cleaning: choosing data and filtering out long-term trends that may confound further analysis.
-  \item Classification: determining whether a time series exhibits oscillations.
-  \item Characterisation: identifying the properties of a single time series, with an emphasis on the period and noise quality.
-  \item Correlation: identifying the relationship between two types of signal from the same cell.
-  \item Clustering: identifying the relationship between multiple time series of the same type of signal from a population of cells.
+  \item Data cleaning: choosing data and filtering out long-term trends that may confound further analysis.
+  \item Visualising groups in a dataset: identifying the relationship between multiple time series of the same type of signal from a population of cells.
         Such a relationship may include groupings or structures within the population of time series.
+  \item Detection of rhythmicity: determining whether a time series exhibits oscillations.
+  \item Period estimation: identifying the period of a single time series.
+        In this section, I discuss the use of the autocorrelation function.
+  \item Detection of synchrony: identifying the relationship between two types of signal from the same cell.
 \end{enumerate}
 
 In this chapter, I will ... (REVISIT THIS AFTER I GO THROUGH EVERYTHING)
@@ -59,7 +60,7 @@ To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} ident
 Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two approaches to analysis of time series: on one end, relying on mathematical methods, and on the other end, a data science approach to time series classification tasks.
 
 
-\section[Cleaning]{Cleaning: choosing data, filtering out long-term trends}
+\section{Data cleaning: filtering out long-term trends}
 \label{sec:analysis-cleaning}
 
 Biological time series often have long-term trends that are not useful and may confound analysis.
@@ -157,7 +158,196 @@ Therefore, for subsequent analyses, I used the high-pass Butterworth filter defi
 This is because using this method, I obtain more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set and estimating the noise properties.
 
 
-\section[Classification]{Classification: is my time series oscillatory?}
+%\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells --- what are their relationships to each other?}
+\section{Visualising groups in the dataset}
+\label{sec:analysis-clustering}
+
+To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented dimension reduction and graph-based clustering methods; specifically, UMAP and modularity clustering.
+Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
+Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
+
+% I don't like this sentence
+To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and \textit{zwf1$\Delta$} (mutant strain) strains.
+%I expected the \textit{zwf1$\Delta$} traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
+
+
+\subsection{UMAP}
+\label{subsec:analysis-clustering-umap}
+
+% TODO: repeat with better datasets
+% And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
+UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset., and it preserves the distances between points.
+% EQUATIONS?
+Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
+This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
+
+UMAP has several hyperparameters, of which four have major effects on the embedding:
+\begin{itemize}
+  \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
+        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
+        As the value increases, the algorithm `glues' more nodes together to form clusters.
+  \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
+        In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
+  \item The \emph{minimal distance} ($\mathrm{min\_dist}$) controls the desired separation between close points in the embedding space.
+        Specifically, this parameter controls how tightly the algorithm is allowed to pack points together.
+        With low values, the visualisation forms `clumps'.
+  \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
+        For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
+\end{itemize}
+
+% MOVE TO DISCUSSION?
+% However, UMAP has several caveats.
+% It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
+% Additionally, it assumes that the data has a manifold structure.
+% So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
+% If more data are sampled, then the amount of structure from noise will tend to decrease.
+% It assumes that local distance is more important than long-range distances, like t-SNE.
+% And finally, approximations were made to improve computational efficiency.
+
+
+% TODO: Use different colours for each type of categorisation
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{Figure_15}
+    \caption{
+    }
+    \label{fig:umap-osc}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{Figure_13}
+    \caption{
+    }
+    \label{fig:umap-strain}
+  \end{subfigure}
+
+  \caption[
+      UMAP embedding of a dataset of time series featurised using \textit{catch22}.
+    ]{
+      UMAP embedding ($n=10$, $\mathrm{min\_dist} = 0.05$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
+      Each node represents a time series, coloured either by
+      \textbf{(\ref{fig:umap-osc})}
+      whether each is oscillatory (`1') or not (`0'), human-labelled, or by
+      \textbf{(\ref{fig:umap-strain})}
+      strain (`BY4741' or `\textit{zwf1$\Delta$}').
+    }
+  \label{fig:umap}
+\end{figure}
+
+To assess the performance of UMAP for time series data, I evaluated whether the method was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to the division between the two strains or between oscillatory and non-oscillatory time series.
+Fig.\ \ref{fig:umap} shows that UMAP identified two clusters of non-oscillatory time series separate from the rest, thus suggesting that unsupervised UMAP could discriminate between oscillatory and non-oscillatory time series.
+% Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
+However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
+In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
+
+% The reason these clusters exist in this figure is likely because the BY4741 \& \textit{zwf1$\Delta$} dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
+% Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly \textit{zwf1$\Delta$}.
+%It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
+
+\begin{figure}
+  \centering
+    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
+    \caption[
+      Grid search of UMAP hyperparameters
+    ]{
+      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
+      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
+    }
+  \label{fig:umap-gridsearch}
+\end{figure}
+
+To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters to find the best combination.
+Fig.\ \ref{fig:umap-gridsearch} suggests that $n=150$ and $\mathrm{min\_dist} = 150$ resulted in a good separation between the the BY4741 and \textit{zwf1$\Delta$} nodes.
+In addition, non-oscillatory time series consistently organised into groups distinct from the rest as the hyperparameters were varied.
+
+
+\subsection{Graph-based clustering}
+\label{subsec:analysis-clustering-graphclustering}
+
+Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
+% [ADD EQUATIONS]
+%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
+To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
+This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graph_representation}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-graph}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{pruning}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-prune}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-modclust}
+  \end{subfigure}
+
+  \caption[
+    Modularity clustering visualises natural groupings of time series
+  ]{
+    Process of preparing a dataset of time series for modularity clustering.
+    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
+    Constructing a graph representation,
+    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
+    pruning the complete graph, and
+    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
+    modularity clustering.
+    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
+  }
+  \label{fig:analysis-clustering-modclust}
+\end{figure}
+
+To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
+Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
+\begin{enumerate}
+  \item \emph{Constructing a graph representation:}
+        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
+        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
+        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
+  \item \emph{Pruning:}
+        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
+        Here, $k=10$.
+  \item \emph{Modularity clustering:}
+        Modularity clustering was performed on the graph to partition the pruned graph into communities.
+        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
+\end{enumerate}
+
+
+% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{graphclustering}
+  \caption{
+    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
+    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
+  }
+  \label{fig:graphclustering}
+\end{figure}
+
+Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
+% This may change.
+Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
+
+
+%\section[Classification]{Classification: is my time series oscillatory?}
+\section{Detection of rhythmicity}
 \label{sec:analysis-classification}
 
 To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
@@ -171,49 +361,12 @@ To determine the time series classification method that is most appropriate for 
 \subsection{Rhythmicity detection using spectral methods}
 \label{subsec:analysis-classification-spectral}
 
-In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test.
+In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (section~\ref{subsec:methods-computational-periodogram}).
 This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
 This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \parencite{scargleStudiesAstronomicalTime1982}.
 The classification was based on controlling the false discovery rate for identification of oscillations.
 In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
-
-The classifier can be described mathematically as follows:
-
-\begin{enumerate}
-\item Let the data have $\mathcal{G}$ cells.
-Let cell $g = 1, \dots{}, \mathcal{G}$ have a time series with $N_{g}$ time points.
-The time series is thus denoted $Y_{g}(t) = y_{g}(t_{1}), \dots{}, y_{g}(t_{N_{g}})$.
-\item For each time series, I define a range of test frequencies linearly from $\frac{1}{N_{g}}$ to the Nyquist limit (i.e. half the rate of image acquisition, \SI{0.2}{\minute^{-1}}, in this case).
-
-With this definition, I compute the classical periodogram for each time series:
-  \begin{equation}
-    P_{g}(\omega) = \frac{N_{g}}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} Y_{g} e^{-2\pi it}dt \right|, % check constants, etc
-    \label{eq:normalised-periodogram-ar}
-  \end{equation}
-        where $\sigma^{2}$ is the sample variance of $Y_{g}$.
-        In this equation, the periodogram is normalised by the coefficient $N_{g}/2\sigma^{2}$ so that the area under the periodogram is constant across all time series.
-        The Lomb-Scargle periodogram is equivalent to the classical periodogram if the time points are equally spaced \parencite{lombLeastsquaresFrequencyAnalysis1976}, as is the case for the vast majority of my data.
-\item For each cell $g$, I denote the peak $h_{g} = \max_{j}P_{g}(\omega)$.
-I define an effective number of independent frequencies $M = f_{max}N_{g}$ for each time series, where $f_{max}$ is the Nyquist limit \parencite{vanderplasUnderstandingLombScarglePeriodogram2018}.
-  I then calculate the $p$-value of testing the null hypothesis that such a peak is due to chance:
-  \begin{equation}
-    p_{g} = 1 - (1 - e^{-h_{g}})^M
-    \label{eq:lsp-pval}
-  \end{equation}
-  This formula is based on the exponential distribution of the power at a given frequency in the periodogram \parencite{scargleStudiesAstronomicalTime1982}.
-\item I order the cells by $p$-values: $p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(\mathcal{G})}$.
-  To control the false discovery rate \parencite{benjaminiControllingFalseDiscovery1995}, I find $\hat{k}$ according to:
-  \begin{equation}
-    \hat{k} = \arg\max_{1 \leq k \leq \mathcal{G}}\{k : p_{(k)} \leq qk/\mathcal{G}\}
-    \label{eq:lsp-khat}
-  \end{equation}
-  where $q$ is a defined false discovery rate.
-\item Cells whose $p$-values correspond to $p_{(1)}, p_{(2)}, \dots, p_{(\hat{k})}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
-\end{enumerate}
-
-Subsequently, the peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation, and therefore, the time series can be rank according to the height of this peak.
-
 
 \begin{figure}[htbp]
   \centering
@@ -259,70 +412,8 @@ This type of model is based on the assumption that each data point in the time s
 The advantage of the autoregressive model is that it leads to an analytical solution for the periodogram, thus potentially resolving the problem of a low-resolution periodogram based on the Fourier spectrum.
 
 In particular, \textcite{jiaFrequencyDomainAnalysis2021} describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
-Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series.
-This model-fitting can be described mathematically as follows:
+Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series (section~\ref{subsec:methods-computational-ar}).
 
-\begin{enumerate}
-  \item The algorithm relies on fitting a single time series $n(0), n(1), \ldots , n(M-1)$ with an autoregressive model $\mathrm{AR}(P)$ with order $P$:
-        \begin{equation}
-          \label{eq:ar-model}
-          \phi_{0}n_{t} + \phi_{1}n_{t-1} + \phi_{2}n_{t-2} + \ldots + \phi_{P}n_{t-P} = \theta_{0}\epsilon_{t}
-        \end{equation}
-        where $\epsilon_{t}$ is a white noise satisfying $\langle \epsilon_{t} \rangle = 0$,
-        $\phi_{0} = 1$, and
-        $\phi_{1}, \ldots , \phi_{P}$ are real numbers such that the complex zeros of the polynomial $\Phi (z) = \sum_{k=0}^{P} \phi_{k}z^{k}$ lie outside the unit circle.
-  \item The sample mean of the time series is estimated by:
-        \begin{equation}
-          \label{eq:ar-mean}
-          \langle n \rangle = \frac{1}{M} \sum_{k=0}^{M-1}n(k)
-        \end{equation}
-  \item The sample autocorrelation function is estimated as:
-        \begin{equation}
-          \label{eq:ar-acf}
-          R_{i} = \frac{1}{M} \sum_{k=0}^{M-1-i}(n(k) - \langle n \rangle)(n(k+i) - \langle n \rangle)
-        \end{equation}
-  \item The coefficients $\phi_{1}, \ldots , \phi_{P}$ are estimated by solving the Yule-Walker equation:
-        \begin{equation}
-          \label{eq:ar-yule-walker}
-          \begin{bmatrix}
-            R_{0} & R_{1} & \dots & R_{P-1} \\
-            R_{1} & R_{0} & \dots & R_{P-2} \\
-            \vdots & \vdots & \ddots & \vdots \\
-            R_{P-1} & R_{P-2} & \dots & R_{0}
-          \end{bmatrix}
-          \begin{bmatrix}
-            \phi_{1} \\
-            \phi_{2} \\
-            \vdots \\
-            \phi_{P}
-          \end{bmatrix}
-          =
-          \begin{bmatrix}
-            R_{1} \\
-            R_{2} \\
-            \vdots \\
-            R_{P}
-          \end{bmatrix}
-        \end{equation}
-  \item The parameter $\theta_{0}$ is estimated as:
-        \begin{equation}
-          \label{eq:ar-noise-param}
-          \theta_{0}^{2} = R_{0} - \sum_{k=1}^{P}\theta_{k}R_{k}
-        \end{equation}
-  \item The order $P$ is determined by minimising the Akaike information criterion:
-        \begin{equation}
-          \label{eq:ar-aic}
-          \mathrm{AIC}(P) = \log \theta_{0}^{2}(P) + 2 \frac{P}{M}
-        \end{equation}
-        where $\theta_{0}(P)$ is the estimated $\theta_{0}$ (equation~\ref{eq:ar-noise-param}) for a specific $P$.
-        In this step, $P$ is varied with $1 \leq P \leq 3 \sqrt{M}$, and the optimum order ($P$) is the one that gives the smallest value of $\mathrm{AIC}(P)$
-   \item The power spectrum is thus estimated analytically using the parameters found in earlier steps by:
-        \begin{equation}
-          \label{eq:ar-power-spectrum}
-          G(\xi) = \frac{1}{2 \pi} \cdot \frac{\theta_{0}^{2}}{|\sum_{k=0}^{P}\phi_{k}\me^{-ik\xi}|^{2}}, -\pi \leq \xi \leq \pi
-        \end{equation}
-        where $\xi$ represents frequency.
-\end{enumerate}
 
 \begin{figure}
   \centering
@@ -379,7 +470,7 @@ Nevertheless, among the time series that the algorithm classifies as oscillatory
 %[Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.]
 
 
-\subsection{Machine learning approaches to classification}
+\subsection{Rhythmicity detection using machine learning}
 \label{subsec:analysis-classification-ml}
 % - Write results from classifier project (SVM, RF, etc.)
 
@@ -536,145 +627,26 @@ a simple machine learning architecture is sufficient in classifying noisy biolog
 This method was also able to identify which time series feature was the most important in distinguishing between oscillatory and non-oscillatory time series.
 
 
-\section[Characterisation]{Characterisation: I have one time series --- what properties does it have?}
+%\section[Characterisation]{Characterisation: I have one time series --- what properties does it have?}
+\section{Period estimation using the autocorrelation function}
 \label{sec:analysis-characterisation}
 
 Characterising features of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations.
-The characteristics that are important to my investigation of the yeast metabolic cycle include the period and the amplitude.
+%The characteristics that are important to my investigation of the yeast metabolic cycle include the period and the amplitude.
 The period of an oscillatory time series is the easiest characteristic to compute a fixed number for because it is well-defined.
-Similarly, the amplitude is easy to estimate, based on fitting a cosine to the signal, but are inadequate if oscillations are asymmetrical.
-However, due to the detrending methods I used, information about the amplitude is lost, and therefore it must be indirectly inferred from the magnitude of noise, assuming that the sources of noise are constant across time series.
+%Similarly, the amplitude is easy to estimate, based on fitting a cosine to the signal, but are inadequate if oscillations are asymmetrical.
+%However, due to the detrending methods I used, information about the amplitude is lost, and therefore it must be indirectly inferred from the magnitude of noise, assuming that the sources of noise are constant across time series.
 
-
-\subsection{Autocorrelation function}
-\label{subsec:analysis-characterisation-acf}
-
+% TODO: Edit this paragraph.  It's a Frankenstein's creation of several others that were deleted.
 In this section, I show that the autocorrelation function can be adapted to characterise the period and noise properties of populations of both sinusoid time series and time series and asymmetrical oscillations.
+The cross-correlation function used in this chapter is adapted from \textcite{pietschDeterminingGrowthRates2023} (section~\ref{subsec:methods-computational-xcf}).
 I first do so with synthetic time series with known properties and adapt the methods to my data that exhibit similar oscillations as the synthetic time series.
+To understand the effect of the autocorrelation function on biological time series, I modelled time series flavin fluorescence oscillations using the harmonic oscillator and modelled time series of histone 2B abundance patterns using the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961} (section~\ref{subsec:methods-computational-synthetic}).
 
-\subsubsection{Mathematical definitions}
-\label{subsubsec:analysis-characterisation-acf-maths}
+\subsection{Synthetic data}
+\label{subsubsec:analysis-characterisation-synthetic}
 
-The cross-correlation function used in this chapter is adapted from \textcite{pietschDeterminingGrowthRates2023}, as follows:
-
-\begin{enumerate}
-  \item Let the data have $M$ cells.
-        Each cell $i$ in the population of $M$ cells has a time series $x_{1}^{(i)}, \ldots , x_{j}^{(i)}, \ldots , x_{N}^{(i)}$ of quantity $x$ and a time series $y_{1}^{(i)}, \ldots , y_{j}^{(i)}, \ldots , y_{N}^{(i)}$ of quantity $y$.
-        Let both time series have a sampling interval of $\Delta t$.
-  \item The deviation from the population mean for each time series is computed.
-        This population mean is calculated over replicates at each time point.
-        The caveat of this calculation is that the signals \emph{must} be out-of-phase, and I ensure this by generating synthetic signals with a random phase.
-        Otherwise, the underlying signal will be subtracted from all time series and the cross-correlation of noise will be computed --- this is undesired.
-        \begin{equation}
-          \delta x_{t}^{(i)} = x_{t}^{(i)} - \frac{1}{M} \sum_{j}x_{t}^{(j)}
-          \label{eq:xcf-dmeans-x}
-        \end{equation}
-        \begin{equation}
-          \delta y_{t}^{(i)} = y_{t}^{(i)} - \frac{1}{M} \sum_{j}y_{t}^{(j)}
-          \label{eq:xcf-dmeans-y}
-        \end{equation}
-  \item Based on \textcite{kivietStochasticityMetabolismGrowth2014}, the cross-covariance of the two time series $x$ and $y$ at a time lag of $r\Delta t$, is thus given by:
-        \begin{equation}
-          C_{xy}^{(i)}(r\Delta t) =
-          \begin{cases}
-            \frac{1}{N-r} \sum_{t=1}^{N-r} \delta x_{t}^{(i)} \cdot \delta y_{t+r}^{(i)} & \text{if } r \geq 0 \\
-            C_{yx}^{(i)}(-r \Delta t) & \text{if } r < 0
-          \end{cases}
-          \label{eq:xcf-xcov}
-        \end{equation}
-    \item $C_{xx}^{(i)}(0)$ and $C_{yy}^{(i)}(0)$ thus give the variances of $x$ and $y$.  The cross-correlation is thus given, with normalising by the standard deviation, by:
-        \begin{equation}
-          R_{xy}^{(i)}(r \Delta t) = \frac{C_{xy}^{(i)}(r \Delta t)}{\sqrt{C_{xx}^{(i)}(0) C_{yy}^{(i)}(0)}}
-          \label{eq:xcf-xcf}
-        \end{equation}
-\end{enumerate}
-
-The autocorrelation of a time series $x$ is thus the cross-correlation of the time series with itself, i.e.\ $R_{xx}^{(i)}(r \Delta t)$.
-
-
-To understand the effect of the autocorrelation function on biological time series, I modelled time series flavin fluorescence oscillations using the harmonic oscillator and modelled time series of histone 2B abundance patterns using the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961}.
-These model oscillators are defined by simple differential equations and are well-characterised.
-
-The harmonic oscillator $y(t)$ is defined as the solution of:
-
-\begin{equation}
-  \sndif{y}{t} = -\omega^{2}y
-  \label{eq:harmonic}
-\end{equation}
-
-where the sole parameter $\omega$ represents the angular frequency.
-%The solution $y(t) = A \sin(\omega{}t + \phi)$ defines a sinusoidal time series; $A$ is a constant representing amplitude and $\phi$ is a constant representing phase, both determined by initial conditions of the system.
-
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.9\linewidth]{fitzhughnagumo_sample.png}
-  \caption[
-    Sample time series based on the solution of the FitzHugh-Nagumo model
-  ]
-  {
-    Sample time series based on the solution $v(t)$ of the FitzHugh-Nagumo model, with parameters
-    $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82.
-  }
-  \label{fig:fitzhughnagumo_sample}
-\end{figure}
-
-The FitzHugh-Nagumo oscillator $v(t)$ is defined as a solution of the system:
-
-\begin{equation}
-  \begin{aligned}
-    \ndif{v}{t} &= v - \frac{v^3}{3} - w + RI_{\mathrm{ext}} \\
-    \tau \ndif{w}{t} &= v + a - bw
-  \end{aligned}
-  \label{eq:fhn}
-\end{equation}
-
-where $RI_{\mathrm{ext}}$, $\tau$, $a$, and $b$ are constant parameters to be determined.
-Fig.\ \ref{fig:fitzhughnagumo_sample} shows an example.
-
-
-Biological time series have noise.
-To assess the affect of noise on the cross-correlation function, I added Gaussian or Gillespie noise to the models of oscillators.
-
-Gaussian noise was generated by randomly drawing samples from the normal distribution $\mathcal{N}(0,\sigma^{2})$.
-Here, $\sigma$ denotes the standard deviation of the distribution and thus controls the size of the noise.
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}{0.4\textwidth}
-    \centering
-    % Modify this figure:
-    % - Axis labels
-    \includegraphics[width=\linewidth]{gillespie}
-    \caption{
-    }
-    \label{fig:gillespie_trajectory}
-  \end{subfigure}%
- \begin{subfigure}{0.6\textwidth}
-    \centering
-    \includegraphics[width=\linewidth]{gillespie_noise_samples}
-    \caption{
-    }
-    \label{fig:gillespie_noise_samples}
-  \end{subfigure}
-
-  \caption{
-    \textbf{(\ref{fig:gillespie_trajectory})}
-    Sample trajectory of a substrate created and destroyed by the birth-death process, simulated by the Gillespie algorithm ($k_{0} = 5$, $d_{0} = 0.05$, $t_{\mathrm{max}} = 1500$).
-    \textbf{(\ref{fig:gillespie_noise_samples})}
-    Sample time series of Gillespie noise, derived from trajectories generated as in (\ref{fig:gillespie_trajectory}).
-  }
-  \label{fig:gillespie_noise}
-\end{figure}
-
-Gillespie noise emulates noise from biological systems (Fig.\ \ref{fig:gillespie_noise}).
-Gillespie noise was generated using the direct method of the Gillespie algorithm \parencite{gillespieExactStochasticSimulation1977} on the birth-death process model (appendix~\ref{append:analysis-gillespie}).
-The parameters of the birth-death process control noise parameters.
-Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
-
-
-\subsubsection{Effect of noise parameters on the autocorrelation function}
+\subsubsection{Harmonic oscillator: effect of noise parameters}
 \label{subsubsec:analysis-characterisation-acf-sinusoid}
 
 \begin{figure}
@@ -759,9 +731,11 @@ Following this, Fig.\ \ref{fig:acf-sinusoids-gausnoise-acf} shows that the addit
 Furthermore, the variation of the autocorrelation function among time series at long lags is increased, evidenced by the interquartile range.
 This variation is because less data was used to compute the autocorrelation function at long lags (mathematical derivation in appendix ...).
 
+Gillespie noise is based on the birth-death process, and its two parameters control noise parameters (section~\ref{subsec:methods-computational-synthetic}).
+Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
 % Though Peter said this `is not trivial'.
-Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} then shows that when Gillespie noise was added to the sinusoids, the medium autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
+Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} shows that when Gillespie noise was added to the sinusoids, the medium autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
 In addition, the location of the peaks --- corresponding to the period of the sinusoid --- were preserved.
 This figure thus suggests that the death rate $d_{0}$ parameter of Gillespie noise controlled the shape of the autocorrelation function.
 
@@ -932,37 +906,7 @@ Conversely, if $C$ can be estimated from the autocorrelation function, then the 
 % The birth rate controls the amplitude of noise and thus controls how robust the autocorrelation function is.
 
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.6\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{26643_ts.png}
-    \caption{
-    }
-    \label{fig:acf-sinusoid-biol-ts}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fy4_26643_plots_06.png}
-    \caption{
-    }
-    \label{fig:acf-sinusoid-biol-acf}
-  \end{subfigure}
-
-  \caption{
-    \textbf{(\ref{fig:acf-sinusoid-biol-ts})}
-    Sample time series of flavin autofluorescence.
-    \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
-    Autocorrelation function across a population of time series of flavin autofluorescence.
-  }
-  \label{fig:acf-sinusoid-biol}
-\end{figure}
-
-From the relationships shown in Figs.\ \ref{fig:acf-noiseamplitude-effect} and \ref{fig:acf-noisetimescale-effect}, noise parameters from the autocorrelation functions of real signals may be deduced.
-Fig.\ \ref{fig:acf-sinusoid-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
-
-
-\subsubsection{The autocorrelation function extended for use with FitzHugh-Nagumo oscillators}
+\subsubsection{FitzHugh-Nagumo oscillator: effect of oscillator shape}
 \label{subsubsec:analysis-characterisation-acf-fhn}
 
 
@@ -1049,6 +993,39 @@ As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ 
 However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
 
+\subsection{Real data}
+\label{subsubsec:analysis-characterisation-real}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.6\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{26643_ts.png}
+    \caption{
+    }
+    \label{fig:acf-sinusoid-biol-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{fy4_26643_plots_06.png}
+    \caption{
+    }
+    \label{fig:acf-sinusoid-biol-acf}
+  \end{subfigure}
+
+  \caption{
+    \textbf{(\ref{fig:acf-sinusoid-biol-ts})}
+    Sample time series of flavin autofluorescence.
+    \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
+    Autocorrelation function across a population of time series of flavin autofluorescence.
+  }
+  \label{fig:acf-sinusoid-biol}
+\end{figure}
+
+From the relationships shown in Figs.\ \ref{fig:acf-noiseamplitude-effect} and \ref{fig:acf-noisetimescale-effect}, noise parameters from the autocorrelation functions of real signals may be deduced.
+Fig.\ \ref{fig:acf-sinusoid-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
+
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.6\textwidth}
@@ -1079,116 +1056,18 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
 From the relationships shown in Figs.\ \ref{fig:acf-fhn-noiseparams-noisetimescale} and \ref{fig:acf-fhn-noiseparams-noiseamplitude}, noise parameters from the autocorrelation functions of real signals may be deduced.
 Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
 
-% Not sure how useful this subsection is...
-% And it's also a bit dangling
-\subsection{Combining methods to get a picture of periodicity}
-\label{subsec:analysis-characterisation-combined}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\linewidth]{potvin-trottierSynchronousLongtermOscillations2016_1e_adapted}
-  \caption[
-    Autocorrelation function and power spectral density calculated time series of cellular YFP concentration
-  ]{
-    Autocorrelation function (main) and power spectral density (upper-right inset) calculated over \num{8694} cell divisions' worth of time series of cellular YFP concentration controlled by a YFP-expressing repressilator.
-    From the autocorrelation function, the average period of the oscillations is 5.6 generations, and the peak frequency of the power spectral density agrees.
-    Adapted from \textcite{potvin-trottierSynchronousLongtermOscillations2016}.
-  }
-  \label{fig:acf-fft-example}
-\end{figure}
-
-Each periodicity-estimation method has a limited ability to estimate the period of short, noisy biological time series; therefore, it is often useful to combine several such methods to produce a picture of the periodicity of oscillatory time series.
-For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator (Fig.\ \ref{fig:acf-fft-example}).
-%Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
-
-% [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
-
-% [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
-
-\subsection{New subsection for noise}
-\label{subsec:analysis-characterisation-noise}
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.5\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{snr_illustration}
-   \caption{
-   }
-   \label{fig:analysis-snr-illustration}
- \end{subfigure}%
- \begin{subfigure}[htpb]{0.5\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
-   \caption{
-   }
-   \label{fig:analysis-snr-histogram-example}
-  \end{subfigure}
-
-  \caption{
-    %The signal-to-noise ratio as a measure of signal quality.
-    \textbf{(\ref{fig:analysis-snr-illustration})}
-    Illustration of signal-to-noise ratio.
-    The signal-to-noise ratio is defined (Eqs.\ \ref{eq:normalised-periodogram}--\ref{eq:noise}) as the area under the periodogram below a cut-off frequency (yellow) divided by the area under the periodogram above a cut-off frequency (pink).
-    \textbf{(\ref{fig:analysis-snr-histogram-example})}
-    Histogram of signal-to-noise ratios from a sample experiment ($n=403$).
-  }
-  \label{fig:analysis-snr}
-\end{figure}
-
-To evaluate the quality of oscillatory time series in a dataset and to indirectly measure the amplitude of the oscillations, I computed a signal-to-noise ratio for each time series.
-Because the information about the amplitude of the oscillations was removed when they were filtered using the high-pass Butterworth filter, a different measure is needed.
-Assuming a constant noise introduced by the combination of intrinsic noise (stochasticity in biochemical processes) and extrinsic noise (variations introduced by measurement instruments), a low signal-to-noise ratio suggests a low oscillation amplitude, and the reverse is true for a high signal-to-noise ratio.
-
-The signal-to-noise ratio can be defined as follows:
-
-Given a time series $x(t) = x_{t_{1}}, x_{t_{2}}, \ldots, x_{t_{N}}$, the normalised classical periodogram (Fourier spectrum) is given by
-
-\begin{equation}
-  P(\omega) = \frac{N}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} x(t) e^{-2\pi it}dt \right|, % check constants, etc
-  \label{eq:normalised-periodogram}
-\end{equation}
-
-where $N$ is the number of time points in $x$ and $\sigma^{2}$ is the sample variance of $x$.
-The periodogram $P$ is defined as a function of the angular frequency $\omega$.
-
-A critical frequency $\omega_{c}$ is then defined to divide signal and noise --- that is, very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.
-
-The signal to noise ratio $r_{s/n}$ (Fig.\ \ref{fig:analysis-snr}) is thus defined as
-
-\begin{equation}
-  r_{s/n} = \frac{s}{n}
-  \label{eq:snr}
-\end{equation}
-
-where the signal $s$ is defined as
-
-\begin{equation}
-  s = \int_{0}^{\omega_{c}} P(\omega) d\omega
-  \label{eq:signal}
-\end{equation}
-
-and the noise $n$ is defined as
-
-\begin{equation}
-  n = \int_{\omega_{c}}^{\infty} P(\omega) d\omega
-  \label{eq:noise}
-\end{equation}
-
-In this thesis, I define $\omega_{c} = \SI[parse-numbers=false]{1/350}{\minute^{-1}}$ because this frequency is lower than the frequencies of all oscillations of flavin autofluorescence I observed in my experiments.
-
-
-\section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
+%\section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
+\section{Detection of synchrony}
 \label{sec:analysis-correlation}
-
-% [COMMENTED OUT BECAUSE IT IS THE SOLE SUBSECTION]
-% \subsection{Cross-correlation}
-% \label{subsec:analysis-correlation-xcf}
 
 To test a method to quantify the temporal lag between flavin autofluorescence oscillations and HTB2::mCherry levels in a population of cells, I computed the cross-correlation functions of a population of sinusoid and FitzHugh-Nagumo oscillators.
 Cross-correlation has been used to investigate the relationship between the expression levels of two genes in a model feed-forward loop \parencite{dunlopRegulatoryActivityRevealed2008},
 and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
 Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employed a single-cell microfluidics experiment with time-lapse microscopy, and therefore their analysis of a population of time series is applicable in this chapter.
+
+\subsection{Synthetic data}
+\label{subsubsec:analysis-correlation-synthetic}
 
 \begin{figure}
   \centering
@@ -1246,223 +1125,40 @@ Fig.\ \ref{fig:xcf-nonoise-xcf} shows that the cross-correlation function correc
 This shift was evidenced by the degree to which the central peak of the cross-correlation function was shifted to the right, in contrast to the situation in which the cross-correlation at lag 0 is 1 if the peaks of the two oscillators coincide.
 Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
-% Commented out: This is repeated again in chapter 4
+
+\subsection{Real data}
+\label{subsubsec:analysis-correlation-real}
+
 % TODO: Replace with pyruvate?  More dramatic.
 
-% \begin{figure}
-%   \centering
-%   \begin{subfigure}[t]{0.9\textwidth}
-%   \centering
-%     \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
-%     \caption{
-%       Sample time series of flavin autofluorescence (purple) and histone 2B abundance (pink).
-%     }
-%     \label{fig:xcf-biol-ts}
-%   \end{subfigure}
-
-%   \begin{subfigure}[t]{0.7\textwidth}
-%   \centering
-%     \includegraphics[width=\linewidth]{xcf_edit.pdf}
-%     \caption{
-%       Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
-%     }
-%     \label{fig:xcf-biol-xcf}
-%   \end{subfigure}
-
-%   \caption{
-%     Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
-%   }
-%   \label{fig:xcf-biol}
-% \end{figure}
-
-% I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
-% Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
-
-
-\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells --- what are their relationships to each other?}
-\label{sec:analysis-clustering}
-
-To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented graph-based clustering and dimension reduction methods; specifically, modularity clustering and UMAP.
-Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
-Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
-
-% I don't like this sentence
-To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and \textit{zwf1$\Delta$} (mutant strain) strains.
-%I expected the \textit{zwf1$\Delta$} traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
-
-\subsection{Graph-based clustering}
-\label{subsec:analysis-clustering-graphclustering}
-
-Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
-% [ADD EQUATIONS]
-%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
-To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
-This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
-
-
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.5\textwidth}
+  \begin{subfigure}[t]{0.9\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{graph_representation}
+    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
     \caption{
+      Sample time series of flavin autofluorescence (purple) and histone 2B abundance (pink).
     }
-    \label{fig:analysis-clustering-modclust-graph}
+    \label{fig:xcf-biol-ts}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.7\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{pruning}
+    \includegraphics[width=\linewidth]{xcf_edit.pdf}
     \caption{
+      Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
     }
-    \label{fig:analysis-clustering-modclust-prune}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-modclust}
+    \label{fig:xcf-biol-xcf}
   \end{subfigure}
 
-  \caption[
-    Modularity clustering visualises natural groupings of time series
-  ]{
-    Process of preparing a dataset of time series for modularity clustering.
-    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
-    Constructing a graph representation,
-    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
-    pruning the complete graph, and
-    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
-    modularity clustering.
-    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
-  }
-  \label{fig:analysis-clustering-modclust}
-\end{figure}
-
-To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
-Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
-\begin{enumerate}
-  \item \emph{Constructing a graph representation:}
-        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
-        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
-        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
-  \item \emph{Pruning:}
-        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
-        Here, $k=10$.
-  \item \emph{Modularity clustering:}
-        Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
-\end{enumerate}
-
-
-% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{graphclustering}
   \caption{
-    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
-    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
+    Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
   }
-  \label{fig:graphclustering}
+  \label{fig:xcf-biol}
 \end{figure}
 
-Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
-% This may change.
-Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
-
-
-\subsection{UMAP}
-\label{subsec:analysis-clustering-umap}
-
-% TODO: repeat with better datasets
-% And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
-UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset., and it preserves the distances between points.
-% EQUATIONS?
-Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
-This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
-
-UMAP has several hyperparameters, of which four have major effects on the embedding:
-\begin{itemize}
-  \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
-        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
-        As the value increases, the algorithm `glues' more nodes together to form clusters.
-  \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
-        In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
-  \item The \emph{minimal distance} ($\mathrm{min\_dist}$) controls the desired separation between close points in the embedding space.
-        Specifically, this parameter controls how tightly the algorithm is allowed to pack points together.
-        With low values, the visualisation forms `clumps'.
-  \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
-        For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
-\end{itemize}
-
-% MOVE TO DISCUSSION?
-% However, UMAP has several caveats.
-% It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
-% Additionally, it assumes that the data has a manifold structure.
-% So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
-% If more data are sampled, then the amount of structure from noise will tend to decrease.
-% It assumes that local distance is more important than long-range distances, like t-SNE.
-% And finally, approximations were made to improve computational efficiency.
-
-
-% TODO: Use different colours for each type of categorisation
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.7\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{Figure_15}
-    \caption{
-    }
-    \label{fig:umap-osc}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.7\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{Figure_13}
-    \caption{
-    }
-    \label{fig:umap-strain}
-  \end{subfigure}
-
-  \caption[
-      UMAP embedding of a dataset of time series featurised using \textit{catch22}.
-    ]{
-      UMAP embedding ($n=10$, $\mathrm{min\_dist} = 0.05$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
-      Each node represents a time series, coloured either by
-      \textbf{(\ref{fig:umap-osc})}
-      whether each is oscillatory (`1') or not (`0'), human-labelled, or by
-      \textbf{(\ref{fig:umap-strain})}
-      strain (`BY4741' or `\textit{zwf1$\Delta$}').
-    }
-  \label{fig:umap}
-\end{figure}
-
-To assess the performance of UMAP for time series data, I evaluated whether the method was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to the division between the two strains or between oscillatory and non-oscillatory time series.
-Fig.\ \ref{fig:umap} shows that UMAP identified two clusters of non-oscillatory time series separate from the rest, thus suggesting that unsupervised UMAP could discriminate between oscillatory and non-oscillatory time series.
-% Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
-However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
-In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
-
-% The reason these clusters exist in this figure is likely because the BY4741 \& \textit{zwf1$\Delta$} dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
-% Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly \textit{zwf1$\Delta$}.
-%It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
-
-\begin{figure}
-  \centering
-    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
-    \caption[
-      Grid search of UMAP hyperparameters
-    ]{
-      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
-      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
-    }
-  \label{fig:umap-gridsearch}
-\end{figure}
-
-To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters to find the best combination.
-Fig.\ \ref{fig:umap-gridsearch} suggests that $n=150$ and $\mathrm{min\_dist} = 150$ resulted in a good separation between the the BY4741 and \textit{zwf1$\Delta$} nodes.
-In addition, non-oscillatory time series consistently organised into groups distinct from the rest as the hyperparameters were varied.
+I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
+Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
 
 
 \section{Discussion}
@@ -1485,3 +1181,16 @@ Solving mathematical and computational problems for each task is an intellectual
 Nevertheless, combining all five main steps can form a powerful analysis workflow that can be adapted to the analysis of other large datasets of time series, biological or not.
 I illustrate the use of such an example of an analysis workflow in chapter~\ref{ch:biology}, when I apply it to analyse biological results.
 Constructing an analysis workflow can be an interesting and challenging software engineering problem in its own right.
+
+% Not sure how useful this subsection is...
+% And it's also a bit dangling
+\subsection{Combining methods to get a picture of periodicity}
+\label{subsec:analysis-characterisation-combined}
+
+Each periodicity-estimation method has a limited ability to estimate the period of short, noisy biological time series; therefore, it is often useful to combine several such methods to produce a picture of the periodicity of oscillatory time series.
+For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator.
+%Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
+
+% [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
+
+% [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]

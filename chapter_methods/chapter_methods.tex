@@ -183,6 +183,310 @@ It then uses \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} to segm
 The background fluorescence is also computed, based on the pixel intensity outside cell outlines, and is then subtracted from the cell fluorescence.
 Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 
+\section{Computational methods}
+\label{sec:methods-computational}
+
+\subsection{Classical periodogram}
+\label{subsec:methods-computational-periodogram}
+
+To detect rhythmicity in time series, I computed the classical periodogram and used a statistical test for rhythmicity based on \textcite{glynnDetectingPeriodicPatterns2006a}, described as follows:
+
+\begin{enumerate}
+\item Let the data have $\mathcal{G}$ cells.
+Let cell $g = 1, \dots{}, \mathcal{G}$ have a time series with $N_{g}$ time points.
+The time series is thus denoted $Y_{g}(t) = y_{g}(t_{1}), \dots{}, y_{g}(t_{N_{g}})$.
+\item For each time series, I define a range of test frequencies linearly from $\frac{1}{N_{g}}$ to the Nyquist limit (i.e. half the rate of image acquisition, \SI{0.2}{\minute^{-1}}, in this case).
+
+With this definition, I compute the classical periodogram for each time series:
+  \begin{equation}
+    P_{g}(\omega) = \frac{N_{g}}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} Y_{g} e^{-2\pi it}dt \right|, % check constants, etc
+    \label{eq:normalised-periodogram-ar}
+  \end{equation}
+        where $\sigma^{2}$ is the sample variance of $Y_{g}$.
+        In this equation, the periodogram is normalised by the coefficient $N_{g}/2\sigma^{2}$ so that the area under the periodogram is constant across all time series.
+        The Lomb-Scargle periodogram is equivalent to the classical periodogram if the time points are equally spaced \parencite{lombLeastsquaresFrequencyAnalysis1976}, as is the case for the vast majority of my data.
+\item For each cell $g$, I denote the peak $h_{g} = \max_{j}P_{g}(\omega)$.
+I define an effective number of independent frequencies $M = f_{max}N_{g}$ for each time series, where $f_{max}$ is the Nyquist limit \parencite{vanderplasUnderstandingLombScarglePeriodogram2018}.
+  I then calculate the $p$-value of testing the null hypothesis that such a peak is due to chance:
+  \begin{equation}
+    p_{g} = 1 - (1 - e^{-h_{g}})^M
+    \label{eq:lsp-pval}
+  \end{equation}
+  This formula is based on the exponential distribution of the power at a given frequency in the periodogram \parencite{scargleStudiesAstronomicalTime1982}.
+\item I order the cells by $p$-values: $p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(\mathcal{G})}$.
+  To control the false discovery rate \parencite{benjaminiControllingFalseDiscovery1995}, I find $\hat{k}$ according to:
+  \begin{equation}
+    \hat{k} = \arg\max_{1 \leq k \leq \mathcal{G}}\{k : p_{(k)} \leq qk/\mathcal{G}\}
+    \label{eq:lsp-khat}
+  \end{equation}
+  where $q$ is a defined false discovery rate.
+\item Cells whose $p$-values correspond to $p_{(1)}, p_{(2)}, \dots, p_{(\hat{k})}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
+\end{enumerate}
+
+Subsequently, the peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation, and therefore, the time series can be ranked according to the height of this peak.
+
+
+\subsection{Autoregressive model}
+\label{subsec:methods-computational-ar}
+
+As an alternative method to detect rhythmicity in time series, I fitted an autoregressive model and used its parameters to compute an analytically-defined periodogram, based on \textcite{jiaFrequencyDomainAnalysis2020}, as follows:
+
+\begin{enumerate}
+  \item The algorithm relies on fitting a single time series $n(0), n(1), \ldots , n(M-1)$ with an autoregressive model $\mathrm{AR}(P)$ with order $P$:
+        \begin{equation}
+          \label{eq:ar-model}
+          \phi_{0}n_{t} + \phi_{1}n_{t-1} + \phi_{2}n_{t-2} + \ldots + \phi_{P}n_{t-P} = \theta_{0}\epsilon_{t}
+        \end{equation}
+        where $\epsilon_{t}$ is a white noise satisfying $\langle \epsilon_{t} \rangle = 0$,
+        $\phi_{0} = 1$, and
+        $\phi_{1}, \ldots , \phi_{P}$ are real numbers such that the complex zeros of the polynomial $\Phi (z) = \sum_{k=0}^{P} \phi_{k}z^{k}$ lie outside the unit circle.
+  \item The sample mean of the time series is estimated by:
+        \begin{equation}
+          \label{eq:ar-mean}
+          \langle n \rangle = \frac{1}{M} \sum_{k=0}^{M-1}n(k)
+        \end{equation}
+  \item The sample autocorrelation function is estimated as:
+        \begin{equation}
+          \label{eq:ar-acf}
+          R_{i} = \frac{1}{M} \sum_{k=0}^{M-1-i}(n(k) - \langle n \rangle)(n(k+i) - \langle n \rangle)
+        \end{equation}
+  \item The coefficients $\phi_{1}, \ldots , \phi_{P}$ are estimated by solving the Yule-Walker equation:
+        \begin{equation}
+          \label{eq:ar-yule-walker}
+          \begin{bmatrix}
+            R_{0} & R_{1} & \dots & R_{P-1} \\
+            R_{1} & R_{0} & \dots & R_{P-2} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            R_{P-1} & R_{P-2} & \dots & R_{0}
+          \end{bmatrix}
+          \begin{bmatrix}
+            \phi_{1} \\
+            \phi_{2} \\
+            \vdots \\
+            \phi_{P}
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+            R_{1} \\
+            R_{2} \\
+            \vdots \\
+            R_{P}
+          \end{bmatrix}
+        \end{equation}
+  \item The parameter $\theta_{0}$ is estimated as:
+        \begin{equation}
+          \label{eq:ar-noise-param}
+          \theta_{0}^{2} = R_{0} - \sum_{k=1}^{P}\theta_{k}R_{k}
+        \end{equation}
+  \item The order $P$ is determined by minimising the Akaike information criterion:
+        \begin{equation}
+          \label{eq:ar-aic}
+          \mathrm{AIC}(P) = \log \theta_{0}^{2}(P) + 2 \frac{P}{M}
+        \end{equation}
+        where $\theta_{0}(P)$ is the estimated $\theta_{0}$ (equation~\ref{eq:ar-noise-param}) for a specific $P$.
+        In this step, $P$ is varied with $1 \leq P \leq 3 \sqrt{M}$, and the optimum order ($P$) is the one that gives the smallest value of $\mathrm{AIC}(P)$
+   \item The power spectrum is thus estimated analytically using the parameters found in earlier steps by:
+        \begin{equation}
+          \label{eq:ar-power-spectrum}
+          G(\xi) = \frac{1}{2 \pi} \cdot \frac{\theta_{0}^{2}}{|\sum_{k=0}^{P}\phi_{k}\me^{-ik\xi}|^{2}}, -\pi \leq \xi \leq \pi
+        \end{equation}
+        where $\xi$ represents frequency.
+\end{enumerate}
+
+
+\subsection{Cross-correlation function}
+\label{subsec:methods-computational-xcf}
+
+To estimate the periodicity of signals, I adapted the cross-correlation function as used in \textcite{pietschDeterminingGrowthRates2023}, as follows:
+
+\begin{enumerate}
+  \item Let the data have $M$ cells.
+        Each cell $i$ in the population of $M$ cells has a time series $x_{1}^{(i)}, \ldots , x_{j}^{(i)}, \ldots , x_{N}^{(i)}$ of quantity $x$ and a time series $y_{1}^{(i)}, \ldots , y_{j}^{(i)}, \ldots , y_{N}^{(i)}$ of quantity $y$.
+        Let both time series have a sampling interval of $\Delta t$.
+  \item The deviation from the population mean for each time series is computed.
+        This population mean is calculated over replicates at each time point.
+        The caveat of this calculation is that the signals \emph{must} be out-of-phase, and I ensure this by generating synthetic signals with a random phase.
+        Otherwise, the underlying signal will be subtracted from all time series and the cross-correlation of noise will be computed --- this is undesired.
+        \begin{equation}
+          \delta x_{t}^{(i)} = x_{t}^{(i)} - \frac{1}{M} \sum_{j}x_{t}^{(j)}
+          \label{eq:xcf-dmeans-x}
+        \end{equation}
+        \begin{equation}
+          \delta y_{t}^{(i)} = y_{t}^{(i)} - \frac{1}{M} \sum_{j}y_{t}^{(j)}
+          \label{eq:xcf-dmeans-y}
+        \end{equation}
+  \item Based on \textcite{kivietStochasticityMetabolismGrowth2014}, the cross-covariance of the two time series $x$ and $y$ at a time lag of $r\Delta t$, is thus given by:
+        \begin{equation}
+          C_{xy}^{(i)}(r\Delta t) =
+          \begin{cases}
+            \frac{1}{N-r} \sum_{t=1}^{N-r} \delta x_{t}^{(i)} \cdot \delta y_{t+r}^{(i)} & \text{if } r \geq 0 \\
+            C_{yx}^{(i)}(-r \Delta t) & \text{if } r < 0
+          \end{cases}
+          \label{eq:xcf-xcov}
+        \end{equation}
+    \item $C_{xx}^{(i)}(0)$ and $C_{yy}^{(i)}(0)$ thus give the variances of $x$ and $y$.  The cross-correlation is thus given, with normalising by the standard deviation, by:
+        \begin{equation}
+          R_{xy}^{(i)}(r \Delta t) = \frac{C_{xy}^{(i)}(r \Delta t)}{\sqrt{C_{xx}^{(i)}(0) C_{yy}^{(i)}(0)}}
+          \label{eq:xcf-xcf}
+        \end{equation}
+\end{enumerate}
+
+The autocorrelation of a time series $x$ is thus the cross-correlation of the time series with itself, i.e.\ $R_{xx}^{(i)}(r \Delta t)$.
+
+
+\subsection{Synthetic oscillations}
+\label{subsec:methods-computational-synthetic}
+
+To understand the effect of the shape and noise properties present in biological time series on the cross-correlation function, I emulated such time series by generating synthetic time series using the harmonic (sinusoid) and FitzHugh-Nagumo oscillators \parencite{fitzhughImpulsesPhysiologicalStates1961}.
+
+The harmonic oscillator $y(t)$ is defined as the solution of:
+
+\begin{equation}
+  \sndif{y}{t} = -\omega^{2}y
+  \label{eq:harmonic}
+\end{equation}
+
+where the sole parameter $\omega$ represents the angular frequency.
+%The solution $y(t) = A \sin(\omega{}t + \phi)$ defines a sinusoidal time series; $A$ is a constant representing amplitude and $\phi$ is a constant representing phase, both determined by initial conditions of the system.
+
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.9\linewidth]{fitzhughnagumo_sample.png}
+%   \caption[
+%     Sample time series based on the solution of the FitzHugh-Nagumo model
+%   ]
+%   {
+%     Sample time series based on the solution $v(t)$ of the FitzHugh-Nagumo model, with parameters
+%     $RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82.
+%   }
+%   \label{fig:fitzhughnagumo_sample}
+% \end{figure}
+
+The FitzHugh-Nagumo oscillator $v(t)$ is defined as a solution of the system:
+
+\begin{equation}
+  \begin{aligned}
+    \ndif{v}{t} &= v - \frac{v^3}{3} - w + RI_{\mathrm{ext}} \\
+    \tau \ndif{w}{t} &= v + a - bw
+  \end{aligned}
+  \label{eq:fhn}
+\end{equation}
+
+where $RI_{\mathrm{ext}}$, $\tau$, $a$, and $b$ are constant parameters to be determined.
+%Fig.\ \ref{fig:fitzhughnagumo_sample} shows an example.
+
+In addition, I emulated noise by generating Gaussian and Gillespie noise.
+
+Gaussian noise was generated by randomly drawing samples from the normal distribution $\mathcal{N}(0,\sigma^{2})$.
+Here, $\sigma$ denotes the standard deviation of the distribution and thus controls the size of the noise.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    % Modify this figure:
+    % - Axis labels
+    \includegraphics[width=\linewidth]{gillespie}
+    \caption{
+    }
+    \label{fig:gillespie_trajectory}
+  \end{subfigure}%
+ \begin{subfigure}{0.6\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{gillespie_noise_samples}
+    \caption{
+    }
+    \label{fig:gillespie_noise_samples}
+  \end{subfigure}
+
+  \caption{
+    \textbf{(\ref{fig:gillespie_trajectory})}
+    Sample trajectory of a substrate created and destroyed by the birth-death process, simulated by the Gillespie algorithm ($k_{0} = 5$, $d_{0} = 0.05$, $t_{\mathrm{max}} = 1500$).
+    \textbf{(\ref{fig:gillespie_noise_samples})}
+    Sample time series of Gillespie noise, derived from trajectories generated as in (\ref{fig:gillespie_trajectory}).
+  }
+  \label{fig:gillespie_noise}
+\end{figure}
+
+Gillespie noise emulates noise from biological systems (Fig.\ \ref{fig:gillespie_noise}).
+Gillespie noise was generated using the direct method of the Gillespie algorithm \parencite{gillespieExactStochasticSimulation1977} on the birth-death process model (appendix~\ref{append:analysis-gillespie}).
+% The parameters of the birth-death process control noise parameters.
+% Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
+
+\subsection{Signal-to-noise ratio}
+\label{subsec:methods-computational-snr}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{snr_illustration}
+   \caption{
+   }
+   \label{fig:analysis-snr-illustration}
+ \end{subfigure}%
+ \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
+   \caption{
+   }
+   \label{fig:analysis-snr-histogram-example}
+  \end{subfigure}
+
+  \caption{
+    %The signal-to-noise ratio as a measure of signal quality.
+    \textbf{(\ref{fig:analysis-snr-illustration})}
+    Illustration of signal-to-noise ratio.
+    The signal-to-noise ratio is defined (Eqs.\ \ref{eq:normalised-periodogram}--\ref{eq:noise}) as the area under the periodogram below a cut-off frequency (yellow) divided by the area under the periodogram above a cut-off frequency (pink).
+    \textbf{(\ref{fig:analysis-snr-histogram-example})}
+    Histogram of signal-to-noise ratios from a sample experiment ($n=403$).
+  }
+  \label{fig:analysis-snr}
+\end{figure}
+
+To evaluate the quality of oscillatory time series in a dataset and to indirectly measure the amplitude of the oscillations, I computed a signal-to-noise ratio for each time series.
+%Because the information about the amplitude of the oscillations was removed when they were filtered using the high-pass Butterworth filter, a different measure is needed.
+Assuming a constant noise introduced by the combination of intrinsic noise (stochasticity in biochemical processes) and extrinsic noise (variations introduced by measurement instruments), a low signal-to-noise ratio suggests a low oscillation amplitude, and the reverse is true for a high signal-to-noise ratio.
+
+The signal-to-noise ratio can be defined as follows:
+
+Given a time series $x(t) = x_{t_{1}}, x_{t_{2}}, \ldots, x_{t_{N}}$, the normalised classical periodogram (Fourier spectrum) is given by
+
+\begin{equation}
+  P(\omega) = \frac{N}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} x(t) e^{-2\pi it}dt \right|, % check constants, etc
+  \label{eq:normalised-periodogram}
+\end{equation}
+
+where $N$ is the number of time points in $x$ and $\sigma^{2}$ is the sample variance of $x$.
+The periodogram $P$ is defined as a function of the angular frequency $\omega$.
+
+A critical frequency $\omega_{c}$ is then defined to divide signal and noise --- that is, very high-frequency components of the periodogram correspond to noise and lower-frequency components correspond to the meaningful oscillations.
+
+The signal to noise ratio $r_{s/n}$ (Fig.\ \ref{fig:analysis-snr}) is thus defined as
+
+\begin{equation}
+  r_{s/n} = \frac{s}{n}
+  \label{eq:snr}
+\end{equation}
+
+where the signal $s$ is defined as
+
+\begin{equation}
+  s = \int_{0}^{\omega_{c}} P(\omega) d\omega
+  \label{eq:signal}
+\end{equation}
+
+and the noise $n$ is defined as
+
+\begin{equation}
+  n = \int_{\omega_{c}}^{\infty} P(\omega) d\omega
+  \label{eq:noise}
+\end{equation}
+
+In this thesis, I define $\omega_{c} = \SI[parse-numbers=false]{1/350}{\minute^{-1}}$ because this frequency is lower than the frequencies of all oscillations of flavin autofluorescence I observed in my experiments.
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../thesis.tex"
