@@ -441,3 +441,16 @@ Then, I pruned this complete graph to produce an incomplete graph by letting eac
 Modularity clustering, specially the general Louvain algorithm, was then used to identify communities within the resulting network, and the resolution parameter could be tuned to control the number of clusters the algorithm finds.
 When the resolution value was set so that the graph was partitioned into two clusters, the clusters conformed well to groups (figure \ref{fig:graphclustering}). % TABLE/NUMBER: Add a 'confusion matrix' (re-use code from 5m) and calculate accuracy (note: revert to some old commit to re-produce this -- why the hell did Fulcher have to change EVERYTHING ughhhhh).  Make clear the point that in each iteration, things are different.
 % (this is the where the Rand value can be used instead, but there is no need -- just making a note here).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\linewidth]{potvin-trottierSynchronousLongtermOscillations2016_1e_adapted}
+  \caption[
+    Autocorrelation function and power spectral density calculated time series of cellular YFP concentration
+  ]{
+    Autocorrelation function (main) and power spectral density (upper-right inset) calculated over \num{8694} cell divisions' worth of time series of cellular YFP concentration controlled by a YFP-expressing repressilator.
+    From the autocorrelation function, the average period of the oscillations is 5.6 generations, and the peak frequency of the power spectral density agrees.
+    Adapted from \textcite{potvin-trottierSynchronousLongtermOscillations2016}.
+  }
+  \label{fig:acf-fft-example}
+\end{figure}
