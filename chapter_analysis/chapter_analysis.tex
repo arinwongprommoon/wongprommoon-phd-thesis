@@ -171,49 +171,12 @@ To determine the time series classification method that is most appropriate for 
 \subsection{Rhythmicity detection using spectral methods}
 \label{subsec:analysis-classification-spectral}
 
-In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test.
+In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (section~\ref{subsec:methods-computational-periodogram}).
 This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
 This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \parencite{scargleStudiesAstronomicalTime1982}.
 The classification was based on controlling the false discovery rate for identification of oscillations.
 In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
-
-The classifier can be described mathematically as follows:
-
-\begin{enumerate}
-\item Let the data have $\mathcal{G}$ cells.
-Let cell $g = 1, \dots{}, \mathcal{G}$ have a time series with $N_{g}$ time points.
-The time series is thus denoted $Y_{g}(t) = y_{g}(t_{1}), \dots{}, y_{g}(t_{N_{g}})$.
-\item For each time series, I define a range of test frequencies linearly from $\frac{1}{N_{g}}$ to the Nyquist limit (i.e. half the rate of image acquisition, \SI{0.2}{\minute^{-1}}, in this case).
-
-With this definition, I compute the classical periodogram for each time series:
-  \begin{equation}
-    P_{g}(\omega) = \frac{N_{g}}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} Y_{g} e^{-2\pi it}dt \right|, % check constants, etc
-    \label{eq:normalised-periodogram-ar}
-  \end{equation}
-        where $\sigma^{2}$ is the sample variance of $Y_{g}$.
-        In this equation, the periodogram is normalised by the coefficient $N_{g}/2\sigma^{2}$ so that the area under the periodogram is constant across all time series.
-        The Lomb-Scargle periodogram is equivalent to the classical periodogram if the time points are equally spaced \parencite{lombLeastsquaresFrequencyAnalysis1976}, as is the case for the vast majority of my data.
-\item For each cell $g$, I denote the peak $h_{g} = \max_{j}P_{g}(\omega)$.
-I define an effective number of independent frequencies $M = f_{max}N_{g}$ for each time series, where $f_{max}$ is the Nyquist limit \parencite{vanderplasUnderstandingLombScarglePeriodogram2018}.
-  I then calculate the $p$-value of testing the null hypothesis that such a peak is due to chance:
-  \begin{equation}
-    p_{g} = 1 - (1 - e^{-h_{g}})^M
-    \label{eq:lsp-pval}
-  \end{equation}
-  This formula is based on the exponential distribution of the power at a given frequency in the periodogram \parencite{scargleStudiesAstronomicalTime1982}.
-\item I order the cells by $p$-values: $p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(\mathcal{G})}$.
-  To control the false discovery rate \parencite{benjaminiControllingFalseDiscovery1995}, I find $\hat{k}$ according to:
-  \begin{equation}
-    \hat{k} = \arg\max_{1 \leq k \leq \mathcal{G}}\{k : p_{(k)} \leq qk/\mathcal{G}\}
-    \label{eq:lsp-khat}
-  \end{equation}
-  where $q$ is a defined false discovery rate.
-\item Cells whose $p$-values correspond to $p_{(1)}, p_{(2)}, \dots, p_{(\hat{k})}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
-\end{enumerate}
-
-Subsequently, the peak of the normalised classical periodogram of each time series was used as a proxy for the quality of oscillation, and therefore, the time series can be rank according to the height of this peak.
-
 
 \begin{figure}[htbp]
   \centering
