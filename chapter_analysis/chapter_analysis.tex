@@ -161,94 +161,13 @@ This is because using this method, I obtain more control over the frequency comp
 \section{Visualising groups in the dataset}
 \label{sec:analysis-clustering}
 
-To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented graph-based clustering and dimension reduction methods; specifically, modularity clustering and UMAP.
+To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented dimension reduction and graph-based clustering methods; specifically, UMAP and modularity clustering.
 Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
 Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
 
 % I don't like this sentence
 To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and \textit{zwf1$\Delta$} (mutant strain) strains.
 %I expected the \textit{zwf1$\Delta$} traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
-
-\subsection{Graph-based clustering}
-\label{subsec:analysis-clustering-graphclustering}
-
-Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
-% [ADD EQUATIONS]
-%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
-To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
-This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.5\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{graph_representation}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-graph}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{pruning}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-prune}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-modclust}
-  \end{subfigure}
-
-  \caption[
-    Modularity clustering visualises natural groupings of time series
-  ]{
-    Process of preparing a dataset of time series for modularity clustering.
-    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
-    Constructing a graph representation,
-    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
-    pruning the complete graph, and
-    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
-    modularity clustering.
-    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
-  }
-  \label{fig:analysis-clustering-modclust}
-\end{figure}
-
-To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
-Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
-\begin{enumerate}
-  \item \emph{Constructing a graph representation:}
-        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
-        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
-        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
-  \item \emph{Pruning:}
-        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
-        Here, $k=10$.
-  \item \emph{Modularity clustering:}
-        Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
-\end{enumerate}
-
-
-% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{graphclustering}
-  \caption{
-    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
-    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
-  }
-  \label{fig:graphclustering}
-\end{figure}
-
-Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
-% This may change.
-Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
 
 
 \subsection{UMAP}
@@ -342,6 +261,88 @@ In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE C
 To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters to find the best combination.
 Fig.\ \ref{fig:umap-gridsearch} suggests that $n=150$ and $\mathrm{min\_dist} = 150$ resulted in a good separation between the the BY4741 and \textit{zwf1$\Delta$} nodes.
 In addition, non-oscillatory time series consistently organised into groups distinct from the rest as the hyperparameters were varied.
+
+
+\subsection{Graph-based clustering}
+\label{subsec:analysis-clustering-graphclustering}
+
+Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
+% [ADD EQUATIONS]
+%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
+To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
+This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graph_representation}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-graph}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{pruning}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-prune}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-modclust}
+  \end{subfigure}
+
+  \caption[
+    Modularity clustering visualises natural groupings of time series
+  ]{
+    Process of preparing a dataset of time series for modularity clustering.
+    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
+    Constructing a graph representation,
+    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
+    pruning the complete graph, and
+    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
+    modularity clustering.
+    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
+  }
+  \label{fig:analysis-clustering-modclust}
+\end{figure}
+
+To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
+Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
+\begin{enumerate}
+  \item \emph{Constructing a graph representation:}
+        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
+        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
+        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
+  \item \emph{Pruning:}
+        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
+        Here, $k=10$.
+  \item \emph{Modularity clustering:}
+        Modularity clustering was performed on the graph to partition the pruned graph into communities.
+        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
+\end{enumerate}
+
+
+% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{graphclustering}
+  \caption{
+    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
+    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
+  }
+  \label{fig:graphclustering}
+\end{figure}
+
+Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
+% This may change.
+Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
 
 
 \section[Classification]{Classification: is my time series oscillatory?}
