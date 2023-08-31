@@ -627,7 +627,7 @@ This method was also able to identify which time series feature was the most imp
 
 
 %\section[Characterisation]{Characterisation: I have one time series --- what properties does it have?}
-\section{Period estimation}
+\section{Period estimation using the autocorrelation function}
 \label{sec:analysis-characterisation}
 
 Characterising features of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations.
@@ -636,27 +636,16 @@ The period of an oscillatory time series is the easiest characteristic to comput
 %Similarly, the amplitude is easy to estimate, based on fitting a cosine to the signal, but are inadequate if oscillations are asymmetrical.
 %However, due to the detrending methods I used, information about the amplitude is lost, and therefore it must be indirectly inferred from the magnitude of noise, assuming that the sources of noise are constant across time series.
 
-
-\subsection{Autocorrelation function}
-\label{subsec:analysis-characterisation-acf}
-
+% TODO: Edit this paragraph.  It's a Frankenstein's creation of several others that were deleted.
 In this section, I show that the autocorrelation function can be adapted to characterise the period and noise properties of populations of both sinusoid time series and time series and asymmetrical oscillations.
+The cross-correlation function used in this chapter is adapted from \textcite{pietschDeterminingGrowthRates2023} (section~\ref{subsec:methods-computational-xcf}).
 I first do so with synthetic time series with known properties and adapt the methods to my data that exhibit similar oscillations as the synthetic time series.
-
-\subsubsection{Mathematical definitions}
-\label{subsubsec:analysis-characterisation-acf-maths}
-
-The cross-correlation function used in this chapter is adapted from \textcite{pietschDeterminingGrowthRates2023}, as follows:
-
-
 To understand the effect of the autocorrelation function on biological time series, I modelled time series flavin fluorescence oscillations using the harmonic oscillator and modelled time series of histone 2B abundance patterns using the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961} (section~\ref{subsec:methods-computational-synthetic}).
-In addition, biological time series have noise.
-To assess the affect of noise on the cross-correlation function, I added Gaussian or Gillespie noise to the models of oscillators (section~\ref{subsec:methods-computational-synthetic}).
-Importantly, the Gillespie noise is based on the birth-death process, and its two parameters control noise parameters.
-Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 
+\subsection{Synthetic data}
+\label{subsubsec:analysis-characterisation-synthetic}
 
-\subsubsection{Effect of noise parameters on the autocorrelation function}
+\subsubsection{Harmonic oscillator: effect of noise parameters}
 \label{subsubsec:analysis-characterisation-acf-sinusoid}
 
 \begin{figure}
@@ -741,9 +730,11 @@ Following this, Fig.\ \ref{fig:acf-sinusoids-gausnoise-acf} shows that the addit
 Furthermore, the variation of the autocorrelation function among time series at long lags is increased, evidenced by the interquartile range.
 This variation is because less data was used to compute the autocorrelation function at long lags (mathematical derivation in appendix ...).
 
+Gillespie noise is based on the birth-death process, and its two parameters control noise parameters (section~\ref{subsec:methods-computational-synthetic}).
+Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
 % Though Peter said this `is not trivial'.
-Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} then shows that when Gillespie noise was added to the sinusoids, the medium autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
+Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} shows that when Gillespie noise was added to the sinusoids, the medium autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
 In addition, the location of the peaks --- corresponding to the period of the sinusoid --- were preserved.
 This figure thus suggests that the death rate $d_{0}$ parameter of Gillespie noise controlled the shape of the autocorrelation function.
 
@@ -914,37 +905,7 @@ Conversely, if $C$ can be estimated from the autocorrelation function, then the 
 % The birth rate controls the amplitude of noise and thus controls how robust the autocorrelation function is.
 
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.6\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{26643_ts.png}
-    \caption{
-    }
-    \label{fig:acf-sinusoid-biol-ts}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fy4_26643_plots_06.png}
-    \caption{
-    }
-    \label{fig:acf-sinusoid-biol-acf}
-  \end{subfigure}
-
-  \caption{
-    \textbf{(\ref{fig:acf-sinusoid-biol-ts})}
-    Sample time series of flavin autofluorescence.
-    \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
-    Autocorrelation function across a population of time series of flavin autofluorescence.
-  }
-  \label{fig:acf-sinusoid-biol}
-\end{figure}
-
-From the relationships shown in Figs.\ \ref{fig:acf-noiseamplitude-effect} and \ref{fig:acf-noisetimescale-effect}, noise parameters from the autocorrelation functions of real signals may be deduced.
-Fig.\ \ref{fig:acf-sinusoid-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
-
-
-\subsubsection{The autocorrelation function extended for use with FitzHugh-Nagumo oscillators}
+\subsubsection{FitzHugh-Nagumo oscillator: effect of oscillator shape}
 \label{subsubsec:analysis-characterisation-acf-fhn}
 
 
@@ -1031,6 +992,39 @@ As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ 
 However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
 
+\subsection{Real data}
+\label{subsubsec:analysis-characterisation-real}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.6\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{26643_ts.png}
+    \caption{
+    }
+    \label{fig:acf-sinusoid-biol-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{fy4_26643_plots_06.png}
+    \caption{
+    }
+    \label{fig:acf-sinusoid-biol-acf}
+  \end{subfigure}
+
+  \caption{
+    \textbf{(\ref{fig:acf-sinusoid-biol-ts})}
+    Sample time series of flavin autofluorescence.
+    \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
+    Autocorrelation function across a population of time series of flavin autofluorescence.
+  }
+  \label{fig:acf-sinusoid-biol}
+\end{figure}
+
+From the relationships shown in Figs.\ \ref{fig:acf-noiseamplitude-effect} and \ref{fig:acf-noisetimescale-effect}, noise parameters from the autocorrelation functions of real signals may be deduced.
+Fig.\ \ref{fig:acf-sinusoid-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
+
+
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.6\textwidth}
@@ -1060,32 +1054,6 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
 
 From the relationships shown in Figs.\ \ref{fig:acf-fhn-noiseparams-noisetimescale} and \ref{fig:acf-fhn-noiseparams-noiseamplitude}, noise parameters from the autocorrelation functions of real signals may be deduced.
 Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
-
-% Not sure how useful this subsection is...
-% And it's also a bit dangling
-\subsection{Combining methods to get a picture of periodicity}
-\label{subsec:analysis-characterisation-combined}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\linewidth]{potvin-trottierSynchronousLongtermOscillations2016_1e_adapted}
-  \caption[
-    Autocorrelation function and power spectral density calculated time series of cellular YFP concentration
-  ]{
-    Autocorrelation function (main) and power spectral density (upper-right inset) calculated over \num{8694} cell divisions' worth of time series of cellular YFP concentration controlled by a YFP-expressing repressilator.
-    From the autocorrelation function, the average period of the oscillations is 5.6 generations, and the peak frequency of the power spectral density agrees.
-    Adapted from \textcite{potvin-trottierSynchronousLongtermOscillations2016}.
-  }
-  \label{fig:acf-fft-example}
-\end{figure}
-
-Each periodicity-estimation method has a limited ability to estimate the period of short, noisy biological time series; therefore, it is often useful to combine several such methods to produce a picture of the periodicity of oscillatory time series.
-For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator (Fig.\ \ref{fig:acf-fft-example}).
-%Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
-
-% [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
-
-% [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
 
 
 \section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
@@ -1209,3 +1177,29 @@ Solving mathematical and computational problems for each task is an intellectual
 Nevertheless, combining all five main steps can form a powerful analysis workflow that can be adapted to the analysis of other large datasets of time series, biological or not.
 I illustrate the use of such an example of an analysis workflow in chapter~\ref{ch:biology}, when I apply it to analyse biological results.
 Constructing an analysis workflow can be an interesting and challenging software engineering problem in its own right.
+
+% Not sure how useful this subsection is...
+% And it's also a bit dangling
+\subsection{Combining methods to get a picture of periodicity}
+\label{subsec:analysis-characterisation-combined}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\linewidth]{potvin-trottierSynchronousLongtermOscillations2016_1e_adapted}
+  \caption[
+    Autocorrelation function and power spectral density calculated time series of cellular YFP concentration
+  ]{
+    Autocorrelation function (main) and power spectral density (upper-right inset) calculated over \num{8694} cell divisions' worth of time series of cellular YFP concentration controlled by a YFP-expressing repressilator.
+    From the autocorrelation function, the average period of the oscillations is 5.6 generations, and the peak frequency of the power spectral density agrees.
+    Adapted from \textcite{potvin-trottierSynchronousLongtermOscillations2016}.
+  }
+  \label{fig:acf-fft-example}
+\end{figure}
+
+Each periodicity-estimation method has a limited ability to estimate the period of short, noisy biological time series; therefore, it is often useful to combine several such methods to produce a picture of the periodicity of oscillatory time series.
+For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator (Fig.\ \ref{fig:acf-fft-example}).
+%Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
+
+% [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
+
+% [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
