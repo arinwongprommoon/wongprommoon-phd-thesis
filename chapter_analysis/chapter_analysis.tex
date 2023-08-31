@@ -157,6 +157,193 @@ Therefore, for subsequent analyses, I used the high-pass Butterworth filter defi
 This is because using this method, I obtain more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set and estimating the noise properties.
 
 
+%\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells --- what are their relationships to each other?}
+\section{Visualising groups in the dataset}
+\label{sec:analysis-clustering}
+
+To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented graph-based clustering and dimension reduction methods; specifically, modularity clustering and UMAP.
+Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
+Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
+
+% I don't like this sentence
+To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and \textit{zwf1$\Delta$} (mutant strain) strains.
+%I expected the \textit{zwf1$\Delta$} traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
+
+\subsection{Graph-based clustering}
+\label{subsec:analysis-clustering-graphclustering}
+
+Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
+% [ADD EQUATIONS]
+%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
+To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
+This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graph_representation}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-graph}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{pruning}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-prune}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
+    \caption{
+    }
+    \label{fig:analysis-clustering-modclust-modclust}
+  \end{subfigure}
+
+  \caption[
+    Modularity clustering visualises natural groupings of time series
+  ]{
+    Process of preparing a dataset of time series for modularity clustering.
+    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
+    Constructing a graph representation,
+    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
+    pruning the complete graph, and
+    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
+    modularity clustering.
+    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
+  }
+  \label{fig:analysis-clustering-modclust}
+\end{figure}
+
+To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
+Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
+\begin{enumerate}
+  \item \emph{Constructing a graph representation:}
+        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
+        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
+        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
+  \item \emph{Pruning:}
+        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
+        Here, $k=10$.
+  \item \emph{Modularity clustering:}
+        Modularity clustering was performed on the graph to partition the pruned graph into communities.
+        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
+\end{enumerate}
+
+
+% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{graphclustering}
+  \caption{
+    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
+    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
+  }
+  \label{fig:graphclustering}
+\end{figure}
+
+Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
+% This may change.
+Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
+
+
+\subsection{UMAP}
+\label{subsec:analysis-clustering-umap}
+
+% TODO: repeat with better datasets
+% And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
+UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset., and it preserves the distances between points.
+% EQUATIONS?
+Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
+This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
+
+UMAP has several hyperparameters, of which four have major effects on the embedding:
+\begin{itemize}
+  \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
+        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
+        As the value increases, the algorithm `glues' more nodes together to form clusters.
+  \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
+        In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
+  \item The \emph{minimal distance} ($\mathrm{min\_dist}$) controls the desired separation between close points in the embedding space.
+        Specifically, this parameter controls how tightly the algorithm is allowed to pack points together.
+        With low values, the visualisation forms `clumps'.
+  \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
+        For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
+\end{itemize}
+
+% MOVE TO DISCUSSION?
+% However, UMAP has several caveats.
+% It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
+% Additionally, it assumes that the data has a manifold structure.
+% So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
+% If more data are sampled, then the amount of structure from noise will tend to decrease.
+% It assumes that local distance is more important than long-range distances, like t-SNE.
+% And finally, approximations were made to improve computational efficiency.
+
+
+% TODO: Use different colours for each type of categorisation
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{Figure_15}
+    \caption{
+    }
+    \label{fig:umap-osc}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{Figure_13}
+    \caption{
+    }
+    \label{fig:umap-strain}
+  \end{subfigure}
+
+  \caption[
+      UMAP embedding of a dataset of time series featurised using \textit{catch22}.
+    ]{
+      UMAP embedding ($n=10$, $\mathrm{min\_dist} = 0.05$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
+      Each node represents a time series, coloured either by
+      \textbf{(\ref{fig:umap-osc})}
+      whether each is oscillatory (`1') or not (`0'), human-labelled, or by
+      \textbf{(\ref{fig:umap-strain})}
+      strain (`BY4741' or `\textit{zwf1$\Delta$}').
+    }
+  \label{fig:umap}
+\end{figure}
+
+To assess the performance of UMAP for time series data, I evaluated whether the method was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to the division between the two strains or between oscillatory and non-oscillatory time series.
+Fig.\ \ref{fig:umap} shows that UMAP identified two clusters of non-oscillatory time series separate from the rest, thus suggesting that unsupervised UMAP could discriminate between oscillatory and non-oscillatory time series.
+% Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
+However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
+In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
+
+% The reason these clusters exist in this figure is likely because the BY4741 \& \textit{zwf1$\Delta$} dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
+% Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly \textit{zwf1$\Delta$}.
+%It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
+
+\begin{figure}
+  \centering
+    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
+    \caption[
+      Grid search of UMAP hyperparameters
+    ]{
+      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
+      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
+    }
+  \label{fig:umap-gridsearch}
+\end{figure}
+
+To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters to find the best combination.
+Fig.\ \ref{fig:umap-gridsearch} suggests that $n=150$ and $\mathrm{min\_dist} = 150$ resulted in a good separation between the the BY4741 and \textit{zwf1$\Delta$} nodes.
+In addition, non-oscillatory time series consistently organised into groups distinct from the rest as the hyperparameters were varied.
+
+
 \section[Classification]{Classification: is my time series oscillatory?}
 \label{sec:analysis-classification}
 
@@ -997,192 +1184,6 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
 
 % I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
 % Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
-
-
-\section[Clustering]{Clustering: I have many time series (of the same signal) from many cells --- what are their relationships to each other?}
-\label{sec:analysis-clustering}
-
-To identify structures or natural groupings in datasets of potentially oscillatory time series, I implemented graph-based clustering and dimension reduction methods; specifically, modularity clustering and UMAP.
-Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
-Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
-
-% I don't like this sentence
-To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and \textit{zwf1$\Delta$} (mutant strain) strains.
-%I expected the \textit{zwf1$\Delta$} traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
-
-\subsection{Graph-based clustering}
-\label{subsec:analysis-clustering-graphclustering}
-
-Modularity clustering is a mathematical method to partition a graph into clusters in order to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
-% [ADD EQUATIONS]
-%This value is defined as the number of edges between clusters minus the number of expected edges if edges are placed at random \parencite{newmanModularityCommunityStructure2006}.
-To solve this optimisation problem, the general Louvain algorithm \parencite{blondelFastUnfoldingCommunities2008,muchaCommunityStructureTimeDependent2010} has been developed.
-This algorithm has one parameter, the resolution ($\gamma$), which specifies the scale of the clusters: low resolution gives large clusters, and high resolution gives small clusters \parencite{fortunatoResolutionLimitCommunity2007}.
-
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.5\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{graph_representation}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-graph}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{pruning}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-prune}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{newmanModularityCommunityStructure2006_1}
-    \caption{
-    }
-    \label{fig:analysis-clustering-modclust-modclust}
-  \end{subfigure}
-
-  \caption[
-    Modularity clustering visualises natural groupings of time series
-  ]{
-    Process of preparing a dataset of time series for modularity clustering.
-    \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
-    Constructing a graph representation,
-    \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
-    pruning the complete graph, and
-    \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
-    modularity clustering.
-    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
-  }
-  \label{fig:analysis-clustering-modclust}
-\end{figure}
-
-To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
-Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
-\begin{enumerate}
-  \item \emph{Constructing a graph representation:}
-        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
-        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
-        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
-  \item \emph{Pruning:}
-        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
-        Here, $k=10$.
-  \item \emph{Modularity clustering:}
-        Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
-\end{enumerate}
-
-
-% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{graphclustering}
-  \caption{
-    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
-    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
-  }
-  \label{fig:graphclustering}
-\end{figure}
-
-Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
-% This may change.
-Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
-
-
-\subsection{UMAP}
-\label{subsec:analysis-clustering-umap}
-
-% TODO: repeat with better datasets
-% And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
-UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset., and it preserves the distances between points.
-% EQUATIONS?
-Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
-This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
-
-UMAP has several hyperparameters, of which four have major effects on the embedding:
-\begin{itemize}
-  \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
-        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
-        As the value increases, the algorithm `glues' more nodes together to form clusters.
-  \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
-        In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
-  \item The \emph{minimal distance} ($\mathrm{min\_dist}$) controls the desired separation between close points in the embedding space.
-        Specifically, this parameter controls how tightly the algorithm is allowed to pack points together.
-        With low values, the visualisation forms `clumps'.
-  \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
-        For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
-\end{itemize}
-
-% MOVE TO DISCUSSION?
-% However, UMAP has several caveats.
-% It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
-% Additionally, it assumes that the data has a manifold structure.
-% So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
-% If more data are sampled, then the amount of structure from noise will tend to decrease.
-% It assumes that local distance is more important than long-range distances, like t-SNE.
-% And finally, approximations were made to improve computational efficiency.
-
-
-% TODO: Use different colours for each type of categorisation
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.7\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{Figure_15}
-    \caption{
-    }
-    \label{fig:umap-osc}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.7\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{Figure_13}
-    \caption{
-    }
-    \label{fig:umap-strain}
-  \end{subfigure}
-
-  \caption[
-      UMAP embedding of a dataset of time series featurised using \textit{catch22}.
-    ]{
-      UMAP embedding ($n=10$, $\mathrm{min\_dist} = 0.05$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
-      Each node represents a time series, coloured either by
-      \textbf{(\ref{fig:umap-osc})}
-      whether each is oscillatory (`1') or not (`0'), human-labelled, or by
-      \textbf{(\ref{fig:umap-strain})}
-      strain (`BY4741' or `\textit{zwf1$\Delta$}').
-    }
-  \label{fig:umap}
-\end{figure}
-
-To assess the performance of UMAP for time series data, I evaluated whether the method was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to the division between the two strains or between oscillatory and non-oscillatory time series.
-Fig.\ \ref{fig:umap} shows that UMAP identified two clusters of non-oscillatory time series separate from the rest, thus suggesting that unsupervised UMAP could discriminate between oscillatory and non-oscillatory time series.
-% Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
-However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
-In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
-
-% The reason these clusters exist in this figure is likely because the BY4741 \& \textit{zwf1$\Delta$} dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
-% Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly \textit{zwf1$\Delta$}.
-%It makes sense because this set of cells have a large group of non-oscillatory flavin signals.
-
-\begin{figure}
-  \centering
-    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
-    \caption[
-      Grid search of UMAP hyperparameters
-    ]{
-      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
-      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
-    }
-  \label{fig:umap-gridsearch}
-\end{figure}
-
-To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters to find the best combination.
-Fig.\ \ref{fig:umap-gridsearch} suggests that $n=150$ and $\mathrm{min\_dist} = 150$ resulted in a good separation between the the BY4741 and \textit{zwf1$\Delta$} nodes.
-In addition, non-oscillatory time series consistently organised into groups distinct from the rest as the hyperparameters were varied.
 
 
 \section{Discussion}
