@@ -1056,17 +1056,17 @@ From the relationships shown in Figs.\ \ref{fig:acf-fhn-noiseparams-noisetimesca
 Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
 
 
-\section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
+%\section[Correlation]{Correlation: I have two signals from the same cell --- what are their relationships to each other?}
+\section{Detection of synchrony}
 \label{sec:analysis-correlation}
-
-% [COMMENTED OUT BECAUSE IT IS THE SOLE SUBSECTION]
-% \subsection{Cross-correlation}
-% \label{subsec:analysis-correlation-xcf}
 
 To test a method to quantify the temporal lag between flavin autofluorescence oscillations and HTB2::mCherry levels in a population of cells, I computed the cross-correlation functions of a population of sinusoid and FitzHugh-Nagumo oscillators.
 Cross-correlation has been used to investigate the relationship between the expression levels of two genes in a model feed-forward loop \parencite{dunlopRegulatoryActivityRevealed2008},
 and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
 Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employed a single-cell microfluidics experiment with time-lapse microscopy, and therefore their analysis of a population of time series is applicable in this chapter.
+
+\subsection{Synthetic data}
+\label{subsubsec:analysis-correlation-synthetic}
 
 \begin{figure}
   \centering
@@ -1124,37 +1124,40 @@ Fig.\ \ref{fig:xcf-nonoise-xcf} shows that the cross-correlation function correc
 This shift was evidenced by the degree to which the central peak of the cross-correlation function was shifted to the right, in contrast to the situation in which the cross-correlation at lag 0 is 1 if the peaks of the two oscillators coincide.
 Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
-% Commented out: This is repeated again in chapter 4
+
+\subsection{Real data}
+\label{subsubsec:analysis-correlation-real}
+
 % TODO: Replace with pyruvate?  More dramatic.
 
-% \begin{figure}
-%   \centering
-%   \begin{subfigure}[t]{0.9\textwidth}
-%   \centering
-%     \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
-%     \caption{
-%       Sample time series of flavin autofluorescence (purple) and histone 2B abundance (pink).
-%     }
-%     \label{fig:xcf-biol-ts}
-%   \end{subfigure}
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.9\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
+    \caption{
+      Sample time series of flavin autofluorescence (purple) and histone 2B abundance (pink).
+    }
+    \label{fig:xcf-biol-ts}
+  \end{subfigure}
 
-%   \begin{subfigure}[t]{0.7\textwidth}
-%   \centering
-%     \includegraphics[width=\linewidth]{xcf_edit.pdf}
-%     \caption{
-%       Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
-%     }
-%     \label{fig:xcf-biol-xcf}
-%   \end{subfigure}
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{xcf_edit.pdf}
+    \caption{
+      Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
+    }
+    \label{fig:xcf-biol-xcf}
+  \end{subfigure}
 
-%   \caption{
-%     Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
-%   }
-%   \label{fig:xcf-biol}
-% \end{figure}
+  \caption{
+    Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
+  }
+  \label{fig:xcf-biol}
+\end{figure}
 
-% I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
-% Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
+I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
+Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
 
 
 \section{Discussion}
