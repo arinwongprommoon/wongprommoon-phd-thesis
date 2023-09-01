@@ -13,6 +13,7 @@
   - ~skeletons/projects/arin-synthetic-oscillators/synthetic.py~: ~white_noise~, ~sinusoid~ or ~harmonic~, ~fitzhugh_nagumo~ plus noise from ~white_noise~ or ~gillespie_noise~.
 
 * General
+- A reminder that this exists: https://git.ecdf.ed.ac.uk/swain-lab/time-series-pipeline
 
 * Cleaning
 ** Choosing time series by presence of time points
