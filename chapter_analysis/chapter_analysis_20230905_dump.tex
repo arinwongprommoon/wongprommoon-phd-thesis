@@ -26,3 +26,7 @@
   }
   \label{fig:analysis-slidingwindow}
 \end{figure}
+
+Another caveat of this classifier lies in its sole tuning parameter, the false discovery rate, which affects the proportion of time series classed as oscillating.
+To optimise the false discovery rate, labels of whether a time series is oscillatory were needed; if the labels are human-defined, as was the case in this section, any optimised false discovery rate would have low reliability.
+Alternatively, a more reliable ground truth could be provided by an experiment expected to result in time series that are not oscillatory.

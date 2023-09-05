@@ -367,11 +367,7 @@ To determine the time series classification method that is most appropriate for 
 \label{subsec:analysis-classification-spectral}
 
 In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (section~\ref{subsec:methods-computational-periodogram}).
-This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method to classify gene expression profiles as oscillating or non-oscillating based on the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976}.
-This periodogram was developed for time series with missing time points, and has a chi-square distribution that aids a statistical test for periodicity \parencite{scargleStudiesAstronomicalTime1982}.
-The classification was based on controlling the false discovery rate for identification of oscillations.
-In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
-Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
+This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method that employed the peak power from the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976} to rank time series by the quality of oscillation and to perform a statistical test to determine whether a time series is oscillatory or non-oscillatory \parencite{scargleStudiesAstronomicalTime1982}.
 
 \begin{figure}[htbp]
   \centering
@@ -435,11 +431,10 @@ Increasing the false discovery rate thus increases the proportion of time series
   \label{fig:glynn-worst}
 \end{figure}
 
-
-Fig.\ \ref{fig:ClassifierBestWorstTS} shows that the classifier correctly ranked high-quality oscillations, determined subjectively, as the highest-quality oscillations.
-However, the time series that it ranked as lowest-quality exhibited oscillations, albeit at a higher frequency, as informed, subjectively, by the coincidence of regular budding events with peaks in the oscillations.
-These oscillations were ranked as low-quality because the Fourier spectrum (Fig.\ \ref{fig:ClassifierBestWorstPS}) identified multiple main frequencies, and thus lowered the peak of the normalised periodogram.
-Thus, a Fourier-based method may not adequately provide the information for a reliable ranking of oscillation quality.
+Figs.\ \ref{fig:glynn-best}--\ref{fig:glynn-worst} suggest that the best- and worst-ranked time series by the quality of their oscillatory signals conformed to subjective judgements of quality.
+Lowest-ranked time series resembled pure noise and led to periodograms with power equally spread across all frequencies, thus bringing down the height of the highest peak.
+Conversely, highest-ranked time series resembled sinusoids and therefore led to periodograms with a strong power corresponding to the frequency of the sinusoid that would model the time series.
+However, the reliability of the ranking method is called into question by the high ranks (ranks 2, 3) of time series with irregular oscillations relative to others (Fig.\ \ref{fig:glynn-best}).
 
 \begin{figure}
   \centering
@@ -449,13 +444,15 @@ Thus, a Fourier-based method may not adequately provide the information for a re
   ]{
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
   }
-  \label{fig:analysis-svc-pr}
+  \label{fig:glynn-roc}
 \end{figure}
 
+The method described by \textcite{glynnDetectingPeriodicPatterns2006a} describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory.
+In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
+Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
 
-Another caveat of this classifier lies in its sole tuning parameter, the false discovery rate, which affects the proportion of time series classed as oscillating.
-To optimise the false discovery rate, labels of whether a time series is oscillatory were needed; if the labels are human-defined, as was the case in this section, any optimised false discovery rate would have low reliability.
-Alternatively, a more reliable ground truth could be provided by an experiment expected to result in time series that are not oscillatory.
+To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve created as the false discovery rate was varied.
+The area under the ROC curve ($A = 0.762$) suggests that the classifier only performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
 
 \subsection{Rhythmicity detection using model fitting}
