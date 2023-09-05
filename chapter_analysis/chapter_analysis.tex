@@ -307,11 +307,10 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
         Here, $k=10$.
   \item \emph{Modularity clustering:}
         Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I varied the resolution $\gamma$ so that ...(NEEDS A BETTER DESCRIPTION)...
+        In this step, I used the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
 \end{enumerate}
 
 
-% TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}[t]{0.7\textwidth}
@@ -334,15 +333,22 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
     Pruned geometric graph of BY4741 and \text{zwf1$\Delta$} time series from the same experiment.
     \textbf{(\ref{fig:graphclustering-combined})}
     Nodes coloured by group: grey, non-oscillatory; blue, oscillatory \textit{zwf1$\Delta$}; orange, oscillatory BY4741.
+    Thickness of edges represent edge weights, scaled by similarity found by cosine distances.
     \textbf{(\ref{fig:graphclustering-leiden})}
-    Nodes coloured by community (out of 9) as optimised by the Leiden algorithm.
+    Nodes coloured by community (out of 10) as optimised by the Leiden algorithm.
+    Edges within a community are in black, while edges between communities are in light grey.
   }
   \label{fig:graphclustering}
 \end{figure}
 
-Fig.\ \ref{fig:graphclustering} shows ...(INSERT DISCUSSION OF RESULTS HERE)...
-% This may change.
-Such results suggested that unsupervised graph-based clustering may have potential to discover structure in the dataset.
+Fig.\ \ref{fig:graphclustering-combined} shows that construction of a pruned graph based on similarities between time series highlights two groups of non-oscillatory time series, similar to the UMAP representation (Fig.\ \ref{fig:umap}).
+Furthermore, Fig.\ \ref{fig:graphclustering-leiden} suggests that these two groups belong to separate communities, and shows that modularity clustering was able to further show communities among the oscillatory time series.
+However, such communities did not divide cleanly along the division between BY4741 and \textit{zwf$\Delta$} cells, suggesting that time series features alone are not able to divide these two strains.
+This agreed with my observation that some oscillatory \text{zwf$\Delta$} time series resembled BY4741 time series.
+
+% PLOT AVERAGE TIME SERIES FROM EACH COMMUNITY?
+
+In sum, the general agreement between UMAP and modularity clustering shows that the BY4741-\textit{zwf$\Delta$} dataset had internal structure defined by rhythmicity of time series.
 
 
 %\section[Classification]{Classification: is my time series oscillatory?}
