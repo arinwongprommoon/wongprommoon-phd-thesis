@@ -386,33 +386,83 @@ Increasing the false discovery rate thus increases the proportion of time series
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{10m_ClassifierBestWorstTS}
+  \begin{subfigure}[t]{0.65\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_1_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-best-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.35\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_2_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-best-ps}
+  \end{subfigure}
+
   \caption[
-    Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation
+    Best five time series in the \textit{zwf1$\Delta$} dataset and
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}
   ]{
-    Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation.
-    Left column shows `best' five and right column shows `worst' five.
-    Blue solid lines: flavin autofluorescence, red dashes: birth event automatically identified by \textit{BABY}.
+    \textbf{(\ref{fig:glynn-best-ts})}
+    Best five time series in the \textit{zwf1$\Delta$} dataset and
+    \textbf{(\ref{fig:glynn-best-ps})}
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}.
   }
-  \label{fig:ClassifierBestWorstTS}
+  \label{fig:glynn-best}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{10m_ClassifierBestWorstPS}
+  \begin{subfigure}[t]{0.65\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_3_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-worst-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.35\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_4_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-worst-ps}
+  \end{subfigure}
+
   \caption[
-    Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations
+    Worst five time series in the \textit{zwf1$\Delta$} dataset and
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}
   ]{
-    Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations.
-    Blue solid lines: normalised classical periodograms of time series in figure \ref{fig:ClassifierBestWorstTS}.
+    \textbf{(\ref{fig:glynn-worst-ts})}
+    Worst five time series in the \textit{zwf1$\Delta$} dataset and
+    \textbf{(\ref{fig:glynn-worst-ps})}
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}.
   }
-  \label{fig:ClassifierBestWorstPS}
+  \label{fig:glynn-worst}
 \end{figure}
+
 
 Fig.\ \ref{fig:ClassifierBestWorstTS} shows that the classifier correctly ranked high-quality oscillations, determined subjectively, as the highest-quality oscillations.
 However, the time series that it ranked as lowest-quality exhibited oscillations, albeit at a higher frequency, as informed, subjectively, by the coincidence of regular budding events with peaks in the oscillations.
 These oscillations were ranked as low-quality because the Fourier spectrum (Fig.\ \ref{fig:ClassifierBestWorstPS}) identified multiple main frequencies, and thus lowered the peak of the normalised periodogram.
 Thus, a Fourier-based method may not adequately provide the information for a reliable ranking of oscillation quality.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{glynn_is20016_5_edit.pdf}
+  \caption[
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
+  ]{
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
+  }
+  \label{fig:analysis-svc-pr}
+\end{figure}
+
 
 Another caveat of this classifier lies in its sole tuning parameter, the false discovery rate, which affects the proportion of time series classed as oscillating.
 To optimise the false discovery rate, labels of whether a time series is oscillatory were needed; if the labels are human-defined, as was the case in this section, any optimised false discovery rate would have low reliability.
@@ -521,30 +571,27 @@ From this input data, 150 time series formed the training set.
 % MODELS
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{precision_recall}
+  \includegraphics[width=0.9\textwidth]{svm_feat_compare_edit.pdf}
   \caption[
   ]{
     (Left) Precision and (right) recall from five-fold cross-validation of support vector classifiers trained using different featurisation methods:
-    (orange) using the time points as features,
-    (green) using the power values in the Fourier spectrum as features,
-    and (red) using \emph{catch22} features.
-    (Blue) `random' indicates assigning time series to the oscillatory and non-oscillatory categories and used their time points as features, as a control.
+    using the time points as features,
+    using the power values in the Fourier spectrum as features,
+    and using \emph{catch22} features.
+    As a control, the oscillatory and non-oscillatory labels were randomly assigned to the time series and the time points were used as features.
   }
   \label{fig:analysis-precision-recall}
 \end{figure}
 
-% Replace with recursive feature elimination?
-% This will modify the discussion paragraph below.
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{catch22_training_featurevector_mean}
+  \includegraphics[width=0.7\textwidth]{svm_1_edit.pdf}
   \caption[
     Mean values of each \texttt{catch22} feature across each cell
   ]{
-    Mean values of each \texttt{catch22} feature across each cell classified as non-oscillatory (class 0) or oscillatory (class 1) by an SVC from the testing set.
-    The horizontal axis shows each \texttt{catch22} feature from 0 to 21, and the vertical axis shows the mean value of each feature across cells within an identified class.
+    Precision-recall curve of binary classifier, using \textit{catch22} for featurisation and with a support vector classifier architecture (radial bias kernel, $\gamma = 1/22$, $C = 1$).
   }
-  \label{fig:analysis-svc-catch22}
+  \label{fig:analysis-svc-pr}
 \end{figure}
 
 To determine the most effective way to featurise the data, I computed the precision and recall of support vector classifiers trained on data featurised using different methods.
@@ -564,9 +611,26 @@ This is in contrast to noisy, non-oscillatory time series.
 % This should give a `hill' in the middle.
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{classifier_histogram_probabilities_adapted}
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{svm_2_edit.pdf}
+   \caption{
+   }
+   \label{fig:analysis-svc-proba-historgram-model}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{svm_scramble_2_edit.pdf}
+   \caption{
+   }
+   \label{fig:analysis-svc-proba-histogram-scramble}
+  \end{subfigure}
+
   \caption{
-    Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC.
+    \textbf{(\ref{fig:analysis-svc-proba-historgram-model})}
+    Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC, and as a control,
+    \textbf{(\ref{fig:analysis-svc-proba-historgram-scramble})}
+    with labels randomly re-assorted to time series.
   }
   \label{fig:analysis-svc-proba-histogram}
 \end{figure}
@@ -574,58 +638,10 @@ This is in contrast to noisy, non-oscillatory time series.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_00}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-00}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_21}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-21}
-  \end{subfigure}
+  \includegraphics[width=0.9\textwidth]{svm_3_edit.pdf}
 
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_38}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-38}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_61}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-61}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_88}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-88}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_99}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-99}
-  \end{subfigure}
   \caption{
-    Sample test set time series arranged by probability that each is oscillatory, as predicted by the support vector classifier:
-    \textbf{(\ref{fig:analysis-svc-proba-00})} 0\%,
-    \textbf{(\ref{fig:analysis-svc-proba-21})} 21\%,
-    \textbf{(\ref{fig:analysis-svc-proba-38})} 38\%,
-    \textbf{(\ref{fig:analysis-svc-proba-61})} 61\%,
-    \textbf{(\ref{fig:analysis-svc-proba-88})} 88\%,
-    \textbf{(\ref{fig:analysis-svc-proba-99})} 99\%,
+    Sample test set time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.
   }
   \label{fig:analysis-svc-proba-gallery}
 \end{figure}
