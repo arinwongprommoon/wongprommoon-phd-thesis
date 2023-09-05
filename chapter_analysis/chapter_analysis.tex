@@ -513,12 +513,36 @@ This method thus allows computing the frequency of the oscillation from the loca
   \label{fig:analysis-ar}
 \end{figure}
 
-Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory, as evidenced by a peak in the periodogram of height greater than 1.
+Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory, as evidenced by a peak in the periodogram.% of height greater than 1.
 In addition, the periodogram correctly identifies a period of \SI{75.2}{\minute}.
-However, when extended across a dataset of time series, very few time series within a dataset were classified as oscillatory using this method.
-Unlike the classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}, the autoregressive model does not having a parameter that can be adjusted to change the expected proportion of a dataset to be classified as oscillatory --- in other words, the tolerance of detecting rhythmicity cannot be adjusted.
+
+\begin{table}
+  \centering
+  % https://tex.stackexchange.com/a/20295
+  \begin{tabular}{l|l|c|c|c}
+    \multicolumn{2}{c}{}&\multicolumn{2}{c}{Human-defined labels}&\\
+    \cline{3-4}
+    \multicolumn{2}{c|}{}&Positive&Negative&\multicolumn{1}{c}{Total}\\
+    \cline{2-4}
+    \multirow{2}{*}{Predicted by AR model}& Positive & 141 & 83 & 224\\
+    \cline{2-4}
+    & Negative & 124 & 77 & 201\\
+    \cline{2-4}
+    \multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{265} & \multicolumn{1}{c}{160} & \multicolumn{1}{c}{425}\\
+  \end{tabular}
+  \caption{
+    Confusion matrix to evaluate the performance of using the autoregressive model \parencite{jiaFrequencyDomainAnalysis2020} to detect rhythmicity in the \textit{zwf1$\Delta$} dataset.
+  }
+  \label{tab:analysis-ar-confusion-matrix}
+\end{table}
+
+To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
+The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor accuracy ($a = 0.513$).
+
+% MOVE THIS TO DISCUSSION?
+Furthermore, unlike the classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}, the autoregressive model does not having a parameter that can be adjusted to change the expected proportion of a dataset to be classified as oscillatory --- in other words, the tolerance of detecting rhythmicity cannot be adjusted.
 Alternatively, the order of the model can be treated as a parameter, and model selection can be performed.
-Nevertheless, among the time series that the algorithm classifies as oscillatory, the algorithm accurately estimates the frequency of oscillations.
+%Nevertheless, among the time series that the algorithm classifies as oscillatory, the algorithm accurately estimates the frequency of oscillations.
 %[Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.]
 
 
