@@ -156,7 +156,7 @@ To demonstrate the data visualisation methods, I used time series of flavin auto
 
 % TODO: repeat with better datasets
 % And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
-UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset., and it preserves the distances between points.
+UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset, and it preserves the distances between points.
 % EQUATIONS?
 Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
 This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
@@ -216,10 +216,12 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
 \end{figure}
 
 To assess the performance of UMAP for time series data, I evaluated whether the method was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to the division between the two strains or between oscillatory and non-oscillatory time series.
-Fig.\ \ref{fig:umap} shows that UMAP identified two clusters of non-oscillatory time series separate from the rest, thus suggesting that unsupervised UMAP could discriminate between oscillatory and non-oscillatory time series.
+Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggests a small group of non-oscillatory time series that differed markedly from the rest, and a larger group that showed more similarity with oscillatory time series.
+In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggests that the BY4741 time series were more similar to each other in contrast to \textit{zwf1$\Delta$} occupying more positions within the space; this agreed with the observation that time series from this strain had a larger variety of shapes and oscillation quality.
+Thus, UMAP may have potential to discover structure in a dataset, especially when separating oscillatory and non-oscillatory time series, or when separating time series of different shapes.
 % Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
-However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
-In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
+% However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
+% In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
 
 % The reason these clusters exist in this figure is likely because the BY4741 \& \textit{zwf1$\Delta$} dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
 % Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly \textit{zwf1$\Delta$}.
