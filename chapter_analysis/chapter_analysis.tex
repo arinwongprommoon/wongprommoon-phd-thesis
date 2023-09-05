@@ -96,63 +96,43 @@ Polynomial detrending assumes a polynomial-shaped underlying signal, while metho
    \label{fig:analysis-filter-butterworth}
   \end{subfigure}
 
-  \caption{
-    (Left panels) Time series and (right panels) Fourier spectra corresponding to
-    \textbf{(\ref{fig:analysis-filter-raw})}
-    a sample raw time series of flavin autofluorescence, and
-    \textbf{(\ref{fig:analysis-filter-butterworth})}
-    the time series processed by a high-pass Butterworth filter with a critical frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
-  }
-  \label{fig:analysis-filter}
-\end{figure}
-
-To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Fig.\ \ref{fig:analysis-filter} shows how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
-Unlike sliding-window methods, defining a signal filter offers direct control over frequencies.
-The critical frequency in this case was defined to create a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
-Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
-
-
-\begin{figure}
-  \centering
   \begin{subfigure}[htpb]{0.8\textwidth}
    \centering
    \includegraphics[width=\textwidth]{fft_slidingwindow}
    \caption{
    }
-   \label{fig:analysis-slidingwindow-movavg}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{fft_savgol}
-   \caption{
-   }
-   \label{fig:analysis-slidingwindow-savgol}
+   \label{fig:analysis-filter-movavg}
   \end{subfigure}
 
   \caption{
-    (Left panels) Raw time series with trends, (middle panels) processed time series, and (right panels) Fourier spectra to demonstrate
-    \textbf{(\ref{fig:analysis-slidingwindow-movavg})}
-    using a moving average (window size 30), and
-    \textbf{(\ref{fig:analysis-slidingwindow-savgol})}
-    using a Savitzky-Golay filter (window size 7, polynomial order 3)
-    to remove trends.
+    (Left panels) Time series and (right panels) Fourier spectra corresponding to
+    \textbf{(\ref{fig:analysis-filter-raw})}
+    a sample raw time series of flavin autofluorescence,
+    \textbf{(\ref{fig:analysis-filter-butterworth})}
+    the time series processed by a high-pass Butterworth filter with a critical frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}, and
+    \textbf{(\ref{fig:analysis-filter-movavg})}
+    the time series detrended using a moving average (window size 30).
   }
-  \label{fig:analysis-slidingwindow}
+  \label{fig:analysis-filter}
 \end{figure}
 
-To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method and the Savitzky-Golay filter.
+To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Figs.\ \ref{fig:analysis-filter-raw}--\ref{fig:analysis-filter-butterworth} show how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
+Unlike sliding-window methods, defining a signal filter offers direct control over frequencies.
+The critical frequency in this case was defined to create a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
+Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
+
+To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.% and the Savitzky-Golay filter.
 Sliding-window methods are common in detrending biological time series.
 For example, \textcite{cunyHighresolutionMassMeasurements2022} used a moving average: a constant, defined sliding window to smooth time series of yeast cell mass during growth.
 \textcite{papagiannakisAutonomousMetabolicOscillations2017} fitted a smoothing spline to their single-cell fluorescence data of the yeast metabolic cycle, then divided the data points by the smoothing spline to detrend their data; the specific mathematical method used to define the smoothing spline was unclear in their study.
 % Equations?
-The Savitzky-Golay filter is also common --- this method is based on fitting a sliding window of a defined number of time points with a polynomial of a defined order using least squares fitting.
+%The Savitzky-Golay filter is also common --- this method is based on fitting a sliding window of a defined number of time points with a polynomial of a defined order using least squares fitting.
 
-Fig.\ \ref{fig:analysis-slidingwindow-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
-In contrast, Fig.\ \ref{fig:analysis-slidingwindow-savgol} shows that the Savitzky-Golay filter ...(INSERT DISCUSSION HERE)...
+Fig.\ \ref{fig:analysis-filter-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
+%In contrast, Fig.\ \ref{fig:analysis-slidingwindow-savgol} shows that the Savitzky-Golay filter ...(INSERT DISCUSSION HERE)...
 In sum, sliding-window methods were not ideal because they distorted the data in a way that affects conclusions, or removed noise information that may be useful.
 % Really?
-Importantly, it is not possible to restore the raw data when it is processed using such methods.
+%Importantly, it is not possible to restore the raw data when it is processed using such methods.
 
 Therefore, for subsequent analyses, I used the high-pass Butterworth filter defined above to process raw fluorescence time series.
 This is because using this method, I obtain more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set and estimating the noise properties.
@@ -176,7 +156,7 @@ To demonstrate the data visualisation methods, I used time series of flavin auto
 
 % TODO: repeat with better datasets
 % And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
-UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset., and it preserves the distances between points.
+UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset, and it preserves the distances between points.
 % EQUATIONS?
 Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
 This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
@@ -205,20 +185,18 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
 % And finally, approximations were made to improve computational efficiency.
 
 
-% TODO: Use different colours for each type of categorisation
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{Figure_15}
+    \includegraphics[width=\linewidth]{umap_single_is20016_2_edit.png}
     \caption{
     }
     \label{fig:umap-osc}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.7\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{Figure_13}
+    \includegraphics[width=\linewidth]{umap_single_is20016_1_edit.png}
     \caption{
     }
     \label{fig:umap-strain}
@@ -227,10 +205,10 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
   \caption[
       UMAP embedding of a dataset of time series featurised using \textit{catch22}.
     ]{
-      UMAP embedding ($n=10$, $\mathrm{min\_dist} = 0.05$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
+      UMAP embedding ($n=5$, $\mathrm{min\_dist} = 0.5$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
       Each node represents a time series, coloured either by
       \textbf{(\ref{fig:umap-osc})}
-      whether each is oscillatory (`1') or not (`0'), human-labelled, or by
+      whether each is oscillatory or not, human-labelled, or by
       \textbf{(\ref{fig:umap-strain})}
       strain (`BY4741' or `\textit{zwf1$\Delta$}').
     }
@@ -238,10 +216,12 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
 \end{figure}
 
 To assess the performance of UMAP for time series data, I evaluated whether the method was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to the division between the two strains or between oscillatory and non-oscillatory time series.
-Fig.\ \ref{fig:umap} shows that UMAP identified two clusters of non-oscillatory time series separate from the rest, thus suggesting that unsupervised UMAP could discriminate between oscillatory and non-oscillatory time series.
+Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggests a small group of non-oscillatory time series that differed markedly from the rest, and a larger group that showed more similarity with oscillatory time series.
+In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggests that the BY4741 time series were more similar to each other in contrast to \textit{zwf1$\Delta$} occupying more positions within the space; this agreed with the observation that time series from this strain had a larger variety of shapes and oscillation quality.
+Thus, UMAP may have potential to discover structure in a dataset, especially when separating oscillatory and non-oscillatory time series, or when separating time series of different shapes.
 % Need: some proof, e.g. representative time series of each cluster -- but maybe it is not possible because UMAP isn't strictly a clustering method, but more of a visualisation method.  Perhaps this is more appropriate to the graph clustering part.
-However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
-In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
+% However, some non-oscillatory time series clustered with oscillatory time series, possibly because these time series were borderline between the two categories.
+% In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE COMMENTED OUT)...
 
 % The reason these clusters exist in this figure is likely because the BY4741 \& \textit{zwf1$\Delta$} dataset contains many very high-quality oscillations that are clearly different from the non-oscillatory time series.
 % Comparing figure~\ref{fig:umap-osc} with figure~\ref{fig:umap-strain} shows that these non-oscillatory time series are mostly \textit{zwf1$\Delta$}.
@@ -249,12 +229,12 @@ In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE C
 
 \begin{figure}
   \centering
-    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
+    \includegraphics[width=0.9\linewidth]{umap_grid_is20016_edit.png}
     \caption[
       Grid search of UMAP hyperparameters
     ]{
-      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
-      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
+      Grid search of UMAP hyperparameters: number of neighbours along the horizontal axis and minimum distance along the vertical axis.
+      Data points are coloured according to category: grey indicates non-oscillatory time series, orange indicates oscillatory time series from BY4741 cells, and blue indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
     }
   \label{fig:umap-gridsearch}
 \end{figure}
@@ -333,10 +313,28 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
 % TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{graphclustering}
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graphclust_combined_is20016.pdf}
+    \caption{
+    }
+    \label{fig:graphclustering-combined}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graphclust_leiden_is20016.pdf}
+    \caption{
+    }
+    \label{fig:graphclustering-leiden}
+  \end{subfigure}
+
   \caption{
-    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
-    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
+    Pruned geometric graph of BY4741 and \text{zwf1$\Delta$} time series from the same experiment.
+    \textbf{(\ref{fig:graphclustering-combined})}
+    Nodes coloured by group: grey, non-oscillatory; blue, oscillatory \textit{zwf1$\Delta$}; orange, oscillatory BY4741.
+    \textbf{(\ref{fig:graphclustering-leiden})}
+    Nodes coloured by community (out of 9) as optimised by the Leiden algorithm.
   }
   \label{fig:graphclustering}
 \end{figure}
@@ -355,7 +353,7 @@ Determining whether a time series is oscillatory, or rhythmicity detection, is c
 Rhythmicity detection is best re-defined as identifying the presence of a frequency in a range of interest, excluding lower frequencies that contribute to trends, and higher frequencies that contribute to noise \parencite{zielinskiStrengthsLimitationsPeriod2014}.
 However, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity; therefore, evaluating such a classification method requires a subjective definition of whether each time series is oscillatory.
 
-To determine the time series classification method that is most appropriate for my data, I compared a  spectral methods, a model-fitting method, and a machine learning method.
+To determine the time series classification method that is most appropriate for my data, I compared a spectral method, a model-fitting method, and a machine learning method.
 
 
 \subsection{Rhythmicity detection using spectral methods}
@@ -370,33 +368,83 @@ Increasing the false discovery rate thus increases the proportion of time series
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{10m_ClassifierBestWorstTS}
+  \begin{subfigure}[t]{0.65\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_1_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-best-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.35\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_2_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-best-ps}
+  \end{subfigure}
+
   \caption[
-    Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation
+    Best five time series in the \textit{zwf1$\Delta$} dataset and
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}
   ]{
-    Classifier based on Lomb-Scargle periodogram ranks time series by quality of oscillation.
-    Left column shows `best' five and right column shows `worst' five.
-    Blue solid lines: flavin autofluorescence, red dashes: birth event automatically identified by \textit{BABY}.
+    \textbf{(\ref{fig:glynn-best-ts})}
+    Best five time series in the \textit{zwf1$\Delta$} dataset and
+    \textbf{(\ref{fig:glynn-best-ps})}
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}.
   }
-  \label{fig:ClassifierBestWorstTS}
+  \label{fig:glynn-best}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{10m_ClassifierBestWorstPS}
+  \begin{subfigure}[t]{0.65\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_3_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-worst-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.35\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_4_edit.pdf}
+    \caption{
+    }
+    \label{fig:glynn-worst-ps}
+  \end{subfigure}
+
   \caption[
-    Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations
+    Worst five time series in the \textit{zwf1$\Delta$} dataset and
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}
   ]{
-    Highest peak of normalised classical periodograms is an inadequate proxy for quality of oscillations.
-    Blue solid lines: normalised classical periodograms of time series in figure \ref{fig:ClassifierBestWorstTS}.
+    \textbf{(\ref{fig:glynn-worst-ts})}
+    Worst five time series in the \textit{zwf1$\Delta$} dataset and
+    \textbf{(\ref{fig:glynn-worst-ps})}
+    their periodograms,
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}.
   }
-  \label{fig:ClassifierBestWorstPS}
+  \label{fig:glynn-worst}
 \end{figure}
+
 
 Fig.\ \ref{fig:ClassifierBestWorstTS} shows that the classifier correctly ranked high-quality oscillations, determined subjectively, as the highest-quality oscillations.
 However, the time series that it ranked as lowest-quality exhibited oscillations, albeit at a higher frequency, as informed, subjectively, by the coincidence of regular budding events with peaks in the oscillations.
 These oscillations were ranked as low-quality because the Fourier spectrum (Fig.\ \ref{fig:ClassifierBestWorstPS}) identified multiple main frequencies, and thus lowered the peak of the normalised periodogram.
 Thus, a Fourier-based method may not adequately provide the information for a reliable ranking of oscillation quality.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{glynn_is20016_5_edit.pdf}
+  \caption[
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
+  ]{
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
+  }
+  \label{fig:analysis-svc-pr}
+\end{figure}
+
 
 Another caveat of this classifier lies in its sole tuning parameter, the false discovery rate, which affects the proportion of time series classed as oscillating.
 To optimise the false discovery rate, labels of whether a time series is oscillatory were needed; if the labels are human-defined, as was the case in this section, any optimised false discovery rate would have low reliability.
@@ -505,30 +553,27 @@ From this input data, 150 time series formed the training set.
 % MODELS
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{precision_recall}
+  \includegraphics[width=0.9\textwidth]{svm_feat_compare_edit.pdf}
   \caption[
   ]{
     (Left) Precision and (right) recall from five-fold cross-validation of support vector classifiers trained using different featurisation methods:
-    (orange) using the time points as features,
-    (green) using the power values in the Fourier spectrum as features,
-    and (red) using \emph{catch22} features.
-    (Blue) `random' indicates assigning time series to the oscillatory and non-oscillatory categories and used their time points as features, as a control.
+    using the time points as features,
+    using the power values in the Fourier spectrum as features,
+    and using \emph{catch22} features.
+    As a control, the oscillatory and non-oscillatory labels were randomly assigned to the time series and the time points were used as features.
   }
   \label{fig:analysis-precision-recall}
 \end{figure}
 
-% Replace with recursive feature elimination?
-% This will modify the discussion paragraph below.
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{catch22_training_featurevector_mean}
+  \includegraphics[width=0.7\textwidth]{svm_1_edit.pdf}
   \caption[
     Mean values of each \texttt{catch22} feature across each cell
   ]{
-    Mean values of each \texttt{catch22} feature across each cell classified as non-oscillatory (class 0) or oscillatory (class 1) by an SVC from the testing set.
-    The horizontal axis shows each \texttt{catch22} feature from 0 to 21, and the vertical axis shows the mean value of each feature across cells within an identified class.
+    Precision-recall curve of binary classifier, using \textit{catch22} for featurisation and with a support vector classifier architecture (radial bias kernel, $\gamma = 1/22$, $C = 1$).
   }
-  \label{fig:analysis-svc-catch22}
+  \label{fig:analysis-svc-pr}
 \end{figure}
 
 To determine the most effective way to featurise the data, I computed the precision and recall of support vector classifiers trained on data featurised using different methods.
@@ -548,9 +593,26 @@ This is in contrast to noisy, non-oscillatory time series.
 % This should give a `hill' in the middle.
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{classifier_histogram_probabilities_adapted}
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{svm_2_edit.pdf}
+   \caption{
+   }
+   \label{fig:analysis-svc-proba-historgram-model}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{svm_scramble_2_edit.pdf}
+   \caption{
+   }
+   \label{fig:analysis-svc-proba-histogram-scramble}
+  \end{subfigure}
+
   \caption{
-    Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC.
+    \textbf{(\ref{fig:analysis-svc-proba-historgram-model})}
+    Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC, and as a control,
+    \textbf{(\ref{fig:analysis-svc-proba-historgram-scramble})}
+    with labels randomly re-assorted to time series.
   }
   \label{fig:analysis-svc-proba-histogram}
 \end{figure}
@@ -558,58 +620,10 @@ This is in contrast to noisy, non-oscillatory time series.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_00}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-00}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_21}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-21}
-  \end{subfigure}
+  \includegraphics[width=0.9\textwidth]{svm_3_edit.pdf}
 
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_38}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-38}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_61}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-61}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_88}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-88}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{proba_99}
-    \caption{
-    }
-    \label{fig:analysis-svc-proba-99}
-  \end{subfigure}
   \caption{
-    Sample test set time series arranged by probability that each is oscillatory, as predicted by the support vector classifier:
-    \textbf{(\ref{fig:analysis-svc-proba-00})} 0\%,
-    \textbf{(\ref{fig:analysis-svc-proba-21})} 21\%,
-    \textbf{(\ref{fig:analysis-svc-proba-38})} 38\%,
-    \textbf{(\ref{fig:analysis-svc-proba-61})} 61\%,
-    \textbf{(\ref{fig:analysis-svc-proba-88})} 88\%,
-    \textbf{(\ref{fig:analysis-svc-proba-99})} 99\%,
+    Sample test set time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.
   }
   \label{fig:analysis-svc-proba-gallery}
 \end{figure}
