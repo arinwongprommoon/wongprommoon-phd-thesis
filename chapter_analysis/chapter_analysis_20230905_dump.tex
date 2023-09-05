@@ -30,3 +30,10 @@
 Another caveat of this classifier lies in its sole tuning parameter, the false discovery rate, which affects the proportion of time series classed as oscillating.
 To optimise the false discovery rate, labels of whether a time series is oscillatory were needed; if the labels are human-defined, as was the case in this section, any optimised false discovery rate would have low reliability.
 Alternatively, a more reliable ground truth could be provided by an experiment expected to result in time series that are not oscillatory.
+
+%[CONFIRM IMPORTANCE VIA RECURSIVE FEATURE ELIMINATION, USING RANDOM FOREST?]
+Furthermore, Fig.\ \ref{fig:analysis-svc-catch22} suggests that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9) is important for the classifier.
+% Equation?
+This feature is defined as the error based on using the mean of the previous three time points to predict each time point in the time series; time series that are more predictable should have low values of this feature.
+Therefore, it is reasonable that oscillatory time series have higher values of this feature --- at any given time in the time series, the value changes substantially after three time points.
+This is in contrast to noisy, non-oscillatory time series.

@@ -608,17 +608,9 @@ To determine the most effective way to featurise the data, I computed the precis
 Precision and recall were chosen as evaluation metrics due to the class imbalance, and the support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 1$.
 
 Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} gave the best performance.
-%[CONFIRM IMPORTANCE VIA RECURSIVE FEATURE ELIMINATION, USING RANDOM FOREST?]
-Furthermore, Fig.\ \ref{fig:analysis-svc-catch22} suggests that the \texttt{FC\_LocalSimple\_mean3\_stderr} feature (represented as feature 9) is important for the classifier.
-% Equation?
-This feature is defined as the error based on using the mean of the previous three time points to predict each time point in the time series; time series that are more predictable should have low values of this feature.
-Therefore, it is reasonable that oscillatory time series have higher values of this feature --- at any given time in the time series, the value changes substantially after three time points.
-This is in contrast to noisy, non-oscillatory time series.
 
 % ADAPTATION OF SVM: PREDICT PROBABILITIES
 
-% Include result from randomly assigning labels as a control?
-% This should give a `hill' in the middle.
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.5\textwidth}
@@ -639,7 +631,7 @@ This is in contrast to noisy, non-oscillatory time series.
   \caption{
     \textbf{(\ref{fig:analysis-svc-proba-historgram-model})}
     Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC, and as a control,
-    \textbf{(\ref{fig:analysis-svc-proba-historgram-scramble})}
+    \textbf{(\ref{fig:analysis-svc-proba-histogram-scramble})}
     with labels randomly re-assorted to time series.
   }
   \label{fig:analysis-svc-proba-histogram}
@@ -662,7 +654,6 @@ Fig.\ \ref{fig:analysis-svc-proba-histogram} shows that the distribution of prob
 This distribution is desirable because it indicates that the classifier is for the most part `certain' whether a time series is oscillatory.
 In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by Fig.\ \ref{fig:analysis-svc-proba-gallery}.
 
-%[MORE EVALUATION? e.g. ROC curve, precision-recall curve.  MAYBE IT IS OVERKILL HERE.]
 
 In sum,
 a simple machine learning architecture is sufficient in classifying noisy biological time series into oscillatory and non-oscillatory categories, complete with probabilities.
