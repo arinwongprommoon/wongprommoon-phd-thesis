@@ -96,63 +96,43 @@ Polynomial detrending assumes a polynomial-shaped underlying signal, while metho
    \label{fig:analysis-filter-butterworth}
   \end{subfigure}
 
-  \caption{
-    (Left panels) Time series and (right panels) Fourier spectra corresponding to
-    \textbf{(\ref{fig:analysis-filter-raw})}
-    a sample raw time series of flavin autofluorescence, and
-    \textbf{(\ref{fig:analysis-filter-butterworth})}
-    the time series processed by a high-pass Butterworth filter with a critical frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
-  }
-  \label{fig:analysis-filter}
-\end{figure}
-
-To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Fig.\ \ref{fig:analysis-filter} shows how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
-Unlike sliding-window methods, defining a signal filter offers direct control over frequencies.
-The critical frequency in this case was defined to create a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
-Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
-
-
-\begin{figure}
-  \centering
   \begin{subfigure}[htpb]{0.8\textwidth}
    \centering
    \includegraphics[width=\textwidth]{fft_slidingwindow}
    \caption{
    }
-   \label{fig:analysis-slidingwindow-movavg}
-  \end{subfigure}
-
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{fft_savgol}
-   \caption{
-   }
-   \label{fig:analysis-slidingwindow-savgol}
+   \label{fig:analysis-filter-movavg}
   \end{subfigure}
 
   \caption{
-    (Left panels) Raw time series with trends, (middle panels) processed time series, and (right panels) Fourier spectra to demonstrate
-    \textbf{(\ref{fig:analysis-slidingwindow-movavg})}
-    using a moving average (window size 30), and
-    \textbf{(\ref{fig:analysis-slidingwindow-savgol})}
-    using a Savitzky-Golay filter (window size 7, polynomial order 3)
-    to remove trends.
+    (Left panels) Time series and (right panels) Fourier spectra corresponding to
+    \textbf{(\ref{fig:analysis-filter-raw})}
+    a sample raw time series of flavin autofluorescence,
+    \textbf{(\ref{fig:analysis-filter-butterworth})}
+    the time series processed by a high-pass Butterworth filter with a critical frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}, and
+    \textbf{(\ref{fig:analysis-filter-movavg})}
+    the time series detrended using a moving average (window size 30).
   }
-  \label{fig:analysis-slidingwindow}
+  \label{fig:analysis-filter}
 \end{figure}
 
-To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method and the Savitzky-Golay filter.
+To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Figs.\ \ref{fig:analysis-filter-raw}--\ref{fig:analysis-filter-butterworth} show how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI[parse-numbers=false]{1/350}{\minute^{-1}}.
+Unlike sliding-window methods, defining a signal filter offers direct control over frequencies.
+The critical frequency in this case was defined to create a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
+Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
+
+To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.% and the Savitzky-Golay filter.
 Sliding-window methods are common in detrending biological time series.
 For example, \textcite{cunyHighresolutionMassMeasurements2022} used a moving average: a constant, defined sliding window to smooth time series of yeast cell mass during growth.
 \textcite{papagiannakisAutonomousMetabolicOscillations2017} fitted a smoothing spline to their single-cell fluorescence data of the yeast metabolic cycle, then divided the data points by the smoothing spline to detrend their data; the specific mathematical method used to define the smoothing spline was unclear in their study.
 % Equations?
-The Savitzky-Golay filter is also common --- this method is based on fitting a sliding window of a defined number of time points with a polynomial of a defined order using least squares fitting.
+%The Savitzky-Golay filter is also common --- this method is based on fitting a sliding window of a defined number of time points with a polynomial of a defined order using least squares fitting.
 
-Fig.\ \ref{fig:analysis-slidingwindow-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
-In contrast, Fig.\ \ref{fig:analysis-slidingwindow-savgol} shows that the Savitzky-Golay filter ...(INSERT DISCUSSION HERE)...
+Fig.\ \ref{fig:analysis-filter-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
+%In contrast, Fig.\ \ref{fig:analysis-slidingwindow-savgol} shows that the Savitzky-Golay filter ...(INSERT DISCUSSION HERE)...
 In sum, sliding-window methods were not ideal because they distorted the data in a way that affects conclusions, or removed noise information that may be useful.
 % Really?
-Importantly, it is not possible to restore the raw data when it is processed using such methods.
+%Importantly, it is not possible to restore the raw data when it is processed using such methods.
 
 Therefore, for subsequent analyses, I used the high-pass Butterworth filter defined above to process raw fluorescence time series.
 This is because using this method, I obtain more control over the frequency components, and the methods preserves noise frequencies that are useful for assessing the quality of the data set and estimating the noise properties.
