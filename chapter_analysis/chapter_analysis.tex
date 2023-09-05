@@ -205,20 +205,18 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
 % And finally, approximations were made to improve computational efficiency.
 
 
-% TODO: Use different colours for each type of categorisation
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.7\textwidth}
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{Figure_15}
+    \includegraphics[width=\linewidth]{umap_single_is20016_2_edit.png}
     \caption{
     }
     \label{fig:umap-osc}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.7\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{Figure_13}
+    \includegraphics[width=\linewidth]{umap_single_is20016_1_edit.png}
     \caption{
     }
     \label{fig:umap-strain}
@@ -227,10 +225,10 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
   \caption[
       UMAP embedding of a dataset of time series featurised using \textit{catch22}.
     ]{
-      UMAP embedding ($n=10$, $\mathrm{min\_dist} = 0.05$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
+      UMAP embedding ($n=5$, $\mathrm{min\_dist} = 0.5$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
       Each node represents a time series, coloured either by
       \textbf{(\ref{fig:umap-osc})}
-      whether each is oscillatory (`1') or not (`0'), human-labelled, or by
+      whether each is oscillatory or not, human-labelled, or by
       \textbf{(\ref{fig:umap-strain})}
       strain (`BY4741' or `\textit{zwf1$\Delta$}').
     }
@@ -249,12 +247,12 @@ In addition, ...(POTENTIALLY ADD SOME DISCUSSION ABOUT THE STRAINS THAT I HAVE C
 
 \begin{figure}
   \centering
-    \includegraphics[width=0.9\linewidth]{IdenFeatures_20016_UMAP_22_cropped}
+    \includegraphics[width=0.9\linewidth]{umap_grid_is20016_edit.png}
     \caption[
       Grid search of UMAP hyperparameters
     ]{
-      Grid search of UMAP hyperparameters: minimum distance along the horizontal axis and number of neighbours along the vertical axis.
-      Data points are coloured according to category: grey indicates non-oscillatory time series, red indicates oscillatory time series from BY4741 cells, and orange indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
+      Grid search of UMAP hyperparameters: number of neighbours along the horizontal axis and minimum distance along the vertical axis.
+      Data points are coloured according to category: grey indicates non-oscillatory time series, orange indicates oscillatory time series from BY4741 cells, and blue indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
     }
   \label{fig:umap-gridsearch}
 \end{figure}
@@ -333,10 +331,28 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
 % TODO: REPEAT INVESTIGATION WITH BETTER DATA, specially the Butterworth-filtered datasets.
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{graphclustering}
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graphclust_combined_is20016.pdf}
+    \caption{
+    }
+    \label{fig:graphclustering-combined}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graphclust_leiden_is20016.pdf}
+    \caption{
+    }
+    \label{fig:graphclustering-leiden}
+  \end{subfigure}
+
   \caption{
-    Graph-based clustering partitions a geometric graph defined by pairwise cosine distances between \textit{catch22} vectors.
-    Red nodes correspond to BY4741, orange nodes correspond to \textit{zwf1$\Delta$}.
+    Pruned geometric graph of BY4741 and \text{zwf1$\Delta$} time series from the same experiment.
+    \textbf{(\ref{fig:graphclustering-combined})}
+    Nodes coloured by group: grey, non-oscillatory; blue, oscillatory \textit{zwf1$\Delta$}; orange, oscillatory BY4741.
+    \textbf{(\ref{fig:graphclustering-leiden})}
+    Nodes coloured by community (out of 9) as optimised by the Leiden algorithm.
   }
   \label{fig:graphclustering}
 \end{figure}
@@ -355,7 +371,7 @@ Determining whether a time series is oscillatory, or rhythmicity detection, is c
 Rhythmicity detection is best re-defined as identifying the presence of a frequency in a range of interest, excluding lower frequencies that contribute to trends, and higher frequencies that contribute to noise \parencite{zielinskiStrengthsLimitationsPeriod2014}.
 However, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity; therefore, evaluating such a classification method requires a subjective definition of whether each time series is oscillatory.
 
-To determine the time series classification method that is most appropriate for my data, I compared a  spectral methods, a model-fitting method, and a machine learning method.
+To determine the time series classification method that is most appropriate for my data, I compared a spectral method, a model-fitting method, and a machine learning method.
 
 
 \subsection{Rhythmicity detection using spectral methods}
