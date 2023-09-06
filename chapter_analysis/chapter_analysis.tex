@@ -1028,19 +1028,27 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.6\textwidth}
+  \begin{subfigure}[t]{0.8\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{26643_ts.png}
+    \includegraphics[width=\linewidth]{acf_sinusoid_biol_ts.png}
     \caption{
     }
     \label{fig:acf-sinusoid-biol-ts}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{fy4_26643_plots_06.png}
+    \includegraphics[width=\linewidth]{acf_sinusoid_biol_acf.png}
     \caption{
     }
     \label{fig:acf-sinusoid-biol-acf}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{acf_sinusoid_biol_acf_fit.png}
+    \caption{
+    }
+    \label{fig:acf-sinusoid-biol-acf-fit}
   \end{subfigure}
 
   \caption{
@@ -1048,6 +1056,8 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
     Sample time series of flavin autofluorescence.
     \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
     Autocorrelation function across a population of time series of flavin autofluorescence.
+    \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
+    Fitting exponential decay functions to determine noise parameters.
   }
   \label{fig:acf-sinusoid-biol}
 \end{figure}
@@ -1058,30 +1068,40 @@ Fig.\ \ref{fig:acf-sinusoid-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION H
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.6\textwidth}
+  \begin{subfigure}[t]{0.8\textwidth}
   \centering
-  % TODO: Edit out the flavin bits
-    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
+    \includegraphics[width=\linewidth]{acf_fhn_biol_ts.png}
     \caption{
     }
     \label{fig:acf-fhn-biol-ts}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_mCh_06.png}
+    \includegraphics[width=\linewidth]{acf_fhn_biol_acf.png}
     \caption{
     }
     \label{fig:acf-fhn-biol-acf}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{acf_fhn_biol_acf_fit.png}
+    \caption{
+    }
+    \label{fig:acf-fhn-biol-acf-fit}
   \end{subfigure}
 
   \caption{
     \textbf{(\ref{fig:acf-fhn-biol-ts})}
-    Sample time series of histone 2B abundance (pink).
+    Sample time series of histone 2B abundance.
     \textbf{(\ref{fig:acf-fhn-biol-acf})}
     Autocorrelation function across a population of time series of histone 2B abundance.
+    \textbf{(\ref{fig:acf-fhn-biol-acf})}
+    Fitting exponential decay functions to determine noise parameters.
   }
   \label{fig:acf-fhn-biol}
 \end{figure}
+
 
 From the relationships shown in Figs.\ \ref{fig:acf-fhn-noiseparams-noisetimescale} and \ref{fig:acf-fhn-noiseparams-noiseamplitude}, noise parameters from the autocorrelation functions of real signals may be deduced.
 Fig.\ \ref{fig:acf-fhn-biol} shows ...(INSERT RESULT OF NEW INVESTIGATION HERE).
@@ -1158,15 +1178,14 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
 \subsection{Real data}
 \label{subsubsec:analysis-correlation-real}
 
-% TODO: Replace with pyruvate?  More dramatic.
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.9\textwidth}
+  \begin{subfigure}[t]{1.0\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{htb2mCherry_26643_plots_purple_01.pdf}
+    \includegraphics[width=\linewidth]{single_birth_plot_edit.pdf}
     \caption{
-      Sample time series of flavin autofluorescence (purple) and histone 2B abundance (pink).
+      Sample time series of flavin autofluorescence (blue) and histone 2B abundance (orange).
     }
     \label{fig:xcf-biol-ts}
   \end{subfigure}
