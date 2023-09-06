@@ -147,7 +147,8 @@ Such data visualisation methods are important because the structures they show m
 Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
 
 % I don't like this sentence
-To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillation from one experiment with both BY4741 (wild-type strain) and \textit{zwf1$\Delta$} (mutant strain) strains.
+To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillations from one experiment with both the wild-type BY4741 strain ($n=206$) and the mutant \textit{zwf1$\Delta$} strain ($n=425$).
+These time series had time points sampled every \SI{5}{\minute} in the experiment, for a total of 163 time points.
 %I expected the \textit{zwf1$\Delta$} traces to show different properties, as it is a strain that did not show oscillations in dissolved oxygen in the chemostat~\parencite{tuCyclicChangesMetabolic2007}.
 
 
@@ -548,21 +549,11 @@ Alternatively, the order of the model can be treated as a parameter, and model s
 
 \subsection{Rhythmicity detection using machine learning}
 \label{subsec:analysis-classification-ml}
-% - Write results from classifier project (SVM, RF, etc.)
 
-
-% [TODO] Worth re-doing the whole experiment using better data, e.g. the data I'm actually using in the biological results chapter.
-
-As an alternative to the mathematical methods previously discussed, I trained a machine learning model --- specifically, a support vector classifier --- to classify oscillatory and non-oscillatory time series and identify features in the time series that discriminate between the two classes (appendix \ref{append:analysis-ml}).
-%
-% DESCRIPTION OF DATA
-Specifically, I trained a support vector classifier on flavin time series from BY4741 cells  under \SI{10}{\gram~\litre^{-1}} glucose.
-The dataset had 294 time series of 118 time points each.
+As an alternative to the mathematical methods previously discussed, I trained a support vector classifier to classify oscillatory and non-oscillatory time series from the \textit{zwf1$\Delta$} cells (appendix \ref{append:analysis-ml}).
 
 % DATA PROCESSING
-
-% [TODO] Repeat experiment with Butterworth filter, rather than sliding window detrending
-To pre-process the data, I normalised each time series $x_{i} = x_{i,1}, x_{i,2}, \ldots , x_{i,j}, \ldots x_{i,n}$ by normalising it to produce a processed time series $z_{i} = z_{i,1}, z_{i,2}, \ldots , z_{i,j}, \ldots z_{i,n}$ as follows:
+To pre-process the data, I normalised each time series $x_{i} = x_{i,1}, x_{i,2}, \ldots , x_{i,j}, \ldots x_{i,n}$ to produce a processed time series $z_{i} = z_{i,1}, z_{i,2}, \ldots , z_{i,j}, \ldots z_{i,n}$ as follows:
 
 \begin{equation}
   z_{i,j} = \frac{x_{i,j} - \mu_{i}}{\sigma_{i}}
@@ -570,12 +561,12 @@ To pre-process the data, I normalised each time series $x_{i} = x_{i,1}, x_{i,2}
 \end{equation}
 
 where $\mu_{i}$ is the mean value of $x_{i}$, and $\sigma_{i}$ is the standard deviation of $x_{i}$.
-As a result, each normalised time series $z_{i}$ has a mean of 0 and a standard deviation of 1.
+As a result, each normalised time series $z_{i}$ has a mean of 0 and a standard deviation of 1, therefore ensuring that the dynamic ranges of the fluorescence signals do not affect rhythmicity detection.
 
 % LABELLING
-Based on the normalised time series, I labelled them as non-oscillatory ($n_{0}=211$) and oscillatory ($n_{1}=83$).
+Based on the normalised time series, I labelled them as non-oscillatory ($n_{0}=224$) and oscillatory ($n_{1}=201$).
 % SPLITTING
-From this input data, 150 time series formed the training set.
+From this input data, 75\% of the time series formed the training set.
 
 % FEATURISATION
 % MODELS
@@ -593,24 +584,24 @@ From this input data, 150 time series formed the training set.
   \label{fig:analysis-precision-recall}
 \end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.7\textwidth]{svm_1_edit.pdf}
-  \caption[
-    Mean values of each \texttt{catch22} feature across each cell
-  ]{
-    Precision-recall curve of binary classifier, using \textit{catch22} for featurisation and with a support vector classifier architecture (radial bias kernel, $\gamma = 1/22$, $C = 1$).
-  }
-  \label{fig:analysis-svc-pr}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.7\textwidth]{svm_1_edit.pdf}
+%   \caption[
+%     Precision-recall curve of binary classifier
+%   ]{
+%     Precision-recall curve of binary classifier, using \textit{catch22} for featurisation and with a support vector classifier architecture (radial bias kernel, $\gamma = 1/22$, $C = 1$).
+%   }
+%   \label{fig:analysis-svc-pr}
+% \end{figure}
 
 To determine the most effective way to featurise the data, I computed the precision and recall of support vector classifiers trained on data featurised using different methods.
-Precision and recall were chosen as evaluation metrics due to the class imbalance, and the support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 1$.
-
-Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} gave the best performance.
+% Precision and recall were chosen as evaluation metrics due to the class imbalance
+All support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 10$.
+Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} and the Fourier spectrum gave comparably high performances, as evidenced by high precision and recall, and with a low degree of overfitting, as evidenced by a small variation of both metrics across the rounds of cross-validation.
+%To evaluate the performance of the \textit{catch22}-based classifier, Fig. \ref{fig:analysis-svc-pr} shows the precision-recall curve of the classifier, which suggests a good performance.
 
 % ADAPTATION OF SVM: PREDICT PROBABILITIES
-
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.5\textwidth}
@@ -618,7 +609,7 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
    \includegraphics[width=\textwidth]{svm_2_edit.pdf}
    \caption{
    }
-   \label{fig:analysis-svc-proba-historgram-model}
+   \label{fig:analysis-svc-proba-histogram-model}
   \end{subfigure}%
   \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
@@ -629,7 +620,7 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
   \end{subfigure}
 
   \caption{
-    \textbf{(\ref{fig:analysis-svc-proba-historgram-model})}
+    \textbf{(\ref{fig:analysis-svc-proba-histogram-model})}
     Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC, and as a control,
     \textbf{(\ref{fig:analysis-svc-proba-histogram-scramble})}
     with labels randomly re-assorted to time series.
@@ -640,7 +631,7 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{svm_3_edit.pdf}
+  \includegraphics[width=0.8\textwidth]{svm_3_edit.pdf}
 
   \caption{
     Sample test set time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.
@@ -648,16 +639,13 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
   \label{fig:analysis-svc-proba-gallery}
 \end{figure}
 
-To predict the probability that each time series is oscillatory to account for uncertainties, in contrast to assigning each test time series to one of two categories, I extended the support vector classifier to predict probabilities.
-This was performed using Platt scaling \parencite{plattProbabilisticOutputsSupport1999}, as implemented by \texttt{scikit-learn}.
-Fig.\ \ref{fig:analysis-svc-proba-histogram} shows that the distribution of probabilities falls in a U-shape.
-This distribution is desirable because it indicates that the classifier is for the most part `certain' whether a time series is oscillatory.
+To predict the probability that each time series is oscillatory, I extended the support vector classifier to predict probabilities, so as to account for uncertainties.
+Prediction of probabilities was performed using Platt scaling \parencite{plattProbabilisticOutputsSupport1999}, as implemented by the \texttt{scikit-learn} package for the Python programming language.
+Fig.\ \ref{fig:analysis-svc-proba-histogram-model} suggests that the classifier performed well in discriminating between two classes, as evidenced by the U-shaped histogram of probabilities, in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
 In addition, these probabilities can also serve as a score for the quality of oscillations, as illustrated by Fig.\ \ref{fig:analysis-svc-proba-gallery}.
 
-
-In sum,
-a simple machine learning architecture is sufficient in classifying noisy biological time series into oscillatory and non-oscillatory categories, complete with probabilities.
-This method was also able to identify which time series feature was the most important in distinguishing between oscillatory and non-oscillatory time series.
+% MOVE TO DISCUSSION?
+%In sum, a simple machine learning architecture is adequate for rhythmicity detection and also offers a probability score for rhythmicity.
 
 
 %\section[Characterisation]{Characterisation: I have one time series --- what properties does it have?}
