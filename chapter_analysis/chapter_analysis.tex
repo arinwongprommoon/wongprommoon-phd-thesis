@@ -23,7 +23,11 @@ Specifically, I address:
   \item Detection of synchrony: identifying the relationship between two types of signal from the same cell.
 \end{enumerate}
 
-In this chapter, I will ... (REVISIT THIS AFTER I GO THROUGH EVERYTHING)
+In this chapter, I show that a high-pass Butterworth filter gives control over frequencies when filtering out long-term trends.
+To discover structure within a dataset, I show that UMAP, a dimension-reduction technique, and modularity clustering, a community detection technique, led to similar conclusions.
+Subsequently, I compare three approaches to rhythmicity detection: a statistical test based on a spectral method, model-fitting and analytically computing a periodogram, and a simple machine learning method.
+To estimate the period and noise parameters of time series, I then explored the effect of noise of the autocorrelation function of synthetic time series.
+Finally, I used the cross-correlation function to detect synchrony and quantify the relationship between two types of oscillators.
 
 
 \section{Analysing time series in a biological context}
@@ -121,7 +125,8 @@ Unlike sliding-window methods, defining a signal filter offers direct control ov
 The critical frequency in this case was defined to create a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
 Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
 
-To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.% and the Savitzky-Golay filter.
+To show how sliding-window methods adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.
+% and the Savitzky-Golay filter.
 Sliding-window methods are common in detrending biological time series.
 For example, \textcite{cunyHighresolutionMassMeasurements2022} used a moving average: a constant, defined sliding window to smooth time series of yeast cell mass during growth.
 \textcite{papagiannakisAutonomousMetabolicOscillations2017} fitted a smoothing spline to their single-cell fluorescence data of the yeast metabolic cycle, then divided the data points by the smoothing spline to detrend their data; the specific mathematical method used to define the smoothing spline was unclear in their study.
