@@ -265,30 +265,16 @@ In addition, the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}
   ]{
     Process of preparing a dataset of time series for modularity clustering.
     \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
-    Constructing a graph representation,
+    Constructing a graph representation: each time series was represented as a vector of \textit{catch22} features in 22-dimensional space.
+    The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
     \textbf{(\ref{fig:analysis-clustering-modclust-prune})}
-    pruning the complete graph, and
+    Pruning the complete graph, by deleting edges, so that each node had at least 10 neighbours.
     \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
-    modularity clustering.
+    Modularity clustering, using the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
     \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
   }
   \label{fig:analysis-clustering-modclust}
 \end{figure}
-
-To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
-Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
-\begin{enumerate}
-  \item \emph{Constructing a graph representation:}
-        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
-        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
-        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
-  \item \emph{Pruning:}
-        The complete graph was pruned by deleting edges, so that each node had at least $k$ neighbours.
-        Here, $k=10$.
-  \item \emph{Modularity clustering:}
-        Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I used the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
-\end{enumerate}
 
 
 \begin{figure}[htbp]
@@ -321,6 +307,8 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
   \label{fig:graphclustering}
 \end{figure}
 
+
+To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters (Fig.\ \ref{fig:analysis-clustering-modclust}).
 Fig.\ \ref{fig:graphclustering-combined} shows that construction of a pruned graph based on similarities between time series highlights two groups of non-oscillatory time series, similar to the UMAP representation (Fig.\ \ref{fig:umap}).
 Furthermore, Fig.\ \ref{fig:graphclustering-leiden} suggests that these two groups belong to separate communities, and shows that modularity clustering was able to further show communities among the oscillatory time series.
 However, such communities did not divide cleanly along the division between BY4741 and \textit{zwf$\Delta$} cells, suggesting that time series features alone are not able to divide these two strains.
