@@ -1,34 +1,10 @@
 \chapter{Insert appendix title here}
 \label{append:analysis}
 
-\section{Classification pipeline}
-\label{append:analysis-ml}
-
-% OVERVIEW OF MACHINE LEARNING
-% (needed to make the rest of the section make sense)
-In machine learning, classification is defined as the process of identifying a category that a piece of input data belongs to.
-In this section, the classification task is identifying whether a time series (input data) is oscillatory (belongs to one category of two) or non-oscillatory (belongs to the other category of two).
-
-% Is this necessary?  It seems too basic.  Dump into appendix?
-A typical classification pipeline can be described by the following steps:
-\begin{enumerate}
-  \item \emph{Pre-processing of data:} Input data is cleaned or normalised.
-        For example, to classify oscillatory time series, the input time series may be normalised to give similar dynamic ranges.
-  \item \emph{Labelling:} Each piece of input data has a label assigned to it to denote which category it belongs to.
-        For example, to classify oscillatory time series, a human can subjective assign the label `0' for non-oscillatory time series and `1' for oscillatory time series, for a total of two categories.
-  \item \emph{Featurisation:} Input data converted to feature vectors in the process of featurisation.
-        This process uses domain knowledge related to the type or origin of the data to define characteristics of the data that may be useful for classification.
-  \item \emph{Train-test split:} The input data set is then randomly divided into a training data set and a test data set.
-  \item \emph{Training of model:} The machine learning model is then fit on the (featurised) training data set and its labels to fit parameters in the model.
-  \item \emph{Evaluation of model on test dataset:}
-        The model, trained on the training dataset, is used to predict the labels of data in the (featurised) test data set.
-        The performance of the model is then evaluated on the test data set.
-        This evaluation is based on computing quantities that express how well the model assigns labels to data, compared to the labels defined earlier.
-\end{enumerate}
-
-
 \section{catch22 features}
 \label{append:analysis-catch22}
+
+Table~\ref{tab:catch22} lists \emph{catch22} features.
 
 \begin{table}[htbp]
   \small
@@ -69,7 +45,57 @@ A typical classification pipeline can be described by the following steps:
   \label{tab:catch22}
 \end{table}
 
-Table~\ref{tab:catch22} lists \emph{catch22} features.
+\section{UMAP hyperparameters}
+\label{append:analysis-umap}
+
+UMAP has several hyperparameters, of which four have major effects on the embedding:
+\begin{itemize}
+  \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
+        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
+        As the value increases, the algorithm `glues' more nodes together to form clusters.
+  \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
+        In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
+  \item The \emph{minimal distance} ($\mathrm{min\_dist}$) controls the desired separation between close points in the embedding space.
+        Specifically, this parameter controls how tightly the algorithm is allowed to pack points together.
+        With low values, the visualisation forms `clumps'.
+  \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
+        For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
+\end{itemize}
+
+% MOVE TO DISCUSSION?
+% However, UMAP has several caveats.
+% It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
+% Additionally, it assumes that the data has a manifold structure.
+% So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
+% If more data are sampled, then the amount of structure from noise will tend to decrease.
+% It assumes that local distance is more important than long-range distances, like t-SNE.
+% And finally, approximations were made to improve computational efficiency.
+
+
+\section{Classification pipeline}
+\label{append:analysis-ml}
+
+% OVERVIEW OF MACHINE LEARNING
+% (needed to make the rest of the section make sense)
+In machine learning, classification is defined as the process of identifying a category that a piece of input data belongs to.
+In this section, the classification task is identifying whether a time series (input data) is oscillatory (belongs to one category of two) or non-oscillatory (belongs to the other category of two).
+
+% Is this necessary?  It seems too basic.  Dump into appendix?
+A typical classification pipeline can be described by the following steps:
+\begin{enumerate}
+  \item \emph{Pre-processing of data:} Input data is cleaned or normalised.
+        For example, to classify oscillatory time series, the input time series may be normalised to give similar dynamic ranges.
+  \item \emph{Labelling:} Each piece of input data has a label assigned to it to denote which category it belongs to.
+        For example, to classify oscillatory time series, a human can subjective assign the label `0' for non-oscillatory time series and `1' for oscillatory time series, for a total of two categories.
+  \item \emph{Featurisation:} Input data converted to feature vectors in the process of featurisation.
+        This process uses domain knowledge related to the type or origin of the data to define characteristics of the data that may be useful for classification.
+  \item \emph{Train-test split:} The input data set is then randomly divided into a training data set and a test data set.
+  \item \emph{Training of model:} The machine learning model is then fit on the (featurised) training data set and its labels to fit parameters in the model.
+  \item \emph{Evaluation of model on test dataset:}
+        The model, trained on the training dataset, is used to predict the labels of data in the (featurised) test data set.
+        The performance of the model is then evaluated on the test data set.
+        This evaluation is based on computing quantities that express how well the model assigns labels to data, compared to the labels defined earlier.
+\end{enumerate}
 
 
 \section{Gillespie noise}
@@ -141,5 +167,3 @@ This time varied depending on the $k_{0}$ and $d_{0}$ values, but the final time
 The latter half of the trajectory was taken and then put on a grid with \num{1000} regularly-spaced time points, equal to the number of time points for the synthetic oscillators (harmonic and FitzHugh-Nagumo).
 The time series was then normalised by subtracting the mean ($k_{0}/d_{0}$) and then dividing by $\sqrt{1/d_{0}}$ to create a time series representing Gillespie noise with mean 0 and standard deviation $\sqrt{k_{0}}$ (figure~\ref{fig:gillespie_noise_samples}).
 This Gillespie noise thus has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$ --- in other words, the rate parameters of the birth-death process control the noise properties of this Gillespie noise.
-
-

@@ -160,36 +160,10 @@ These time series had time points sampled every \SI{5}{\minute} in the experimen
 \subsection{UMAP}
 \label{subsec:analysis-clustering-umap}
 
-% TODO: repeat with better datasets
-% And it probably saves more time to go over the code again, draft new figures that show my point, and generate new figures, rather than trying to massage the existing figures into this structure.
 UMAP \parencite{mcinnesUMAPUniformManifold2020} is a unsupervised dimension reduction method that can be used to visualise structure in a dataset, and it preserves the distances between points.
 % EQUATIONS?
 Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
 This embedding thus serve as coordinates to plot the data onto a low-dimensional space so as to preserve any clustering in the data.
-
-UMAP has several hyperparameters, of which four have major effects on the embedding:
-\begin{itemize}
-  \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
-        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
-        As the value increases, the algorithm `glues' more nodes together to form clusters.
-  \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
-        In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
-  \item The \emph{minimal distance} ($\mathrm{min\_dist}$) controls the desired separation between close points in the embedding space.
-        Specifically, this parameter controls how tightly the algorithm is allowed to pack points together.
-        With low values, the visualisation forms `clumps'.
-  \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
-        For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
-\end{itemize}
-
-% MOVE TO DISCUSSION?
-% However, UMAP has several caveats.
-% It lacks strong interpretability, namely: dimensions do not mean anything, unlike in principal component analysis (PCA).
-% Additionally, it assumes that the data has a manifold structure.
-% So it tends to find manifold structure within the noise of a dataset, like how humans find constellations among stars.
-% If more data are sampled, then the amount of structure from noise will tend to decrease.
-% It assumes that local distance is more important than long-range distances, like t-SNE.
-% And finally, approximations were made to improve computational efficiency.
-
 
 \begin{figure}
   \centering
@@ -245,7 +219,7 @@ Thus, UMAP may have potential to discover structure in a dataset, especially whe
   \label{fig:umap-gridsearch}
 \end{figure}
 
-To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters to find the best combination.
+To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ hyperparameters (appendix~\ref{append:analysis-umap}) to find the best combination.
 Fig.\ \ref{fig:umap-gridsearch} suggests that $50 \leq n \leq 150$ and $0.25 \leq \mathrm{min\_dist} \leq 1$ resulted in a good separation between the the BY4741 and \textit{zwf1$\Delta$} nodes.
 In addition, non-oscillatory time series consistently organised into groups distinct from the rest as the hyperparameters were varied.
 
