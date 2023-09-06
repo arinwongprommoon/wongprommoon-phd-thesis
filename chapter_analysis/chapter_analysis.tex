@@ -1197,33 +1197,27 @@ The cross-correlation function suggests that the histone 2B oscillations peaked 
 \section{Discussion}
 \label{sec:analysis-discussion}
 
-In this chapter, I describe the process of analysing populations of single-cell data of flavin autofluorescence oscillation and of histone 2B localisation time series, broken down into five main steps.
-These steps consist of: cleaning data, classification of oscillatory time series, characterisation of features of oscillatory time series, correlation of two related time series, and clustering of similar time series in a dataset.
+This chapter discusses methods to filter long-term trends in time series data, to visualise structures within a dataset of time series, to detect rhythmicity in a time series, to estimate period and noise parameters, and to detect the synchrony between two time series.
 
-In each step, there are several methods to choose from, each with its own merits and caveats, and judgement calls must be made.
-Additionally, combining different methods to answer the same time series question is often needed to provide a good picture of the quantity being measured.
-In cleaning data, the analyst must decide on a threshold to filter out useless data from the useful ones, but without compromising on the size of the resulting dataset so the remaining dataset is still useful.
-In classification of oscillatory time series, rhythmicity detection depends upon defining a threshold that separates `oscillatory' from `non-oscillatory' time series.
-This is true whether or not the rhythmicity detection method relies on machine learning.
-Furthermore, it is difficult to do this with noisy and relatively short (on the order of 10 oscillations) time series.
-It is easier to numerically characterise some properties of oscillatory time series than others, but all methods give error intervals.
-And finally, clustering also depends on defining parameters that control the number of groups found in a dataset.
+My results suggest that using a high-pass Butterworth filter to filter out long-term trends in time series data gives better control over the frequency profile of the time series than moving-average methods, which is often used to detrend time series from biological oscillators.
+Such results highlight that a degree of caution is needed to choose methods for a crucial step in data analysis.
 
-Solving mathematical and computational problems for each task is an intellectual investigation in its own right, and opens more questions than answers.
-%And so future directions include things like using Bayesian method to classify oscillations, or whether better data or better featurisation helps.
-Nevertheless, combining all five main steps can form a powerful analysis workflow that can be adapted to the analysis of other large datasets of time series, biological or not.
-I illustrate the use of such an example of an analysis workflow in chapter~\ref{ch:biology}, when I apply it to analyse biological results.
-Constructing an analysis workflow can be an interesting and challenging software engineering problem in its own right.
+My exploration of UMAP and modularity clustering suggests that both methods are useful to discovering structure within time series, particularly along the division between oscillatory and non-oscillatory time series.
+These methods further indicate sub-groups of time series that may have similar properties, such as shape or oscillation quality, which may correspond to sub-populations of metabolic cycle-producing cells in a culture.
+The consistency between the two methods strongly suggest that such groups in the dataset are meaningful.
 
-% Not sure how useful this subsection is...
-% And it's also a bit dangling
-\subsection{Combining methods to get a picture of periodicity}
-\label{subsec:analysis-characterisation-combined}
+Subsequently, my exploration of three approaches to detect rhythmicity --- deriving a statistical test of a power spectrum, deriving a periodogram from an autoregressive model, and a support vector classifier --- highlights the difficulty of rhythmicity detection in noisy biological time series.
+The spectral method described by \parencite{glynnDetectingPeriodicPatterns2006a} had a modest performance, but required defining a threshold and was dependent the input dataset.
+The autoregressive model was able to identify the most likely period in some time series, but otherwise classifies most time series as non-oscillatory, and lacks a tuning parameter.
+Finally, the support vector classifier suggests that a simple machine learning model can be adapted for rhythmicity detection, subject to a good feature set and training data.
+Ultimately, rhythmicity detection requires supplying a threshold in some form, be it a range of frequencies in which oscillations are expected, a parameter that controls the proportion of time series detected as oscillatory, or training labels.
 
-Each periodicity-estimation method has a limited ability to estimate the period of short, noisy biological time series; therefore, it is often useful to combine several such methods to produce a picture of the periodicity of oscillatory time series.
-For example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator.
-%Thus, in my subsequent analysis of biological data, I combine the autocorrelation function and the Fourier spectrum.
+My observations concerning the autocorrelation function confirms its use for estimating the period of an oscillatory time series, as used previously by \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+As periodicity-estimation methods have a limited ability to estimate the period of short, noisy time series owing to little input data, it can be useful to combine several such methods to produce a picture of the periodicity of oscillatory time series; for example, \textcite{potvin-trottierSynchronousLongtermOscillations2016} combines the autocorrelation function and the Fourier transform to study the changes in the periodicity of a modified model of the repressilator.
+Furthermore, I showed that the autocorrelation function may be used to estimate parameters to describe noise, assuming that the noise can be modelled by the birth-death process.
+However, further work, such as synthetic time series generated from a wider variety of parameters or additional estimation methods are likely required for adequate estimation of noise parameters from real data.
+In addition, it is possible that other types of noise better describe the noise from real data, and such types of noise may lead to different effects on the autocorrelation function.
 
-% [FIGURE: SHOWS A GOOD TIME SERIES, FFT, ACF, AR, AND THE MOST PROBABLY OSCILLATION FREQUENCY FROM EACH]
+Finally, my results show that the cross-correlation function, as used by \textcite{dunlopRegulatoryActivityRevealed2008}, \textcite{kivietStochasticityMetabolismGrowth2014}, and \textcite{pietschDeterminingGrowthRates2023}, can be used to detect synchrony between two sets of time series and to quantify the temporal relationship between the time series, even if the time series are very noisy.
 
-% [FIGURE: THE SAME AS ABOVE BUT LOOKING AT A POPULATION OF TIME SERIES.  THESE TRAJECTORIES SHOULD HAVE BEEN COMPUTED INDIVIDUALLY FOR EACH TIME SERIES.  THE CAPTION SHOULD EXPLAIN THE MEAN/MEDIAN AND ERROR RANGES.]
+Taken together, the analysis methods discussed in this chapter can form the basis of a powerful data analysis pipeline to analyse large datasets of potentially oscillatory biological time series.
