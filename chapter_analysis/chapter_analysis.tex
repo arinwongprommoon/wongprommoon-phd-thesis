@@ -324,8 +324,8 @@ In sum, the general agreement between UMAP and modularity clustering shows that 
 \label{sec:analysis-classification}
 
 To assess how a perturbation affects the YMC, it is important to have a systematic method to determine whether a time series is oscillatory.
-Determining whether a time series is oscillatory, or rhythmicity detection, is challenging because the task of defining the presence of an oscillation breaks down when the frequency domain is considered.
-Rhythmicity detection is best re-defined as identifying the presence of a frequency in a range of interest, excluding lower frequencies that contribute to trends, and higher frequencies that contribute to noise \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+%Determining whether a time series is oscillatory, or rhythmicity detection, is challenging because the task of defining the presence of an oscillation breaks down when the frequency domain is considered.
+Rhythmicity detection can be seen as identifying the presence of a frequency in a range of interest, excluding lower frequencies that contribute to trends, and higher frequencies that contribute to noise \parencite{zielinskiStrengthsLimitationsPeriod2014}.
 However, there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity; therefore, evaluating such a classification method requires a subjective definition of whether each time series is oscillatory.
 
 To determine the time series classification method that is most appropriate for my data, I compared a spectral method, a model-fitting method, and a machine learning method.
@@ -417,23 +417,13 @@ However, the reliability of the ranking method is called into question by the hi
 
 The method described by \textcite{glynnDetectingPeriodicPatterns2006a} describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory.
 In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
-Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
-
+%Increasing the false discovery rate thus increases the proportion of time series classed as oscillating.
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve created as the false discovery rate was varied.
 The area under the ROC curve ($A = 0.762$) suggests that the classifier only performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
 
 \subsection{Rhythmicity detection using model fitting}
 \label{subsec:analysis-classification-ar}
-
-To identify an alternative method to classify oscillatory and non-oscillatory time series, I assessed the performance of a time series classification method based on the autoregressive model.
-%The autoregressive model has been used before to characterise biological time series \parencite{zielinskiStrengthsLimitationsPeriod2014}.
-This type of model is based on the assumption that each data point in the time series can be expressed as a linear combination of $P$ data points that precede it, thus smoothing the time series.
-The advantage of the autoregressive model is that it leads to an analytical solution for the periodogram, thus potentially resolving the problem of a low-resolution periodogram based on the Fourier spectrum.
-
-In particular, \textcite{jiaFrequencyDomainAnalysis2021} describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
-Autoregressive models were fitted to simulated time series of oscillatory gene expression, and its parameters used to define a power spectrum for the time series (section~\ref{subsec:methods-computational-ar}).
-
 
 \begin{figure}
   \centering
@@ -448,6 +438,9 @@ Autoregressive models were fitted to simulated time series of oscillatory gene e
   \label{fig:analysis-ar-classification}
 \end{figure}
 
+To identify an alternative method to classify oscillatory and non-oscillatory time series, I assessed the performance of a time series classification method based on the autoregressive model.
+In particular, \textcite{jiaFrequencyDomainAnalysis2021} describes a model of stochastic gene expression in a dividing cell, which predicts oscillatory gene expression.
+In this model, each data point is expressed as a linear combination of a number of data points that precede it, and model parameters lead to an analytical solution for the periodogram, giving an advantage over the low-resolution Fourier spectrum (section~\ref{subsec:methods-computational-ar}).
 The resulting power spectra fell into four categories: one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
@@ -481,7 +474,8 @@ This method thus allows computing the frequency of the oscillation from the loca
   \label{fig:analysis-ar}
 \end{figure}
 
-Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory, as evidenced by a peak in the periodogram.% of height greater than 1.
+Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory, as evidenced by a peak in the periodogram.
+% of height greater than 1.
 In addition, the periodogram correctly identifies a period of \SI{75.2}{\minute}.
 
 \begin{table}
@@ -508,8 +502,9 @@ To assess the performance of the use of the autoregressive model for rhythmicity
 The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor accuracy ($a = 0.513$).
 
 % MOVE THIS TO DISCUSSION?
-Furthermore, unlike the classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}, the autoregressive model does not having a parameter that can be adjusted to change the expected proportion of a dataset to be classified as oscillatory --- in other words, the tolerance of detecting rhythmicity cannot be adjusted.
-Alternatively, the order of the model can be treated as a parameter, and model selection can be performed.
+% Furthermore, unlike the classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}, the autoregressive model does not having a parameter that can be adjusted to change the expected proportion of a dataset to be classified as oscillatory --- in other words, the tolerance of detecting rhythmicity cannot be adjusted.
+% DISCUSSION
+%Alternatively, the order of the model can be treated as a parameter, and model selection can be performed.
 %Nevertheless, among the time series that the algorithm classifies as oscillatory, the algorithm accurately estimates the frequency of oscillations.
 %[Need: figures to summarise my investigation on population.  Probably need to re-do this on some datasets because it is poorly documented in my notes.]
 
@@ -620,7 +615,7 @@ In addition, these probabilities can also serve as a score for the quality of os
 \label{sec:analysis-characterisation}
 
 Characterising features of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations.
-The period of an oscillatory time series is the easiest characteristic to compute a fixed number for because it is well-defined.
+% The period of an oscillatory time series is the easiest characteristic to compute a fixed number for because it is well-defined.
 
 To show that the autocorrelation function can be used to estimate the period and noise properties of both symmetric and asymmetric oscillations, I adapted the autocorrelation function as used by \textcite{pietschDeterminingGrowthRates2023} (section~\ref{subsec:methods-computational-xcf}).
 To calibrate the method, I generated synthetic oscillations --- sinusoids and the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961} --- to investigate the effect of their properties on the autocorrelation function (section~\ref{subsec:methods-computational-synthetic}).
