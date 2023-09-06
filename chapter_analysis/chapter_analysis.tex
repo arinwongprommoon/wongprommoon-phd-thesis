@@ -1094,10 +1094,10 @@ The differences of these noise parameters relative to the flavin autofluorescenc
 \section{Detection of synchrony}
 \label{sec:analysis-correlation}
 
-To test a method to quantify the temporal lag between flavin autofluorescence oscillations and HTB2::mCherry levels in a population of cells, I computed the cross-correlation functions of a population of sinusoid and FitzHugh-Nagumo oscillators.
+To test a method to quantify the temporal lag between two types of oscillations, I computed the cross-correlation functions of a population of sinusoid and FitzHugh-Nagumo oscillators.
 Cross-correlation has been used to investigate the relationship between the expression levels of two genes in a model feed-forward loop \parencite{dunlopRegulatoryActivityRevealed2008},
-and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes OR of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
-Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employed a single-cell microfluidics experiment with time-lapse microscopy, and therefore their analysis of a population of time series is applicable in this chapter.
+and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
+%Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employed a single-cell microfluidics experiment with time-lapse microscopy, and therefore their analysis of a population of time series is applicable in this chapter.
 
 \subsection{Synthetic data}
 \label{subsubsec:analysis-correlation-synthetic}
@@ -1139,7 +1139,7 @@ Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employed a singl
   \caption{
     %Using the cross-correlation function to evaluate the shift of one synthetic time series relative to another with a different shape.
     \textbf{(\ref{fig:xcf-nonoise-ts})}
-    (Blue) Sample sinusoid ($f = 0.026$) and (orange) FitzHugh-Nagumo oscillator ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) of the same frequency and without noise, and
+    (Blue) Sample sinusoid ($f = 0.0235$) and (orange) FitzHugh-Nagumo oscillator ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) of the same frequency and without noise, and
     \textbf{(\ref{fig:xcf-nonoise-xcf})}
     the cross-correlation function of the FitzHugh-Nagumo oscillators with respect to the sinusoids.
     %
@@ -1153,8 +1153,9 @@ Importantly, \textcite{kivietStochasticityMetabolismGrowth2014} employed a singl
   \label{fig:xcf}
 \end{figure}
 
-Fig.\ \ref{fig:xcf-nonoise-xcf} shows that the cross-correlation function correctly indicated the degree to which the FitzHugh-Nagumo oscillators were shifted forward with respect to the sinusoids.
-This shift was evidenced by the degree to which the central peak of the cross-correlation function was shifted to the right, in contrast to the situation in which the cross-correlation at lag 0 is 1 if the peaks of the two oscillators coincide.
+Fig.\ \ref{fig:xcf-nonoise-xcf} shows that the cross-correlation function identifies that the sinusoids, on average, peak 20 time points before the FitzHugh-Nagumo oscillators, close to the actual value of 20.75 time points.
+This shift was evidenced by the position of the peak of the cross-correlation function closest to the vertical axis.
+The cross-correlation function further shows that synchrony between the two oscillators is maintained along the entire time series, across all time series.
 Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
 
@@ -1166,9 +1167,8 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
   \centering
   \begin{subfigure}[t]{1.0\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{single_birth_plot_edit.pdf}
+    \includegraphics[width=\linewidth]{single_birth_plot_nostar.pdf}
     \caption{
-      Sample time series of flavin autofluorescence (blue) and histone 2B abundance (orange).
     }
     \label{fig:xcf-biol-ts}
   \end{subfigure}
@@ -1177,19 +1177,21 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
   \centering
     \includegraphics[width=\linewidth]{xcf_edit.pdf}
     \caption{
-      Cross-correlation function of the histone 2B abundance time series with respect to the flavin autofluorescence time series.
     }
     \label{fig:xcf-biol-xcf}
   \end{subfigure}
 
   \caption{
-    Using the cross-correlation function to evaluate the shift of histone 2B abundance traces with respect to flavin autofluorescence traces.
+    \textbf{(\ref{fig:xcf-biol-ts})}
+    Sample time series of flavin autofluorescence (blue) and histone 2B abundance (orange).
+    \textbf{(\ref{fig:xcf-biol-xcf})}
+    Cross-correlation function between the flavin autofluorescence time series and the histone 2B abundance time series.
   }
   \label{fig:xcf-biol}
 \end{figure}
 
-I can thus use this method to quantify the shift of the cell division cycle relative to the yeast metabolic cycle, therefore assessing the relationship between the two oscillators.
-Figure~\ref{fig:xcf-biol} shows such as example, which demonstrates that the histone 2B oscillations succeed the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
+To show how the cross-correlation function can be used to quantify the synchrony between flavin autofluorescence oscillations and HTB2::mCherry levels in a population of cells, Fig.\ \ref{fig:xcf-biol} displays a sample pair of time series (Fig.\ \ref{fig:xcf-biol-ts}) and the cross-correlation function from the population of cells (Fig.\ \ref{fig:xcf-biol-xcf}).
+The cross-correlation function suggests that the histone 2B oscillations peaked after the flavin autofluorescence oscillations by an average of \SI{5}{\minute}.
 
 
 \section{Discussion}
