@@ -410,9 +410,26 @@ Here, $\sigma$ denotes the standard deviation of the distribution and thus contr
 \end{figure}
 
 Gillespie noise emulates noise from biological systems (Fig.\ \ref{fig:gillespie_noise}).
-Gillespie noise was generated using the direct method of the Gillespie algorithm \parencite{gillespieExactStochasticSimulation1977} on the birth-death process model (appendix~\ref{append:analysis-gillespie}).
-% The parameters of the birth-death process control noise parameters.
-% Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
+Gillespie noise was generated using the direct method of the Gillespie algorithm \parencite{gillespieExactStochasticSimulation1977} on the birth-death process model (Appendix~\ref{append:analysis-gillespie}).
+
+The birth-death process is a simple stochastic model used for the modelling of gene expression.
+The model describes a species that is produced at a linear birth rate $k_{0}$ and destroyed at a linear death rate $d_{0}$, and is defined by the system of equations~\ref{eq:birth-death-process}:
+
+\begin{equation}
+  \begin{aligned}
+    R_{1}: \varnothing \ce{ &->[k_{0}] P}\\
+    R_{2}: \ce{P &->[d_{0}]} \varnothing
+  \end{aligned}
+  \label{eq:birth-death-process}
+\end{equation}
+
+To produce Gillespie noise, a stochastic simulation employing the direct method of the Gillespie algorithm was performed on the birth-death process model with defined $k_{0}$ and $d_{0}$ parameters.
+The final time was defined in such a way that allows the trajectory of the amount of $P$ over time to reach a steady state (Fig.\ \ref{fig:gillespie_trajectory}).
+This time varied depending on the $k_{0}$ and $d_{0}$ values, but the final time of \num{1500} was chosen as it was long enough to have the trajectory each steady state for the $k_{0}$ and $d_{0}$ values used in this study.
+The latter half of the trajectory was taken and then put on a grid with \num{1000} regularly-spaced time points, equal to the number of time points for the synthetic oscillators (harmonic and FitzHugh-Nagumo).
+The time series was then normalised by subtracting the mean ($k_{0}/d_{0}$) and then dividing by $\sqrt{1/d_{0}}$ to create a time series representing Gillespie noise with mean 0 and standard deviation $\sqrt{k_{0}}$ (Fig.\ \ref{fig:gillespie_noise_samples}).
+This Gillespie noise thus has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$ --- in other words, the rate parameters of the birth-death process control the noise properties of this Gillespie noise.
+
 
 \subsection{Signal-to-noise ratio}
 \label{subsec:methods-computational-snr}
