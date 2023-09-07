@@ -96,7 +96,7 @@ To determine the detrending method that is most appropriate for my data, I compa
 
   \begin{subfigure}[htpb]{0.8\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{fft_slidingwindow}
+   \includegraphics[width=\textwidth]{fft_slidingwindow_edit}
    \caption{
    }
    \label{fig:analysis-filter-movavg}
@@ -107,9 +107,10 @@ To determine the detrending method that is most appropriate for my data, I compa
     \textbf{(\ref{fig:analysis-filter-raw})}
     a sample raw time series of flavin autofluorescence,
     \textbf{(\ref{fig:analysis-filter-butterworth})}
-    the time series processed by a high-pass Butterworth filter with a critical frequency \SI[parse-numbers=false]{1/350}{\minute^{-1}}, and
+    the time series processed by a high-pass Butterworth filter with a critical frequency \SI{2.86d-3}{\minute^{-1}}, and
     \textbf{(\ref{fig:analysis-filter-movavg})}
     the time series detrended using a moving average (window size 30).
+    Arrow ($\searrow$) indicates artefact.
   }
   \label{fig:analysis-filter}
 \end{figure}
@@ -151,7 +152,7 @@ This embedding thus serves as coordinates to plot the data onto a low-dimensiona
   \centering
   \begin{subfigure}[t]{0.5\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{umap_single_is20016_2_edit.png}
+    \includegraphics[width=\linewidth]{umap_single_is20016_2_edit2.png}
     \caption{
     }
     \label{fig:umap-osc}
@@ -170,7 +171,7 @@ This embedding thus serves as coordinates to plot the data onto a low-dimensiona
       UMAP embedding ($n=5$, $\mathrm{min\_dist} = 0.5$, $d=2$, Euclidean distance as the metric) of a dataset of time series featurised using \textit{catch22}.
       Each node represents a time series, coloured either by
       \textbf{(\ref{fig:umap-osc})}
-      whether each is oscillatory or not, human-labelled, or by
+      whether each is oscillatory or not, human-labelled ($\ast$ and $\ast \ast$ indicating two groups of non-oscillatory nodes of interest), or by
       \textbf{(\ref{fig:umap-strain})}
       strain (`BY4741' or `\textit{zwf1$\Delta$}').
     }
@@ -178,7 +179,7 @@ This embedding thus serves as coordinates to plot the data onto a low-dimensiona
 \end{figure}
 
 To evaluate whether UMAP was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to meaningful divisions, I featurised the time series with \textit{catch22}, then used UMAP to compute two-dimensional embeddings.
-Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggested a small group of non-oscillatory time series that differed markedly from the rest, and a larger group that was more similar to oscillatory time series.
+Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggested a small group of non-oscillatory time series that differed markedly from the rest ($\ast$ in figure), and a larger group that was more similar to oscillatory time series ($\ast \ast$ in figure).
 In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggested that the BY4741 time series were more similar to each other.
 In contrast, \textit{zwf1$\Delta$} occupied more positions within the embedding space.
 These embeddings agreed with my observation that time series from the \textit{zwf1$\Delta$} strain had a larger variety of shapes and oscillation quality than the BY4741 strain.
@@ -187,7 +188,7 @@ Thus, UMAP may have potential to separate oscillatory and non-oscillatory time s
 
 \begin{figure}
   \centering
-    \includegraphics[width=0.9\linewidth]{umap_grid_is20016_edit.png}
+    \includegraphics[width=0.9\linewidth]{umap_grid_is20016_edit2.png}
     \caption[
       Grid search of UMAP hyperparameters
     ]{
@@ -418,7 +419,7 @@ This method thus allows computing the frequency of the oscillation from the loca
   % Remove birth events?  They are not needed to understand this and may confuse people.
   \begin{subfigure}[htpb]{0.6\textwidth}
    \centering
-   \includegraphics[width=\textwidth]{timeseries_example_for_ar}
+   \includegraphics[width=\textwidth]{timeseries_example_for_ar_edit}
    \caption{
    }
    \label{fig:analysis-ar-timeseries}
@@ -433,7 +434,7 @@ This method thus allows computing the frequency of the oscillation from the loca
 
   \caption{
     \textbf{(\ref{fig:analysis-ar-timeseries})}
-    Sample time series (dark solid line), with a fitted autoregressive model (light solid line) of order 4 computed according to \textcite{jiaFrequencyDomainAnalysis2020}.
+    Sample time series (orange), with a fitted autoregressive model (blue) of order 18 computed according to \textcite{jiaFrequencyDomainAnalysis2020}.
     \textbf{(\ref{fig:analysis-ar-periodogram})}
     Periodogram defined based on parameters of the autoregressive model.
     % The presence of a peak of height greater than 1 indicates that the time series is oscillatory.
