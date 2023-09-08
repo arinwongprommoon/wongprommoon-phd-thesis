@@ -557,6 +557,14 @@
   #1%
 }
 
+%% THAI ABSTRACT
+
+\newcommand{\thaiabstract}[1]{%
+  \chapter{Abstract (Thai)}%
+  #1%
+}
+
+
 %% ACKNOWLEDGEMENTS
 
 \newcommand{\acknowledgements}[1]{%
