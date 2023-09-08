@@ -132,8 +132,14 @@
 
 \usepackage{varioref}
 
-%% Proper hyphenation
-\usepackage[british]{babel}
+%% Lang, incl. proper hyphenation
+\usepackage[utf8x]{inputenc}
+\usepackage[thai,british]{babel}
+
+\makeatletter
+\@namedef{opt@inputenc.sty}{utf8}
+\makeatother
+\usepackage{CJKutf8}
 
 %% Rotating
 \usepackage{pdflscape}
