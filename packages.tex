@@ -134,7 +134,8 @@
 
 %% Lang, incl. proper hyphenation
 \usepackage[utf8x]{inputenc}
-\usepackage[thai,british]{babel}
+\usepackage[british,thaicjk]{babel}
+\addto\extrasthaicjk{\fontencoding{C90}\selectfont}
 
 \makeatletter
 \@namedef{opt@inputenc.sty}{utf8}
