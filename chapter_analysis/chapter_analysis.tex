@@ -102,7 +102,12 @@ To determine the detrending method that is most appropriate for my data, I compa
    \label{fig:analysis-filter-movavg}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Time series and Fourier spectra corresponding to
+    a sample raw time series of flavin autofluorescence,
+    the time series processed by a high-pass Butterworth filter, and
+    the time series detrended using a moving average.
+  ]{
     (Left panels) Time series and (right panels) Fourier spectra corresponding to
     \textbf{(\ref{fig:analysis-filter-raw})}
     a sample raw time series of flavin autofluorescence,
@@ -190,7 +195,7 @@ Thus, UMAP may have potential to separate oscillatory and non-oscillatory time s
   \centering
     \includegraphics[width=0.9\linewidth]{umap_grid_is20016_edit2.png}
     \caption[
-      Grid search of UMAP hyperparameters
+      Grid search of UMAP hyperparameters.
     ]{
       Grid search of UMAP hyperparameters: number of neighbours along the horizontal axis and minimum distance along the vertical axis.
       Data points are coloured according to category: grey indicates non-oscillatory time series, orange indicates oscillatory time series from BY4741 cells, and blue indicates oscillatory time series from \textit{zwf1$\Delta$} cells.
@@ -237,7 +242,7 @@ This optimisation problem is computationally difficult, so approximations such a
   \end{subfigure}
 
   \caption[
-    Modularity clustering visualises natural groupings of time series
+    Process of preparing a dataset of time series for modularity clustering.
   ]{
     Process of preparing a dataset of time series for modularity clustering.
     \textbf{(\ref{fig:analysis-clustering-modclust-graph})}
@@ -271,7 +276,9 @@ This optimisation problem is computationally difficult, so approximations such a
     \label{fig:graphclustering-leiden}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Pruned geometric graph of BY4741 and \textit{zwf1$\Delta$} time series from the same experiment.
+  ]{
     Pruned geometric graph of BY4741 and \textit{zwf1$\Delta$} time series from the same experiment.
     \textbf{(\ref{fig:graphclustering-combined})}
     Nodes coloured by group: grey, non-oscillatory; blue, oscillatory \textit{zwf1$\Delta$}; orange, oscillatory BY4741.
@@ -379,7 +386,7 @@ However, some time series with visually irregular oscillations (Fig.\ \ref{fig:g
   \centering
   \includegraphics[width=0.5\textwidth]{glynn_is20016_5_edit.pdf}
   \caption[
-    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}.
   ]{
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
   }
@@ -399,7 +406,7 @@ The area under the ROC curve ($A = 0.762$) suggests that the classifier performe
   \centering
   \includegraphics[width=1.0\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
   \caption[
-    Power spectra analytically derived from fitting an autoregressive model to time series can be divided into four types
+    Power spectra analytically derived from fitting an autoregressive model to time series can be divided into four types.
   ]{
     Power spectra (a) analytically derived from fitting an autoregressive model to time series (b) can be divided into four types.
     Type I lacks a local maximum and is denoted as lacking oscillations.
@@ -432,7 +439,9 @@ This method thus allows computing the frequency of the oscillation from the loca
    \label{fig:analysis-ar-periodogram}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample time series, with a fitted autoregressive model computed according to \textcite{jiaFrequencyDomainAnalysis2020}.
+  ]{
     \textbf{(\ref{fig:analysis-ar-timeseries})}
     Sample time series (orange), with a fitted autoregressive model (blue) of order 18 computed according to \textcite{jiaFrequencyDomainAnalysis2020}.
     \textbf{(\ref{fig:analysis-ar-periodogram})}
@@ -457,7 +466,9 @@ This method thus allows computing the frequency of the oscillation from the loca
     \cline{2-4}
     \multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{265} & \multicolumn{1}{c}{160} & \multicolumn{1}{c}{425}\\
   \end{tabular}
-  \caption{
+  \caption[
+    Confusion matrix to evaluate the performance of using the autoregressive model \parencite{jiaFrequencyDomainAnalysis2020} to detect rhythmicity.
+  ]{
     Confusion matrix to evaluate the performance of using the autoregressive model \parencite{jiaFrequencyDomainAnalysis2020} to detect rhythmicity in the \textit{zwf1$\Delta$} dataset.
   }
   \label{tab:analysis-ar-confusion-matrix}
@@ -488,6 +499,7 @@ From this input data, 75\% of the time series formed the training set.
   \centering
   \includegraphics[width=0.9\textwidth]{svm_feat_compare_edit.pdf}
   \caption[
+    Precision and recall from five-fold cross-validation of support vector classifiers trained using different featurisation methods.
   ]{
     (Left) Precision and (right) recall from five-fold cross-validation of support vector classifiers trained using different featurisation methods:
     using the time points as features,
@@ -532,7 +544,10 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
    \label{fig:analysis-svc-proba-histogram-scramble}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC, and as a control,
+    with labels randomly re-assorted to time series.
+  ]{
     \textbf{(\ref{fig:analysis-svc-proba-histogram-model})}
     Histogram of probabilities of whether a time series in the test data set is classified as oscillatory by the SVC (featurisation with \textit{catch22}, $\gamma = 1/22$, $C = 10$), and as a control,
     \textbf{(\ref{fig:analysis-svc-proba-histogram-scramble})}
@@ -621,7 +636,9 @@ Subsequently, I applied the autocorrelation function to characterise experimenta
     \label{fig:acf-sinusoids-gillnoise-acf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample sinusoids without noise, with Gaussian noise, and with Gillespie noise, along with their autocorrelation functions.
+  ]{
     %Effect of type of noise on the autocorrelation function.
     \textbf{(\ref{fig:acf-sinusoids-nonoise-ts})} Sample sinusoids without noise, and 
     \textbf{(\ref{fig:acf-sinusoids-nonoise-acf})} its autocorrelation function.
@@ -638,7 +655,7 @@ Subsequently, I applied the autocorrelation function to characterise experimenta
   \label{fig:acf-sinusoids}
 \end{figure}
 
-To compare the effect of Gaussian noise and Gillespie noise on the autocorrelation function, I computed the autocorrelation functions from a population of sinusoids with either type of noise added via elementwise sums.
+To compare the effect of Gaussian noise and Gillespie noise on the autocorrelation function, I computed the autocorrelation functions from a population of sinusoids with either type of noise added via element-wise sums.
 
 % [Show working -- i.e. the mathematical derivations that make me expect results?]
 % [Equations -- clear lines before/after, rather than having them in-line?]
@@ -723,7 +740,9 @@ The observation thus suggests that the death rate $d_{0}$ parameter of Gillespie
     \label{fig:acf-noisetimescale-effect-relationship}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
+  ]{
     %Characterising the autocorrelation function to quantify the effect of Gillespie noise timescale.
     \textbf{(\ref{fig:acf-noisetimescale-effect-fit})} Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
     \textbf{(\ref{fig:acf-noisetimescale-effect-relationship})} The relationship between $d_{0}$ and the decay rate $D$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
@@ -806,7 +825,7 @@ Conversely, if $D$ can be estimated from the autocorrelation function, then the 
   \centering
   \includegraphics[width=0.6\linewidth]{birthrate_vs_ydispl.png}
   \caption[
-    Quantifying the effect of Gillespie noise amplitude on the autocorrelation function
+    The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function.
   ]{
     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
     Here, $d_{0}$ was held constant at 0.05.
@@ -844,7 +863,10 @@ Conversely, if $C$ can be estimated from the autocorrelation function, then the 
     \label{fig:acf-fhn-gillnoise-acf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample FitzHugh-Nagumo oscillators with Gillespie noise, and
+    its autocorrelation function.
+  ]{
     %The autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise.
     \textbf{(\ref{fig:acf-fhn-gillnoise-ts})} Sample FitzHugh-Nagumo oscillators ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.05$), and 
     \textbf{(\ref{fig:acf-fhn-gillnoise-acf})} its autocorrelation function.
@@ -888,7 +910,9 @@ Conversely, if $C$ can be estimated from the autocorrelation function, then the 
     \label{fig:acf-fhn-noiseparams-noiseamplitude}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
+  ]{
     %Quantifying the effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
     \textbf{(\ref{fig:acf-fhn-noiseparams-fit})}
     Fitting exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, to the autocorrelation function, generated with $k_{0}=5$ and $d_{0}=0.05$, and
@@ -938,7 +962,9 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
     \label{fig:acf-sinusoid-biol-acf-fit}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample time series of flavin autofluorescence, its autocorrelation function, and fitting exponential decay functions.
+  ]{
     \textbf{(\ref{fig:acf-sinusoid-biol-ts})}
     Sample time series of flavin autofluorescence.
     \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
@@ -980,7 +1006,9 @@ Nevertheless, the decay rate $D$ of the exponential function fitted to the mean 
     \label{fig:acf-fhn-biol-acf-fit}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample time series of histone 2B abundance, its autocorrelation function, and fitting exponential decay functions.
+  ]{
     \textbf{(\ref{fig:acf-fhn-biol-ts})}
     Sample time series of histone 2B abundance.
     \textbf{(\ref{fig:acf-fhn-biol-acf})}
@@ -1041,7 +1069,9 @@ and to investigate the relationship between instantaneous growth rate and the ex
     \label{fig:xcf-gillnoise-xcf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample sinusoid and FitzHugh-Nagumo oscillators without noise and with Gillespie noise, along with their cross-correlation functions.
+  ]{
     %Using the cross-correlation function to evaluate the shift of one synthetic time series relative to another with a different shape.
     \textbf{(\ref{fig:xcf-nonoise-ts})}
     (Blue) Sample sinusoid ($f = 0.0235$) and (orange) FitzHugh-Nagumo oscillator ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) of the same frequency and without noise, and
@@ -1086,7 +1116,9 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
     \label{fig:xcf-biol-xcf}
   \end{subfigure}
 
-  \caption{
+  \caption[
+    Sample time series of flavin autofluorescence and histone 2B abundance, along with the cross-correlation function.
+  ]{
     \textbf{(\ref{fig:xcf-biol-ts})}
     Sample time series of flavin autofluorescence (blue) and histone 2B abundance (orange).
     \textbf{(\ref{fig:xcf-biol-xcf})}
