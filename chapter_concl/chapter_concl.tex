@@ -1,54 +1,84 @@
 \chapter{Conclusions}
 \label{ch:concl}
 
-% TODO: Edit, especially deal with overlong sentences.
-% MAYBE: Separate into sections.
+Although biological rhythms are crucial for living organisms to control their physiological processes in response to external conditions, not all biological rhythms are well-characterised.
+In contrast to the circadian rhythm and the cell division cycle, our knowledge of the biochemical basis of the yeast metabolic cycle is incomplete: we lack proteomic information and we have an unclear picture of cycling of nutrient stores.
+Additionally, chemostat-based and single-cell experiments led to conflicting conclusions about the yeast metabolic cycle because each type of experiment creates different culture conditions and have different types of measurements.
 
-Biological rhythms are central to the control of the physiological processes of living organisms to respond to periodic and non-periodic external conditions.
-Two important and well-characterised biological rhythms include the circadian rhythm, which co-ordinates physiological responses to the day-night cycle, and the cell division cycle, which ensures that cell division occurs when environmental conditions, internal stores, and genetic integrity are favourable.
-In contrast to the above examples, the yeast metabolic cycle presents an example of a poorly-characterised biological rhythm, owing partly to conflicting lines of evidence from different experimental methods: the chemostat and single-cell microfluidics.
+The main goal of this thesis was thus to develop an explanation to reconcile chemostat and single-cell studies on the yeast metabolic cycle.
+Specifically, I developed such explanations through testing whether specific characteristics of the yeast metabolic cycle as observed in the chemostat could be recapitulated in single-cell microfluidics.
+In addition, this thesis aimed to show whether proteomic constraints and limiting nutrient conditions could explain why the yeast cell temporally segregates biosynthetic events as it progresses through the yeast metabolic cycle.
+This secondary aim provided a coarse-grained explanation of a model of the yeast metabolic cycle as a fundamental metabolic adaptation to physiological constraints.
 
-The main goal of this thesis was thus to demonstrate which characteristics of the yeast metabolic cycle as observed in the chemostat could be recapitulated in single-cell microfluidics, leading to an explanation that could reconcile the two lines of evidence.
-In addition, this thesis aimed to demonstrate whether proteomic constraints and nutrient conditions explain the choice between resource allocation strategies that could explain the yeast cell's decision to temporally segregate biosynthetic events as previously observed in the yeast metabolic cycle.
+
+\section{Microfluidics and fluorescence microscopy for cellular metabolic cycles}
+\label{sec:concl-biology}
 
 In chapter~\ref{ch:biology}, I used the ALCATRAS \parencite{craneMicrofluidicSystemStudying2014} single-cell microfluidics platform to physically separate budding yeast cells and fluorescence microscopy to monitor the yeast metabolic cycle and the cell division cycle.
-I showed that yeast cells independently generate flavin-based single-cell metabolic cycles.
-In addition, a specific phase of such cycles likely gates the cell division cycle, as evidenced by decoupling between the metabolic and cell division cycles during starvation.
-I further showed that the metabolic cycle is retained in nutrient perturbations and in deletion strains.
-In particular, I showed that cells generated such cycles in potassium-deficient conditions, contrary to \textcite{oneillEukaryoticCellBiology2020}, and that \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} cells generated flavin cycles whose waveforms did not correspond to cycles of dissolved oxygen previously observed in the chemostat \parencite{tuCyclicChangesMetabolic2007,caustonMetabolicCyclesYeast2015}.
+I showed that yeast cells independently generated flavin-based single-cell metabolic cycles.
+In addition, a specific phase of such cycles likely gated the cell division cycle, as evidenced by decoupling between the metabolic and cell division cycles during starvation.
+I further showed that the metabolic cycle was retained in nutrient perturbations and in deletion strains.
+In particular, I showed that cells generated such cycles in potassium-deficient conditions, contrary to \textcite{oneillEukaryoticCellBiology2020}.
+I also showed that that \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} cells generated flavin cycles whose waveforms differed from cycles of dissolved oxygen previously observed in the chemostat \parencite{tuCyclicChangesMetabolic2007,caustonMetabolicCyclesYeast2015}.
 
-My results suggest that the yeast metabolic cycle is likely an intrinsic cycle in budding yeast that naturally oscillates within a range of natural frequencies, but is able to adjust this frequency according to nutrient conditions.
-The metabolic cycle then provides windows of opportunities for the cell division cycle to be initiated if conditions are permissive.
-Otherwise, in non-permissive conditions, the metabolic cycle continues while the cell is halted in a gap phase (G\textsubscript{1} or G\textsubscript{2}/M) of the cell division cycle.
-In addition, the discrepancy between single-cell and chemostat observations suggest that sub-populations in the yeast culture may provide an explanation \parencite{burnettiCellCycleStart2016}.
-Further experiments to test the role of lipid storage, and to better emulate chemostat conditions in a microfluidics platform may provide more clarity to the mechanistic basis of the yeast metabolic cycle, potentially leading to a mathematical model of coupled oscillations.
+My results suggest that the yeast metabolic cycle is likely an intrinsic cycle in budding yeast that oscillates within a range of natural frequencies, but the cell is able to adjust this frequency to respond to nutrient conditions.
+If conditions are permissive, the metabolic cycle provides windows of opportunities for the cell division cycle to be initiated.
+Otherwise, if conditions are not permissive, the metabolic cycle continues while the cell division cycle is halted at a gap phase (G\textsubscript{1} or G\textsubscript{2}/M).
+My results further suggest that the presence of sub-populations in the yeast culture \parencite{burnettiCellCycleStart2016,bagameryPutativeBetHedgingStrategy2020} could explain the discrepancy between single-cell and chemostat observations.
 
-Because the ALCATRAS platform produces large datasets of time series, in chapter~\ref{ch:analysis}, I developed a series of time series analysis methods to clean data, visualise groups in a dataset, detect rhythmicity, estimate periodicity of signals, and detect synchrony between two types of signals.
-I showed that a high-pass filter offers greater control over the frequency domain of time series that some existing methods.
-Subsequently, I showed that the division between oscillatory and non-oscillatory time series could be found by dimension-reduction and clustering methods.
+To provide more clarity to the role of nutrient storage in the yeast metabolic cycle, future work may include experiments with lipid synthesis-deficient strains.
+Additionally, a feast-and-famine experimental set-up which better emulates chemostat conditions could lead to a clearer explanation for previous chemostat-based studies.
+The glucose pulses imposed by this set-up may lead to a mathematical model of coupled oscillations that links the intrinsic yeast metabolic cycle to extrinsically-imposed oscillations.
+
+
+\section{Analysis of oscillatory time series in the yeast metabolic cycle}
+\label{sec:concl-analysis}
+
+Because the ALCATRAS platform produces large datasets of time series, in chapter~\ref{ch:analysis}, I developed a series of time series analysis methods.
+These methods clean data, visualise groups in a dataset, detect rhythmicity, estimate periodicity of signals, and detect synchrony between two types of signals.
+I showed that a high-pass filter offered good control over the frequency domain of time series.
+Subsequently, I showed that dimension-reduction (UMAP) and clustering (modularity clustering) methods agreed on a division between oscillatory and non-oscillatory time series in a dataset.
 Following this, I demonstrated that a statistical method based on the power spectrum and a support vector classifier offer modest performances in rhythmicity detection.
-Additionally, I showed that the mathematical basis of the autocorrelation function could be used to estimate periodicity and noise parameters from synthetic data; however, my current implementation has limited ability in characterising noise parameters from real data.
+Additionally, I showed that the autocorrelation function could be used to estimate periodicity and noise parameters from synthetic data.
+However, my current implementation of the autocorrelation function has limited ability in characterising noise parameters from real data.
 Finally, I showed that the cross-correlation function could be used to quantify the shift of one type of time series relative to another, across a population of paired time series
 
-The set of methods developed in chapter~\ref{ch:analysis} can form a powerful time series analysis pipeline that can be used to analyse recordings of oscillatory signals from any natural phenomenon; however, further development is needed to refine the methods to improve their utility.
-The overarching principle is that all methods rely on having a large enough dataset of signals that include a variety of oscillation types and shapes, in order for them to be generalisable.
-Rhythmicity detection is complicated by the fact that it can be defined differently depending on the perspective: from a signal-processing perspective, it can best be defined as finding a strong signal within a range of expected frequencies \parencite{zielinskiStrengthsLimitationsPeriod2014}, but from a data science perspective, rhythmicity detection can be seen as identifying the values of a set of time series features that discriminate between non-oscillatory and oscillatory time series.
-Furthermore, to further improve the utility of the autocorrelation function in inferring noise parameters, noise based on a broader range of parameters should be simulated, and this may lead to inferring a more precise relationship between such parameters and the shape of the autocorrelation function.
-With a more precise relationship, detection of noise parameters can be useful to compare the noise from different environmental conditions and imaging methods.
+% MOVE TO CHAPT 4 DISCUSSION?  IT LOOKS OUT OF PLACE HERE.
+Rhythmicity detection is complicated by its different definitions depending on the approach --- reflected in the variety of rhythmicity detection methods compared in chapter~\ref{ch:analysis}.
+From a signal-processing perspective, it can be defined as finding a strong signal within a range of expected frequencies \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+However, from a data science perspective, rhythmicity detection can be seen as identifying the values of a set of time series features that best discriminate between non-oscillatory and oscillatory time series.
 
-Finally, in chapter~\ref{ch:model}, I used an enzyme-constrained genome-scale model of budding yeast and flux balance analysis to address whether a limit on the size of the proteome pool leads to a choice between sequential and parallel biosynthesis as resource allocation strategies.
+To improve the usefulness of the time series analysis methods, further refinement is needed.
+To make the clustering methods and the support vector classifier generalisable, we require a large enough dataset of signals that includes a variety of oscillation types and shapes, and hyperparameter tuning.
+Furthermore, to improve the ability of the autocorrelation function to infer noise properties of real data, a broader range of noise parameters should be simulated.
+Such simulations would provide addition information that leads to give a more precise relationship between noise parameters and the shape of the autocorrelation function.
+A precise way to detect of noise parameters can then be useful to compare the noise from different environmental conditions and imaging methods.
+With the improvements in place, the methods developed in chapter~\ref{ch:analysis} can form a powerful time series analysis pipeline for oscillatory signals from any natural phenomenon.
+
+
+\section{Modelling yeast biosynthesis strategies under constraints}
+\label{sec:concl-model}
+
+Finally, in chapter~\ref{ch:model}, I used an enzyme-constrained genome-scale model of budding yeast and flux balance analysis to address whether a limited proteome pool leads to a preference of sequential biosynthesis over parallel biosynthesis.
 In this chapter, I used the novel approach of ablating components of the biomass reaction to simulate temporal segregation of biosynthesis, and devised a time ratio that indicates whether sequential or parallel biosynthesis was more advantageous.
-I showed that sequential scheduling of biosynthesis is advantageous, across deletion strains, because of a limited enzyme-available proteome pool.
-However, I also showed that parallel scheduling of biosynthesis becomes advantageous when both carbon and nitrogen sources are limiting, and may be explained by the sharing of enzymes across tasks of synthesising different biomass components.
+I showed that sequential scheduling of biosynthesis was advantageous across deletion strains, and became more advantageous if the proteome pool was smaller.
+However, I also showed that parallel scheduling of biosynthesis became advantageous when both carbon and nitrogen sources were limiting.
+This observation may be explained by the synthesis pathways across different biomass components sharing enzymes.
 
-The advantage of sequential biosynthesis may explain why the yeast cell temporally partitions biosynthesis of biomass components across phases of the yeast metabolic cycle, even when such partitioning is not needed to coordinate events of the cell division cycle (i.e.\ when the metabolic cycle proceeds without cell division during starvation).
-Furthermore, the advantage of parallel biosynthesis in some conditions may suggest a limit as to when the metabolic cycle occurs, potentially predicting an absence of metabolic cycles in some harsh nutrient conditions or in some deletion strains.
+The advantage of sequential biosynthesis may explain why the yeast cell temporally partitions biosynthesis of biomass components across phases of the yeast metabolic cycle, even when such partitioning is not needed to coordinate events of the cell division cycle --- e.g.\ when the metabolic cycle proceeds without cell division during starvation.
+Furthermore, the advantage of parallel biosynthesis in some conditions suggests that the metabolic cycle may cease to occur if nutrient conditions are too harsh.
 % IDEA: Do the grid plot for the deletion strains?
-To improve the predictability of metabolic models on the study of resource allocation strategies in the context of the yeast metabolic cycle, this study could be extended by using derivations of flux balance analysis that account for temporality (such as dynamic flux balance analysis) or compartmentalisation.
+To improve model predictability, this study could be extended by using derivations of flux balance analysis that account for compartmentalisation or temporality, such as dynamic flux balance analysis.
 
-Put together, single-cell analysis of flavin-based yeast metabolic cycles and metabolic modelling of budding yeast may provide a stronger mechanistic explanation for such an under-characterised biological rhythm.
-I envisage a biochemical explanation for the autonomous generation of the yeast metabolic cycle and for its response to nutrient conditions, which can then be modelled using techniques such as flux balance analysis.
-In addition, robust analysis methods would be able to discover classes of oscillations within a microfluidics experiment that could correspond to sub-populations in the culture, potentially reconciling results of single-cell and chemostat experiments.
+
+\section{Summary}
+\label{sec:concl-summary}
+
+Put together, single-cell analysis of flavin-based yeast metabolic cycles and modelling of the metabolism of budding yeast may provide a mechanistic explanation for such an under-characterised biological rhythm.
+I envisage a biochemical explanation for the autonomous generation of the yeast metabolic cycle and for its response to nutrient conditions.
+The biochemistry of the yeast metabolic cycle could then be modelled using techniques such as flux balance analysis.
+In addition, robust time series analysis methods would be able to discover classes of oscillations within a microfluidics experiment that could correspond to sub-populations in the culture.
+Identification of such sub-population could then potentially reconcile results of single-cell and chemostat experiments.
 
 Biological rhythms are an important physiological feature of all living organisms, and the yeast metabolic cycle may suggest a common evolutionary or functional origin of all biological rhythms.
 This thesis, in sum, shows the robustness of the yeast metabolic cycle and relates it to resource allocation strategies, thus potentially shedding light on what could be a fundamental biological process.
