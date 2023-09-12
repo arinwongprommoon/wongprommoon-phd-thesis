@@ -98,7 +98,7 @@ A typical classification pipeline can be described by the following steps:
 \end{enumerate}
 
 
-\section{Gillespie noise}
+\section{Gillespie algorithm for stochastic chemical systems}
 \label{append:analysis-gillespie}
 
 To define the Gillespie algorithm, consider such a system with $M$ reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$ involving $N$ species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ in a fixed volume $V$ at thermal equilibrium.
@@ -125,8 +125,8 @@ Each reaction $R_{j}$ is described by two quantities:
         where $k_{j}$ is the rate constant of reaction $R_{j}$.
 \end{enumerate}
 
-The Gillespie algorithm aims to estimate the state vector given the initial state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$.
-It does so by iteratively choosing the next reaction that occurs, based on its probability, and then choosing its firing time based on a probability distribution.
+The Gillespie algorithm aims to predict the temporal evolution of the state vector given the initial state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$.
+It does so by iteratively choosing the next reaction that occurs, based on its probability, and then choosing its firing time based on a propensity function.
 Combining these simulations gives a trajectory of state vectors across the time course of interest.
 In detail, the direct Gillespie algorithm can be defined as stated in algorithm~\ref{alg:gillespie} \parencite{gillespieStochasticSimulationChemical2007}:
 

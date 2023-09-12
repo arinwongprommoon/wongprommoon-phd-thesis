@@ -47,9 +47,9 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [X] L2330: Delete 'potentially'.
 
 *** appndx_analysis
-- [ ] L3008: Rename section.
-- [ ] L3022: 'estimate' --> ...
-- [ ] L3024: 'probability' --> 'propensity function'
+- [X] L3008: Rename section.
+- [X] L3022: 'estimate' --> ...
+- [X] L3024: 'probability' --> 'propensity function'
 
 ** Figures
 - [X] F01: Add units to window size.
