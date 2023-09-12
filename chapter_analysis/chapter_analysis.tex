@@ -722,33 +722,32 @@ The observation thus suggests that the death rate $d_{0}$ parameter of Gillespie
 \end{figure}
 
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.5\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{acf_fit_example.png}
-    \caption{
-    }
-    \label{fig:acf-noisetimescale-effect-fit}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.5\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
-    \caption{
-    }
-    \label{fig:acf-noisetimescale-effect-relationship}
-  \end{subfigure}
+% \begin{figure}
+%   \centering
+%   \begin{subfigure}[t]{0.5\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{acf_fit_example.png}
+%     \caption{
+%     }
+%     \label{fig:acf-noisetimescale-effect-fit}
+%   \end{subfigure}%
+%   \begin{subfigure}[t]{0.5\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
+%     \caption{
+%     }
+%     \label{fig:acf-noisetimescale-effect-relationship}
+%   \end{subfigure}
 
-  \caption[
-    Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
-  ]{
-    %Characterising the autocorrelation function to quantify the effect of Gillespie noise timescale.
-    \textbf{(\ref{fig:acf-noisetimescale-effect-fit})} Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
-    \textbf{(\ref{fig:acf-noisetimescale-effect-relationship})} The relationship between $d_{0}$ and the decay rate $D$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
-    Here, $k_{0}$ was held constant at 5.
-  }
-  \label{fig:acf-noisetimescale-effect}
-\end{figure}
+%   \caption[
+%     Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
+%   ]{
+%     \textbf{(\ref{fig:acf-noisetimescale-effect-fit})} Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
+%     \textbf{(\ref{fig:acf-noisetimescale-effect-relationship})} The relationship between $d_{0}$ and the decay rate $D$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
+%     Here, $k_{0}$ was held constant at 5.
+%   }
+%   \label{fig:acf-noisetimescale-effect}
+% \end{figure}
 
 To quantify the effect of the noise timescale on the shape of the autocorrelation function, I varied the death rate parameter $d_{0}$ when generating Gillespie noise.
 %
@@ -820,28 +819,26 @@ A lower death rate also increased the variation between autocorrelation function
 \end{figure}
 
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\linewidth]{birthrate_vs_ydispl.png}
-  \caption[
-    The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function.
-  ]{
-    The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
-    Here, $d_{0}$ was held constant at 0.05.
-  }
-  \label{fig:acf-noiseamplitude-effect}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.6\linewidth]{birthrate_vs_ydispl.png}
+%   \caption[
+%     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function.
+%   ]{
+%     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
+%     Here, $d_{0}$ was held constant at 0.05.
+%   }
+%   \label{fig:acf-noiseamplitude-effect}
+% \end{figure}
 
 
 To quantify the effect of the noise amplitude on the autocorrelation function, I varied the birth rate parameter $k_{0}$ when generating Gillespie noise.
 Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the amplitude of noise (Fig.\ \ref{fig:acf-noiseamplitude-highk0-ts}) and increased the variation between replicate autocorrelation functions (Fig.\ \ref{fig:acf-noiseamplitude-highk0-acf}), while the opposite was true for a higher birth rate (Figs.\ \ref{fig:acf-noiseamplitude-lowk0-ts}--\ref{fig:acf-noiseamplitude-lowk0-acf}).
 
-To show how the noise amplitude can be estimated from the autocorrelation function, I fit exponential decay functions
-%(Eq.\ \ref{eq:acf-expofit})
-as in Fig.\ \ref{fig:acf-noisetimescale-effect-fit}.
-Fig.\ \ref{fig:acf-noiseamplitude-effect} suggests that the $y$-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
-In other words, the birth rate $d_{0}$ controls the $y$-displacement parameter $C$ of the autocorrelation function, which is a proxy for the function's amplitude.
-Conversely, if $C$ can be estimated from the autocorrelation function, then the noise amplitude of the time series can be estimated.
+% To show how the noise amplitude can be estimated from the autocorrelation function, I fit exponential decay functions (Eq.\ \ref{eq:acf-expofit}) as in Fig.\ \ref{fig:acf-noisetimescale-effect-fit}.
+% Fig.\ \ref{fig:acf-noiseamplitude-effect} suggests that the $y$-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
+% In other words, the birth rate $d_{0}$ controls the $y$-displacement parameter $C$ of the autocorrelation function, which is a proxy for the function's amplitude.
+% Conversely, if $C$ can be estimated from the autocorrelation function, then the noise amplitude of the time series can be estimated.
 
 
 \subsection{FitzHugh-Nagumo oscillator: effect of oscillation shape}
@@ -879,60 +876,59 @@ Conversely, if $C$ can be estimated from the autocorrelation function, then the 
 \end{figure}
 
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fhn_expofit}
-    \caption{
-    }
-    \label{fig:acf-fhn-noiseparams-fit}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fhn_highnts_expofit}
-    \caption{
-    }
-    \label{fig:acf-fhn-noiseparams-fit-highnts}
-  \end{subfigure}
+% \begin{figure}
+%   \centering
+%   \begin{subfigure}[t]{0.45\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{fhn_expofit}
+%     \caption{
+%     }
+%     \label{fig:acf-fhn-noiseparams-fit}
+%   \end{subfigure}%
+%   \begin{subfigure}[t]{0.45\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{fhn_highnts_expofit}
+%     \caption{
+%     }
+%     \label{fig:acf-fhn-noiseparams-fit-highnts}
+%   \end{subfigure}
+%
+%   \begin{subfigure}[t]{0.45\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{fhn_deathrate_vs_decay.png}
+%     \caption{
+%     }
+%     \label{fig:acf-fhn-noiseparams-noisetimescale}
+%   \end{subfigure}%
+%   \begin{subfigure}[t]{0.45\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{fhn_birthrate_vs_ydispl.png}
+%     \caption{
+%     }
+%     \label{fig:acf-fhn-noiseparams-noiseamplitude}
+%   \end{subfigure}
 
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fhn_deathrate_vs_decay.png}
-    \caption{
-    }
-    \label{fig:acf-fhn-noiseparams-noisetimescale}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.45\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fhn_birthrate_vs_ydispl.png}
-    \caption{
-    }
-    \label{fig:acf-fhn-noiseparams-noiseamplitude}
-  \end{subfigure}
-
-  \caption[
-    Effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
-  ]{
-    %Quantifying the effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
-    \textbf{(\ref{fig:acf-fhn-noiseparams-fit})}
-    Fitting exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, to the autocorrelation function, generated with $k_{0}=5$ and $d_{0}=0.05$, and
-    \textbf{(\ref{fig:acf-fhn-noiseparams-fit-highnts})}
-    with $k_{0}=5$ and $d_{0}=0.005$.
-    \textbf{(\ref{fig:acf-fhn-noiseparams-noisetimescale})}
-    The relationship between $d_{0}$ and the decay rate $D$ ($k_{0}=5$).
-    \textbf{(\ref{fig:acf-fhn-noiseparams-noiseamplitude})}
-    The relationship between $k_{0}/d_{0}$ and $y$-displacement $C$ of the exponential fit ($d_{0}=0.05$)
-  }
-  \label{fig:acf-fhn-noiseparams}
-\end{figure}
+%   \caption[
+%     Effect of Gillespie noise parameters on the autocorrelation function of FitzHugh-Nagumo oscillators.
+%   ]{
+%     \textbf{(\ref{fig:acf-fhn-noiseparams-fit})}
+%     Fitting exponential decay functions of the form $y = (1-C)\me^{-DT}+C$, with $C$ and $D$ as variable parameters, to the autocorrelation function, generated with $k_{0}=5$ and $d_{0}=0.05$, and
+%     \textbf{(\ref{fig:acf-fhn-noiseparams-fit-highnts})}
+%     with $k_{0}=5$ and $d_{0}=0.005$.
+%     \textbf{(\ref{fig:acf-fhn-noiseparams-noisetimescale})}
+%     The relationship between $d_{0}$ and the decay rate $D$ ($k_{0}=5$).
+%     \textbf{(\ref{fig:acf-fhn-noiseparams-noiseamplitude})}
+%     The relationship between $k_{0}/d_{0}$ and $y$-displacement $C$ of the exponential fit ($d_{0}=0.05$)
+%   }
+%   \label{fig:acf-fhn-noiseparams}
+% \end{figure}
 
 To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from an asymmetric oscillation, I repeated the exponential fitting in section~\ref{subsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator as defined in the Methods (Section~\ref{subsec:methods-computational-synthetic}).
 
 Fig.\ \ref{fig:acf-fhn-gillnoise-acf} shows that when the oscillator had a different shape, the waves in the autocorrelation function changed shape, becoming more pointed.
-In addition, Fig.\ \ref{fig:acf-fhn-noiseparams-fit-highnts} suggests that fitting an exponential decay function to the autocorrelation function to estimate noise parameters was less reliable, particularly with high noise timescales.
-As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produced a greater range of uncertainty (Fig.\ \ref{fig:acf-fhn-noiseparams-noisetimescale}).
-However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
+% In addition, Fig.\ \ref{fig:acf-fhn-noiseparams-fit-highnts} suggests that fitting an exponential decay function to the autocorrelation function to estimate noise parameters was less reliable, particularly with high noise timescales.
+% As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produced a greater range of uncertainty (Fig.\ \ref{fig:acf-fhn-noiseparams-noisetimescale}).
+% However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
 
 \subsection{Real data}
@@ -954,14 +950,15 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
     \caption{
     }
     \label{fig:acf-sinusoid-biol-acf}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.5\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{acf_sinusoid_biol_acf_fit.png}
-    \caption{
-    }
-    \label{fig:acf-sinusoid-biol-acf-fit}
   \end{subfigure}
+
+  % \begin{subfigure}[t]{0.5\textwidth}
+  % \centering
+  %   \includegraphics[width=\linewidth]{acf_sinusoid_biol_acf_fit.png}
+  %   \caption{
+  %   }
+  %   \label{fig:acf-sinusoid-biol-acf-fit}
+  % \end{subfigure}
 
   \caption[
     Sample time series of flavin autofluorescence, its autocorrelation function, and fitting exponential decay functions.
@@ -970,13 +967,14 @@ However, estimating the noise amplitude $A$ based on the y-displacement $C$ of t
     Sample time series of flavin autofluorescence.
     \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
     Autocorrelation function across a population of time series of flavin autofluorescence.
-    \textbf{(\ref{fig:acf-sinusoid-biol-acf})}
-    Fitting exponential decay functions to determine noise parameters, lag axis scaled to match Fig.\ \ref{fig:acf-noisetimescale-effect}.
+    % \textbf{(\ref{fig:acf-sinusoid-biol-acf-fit})}
+    % Fitting exponential decay functions to determine noise parameters, lag axis scaled to match Fig.\ \ref{fig:acf-noisetimescale-effect}.
   }
   \label{fig:acf-sinusoid-biol}
 \end{figure}
 
-To deduce the period and noise parameters of a experimentally-recorded sinusoid-like signal (Fig.\ \ref{fig:acf-sinusoid-biol-ts}), I computed the autocorrelation functions of a population of flavin autofluorescence time series (Fig.\ \ref{fig:acf-sinusoid-biol-acf}), and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated sinusoids (Fig.\ \ref{fig:acf-sinusoid-biol-acf-fit}).
+To deduce the period and noise parameters of a experimentally-recorded sinusoid-like signal (Fig.\ \ref{fig:acf-sinusoid-biol-ts}), I computed the autocorrelation functions of a population of flavin autofluorescence time series (Fig.\ \ref{fig:acf-sinusoid-biol-acf}).
+% , and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated sinusoids (Fig.\ \ref{fig:acf-sinusoid-biol-acf-fit}).
 The autocorrelation function suggests an average period of 19 time points, corresponding to \SI{95}{\minute}, as expected from the nutrient conditions.
 However, estimation of noise parameters was complicated by the damping in the autocorrelation function, giving a different shape compared to the synthetic data and fewer peaks and troughs for fitting.
 Nevertheless, the decay rate $D$ of the exponential function fitted to the mean autocorrelation function suggested a noise timescale of 7.16 and the y-displacement $C$ of the exponential function fitted to the peaks of the autocorrelation function suggested a noise amplitude of 161.84.
@@ -998,14 +996,15 @@ Nevertheless, the decay rate $D$ of the exponential function fitted to the mean 
     \caption{
     }
     \label{fig:acf-fhn-biol-acf}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.5\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{acf_fhn_biol_acf_fit.png}
-    \caption{
-    }
-    \label{fig:acf-fhn-biol-acf-fit}
   \end{subfigure}
+
+  % \begin{subfigure}[t]{0.5\textwidth}
+  % \centering
+  %   \includegraphics[width=\linewidth]{acf_fhn_biol_acf_fit.png}
+  %   \caption{
+  %   }
+  %   \label{fig:acf-fhn-biol-acf-fit}
+  % \end{subfigure}
 
   \caption[
     Sample time series of histone 2B abundance, its autocorrelation function, and fitting exponential decay functions.
@@ -1014,8 +1013,8 @@ Nevertheless, the decay rate $D$ of the exponential function fitted to the mean 
     Sample time series of histone 2B abundance.
     \textbf{(\ref{fig:acf-fhn-biol-acf})}
     Autocorrelation function across a population of time series of histone 2B abundance.
-    \textbf{(\ref{fig:acf-fhn-biol-acf})}
-    Fitting exponential decay functions to determine noise parameters.
+    % \textbf{(\ref{fig:acf-fhn-biol-acf-fit})}
+    % Fitting exponential decay functions to determine noise parameters.
   }
   \label{fig:acf-fhn-biol}
 \end{figure}
@@ -1023,7 +1022,8 @@ Nevertheless, the decay rate $D$ of the exponential function fitted to the mean 
 In addition to flavin autofluorescence, I also recorded time series of histone 2B abundance as an indicator of the phases of the cell division cycle \parencite{garmendia-torresMultipleInputsEnsure2018}, to investigate whether the flavin autofluorescence oscillations and the cell division cycle synchronised.
 The abundance of histone 2B follow an asymmetric oscillation (Fig.\ \ref{fig:acf-fhn-biol-ts}).
 
-Similar to the previous section, to deduce the period and noise parameters of this signal, I computed the autocorrelation functions of a population of histone 2B abundance time series (Fig.\ \ref{fig:acf-fhn-biol-acf}), and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated FitzHugh-Nagumo oscillators (Fig.\ \ref{fig:acf-fhn-biol-acf-fit}).
+Similar to the previous section, to deduce the period and noise parameters of this signal, I computed the autocorrelation functions of a population of histone 2B abundance time series (Fig.\ \ref{fig:acf-fhn-biol-acf}).
+% , and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated FitzHugh-Nagumo oscillators (Fig.\ \ref{fig:acf-fhn-biol-acf-fit}).
 The autocorrelation function also suggests an average period of 19 time points, corresponding to \SI{95}{\minute}.
 As was the case for the flavin autofluorescence time series, the damping in the autocorrelation function complicated estimation of noise parameters; though the decay rate $D$ of the exponential function fitted to the mean autocorrelation function suggested a noise timescale of 11.19 and the y-displacement $C$ of the exponential function fitted to the peaks of the autocorrelation function suggested a noise amplitude of 292.41.
 The differences of these noise parameters relative to the flavin autofluorescence time series suggest different noise properties, which can be explained by the different fluorescence channels and exposure times used to generate each type of signal.

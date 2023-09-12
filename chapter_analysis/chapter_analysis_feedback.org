@@ -59,7 +59,7 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
   - [X] Define or delete 'geometric'.
 - [X] F09: Move to after fig 4.10
 - [X] F12: 'control.' --> 'control' (i.e. remove full stop); strikethrough text --> 'reassigned'.
-- [ ] F16, 18, 20, 21c, 22c: Remove.
+- [X] F16, 18, 20, 21c, 22c: Remove.
 - [X] F24: Move to after L2275.
 
 
