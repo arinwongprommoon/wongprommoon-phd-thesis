@@ -9,7 +9,7 @@ In general: https://www.ed.ac.uk/academic-services/students/thesis-submission
     (c) that the work has not been submitted for any other degree or professional qualification except as specified, and
     (d) that any included publications are the student’s own work, except where indicated throughout the thesis and summarised and clearly identified on the declarations page of the thesis
 - Fonts: Sans serif, size 12
-- Word spacing: even spacing, avoid hyphenation
+- Word spacing: even spacing (amount of spacing not stated -- will probably stick to double-spacing since that seems to be the convention), avoid hyphenation
 - Title page:
   - Title of thesis, author's name.
   - Name of degree, the University of Edinburgh, year of presentation.
