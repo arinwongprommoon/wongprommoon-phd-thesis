@@ -10,39 +10,41 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 
 ** Text
 *** analysis
-- [ ] L1904: Swap paragraphs L1904-1905 and L1906-1911.
-- [ ] L1915: Add 'this chapter focuses on'.
-- [ ] L1938: Join paragraphs.
-- [ ] L1947: Add 'The software'.
-- [ ] L1971: Add ref to appendix.
-- [ ] L1987: 'based' --> 'chosen'.
-- [ ] L1991: Add 'may'.
-- [ ] L2015: Say 'I manually labelled'
-- [ ] L2024: Remove words.
-- [ ] L2033: 'more positions within' --> 'larger regions of'
-- [ ] L2041: 'was' --> 'were'
-- [ ] L2046: 'clusters' --> 'groups'
-- [ ] L2054-2053: various changes.
-- [ ] L2063: (I spotted this) italicise zwf1Δ.
-- [ ] L2080: Reference specific equations to explain how the ranking works.
-- [ ] L2082: Swap sentence beginning L2082 and sentence beginning L2085, and edit language slightly to reflect this.
-- [ ] L2083: 'pure' --> 'white'
-- [ ] L2089: make clear this is after visual inspection, probably just add 'after visual inspection'.
-- [ ] L2091: Add ref to methods.
+- [X] L1904: Swap paragraphs L1904-1905 and L1906-1911.
+- [X] L1915: Add 'this chapter focuses on'.
+- [X] L1938: Join paragraphs.
+- [X] L1947: Add 'The software'.
+- [X] L1971: Add ref to appendix.
+- [X] L1987: 'based' --> 'chosen'.
+- [X] L1991: Add 'may'.
+- [X] L2015: Say 'I manually labelled'
+- [X] L2024: Remove words.
+- [X] L2033: 'more positions within' --> 'larger regions of'
+- [X] L2041: 'was' --> 'were'
+- [X] L2046: 'clusters' --> 'groups'
+- [X] L2054-2053: various changes.
+- [X] L2063: (I spotted this) italicise zwf1Δ.
+- [X] L2080: Reference specific equations to explain how the ranking works.
+- [ ] (ADDITIONAL) Make more explicit the ranking in section 2.4.1 in the methods (i.e. use the word 'ranking' somewhere).  Split equations if necessary.
+- [X] L2082: Swap sentence beginning L2082 and sentence beginning L2085, and edit language slightly to reflect this.
+- [X] L2083: 'pure' --> 'white'
+- [X] L2089: make clear this is after visual inspection, probably just add 'after visual inspection'.
+- [X] L2091: Add ref to methods.
+- [ ] (ADDITIONAL) Make more explicit the false discovery rate in section 2.4.1 in the methods (i.e. use the word 'ranking' somewhere).  Reword as necessary.
 - [ ] L2112, 2117: Swap fig numbers (should be automatically fixed if F09 is moved).
-- [ ] L2125-2126: Replace notation (x and z).
-- [ ] L2127: Add 'computed across all time points'.
+- [X] L2125-2126: Replace notation (x and z).
+- [X] L2127: Add 'computed across all time points'.
 - [ ] L2136: Define precision & recall, or add to methods so they can be referred to here.
-- [ ] L2143: Say that it works nicely (in science language).
-- [ ] L2155: (Probably better in L2153) Add 'details on FN oscillator can be found in section XXX in methods'.
-- [ ] L2156: Promote section & rename.
-- [ ] L2184-2195: (Maybe) remove.
-- [ ] L2210: Promote section & rename.
-- [ ] L2213: Refer to methods re FitzHugh-Nagumo oscillator.
+- [X] L2143: Say that it works nicely (in science language).
+- [X] L2155: (Probably better in L2153) Add 'details on FN oscillator can be found in section XXX in methods'.
+- [X] L2156: Promote section & rename.
+- [X] L2184-2195: (Maybe) remove. (OR SHOVE INTO APPENDIX?)
+- [X] L2210: Promote section & rename.
+- [X] L2213: Refer to methods re FitzHugh-Nagumo oscillator.
 - [ ] L2223: '4.5.2' --> '4.5.3' (should be automatically updated when sections are promoted)
-- [ ] L2239, F22: Explain histone 2B.
-- [ ] L2295: 'support vector classifier' --> 'binary classifier'.
-- [ ] L2330: Delete 'potentially'.
+- [X] L2239, F22: Explain histone 2B.
+- [X] L2295: 'support vector classifier' --> 'binary classifier'.
+- [X] L2330: Delete 'potentially'.
 
 *** appndx_analysis
 - [ ] L3008: Rename section.
@@ -50,15 +52,15 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [ ] L3024: 'probability' --> 'propensity function'
 
 ** Figures
-- [ ] F01: Add units to window size.
+- [X] F01: Add units to window size.
 - [ ] F03: Add colour legend to figure (use Inkscape and steal elements from fig 4.2)
-- [ ] F05: Several issues...
+- [-] F05: Several issues...
   - [ ] 4.5a: Add colour legend to figure.
-  - [ ] Define or delete 'geometric'.
-- [ ] F09: Move to after fig 4.10
-- [ ] F12: 'control.' --> 'control' (i.e. remove full stop); strikethrough text --> 'reassigned'.
+  - [X] Define or delete 'geometric'.
+- [X] F09: Move to after fig 4.10
+- [X] F12: 'control.' --> 'control' (i.e. remove full stop); strikethrough text --> 'reassigned'.
 - [ ] F16, 18, 20, 21c, 22c: Remove.
-- [ ] F24: Move to after L2275.
+- [X] F24: Move to after L2275.
 
 
 * Category 2
