@@ -53,7 +53,7 @@ Another study used linear detrending of data followed by FFT-NLLS and spectral r
 In addition, \textcite{fulcherHctsaComputationalFramework2017} described a software pipeline, termed \textit{hctsa}, that computes over 7700 time series features for input time series.
 The resulting feature matrix --- a row for each time series and a column for each feature --- could then be used to identify sets of features that are useful to discriminate between sets of time series or to identify clusters of time series based on their properties.
 The publication then showed that \textit{hctsa} could be used to distinguish five \textit{Caenorhabditis elegans} strains based on their movement patterns, and to identify clusters in the feature space of time series of \textit{Drosophila melanogaster} movement patterns which correspond well to experimental groups.
-To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} identified 22 features, termed \textit{catch22}, of \textit{hctsa} that performed well in time series classification tasks based on 93 datasets (Table~\ref{tab:catch22} in Appendix~\ref{sec:append-analysis-catch22}).
+To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} identified 22 features, termed \textit{catch22}, of \textit{hctsa} that performed well in time series classification tasks based on 93 datasets (Table~\ref{tab:catch22} in Appendix~\ref{append:analysis-catch22}).
 
 Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two approaches to analysis of time series: on one end, relying on mathematical methods, and on the other end, a data science approach to time series classification tasks.
 
@@ -391,7 +391,7 @@ However, some time series with irregular oscillations based on visual inspection
   \label{fig:glynn-roc}
 \end{figure}
 
-The method described by \textcite{glynnDetectingPeriodicPatterns2006a} also describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory (see methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{lsp-khat}).
+The method described by \textcite{glynnDetectingPeriodicPatterns2006a} also describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory (see methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
 %In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
 The area under the ROC curve ($A = 0.762$) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
@@ -836,7 +836,9 @@ A lower death rate also increased the variation between autocorrelation function
 To quantify the effect of the noise amplitude on the autocorrelation function, I varied the birth rate parameter $k_{0}$ when generating Gillespie noise.
 Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the amplitude of noise (Fig.\ \ref{fig:acf-noiseamplitude-highk0-ts}) and increased the variation between replicate autocorrelation functions (Fig.\ \ref{fig:acf-noiseamplitude-highk0-acf}), while the opposite was true for a higher birth rate (Figs.\ \ref{fig:acf-noiseamplitude-lowk0-ts}--\ref{fig:acf-noiseamplitude-lowk0-acf}).
 
-To show how the noise amplitude can be estimated from the autocorrelation function, I fit exponential decay functions (Eq.\ \ref{eq:acf-expofit}) as in Fig.\ \ref{fig:acf-noisetimescale-effect-fit}.
+To show how the noise amplitude can be estimated from the autocorrelation function, I fit exponential decay functions
+%(Eq.\ \ref{eq:acf-expofit})
+as in Fig.\ \ref{fig:acf-noisetimescale-effect-fit}.
 Fig.\ \ref{fig:acf-noiseamplitude-effect} suggests that the $y$-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
 In other words, the birth rate $d_{0}$ controls the $y$-displacement parameter $C$ of the autocorrelation function, which is a proxy for the function's amplitude.
 Conversely, if $C$ can be estimated from the autocorrelation function, then the noise amplitude of the time series can be estimated.
@@ -925,7 +927,7 @@ Conversely, if $C$ can be estimated from the autocorrelation function, then the 
   \label{fig:acf-fhn-noiseparams}
 \end{figure}
 
-To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from an asymmetric oscillation, I repeated the exponential fitting in section~\ref{subsubsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator as defined in the Methods (Section~\ref{subsec:methods-computational-synthetic}).
+To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from an asymmetric oscillation, I repeated the exponential fitting in section~\ref{subsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator as defined in the Methods (Section~\ref{subsec:methods-computational-synthetic}).
 
 Fig.\ \ref{fig:acf-fhn-gillnoise-acf} shows that when the oscillator had a different shape, the waves in the autocorrelation function changed shape, becoming more pointed.
 In addition, Fig.\ \ref{fig:acf-fhn-noiseparams-fit-highnts} suggests that fitting an exponential decay function to the autocorrelation function to estimate noise parameters was less reliable, particularly with high noise timescales.

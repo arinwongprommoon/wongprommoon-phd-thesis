@@ -31,7 +31,7 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [X] L2089: make clear this is after visual inspection, probably just add 'after visual inspection'.
 - [X] L2091: Add ref to methods.
 - [ ] (ADDITIONAL) Make more explicit the false discovery rate in section 2.4.1 in the methods (i.e. use the word 'ranking' somewhere).  Reword as necessary.
-- [ ] L2112, 2117: Swap fig numbers (should be automatically fixed if F09 is moved).
+- [X] L2112, 2117: Swap fig numbers (should be automatically fixed if F09 is moved).
 - [X] L2125-2126: Replace notation (x and z).
 - [X] L2127: Add 'computed across all time points'.
 - [ ] L2136: Define precision & recall, or add to methods so they can be referred to here.
@@ -41,7 +41,7 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [X] L2184-2195: (Maybe) remove. (OR SHOVE INTO APPENDIX?)
 - [X] L2210: Promote section & rename.
 - [X] L2213: Refer to methods re FitzHugh-Nagumo oscillator.
-- [ ] L2223: '4.5.2' --> '4.5.3' (should be automatically updated when sections are promoted)
+- [X] L2223: '4.5.2' --> '4.5.3' (should be automatically updated when sections are promoted)
 - [X] L2239, F22: Explain histone 2B.
 - [X] L2295: 'support vector classifier' --> 'binary classifier'.
 - [X] L2330: Delete 'potentially'.
