@@ -723,7 +723,21 @@ Fig.\ \ref{fig:acf-sinusoids-nonoise-acf} shows that the autocorrelation functio
 Following this, Fig.\ \ref{fig:acf-sinusoids-gausnoise-acf} shows that the addition of Gaussian noise preserved the point $(0,1)$, but the amplitude of the cosine that models the autocorrelation function was decreased.
 Furthermore, the variation of the autocorrelation function among time series at long lags was increased, as evidenced by the interquartile range, because less data was used to compute the autocorrelation function at longer lags.% (mathematical derivation in appendix ...).
 
-Gillespie noise is based on the birth-death process, and its two parameters control noise parameters (Methods Section~\ref{subsec:methods-computational-synthetic}).
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{birth_death_process}
+
+  \caption[
+    Illustration of the birth-death process.
+  ]{
+    Illustration of the birth-death process.
+    The birth-death process is defined by two reactions: birth ($R_{1}: \varnothing \ce{ -> P}$), with rate $k_{0}$, and death ($R_{2}: \ce{P -> } \varnothing$) with rate $d_{0}$, both of which affect the number $N$ of species $P$.
+    Random firing of the birth and death reactions, simulated by the Gillespie algorithm \parencite{gillespieStochasticSimulationChemical2007}, defines the trajectory of $N$ over time, which in turn defines Gillespie noise.
+  }
+  \label{fig:analysis-birthdeath-process}
+\end{figure}
+
+Gillespie noise is based on the birth-death process (Fig.\ \ref{fig:analysis-birthdeath-process}), and its two parameters control noise parameters (Methods Section~\ref{subsec:methods-computational-synthetic}).
 Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
 % Though Peter said this `is not trivial'.
