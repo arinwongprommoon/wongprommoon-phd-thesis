@@ -53,7 +53,7 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 
 ** Figures
 - [X] F01: Add units to window size.
-- [ ] F03: Add colour legend to figure (use Inkscape and steal elements from fig 4.2)
+- [X] F03: Add colour legend to figure (use Inkscape and steal elements from fig 4.2)
 - [-] F05: Several issues...
   - [ ] 4.5a: Add colour legend to figure.
   - [X] Define or delete 'geometric'.
