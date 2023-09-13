@@ -186,6 +186,53 @@ Flavin fluorescence thus represents the oxidation of flavins throughout the yeas
 \section{Computational methods}
 \label{sec:methods-computational}
 
+\subsection{Precision and recall}
+\label{subsec:methods-computational-precision-recall}
+
+To evaluate the performance of rhythmicity detection methods, precision and recall are computed.
+The rhythmicity detection methods are seen as a binary classifier that predicts a `positive' or `negative' label to each observation, and these predicted labels are compared against true labels --- in the context of this thesis, manually-defined labels of whether a time series is oscillatory or not.
+
+Given the confusion matrix:
+
+\begin{table}[h]
+  \centering
+  % https://tex.stackexchange.com/a/20295
+  \begin{tabular}{l|l|c|c|c}
+    \multicolumn{2}{c}{}&\multicolumn{2}{c}{Predicted labels}&\\
+    \cline{3-4}
+    \multicolumn{2}{c|}{}&Positive&Negative&\multicolumn{1}{c}{}\\
+    \cline{2-4}
+    \multirow{2}{*}{True labels}& Positive & True positives (TP) & False negatives (FN) & \\
+    \cline{2-4}
+    & Negative & False positives (FP) & True negatives (TN) & \\
+    \cline{2-4}
+    \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{}\\
+  \end{tabular}
+  \caption[
+    Confusion matrix
+  ]{
+    Confusion matrix
+  }
+  \label{tab:methods-confusion-matrix}
+\end{table}
+
+Precision is defined as:
+
+\begin{equation}
+  \mathrm{Precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}}
+  \label{eq:methods-precision}
+\end{equation}
+
+And recall is defined as:
+
+\begin{equation}
+  \mathrm{Recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}}
+  \label{eq:methods-recall}
+\end{equation}
+
+Precision and recall can be used with datasets with class imbalance, i.e.\ if the two labels are not spit evenly across observations.
+
+
 \subsection{Classical periodogram}
 \label{subsec:methods-computational-periodogram}
 

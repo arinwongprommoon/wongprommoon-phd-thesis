@@ -481,7 +481,7 @@ Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to corr
 \end{table}
 
 To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
-The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier precision = recall = 0.527), as it classed a large proportion of time series as non-oscillatory.
+The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
 
 
 \subsection{Rhythmicity detection using machine learning}
@@ -526,7 +526,7 @@ From this input data, 75\% of the time series formed the training set.
 %   \label{fig:analysis-svc-pr}
 % \end{figure}
 
-To determine the most effective way to featurise the data, I computed the precision and recall of support vector classifiers trained on data featurised using different methods.
+To determine the most effective way to featurise the data, I computed the precision and recall (defined in Methods Section~\ref{subsec:methods-computational-precision-recall}) of support vector classifiers trained on data featurised using different methods.
 All support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 10$.
 Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} and the Fourier spectrum gave comparably high performances, as evidenced by high precision and recall, and with a low degree of overfitting, as evidenced by a small variation of both metrics across the rounds of cross-validation.
 %To evaluate the performance of the \textit{catch22}-based classifier, Fig. \ref{fig:analysis-svc-pr} shows the precision-recall curve of the classifier, which suggests a good performance.
