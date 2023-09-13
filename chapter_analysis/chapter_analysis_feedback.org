@@ -25,12 +25,12 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 - [X] L2054-2053: various changes.
 - [X] L2063: (I spotted this) italicise zwf1Δ.
 - [X] L2080: Reference specific equations to explain how the ranking works.
-- [ ] (ADDITIONAL) Make more explicit the ranking in section 2.4.1 in the methods (i.e. use the word 'ranking' somewhere).  Split equations if necessary.
+- [X] (ADDITIONAL) Make more explicit the ranking in section 2.4.1 in the methods (i.e. use the word 'ranking' somewhere).  Split equations if necessary.
 - [X] L2082: Swap sentence beginning L2082 and sentence beginning L2085, and edit language slightly to reflect this.
 - [X] L2083: 'pure' --> 'white'
 - [X] L2089: make clear this is after visual inspection, probably just add 'after visual inspection'.
 - [X] L2091: Add ref to methods.
-- [ ] (ADDITIONAL) Make more explicit the false discovery rate in section 2.4.1 in the methods (i.e. use the word 'ranking' somewhere).  Reword as necessary.
+- [X] (ADDITIONAL) Make more explicit the false discovery rate in section 2.4.1 in the methods (i.e. use the word 'false discovery rate' somewhere).  Reword as necessary.
 - [X] L2112, 2117: Swap fig numbers (should be automatically fixed if F09 is moved).
 - [X] L2125-2126: Replace notation (x and z).
 - [X] L2127: Add 'computed across all time points'.
