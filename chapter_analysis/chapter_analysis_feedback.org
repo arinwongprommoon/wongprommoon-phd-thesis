@@ -86,7 +86,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [ ] L2169: Refer to said diagram to explain what k0 and d0 are.
 
 **** appndx_analysis
-- [ ] L2962: Brief intro to UMAP (probably steal from chapt 4 main text), with references.
+- [X] L2962: Brief intro to UMAP (probably steal from chapt 4 main text), with references.
 - [ ] L3018-3020: Correct the maths.
 
 *** Figures
