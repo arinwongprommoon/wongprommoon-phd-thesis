@@ -310,7 +310,7 @@ To determine the time series classification method that is most appropriate for 
 \subsection{Rhythmicity detection using spectral methods}
 \label{subsec:analysis-classification-spectral}
 
-In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (section~\ref{subsec:methods-computational-periodogram}).
+In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (Methods Section~\ref{subsec:methods-computational-periodogram}).
 This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method that employed the peak power from the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976} to rank time series by the quality of oscillation and to perform a statistical test to determine whether a time series is oscillatory or non-oscillatory \parencite{scargleStudiesAstronomicalTime1982}, as shown by Eqs.\ \ref{eq:lsp-pval}--\ref{eq:lsp-khat}.
 
 \begin{figure}[htbp]
@@ -391,7 +391,7 @@ However, some time series with irregular oscillations based on visual inspection
   \label{fig:glynn-roc}
 \end{figure}
 
-The method described by \textcite{glynnDetectingPeriodicPatterns2006a} also describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory (see methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
+The method described by \textcite{glynnDetectingPeriodicPatterns2006a} also describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
 %In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
 The area under the ROC curve ($A = 0.762$) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
@@ -402,7 +402,7 @@ The area under the ROC curve ($A = 0.762$) suggests that the classifier performe
 
 
 To assess the performance of a time series classification method based on the autoregressive model, I implemented the method described by \textcite{jiaFrequencyDomainAnalysis2020}, used to characterise synthetic time series of stochastic, oscillatory gene expression in a dividing cell.
-In the implementation of the autoregressive model used by \textcite{jiaFrequencyDomainAnalysis2020}, each data point was expressed as a linear combination of a number of data points that precede it, and model parameters led to an analytical solution for the periodogram, thus giving an advantage over the low-resolution Fourier spectrum (section~\ref{subsec:methods-computational-ar}).
+In the implementation of the autoregressive model used by \textcite{jiaFrequencyDomainAnalysis2020}, each data point was expressed as a linear combination of a number of data points that precede it, and model parameters led to an analytical solution for the periodogram, thus giving an advantage over the low-resolution Fourier spectrum (Methods Section~\ref{subsec:methods-computational-ar}).
 The resulting power spectra fell into four categories, one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
@@ -577,10 +577,10 @@ In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the pr
 \label{sec:analysis-characterisation}
 
 Estimating the period of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations.
-To show that the autocorrelation function can be used to estimate the period and noise properties of both symmetric and asymmetric oscillations, I adapted the autocorrelation function as used by \textcite{pietschDeterminingGrowthRates2023} (section~\ref{subsec:methods-computational-xcf}).
+To show that the autocorrelation function can be used to estimate the period and noise properties of both symmetric and asymmetric oscillations, I adapted the autocorrelation function as used by \textcite{pietschDeterminingGrowthRates2023} (Methods Section~\ref{subsec:methods-computational-xcf}).
 To calibrate the method, I generated synthetic oscillations --- sinusoids and the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961} --- to investigate the effect of their properties on the autocorrelation function.
 Subsequently, I applied the autocorrelation function to characterise experimentally-recorded time series.
-Details on how the sinusoids and the FitzHugh-Nagumo oscillators were defined can be found in Section~\ref{subsec:methods-computational-synthetic}.
+Details on how the sinusoids and the FitzHugh-Nagumo oscillators were defined can be found in Methods Section~\ref{subsec:methods-computational-synthetic}.
 
 \subsection{Effect of noise parameters on the autocorrelation function of synthetic sinusoids}
 \label{subsec:analysis-characterisation-acf-sinusoid}
@@ -663,7 +663,7 @@ Fig.\ \ref{fig:acf-sinusoids-nonoise-acf} shows that the autocorrelation functio
 Following this, Fig.\ \ref{fig:acf-sinusoids-gausnoise-acf} shows that the addition of Gaussian noise preserved the point $(0,1)$, but the amplitude of the cosine that models the autocorrelation function was decreased.
 Furthermore, the variation of the autocorrelation function among time series at long lags was increased, as evidenced by the interquartile range, because less data was used to compute the autocorrelation function at longer lags.% (mathematical derivation in appendix ...).
 
-Gillespie noise is based on the birth-death process, and its two parameters control noise parameters (section~\ref{subsec:methods-computational-synthetic}).
+Gillespie noise is based on the birth-death process, and its two parameters control noise parameters (Methods Section~\ref{subsec:methods-computational-synthetic}).
 Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
 % Though Peter said this `is not trivial'.

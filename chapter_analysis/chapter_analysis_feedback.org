@@ -107,7 +107,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 Most of the time, these uncover unclear writing: e.g. point not made clearly, buried in uninteresting/confusing text.
 
 ** Does not involve code
-- [ ] L2076: 'section 2.4.1' --> refer to methods 2.4.1, or something along those lines.  Also do this with other similar occurrences in the text (all than begin with 'section 2*').
+- [X] L2076: 'section 2.4.1' --> refer to methods 2.4.1, or something along those lines.  Also do this with other similar occurrences in the text (all than begin with 'section 2*').
 
 ** Involves code
 
