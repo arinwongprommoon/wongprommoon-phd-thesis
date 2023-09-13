@@ -83,7 +83,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
   - [X] Clarify why predicting probability is needed.
   - [X] Explain Platt.
   - [X] Refer to 'predict_proba' in sklearn (resurrect text).
-- [ ] L2169: Refer to said diagram to explain what k0 and d0 are.
+- [X] L2169: Refer to said diagram to explain what k0 and d0 are.
 
 **** appndx_analysis
 - [X] L2962: Brief intro to UMAP (probably steal from chapt 4 main text), with references.
@@ -100,9 +100,9 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [X] F10: Add text in-between (whatever that is).
 
 ** Involves code
-- [ ] F14: Add diagram to explain what k0 and d0 are.
-  - [ ] Can probably partly be achieved by moving it from the methods, or make the reference explicit.
-- [ ] L2063: Add fig to show that some zwf1Δ time series resembled BY4741 time series.
+- [X] F14: Add diagram to explain what k0 and d0 are.
+  - [X] Can probably partly be achieved by moving it from the methods, or make the reference explicit.
+- [X] L2063: Add fig to show that some zwf1Δ time series resembled BY4741 time series.
 
 * Category 3
 'That idiot didn't get my point at all/didn't bother to read/etc.' (their words, not mine)
