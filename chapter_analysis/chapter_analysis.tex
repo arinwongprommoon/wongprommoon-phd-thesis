@@ -211,8 +211,8 @@ In addition, non-oscillatory time series were consistently displayed into groups
 
 Modularity clustering is a mathematical method that partitions a graph into groups to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
 This optimisation problem is computationally difficult, so approximations such as the Louvain algorithm are needed for large networks \parencite{blondelFastUnfoldingCommunities2008}, with the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} subsequently developed to ensure that communities are well-connected and to provide an optimum number of communities.
-% Furthermore, the intrinsic scale of modularity scales with the square root of the number of connections in the network; therefore, if the network is large, there is a large resolution limit, preventing a modularity clustering algorithm from detecting small-scale structures \parencite{fortunatoResolutionLimitCommunity2007,traagNarrowScopeResolutionlimitfree2011}.
-% To remedy this, algorithms that implement a resolution parameter ($\gamma$), were devised; the value of this parameter thus controls the scale at which communities are detected \parencite{reichardtDetectingFuzzyCommunity2004,kumpulaLimitedResolutionComplex2007}.
+Furthermore, the intrinsic scale of modularity scales with the square root of the number of connections in the network; therefore, if the network is large, there is a large resolution limit, preventing a modularity clustering algorithm from detecting small-scale structures \parencite{fortunatoResolutionLimitCommunity2007,traagNarrowScopeResolutionlimitfree2011}.
+To remedy this, algorithms that implement a resolution parameter ($\gamma$), were devised; the value of this parameter thus controls the scale at which communities are detected \parencite{reichardtDetectingFuzzyCommunity2004,kumpulaLimitedResolutionComplex2007}.
 
 \begin{figure}
   \centering
@@ -281,12 +281,34 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
     \label{fig:graphclustering-combined}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.5\textwidth}
+  % \begin{subfigure}[t]{0.5\textwidth}
+  % \centering
+  %   \includegraphics[width=\linewidth]{graphclust_leiden_is20016.pdf}
+  %   \caption{
+  %   }
+  %   \label{fig:graphclustering-leiden}
+  % \end{subfigure}
+
+  \begin{subfigure}[t]{0.33\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{graphclust_leiden_is20016.pdf}
+    \includegraphics[width=\linewidth]{graphclust_cpm_00p010_is20016.pdf}
     \caption{
     }
-    \label{fig:graphclustering-leiden}
+    \label{fig:graphclustering-cpm_00p010}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.33\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graphclust_cpm_00p020_is20016.pdf}
+    \caption{
+    }
+    \label{fig:graphclustering-cpm_00p020}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.33\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{graphclust_cpm_00p030_is20016.pdf}
+    \caption{
+    }
+    \label{fig:graphclustering-cpm_00p030}
   \end{subfigure}
 
   \caption[
@@ -296,15 +318,22 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
     \textbf{(\ref{fig:graphclustering-combined})}
     Nodes coloured by group: grey, non-oscillatory; blue, oscillatory \textit{zwf1$\Delta$}; orange, oscillatory BY4741.
     Thickness of edges represent edge weights, scaled by similarity found by cosine distances.
-    \textbf{(\ref{fig:graphclustering-leiden})}
-    Nodes coloured by community (out of 10) as optimised by the Leiden algorithm.
-    Edges within a community are in black, while edges between communities are in light grey.
+    % \textbf{(\ref{fig:graphclustering-leiden})}
+    % Nodes coloured by community (out of 10) as optimised by the Leiden algorithm.
+    % Edges within a community are in black, while edges between communities are in light grey.
+    Additionally, nodes coloured by community as found by the constant Potts model \parencite{traagNarrowScopeResolutionlimitfree2011} as the resolution parameter ($\gamma$) was varied:
+    \textbf{(\ref{fig:graphclustering-cpm_00p010})} $\gamma = 0.01$ (4 communities),
+    \textbf{(\ref{fig:graphclustering-cpm_00p020})} $\gamma = 0.02$ (10 communities), and
+    \textbf{(\ref{fig:graphclustering-cpm_00p030})} $\gamma = 0.03$ (12 communities).
   }
   \label{fig:graphclustering}
 \end{figure}
 
 Fig.\ \ref{fig:graphclustering-combined} shows that construction of a pruned graph based on similarities between time series highlights two groups of non-oscillatory time series.
-Furthermore, Fig.\ \ref{fig:graphclustering-leiden} suggests that these two groups belong to separate communities, and shows that modularity clustering was able to further show communities among the oscillatory time series.
+Subsequently, Figs.\ \ref{fig:graphclustering-cpm_00p010}--\ref{fig:graphclustering-cpm_00p030} show the resolution parameter ($\gamma$) controls the number of communities detected.
+Non-oscillatory time series were assigned to a separate group when $\gamma = 0.01$, and the two sub-groups of non-oscillatory time series were separated when $\gamma = 0.02$; however, $\gamma = 0.03$, the divisions changed.
+The Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} suggested 10 as the optimal number of communities, which was realised by $\gamma = 0.02$.
+For all $\gamma$ values, modularity clustering was able to further show communities among the oscillatory time series.
 However, such communities did not divide cleanly along the division between BY4741 and \textit{zwf1$\Delta$} cells, suggesting that time series features alone were not able to divide these two strains.
 This agreed with my observation that some oscillatory \textit{zwf1$\Delta$} time series resembled BY4741 time series.
 
