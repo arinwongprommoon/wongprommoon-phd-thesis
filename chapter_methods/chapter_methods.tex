@@ -1,8 +1,11 @@
 \chapter{Methods}
 \label{ch:methods}
 
-\section{Strains and media}
-\label{sec:methods-strains_media}
+\section{Laboratory methods}
+\label{sec:methods-lab}
+
+\subsection{Strains and media}
+\label{subsec:methods-strains_media}
 
 The \textit{S. cerevisiae} strains used in this thesis are described in table~\ref{tab:methods-strains}.
 % Potential additions: CEN.PK & Causton strains, if they go into the biological chapter.
@@ -131,10 +134,10 @@ Then, a carbon source is added as appropriate to create the growth medium.
   \label{tab:methods-media-auxotroph}
 \end{table}
 
-\section{Single-cell microfluidics}
-\label{sec:methods-microfluidics}
+\subsection{Single-cell microfluidics}
+\label{subsec:methods-microfluidics}
 
-Cells were grown from colonies on solid agar in a liquid culture composed of minimal media formulation appropriate for the experiment, supplements appropriate for the strain's auxotrophy, and a carbon source (glucose or pyruvate) appropriate for the experiment (see section~\ref{sec:methods-strains_media}).
+Cells were grown from colonies on solid agar in a liquid culture composed of minimal media formulation appropriate for the experiment, supplements appropriate for the strain's auxotrophy, and a carbon source (glucose or pyruvate) appropriate for the experiment (see Section~\ref{subsec:methods-strains_media}).
 % Kevin's OD measurements?
 The cells were incubated at \SI{30}{\celsius} for \SI{14}{\hour} (overnight) if the carbon source is glucose or \SI{48}{\hour} if the carbon source is pyruvate.
 Subsequently, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and were then incubated for a further \SI{4}{\hour}.
@@ -172,7 +175,7 @@ One z-slice was taken for each flavin image in each position.
 For mCherry imaging, the excitation filter was set to \SIrange{555}{590}{\nano\metre}), the emission filter was to set to 632/60 (\SIrange{602}{682}{\nano\metre}) and the exposure time was \SI{100}{\milli\second}.
 Five z-slices were taken for mCherry images, with a spacing of \SI{0.6}{\micro\metre} between slices.
 
-\section{Segmentation, extraction, post-processing}
+\section{Image analysis methods}
 \label{sec:methods-segmentation}
 
 I used \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an end-to-end Python-based software package developed for time-lapse microscopy, to process the microscope images in order to obtain flavin and mCherry time series for further analysis.
