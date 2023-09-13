@@ -103,7 +103,7 @@ A typical classification pipeline can be described by the following steps:
 \section{Gillespie algorithm for stochastic chemical systems}
 \label{append:analysis-gillespie}
 
-To define the Gillespie algorithm, consider such a system with $M$ reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$ involving $N$ species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ in a fixed volume $V$ at thermal equilibrium.
+To define the Gillespie algorithm \parencite{gillespieStochasticSimulationChemical2007}, consider such a system with $M$ reactions $R_{1}, \ldots , R_{j}, \ldots R_{M}$ involving $N$ species $S_{1}, \ldots , S_{i}, \ldots S_{N}$ in a fixed volume $V$ at thermal equilibrium.
 Let $X_{i}(t)$ represent the number of molecules of $S_{i}$ at time $t$, and the state vector
 
 \begin{equation}
@@ -117,20 +117,37 @@ Each reaction $R_{j}$ is described by two quantities:
 \begin{enumerate}
   \item A state-change vector $\mathbf{v}_{j} \coloneqq [v_{1,j}, \ldots , v_{N,j}]$ which defines how the stoichiometry of the system changes if the reaction occurs.
         $v_{i,j}$ represents the change in the stoichiometry of $S_{i}$ when $R_{j}$ occurs.
-  \item A propensity function $a_{j}$, which gives the probability, given a the state $\mathbf{X}(t) = \mathbf{x}$, that one $R_{j}$ reaction occurs in the volume $V$ within the following short time interval $[t, t+dt)$.
-        % TODO: Verify this expression -- this is from Mona, but this exact form doesn't appear in Gillespie (1977), Gillespie (2007), or Wilkinson (2018).
-        This function is defined by
-        \begin{equation}
-          a_{j}(\mathbf{x})dt \coloneqq k_{j} \prod_{n=1}^{N}\mathbf{v_{n}}S_{n}
-          \label{eq:gillespie-propensity}
-        \end{equation}
-        where $k_{j}$ is the rate constant of reaction $R_{j}$.
+  \item A propensity function $a_{j}(\mathbf{x})$, which gives the probability, that one $R_{j}$ reaction occurs in the volume $V$ within the following short time interval $[t, t+dt)$, given the state $\mathbf{X}(t) = \mathbf{x}$.
 \end{enumerate}
+
+The definition of the propensity function $a_{j}(\mathbf{x})$ differs depending on the reaction.
+For a unimolecular reaction (\ce{S1 -> P}),
+
+\begin{equation}
+  a_{j}(\mathbf{x}) = k_{j}X_{1}
+  \label{eq:gillespie-propensity-unimolecular}
+\end{equation}
+
+For a bimolecular reaction with two different species (\ce{S1 + S2 -> P}),
+
+\begin{equation}
+  a_{j}(\mathbf{x}) = \frac{k_{j}}{V} X_{1}X_{2}
+  \label{eq:gillespie-propensity-bimolecular-different}
+\end{equation}
+
+And finally, for a bimolecular reaction with two molecules of the same species (\ce{S1 + S1 -> P}),
+
+\begin{equation}
+  a_{j}(\mathbf{x}) = \frac{k_{j}}{V} X_{1}(X_{1} - 1)
+  \label{eq:gillespie-propensity-bimolecular-same}
+\end{equation}
+
+Where, in all cases, $k_{j}$ is the rate constant of reaction $R_{j}$.
 
 The Gillespie algorithm aims to predict the temporal evolution of the state vector given the initial state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$.
 It does so by iteratively choosing the next reaction that occurs, based on its probability, and then choosing its firing time based on a propensity function.
 Combining these simulations gives a trajectory of state vectors across the time course of interest.
-In detail, the direct Gillespie algorithm can be defined as stated in algorithm~\ref{alg:gillespie} \parencite{gillespieStochasticSimulationChemical2007}:
+In detail, the direct Gillespie algorithm can be defined as stated in algorithm~\ref{alg:gillespie}:
 
 \RestyleAlgo{ruled}
 \begin{algorithm}[htbp]

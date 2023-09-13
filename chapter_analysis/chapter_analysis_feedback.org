@@ -87,7 +87,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 
 **** appndx_analysis
 - [X] L2962: Brief intro to UMAP (probably steal from chapt 4 main text), with references.
-- [ ] L3018-3020: Correct the maths.
+- [X] L3018-3020: Correct the maths.
 
 *** Figures
 - [ ] F04: Several issues...
