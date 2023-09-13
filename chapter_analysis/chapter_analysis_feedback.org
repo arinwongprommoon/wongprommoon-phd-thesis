@@ -72,16 +72,17 @@ Involve harder thought and more work.  Typically involve points of science rathe
 ** Does not involve code
 *** Text
 **** analysis
-- [ ] L1980: Fix dangling sentence.
-- [ ] L1990: Rephrase sentence to make 'trade-off' clearer.
-- [ ] L2020: Fact-check statement re UMAP, or delete.
-- [ ] L2067: Complete paragraph with a sentence that begins with 'however'.
-- [ ] L2091: Add bit more background (whatever that is).  May need to re-read Glynn et al. (2006).
-- [ ] L2118: Define accuracy, or replace with precision/recall.  Compare to the 'no-skill' classifier given by class imbalance.
-- [ ] L2138: Several issues...
-  - [ ] Clarify why predicting probability is needed.
-  - [ ] Explain Platt.
-  - [ ] Refer to 'predict_proba' in sklearn (resurrect text).
+- [X] L1980: Fix dangling sentence.
+- [X] L1990: Rephrase sentence to make 'trade-off' clearer.
+- [X] L2020: Fact-check statement re UMAP, or delete.
+- [X] L2067: Complete paragraph with a sentence that begins with 'however'.
+- [X] L2091: Add bit more background (whatever that is).  May need to re-read Glynn et al. (2006).
+- [X] L2118: Define accuracy, or replace with precision/recall.  Compare to the 'no-skill' classifier given by class imbalance.
+- [ ] L2118: (ADDITIONAL) Reference precision & recall definition in the methods.
+- [X] L2138: Several issues...
+  - [X] Clarify why predicting probability is needed.
+  - [X] Explain Platt.
+  - [X] Refer to 'predict_proba' in sklearn (resurrect text).
 - [ ] L2169: Refer to said diagram to explain what k0 and d0 are.
 
 **** appndx_analysis
@@ -95,8 +96,8 @@ Involve harder thought and more work.  Typically involve points of science rathe
   - [ ] 4.4b: '10' -> '3'.
   - [ ] 4.4b: Explain pruning in text.  Clarify that this is a kNN graph.
 - [ ] F05: (Does not involve code because I already have these figures) Add figures to show what happen if I vary γ; alternatively, make it clear that this method optimises the number of clusters.
-- [ ] F08: Clarify whether this is real 'training' as in ML, or what it is otherwise.
-- [ ] F10: Add text in-between (whatever that is).
+- [X] F08: Clarify whether this is real 'training' as in ML, or what it is otherwise.
+- [X] F10: Add text in-between (whatever that is).
 
 ** Involves code
 - [ ] F14: Add diagram to explain what k0 and d0 are.

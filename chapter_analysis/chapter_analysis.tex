@@ -63,7 +63,7 @@ Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two a
 
 Biological time series often have long-term trends.
 In my study of the yeast metabolic cycle, such trends include slow, global changes in flavin autofluorescence, which must be removed to uncover the periodic behaviour of flavin autofluorescence that is a component of the metabolic cycle.
-To determine the detrending method that is most appropriate for my data, I compared a frequency filtering method, a sliding-window detrending method.
+To determine the detrending method that is most appropriate for my data, I compared a frequency filtering method with a sliding-window detrending method.
 
 % \textcite{zielinskiPeriodEstimationRhythm2022} describes several methods of detrending time series:
 % \begin{enumerate}
@@ -122,7 +122,7 @@ To determine the detrending method that is most appropriate for my data, I compa
 To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Figs.\ \ref{fig:analysis-filter-raw}--\ref{fig:analysis-filter-butterworth} show how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI{2.86d-3}{\minute^{-1}}, corresponding to a period of \SI{350}{\minute}.
 Defining a signal filter offers direct control over frequencies.
 The critical frequency was chosen as a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
-Defining this critical frequency is a trade-off between emphasising metabolic oscillations in expected frequency windows and excluding the possibility of long-period metabolic cycles.
+Defining the critical frequency in this way excludes the possibility of metabolic cycles that have very long periods in favour of emphasising metabolic oscillations of an expected frequency.
 
 To show how sliding-window methods may adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.
 Sliding-window methods are common in detrending biological time series.
@@ -141,7 +141,7 @@ Previous efforts in using computational methods to identify groups in a set of b
 
 To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillations from one experiment with both the wild-type BY4741 strain ($n=206$) and the mutant \textit{zwf1$\Delta$} strain ($n=425$).
 These time series had time points sampled every \SI{5}{\minute} in the experiment, for a total of 163 time points.
-I manually labelled the time series to indicate whether they were oscillatory or not, with 142 of the 206 BY4741 time series classed as oscillatory and 225 of the 425 \textit{zwf1$\Delta$} classed as oscillatory.
+I manually labelled the time series to indicate whether they were oscillatory or not, with 142 of the 206 BY4741 time series classed as oscillatory and 224 of the 425 \textit{zwf1$\Delta$} classed as oscillatory.
 
 
 \subsection{UMAP}
@@ -298,6 +298,8 @@ This agreed with my observation that some oscillatory \textit{zwf1$\Delta$} time
 % PLOT AVERAGE TIME SERIES FROM EACH COMMUNITY?
 
 In sum, the general agreement between UMAP and modularity clustering shows that the BY4741 \& \textit{zwf1$\Delta$} dataset had internal structure defined by rhythmicity of time series.
+However, it was not clear from the UMAP whether there are sub-populations among the BY4741 and \textit{zwf1$\Delta$} time series whose members exhibit similar types of oscillations.
+In contrast, while modularity clustering suggests that such sub-populations can be found based on connectivity between nodes, the number of sub-populations depends on the value of a resolution parameter.
 
 
 \section{Detection of rhythmicity}
@@ -386,13 +388,17 @@ However, some time series with irregular oscillations based on visual inspection
   \caption[
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}.
   ]{
-    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied, trained on the \textit{zwf1$\Delta$} dataset.
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied.
+    The true positive rate and false positive rates were evaluated based on manual scoring of the \textit{zwf1$\Delta$} dataset.
   }
   \label{fig:glynn-roc}
 \end{figure}
 
-The method described by \textcite{glynnDetectingPeriodicPatterns2006a} also describes a false discovery rate that is used to control the proportion of oscillations that are oscillatory (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
-%In testing multiple hypotheses, the false discovery rate is defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant.
+To detect rhythmicity in one time series, \textcite{glynnDetectingPeriodicPatterns2006a} calculates the probability of the null hypothesis that a peak in the periodogram occurs due to chance.
+When extended across a population of time series, rhythmicity detection by this method thus becomes a task of testing multiple hypotheses.
+\textcite{glynnDetectingPeriodicPatterns2006a} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
+Controlling the false discovery rate thus controls the expected proportion of oscillations that are classified as oscillatory.
+
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
 The area under the ROC curve ($A = 0.762$) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
@@ -400,16 +406,13 @@ The area under the ROC curve ($A = 0.762$) suggests that the classifier performe
 \subsection{Rhythmicity detection using model fitting}
 \label{subsec:analysis-classification-ar}
 
-
 To assess the performance of a time series classification method based on the autoregressive model, I implemented the method described by \textcite{jiaFrequencyDomainAnalysis2020}, used to characterise synthetic time series of stochastic, oscillatory gene expression in a dividing cell.
 In the implementation of the autoregressive model used by \textcite{jiaFrequencyDomainAnalysis2020}, each data point was expressed as a linear combination of a number of data points that precede it, and model parameters led to an analytical solution for the periodogram, thus giving an advantage over the low-resolution Fourier spectrum (Methods Section~\ref{subsec:methods-computational-ar}).
 The resulting power spectra fell into four categories, one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
-% Change colour scheme to make it a bit less purple and more blue-orange, consistent with chapt 4?
 \begin{figure}
   \centering
-  % Remove birth events?  They are not needed to understand this and may confuse people.
   \begin{subfigure}[htpb]{0.6\textwidth}
    \centering
    \includegraphics[width=\textwidth]{timeseries_example_for_ar_edit}
@@ -452,16 +455,18 @@ This method thus allows computing the frequency of the oscillation from the loca
   \label{fig:analysis-ar-classification}
 \end{figure}
 
+Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory at a period of \SI{75.2}{\minute}, as evidenced by the location of a peak in the periodogram that the model predicted.
+
 
 \begin{table}
   \centering
   % https://tex.stackexchange.com/a/20295
   \begin{tabular}{l|l|c|c|c}
-    \multicolumn{2}{c}{}&\multicolumn{2}{c}{Human-defined labels}&\\
+    \multicolumn{2}{c}{}&\multicolumn{2}{c}{Predicted by AR model}&\\
     \cline{3-4}
     \multicolumn{2}{c|}{}&Positive&Negative&\multicolumn{1}{c}{Total}\\
     \cline{2-4}
-    \multirow{2}{*}{Predicted by AR model}& Positive & 141 & 83 & 224\\
+    \multirow{2}{*}{Human-defined labels}& Positive & 141 & 83 & 224\\
     \cline{2-4}
     & Negative & 124 & 77 & 201\\
     \cline{2-4}
@@ -475,9 +480,8 @@ This method thus allows computing the frequency of the oscillation from the loca
   \label{tab:analysis-ar-confusion-matrix}
 \end{table}
 
-Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory at a period of \SI{75.2}{\minute}, as evidenced by the location of a peak in the periodogram that the model predicted.
 To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
-The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor accuracy ($a = 0.513$), as it classed a large proportion of time series as non-oscillatory.
+The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier precision = recall = 0.527), as it classed a large proportion of time series as non-oscillatory.
 
 
 \subsection{Rhythmicity detection using machine learning}
@@ -568,7 +572,8 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
   \label{fig:analysis-svc-proba-gallery}
 \end{figure}
 
-To predict the probability that each time series was oscillatory, I extended the support vector classifier for this purpose using Platt scaling \parencite{plattProbabilisticOutputsSupport1999}.
+To predict the probability that each time series was oscillatory, I used Platt scaling  \parencite{plattProbabilisticOutputsSupport1999} with the support vector classifier, as implemented by the \texttt{predict\_proba} method in the Python package \texttt{scikit\_learn}.
+Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
 Fig.\ \ref{fig:analysis-svc-proba-histogram-model} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities, in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
 In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the probabilities can serve as a good score to rank time series by oscillation quality.
 
