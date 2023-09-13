@@ -90,11 +90,11 @@ Involve harder thought and more work.  Typically involve points of science rathe
 - [X] L3018-3020: Correct the maths.
 
 *** Figures
-- [ ] F04: Several issues...
-  - [ ] Probably worth resurrecting the paragraph that the caption of this figure replaced.
-  - [ ] 4.4a: Make clear that it does not show real data, but is just for illustrative purposes.
-  - [ ] 4.4b: '10' -> '3'.
-  - [ ] 4.4b: Explain pruning in text.  Clarify that this is a kNN graph.
+- [X] F04: Several issues...
+  - [X] Probably worth resurrecting the paragraph that the caption of this figure replaced.
+  - [X] 4.4a: Make clear that it does not show real data, but is just for illustrative purposes.
+  - [X] 4.4b: '10' -> '3'.
+  - [X] 4.4b: Explain pruning in text.  Clarify that this is a kNN graph.
 - [ ] F05: (Does not involve code because I already have these figures) Add figures to show what happen if I vary γ; alternatively, make it clear that this method optimises the number of clusters.
 - [X] F08: Clarify whether this is real 'training' as in ML, or what it is otherwise.
 - [X] F10: Add text in-between (whatever that is).
