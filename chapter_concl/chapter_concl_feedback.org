@@ -12,7 +12,7 @@ Clear problems with straightforward solutions, e.g. grammar mistakes, reordering
 Seem to be on to something, but no obvious path forward yet.
 Involve harder thought and more work.  Typically involve points of science rather than just wording or argument.  May require new techniques, reading more literature, or thinking about your work in a different way.
 
-- [ ] L2949: Read O'Neill paper to check if they did proteomics.  If so, edit this and also the intro.
+- [X] L2949: Read O'Neill paper to check if they did proteomics.  If so, edit this and also the intro.
 - [ ] L3069: Add speculative paragraph.
   - In email: "i feel that you ought to try to end with a speculative paragraph or two on some big questions, e.g., on the reason for oscillations in general or which cycle ought to lead the other (cell vs metabolic). what about the relation to Andrew and Gerben's work on non-genetic oscillations?"
 
@@ -22,7 +22,7 @@ Involve harder thought and more work.  Typically involve points of science rathe
 'That idiot didn't get my point at all/didn't bother to read/etc.' (their words, not mine)
 Most of the time, these uncover unclear writing: e.g. point not made clearly, buried in uninteresting/confusing text.
 
-- [ ] L2959: Something about limiting nutrient conditions in the FBA investigation.
+- [X] L2959: Something about limiting nutrient conditions in the FBA investigation.
 - [ ] L3069: Probably need to make multiple populations in chemostats more obvious.  I discussed them in the intro and biology chapters.
 
 * Notes on tackling the more difficult bits
