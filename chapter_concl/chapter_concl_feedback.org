@@ -23,6 +23,6 @@ Involve harder thought and more work.  Typically involve points of science rathe
 Most of the time, these uncover unclear writing: e.g. point not made clearly, buried in uninteresting/confusing text.
 
 - [X] L2959: Something about limiting nutrient conditions in the FBA investigation.
-- [ ] L3069: Probably need to make multiple populations in chemostats more obvious.  I discussed them in the intro and biology chapters.
+- [X] L3069: Probably need to make multiple populations in chemostats more obvious.  I discussed them in the intro and biology chapters.
 
 * Notes on tackling the more difficult bits
