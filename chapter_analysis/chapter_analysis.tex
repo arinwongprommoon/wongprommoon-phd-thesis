@@ -32,7 +32,7 @@ Finally, I used the cross-correlation function to detect synchrony and to quanti
 Previous studies have described computational pipelines that included mathematical methods to analyse biological time series.
 \textcite{zielinskiPeriodEstimationRhythm2022} described a software pipeline (BioDare/BioDare2), catered to circadian rhythm studies, to estimate the period and detect rhythmicity in time series.
 This pipeline includes choices of methods to detrend and normalise time series, followed by a choice of methods to estimate the period, phase, and amplitude of the time series.
-Furthermore, the pipeline also includes statistical tests for the presence of an oscillation in a time series: an implementation of the JTK\_CYCLE test \parencite{hughesJTK_CYCLEEfficientNonparametric2010} along with an empirical derivative \parencite{hutchisonImprovedStatisticalMethods2015a}.
+Furthermore, the pipeline also includes statistical tests for the presence of an oscillation in a time series: an implementation of the JTK\_CYCLE test \parencite{hughesJTK_CYCLEEfficientNonparametric2010} along with an empirical derivative \parencite{hutchisonImprovedStatisticalMethods2015}.
 
 The software BioDare2 builds upon \textcite{zielinskiStrengthsLimitationsPeriod2014}, which compared and contrasted a set of period-estimation methods ---
 FFT-NLLS, mFourFit, MESA, the Enright periodogram, the Lomb-Scargle periodogram, and spectrum resampling --- to conclude with recommendations on time series analysis.
@@ -368,7 +368,7 @@ To determine the time series classification method that is most appropriate for 
 \label{subsec:analysis-classification-spectral}
 
 In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (Methods Section~\ref{subsec:methods-computational-periodogram}).
-This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, which described a method that employed the peak power from the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976} to rank time series by the quality of oscillation and to perform a statistical test to determine whether a time series is oscillatory or non-oscillatory \parencite{scargleStudiesAstronomicalTime1982}, as shown by Eqs.\ \ref{eq:lsp-pval}--\ref{eq:lsp-khat}.
+This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006}, which described a method that employed the peak power from the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976} to rank time series by the quality of oscillation and to perform a statistical test to determine whether a time series is oscillatory or non-oscillatory \parencite{scargleStudiesAstronomicalTime1982}, as shown by Eqs.\ \ref{eq:lsp-pval}--\ref{eq:lsp-khat}.
 
 \begin{figure}[htbp]
   \centering
@@ -390,13 +390,13 @@ This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, whi
   \caption[
     Best five time series in the \textit{zwf1$\Delta$} dataset and
     their periodograms,
-    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006}
   ]{
     \textbf{(\ref{fig:glynn-best-ts})}
     Best five time series in the \textit{zwf1$\Delta$} dataset and
     \textbf{(\ref{fig:glynn-best-ps})}
     their periodograms,
-    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}.
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006}.
   }
   \label{fig:glynn-best}
 \end{figure}
@@ -421,13 +421,13 @@ This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006a}, whi
   \caption[
     Worst five time series in the \textit{zwf1$\Delta$} dataset and
     their periodograms,
-    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006}
   ]{
     \textbf{(\ref{fig:glynn-worst-ts})}
     Worst five time series in the \textit{zwf1$\Delta$} dataset and
     \textbf{(\ref{fig:glynn-worst-ps})}
     their periodograms,
-    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006a}.
+    ranked by the quality of oscillation based on the maximum power in the periodogram \parencite{glynnDetectingPeriodicPatterns2006}.
   }
   \label{fig:glynn-worst}
 \end{figure}
@@ -441,17 +441,17 @@ However, some time series with irregular oscillations based on visual inspection
   \centering
   \includegraphics[width=0.5\textwidth]{glynn_is20016_5_edit.pdf}
   \caption[
-    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a}.
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006}.
   ]{
-    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006a} as the false discovery rate was varied.
+    ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006} as the false discovery rate was varied.
     The true positive rate and false positive rates were evaluated based on manual scoring of the \textit{zwf1$\Delta$} dataset.
   }
   \label{fig:glynn-roc}
 \end{figure}
 
-To detect rhythmicity in one time series, \textcite{glynnDetectingPeriodicPatterns2006a} calculates the probability of the null hypothesis that a peak in the periodogram occurs due to chance.
+To detect rhythmicity in one time series, \textcite{glynnDetectingPeriodicPatterns2006} calculates the probability of the null hypothesis that a peak in the periodogram occurs due to chance.
 When extended across a population of time series, rhythmicity detection by this method thus becomes a task of testing multiple hypotheses.
-\textcite{glynnDetectingPeriodicPatterns2006a} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
+\textcite{glynnDetectingPeriodicPatterns2006} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
 Controlling the false discovery rate thus controls the expected proportion of oscillations that are classified as oscillatory.
 
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
@@ -1223,7 +1223,7 @@ These methods further indicated sub-groups of time series that may have similar 
 The consistency between the two methods strongly suggest that such groups in the dataset are meaningful.
 
 Subsequently, my exploration of three approaches to detect rhythmicity --- deriving a statistical test of a power spectrum, deriving a periodogram from an autoregressive model, and a binary classifier --- highlights the difficulty of rhythmicity detection in noisy biological time series.
-The spectral method described by \parencite{glynnDetectingPeriodicPatterns2006a} had a modest performance.
+The spectral method described by \parencite{glynnDetectingPeriodicPatterns2006} had a modest performance.
 The autoregressive model was able to identify the most likely period in some time series, but otherwise classified most time series as non-oscillatory, and lacked a tuning parameter.
 Finally, the support vector classifier suggests that a simple machine learning model could be adapted for rhythmicity detection, subject to a good feature set and training data.
 
