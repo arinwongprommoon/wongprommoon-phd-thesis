@@ -711,12 +711,12 @@ Further clarification of the mechanistic basis of the yeast metabolic cycle is n
 \label{subsec:intro-flavin-autofluo}
 % - (Refer to reviews, e.g. Maslanka et al. 2018 -- is a goldmine)
 
-Cellular autofluorescence is defined as the intrinsic fluorescence of a cell without fluorescent tags.
+Cellular autofluorescence is the intrinsic fluorescence of a cell without fluorescent tags.
 It is caused by the autofluorescence of compounds that have light emission properties \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}.
 Such endogenous fluorophores include coenzymes, vitamins, and amino acids with aromatic chemical groups, flavins being one of them.
-However, autofluorescence pose difficulty in cellular microscopy because their wavelengths can overlap with other fluorophores and therefore it is difficult to draw biochemical conclusions from the signal alone.
+However, autofluorescence poses a difficulty in cellular microscopy because its wavelengths can overlap with other fluorophores and therefore it is difficult to draw biochemical conclusions from the fluorescence signal alone.
 For example, flavin autofluorescence overlaps with the spectrum of the fluorescent glucose analogue 6-NBDG \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}, and thus interferes with studies that use this analogue to study glucose uptake.
-Owing to the identity of the compounds that are responsible for autofluorescence, cellular autofluorescence can indicate of the physiology and metabolism of the cell, and it has been used to study the yeast metabolic cycle.
+Cellular autofluorescence can indicate of the physiology and metabolism of the cell.
 Autofluorescence thus offers an easy way to monitor cell physiology without engineering genetic constructs.
 
 \subsection{Biochemical basis of flavins and flavoproteins}
@@ -736,19 +736,18 @@ Autofluorescence thus offers an easy way to monitor cell physiology without engi
 Flavins are a group of organic compounds that share an aromatic moiety that allows redox reactions (Fig.\ \ref{fig:intro-flavin-structure}).
 Specifically, the flavin moiety can exist in the oxidised, semiquinone, or reduced states.
 Flavins thus function as electron carriers in the cell.
+
 In \textit{Saccharomyces cerevisiae}, flavin is present as FMN and FAD, which function as prosthetic groups in flavin-dependent proteins, or flavoproteins, whose genes account for 1.1\% of the genome \parencite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
 FMN and FAD can be covalently bound to these proteins or be free \parencite{mewiesCovalentAttachmentFlavin1998}.
-FAD is a co-enzyme and has major roles in transferring electrons from the TCA cycle to the mitochondrial ETC.
+FAD is a co-enzyme and has major roles in transferring electrons from the tricarboxylic acid cycle to the mitochondrial electron transport chain.
 Flavins in \textit{Saccharomyces cerevisiae} are derived from riboflavin (Fig.\ \ref{fig:intro-flavin-schematic}).
 Riboflavin can be synthesised \textit{de novo} from purine biosynthesis and the oxidative pentose phosphate pathway (Fig.\ \ref{fig:intro-flavin-kegg}).
 % Is there more to this than the KEGG diagram?
-Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD.
-
-% (Biosynthesis of flavin)
+Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD\@; therefore, monitoring of flavins monitors the combined pool of FMN and FAD in their oxidised states.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{flavin-cell-schematic}
+  \includegraphics[width=0.8\textwidth]{flavin-cell-schematic}
   \caption[
     Simplified schematic of biosynthesis of flavins
   ]{
@@ -760,7 +759,7 @@ Based on the metabolism of flavins, the cell only synthesises new flavin for syn
 % https://www.genome.jp/pathway/map00740
 \begin{figure}
   \centering
-  \includegraphics[width=0.95\textwidth]{kegg-flavin}
+  \includegraphics[width=1.0\textwidth]{kegg-flavin}
   \caption[
     Reference pathway for biosynthesis of riboflavin and derivatives
   ]{
@@ -771,7 +770,7 @@ Based on the metabolism of flavins, the cell only synthesises new flavin for syn
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.95\textwidth]{fpbase-riboflavin-adapted}
+  \includegraphics[width=0.9\textwidth]{fpbase-riboflavin-adapted}
   \caption[
     Fluorescence spectrum of riboflavin
   ]{
@@ -785,13 +784,10 @@ The redox biochemistry of flavins give rise to fluorescence, so monitoring flavi
 Flavins, in their oxidised forms (FMN and FAD), have a peak excitation frequency of $\approx$460 nm and a peak emission frequency of $\approx$535 nm \parencite{maslankaAutofluorescenceYeastSaccharomyces2018, wagnieresVivoFluorescenceSpectroscopy1998}, displayed in Fig.\ \ref{fig:intro-flavin-spectra}.
 Comparison of \textit{in vivo} autofluorescence in mammalian cells and the fluorescence spectrum of riboflavin in PBS confirms this fluorescence behaviour \parencite{aubinAutofluorescenceViableCultured1979}.
 In contrast, the reduced forms FMNH\textsubscript{2} and FADH\textsubscript{2} have negligible fluorescence \parencite{mastersConfocalRedoxImaging1994}.
-Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} have monitored flavin autofluorescence to study the YMC.
+Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} have monitored flavin autofluorescence to study the YMC\@.
 
 \subsubsection{Descriptions of key flavoproteins and their roles}
 \label{subsubsec:intro-flavin-biochem-descriptions}
-% - (Sort by abundance)
-% - (On second thought, I'm not sure how useful a shopping list of flavoproteins is.
-% probably better to pick a couple that are really key to what i study)
 
 \begin{figure}
   \centering
@@ -838,31 +834,32 @@ The biochemical and enzymatic properties of many flavoproteins are poorly charac
   \label{tab:intro-flavoproteins}
 \end{table}
 
-The most abundant flavoproteins catalyse redox reactions (table~\ref{tab:intro-flavoproteins}).
+The most abundant flavoproteins catalyse redox reactions (Table~\ref{tab:intro-flavoproteins}).
 Specifically, these reactions include reduction of reactive chemical species to respond to oxidative stress --- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
 Additionally, the reactions include biosynthetic reactions.
 Many of these reactions require NADPH or NADH to donate electrons, suggesting a link between flavins and NAD(P)H in regulating the cellular redox state.
-In particular, Oye2p catalyses the NADPH redox reaction, thus providing a link between flavins and NAD(P)H.
+In particular, Oye2p catalyses the NADPH redox reaction, thus providing a link between flavins and NAD(P)H\@.
 One exception flavoprotein is Ilv2p, which does not catalyse a redox reaction.
 It has been hypothesised that an ancestral form of Ilv2p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \parencite{pangCrystalStructureYeast2002}.
-To maintain the cellular redox state, it is thus reasonable to assume that the redox equilibrium of all flavoprotein-catalysed reactions are in the same direction at any point of the YMC.
+To maintain the cellular redox state, it is thus reasonable to assume that the redox equilibrium of all flavoprotein-catalysed reactions are in the same direction at any point of the YMC\@.
 Supporting this, \textcite{sianoNADHFlavinFluorescence1989} show that NAD(P)H fluorescence and the fluorescence of lipoamide dehydrogenase, a flavoprotein, indicate simultaneous reduction in response to lowered dissolved oxygen.
 They further show redox equilibrium in both fluorophores in response to glucose addition.
 
-It is important to rule out the possibility that flavin cycling is merely a function of the cell division cycle to make sure that flavin monitoring monitors the YMC.
+It is important to rule out the possibility that flavin cycling is merely a function of the cell division cycle to make sure that flavin monitoring monitors the YMC\@.
 None of these flavoproteins are strictly cell division cycle proteins, but this does not exclude cycling of flavin autofluorescence linked to the cell division cycle.
-For example, fatty acid synthesis proteins should cycle along with the cell division cycle as cell synthesises more plasma membrane.
+For example, fatty acid synthesis proteins should cycle along with the cell division cycle as cell synthesises more plasma membranes.
 
 \subsection{Flavins and flavoproteins in the yeast metabolic cycle}
 \label{subsec:intro-flavin-ymc}
 
 Flavin fluorescence can be used to monitor the metabolic cycle.
 The biological basis of flavins justifies this use.
-Flavins are linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1p), as discussed in section \ref{subsubsec:intro-flavin-biochem-descriptions}, and NAD(P)H cycles have been implicated in bulk-culture \parencite{tuLogicYeastMetabolic2005} % and more
-and single-cell \parencite{papagiannakisAutonomousMetabolicOscillations2017} studies of the YMC, as discussed in section \ref{subsubsec:intro-ymc-definition-phases}.
-The oxidation of flavin is at its maximum at the start of the reductive state of the YMC, as evidence by how flavin fluorescence peaks just before dissolved oxygen concentration in the chemostat \parencite{murrayRedoxRegulationRespiring2011,sasidharanTimeStructureYeastMetabolism2012}.
+Flavins are linked to NAD(P)H via nitric oxide oxidoreductase (Yhb1p), as discussed in Section~\ref{subsubsec:intro-flavin-biochem-descriptions}, and NAD(P)H cycles have been implicated in bulk-culture \parencite{tuLogicYeastMetabolic2005} % and more
+and single-cell \parencite{papagiannakisAutonomousMetabolicOscillations2017} studies of the YMC, as discussed in Section~\ref{subsubsec:intro-ymc-definition-phases}.
+The oxidation of flavin is at its maximum at the start of the reductive state of the YMC, as evidenced by how flavin fluorescence peaks just before dissolved oxygen concentration in the chemostat \parencite{murrayRedoxRegulationRespiring2011,sasidharanTimeStructureYeastMetabolism2012}.
 Riboflavin abundance in the cell has been shown to oscillate and peak in the oxidative state of the YMC, while FAD abundance is at its maximum in the reductive-building phase, as evidenced by metabolic profiling of extracts from chemostat cultures taken at evenly-spaced intervals \parencite{tuCyclicChangesMetabolic2007}.
-Flavoproteins may have roles linked to the YMC.
+
+Flavoproteins may have roles linked to the YMC\@.
 The most abundant is Fas1 (fatty acid synthetase).
 Because there is evidence that cycles of fatty acid stores are implicated in metabolic cycling in yeast \parencite{campbellBuildingBlocksAre2020}, it is likely that fatty acid synthetase is heavily implicated.
 Following this, the second most abundant is Yhb1, which may play a major role as discussed earlier.
@@ -873,8 +870,8 @@ Thus, filling in this knowledge gap is an avenue for further research.
 
 Nevertheless, there are caveats to using flavin autofluorescence.
 Riboflavin fluorescence is captured too, though its intracellular abundance is two order of magnitudes lower than that of FMN and that of FAD, and these two flavin derivatives are present at the same order of magnitude \parencite{tuCyclicChangesMetabolic2007}.
-Plus, different concentrations of riboflavin influence the autofluorescence signal and influence the physiological state of the cell \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}.
-The experimenter can eliminate the effects of riboflavin by using riboflavin-free minimal media \parencite{verduynEffectBenzoicAcid1992}.
+In addition, different concentrations of riboflavin influence the autofluorescence signal and influence the physiological state of the cell \parencite{maslankaAutofluorescenceYeastSaccharomyces2018}.
+However, the experimenter can eliminate the effects of riboflavin by using riboflavin-free minimal media \parencite{verduynEffectBenzoicAcid1992}.
 Additionally, flavin fluorescence is the aggregate of many flavoprotein components, therefore it cannot be concluded that flavin fluorescence is the readout of one protein in particular --- one can only draw conclusions about the overall redox state.
 Furthermore, the changes in flavin fluorescence can be because of changes in the `flavin pool' --- the amount of flavin-derived moieties in a cell across all their redox states --- or due to global changes in intracellular flavin redox state, as a function of intracellular redox state.
 Most studies assume a constant flavin pool and see oscillations as periodic shifts in redox equilibrium.
