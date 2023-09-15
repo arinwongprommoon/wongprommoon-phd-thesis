@@ -285,7 +285,7 @@ As an alternative method to detect rhythmicity in time series, I fitted an autor
           \label{eq:ar-aic}
           \mathrm{AIC}(P) = \log \theta_{0}^{2}(P) + 2 \frac{P}{M}
         \end{equation}
-        where $\theta_{0}(P)$ is the estimated $\theta_{0}$ (equation~\ref{eq:ar-noise-param}) for a specific $P$.
+        where $\theta_{0}(P)$ is the estimated $\theta_{0}$ (Eq.\ \ref{eq:ar-noise-param}) for a specific $P$.
         In this step, $P$ is varied with $1 \leq P \leq 3 \sqrt{M}$, and the optimum order ($P$) is the one that gives the smallest value of $\mathrm{AIC}(P)$
    \item The power spectrum is thus estimated analytically using the parameters found in earlier steps by:
         \begin{equation}
@@ -462,7 +462,7 @@ Gillespie noise emulates noise from biological systems.
 Gillespie noise was generated using the direct method of the Gillespie algorithm \parencite{gillespieExactStochasticSimulation1977} on the birth-death process model (Appendix~\ref{append:analysis-gillespie}).
 
 The birth-death process is a simple stochastic model used for the modelling of gene expression.
-The model describes a species that is produced at a linear birth rate $k_{0}$ and destroyed at a linear death rate $d_{0}$, and is defined by the system of equations~\ref{eq:birth-death-process}:
+The model describes a species that is produced at a linear birth rate $k_{0}$ and destroyed at a linear death rate $d_{0}$, and is defined by the system of equations Eq.\ \ref{eq:birth-death-process}:
 
 \begin{equation}
   \begin{aligned}

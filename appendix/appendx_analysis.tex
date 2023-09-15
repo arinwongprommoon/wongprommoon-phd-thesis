@@ -107,7 +107,7 @@ To define the Gillespie algorithm \parencite{gillespieStochasticSimulationChemic
 Let $X_{i}(t)$ represent the number of molecules of $S_{i}$ at time $t$, and the state vector
 
 \begin{equation}
-  \mathbf{X}(t) \coloneqq [X_{1}(t), \ldots , X_{N}(t)]
+  \mathbf{X}(t) = [X_{1}(t), \ldots , X_{N}(t)]
   \label{eq:gillespie-statevector}
 \end{equation}
 
@@ -115,7 +115,7 @@ thus gives the state of the system at any given time $t$.
 
 Each reaction $R_{j}$ is described by two quantities:
 \begin{enumerate}
-  \item A state-change vector $\mathbf{v}_{j} \coloneqq [v_{1,j}, \ldots , v_{N,j}]$ which defines how the stoichiometry of the system changes if the reaction occurs.
+  \item A state-change vector $\mathbf{v}_{j} = [v_{1,j}, \ldots , v_{N,j}]$ which defines how the stoichiometry of the system changes if the reaction occurs.
         $v_{i,j}$ represents the change in the stoichiometry of $S_{i}$ when $R_{j}$ occurs.
   \item A propensity function $a_{j}(\mathbf{x})$, which gives the probability, that one $R_{j}$ reaction occurs in the volume $V$ within the following short time interval $[t, t+dt)$, given the state $\mathbf{X}(t) = \mathbf{x}$.
 \end{enumerate}
