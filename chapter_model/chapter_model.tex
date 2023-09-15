@@ -4,8 +4,10 @@
 To better understand the mechanistic basis of the YMC, I sought to build a model of how the cyclic sequence of cellular events respond to extracellular nutrient conditions.
 However, it is challenging to develop a fine-grained model for the aspects of the YMC,
 especially if the detailed molecular mechanisms are unclear.
-Further complicating the development of a fine-grained model is the fact that the main read-outs from single-cell studies, NAD(P)H and flavin autofluorescence, are aggregate signals from several biochemical phenomena.
-Thus, it is more feasible to construct coarse-grained models to answer biological questions about the YMC.
+Further complicating the development of a fine-grained model is the fact that the main read-outs from single-cell studies --- NAD(P)H and flavin autofluorescence --- are aggregate signals from several biochemical phenomena.
+
+Thus, it is more feasible to construct coarse-grained models to answer biological questions about the YMC\@.
+One such question is whether a finite proteome is responsible for the sequence of events in the yeast metabolic cycle, especially considering the high energetic and resource requirements of protein synthesis \parencite{oneillEukaryoticCellBiology2020,zylstraMetabolicDynamicsCell2022}.
 
 Here, I use a genome-scale metabolic model and flux balance analysis (FBA) to address whether cellular events in the metabolic cycle reflect a strategy in resource allocation that optimises growth.
 
@@ -171,7 +173,7 @@ This constraint narrows the solution space when the objective function is optimi
 GECKO imposes an additional constraint on the metabolic fluxes based on the concentration of the enzyme that catalyses the reaction (Fig.\ \ref{fig:model-gecko}).
 
 GECKO modifies the linear programming of FBA as defined by Eq.\ \ref{eq:model-fba-objective} and~\ref{eq:model-fba-constraints} so that enzymes are expressed as metabolites that take part in reactions.
-In mathematical terms, this can be expressed as:
+This can be expressed as:
 
 \begin{equation}
   \max \mathbf{c}^{\intercal} \mathbf{v}
@@ -228,7 +230,7 @@ with the stoichiometric coefficient $n_{ij} = 1/k_{\mathrm{cat}}^{ij}$.
 GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021}.
 
 This transformation, adding the enzyme as a pseudometabolite, is based on the intuition that the system uses some amount of enzyme at a specific time to catalyse the flux through the reaction.
-Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes (appendix~\ref{append:model-gecko}).
+Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes (Appendix~\ref{append:model-gecko}).
 
 To constrain overall enzyme levels in the model, GECKO defines a pseudoreaction
 
@@ -277,7 +279,7 @@ The mass of each enzyme in the cell determines the amount (in moles) of each enz
 
 To compute the synthesis time for each biomass component, the mass fractions of each biomass component must be known.
 These quantities are typically stored as molecular weights in a genome-scale model.
-As biomass components in ecYeast8 are pseudometabolites without specified molecular weights, I computed the mass fractions of each biomass component based on their \textit{isa} reactions (appendix~\ref{append:model-molweights}).
+As biomass components in ecYeast8 are pseudometabolites without specified molecular weights, I computed the mass fractions of each biomass component based on their \textit{isa} reactions (Appendix~\ref{append:model-molweights}).
 Rather than using mass fractions based on experimental studies, I used mass fractions based on the model because the mass fraction of each biomass component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
 
 \begin{table}[ht]
@@ -526,7 +528,7 @@ The quantities $\Tseq$ and $\Tpar$ are defined:
   \label{eq:model-b}
 \end{equation}
 
-Because $\biomfrac{protein} = 0.525$ (table~\ref{tab:model-biomfrac}), $\Tpar = \Tprop{protein}$.
+Because $\biomfrac{protein} = 0.525$ (Table~\ref{tab:model-biomfrac}), $\Tpar = \Tprop{protein}$.
 
 Therefore,
 
@@ -561,19 +563,19 @@ Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass compone
 
 % In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
 To confirm that the advantage of the sequential biosynthesis strategy is retained in other genetic backgrounds, I extended the computation $\ratioabl$ and related quantities to models in which genes were deleted.
-To corroborate results from Chap.\ \ref{ch:biology}, the BY4741 \textit{zwf1$\Delta$} and BY4742 \textit{tsa2$\Delta$} strains were simulated --- the latter was substituted for \textit{tsa1$\Delta$ tsa2$\Delta$} because the ecYeast8 model did not include reactions that correspond to \textit{TSA1}.
+To corroborate results from Chapter~\ref{ch:biology}, the BY4741 \textit{zwf1$\Delta$} and BY4742 \textit{tsa2$\Delta$} strains were simulated --- the latter was substituted for \textit{tsa1$\Delta$ tsa2$\Delta$} because the ecYeast8 model did not include reactions that correspond to \textit{TSA1}.
 The deletions were made by restricting to zero the reaction fluxes that are associated with the deleted genes in the model.
 For BY4741-background strains, supplements were simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
 The same applied to BY4742-background strains, but lysine uptake replaced methionine uptake.
 Fig.\ \ref{fig:model-ablation-strains} shows that $\ratioabl < 1$ still held for auxotrophs and deletion strains, suggesting that the sequential biosynthesis strategy remained advantageous.
-Assuming that temporal scheduling of the synthesis of biomass components during growth explains the timing of biosynthetic events in the yeast metabolic cycle, these observations supports results in Chap.\ \ref{ch:biology} which shows that auxotrophs and deletion strains have YMCs.
+Assuming that temporal scheduling of the synthesis of biomass components during growth explains the timing of biosynthetic events in the yeast metabolic cycle, these observations supports results in Chapter~\ref{ch:biology} which shows that auxotrophs and deletion strains have YMCs.
 
 
 \section{Effect of restricting the enzyme pool}
 \label{sec:model-pool}
 
 The yeast cell has a finite enzyme-available proteome pool, so it must decide which enzymes to allocate the greatest proportions of the pool to.
-To study this effect using the ecYeast8 model, I imposed a constraint on the enzyme-available proteome pool by varying the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (equation~\ref{eq:model-gecko-enzyme-pool}).
+To study this effect using the ecYeast8 model, I imposed a constraint on the enzyme-available proteome pool by varying the value of the upper limit of the flux $\epool$ of the enzyme pool pseudoreaction (Eq.\ \ref{eq:model-gecko-enzyme-pool}), taking advantage of a GECKO formalism that is easy to modify and interpret.
 With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must decrease, and the model must decide which enzyme usage pseudoreactions to allocate a higher flux to, modelling the biological response to a restricted enzyme pool.
 
 \begin{figure}
@@ -780,7 +782,7 @@ The ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal m
 This ratio is informative because:
 \begin{enumerate}
   \item Of all biomass components, predicted synthesis times of these biomass components varied the most as the glucose and ammonium exchange rates were varied.
-  \item Each accounts for a large proportion of biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (table~\ref{tab:model-biomfrac}).
+  \item Each accounts for a large proportion of biomass: protein accounts for 52.5\% and carbohydrate accounts for 36.4\% (Table~\ref{tab:model-biomfrac}).
   \item Carbohydrate synthesis has a clear biochemical relationship with the level of a carbon source.
         Additionally, protein synthesis has a clear biochemical relationship with the level of ammonium as amino acids contain amino groups.
 \end{enumerate}
@@ -892,31 +894,35 @@ Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nu
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{CompareEnzUse_glc16p89_pyrUnres_ammUnres_1.pdf}
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc01p69_pyrUnres_amm01p05_2.pdf}
     \caption{
     }
-    \label{fig:model-rank-glc-lowratio-rank}
+    \label{fig:model-rank-glc-highratio-kendall}
   \end{subfigure}%
 
   \caption[
-    Changes in enzyme usage reaction flux in rounds of ablation (glucose-ammonium)
-  ]{
-    Changes in enzyme usage reaction flux in rounds of ablation, in  \textbf{(\ref{fig:model-rank-glc-highratio-rank})} a high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-glc-lowratio-rank})} a low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}).
+    Changes in enzyme usage reaction flux and Kendall's $\tau$-b rank correlation coefficient for each pair, $\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}.
+    ]{
+    For the high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}):
+    \textbf{(\ref{fig:model-rank-glc-highratio-rank})}
+    changes in enzyme usage reaction flux in rounds of ablation.
     Columns show the biomass component prioritised.
     In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
     Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
+    \textbf{(\ref{fig:model-rank-glc-highratio-kendall})}
+    Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair of enzyme usage flux profiles.
   }
-  \label{fig:model-rank-glc-rank}
+  \label{fig:model-rank-glc-highratio}
 \end{figure}
 
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{CompareEnzUse_glc01p69_pyrUnres_amm01p05_2.pdf}
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc16p89_pyrUnres_ammUnres_1.pdf}
     \caption{
     }
-    \label{fig:model-rank-glc-highratio-kendall}
+    \label{fig:model-rank-glc-lowratio-rank}
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -927,21 +933,29 @@ Furthermore, the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as nu
   \end{subfigure}
 
   \caption[
-    Pairwise Kendall's $\tau$-b rank correlation coefficient (glucose-ammonium)
+    Changes in enzyme usage reaction flux and Kendall's $\tau$-b rank correlation coefficient for each pair, $\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}.
   ]{
-    Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair enzyme usage flux profiles represented in columns of Fig.\ \ref{fig:model-rank-glc-rank} of columns in the top panels to quantify the similarity between each case.
-    The computations were performed for \textbf{(\ref{fig:model-rank-glc-highratio-kendall})} a high $\ratioabl$ condition ($\exchrate{glc}$ = \SI{1.69}{\mmolgdwh}, $\exchrate{amm}$ = \SI{1.05}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-glc-lowratio-kendall})} a low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}).
+    For the low $\ratioabl$ condition ($\exchrate{glc}$ = \SI{16.89}{\mmolgdwh}):
+    \textbf{(\ref{fig:model-rank-glc-lowratio-rank})}
+    changes in enzyme usage reaction flux in rounds of ablation.
+    Columns show the biomass component prioritised.
+    In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
+    Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
+    \textbf{(\ref{fig:model-rank-glc-lowratio-kendall})}
+    Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair of enzyme usage flux profiles.
   }
-  \label{fig:model-rank-glc-kendall}
+  \label{fig:model-rank-glc-lowratio}
 \end{figure}
 
 The investigation of the effect of carbon and nitrogen sources on scheduling strategies led to a new hypothesis: the cell favours parallel biosynthesis of biomass components when the carbon source and the nitrogen source are both limiting, especially if the associated biomass components share metabolic pathways and if the conditions dictate similar levels of enzymes.
 This hypothesis arose from the observation that the highest $\ratioabl$ occurred at the boundary at which both the carbon source and the nitrogen source were limiting.
 
-To evaluate the hypothesis, I compared the enzyme usage reaction flux vectors in rounds of ablation between a high $\ratioabl$ condition and a low $\ratioabl$ condition created by combinations of glucose and ammonium exchange rates.
-Enzyme usage reaction flux vectors show how the cell allocates its finite proteome to enzymes when each biomass component is prioritised (section~\ref{sec:model-timescale}).
+To evaluate this hypothesis, I compared the enzyme usage reaction flux vectors in rounds of ablation between a high $\ratioabl$ condition and a low $\ratioabl$ condition created by combinations of glucose and ammonium exchange rates.
+Enzyme usage reaction flux vectors show how the cell allocates its finite proteome to enzymes when each biomass component is prioritised (Section~\ref{sec:model-timescale}).
+
 To test whether similarities in proteome allocation to enzymes explain parallel biosynthesis, Fig.\ \ref{fig:model-rank-glc-highratio-rank} shows that when both glucose and ammonium were limiting, the allocation patterns were similar across rounds of ablation, thus explaining the advantage of parallel biosynthesis of biomass components.
 This similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall}, which shows that parallel biosynthesis exhibited relatively similar proteome allocation with the synthesis of individual biomass components.
+
 In contrast, Fig.\ \ref{fig:model-rank-glc-lowratio-rank} shows that when neither glucose nor ammonium limited growth, biomass components could be divided into two groups based on enzyme usage reaction flux vectors.
 These groups suggest an explanation for sequential biosynthesis: the cell may synthesise lipids and proteins together in one stage of its growth cycle, while synthesising carbohydrates, DNA, RNA, cofactors, and ions together in another stage.
 The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig:model-rank-glc-lowratio-kendall}, which shows that parallel biosynthesis exhibited different proteome allocation compared to the synthesis of individual biomass components.
@@ -961,31 +975,37 @@ The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr08p89_ammUnres_1.pdf}
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr03p73_amm00p90_2.pdf}
     \caption{
     }
-    \label{fig:model-rank-pyr-lowratio-rank}
+    \label{fig:model-rank-pyr-highratio-kendall}
   \end{subfigure}
 
+
   \caption[
-    Changes in enzyme usage reaction flux in rounds of ablation (pyruvate-ammonium)
+    Changes in enzyme usage reaction flux and Kendall's $\tau$-b rank correlation coefficient for each pair, $\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}.
   ]{
-    Changes in enzyme usage reaction flux in rounds of ablation, in  \textbf{(\ref{fig:model-rank-pyr-highratio-rank})} a high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-pyr-lowratio-rank})} a low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}).
+    For the high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}):
+    \textbf{(\ref{fig:model-rank-pyr-highratio-rank})}
+    changes in enzyme usage reaction flux in rounds of ablation.
     Columns show the biomass component prioritised.
     In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
     Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
+    \textbf{(\ref{fig:model-rank-pyr-highratio-kendall})}
+    Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair of enzyme usage flux profiles.
   }
-  \label{fig:model-rank-pyr-rank}
+  \label{fig:model-rank-pyr-highratio}
 \end{figure}
+
 
 \begin{figure}
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
-    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr03p73_amm00p90_2.pdf}
+    \includegraphics[width=\linewidth]{CompareEnzUse_glc00p00_pyr08p89_ammUnres_1.pdf}
     \caption{
     }
-    \label{fig:model-rank-pyr-highratio-kendall}
+    \label{fig:model-rank-pyr-lowratio-rank}
   \end{subfigure}%
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -996,12 +1016,18 @@ The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig
   \end{subfigure}
 
   \caption[
-    Pairwise Kendall's $\tau$-b rank correlation coefficient (pyruvate-ammonium)
+    Changes in enzyme usage reaction flux and Kendall's $\tau$-b rank correlation coefficient for each pair, $\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}.
   ]{
-    Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair enzyme usage flux profiles represented in columns of Fig.\ \ref{fig:model-rank-pyr-rank} of columns in the top panels to quantify the similarity between each case.
-    The computations were performed for \textbf{(\ref{fig:model-rank-pyr-highratio-kendall})} a high $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{3.73}{\mmolgdwh}, $\exchrate{amm}$ = \SI{0.90}{\mmolgdwh}), and \textbf{(\ref{fig:model-rank-pyr-lowratio-kendall})} a low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}).
+    For the low $\ratioabl$ condition ($\exchrate{pyr}$ = \SI{8.89}{\mmolgdwh}):
+    \textbf{(\ref{fig:model-rank-pyr-lowratio-rank})}
+    changes in enzyme usage reaction flux in rounds of ablation.
+    Columns show the biomass component prioritised.
+    In each column, rows represent enzyme usage reactions, arranged in descending order of flux.
+    Colours identify the reactions, with white indicating reactions that carry zero flux in the parallel case.
+    \textbf{(\ref{fig:model-rank-pyr-lowratio-kendall})}
+    Pairwise Kendall's $\tau$-b rank correlation coefficient \parencite{kendallTREATMENTTIESRANKING1945} for each pair of enzyme usage flux profiles.
   }
-  \label{fig:model-rank-pyr-kendall}
+  \label{fig:model-rank-pyr-lowratio}
 \end{figure}
 
 To evaluate, in a different carbon source, whether parallel biosynthesis is also favoured when biomass components share metabolic pathways, I extended the comparison of enzyme usage reaction flux vectors in rounds of ablation to nutrient conditions created by pyruvate and ammonium exchange rates.
@@ -1064,18 +1090,26 @@ In sum, although choosing representative nutrient conditions led to an attractiv
 \section{Discussion}
 \label{subsec:model-discussion}
 
-This chapter examines the choice between two strategies of scheduling synthesis of biomass components in the yeast cell: in sequence and in parallel.
+This chapter uses a genome-scale model of budding yeast and flux balance analysis to test whether sequential synthesis of biomass components reflects an adaptation to limited cellular resources.
 % The cell synthesises its biomass components in sequence, re-allocating its proteome to enzymes that have roles related to the synthesis of each biomass component, as an adaptation to a limited proteome pool.
 % However, changes in nutrient conditions may make parallel biosynthesis advantageous if the proteome allocation between biomass components become more similar.
 
-Results show that ablation of components of the biomass reaction led to changes in proteome allocation to enzymes that are biologically relevant (section~\ref{sec:model-yeast8-pseudometabolites}) and provides a way to estimate the timescale of synthesis of biomass components (section~\ref{sec:model-timescale}).
-%From these times, a $\ratioabl$ ratio was derived to assess whether sequential or parallel biosynthesis of biomass components is favoured.
-These timescales suggest that sequential scheduling of biosynthesis saves times during growth and remains advantageous across deletion strains.
+My results suggest that ablation of components of the biomass reaction was a viable method to simulate sequential synthesis of biomass components, as evidenced by how ablation predicted biologically relevant changes in proteome allocation to enzymes.
+In addition, ablation lead to a way to estimate the time of synthesis of biomass components.
+These times suggest that sequential scheduling of biosynthesis saves time during growth and remains advantageous across deletion strains.
 
-Results further show that within realistic growth rates, a smaller proteome pool led to a greater advantage of sequential biosynthesis (section~\ref{sec:model-pool}).
-However, parallel scheduling of biosynthesis becomes advantageous in some nutrient conditions, such as when both carbon and nitrogen sources are limiting (section~\ref{subsec:model-grid}).
-This may be explained by similar proteome allocation patterns across the synthesis of biomass components (section~\ref{subsec:model-rank}).
+My results further show that within realistic growth rates, a smaller proteome pool led to a greater advantage of sequential biosynthesis over parallel biosynthesis.
+However, parallel scheduling of biosynthesis becomes advantageous in some nutrient conditions, such as when both carbon and nitrogen sources are limiting.
+Further simulations suggest an explanation for this advantage of parallel biosynthesis: as each biomass component is synthesised, the cell allocates its proteome pool to enzymes in similar patterns.
 
-Conditions in which sequential biosynthesis is advantageous may explain why yeast cells show metabolic cycles in certain nutrient conditions.
-Temporal scheduling of biosynthesis as an adaptation to a finite proteome may explain temporal gating of biosynthetic events in the yeast metabolic cycle.
+The advantage of sequential scheduling of biosynthesis over parallel scheduling of biosynthesis may explain why yeast cells exhibit metabolic cycles, in which there is a sequence of synthesising biomass components.
+Conversely, the advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis in nutrient-limiting conditions may explain the absence of metabolic cycles in extreme, non-permissive conditions.
+The metabolic cycle may thus be an adaptation to a limited proteome pool and having to carry out the metabolically expensive process of protein synthesis during cell growth \parencite{oneillEukaryoticCellBiology2020}.
 Clustering of the synthesis of lipids and proteins in one group may explain cycling of storage lipids \parencite{campbellBuildingBlocksAre2020}, while clustering of carbohydrate, DNA, and RNA synthesis in another group to group together processes that require oxidative phosphorylation may explain respiratory cycles in the YMC \parencite{tuLogicYeastMetabolic2005}.
+
+However, the limitations of using FBA to investigate resource allocation strategies in this chapter include multiplicity of solutions and a lack of ability to preform concentration-dependent, time-dependent, and compartment-dependent simulations.
+The multiplicity of solutions in FBA makes it challenging to draw conclusions about how quantities derived from flux values apart from growth.
+These values in the GECKO model include enzyme usage reaction fluxes, which would inform proteome allocation strategies.
+In addition, FBA gives a steady-state picture of metabolism.
+To describe changes in fluxes over time, derivatives such as dynamic FBA \parencite{mahadevanDynamicFluxBalance2002} could be used.
+To further increase the precision of the model and thus its ability to make predictions, compartmentalisation can be considered \parencite{elsemmanWholecellModelingYeast2022}, or resource balance analysis \parencite{goelzerCellDesignBacteria2011} can be used.
