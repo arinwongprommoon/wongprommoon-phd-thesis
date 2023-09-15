@@ -90,7 +90,7 @@ The resulting molecular weight will thus represent the mass fraction of each bio
 Computing the molecular weights of the carbohydrate, DNA, RNA, cofactor, and ion pseudometabolites is straightforward.
 This is because the equations similarly have reactants with molecular weights specified in the model and only the pseudometabolite, the sole product, does not have a molecular weight specified.
 In such cases, Eq.\ \ref{eq:conservation-of-mass} can be applied directly, i.e.\ the molecular weight of the pseudometabolite is equal to $\sum_{r = j}^{n_{r}}m_{r}c_{r}$, where $m_{r}$ values are taken directly from the molecular weights specified in the model.
-The results for these pseudometabolites are shown in table~\ref{tab:ecyeast8-easy-rxns}
+The results for these pseudometabolites are shown in Table~\ref{tab:ecyeast8-easy-rxns}
 
 \begin{table}[ht]
   \centering
@@ -187,7 +187,7 @@ I took the mean of the four weights to give \SI{729.53}{\gram~\mole^{-1}}.
 Subsequently, the molecular weight of \texttt{lipid backbone} was computed from this mean value and the molecular weights of other species involved in the production of \texttt{lipid backbone}, giving \SI{21.31}{\gram~\mole^{-1}}.
 With the molecular weights of \texttt{lipid backbone} and \texttt{lipid chain} defined, the molecular weight of \texttt{lipid} is thus the sum of the two.
 
-A summary of molecular weights can be found in table~\ref{tab:ecyeast8-mol-weights}.
+A summary of molecular weights can be found in Table~\ref{tab:ecyeast8-mol-weights}.
 
 Subsequently, the mass fraction of each biomass component is computed by dividing the molecular weight of the corresponding pseudometabolite by the molecular weight of biomass:
 
@@ -214,7 +214,7 @@ Subsequently, the mass fraction of each biomass component is computed by dividin
 \section{Mathematical explanation of the effect of restricting the enzyme pool}
 \label{append:model-pool}
 
-Let $\ratioabl$, given by equation~\ref{eq:model-ratio}, depend on $x$:
+Let $\ratioabl$, given by Eq.\ \ref{eq:model-ratio}, depend on $x$:
 
 \begin{equation}
   \ratioabl(x) = \left( \sum_i \frac{f_i}{\griabl(x)} \right) \cdot \frac{\gro(x)}{\biomfrac{protein}}
@@ -238,8 +238,8 @@ To explain the increase in $\ratioabl$ as $\epool^{\prime}$ increases, I conside
 
 With reference to Fig.\ \ref{fig:model-pool}, consider $0 \leq x \leq 0.5$.
 In this region of $x$, based on the observations in the figure, we model $\gro = k_{0}x$ and $\griabl = k_{i}x$, where constants $k_{0}, k_{i} > 0$.
-This models how these values initially increase linearly in figure~\ref{fig:model-pool}.
-Equation~\ref{eq:model-ratio-diff} thus becomes:
+This models how these values initially increase linearly in Fig.\ \ref{fig:model-pool}.
+Eq.\ \ref{eq:model-ratio-diff} thus becomes:
 \begin{equation}
   \begin{aligned}
   \ndif{\ratioabl(x)}{x} &= \frac{1}{\biomfrac{protein}} \left[ \left( \sum_i \frac{f_i}{k_{i}x} \right) \cdot k_{0} - k_{0}x \sum_{i}\left( \frac{f_{i}}{(k_{i}x)^{2}} \cdot k_{i} \right) \right]\\
@@ -255,7 +255,7 @@ And this explains the constant $\ratioabl$ in this region.
 Now, consider $0.5 < x \leq 9$.
 In this region, the trajectories of $\griabl$ with respect to time remain linear, but some with changes in slope.
 In other words, in a sub-region where the slopes of all $\griabl$ are constant, we can let: $\gro = k_{0}x$ and $\griabl = m_{i}x + c_{i}$, where $k_{0}, m_{i}, c_{i} > 0$.
-Equation~\ref{eq:model-ratio-diff} thus becomes:
+Eq.\ \ref{eq:model-ratio-diff} thus becomes:
 \begin{equation}
   \begin{aligned}
   \ndif{\ratioabl(x)}{x} &= \frac{1}{\biomfrac{protein}} \left[ \left( \sum_i \frac{f_i}{m_{i}x+c_{i}} \right) \cdot k_{0} - k_{0}x \sum_{i}\left( \frac{f_{i}}{(m_{i}x+c_{i})^{2}} \cdot m_{i} \right) \right]\\
@@ -268,7 +268,7 @@ Equation~\ref{eq:model-ratio-diff} thus becomes:
 
 As $f_{i}, c_{i}, m_{i} > 0$ for all biomass components $i$, and $k_{0} > 0$, we get $\ndif{\ratioabl(x)}{x} > 0$ regardless of the values that these constants take.
 Because $k_{0}$ does not change over the region of $x$ considered, $m_{i}$, $c_{i}$, and $x$ values thus determine the magnitude of $\ndif{\ratioabl(x)}{x}$.
-If within a region of $x$, $m_{i}$ and $c_{i}$ values remain constant for all $i$, then as $x$ increases, $\ndif{\ratioabl(x)}{x}$ should decrease --- this is certainly the case, as can be observed in figure~\ref{fig:model-pool}.
+If within a region of $x$, $m_{i}$ and $c_{i}$ values remain constant for all $i$, then as $x$ increases, $\ndif{\ratioabl(x)}{x}$ should decrease --- this is certainly the case, as can be observed in Fig.\ \ref{fig:model-pool}.
 
 Lastly, consider $x > 9$.
 In this region, $\gro$ becomes constant, thus we let $\gro = k_{0}$.

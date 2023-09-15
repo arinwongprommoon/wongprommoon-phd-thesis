@@ -1,4 +1,4 @@
-\chapter{Time series analysis}
+\chapter{Time series}
 \label{append:analysis}
 
 \section{catch22 features}
@@ -51,7 +51,7 @@ Table~\ref{tab:catch22} lists \emph{catch22} features.
 UMAP \parencite{mcinnesUMAPUniformManifold2020} is a dimension reduction method which aims to find a global manifold structure of the input observations and computes a low-dimension embedding that preserves the structure of the manifold.
 
 UMAP has several hyperparameters, of which four have major effects on the embedding:
-\begin{itemize}
+\begin{enumerate}
   \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
         With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
         As the value increases, the algorithm `glues' more nodes together to form clusters.
@@ -62,7 +62,7 @@ UMAP has several hyperparameters, of which four have major effects on the embedd
         With low values, the visualisation forms `clumps'.
   \item The previous hyperparameters are numerical, but the \emph{metric} hyperparameter instead specifies the distance metric that is used to compute distances in the ambient space of the input data.
         For example, this metric can be the Euclidean distance, the cosine distance, or other metrics used to compute the distances between two vectors of numerical data.
-\end{itemize}
+\end{enumerate}
 
 % MOVE TO DISCUSSION?
 % However, UMAP has several caveats.
