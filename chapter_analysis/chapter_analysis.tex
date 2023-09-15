@@ -135,8 +135,8 @@ Fig.\ \ref{fig:analysis-filter-movavg} shows that the moving average method intr
 \section{Visualising groups in the dataset}
 \label{sec:analysis-clustering}
 
-To identify structures in datasets of time series, I implemented UMAP, a dimension reduction method, and modularity clustering, a graph-based clustering method.
-Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, subpopulations of oscillations with similar properties.
+To identify structures in datasets of time series, I implemented UMAP, a dimension-reduction method, and modularity clustering, a graph-based clustering method.
+Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, sub-populations of oscillations with similar properties.
 Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
 
 To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillations from one experiment with both the wild-type BY4741 strain ($n=206$) and the mutant \textit{zwf1$\Delta$} strain ($n=425$).
@@ -255,7 +255,7 @@ To remedy this, algorithms that implement a resolution parameter ($\gamma$), wer
   \label{fig:analysis-clustering-modclust}
 \end{figure}
 
-To assess the performance of a graph-based clustering method in identify clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
+To assess the performance of a graph-based clustering method in identifying clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
 Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
 \begin{enumerate}
   \item \emph{Constructing a graph representation:}
@@ -267,7 +267,7 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
         I used $k=10$.
   \item \emph{Modularity clustering:}
         Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I used the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
+        In this step, I used the constant Potts model \parencite{traagNarrowScopeResolutionlimitfree2011} and the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
 \end{enumerate}
 
 
@@ -330,11 +330,11 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
 \end{figure}
 
 Fig.\ \ref{fig:graphclustering-combined} shows that construction of a pruned graph based on similarities between time series highlights two groups of non-oscillatory time series.
-Subsequently, Figs.\ \ref{fig:graphclustering-cpm_00p010}--\ref{fig:graphclustering-cpm_00p030} show the resolution parameter ($\gamma$) controls the number of communities detected.
-Non-oscillatory time series were assigned to a separate group when $\gamma = 0.01$, and the two sub-groups of non-oscillatory time series were separated when $\gamma = 0.02$; however, $\gamma = 0.03$, the divisions changed.
+Subsequently, Figs.\ \ref{fig:graphclustering-cpm_00p010}--\ref{fig:graphclustering-cpm_00p030} show that the resolution parameter ($\gamma$) controls the number of communities detected.
+Non-oscillatory time series were assigned to a separate group when $\gamma = 0.01$, and the two sub-groups of non-oscillatory time series were separated when $\gamma = 0.02$; however, when $\gamma = 0.03$, the divisions changed.
 The Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} suggested 10 as the optimal number of communities, which was realised by $\gamma = 0.02$.
 For all $\gamma$ values, modularity clustering was able to further show communities among the oscillatory time series.
-However, such communities did not divide cleanly along the division between BY4741 and \textit{zwf1$\Delta$} cells, suggesting that time series features alone were not able to divide these two strains.
+However, such communities did not divide along the division between BY4741 and \textit{zwf1$\Delta$} cells, suggesting that time series features alone were not able to divide these two strains.
 This agreed with my observation that some oscillatory \textit{zwf1$\Delta$} time series resembled BY4741 time series (Fig.\ \ref{fig:analysis-sample-zwf1}).
 
 \begin{figure}
@@ -353,7 +353,7 @@ This agreed with my observation that some oscillatory \textit{zwf1$\Delta$} time
 % PLOT AVERAGE TIME SERIES FROM EACH COMMUNITY?
 
 In sum, the general agreement between UMAP and modularity clustering shows that the BY4741 \& \textit{zwf1$\Delta$} dataset had internal structure defined by rhythmicity of time series.
-However, it was not clear from the UMAP whether there are sub-populations among the BY4741 and \textit{zwf1$\Delta$} time series whose members exhibit similar types of oscillations.
+However, it was not clear from UMAP whether there were sub-populations among the BY4741 and \textit{zwf1$\Delta$} time series whose members exhibit similar types of oscillations.
 In contrast, while modularity clustering suggests that such sub-populations can be found based on connectivity between nodes, the number of sub-populations depends on the value of a resolution parameter.
 
 
@@ -432,7 +432,7 @@ This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006}, whic
   \label{fig:glynn-worst}
 \end{figure}
 
-Figs.\ \ref{fig:glynn-best}--\ref{fig:glynn-worst} suggest that the best- and worst-ranked time series by the quality of their oscillatory signals conformed to subjective judgements of quality.
+Figs.\ \ref{fig:glynn-best}--\ref{fig:glynn-worst} suggest that the best- and worst-ranked time series according to the quality of their oscillatory signals conformed to subjective judgements of quality.
 Highest-ranked time series resembled sinusoids and therefore led to periodograms with a strong power corresponding to the frequency of the sinusoid that would model the time series.
 Conversely, lowest-ranked time series resembled white noise and led to periodograms with power equally spread across all frequencies, thus bringing down the height of the highest peak.
 However, some time series with irregular oscillations based on visual inspection (Fig.\ \ref{fig:glynn-best}; ranks 2, 3) were given higher ranks than those with more regular oscillations based on visual inspection, thus calling into question the reliability of the ranking method.
@@ -444,7 +444,7 @@ However, some time series with irregular oscillations based on visual inspection
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006}.
   ]{
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006} as the false discovery rate was varied.
-    The true positive rate and false positive rates were evaluated based on manual scoring of the \textit{zwf1$\Delta$} dataset.
+    The true positive rate and false positive rates were computed based on the manual labels of the \textit{zwf1$\Delta$} dataset.
   }
   \label{fig:glynn-roc}
 \end{figure}
@@ -455,7 +455,7 @@ When extended across a population of time series, rhythmicity detection by this 
 Controlling the false discovery rate thus controls the expected proportion of oscillations that are classified as oscillatory.
 
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
-The area under the ROC curve ($A = 0.762$) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
+The area under the ROC curve (0.762) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
 
 \subsection{Rhythmicity detection using model fitting}
@@ -536,13 +536,13 @@ Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to corr
 \end{table}
 
 To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
-The confusion matrix (table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
+The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
 
 
 \subsection{Rhythmicity detection using machine learning}
 \label{subsec:analysis-classification-ml}
 
-As an alternative to the mathematical methods previously discussed, I trained a support vector classifier to classify oscillatory and non-oscillatory time series from the \textit{zwf1$\Delta$} cells (appendix \ref{append:analysis-ml}).
+As an alternative to the mathematical methods previously discussed, I trained a support vector classifier to classify oscillatory and non-oscillatory time series from the \textit{zwf1$\Delta$} cells (Appendix~\ref{append:analysis-ml}).
 
 To ensure that the dynamic ranges of the fluorescence signals do not affect rhythmicity detection, I normalised each time series $x_{i}(t_{1}), \ldots , x_{i}(t_{j}), \ldots , x_{i}(t_{N})$ to produce a processed time series $z_{i}(t_{1}), \ldots , z_{i}(t_{j}), \ldots , z_{i}(t_{N})$ as follows:
 
@@ -565,7 +565,7 @@ From this input data, 75\% of the time series formed the training set.
     using the time points as features,
     using the power values in the Fourier spectrum as features,
     and using \emph{catch22} features.
-    As a control, the oscillatory and non-oscillatory labels were randomly assigned to the time series and the time points were used as features.
+    As a control, the oscillatory and non-oscillatory labels were randomly reassigned to the time series and the time points were used as features.
   }
   \label{fig:analysis-precision-recall}
 \end{figure}
@@ -629,14 +629,14 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
 
 To predict the probability that each time series was oscillatory, I used Platt scaling  \parencite{plattProbabilisticOutputsSupport1999} with the support vector classifier, as implemented by the \texttt{predict\_proba} method in the Python package \texttt{scikit\_learn}.
 Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
-Fig.\ \ref{fig:analysis-svc-proba-histogram-model} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities, in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
+Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities (Fig.\ \ref{fig:analysis-svc-proba-histogram-model}), in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
 In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the probabilities can serve as a good score to rank time series by oscillation quality.
 
 
 \section{Period estimation using the autocorrelation function}
 \label{sec:analysis-characterisation}
 
-Estimating the period of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations.
+Estimating the period of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations as was previously used by \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
 To show that the autocorrelation function can be used to estimate the period and noise properties of both symmetric and asymmetric oscillations, I adapted the autocorrelation function as used by \textcite{pietschDeterminingGrowthRates2023} (Methods Section~\ref{subsec:methods-computational-xcf}).
 To calibrate the method, I generated synthetic oscillations --- sinusoids and the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961} --- to investigate the effect of their properties on the autocorrelation function.
 Subsequently, I applied the autocorrelation function to characterise experimentally-recorded time series.
@@ -1014,9 +1014,11 @@ Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the 
 %   \label{fig:acf-fhn-noiseparams}
 % \end{figure}
 
-To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from an asymmetric oscillation, I repeated the exponential fitting in section~\ref{subsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator as defined in the Methods (Section~\ref{subsec:methods-computational-synthetic}).
+To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from an asymmetric oscillation, I added Gillespie noise with varying $d_{0}$ and $k_{0}$ to FitzHugh-Nagumo oscillators as defined in the Methods Section~\ref{subsec:methods-computational-synthetic}.
+%I repeated the exponential fitting in section~\ref{subsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator as defined in the Methods (Section~\ref{subsec:methods-computational-synthetic}).
 
 Fig.\ \ref{fig:acf-fhn-gillnoise-acf} shows that when the oscillator had a different shape, the waves in the autocorrelation function changed shape, becoming more pointed.
+Additionally, the effect of noise parameters on the autocorrelation function is preserved when the oscillators switch from sinusoid to FitzHugh-Nagumo oscillators.
 % In addition, Fig.\ \ref{fig:acf-fhn-noiseparams-fit-highnts} suggests that fitting an exponential decay function to the autocorrelation function to estimate noise parameters was less reliable, particularly with high noise timescales.
 % As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produced a greater range of uncertainty (Fig.\ \ref{fig:acf-fhn-noiseparams-noisetimescale}).
 % However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
@@ -1027,15 +1029,14 @@ Fig.\ \ref{fig:acf-fhn-gillnoise-acf} shows that when the oscillator had a diffe
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.8\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{acf_sinusoid_biol_ts.png}
     \caption{
     }
     \label{fig:acf-sinusoid-biol-ts}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.5\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{acf_sinusoid_biol_acf.png}
     \caption{
@@ -1074,15 +1075,14 @@ Nevertheless, relating the shape of the autocorrelation function to the effect o
 
 \begin{figure}
   \centering
-  \begin{subfigure}[t]{0.8\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
   \centering
     \includegraphics[width=\linewidth]{acf_fhn_biol_ts.png}
     \caption{
     }
     \label{fig:acf-fhn-biol-ts}
-  \end{subfigure}
-
-  \begin{subfigure}[t]{0.5\textwidth}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
   \centering
     \includegraphics[width=\linewidth]{acf_fhn_biol_acf.png}
     \caption{
@@ -1233,14 +1233,14 @@ The cross-correlation function suggests that the histone 2B oscillations peaked 
 This chapter discusses methods to filter long-term trends in time series data, to visualise structures within a dataset of time series, to detect rhythmicity in a time series, to estimate period and noise parameters, and to detect the synchrony between two time series.
 
 My results suggest that using a high-pass Butterworth filter to filter out long-term trends in time series data gives better control over the frequency profile of the time series than moving-average methods, which is often used to detrend time series from biological oscillators.
-Such results highlight that a degree of caution is needed to choose methods for a crucial step in data analysis.
+Such results highlight that a degree of caution is needed to choose methods for such a crucial step in data analysis.
 
-My exploration of UMAP and modularity clustering suggests that both methods were useful to discovering structure within time series, particularly in discriminating between oscillatory and non-oscillatory time series.
+My exploration of UMAP and modularity clustering suggests that both methods were useful in discovering structure within time series, particularly in discriminating between oscillatory and non-oscillatory time series.
 These methods further indicated sub-groups of time series that may have similar properties, such as shape or oscillation quality, which may correspond to sub-populations of metabolic cycle-producing cells in a culture.
 The consistency between the two methods strongly suggest that such groups in the dataset are meaningful.
 
 Subsequently, my exploration of three approaches to detect rhythmicity --- deriving a statistical test of a power spectrum, deriving a periodogram from an autoregressive model, and a binary classifier --- highlights the difficulty of rhythmicity detection in noisy biological time series.
-The spectral method described by \parencite{glynnDetectingPeriodicPatterns2006} had a modest performance.
+The spectral method described by \textcite{glynnDetectingPeriodicPatterns2006} had a modest performance.
 The autoregressive model was able to identify the most likely period in some time series, but otherwise classified most time series as non-oscillatory, and lacked a tuning parameter.
 Finally, the support vector classifier suggests that a simple machine learning model could be adapted for rhythmicity detection, subject to a good feature set and training data.
 
