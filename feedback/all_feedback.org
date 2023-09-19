@@ -27,7 +27,7 @@
 *** Acknowledgements
 - [X] L0109: Pietsch
 ** Intro
-- [ ] F1.03, 1.05, 1.12, 1.13: Add text in between
+- [X] F1.03, 1.05, 1.12, 1.13: Add text in between
 - [X] F1.10: Define 'HOC', 'LOC' in figure
 - [X] L0991: showed
 ** Methods
@@ -36,7 +36,7 @@
 - [X] L1420: change title
 ** Biology
 - [X] L1531: move words
-- [ ] F3.05, F3.06: Move figs down
+- [X] F3.05, F3.06: Move figs down
 - [X] L1671: p-value.  Missing ')'?
 - [X] L1826: add 'with'
 - [X] L1854: e --> y
