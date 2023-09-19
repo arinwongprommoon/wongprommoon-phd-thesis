@@ -41,8 +41,8 @@
 - [X] L1826: add 'with'
 - [X] L1854: e --> y
 ** Analysis
-- [ ] Remove 'rhythmicity detection' from Section 4.4.X titles
-- [ ] Add something to Section 4.5.3 & 4.6.2 titles
+- [X] Remove 'rhythmicity detection' from Section 4.4.X titles
+- [X] Add something to Section 4.5.3 & 4.6.2 titles
 ** Model
 - [ ] L2482-2519 (?): move to methods
 - [ ] L2534-2572: move to appendix

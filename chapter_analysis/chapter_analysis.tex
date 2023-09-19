@@ -364,7 +364,7 @@ To identify metabolic cycles from flavin autofluorescence signals, it is importa
 To determine the time series classification method that is most appropriate for my data, I compared a spectral method, a model-fitting method, and a machine learning method.
 
 
-\subsection{Rhythmicity detection using spectral methods}
+\subsection{Spectral methods}
 \label{subsec:analysis-classification-spectral}
 
 In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (Methods Section~\ref{subsec:methods-computational-periodogram}).
@@ -458,7 +458,7 @@ To assess the performance of this method as a classifier for rhythmicity detecti
 The area under the ROC curve (0.762) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
 
-\subsection{Rhythmicity detection using model fitting}
+\subsection{Model fitting}
 \label{subsec:analysis-classification-ar}
 
 To assess the performance of a time series classification method based on the autoregressive model, I implemented the method described by \textcite{jiaFrequencyDomainAnalysis2020}, used to characterise synthetic time series of stochastic, oscillatory gene expression in a dividing cell.
@@ -539,7 +539,7 @@ To assess the performance of the use of the autoregressive model for rhythmicity
 The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
 
 
-\subsection{Rhythmicity detection using machine learning}
+\subsection{Machine learning}
 \label{subsec:analysis-classification-ml}
 
 As an alternative to the mathematical methods previously discussed, I trained a support vector classifier to classify oscillatory and non-oscillatory time series from the \textit{zwf1$\Delta$} cells (Appendix~\ref{append:analysis-ml}).
@@ -1024,7 +1024,7 @@ Additionally, the effect of noise parameters on the autocorrelation function is 
 % However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
 
-\subsection{Real data}
+\subsection{Real data from fluorescence microscopy in microfluidics experiments}
 \label{subsubsec:analysis-characterisation-real}
 
 \begin{figure}
@@ -1191,7 +1191,7 @@ The cross-correlation function further showed that synchrony between the two osc
 Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
 
-\subsection{Real data}
+\subsection{Real data from fluorescence microscopy in microfluidics experiments}
 \label{subsubsec:analysis-correlation-real}
 
 To show how the cross-correlation function can be used to quantify the synchrony between flavin autofluorescence oscillations and HTB2::mCherry levels in a population of cells, Fig.\ \ref{fig:xcf-biol} displays a sample pair of time series (Fig.\ \ref{fig:xcf-biol-ts}) and the cross-correlation function from the population of cells (Fig.\ \ref{fig:xcf-biol-xcf}).
