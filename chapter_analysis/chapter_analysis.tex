@@ -75,6 +75,18 @@ To determine the detrending method that is most appropriate for my data, I compa
 % However, each method has its own caveats.
 % Polynomial detrending assumes a polynomial-shaped underlying signal, while methods based an sliding-window detrending necessitates discarding time points at the beginning and end of the time series and may introduce strong artefacts.
 
+To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Figs.\ \ref{fig:analysis-filter-raw}--\ref{fig:analysis-filter-butterworth} show how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI{2.86d-3}{\minute^{-1}}, corresponding to a period of \SI{350}{\minute}.
+Defining a signal filter offers direct control over frequencies.
+The critical frequency was chosen as a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
+Defining the critical frequency in this way excludes the possibility of metabolic cycles that have very long periods in favour of emphasising metabolic oscillations of an expected frequency.
+
+To show how sliding-window methods may adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.
+Sliding-window methods are common in detrending biological time series.
+For example, \textcite{cunyHighresolutionMassMeasurements2022} used a moving average: a constant, defined sliding window to smooth time series of yeast cell mass during growth.
+%\textcite{papagiannakisAutonomousMetabolicOscillations2017} fitted a smoothing spline to their single-cell fluorescence data of the yeast metabolic cycle, then divided the data points by the smoothing spline to detrend their data; the specific mathematical method used to define the smoothing spline was unclear in their study.
+%
+Fig.\ \ref{fig:analysis-filter-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
+
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.8\textwidth}
@@ -119,19 +131,6 @@ To determine the detrending method that is most appropriate for my data, I compa
   \label{fig:analysis-filter}
 \end{figure}
 
-To demonstrate the use of a method that modifies the frequency profile of time series to remove trends, Figs.\ \ref{fig:analysis-filter-raw}--\ref{fig:analysis-filter-butterworth} show how a time series and its Fourier spectrum changes after the application of a high-pass Butterworth filter with a critical frequency of \SI{2.86d-3}{\minute^{-1}}, corresponding to a period of \SI{350}{\minute}.
-Defining a signal filter offers direct control over frequencies.
-The critical frequency was chosen as a reasonable upper limit of periods of the yeast metabolic cycle, based on my observations in single-cell microfluidics experiments.
-Defining the critical frequency in this way excludes the possibility of metabolic cycles that have very long periods in favour of emphasising metabolic oscillations of an expected frequency.
-
-To show how sliding-window methods may adversely affect the frequency profile of time series when used for detrending, I computed the Fourier spectrum of time series detrended using the moving average method.
-Sliding-window methods are common in detrending biological time series.
-For example, \textcite{cunyHighresolutionMassMeasurements2022} used a moving average: a constant, defined sliding window to smooth time series of yeast cell mass during growth.
-%\textcite{papagiannakisAutonomousMetabolicOscillations2017} fitted a smoothing spline to their single-cell fluorescence data of the yeast metabolic cycle, then divided the data points by the smoothing spline to detrend their data; the specific mathematical method used to define the smoothing spline was unclear in their study.
-%
-Fig.\ \ref{fig:analysis-filter-movavg} shows that the moving average method introduced an artefact in the frequency spectrum near the reciprocal of the window size and decreases the number of time points.
-
-
 \section{Visualising groups in the dataset}
 \label{sec:analysis-clustering}
 
@@ -150,6 +149,13 @@ I manually labelled the time series to indicate whether they were oscillatory or
 UMAP \parencite{mcinnesUMAPUniformManifold2020} is an unsupervised dimension reduction method that can be used to visualise structure in a dataset.
 Specifically, UMAP aims to find a manifold structure of the input observations and compute a low-dimensional embedding that preserves the topological structure of the manifold.
 This embedding thus serves as coordinates to plot the data onto a low-dimensional space.
+
+To evaluate whether UMAP was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to meaningful divisions, I featurised the time series with \textit{catch22}, then used UMAP to compute two-dimensional embeddings.
+Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggested a small group of non-oscillatory time series that differed markedly from the rest ($\ast$ in figure), and a larger group that was more similar to oscillatory time series ($\ast \ast$ in figure).
+In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggested that the BY4741 time series were more similar to each other.
+In contrast, \textit{zwf1$\Delta$} occupied larger regions of the embedding space.
+These embeddings agreed with my observation that time series from the \textit{zwf1$\Delta$} strain had a larger variety of shapes and oscillation quality than the BY4741 strain.
+Thus, UMAP may have potential to separate oscillatory and non-oscillatory time series, or time series of different shapes.
 
 \begin{figure}
   \centering
@@ -181,13 +187,9 @@ This embedding thus serves as coordinates to plot the data onto a low-dimensiona
   \label{fig:umap}
 \end{figure}
 
-To evaluate whether UMAP was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to meaningful divisions, I featurised the time series with \textit{catch22}, then used UMAP to compute two-dimensional embeddings.
-Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggested a small group of non-oscillatory time series that differed markedly from the rest ($\ast$ in figure), and a larger group that was more similar to oscillatory time series ($\ast \ast$ in figure).
-In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggested that the BY4741 time series were more similar to each other.
-In contrast, \textit{zwf1$\Delta$} occupied larger regions of the embedding space.
-These embeddings agreed with my observation that time series from the \textit{zwf1$\Delta$} strain had a larger variety of shapes and oscillation quality than the BY4741 strain.
-Thus, UMAP may have potential to separate oscillatory and non-oscillatory time series, or time series of different shapes.
-
+To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ UMAP hyperparameters (Appendix~\ref{append:analysis-umap}) to find the best combination.
+Fig.\ \ref{fig:umap-gridsearch} suggests that $50 \leq n \leq 150$ and $0.25 \leq \mathrm{min\_dist} \leq 1$ resulted in a good separation between the BY4741 and \textit{zwf1$\Delta$} nodes.
+In addition, non-oscillatory time series were consistently displayed into groups separate from the rest as the hyperparameters were varied.
 
 \begin{figure}
   \centering
@@ -201,10 +203,6 @@ Thus, UMAP may have potential to separate oscillatory and non-oscillatory time s
   \label{fig:umap-gridsearch}
 \end{figure}
 
-To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ UMAP hyperparameters (Appendix~\ref{append:analysis-umap}) to find the best combination.
-Fig.\ \ref{fig:umap-gridsearch} suggests that $50 \leq n \leq 150$ and $0.25 \leq \mathrm{min\_dist} \leq 1$ resulted in a good separation between the BY4741 and \textit{zwf1$\Delta$} nodes.
-In addition, non-oscillatory time series were consistently displayed into groups separate from the rest as the hyperparameters were varied.
-
 
 \subsection{Graph-based clustering}
 \label{subsec:analysis-clustering-graphclustering}
@@ -213,6 +211,21 @@ Modularity clustering is a mathematical method that partitions a graph into grou
 This optimisation problem is computationally difficult, so approximations such as the Louvain algorithm are needed for large networks \parencite{blondelFastUnfoldingCommunities2008}, with the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} subsequently developed to ensure that communities are well-connected and to provide an optimum number of communities.
 Furthermore, the intrinsic scale of modularity scales with the square root of the number of connections in the network; therefore, if the network is large, there is a large resolution limit, preventing a modularity clustering algorithm from detecting small-scale structures \parencite{fortunatoResolutionLimitCommunity2007,traagNarrowScopeResolutionlimitfree2011}.
 To remedy this, algorithms that implement a resolution parameter ($\gamma$), were devised; the value of this parameter thus controls the scale at which communities are detected \parencite{reichardtDetectingFuzzyCommunity2004,kumpulaLimitedResolutionComplex2007}.
+
+To assess the performance of a graph-based clustering method in identifying clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
+Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
+\begin{enumerate}
+  \item \emph{Constructing a graph representation:}
+        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
+        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
+        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
+  \item \emph{Pruning:}
+        The complete graph was pruned by deleting edges, so that each node was connected to at least the $k$ nearest neighbours.
+        I used $k=10$.
+  \item \emph{Modularity clustering:}
+        Modularity clustering was performed on the graph to partition the pruned graph into communities.
+        In this step, I used the constant Potts model \parencite{traagNarrowScopeResolutionlimitfree2011} and the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
+\end{enumerate}
 
 \begin{figure}
   \centering
@@ -255,21 +268,11 @@ To remedy this, algorithms that implement a resolution parameter ($\gamma$), wer
   \label{fig:analysis-clustering-modclust}
 \end{figure}
 
-To assess the performance of a graph-based clustering method in identifying clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
-Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifically:
-\begin{enumerate}
-  \item \emph{Constructing a graph representation:}
-        Each time series was represented as a vector of features in $n$-dimensional space, where $n$ is the length of the vector.
-        Here, I represented each time series with a vector of 22 features using \textit{catch22}.
-        The cosine distances between each pair of vector was computed, and became the edge weights of a complete graph with each time series as a node.
-  \item \emph{Pruning:}
-        The complete graph was pruned by deleting edges, so that each node was connected to at least the $k$ nearest neighbours.
-        I used $k=10$.
-  \item \emph{Modularity clustering:}
-        Modularity clustering was performed on the graph to partition the pruned graph into communities.
-        In this step, I used the constant Potts model \parencite{traagNarrowScopeResolutionlimitfree2011} and the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}.
-\end{enumerate}
-
+Fig.\ \ref{fig:graphclustering-combined} shows that construction of a pruned graph based on similarities between time series highlights two groups of non-oscillatory time series.
+Subsequently, Figs.\ \ref{fig:graphclustering-cpm_00p010}--\ref{fig:graphclustering-cpm_00p030} show that the resolution parameter ($\gamma$) controls the number of communities detected.
+Non-oscillatory time series were assigned to a separate group when $\gamma = 0.01$, and the two sub-groups of non-oscillatory time series were separated when $\gamma = 0.02$; however, when $\gamma = 0.03$, the divisions changed.
+The Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} suggested 10 as the optimal number of communities, which was realised by $\gamma = 0.02$.
+For all $\gamma$ values, modularity clustering was able to further show communities among the oscillatory time series.
 
 \begin{figure}[htbp]
   \centering
@@ -329,11 +332,6 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
   \label{fig:graphclustering}
 \end{figure}
 
-Fig.\ \ref{fig:graphclustering-combined} shows that construction of a pruned graph based on similarities between time series highlights two groups of non-oscillatory time series.
-Subsequently, Figs.\ \ref{fig:graphclustering-cpm_00p010}--\ref{fig:graphclustering-cpm_00p030} show that the resolution parameter ($\gamma$) controls the number of communities detected.
-Non-oscillatory time series were assigned to a separate group when $\gamma = 0.01$, and the two sub-groups of non-oscillatory time series were separated when $\gamma = 0.02$; however, when $\gamma = 0.03$, the divisions changed.
-The Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} suggested 10 as the optimal number of communities, which was realised by $\gamma = 0.02$.
-For all $\gamma$ values, modularity clustering was able to further show communities among the oscillatory time series.
 However, such communities did not divide along the division between BY4741 and \textit{zwf1$\Delta$} cells, suggesting that time series features alone were not able to divide these two strains.
 This agreed with my observation that some oscillatory \textit{zwf1$\Delta$} time series resembled BY4741 time series (Fig.\ \ref{fig:analysis-sample-zwf1}).
 
@@ -369,6 +367,11 @@ To determine the time series classification method that is most appropriate for 
 
 In order to classify oscillatory and non-oscillatory time series, I modified a classifier based on a spectral method that included a statistical test (Methods Section~\ref{subsec:methods-computational-periodogram}).
 This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006}, which described a method that employed the peak power from the Lomb-Scargle periodogram \parencite{lombLeastsquaresFrequencyAnalysis1976} to rank time series by the quality of oscillation and to perform a statistical test to determine whether a time series is oscillatory or non-oscillatory \parencite{scargleStudiesAstronomicalTime1982}, as shown by Eqs.\ \ref{eq:lsp-pval}--\ref{eq:lsp-khat}.
+
+Figs.\ \ref{fig:glynn-best}--\ref{fig:glynn-worst} suggest that the best- and worst-ranked time series according to the quality of their oscillatory signals conformed to subjective judgements of quality.
+Highest-ranked time series resembled sinusoids and therefore led to periodograms with a strong power corresponding to the frequency of the sinusoid that would model the time series.
+Conversely, lowest-ranked time series resembled white noise and led to periodograms with power equally spread across all frequencies, thus bringing down the height of the highest peak.
+However, some time series with irregular oscillations based on visual inspection (Fig.\ \ref{fig:glynn-best}; ranks 2, 3) were given higher ranks than those with more regular oscillations based on visual inspection, thus calling into question the reliability of the ranking method.
 
 \begin{figure}[htbp]
   \centering
@@ -432,10 +435,13 @@ This classifier was based on \textcite{glynnDetectingPeriodicPatterns2006}, whic
   \label{fig:glynn-worst}
 \end{figure}
 
-Figs.\ \ref{fig:glynn-best}--\ref{fig:glynn-worst} suggest that the best- and worst-ranked time series according to the quality of their oscillatory signals conformed to subjective judgements of quality.
-Highest-ranked time series resembled sinusoids and therefore led to periodograms with a strong power corresponding to the frequency of the sinusoid that would model the time series.
-Conversely, lowest-ranked time series resembled white noise and led to periodograms with power equally spread across all frequencies, thus bringing down the height of the highest peak.
-However, some time series with irregular oscillations based on visual inspection (Fig.\ \ref{fig:glynn-best}; ranks 2, 3) were given higher ranks than those with more regular oscillations based on visual inspection, thus calling into question the reliability of the ranking method.
+To detect rhythmicity in one time series, \textcite{glynnDetectingPeriodicPatterns2006} calculates the probability of the null hypothesis that a peak in the periodogram occurs due to chance.
+When extended across a population of time series, rhythmicity detection by this method thus becomes a task of testing multiple hypotheses.
+\textcite{glynnDetectingPeriodicPatterns2006} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
+Controlling the false discovery rate thus controls the expected proportion of oscillations that are classified as oscillatory.
+
+To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
+The area under the ROC curve (0.762) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
 \begin{figure}
   \centering
@@ -449,14 +455,6 @@ However, some time series with irregular oscillations based on visual inspection
   \label{fig:glynn-roc}
 \end{figure}
 
-To detect rhythmicity in one time series, \textcite{glynnDetectingPeriodicPatterns2006} calculates the probability of the null hypothesis that a peak in the periodogram occurs due to chance.
-When extended across a population of time series, rhythmicity detection by this method thus becomes a task of testing multiple hypotheses.
-\textcite{glynnDetectingPeriodicPatterns2006} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
-Controlling the false discovery rate thus controls the expected proportion of oscillations that are classified as oscillatory.
-
-To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
-The area under the ROC curve (0.762) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
-
 
 \subsection{Model fitting}
 \label{subsec:analysis-classification-ar}
@@ -465,6 +463,21 @@ To assess the performance of a time series classification method based on the au
 In the implementation of the autoregressive model used by \textcite{jiaFrequencyDomainAnalysis2020}, each data point was expressed as a linear combination of a number of data points that precede it, and model parameters led to an analytical solution for the periodogram, thus giving an advantage over the low-resolution Fourier spectrum (Methods Section~\ref{subsec:methods-computational-ar}).
 The resulting power spectra fell into four categories, one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
+  \caption[
+    Power spectra analytically derived from fitting an autoregressive model to time series can be divided into four types.
+  ]{
+    Power spectra (a) analytically derived from fitting an autoregressive model to time series (b) can be divided into four types.
+    Type I lacks a local maximum and is denoted as lacking oscillations.
+    Figure adapted from \textcite{jiaFrequencyDomainAnalysis2020}.
+  }
+  \label{fig:analysis-ar-classification}
+\end{figure}
+
+Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory at a period of \SI{75.2}{\minute}, as evidenced by the location of a peak in the periodogram that the model predicted.
 
 \begin{figure}
   \centering
@@ -496,22 +509,8 @@ This method thus allows computing the frequency of the oscillation from the loca
   \label{fig:analysis-ar}
 \end{figure}
 
-
-\begin{figure}
-  \centering
-  \includegraphics[width=1.0\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
-  \caption[
-    Power spectra analytically derived from fitting an autoregressive model to time series can be divided into four types.
-  ]{
-    Power spectra (a) analytically derived from fitting an autoregressive model to time series (b) can be divided into four types.
-    Type I lacks a local maximum and is denoted as lacking oscillations.
-    Figure adapted from \textcite{jiaFrequencyDomainAnalysis2020}.
-  }
-  \label{fig:analysis-ar-classification}
-\end{figure}
-
-Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory at a period of \SI{75.2}{\minute}, as evidenced by the location of a peak in the periodogram that the model predicted.
-
+To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
+The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
 
 \begin{table}
   \centering
@@ -535,9 +534,6 @@ Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to corr
   \label{tab:analysis-ar-confusion-matrix}
 \end{table}
 
-To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
-The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
-
 
 \subsection{Machine learning}
 \label{subsec:analysis-classification-ml}
@@ -554,6 +550,11 @@ To ensure that the dynamic ranges of the fluorescence signals do not affect rhyt
 where $\mu_{i}$ is the mean value of $x_{i}$ computed across all time points, and $\sigma_{i}$ is the standard deviation of $x_{i}$ computed across all time points.
 As a result, each normalised time series $z_{i}$ has a mean of 0 and a standard deviation of 1.
 From this input data, 75\% of the time series formed the training set.
+
+To determine the most effective way to featurise the data, I computed the precision and recall (defined in Methods Section~\ref{subsec:methods-computational-precision-recall}) of support vector classifiers trained on data featurised using different methods.
+All support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 10$.
+Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} and the Fourier spectrum gave comparably high performances, as evidenced by high precision and recall, and with a low degree of overfitting, as evidenced by a small variation of both metrics across the rounds of cross-validation.
+%To evaluate the performance of the \textit{catch22}-based classifier, Fig. \ref{fig:analysis-svc-pr} shows the precision-recall curve of the classifier, which suggests a good performance.
 
 \begin{figure}
   \centering
@@ -581,11 +582,9 @@ From this input data, 75\% of the time series formed the training set.
 %   \label{fig:analysis-svc-pr}
 % \end{figure}
 
-To determine the most effective way to featurise the data, I computed the precision and recall (defined in Methods Section~\ref{subsec:methods-computational-precision-recall}) of support vector classifiers trained on data featurised using different methods.
-All support vector classifiers were trained using a radial bias kernel, a kernel coefficient $\gamma = 1/N$, where $N$ is the number of features, and a regularisation parameter $C = 10$.
-Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \textit{catch22} and the Fourier spectrum gave comparably high performances, as evidenced by high precision and recall, and with a low degree of overfitting, as evidenced by a small variation of both metrics across the rounds of cross-validation.
-%To evaluate the performance of the \textit{catch22}-based classifier, Fig. \ref{fig:analysis-svc-pr} shows the precision-recall curve of the classifier, which suggests a good performance.
-
+To predict the probability that each time series was oscillatory, I used Platt scaling  \parencite{plattProbabilisticOutputsSupport1999} with the support vector classifier, as implemented by the \texttt{predict\_proba} method in the Python package \texttt{scikit\_learn}.
+Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
+Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities (Fig.\ \ref{fig:analysis-svc-proba-histogram-model}), in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
 
 \begin{figure}
   \centering
@@ -616,6 +615,7 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
   \label{fig:analysis-svc-proba-histogram}
 \end{figure}
 
+In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the probabilities can serve as a good score to rank time series by oscillation quality.
 
 \begin{figure}
   \centering
@@ -626,11 +626,6 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
   }
   \label{fig:analysis-svc-proba-gallery}
 \end{figure}
-
-To predict the probability that each time series was oscillatory, I used Platt scaling  \parencite{plattProbabilisticOutputsSupport1999} with the support vector classifier, as implemented by the \texttt{predict\_proba} method in the Python package \texttt{scikit\_learn}.
-Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
-Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities (Fig.\ \ref{fig:analysis-svc-proba-histogram-model}), in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
-In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the probabilities can serve as a good score to rank time series by oscillation quality.
 
 
 \section{Period estimation using the autocorrelation function}
@@ -644,6 +639,13 @@ Details on how the sinusoids and the FitzHugh-Nagumo oscillators were defined ca
 
 \subsection{Effect of noise parameters on the autocorrelation function of synthetic sinusoids}
 \label{subsec:analysis-characterisation-acf-sinusoid}
+
+To compare the effect of Gaussian noise and Gillespie noise on the autocorrelation function, I computed the autocorrelation functions from a population of sinusoids with either type of noise added via element-wise sums.
+% [Show working -- i.e. the mathematical derivations that make me expect results?]
+% [Equations -- clear lines before/after, rather than having them in-line?]
+Fig.\ \ref{fig:acf-sinusoids-nonoise-acf} shows that the autocorrelation function computed from a population of out-of-phase sinusoids could be modelled by a cosine with the same period as the sinusoids.
+Following this, Fig.\ \ref{fig:acf-sinusoids-gausnoise-acf} shows that the addition of Gaussian noise preserved the point $(0,1)$, but the amplitude of the cosine that models the autocorrelation function was decreased.
+Furthermore, the variation of the autocorrelation function among time series at long lags was increased, as evidenced by the interquartile range, because less data was used to compute the autocorrelation function at longer lags.% (mathematical derivation in appendix ...).
 
 \begin{figure}
   \centering
@@ -699,13 +701,13 @@ Details on how the sinusoids and the FitzHugh-Nagumo oscillators were defined ca
     Sample sinusoids without noise, with Gaussian noise, and with Gillespie noise, along with their autocorrelation functions.
   ]{
     %Effect of type of noise on the autocorrelation function.
-    \textbf{(\ref{fig:acf-sinusoids-nonoise-ts})} Sample sinusoids without noise, and 
+    \textbf{(\ref{fig:acf-sinusoids-nonoise-ts})} Sample sinusoids without noise, and
     \textbf{(\ref{fig:acf-sinusoids-nonoise-acf})} its autocorrelation function.
     %
-    \textbf{(\ref{fig:acf-sinusoids-gausnoise-ts})} Sample sinusoids with Gaussian noise defined by drawing samples from $\mathcal{N}(0,\sigma^{2}=3)$, and 
+    \textbf{(\ref{fig:acf-sinusoids-gausnoise-ts})} Sample sinusoids with Gaussian noise defined by drawing samples from $\mathcal{N}(0,\sigma^{2}=3)$, and
     \textbf{(\ref{fig:acf-sinusoids-gausnoise-acf})} its autocorrelation function.
     %
-    \textbf{(\ref{fig:acf-sinusoids-gillnoise-ts})} Sample sinusoids of with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.05$), and 
+    \textbf{(\ref{fig:acf-sinusoids-gillnoise-ts})} Sample sinusoids of with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.05$), and
     \textbf{(\ref{fig:acf-sinusoids-gillnoise-acf})} its autocorrelation function.
     Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
     %
@@ -714,14 +716,8 @@ Details on how the sinusoids and the FitzHugh-Nagumo oscillators were defined ca
   \label{fig:acf-sinusoids}
 \end{figure}
 
-To compare the effect of Gaussian noise and Gillespie noise on the autocorrelation function, I computed the autocorrelation functions from a population of sinusoids with either type of noise added via element-wise sums.
-
-% [Show working -- i.e. the mathematical derivations that make me expect results?]
-% [Equations -- clear lines before/after, rather than having them in-line?]
-
-Fig.\ \ref{fig:acf-sinusoids-nonoise-acf} shows that the autocorrelation function computed from a population of out-of-phase sinusoids could be modelled by a cosine with the same period as the sinusoids.
-Following this, Fig.\ \ref{fig:acf-sinusoids-gausnoise-acf} shows that the addition of Gaussian noise preserved the point $(0,1)$, but the amplitude of the cosine that models the autocorrelation function was decreased.
-Furthermore, the variation of the autocorrelation function among time series at long lags was increased, as evidenced by the interquartile range, because less data was used to compute the autocorrelation function at longer lags.% (mathematical derivation in appendix ...).
+Gillespie noise is based on the birth-death process (Fig.\ \ref{fig:analysis-birthdeath-process}), and its two parameters control noise parameters (Methods Section~\ref{subsec:methods-computational-synthetic}).
+Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 
 \begin{figure}
   \centering
@@ -754,14 +750,42 @@ Furthermore, the variation of the autocorrelation function among time series at 
   \label{fig:analysis-birthdeath-process}
 \end{figure}
 
-Gillespie noise is based on the birth-death process (Fig.\ \ref{fig:analysis-birthdeath-process}), and its two parameters control noise parameters (Methods Section~\ref{subsec:methods-computational-synthetic}).
-Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
 % Though Peter said this `is not trivial'.
 Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} shows that when Gillespie noise was added to the sinusoids, the medium autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
 In addition, the locations of the peaks of the autocorrelation function were preserved.
 The observation thus suggests that the death rate $d_{0}$ parameter of Gillespie noise controlled the shape of the autocorrelation function.
 
+% \begin{figure}
+%   \centering
+%   \begin{subfigure}[t]{0.5\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{acf_fit_example.png}
+%     \caption{
+%     }
+%     \label{fig:acf-noisetimescale-effect-fit}
+%   \end{subfigure}%
+%   \begin{subfigure}[t]{0.5\textwidth}
+%   \centering
+%     \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
+%     \caption{
+%     }
+%     \label{fig:acf-noisetimescale-effect-relationship}
+%   \end{subfigure}
+
+%   \caption[
+%     Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
+%   ]{
+%     \textbf{(\ref{fig:acf-noisetimescale-effect-fit})} Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
+%     \textbf{(\ref{fig:acf-noisetimescale-effect-relationship})} The relationship between $d_{0}$ and the decay rate $D$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
+%     Here, $k_{0}$ was held constant at 5.
+%   }
+%   \label{fig:acf-noisetimescale-effect}
+% \end{figure}
+
+To quantify the effect of the noise timescale on the shape of the autocorrelation function, I varied the death rate parameter $d_{0}$ when generating Gillespie noise.
+Fig.\ \ref{fig:acf-noisetimescale} shows that a higher death rate decreased the decay timescale of the autocorrelation function (Fig.\ \ref{fig:acf-noisetimescale-highd0-acf}), while a lower death rate introduced long-term trends in the simulated signals (Fig.\ \ref{fig:acf-noisetimescale-lowd0-ts}).
+A lower death rate also increased the variation between autocorrelation functions between replicates (Fig.\ \ref{fig:acf-noisetimescale-lowd0-acf}).
 
 \begin{figure}
   \centering
@@ -799,10 +823,10 @@ The observation thus suggests that the death rate $d_{0}$ parameter of Gillespie
     Effect of death rate of Gillespie noise on the autocorrelation function.
   ]{
     %Effect of death rate ($d_{0}$) of Gillespie noise on the autocorrelation function.
-    \textbf{(\ref{fig:acf-noisetimescale-highd0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.5$), and 
+    \textbf{(\ref{fig:acf-noisetimescale-highd0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.5$), and
     \textbf{(\ref{fig:acf-noisetimescale-highd0-acf})} its autocorrelation function.
     %
-    \textbf{(\ref{fig:acf-noisetimescale-lowd0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.005$), and 
+    \textbf{(\ref{fig:acf-noisetimescale-lowd0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.005$), and
     \textbf{(\ref{fig:acf-noisetimescale-lowd0-acf})} its autocorrelation function.
     %
     Red lines are defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
@@ -811,39 +835,6 @@ The observation thus suggests that the death rate $d_{0}$ parameter of Gillespie
   }
   \label{fig:acf-noisetimescale}
 \end{figure}
-
-
-% \begin{figure}
-%   \centering
-%   \begin{subfigure}[t]{0.5\textwidth}
-%   \centering
-%     \includegraphics[width=\linewidth]{acf_fit_example.png}
-%     \caption{
-%     }
-%     \label{fig:acf-noisetimescale-effect-fit}
-%   \end{subfigure}%
-%   \begin{subfigure}[t]{0.5\textwidth}
-%   \centering
-%     \includegraphics[width=\linewidth]{deathrate_vs_decay.png}
-%     \caption{
-%     }
-%     \label{fig:acf-noisetimescale-effect-relationship}
-%   \end{subfigure}
-
-%   \caption[
-%     Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
-%   ]{
-%     \textbf{(\ref{fig:acf-noisetimescale-effect-fit})} Fitting exponential decay functions to estimate $d_{0}$ from the autocorrelation function.
-%     \textbf{(\ref{fig:acf-noisetimescale-effect-relationship})} The relationship between $d_{0}$ and the decay rate $D$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
-%     Here, $k_{0}$ was held constant at 5.
-%   }
-%   \label{fig:acf-noisetimescale-effect}
-% \end{figure}
-
-To quantify the effect of the noise timescale on the shape of the autocorrelation function, I varied the death rate parameter $d_{0}$ when generating Gillespie noise.
-%
-Fig.\ \ref{fig:acf-noisetimescale} shows that a higher death rate decreased the decay timescale of the autocorrelation function (Fig.\ \ref{fig:acf-noisetimescale-highd0-acf}), while a lower death rate introduced long-term trends in the simulated signals (Fig.\ \ref{fig:acf-noisetimescale-lowd0-ts}).
-A lower death rate also increased the variation between autocorrelation functions between replicates (Fig.\ \ref{fig:acf-noisetimescale-lowd0-acf}).
 
 % To show how $d_{0}$ can be estimated from the autocorrelation function, I fitted exponential decay functions to the mean autocorrelation, the peaks of the mean function, and the troughs of the mean functions using non-linear least squares fitting (Fig.\ \ref{fig:acf-noisetimescale-effect-fit}).
 % The functions were of the form:
@@ -859,6 +850,21 @@ A lower death rate also increased the variation between autocorrelation function
 % In other words, the death rate $d_{0}$ controls the decay rate $D$ of the autocorrelation function.
 % Conversely, if $D$ can be estimated from the autocorrelation function, then the noise timescale of the time series can be estimated.
 
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.6\linewidth]{birthrate_vs_ydispl.png}
+%   \caption[
+%     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function.
+%   ]{
+%     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
+%     Here, $d_{0}$ was held constant at 0.05.
+%   }
+%   \label{fig:acf-noiseamplitude-effect}
+% \end{figure}
+
+To quantify the effect of the noise amplitude on the autocorrelation function, I varied the birth rate parameter $k_{0}$ when generating Gillespie noise.
+Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the amplitude of noise (Fig.\ \ref{fig:acf-noiseamplitude-highk0-ts}) and increased the variation between replicate autocorrelation functions (Fig.\ \ref{fig:acf-noiseamplitude-highk0-acf}), while the opposite was true for a higher birth rate (Figs.\ \ref{fig:acf-noiseamplitude-lowk0-ts}--\ref{fig:acf-noiseamplitude-lowk0-acf}).
 
 \begin{figure}
   \centering
@@ -896,10 +902,10 @@ A lower death rate also increased the variation between autocorrelation function
     Effect of birth rate of Gillespie noise on the autocorrelation function.
   ]{
     %Effect of birth rate ($k_{0}$) of Gillespie noise on the autocorrelation function.
-    \textbf{(\ref{fig:acf-noiseamplitude-highk0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 25$ and $d_{0} = 0.05$), and 
+    \textbf{(\ref{fig:acf-noiseamplitude-highk0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 25$ and $d_{0} = 0.05$), and
     \textbf{(\ref{fig:acf-noiseamplitude-highk0-acf})} its autocorrelation function.
     %
-    \textbf{(\ref{fig:acf-noiseamplitude-lowk0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 1$ and $d_{0} = 0.05$), and 
+    \textbf{(\ref{fig:acf-noiseamplitude-lowk0-ts})} Sample sinusoids with Gillespie noise ($k_{0} = 1$ and $d_{0} = 0.05$), and
     \textbf{(\ref{fig:acf-noiseamplitude-lowk0-acf})} its autocorrelation function.
     %
     Red lines are defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
@@ -909,23 +915,6 @@ A lower death rate also increased the variation between autocorrelation function
   \label{fig:acf-noiseamplitude}
 \end{figure}
 
-
-% \begin{figure}
-%   \centering
-%   \includegraphics[width=0.6\linewidth]{birthrate_vs_ydispl.png}
-%   \caption[
-%     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function.
-%   ]{
-%     The relationship between the noise amplitude and the $y$-displacement $C$ found from fitting exponential decay functions to the mean autocorrelation function, the peaks, and the troughs of this mean function.
-%     Here, $d_{0}$ was held constant at 0.05.
-%   }
-%   \label{fig:acf-noiseamplitude-effect}
-% \end{figure}
-
-
-To quantify the effect of the noise amplitude on the autocorrelation function, I varied the birth rate parameter $k_{0}$ when generating Gillespie noise.
-Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the amplitude of noise (Fig.\ \ref{fig:acf-noiseamplitude-highk0-ts}) and increased the variation between replicate autocorrelation functions (Fig.\ \ref{fig:acf-noiseamplitude-highk0-acf}), while the opposite was true for a higher birth rate (Figs.\ \ref{fig:acf-noiseamplitude-lowk0-ts}--\ref{fig:acf-noiseamplitude-lowk0-acf}).
-
 % To show how the noise amplitude can be estimated from the autocorrelation function, I fit exponential decay functions (Eq.\ \ref{eq:acf-expofit}) as in Fig.\ \ref{fig:acf-noisetimescale-effect-fit}.
 % Fig.\ \ref{fig:acf-noiseamplitude-effect} suggests that the $y$-displacements $C$ of the exponential fits to peaks and troughs converged to 0 as $k_{0}/d_{0}$ increased, showing that the amplitude of the oscillations in the autocorrelation function decreases as the noise amplitude increases.
 % In other words, the birth rate $d_{0}$ controls the $y$-displacement parameter $C$ of the autocorrelation function, which is a proxy for the function's amplitude.
@@ -934,38 +923,6 @@ Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the 
 
 \subsection{FitzHugh-Nagumo oscillator: effect of oscillation shape}
 \label{subsec:analysis-characterisation-acf-fhn}
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[t]{0.6\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fhn_meanplot}
-    \caption{
-    }
-    \label{fig:acf-fhn-gillnoise-ts}
-  \end{subfigure}%
-  \begin{subfigure}[t]{0.4\textwidth}
-  \centering
-    \includegraphics[width=\linewidth]{fhn_acf}
-    \caption{
-    }
-    \label{fig:acf-fhn-gillnoise-acf}
-  \end{subfigure}
-
-  \caption[
-    Sample FitzHugh-Nagumo oscillators with Gillespie noise, and
-    its autocorrelation function.
-  ]{
-    %The autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise.
-    \textbf{(\ref{fig:acf-fhn-gillnoise-ts})} Sample FitzHugh-Nagumo oscillators ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.05$), and 
-    \textbf{(\ref{fig:acf-fhn-gillnoise-acf})} its autocorrelation function.
-    Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
-    %
-    There were 100 repeats, randomly out-of-phase.
-  }
-  \label{fig:acf-fhn}
-\end{figure}
-
 
 % \begin{figure}
 %   \centering
@@ -1016,16 +973,53 @@ Fig.\ \ref{fig:acf-noiseamplitude} shows that a higher birth rate increased the 
 
 To test whether Gillespie noise parameters can be estimated from the autocorrelation function computed from an asymmetric oscillation, I added Gillespie noise with varying $d_{0}$ and $k_{0}$ to FitzHugh-Nagumo oscillators as defined in the Methods Section~\ref{subsec:methods-computational-synthetic}.
 %I repeated the exponential fitting in section~\ref{subsec:analysis-characterisation-acf-sinusoid} on the FitzHugh-Nagumo oscillator as defined in the Methods (Section~\ref{subsec:methods-computational-synthetic}).
-
 Fig.\ \ref{fig:acf-fhn-gillnoise-acf} shows that when the oscillator had a different shape, the waves in the autocorrelation function changed shape, becoming more pointed.
 Additionally, the effect of noise parameters on the autocorrelation function is preserved when the oscillators switch from sinusoid to FitzHugh-Nagumo oscillators.
 % In addition, Fig.\ \ref{fig:acf-fhn-noiseparams-fit-highnts} suggests that fitting an exponential decay function to the autocorrelation function to estimate noise parameters was less reliable, particularly with high noise timescales.
 % As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produced a greater range of uncertainty (Fig.\ \ref{fig:acf-fhn-noiseparams-noisetimescale}).
 % However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.6\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{fhn_meanplot}
+    \caption{
+    }
+    \label{fig:acf-fhn-gillnoise-ts}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.4\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{fhn_acf}
+    \caption{
+    }
+    \label{fig:acf-fhn-gillnoise-acf}
+  \end{subfigure}
+
+  \caption[
+    Sample FitzHugh-Nagumo oscillators with Gillespie noise, and
+    its autocorrelation function.
+  ]{
+    %The autocorrelation function of FitzHugh-Nagumo oscillators with Gillespie noise.
+    \textbf{(\ref{fig:acf-fhn-gillnoise-ts})} Sample FitzHugh-Nagumo oscillators ($RI_{\mathrm{ext}}$ = 0.4, $\tau$ = 12.5, $a$ = 0.7, $b$ = 0.82) with Gillespie noise ($k_{0} = 5$ and $d_{0} = 0.05$), and
+    \textbf{(\ref{fig:acf-fhn-gillnoise-acf})} its autocorrelation function.
+    Red line is defined by $y = \me^{-2d_{0}T}$, where $T$ represents the lag in units of period of the sinusoids.
+    %
+    There were 100 repeats, randomly out-of-phase.
+  }
+  \label{fig:acf-fhn}
+\end{figure}
+
 
 \subsection{Real data from fluorescence microscopy in microfluidics experiments}
 \label{subsubsec:analysis-characterisation-real}
+
+To deduce the period and noise parameters of a experimentally-recorded sinusoid-like signal (Fig.\ \ref{fig:acf-sinusoid-biol-ts}), I computed the autocorrelation functions of a population of flavin autofluorescence time series (Fig.\ \ref{fig:acf-sinusoid-biol-acf}).
+% , and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated sinusoids (Fig.\ \ref{fig:acf-sinusoid-biol-acf-fit}).
+The autocorrelation function suggests an average period of 19 time points, corresponding to \SI{95}{\minute}, as expected from the nutrient conditions.
+However, estimation of noise parameters was complicated by the damping in the autocorrelation function, giving a different shape compared to the synthetic data and fewer peaks and troughs for fitting.
+Nevertheless, relating the shape of the autocorrelation function to the effect of noise parameters on synthetic sinusoids suggested a noise timescale of 7.35 and a noise amplitude of 110.45.
+% Nevertheless, the decay rate $D$ of the exponential function fitted to the mean autocorrelation function suggested a noise timescale of 7.35 and the y-displacement $C$ of the exponential function fitted to the peaks of the autocorrelation function suggested a noise amplitude of 161.84.
 
 \begin{figure}
   \centering
@@ -1065,13 +1059,8 @@ Additionally, the effect of noise parameters on the autocorrelation function is 
   \label{fig:acf-sinusoid-biol}
 \end{figure}
 
-To deduce the period and noise parameters of a experimentally-recorded sinusoid-like signal (Fig.\ \ref{fig:acf-sinusoid-biol-ts}), I computed the autocorrelation functions of a population of flavin autofluorescence time series (Fig.\ \ref{fig:acf-sinusoid-biol-acf}).
-% , and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated sinusoids (Fig.\ \ref{fig:acf-sinusoid-biol-acf-fit}).
-The autocorrelation function suggests an average period of 19 time points, corresponding to \SI{95}{\minute}, as expected from the nutrient conditions.
-However, estimation of noise parameters was complicated by the damping in the autocorrelation function, giving a different shape compared to the synthetic data and fewer peaks and troughs for fitting.
-Nevertheless, relating the shape of the autocorrelation function to the effect of noise parameters on synthetic sinusoids suggested a noise timescale of 7.35 and a noise amplitude of 110.45.
-% Nevertheless, the decay rate $D$ of the exponential function fitted to the mean autocorrelation function suggested a noise timescale of 7.35 and the y-displacement $C$ of the exponential function fitted to the peaks of the autocorrelation function suggested a noise amplitude of 161.84.
-
+In addition to flavin autofluorescence, I also recorded time series of histone 2B abundance as an indicator of the phases of the cell division cycle \parencite{garmendia-torresMultipleInputsEnsure2018}, to investigate whether the flavin autofluorescence oscillations and the cell division cycle synchronised.
+The abundance of histone 2B follow an asymmetric oscillation (Fig.\ \ref{fig:acf-fhn-biol-ts}).
 
 \begin{figure}
   \centering
@@ -1111,9 +1100,6 @@ Nevertheless, relating the shape of the autocorrelation function to the effect o
   \label{fig:acf-fhn-biol}
 \end{figure}
 
-In addition to flavin autofluorescence, I also recorded time series of histone 2B abundance as an indicator of the phases of the cell division cycle \parencite{garmendia-torresMultipleInputsEnsure2018}, to investigate whether the flavin autofluorescence oscillations and the cell division cycle synchronised.
-The abundance of histone 2B follow an asymmetric oscillation (Fig.\ \ref{fig:acf-fhn-biol-ts}).
-
 Similar to the previous section, to deduce the period and noise parameters of this signal, I computed the autocorrelation functions of a population of histone 2B abundance time series (Fig.\ \ref{fig:acf-fhn-biol-acf}).
 % , and fitted exponential functions to the mean autocorrelation function, scaled to have amplitudes and periods fit the simulated FitzHugh-Nagumo oscillators (Fig.\ \ref{fig:acf-fhn-biol-acf-fit}).
 The autocorrelation function also suggests an average period of 19 time points, corresponding to \SI{95}{\minute}.
@@ -1129,8 +1115,14 @@ To test a method to detect the synchrony and quantify the temporal lag between t
 Cross-correlation has been used to investigate the relationship between the expression levels of two genes in a model feed-forward loop \parencite{dunlopRegulatoryActivityRevealed2008},
 and to investigate the relationship between instantaneous growth rate and the expression of \textit{lac} genes of enzymes in central metabolism across a population of \textit{E. coli} cells \parencite{kivietStochasticityMetabolismGrowth2014}.
 
+
 \subsection{Synthetic data}
 \label{subsubsec:analysis-correlation-synthetic}
+
+Fig.\ \ref{fig:xcf-nonoise-xcf} shows that the cross-correlation function identifies that the sinusoids, on average, peaked 20 time points before the FitzHugh-Nagumo oscillators, close to the actual value of 20.75 time points.
+This shift was evidenced by the position of the peak of the cross-correlation function closest to the vertical axis.
+The cross-correlation function further showed that synchrony between the two oscillators was maintained along the entire time series, across all time series.
+Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
 \begin{figure}
   \centering
@@ -1184,11 +1176,6 @@ and to investigate the relationship between instantaneous growth rate and the ex
   }
   \label{fig:xcf}
 \end{figure}
-
-Fig.\ \ref{fig:xcf-nonoise-xcf} shows that the cross-correlation function identifies that the sinusoids, on average, peaked 20 time points before the FitzHugh-Nagumo oscillators, close to the actual value of 20.75 time points.
-This shift was evidenced by the position of the peak of the cross-correlation function closest to the vertical axis.
-The cross-correlation function further showed that synchrony between the two oscillators was maintained along the entire time series, across all time series.
-Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
 
 \subsection{Real data from fluorescence microscopy in microfluidics experiments}
