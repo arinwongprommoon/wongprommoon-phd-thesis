@@ -25,7 +25,7 @@
 - [X] L0065-0066: minor
 - [X] L0070-0074: fixes
 *** Acknowledgements
-- [ ] L0109: Pietsch
+- [X] L0109: Pietsch
 ** Intro
 - [ ] F1.03, 1.05, 1.12, 1.13: Add text in between
 - [ ] F1.10: Define 'HOC', 'LOC' in figure
