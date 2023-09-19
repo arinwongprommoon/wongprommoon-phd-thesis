@@ -44,9 +44,9 @@
 - [X] Remove 'rhythmicity detection' from Section 4.4.X titles
 - [X] Add something to Section 4.5.3 & 4.6.2 titles
 ** Model
-- [ ] L2482-2519 (?): move to methods
-- [ ] L2534-2572: move to appendix
-- [ ] L2574-2582: move to methods
+- [X] L2482-2519 (?): move to methods
+- [X] L2534-2572: move to appendix
+- [X] L2574-2582: move to methods
 - [ ] T5.01: move down
 - [X] L2657, etc: change the language -- cell --> model
 - [X] L2941: may cast doubts on...

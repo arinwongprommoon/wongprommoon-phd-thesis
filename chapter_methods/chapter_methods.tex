@@ -185,7 +185,7 @@ The background fluorescence is also computed, based on the pixel intensity outsi
 Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see Section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 
 
-\section{Computational methods}
+\section{Time series analysis methods}
 \label{sec:methods-computational}
 
 \subsection{Classical periodogram}
@@ -555,6 +555,78 @@ and the noise $n$ is defined as
 
 In this thesis, I define $\omega_{c} = \SI{0.018}{\minute^{-1}}$ because this frequency is lower than the frequencies of all oscillations of flavin autofluorescence I observed in my experiments.
 
+
+\section{Methods related to flux balance analysis}
+\label{sec:methods-fba}
+
+\subsection{ecYeast8 formalisms}
+\label{subsec:methods-fba-ecYeast8}
+
+In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in genome-scale metabolic models.
+
+ecYeast8 contains four formalisms relevant to this chapter:
+\begin{enumerate}
+  \item
+        The biomass reaction is defined by having `pseudometabolites' as reactants and a biomass species as a product.
+        These pseudometabolites include lipids, proteins, carbohydrates, RNA, DNA, ions, and cofactors.
+        This is in contrast to BiGG genome-scale models \parencite{norsigianBiGGModels20202020}.
+        In these models, biomass reactions have chemical species as reactants, and each has a stoichiometric coefficient that is equal to the species' abundance in units of \SI{}{\mmolgdw}.
+  \item
+        The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites \parencite{heavnerYeastExpandedReconstruction2012}.
+        These reactions account for how some KEGG definitions of reactions require generic compounds and these reactions also allow flexibility of biomass definition in different growth conditions.
+        The \textit{isa} reactions have chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}, and a pseudometabolite as a product.
+        In effect, the species abundance information is shifted one reaction away from the biomass reaction.
+  \item
+        The models implements SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
+        This formalism is needed because species of lipid backbones and acyl chain can combine to form lipids in more than a thousand ways, and the resulting lipid species are difficult to all be represented in a genome-scale metabolic model.
+        SLIMEr thus introduces reactions that split lipids into their basic components and lipid pseudoreactions to preserve the distribution of acyl chains.
+        As a result, the definitions of lipids are flexible.
+  \item
+        GECKO was applied to Yeast8 to produce ecYeast8.
+        GECKO modifies the stoichiometric matrix of a genome-scale metabolic model to account for enzyme abundances and kinetics.
+        Specifically, it adds to enzyme-catalysed reactions enzyme species with a stoichiometric coefficient derived from its $k_{cat}$ value.
+        The formalism also adds reactions to model drawing enzymes from a pool.
+        GECKO simulates an upper limit of amino acids available for enzyme production.
+\end{enumerate}
+
+
+\subsection{Computing molecular weights of pseudometabolites}
+\label{subsec:methods-fba-molweights}
+
+To compute the synthesis time for each biomass component, the mass fractions of each biomass component must be known.
+These quantities are typically stored as molecular weights in a genome-scale model.
+As biomass components in ecYeast8 are pseudometabolites without specified molecular weights, I computed the mass fractions of each biomass component based on their \textit{isa} reactions (Appendix~\ref{append:model-molweights}).
+Rather than using mass fractions based on experimental studies, I used mass fractions based on the model because the mass fraction of each biomass component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{lSS}
+    Metabolite & {\makecell{Computed molecular weight\\ (\SI{}{\gram~\mol^{-1}})}} & {\makecell{Biomass composition\\ at growth rate \SI{0.375}{\hour^{-1}}\\ (\SI{}{\gram~\kilo\gram_{DW}^{-1}})}} \\
+    \hline
+    Protein & 504.37 & 505.\\
+    Carbohydrate & 350.37 & 237.\\
+    RNA & 64.04 & 105.\\
+    Lipid & 31.57 & 57.\\
+    Cofactors & 4.83 & \\
+    DNA & 3.90 & 5. \\
+    Ions & 2.48 & \\
+    \hline
+    Total & 961.57 & \\
+  \end{tabular}
+  \caption[
+    Computed molecular weights of bulk metabolites in ecYeast8, compared to experimentally recorded biomass composition
+  ]{
+    Computed molecular weights of bulk metabolites in ecYeast8, compared to experimentally recorded biomass composition by \textcite{canelasVivoDatadrivenFramework2011}.
+  }
+  \label{tab:ecyeast8-mol-weights}
+\end{table}
+
+Table~\ref{tab:ecyeast8-mol-weights} summarises the molecular weight of the pseudometabolites.
+The ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}, thus validating my calculations.
+
+Adding together molecular weights of pseudometabolites gave a molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
+In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
+In addition, the sum of stoichiometric coefficients are not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
 
 %%% Local Variables:
 %%% mode: latex

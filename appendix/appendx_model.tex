@@ -1,8 +1,72 @@
 \chapter{Flux balance analysis}
 \label{append:model}
 
-\section{Modifications of chemical reactions in GECKO for non-simple cases}
+\section{Modifications of chemical reaction in GECKO, general cases}
 \label{append:model-gecko}
+
+To illustrate how GECKO modifies chemical reactions, consider a simple example, a reaction $R_{j}$ catalysed by enzyme $E_{i}$:
+
+\begin{equation}
+  \ce{ A + B ->[E_{i}] C + D }
+  \label{eq:model-gecko-catalysed}
+\end{equation}
+
+To apply the constraints described by Eq.\ \ref{eq:model-gecko-fba-constraints}, the chemical reaction in Eq.\ \ref{eq:model-gecko-catalysed} is modified by adding a term:
+
+\begin{equation}
+  \ce{ n_{ij}E_{i} + A + B -> C + D }
+  \label{eq:model-gecko-catalysed-formalism}
+\end{equation}
+with the stoichiometric coefficient $n_{ij} = 1/k_{\mathrm{cat}}^{ij}$.
+GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021}.
+
+This transformation, adding the enzyme as a pseudometabolite, is based on the intuition that the system uses some amount of enzyme at a specific time to catalyse the flux through the reaction.
+Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes (Appendix~\ref{append:model-gecko-nonsimple}).
+
+To constrain overall enzyme levels in the model, GECKO defines a pseudoreaction
+
+\begin{equation}
+  ER_{\mathrm{pool}}: \varnothing \ce{ -> E_{pool} }
+  \label{eq:model-gecko-enzyme-pool}
+\end{equation}
+
+where $E_{\mathrm{pool}}$ is a pseudometabolite that represents the proteome pool available for enzymes.
+This pseudoreaction has a flux
+
+\begin{equation}
+  \epool \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma
+  \label{eq:model-gecko-enzyme-pool-flux}
+\end{equation}
+
+in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
+$P_{\mathrm{total}}$ is the total protein fraction with respect to the dry weight of the cell,
+$P_{\mathrm{measured}}$ is the protein fraction of proteins whose weight are accounted for in the model, based on proteomic data,
+$f$ represents the fraction of proteins that are enzymes, and
+$\sigma$ is a parameter that represents the average saturation of enzymes.
+ecYeast8.6.0 assumes parameter values of $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
+If no proteomic data is used, as is the case in this chapter, $P_{\mathrm{measured}} = 0$.
+
+Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0.
+Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
+experimental data justifies this assumption \parencite{nissenFluxDistributionsAnaerobic1997}.
+
+Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
+
+\begin{equation}
+  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
+  \label{eq:model-gecko-enzyme-usage}
+\end{equation}
+
+where $\mathrm{MW}_{i}$ represents the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
+The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
+GECKO takes enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
+
+Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.
+The mass of each enzyme in the cell determines the amount (in moles) of each enzyme and therefore its catalytic activity.
+
+
+\section{Modifications of chemical reactions in GECKO for non-simple cases}
+\label{append:model-gecko-nonsimple}
 
 GECKO modifies chemical reactions in a genome-scale model so that enzymes are expressed as metabolites that take part in reactions.
 Section~\ref{subsec:model-yeast8-gecko} describes how this was performed for the simple case of a singular chemical reaction and one enzyme having a one-to-one association.

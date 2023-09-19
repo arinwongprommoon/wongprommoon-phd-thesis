@@ -116,38 +116,7 @@ Here, I used the model ec\-Yeast\-8.6.0, the latest version for which both origi
 ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017} --- specifically, GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, the latest published version.
 GECKO applies an enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
 In addition, the model has `pseudometabolites' defined by reactions that group specific chemical species in general classes.
-These formalisms allow studying each class of biomass component (e.g.\ lipid, protein, carbohydrate) individually.
-
-In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in genome-scale metabolic models.
-
-ecYeast8 contains four formalisms relevant to this chapter:
-\begin{enumerate}
-  \item
-        The biomass reaction is defined by having `pseudometabolites' as reactants and a biomass species as a product.
-        These pseudometabolites include lipids, proteins, carbohydrates, RNA, DNA, ions, and cofactors.
-        This is in contrast to BiGG genome-scale models \parencite{norsigianBiGGModels20202020}.
-        In these models, biomass reactions have chemical species as reactants, and each has a stoichiometric coefficient that is equal to the species' abundance in units of \SI{}{\mmolgdw}.
-  \item
-        The pseudometabolites are defined by `\textit{isa}' reactions, which group specific chemical species into classes of metabolites \parencite{heavnerYeastExpandedReconstruction2012}.
-        These reactions account for how some KEGG definitions of reactions require generic compounds and these reactions also allow flexibility of biomass definition in different growth conditions.
-        The \textit{isa} reactions have chemical species as reactants, each with a stoichiometric coefficient representing the species' abundance in units of \SI{}{\mmolgdw}, and a pseudometabolite as a product.
-        In effect, the species abundance information is shifted one reaction away from the biomass reaction.
-  \item
-        The models implements SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, which Splits Lipids Into Measurable Entities, and adds constraints on lipid classes and acyl chain distribution.
-        This formalism is needed because species of lipid backbones and acyl chain can combine to form lipids in more than a thousand ways, and the resulting lipid species are difficult to all be represented in a genome-scale metabolic model.
-        SLIMEr thus introduces reactions that split lipids into their basic components and lipid pseudoreactions to preserve the distribution of acyl chains.
-        As a result, the definitions of lipids are flexible.
-  \item
-        GECKO was applied to Yeast8 to produce ecYeast8.
-        GECKO modifies the stoichiometric matrix of a genome-scale metabolic model to account for enzyme abundances and kinetics.
-        Specifically, it adds to enzyme-catalysed reactions enzyme species with a stoichiometric coefficient derived from its $k_{cat}$ value.
-        The formalism also adds reactions to model drawing enzymes from a pool.
-        GECKO simulates an upper limit of amino acids available for enzyme production.
-\end{enumerate}
-
-Here, I detail how I apply these formalisms for this chapter.
-% TODO: Use proper refs rather than hard-coding numbers.
-In particular, I detail GECKO (item 4) and computing molecular weights of pseudometabolites (based on items 1 and 2).
+These formalisms allow studying each class of biomass component (e.g.\ lipid, protein, carbohydrate) individually (Methods Section \ref{subsec:methods-fba-ecYeast8}).
 
 
 \subsection{GECKO}
@@ -194,6 +163,7 @@ subject to
 where $v_{j}$ is the flux of each reaction $R_{j}$ catalysed by enzyme $E_{i}$, $k_{\mathrm{cat}}^{ij}$ is the catalytic constant of the enzyme $E_{i}$ for reaction $R_{j}$, and $[E_{i}]$ represents the concentration of the enzyme $E_{i}$.
 These constraints ensure that each $v_{j}$ does not exceed the $v_{\mathrm{max}}$ of $E_{i}$.
 Each enzyme $E_{i}$ may catalyse one or more reactions $R_{j}$.
+Appendices~\ref{append:model-gecko}--\ref{append:model-gecko-nonsimple} illustrate these modifications by considering how they modify chemical reactions in the model.
 
 % The constraints in Eq.\ \ref{eq:model-gecko-fba-constraints} is imposed by extending the stoichiometric matrix $\mathbf{S}$ and flux vector $\mathbf{v}$.
 % Specifically, $\mathbf{S}$ has additional rows to represent new metabolites that represent each enzyme $E_{i}$.
@@ -212,105 +182,6 @@ Each enzyme $E_{i}$ may catalyse one or more reactions $R_{j}$.
 % \end{equation}
 
 % where $e_{i}$ represents the flux of an enzyme usage reaction $ER_{i}$ associated with $E_{i}$.
-
-To illustrate how GECKO modifies chemical reactions, consider a simple example, a reaction $R_{j}$ catalysed by enzyme $E_{i}$:
-
-\begin{equation}
-  \ce{ A + B ->[E_{i}] C + D }
-  \label{eq:model-gecko-catalysed}
-\end{equation}
-
-To apply the constraints described by Eq.\ \ref{eq:model-gecko-fba-constraints}, the chemical reaction in Eq.\ \ref{eq:model-gecko-catalysed} is modified by adding a term:
-
-\begin{equation}
-  \ce{ n_{ij}E_{i} + A + B -> C + D }
-  \label{eq:model-gecko-catalysed-formalism}
-\end{equation}
-with the stoichiometric coefficient $n_{ij} = 1/k_{\mathrm{cat}}^{ij}$.
-GECKO takes $k_{cat}$ values from BRENDA \parencite{changBRENDAELIXIRCore2021}.
-
-This transformation, adding the enzyme as a pseudometabolite, is based on the intuition that the system uses some amount of enzyme at a specific time to catalyse the flux through the reaction.
-Slightly different formalisms are applied to reversible reactions, isozymes, promiscuous enzymes, and enzyme complexes (Appendix~\ref{append:model-gecko}).
-
-To constrain overall enzyme levels in the model, GECKO defines a pseudoreaction
-
-\begin{equation}
-  ER_{\mathrm{pool}}: \varnothing \ce{ -> E_{pool} }
-  \label{eq:model-gecko-enzyme-pool}
-\end{equation}
-
-where $E_{\mathrm{pool}}$ is a pseudometabolite that represents the proteome pool available for enzymes.
-This pseudoreaction has a flux
-
-\begin{equation}
-  \epool \leq (P_{\mathrm{total}} - P_{\mathrm{measured}}) \cdot f \cdot \sigma
-  \label{eq:model-gecko-enzyme-pool-flux}
-\end{equation}
-
-in units of \SI{}{\gram~\gram_{DW}^{-1}}, where
-$P_{\mathrm{total}}$ is the total protein fraction with respect to the dry weight of the cell,
-$P_{\mathrm{measured}}$ is the protein fraction of proteins whose weight are accounted for in the model, based on proteomic data,
-$f$ represents the fraction of proteins that are enzymes, and
-$\sigma$ is a parameter that represents the average saturation of enzymes.
-ecYeast8.6.0 assumes parameter values of $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
-If no proteomic data is used, as is the case in this chapter, $P_{\mathrm{measured}} = 0$.
-
-Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0.
-Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
-experimental data justifies this assumption \parencite{nissenFluxDistributionsAnaerobic1997}.
-
-Then, for each enzyme $\ce{E_{i}}$, GECKO defines enzyme usage pseudoreactions of the form
-
-\begin{equation}
-  ER_{i}: \ce{ MW_{i} E_{\mathrm{pool}} -> E_{i} }
-  \label{eq:model-gecko-enzyme-usage}
-\end{equation}
-
-where $\mathrm{MW}_{i}$ represents the molecular weight of the enzyme in units of \SI{}{\gram~\milli\mole^{-1}}.
-The flux of enzyme usage pseudoreactions are defined in units of \SI{}{\mmolgdw}.
-GECKO takes enzyme data from SWISSPROT \parencite{theuniprotconsortiumUniProtUniversalProtein2023} and KEGG \parencite{kanehisaKEGGTaxonomybasedAnalysis2023}, including molecular weight of proteins and associated pathways.
-
-Taken together, the modelled cell thus has an enzyme pool in terms of a mass fraction of the cell's dry weight, and the modelled cell allocates certain fractions of this mass to the synthesis of each enzyme at steady-state.
-The mass of each enzyme in the cell determines the amount (in moles) of each enzyme and therefore its catalytic activity.
-
-
-\subsection{Computing molecular weights of pseudometabolites}
-\label{subsec:model-yeast8-molweights}
-
-To compute the synthesis time for each biomass component, the mass fractions of each biomass component must be known.
-These quantities are typically stored as molecular weights in a genome-scale model.
-As biomass components in ecYeast8 are pseudometabolites without specified molecular weights, I computed the mass fractions of each biomass component based on their \textit{isa} reactions (Appendix~\ref{append:model-molweights}).
-Rather than using mass fractions based on experimental studies, I used mass fractions based on the model because the mass fraction of each biomass component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
-
-\begin{table}[ht]
-  \centering
-  \begin{tabular}{lSS}
-    Metabolite & {\makecell{Computed molecular weight\\ (\SI{}{\gram~\mol^{-1}})}} & {\makecell{Biomass composition\\ at growth rate \SI{0.375}{\hour^{-1}}\\ (\SI{}{\gram~\kilo\gram_{DW}^{-1}})}} \\
-    \hline
-    Protein & 504.37 & 505.\\
-    Carbohydrate & 350.37 & 237.\\
-    RNA & 64.04 & 105.\\
-    Lipid & 31.57 & 57.\\
-    Cofactors & 4.83 & \\
-    DNA & 3.90 & 5. \\
-    Ions & 2.48 & \\
-    \hline
-    Total & 961.57 & \\
-  \end{tabular}
-  \caption[
-    Computed molecular weights of bulk metabolites in ecYeast8, compared to experimentally recorded biomass composition
-  ]{
-    Computed molecular weights of bulk metabolites in ecYeast8, compared to experimentally recorded biomass composition by \textcite{canelasVivoDatadrivenFramework2011}.
-  }
-  \label{tab:ecyeast8-mol-weights}
-\end{table}
-
-Table~\ref{tab:ecyeast8-mol-weights} summarises the molecular weight of the pseudometabolites.
-The ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}, thus validating my calculations.
-
-Adding together molecular weights of pseudometabolites gave a molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
-In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
-In addition, the sum of stoichiometric coefficients are not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
 
 
 \section{Ablating pseudometabolites from the biomass reaction}
