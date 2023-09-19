@@ -7,7 +7,7 @@
 \subsection{Strains and media}
 \label{subsec:methods-strains_media}
 
-The \textit{Saccharomyces cerevisiae} strains used in this thesis are described in table~\ref{tab:methods-strains}.
+The \textit{Saccharomyces cerevisiae} strains used in this thesis are described in Table~\ref{tab:methods-strains}.
 
 \begin{table}
   \footnotesize
@@ -32,8 +32,6 @@ The \textit{Saccharomyces cerevisiae} strains used in this thesis are described 
 The minimal medium described by \textcite{verduynEffectBenzoicAcid1992} was used unless otherwise stated.
 This minimal medium does not contain riboflavin, thus minimising its effect on flavin autofluorescence imaging, and its composition is known and easily controlled.
 Specifically, the composition of the carbon source-limiting medium are described in Tables~\ref{tab:methods-media-delft}--\ref{tab:methods-media-delft-vitamins}, and the media pH was adjusted to 6.0 using potassium hydroxide, or sodium hydroxide for potassium-free media.
-For auxotrophic strains, supplements were added according to Table~\ref{tab:methods-media-auxotroph}.
-Then, a carbon source is added as appropriate to create the growth medium.
 
 \begin{table}
   \footnotesize
@@ -110,6 +108,9 @@ Then, a carbon source is added as appropriate to create the growth medium.
   \label{tab:methods-media-delft-vitamins}
 \end{table}
 
+For auxotrophic strains, supplements were added according to Table~\ref{tab:methods-media-auxotroph}.
+Then, a carbon source is added as appropriate to create the growth medium.
+
 \begin{table}
   \footnotesize
   \centering
@@ -141,6 +142,13 @@ Cells were grown from colonies on solid agar in a liquid culture composed of min
 The cells were incubated at \SI{30}{\celsius} for \SI{14}{\hour} (overnight) if the carbon source is glucose or \SI{48}{\hour} if the carbon source is pyruvate.
 Subsequently, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and were then incubated for a further \SI{4}{\hour}.
 
+ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared and for an experiment, one device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
+Cells were then loaded into the ALCATRAS chambers --- different chambers can house cells from different strains (Fig.\ \ref{fig:methods-microfluidics}).
+Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
+As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after the parents bud.
+There are two syringes that can contain different media, and in experiments that require different nutrient conditions at different times, the ALCATRAS system is programmed to switch between the two syringes.
+The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{microfluidics}
@@ -155,13 +163,6 @@ Subsequently, the cells were diluted so that the resulting culture had an OD\tex
   \label{fig:methods-microfluidics}
 \end{figure}
 
-ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared and for an experiment, one device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
-Cells were then loaded into the ALCATRAS chambers --- different chambers can house cells from different strains (Fig.\ \ref{fig:methods-microfluidics}).
-Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
-As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after the parents bud.
-There are two syringes that can contain different media, and in experiments that require different nutrient conditions at different times, the ALCATRAS system is programmed to switch between the two syringes.
-The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
-
 Microscopy was performed using a 60 $\times$ 1.4 NA oil immersion objective (Nikon), and the Nikon Perfect Focus System was used to ensure consistent focus.
 X-Y spatial positions were defined for each chamber to maximise spatial coverage of the chamber while ensuring that the microscope takes less time to move positions and capture images than the interval period.
 Images were taken every \SI{5}{\minute}, and the duration of image acquisition varied for each experiment.
@@ -170,7 +171,7 @@ Five z-slices were taken for brightfield images, with a spacing of \SI{0.6}{\mic
 Fluorescence imaging was performed with an OptoLED light source (Cain Research), and LED voltage was optimised for maximum signal intensity without LED cut-off prior to experiments.
 For flavin imaging, the excitation filter was set to 430/24 (\SIrange{418}{442}{\nano\metre}), the emission filter was set to 535/30 (\SIrange{520}{550}{\nano\metre}), and the exposure time was \SI{60}{\milli\second}.
 One z-slice was taken for each flavin image in each position.
-For mCherry imaging, the excitation filter was set to \SIrange{555}{590}{\nano\metre}), the emission filter was to set to 632/60 (\SIrange{602}{682}{\nano\metre}) and the exposure time was \SI{100}{\milli\second}.
+For mCherry imaging, the excitation filter was set to (\SIrange{555}{590}{\nano\metre}), the emission filter was to set to 632/60 (\SIrange{602}{682}{\nano\metre}) and the exposure time was \SI{100}{\milli\second}.
 Five z-slices were taken for mCherry images, with a spacing of \SI{0.6}{\micro\metre} between slices.
 
 \section{Image analysis methods}
@@ -484,36 +485,6 @@ This Gillespie noise thus has a standard deviation of noise amplitude $A = \sqrt
 \subsection{Signal-to-noise ratio}
 \label{subsec:methods-computational-snr}
 
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.5\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{snr_illustration}
-   \caption{
-   }
-   \label{fig:analysis-snr-illustration}
- \end{subfigure}%
- \begin{subfigure}[htpb]{0.5\textwidth}
-   \centering
-   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
-   \caption{
-   }
-   \label{fig:analysis-snr-histogram-example}
-  \end{subfigure}
-
-  \caption[
-    Illustration of signal-to-noise ratio.
-  ]{
-    %The signal-to-noise ratio as a measure of signal quality.
-    \textbf{(\ref{fig:analysis-snr-illustration})}
-    Illustration of signal-to-noise ratio.
-    The signal-to-noise ratio is defined (Eqs.\ \ref{eq:normalised-periodogram}--\ref{eq:noise}) as the area under the periodogram below a cut-off frequency (yellow) divided by the area under the periodogram above a cut-off frequency (pink).
-    \textbf{(\ref{fig:analysis-snr-histogram-example})}
-    Histogram of signal-to-noise ratios from a sample experiment ($n=403$).
-  }
-  \label{fig:analysis-snr}
-\end{figure}
-
 To evaluate the quality of oscillatory time series in a dataset and to indirectly measure the amplitude of the oscillations, I computed a signal-to-noise ratio for each time series.
 %Because the information about the amplitude of the oscillations was removed when they were filtered using the high-pass Butterworth filter, a different measure is needed.
 Assuming a constant noise introduced by the combination of intrinsic noise (stochasticity in biochemical processes) and extrinsic noise (variations introduced by measurement instruments), a low signal-to-noise ratio suggests a low oscillation amplitude, and the reverse is true for a high signal-to-noise ratio.
@@ -552,6 +523,37 @@ and the noise $n$ is defined as
   n = \int_{\omega_{c}}^{\infty} P(\omega) d\omega
   \label{eq:noise}
 \end{equation}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{snr_illustration}
+   \caption{
+   }
+   \label{fig:analysis-snr-illustration}
+ \end{subfigure}%
+ \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{pyruvate_snr_edit}
+   \caption{
+   }
+   \label{fig:analysis-snr-histogram-example}
+  \end{subfigure}
+
+  \caption[
+    Illustration of signal-to-noise ratio.
+  ]{
+    %The signal-to-noise ratio as a measure of signal quality.
+    \textbf{(\ref{fig:analysis-snr-illustration})}
+    Illustration of signal-to-noise ratio.
+    The signal-to-noise ratio is defined (Eqs.\ \ref{eq:normalised-periodogram}--\ref{eq:noise}) as the area under the periodogram below a cut-off frequency (yellow) divided by the area under the periodogram above a cut-off frequency (pink).
+    \textbf{(\ref{fig:analysis-snr-histogram-example})}
+    Histogram of signal-to-noise ratios from a sample experiment ($n=403$).
+  }
+  \label{fig:analysis-snr}
+\end{figure}
 
 In this thesis, I define $\omega_{c} = \SI{0.018}{\minute^{-1}}$ because this frequency is lower than the frequencies of all oscillations of flavin autofluorescence I observed in my experiments.
 
@@ -598,6 +600,9 @@ These quantities are typically stored as molecular weights in a genome-scale mod
 As biomass components in ecYeast8 are pseudometabolites without specified molecular weights, I computed the mass fractions of each biomass component based on their \textit{isa} reactions (Appendix~\ref{append:model-molweights}).
 Rather than using mass fractions based on experimental studies, I used mass fractions based on the model because the mass fraction of each biomass component varies according to strain and growth rate \parencite{nilssonMetabolicTradeoffsYeast2016, elsemmanWholecellModelingYeast2022}.
 
+Table~\ref{tab:ecyeast8-mol-weights} summarises the molecular weight of the pseudometabolites.
+The ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}, thus validating my calculations.
+
 \begin{table}[ht]
   \centering
   \begin{tabular}{lSS}
@@ -620,9 +625,6 @@ Rather than using mass fractions based on experimental studies, I used mass frac
   }
   \label{tab:ecyeast8-mol-weights}
 \end{table}
-
-Table~\ref{tab:ecyeast8-mol-weights} summarises the molecular weight of the pseudometabolites.
-The ratio between the molecular weights are similar to the ratio between the mass of each class of macromolecule in the yeast cell dry weight shown by \textcite{canelasVivoDatadrivenFramework2011}, thus validating my calculations.
 
 Adding together molecular weights of pseudometabolites gave a molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
 In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
