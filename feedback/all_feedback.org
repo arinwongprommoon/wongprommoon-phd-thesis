@@ -14,10 +14,10 @@
 - [ ] Figure placement
 ** Frontmatter
 *** Abstract
-- [ ] L0020: add 'which is'
-- [ ] L0024-0025: minor
-- [ ] L0038-0039: minor
-- [ ] L0048: many --> various
+- [X] L0020: add 'which is'
+- [X] L0024-0025: minor
+- [X] L0038-0039: minor
+- [X] L0048: many --> various
 *** Lay summary
 - [ ] L0058: studies on
 - [ ] L0059: focussed on
