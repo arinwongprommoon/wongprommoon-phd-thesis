@@ -60,7 +60,7 @@
 - [X] (to clarify) L0643-L0644: duplicate 'biological rhythm'
 - [X] L1063: elaborate fundamental system
 ** Biology
-- [ ] L1613-1615: explain how this links to figs
+- [X] L1613-1615: explain how this links to figs
 ** Model
 - [ ] L2646: clarify
 - [ ] L2716: fix dangling sentence
