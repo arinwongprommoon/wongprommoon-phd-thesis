@@ -3,29 +3,73 @@
 * Notes
 - Based on feedback/all_20230915_448eb8f_DO.pdf
 
+* From DO
+- General comment: there is tendency to show figures before they are references, but i suggest you avoid that and put figures after the first time they are mentioned (examples are Figs 1.12-1.14, 3.5-3.6 but there are more). This will also help you to distribute text in between figures, as those subsequent figures (without text in between them) are not such good practice.
+- Yes, I think and Figure with an example image and time course alongside would help in Chapter 2.
+- I didn’t have problems with 4.5.2.
+- Yes Ch 5 is a bit long and I have suggested parts of 5.3 that could be kept or moved to appendix. It’s not terrible long, but you could remove the excess fat.
+
 * Category 1
+** General
+- [ ] Figure placement
 ** Frontmatter
+*** Abstract
+- [ ] L0020: add 'which is'
+- [ ] L0024-0025: minor
+- [ ] L0038-0039: minor
+- [ ] L0048: many --> various
+*** Lay summary
+- [ ] L0058: studies on
+- [ ] L0059: focussed on
+- [ ] L0061-0062: delete
+- [ ] L0065-0066: minor
+- [ ] L0070-0074: fixes
+*** Acknowledgements
+- [ ] L0109: Pietsch
 ** Intro
+- [ ] F1.03, 1.05, 1.12, 1.13: Add text in between
+- [ ] F1.10: Define 'HOC', 'LOC' in figure
+- [ ] L991: showed
 ** Methods
+- [ ] L1365: Remove brackets from notation
+- [ ] L1399: spit --> split
+- [ ] L1420: change title
 ** Biology
+- [ ] L1531: move words
+- [ ] F3.05, F3.06: Move figs down
+- [ ] L1671: p-value.  Missing ')'?
+- [ ] L1826: add 'with'
+- [ ] L1854: e --> y
 ** Analysis
+- [ ] Remove 'rhythmicity detection' from Section 4.4.X titles
+- [ ] Add something to Section 4.5.3 & 4.6.2 titles
 ** Model
-** Backmatter
+- [ ] L2482-2519 (?): move to methods
+- [ ] L2534-2572: move to appendix
+- [ ] L2574-2582: move to methods
+- [ ] T5.01: move down
+- [ ] L2657, etc: change the language -- cell --> model
+- [ ] L2941: may cast doubts on...
 
 * Category 2
 ** Frontmatter
+- [ ] L0062-L0064: deal with Turing test false positive
+- [ ] L0077-L0081: too lay
+- [ ] L0082-L0088: too lay
 ** Intro
-** Methods
+- [ ] (to clarify) L0643-L0644: duplicate 'biological rhythm'
+- [ ] L1063: elaborate fundamental system
 ** Biology
-** Analysis
+- [ ] L1613-1615: explain how this links to figs
 ** Model
-** Backmatter
+- [ ] L2646: clarify
+- [ ] L2716: fix dangling sentence
+- [ ] L2838-2854: make easier to read
+** Conclusion
+- [ ] (to clarify) L3110: clarify if I know explanation
 
 * Category 3
-** Frontmatter
-** Intro
-** Methods
-** Biology
-** Analysis
 ** Model
+- [ ] L2647: fix 'incomplete sentence' (I think it's complete, but it might just be written poorly)
 ** Backmatter
+- [ ] L3363: B.3 is referenced in chapter, make it more obvious in both chapter & appendix, possibly write a sentence at the beginning of the appendix section
