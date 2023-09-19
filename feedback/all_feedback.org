@@ -48,8 +48,8 @@
 - [ ] L2534-2572: move to appendix
 - [ ] L2574-2582: move to methods
 - [ ] T5.01: move down
-- [ ] L2657, etc: change the language -- cell --> model
-- [ ] L2941: may cast doubts on...
+- [X] L2657, etc: change the language -- cell --> model
+- [X] L2941: may cast doubts on...
 
 * Category 2
 ** Frontmatter
