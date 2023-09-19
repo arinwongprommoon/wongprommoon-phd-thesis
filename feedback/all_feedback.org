@@ -28,8 +28,8 @@
 - [X] L0109: Pietsch
 ** Intro
 - [ ] F1.03, 1.05, 1.12, 1.13: Add text in between
-- [ ] F1.10: Define 'HOC', 'LOC' in figure
-- [ ] L991: showed
+- [X] F1.10: Define 'HOC', 'LOC' in figure
+- [X] L0991: showed
 ** Methods
 - [ ] L1365: Remove brackets from notation
 - [ ] L1399: spit --> split
