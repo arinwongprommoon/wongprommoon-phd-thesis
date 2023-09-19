@@ -11,7 +11,7 @@
 
 * Category 1
 ** General
-- [ ] Figure placement
+- [ ] Figure placement (htbp?)
 ** Frontmatter
 *** Abstract
 - [X] L0020: add 'which is'
@@ -47,15 +47,15 @@
 - [X] L2482-2519 (?): move to methods
 - [X] L2534-2572: move to appendix
 - [X] L2574-2582: move to methods
-- [ ] T5.01: move down
+- [X] T5.01: move down
 - [X] L2657, etc: change the language -- cell --> model
 - [X] L2941: may cast doubts on...
 
 * Category 2
 ** Frontmatter
-- [ ] L0062-L0064: deal with Turing test false positive
-- [ ] L0077-L0081: too lay
-- [ ] L0082-L0088: too lay
+- [X] L0062-L0064: deal with Turing test false positive
+- [X] L0077-L0081: too lay
+- [X] L0082-L0088: too lay
 ** Intro
 - [ ] (to clarify) L0643-L0644: duplicate 'biological rhythm'
 - [ ] L1063: elaborate fundamental system
