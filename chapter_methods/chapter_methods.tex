@@ -216,15 +216,15 @@ With this definition, I compute the classical periodogram for each time series:
     \label{eq:lsp-pval}
   \end{equation}
   This formula is based on the exponential distribution of the power at a given frequency in the periodogram \parencite{scargleStudiesAstronomicalTime1982}.
-\item I order the cells by $p$-values: $p_{(1)} \leq p_{(2)} \leq \dots \leq p_{(\mathcal{G})}$.
+\item I order the cells by $p$-values: $p_{1} \leq p_{2} \leq \dots \leq p_{\mathcal{G}}$.
       This order thus ranks the cells by oscillation quality.
 \item To control the false discovery rate \parencite{benjaminiControllingFalseDiscovery1995}, I find $\hat{k}$ according to:
   \begin{equation}
-    \hat{k} = \arg\max_{1 \leq k \leq \mathcal{G}}\{k : p_{(k)} \leq qk/\mathcal{G}\}
+    \hat{k} = \arg\max_{1 \leq k \leq \mathcal{G}}\{k : p_{k} \leq qk/\mathcal{G}\}
     \label{eq:lsp-khat}
   \end{equation}
   where $q$ is a defined false discovery rate.
-\item Cells whose $p$-values correspond to $p_{(1)}, p_{(2)}, \dots, p_{(\hat{k})}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
+\item Cells whose $p$-values correspond to $p_{1}, p_{2}, \dots, p_{\hat{k}}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
 \end{enumerate}
 
 
@@ -340,7 +340,7 @@ And recall is defined as:
   \label{eq:methods-recall}
 \end{equation}
 
-Precision and recall can be used with datasets with class imbalance, i.e.\ if the two labels are not spit evenly across observations.
+Precision and recall can be used with datasets with class imbalance, i.e.\ if the two labels are not split evenly across observations.
 
 
 \subsection{Cross-correlation function}
@@ -383,7 +383,7 @@ To estimate the periodicity of signals and to detect the synchrony between two t
 The autocorrelation of a time series $x$ is thus the cross-correlation of the time series with itself, i.e.\ $R_{xx}^{(i)}(r \Delta t)$.
 
 
-\subsection{Synthetic oscillations}
+\subsection{Generation of synthetic oscillatory data}
 \label{subsec:methods-computational-synthetic}
 
 To understand the effect of the shape and noise properties present in biological time series on the cross-correlation function, I emulated such time series by generating synthetic time series using the harmonic (sinusoid) and FitzHugh-Nagumo oscillators \parencite{fitzhughImpulsesPhysiologicalStates1961}.

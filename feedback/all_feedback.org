@@ -31,9 +31,9 @@
 - [X] F1.10: Define 'HOC', 'LOC' in figure
 - [X] L0991: showed
 ** Methods
-- [ ] L1365: Remove brackets from notation
-- [ ] L1399: spit --> split
-- [ ] L1420: change title
+- [X] L1365: Remove brackets from notation
+- [X] L1399: spit --> split
+- [X] L1420: change title
 ** Biology
 - [ ] L1531: move words
 - [ ] F3.05, F3.06: Move figs down
