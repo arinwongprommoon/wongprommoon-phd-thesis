@@ -19,11 +19,11 @@
 - [X] L0038-0039: minor
 - [X] L0048: many --> various
 *** Lay summary
-- [ ] L0058: studies on
-- [ ] L0059: focussed on
-- [ ] L0061-0062: delete
-- [ ] L0065-0066: minor
-- [ ] L0070-0074: fixes
+- [X] L0058: studies on
+- [X] L0059: focussed on
+- [X] L0061-0062: delete
+- [X] L0065-0066: minor
+- [X] L0070-0074: fixes
 *** Acknowledgements
 - [ ] L0109: Pietsch
 ** Intro
