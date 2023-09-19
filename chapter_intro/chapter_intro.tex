@@ -39,6 +39,13 @@ To demonstrate the definition of biological rhythm, I discuss the cell division 
 \subsubsection{Cell division cycle}
 \label{subsubsec:intro-cdc}
 
+The cell division cycle is a series of cellular events that ensure that a parent cell divides into two progeny cells.
+These events include cell growth and accumulation of biomass, replication of genetic material with proofreading, and dividing the cell into two compartments.
+In eukaryotes, the latter event consists of karyokinesis (division of the nucleus) and cytokinesis (division of the cell).
+In budding yeast (\textit{Saccharomyces cerevisiae}), the cell division cycle is divided into the G\textsubscript{1}, S, G\textsubscript{2}, and M phases (Fig.\ \ref{fig:intro-cdc-overview}).
+In the gap phases (G\textsubscript{1} and G\textsubscript{2}), the cell primarily grows and accumulates biomass.
+The cell replicates DNA in the S phase and in the M phase it conducts mitosis, in which chromosomes are segregated between the progeny cells.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{adlerYeastCellCycle2022_1}
@@ -51,13 +58,6 @@ To demonstrate the definition of biological rhythm, I discuss the cell division 
     Adapted from \textcite{adlerYeastCellCycle2022}.}
   \label{fig:intro-cdc-overview}
 \end{figure}
-
-The cell division cycle is a series of cellular events that ensure that a parent cell divides into two progeny cells.
-These events include cell growth and accumulation of biomass, replication of genetic material with proofreading, and dividing the cell into two compartments.
-In eukaryotes, the latter event consists of karyokinesis (division of the nucleus) and cytokinesis (division of the cell).
-In budding yeast (\textit{Saccharomyces cerevisiae}), the cell division cycle is divided into the G\textsubscript{1}, S, G\textsubscript{2}, and M phases (Fig.\ \ref{fig:intro-cdc-overview}).
-In the gap phases (G\textsubscript{1} and G\textsubscript{2}), the cell primarily grows and accumulates biomass.
-The cell replicates DNA in the S phase and in the M phase it conducts mitosis, in which chromosomes are segregated between the progeny cells.
 
 The cell division cycle is important in unicellular organisms such as budding yeast because it is the mechanism by which the organism reproduces.
 Regulation of the cell division cycle is thus important
@@ -96,6 +96,10 @@ There is also evidence for an additional cyclin-dependent kinase, Pho85 \parenci
 \subsubsection{Glycolytic cycle}
 \label{subsubsec:intro-glycolytic}
 
+The glycolytic oscillation is a biochemical oscillator in budding yeast, characterised by damped  oscillations in the levels of glycolytic intermediates at a period of 40--50 seconds  \parencite{ghoshOscillationsGlycolyticIntermediates1964}.
+These oscillations have been observed as a response to high-glucose conditions and in anaerobic conditions.
+Later studies show that levels of NADH \parencite{lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, pH, and mitochondrial membrane potential \parencite{doddLiveCellImaging2017} also oscillate at the same frequency (Fig.\ \ref{fig:intro-glycolytic-overview}).
+
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{doddLiveCellImaging2017_3a_adapted}
@@ -106,10 +110,6 @@ There is also evidence for an additional cyclin-dependent kinase, Pho85 \parenci
     Adapted from \textcite{doddLiveCellImaging2017}.}
   \label{fig:intro-glycolytic-overview}
 \end{figure}
-
-The glycolytic oscillation is a biochemical oscillator in budding yeast, characterised by damped  oscillations in the levels of glycolytic intermediates at a period of 40--50 seconds  \parencite{ghoshOscillationsGlycolyticIntermediates1964}.
-These oscillations have been observed as a response to high-glucose conditions and in anaerobic conditions.
-Later studies show that levels of NADH \parencite{lloydSaccharomycesCerevisiaeOscillatory2019, olsenOscillationsYeastGlycolysis2021}, pH, and mitochondrial membrane potential \parencite{doddLiveCellImaging2017} also oscillate at the same frequency (Fig.\ \ref{fig:intro-glycolytic-overview}).
 
 Many hypotheses have been proposed to explain the existence of glycolytic oscillations, but there is no consensus \parencite{lloydSaccharomycesCerevisiaeOscillatory2019}, though \textcite{thokeConstantLowentropyProcess2018} proposed that these oscillations are the result of cells attempting to maintain a constant low-entropy state while remaining metabolically active.
 Evidence shows that glycolytic oscillations are regulated through solely biochemical means.
@@ -190,6 +190,9 @@ and it has metabolite oscillations as evidenced by changes in the levels of comp
 % a previous subsection.
 % ---------------------------------------------------------------------
 
+Based on chemostat studies,
+the YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase (Fig.\ \ref{fig:intro-ymc-overview}).
+
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{mellorMolecularBasisMetabolic2016_3c_adapted}
@@ -203,8 +206,10 @@ and it has metabolite oscillations as evidenced by changes in the levels of comp
   \label{fig:intro-ymc-overview}
 \end{figure}
 
-Based on chemostat studies,
-the YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase (Fig.\ \ref{fig:intro-ymc-overview}).
+% Though Lloyd/Murray camp also describe these 3 phases
+Many authors \parencite{slavovMetabolicCyclingCell2011, murrayRedoxRegulationRespiring2011, caustonMetabolicRhythmsFramework2018} use oxygen consumption rates, evidenced by the change of dissolved oxygen concentrations over time, as a basis to refer to the YMC as a two-phase cycle (Fig.\ \ref{fig:intro-ymc-tu-oxygen}).
+In contrast, some authors \parencite{machneYinYangYeast2012} base their two-phase model on the clustering of transcript level patterns.
+\textcite{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
 
 \begin{figure}
   \centering
@@ -216,6 +221,9 @@ the YMC can be divided into two major phases: an oxidative, high-oxygen consumpt
     Adapted from \textcite{tuLogicYeastMetabolic2005}.}
   \label{fig:intro-ymc-tu-oxygen}
 \end{figure}
+
+In contrast to the two-phase model, some authors identify a three-phase model with a reductive-building (RB) phase and a reductive-charging (RC) phase within the reductive phase.
+This three-phase model is primarily based on cellular events, including clustering of transcript trajectories \parencite{tuLogicYeastMetabolic2005} (Fig.\ \ref{fig:intro-ymc-tu-transcripts}) and of metabolite concentration trajectories \parencite{tuCyclicChangesMetabolic2007}.
 
 \begin{figure}
   \centering
@@ -230,13 +238,12 @@ the YMC can be divided into two major phases: an oxidative, high-oxygen consumpt
   \label{fig:intro-ymc-tu-transcripts}
 \end{figure}
 
-% Though Lloyd/Murray camp also describe these 3 phases
-Many authors \parencite{slavovMetabolicCyclingCell2011, murrayRedoxRegulationRespiring2011, caustonMetabolicRhythmsFramework2018} use oxygen consumption rates, evidenced by the change of dissolved oxygen concentrations over time, as a basis to refer to the YMC as a two-phase cycle (Fig.\ \ref{fig:intro-ymc-tu-oxygen}).
-In contrast, some authors \parencite{machneYinYangYeast2012} base their two-phase model on the clustering of transcript level patterns.
-\textcite{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
-
-In contrast to the two-phase model, some authors identify a three-phase model with a reductive-building (RB) phase and a reductive-charging (RC) phase within the reductive phase.
-This three-phase model is primarily based on cellular events, including clustering of transcript trajectories \parencite{tuLogicYeastMetabolic2005} (Fig.\ \ref{fig:intro-ymc-tu-transcripts}) and of metabolite concentration trajectories \parencite{tuCyclicChangesMetabolic2007}.
+Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
+Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (Fig.\ \ref{fig:intro-ymc-overview-ss}).
+In later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
+% ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
+%However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
+The two- or three-phase response may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
 
 \begin{figure}
   \centering
@@ -249,12 +256,16 @@ This three-phase model is primarily based on cellular events, including clusteri
   \label{fig:intro-ymc-overview-ss}
 \end{figure}
 
-Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
-Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (Fig.\ \ref{fig:intro-ymc-overview-ss}).
-In later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
-% ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
-%However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
-The two- or three-phase response may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
+Cellular processes occur with the phases of the metabolic cycle (Fig.\ \ref{fig:intro-ymc-overview-oneill}).
+In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
+% Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
+% but I showed that they do
+energy-demanding processes
+like biosynthesis and gene expression occur.
+Biosynthesis and associated gene expression are confirmed by increased transcripts from genes encoding components of the translation machinery and amino acid biosynthesis \parencite{tuLogicYeastMetabolic2005}.
+`Redox state' metabolites, including NADH, NADPH, glutathione \parencite{lloydUltradianMetronomeTimekeeper2005}, and flavins (FMN and FAD)
+\parencite{murrayRedoxRegulationRespiring2011} become most oxidised in this phase.
+As cells transition from the oxidative to the reductive phase, 70\% of metabolite concentrations peak, when NAD(P)H autofluorescence peaks, and the DNA synthesis rate is at its maximum \parencite{lloydTemporalArchitectureEukaryotic2006}.
 
 \begin{figure}
   \centering
@@ -270,17 +281,6 @@ The two- or three-phase response may result from cellular adaptation to glucose 
     Adapted from \textcite{oneillEukaryoticCellBiology2020}.}
   \label{fig:intro-ymc-overview-oneill}
 \end{figure}
-
-Cellular processes occur with the phases of the metabolic cycle (Fig.\ \ref{fig:intro-ymc-overview-oneill}).
-In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
-% Potentially may be the reason auxotrophs (hypothetically) don't have YMCs --
-% but I showed that they do
-energy-demanding processes
-like biosynthesis and gene expression occur.
-Biosynthesis and associated gene expression are confirmed by increased transcripts from genes encoding components of the translation machinery and amino acid biosynthesis \parencite{tuLogicYeastMetabolic2005}.
-`Redox state' metabolites, including NADH, NADPH, glutathione \parencite{lloydUltradianMetronomeTimekeeper2005}, and flavins (FMN and FAD)
-\parencite{murrayRedoxRegulationRespiring2011} become most oxidised in this phase.
-As cells transition from the oxidative to the reductive phase, 70\% of metabolite concentrations peak, when NAD(P)H autofluorescence peaks, and the DNA synthesis rate is at its maximum \parencite{lloydTemporalArchitectureEukaryotic2006}.
 
 In the reductive phase, cells consume oxygen at a low rate.
 During the reductive-building phase, activities linked to mitochondrial growth occur.
@@ -385,6 +385,12 @@ Additionally, the dissolved-oxygen oscillations are robust to media potassium io
 \subsubsection{Genetic perturbations}
 \label{subsubsec:intro-ymc-perturbations-genetic}
 
+Although the molecular basis of the yeast metabolic cycle is not well-characterised, gene deletions shed light on it.
+% Mellor (2016) provide an awesome table.
+Genes that control the cell division cycle and metabolism have been deleted in studies.
+
+Several deletions have been shown to remove the metabolic oscillations in chemostats: \textit{zwf1$\Delta$} \parencite{tuCyclicChangesMetabolic2007}, \textit{gsy2$\Delta$}, and \textit{gph1$\Delta$} \parencite{oneillEukaryoticCellBiology2020} (Figs.\ \ref{fig:intro-ymc-zwf1},~\ref{fig:intro-ymc-gsy2-gph1}).
+
 \begin{figure}
   \centering
   \begin{subfigure}[htpb]{0.9\textwidth}
@@ -450,12 +456,6 @@ Additionally, the dissolved-oxygen oscillations are robust to media potassium io
   \label{fig:intro-ymc-del}
 \end{figure}
 
-Although the molecular basis of the yeast metabolic cycle is not well-characterised, gene deletions shed light on it.
-% Mellor (2016) provide an awesome table.
-Genes that control the cell division cycle and metabolism have been deleted in studies.
-
-Several deletions have been shown to remove the metabolic oscillations in chemostats: \textit{zwf1$\Delta$} \parencite{tuCyclicChangesMetabolic2007}, \textit{gsy2$\Delta$}, and \textit{gph1$\Delta$} \parencite{oneillEukaryoticCellBiology2020} (Figs.\ \ref{fig:intro-ymc-zwf1},~\ref{fig:intro-ymc-gsy2-gph1}).
-
 \textit{ZWF1} codes for glucose-6-phosphate dehydrogenase and is thus responsible for entry into the pentose phosphate pathway and subsequently a major source of NADPH generation.
 Therefore, deleting this gene may impair control of cellular redox.
 However, because of its role, this gene deletion impairs adapting to oxidative and pH stress and also causes methionine auxotrophy, so it may be difficult to draw conclusions from this deletion in particular.
@@ -510,6 +510,12 @@ Taken together, the models provide an attractive cell-to-cell signalling explana
 However, such an explanation does not explain the presence of metabolic cycling in single-cell conditions in which cells are physically separated and thus signalling between cells cannot occur.
 Though, autonomous generation of metabolic cycles and synchrony of metabolic cycles in a population can each arise from mechanisms that are independent of each other.
 
+Based on single-cell experimental observations, \textcite{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators at different stages.
+The study uses growth on different carbon source conditions to determine parameters that define the natural frequencies of the cell division cycle oscillators and the strength of the coupling between the four oscillators.
+Parameter optimisation predicts that the metabolic cycle most strongly influences the START point of the cell division cycle, and more weakly influences the M and S phases, while the three stages of the cell division cycle negligibly influence each other (Fig.\ \ref{fig:intro-ymc-coupled_oscillators}).
+Under perturbations, the model system remains stable but shows a shift in oscillation frequency, agreeing with experimental observations, and also predicts the effects of Cdc20 and Cdc14 dynamic depletions.
+However, a key criticism of this model-based study is that the Kuramoto model makes simplistic assumptions about the oscillators, which may be unrealistic, given how little is known about the mechanistic basis of the metabolic oscillator.
+
 \begin{figure}
   \centering
   \includegraphics[width=1.0\textwidth]{ozsezenInferenceHighLevelInteraction2019_7}
@@ -521,12 +527,6 @@ Though, autonomous generation of metabolic cycles and synchrony of metabolic cyc
     Adapted from \textcite{ozsezenInferenceHighLevelInteraction2019}.}
   \label{fig:intro-ymc-coupled_oscillators}
 \end{figure}
-
-Based on single-cell experimental observations, \textcite{ozsezenInferenceHighLevelInteraction2019} use a deterministic Kuramoto model to explain the interaction between one metabolic oscillator and three cell cycle oscillators at different stages.
-The study uses growth on different carbon source conditions to determine parameters that define the natural frequencies of the cell division cycle oscillators and the strength of the coupling between the four oscillators.
-Parameter optimisation predicts that the metabolic cycle most strongly influences the START point of the cell division cycle, and more weakly influences the M and S phases, while the three stages of the cell division cycle negligibly influence each other (Fig.\ \ref{fig:intro-ymc-coupled_oscillators}).
-Under perturbations, the model system remains stable but shows a shift in oscillation frequency, agreeing with experimental observations, and also predicts the effects of Cdc20 and Cdc14 dynamic depletions.
-However, a key criticism of this model-based study is that the Kuramoto model makes simplistic assumptions about the oscillators, which may be unrealistic, given how little is known about the mechanistic basis of the metabolic oscillator.
 
 Taken together, modelling approaches have been able to predict some aspects of the metabolic cycle.
 However, most models focus on specific aspects to the detriment of other experimental observations, and none sufficiently reconcile observations from chemostat-based and single-cell studies.
@@ -587,6 +587,13 @@ The subsequent response to regularly changing media conditions could explain tem
 In other words, the conditions of the chemostat may force the population of cells to behave in a certain way.
 However, temporal segregation of physiological process has also been reported in single-cell studies \parencite{takhaveevTemporalSegregationBiosynthetic2023}, suggesting that the cycling of solutes in the chemostat could affect some, but not all, temporal aspects of the metabolic cycle.
 
+The chemostat obscures contribution of sub-populations of cells (Fig.\ \ref{fig:intro-ymc-populations}).
+\textcite{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for the metabolic cycle and the cell division cycle appearing coupled one-to-one in the chemostat while having different periods.
+This proposition was information by observing one pulse of DNA replication per YMC and observing that a fraction of cells that exhibit the YMC initiated cell division.
+Contributions from sub-populations of cells are further highlighted by \textcite{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that a group of genetically identical yeast cells divide themselves into two populations.
+Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
+Taken together, it is possible that phenotypically different sub-populations in the chemostat culture may partially explain the observations in the chemostat so far.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{mellorMolecularBasisMetabolic2016_3b_adapted}
@@ -599,13 +606,6 @@ However, temporal segregation of physiological process has also been reported in
     Adapted from \textcite{mellorMolecularBasisMetabolic2016}.}
   \label{fig:intro-ymc-populations}
 \end{figure}
-
-The chemostat obscures contribution of sub-populations of cells (Fig.\ \ref{fig:intro-ymc-populations}).
-\textcite{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for the metabolic cycle and the cell division cycle appearing coupled one-to-one in the chemostat while having different periods.
-This proposition was information by observing one pulse of DNA replication per YMC and observing that a fraction of cells that exhibit the YMC initiated cell division.
-Contributions from sub-populations of cells are further highlighted by \textcite{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that a group of genetically identical yeast cells divide themselves into two populations.
-Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
-Taken together, it is possible that phenotypically different sub-populations in the chemostat culture may partially explain the observations in the chemostat so far.
 
 In addition, there is the question of whether cells individually generate the metabolic cycle or is a diffusible chemical responsible for synchrony, as proposed by \textcite{krishnaMinimalPushPull2018}.
 Furthermore, \textcite{smithTheoryChemostatDynamics1995} showed, theoretically, if a chemostat has two competing species, and an inhibitor which inhibits one of the species is added, then the chemostat can generate oscillations.
@@ -723,6 +723,10 @@ Autofluorescence thus offers an easy way to monitor cell physiology without engi
 \subsection{Biochemical basis of flavins and flavoproteins}
 \label{subsec:intro-flavin-biochem}
 
+Flavins are a group of organic compounds that share an aromatic moiety that allows redox reactions (Fig.\ \ref{fig:intro-flavin-structure}).
+Specifically, the flavin moiety can exist in the oxidised, semiquinone, or reduced states.
+Flavins thus function as electron carriers in the cell.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{patelFlavinContainingOxidativeBiocatalysts2006_1}
@@ -734,17 +738,10 @@ Autofluorescence thus offers an easy way to monitor cell physiology without engi
   \label{fig:intro-flavin-structure}
 \end{figure}
 
-Flavins are a group of organic compounds that share an aromatic moiety that allows redox reactions (Fig.\ \ref{fig:intro-flavin-structure}).
-Specifically, the flavin moiety can exist in the oxidised, semiquinone, or reduced states.
-Flavins thus function as electron carriers in the cell.
-
 In \textit{Saccharomyces cerevisiae}, flavin is present as FMN and FAD, which function as prosthetic groups in flavin-dependent proteins, or flavoproteins, whose genes account for 1.1\% of the genome \parencite{gudipatiFlavoproteomeYeastSaccharomyces2014}.
 FMN and FAD can be covalently bound to these proteins or be free \parencite{mewiesCovalentAttachmentFlavin1998}.
 FAD is a co-enzyme and has major roles in transferring electrons from the tricarboxylic acid cycle to the mitochondrial electron transport chain.
 Flavins in \textit{Saccharomyces cerevisiae} are derived from riboflavin (Fig.\ \ref{fig:intro-flavin-schematic}).
-Riboflavin can be synthesised \textit{de novo} from purine biosynthesis and the oxidative pentose phosphate pathway (Fig.\ \ref{fig:intro-flavin-kegg}).
-% Is there more to this than the KEGG diagram?
-Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD\@; therefore, monitoring of flavins monitors the combined pool of FMN and FAD in their oxidised states.
 
 \begin{figure}
   \centering
@@ -756,6 +753,10 @@ Based on the metabolism of flavins, the cell only synthesises new flavin for syn
     }
   \label{fig:intro-flavin-schematic}
 \end{figure}
+
+Riboflavin can be synthesised \textit{de novo} from purine biosynthesis and the oxidative pentose phosphate pathway (Fig.\ \ref{fig:intro-flavin-kegg}).
+% Is there more to this than the KEGG diagram?
+Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD\@; therefore, monitoring of flavins monitors the combined pool of FMN and FAD in their oxidised states.
 
 % https://www.genome.jp/pathway/map00740
 \begin{figure}
@@ -769,6 +770,13 @@ Based on the metabolism of flavins, the cell only synthesises new flavin for syn
   \label{fig:intro-flavin-kegg}
 \end{figure}
 
+From a technical standpoint, the redox states of flavins reflect the emission and absorption of electromagnetic radiation by the flavin moiety.
+The redox biochemistry of flavins give rise to fluorescence, so monitoring flavin autofluorescence monitors the redox state of the cell.
+Flavins, in their oxidised forms (FMN and FAD), have a peak excitation frequency of $\approx$460 nm and a peak emission frequency of $\approx$535 nm \parencite{maslankaAutofluorescenceYeastSaccharomyces2018, wagnieresVivoFluorescenceSpectroscopy1998}, displayed in Fig.\ \ref{fig:intro-flavin-spectra}.
+Comparison of \textit{in vivo} autofluorescence in mammalian cells and the fluorescence spectrum of riboflavin in PBS confirms this fluorescence behaviour \parencite{aubinAutofluorescenceViableCultured1979}.
+In contrast, the reduced forms FMNH\textsubscript{2} and FADH\textsubscript{2} have negligible fluorescence \parencite{mastersConfocalRedoxImaging1994}.
+Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} have monitored flavin autofluorescence to study the YMC\@.
+
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{fpbase-riboflavin-adapted}
@@ -780,15 +788,13 @@ Based on the metabolism of flavins, the cell only synthesises new flavin for syn
   \label{fig:intro-flavin-spectra}
 \end{figure}
 
-From a technical standpoint, the redox states of flavins reflect the emission and absorption of electromagnetic radiation by the flavin moiety.
-The redox biochemistry of flavins give rise to fluorescence, so monitoring flavin autofluorescence monitors the redox state of the cell.
-Flavins, in their oxidised forms (FMN and FAD), have a peak excitation frequency of $\approx$460 nm and a peak emission frequency of $\approx$535 nm \parencite{maslankaAutofluorescenceYeastSaccharomyces2018, wagnieresVivoFluorescenceSpectroscopy1998}, displayed in Fig.\ \ref{fig:intro-flavin-spectra}.
-Comparison of \textit{in vivo} autofluorescence in mammalian cells and the fluorescence spectrum of riboflavin in PBS confirms this fluorescence behaviour \parencite{aubinAutofluorescenceViableCultured1979}.
-In contrast, the reduced forms FMNH\textsubscript{2} and FADH\textsubscript{2} have negligible fluorescence \parencite{mastersConfocalRedoxImaging1994}.
-Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murrayRedoxRegulationRespiring2011} and single-cell microfluidic studies \parencite{baumgartnerFlavinbasedMetabolicCycles2018} have monitored flavin autofluorescence to study the YMC\@.
-
 \subsubsection{Descriptions of key flavoproteins and their roles}
 \label{subsubsec:intro-flavin-biochem-descriptions}
+
+\textcite{gudipatiFlavoproteomeYeastSaccharomyces2014} describe 68 genes that code for 47 flavoproteins in budding yeast (Fig.\ \ref{fig:intro-flavoprotein-abundance}).
+Of these, 35 require FAD, 15 require FMN, and 3 require both.
+In budding yeast, most flavins sit in the active site without covalent bonding.
+The biochemical and enzymatic properties of many flavoproteins are poorly characterised \parencite{kochStructureBiochemicalKinetic2017}.
 
 \begin{figure}
   \centering
@@ -802,10 +808,16 @@ Both chemostat-based \parencite{sasidharanTimeStructureYeastMetabolism2012, murr
   \label{fig:intro-flavoprotein-abundance}
 \end{figure}
 
-\textcite{gudipatiFlavoproteomeYeastSaccharomyces2014} describe 68 genes that code for 47 flavoproteins in budding yeast (Fig.\ \ref{fig:intro-flavoprotein-abundance}).
-Of these, 35 require FAD, 15 require FMN, and 3 require both.
-In budding yeast, most flavins sit in the active site without covalent bonding.
-The biochemical and enzymatic properties of many flavoproteins are poorly characterised \parencite{kochStructureBiochemicalKinetic2017}.
+The most abundant flavoproteins catalyse redox reactions (Table~\ref{tab:intro-flavoproteins}).
+Specifically, these reactions include reduction of reactive chemical species to respond to oxidative stress --- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
+Additionally, the reactions include biosynthetic reactions.
+Many of these reactions require NADPH or NADH to donate electrons, suggesting a link between flavins and NAD(P)H in regulating the cellular redox state.
+In particular, Oye2p catalyses the NADPH redox reaction, thus providing a link between flavins and NAD(P)H\@.
+One exception flavoprotein is Ilv2p, which does not catalyse a redox reaction.
+It has been hypothesised that an ancestral form of Ilv2p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \parencite{pangCrystalStructureYeast2002}.
+To maintain the cellular redox state, it is thus reasonable to assume that the redox equilibrium of all flavoprotein-catalysed reactions are in the same direction at any point of the YMC\@.
+Supporting this, \textcite{sianoNADHFlavinFluorescence1989} show that NAD(P)H fluorescence and the fluorescence of lipoamide dehydrogenase, a flavoprotein, indicate simultaneous reduction in response to lowered dissolved oxygen.
+They further show redox equilibrium in both fluorophores in response to glucose addition.
 
 \begin{table}[htbp]
   \footnotesize
@@ -834,17 +846,6 @@ The biochemical and enzymatic properties of many flavoproteins are poorly charac
   }
   \label{tab:intro-flavoproteins}
 \end{table}
-
-The most abundant flavoproteins catalyse redox reactions (Table~\ref{tab:intro-flavoproteins}).
-Specifically, these reactions include reduction of reactive chemical species to respond to oxidative stress --- though not all enzymes involved in the response to reactive chemical species have flavin co-factors.
-Additionally, the reactions include biosynthetic reactions.
-Many of these reactions require NADPH or NADH to donate electrons, suggesting a link between flavins and NAD(P)H in regulating the cellular redox state.
-In particular, Oye2p catalyses the NADPH redox reaction, thus providing a link between flavins and NAD(P)H\@.
-One exception flavoprotein is Ilv2p, which does not catalyse a redox reaction.
-It has been hypothesised that an ancestral form of Ilv2p catalysed a redox reaction, but the argument is weak because it is inferred from the presence of FAD \parencite{pangCrystalStructureYeast2002}.
-To maintain the cellular redox state, it is thus reasonable to assume that the redox equilibrium of all flavoprotein-catalysed reactions are in the same direction at any point of the YMC\@.
-Supporting this, \textcite{sianoNADHFlavinFluorescence1989} show that NAD(P)H fluorescence and the fluorescence of lipoamide dehydrogenase, a flavoprotein, indicate simultaneous reduction in response to lowered dissolved oxygen.
-They further show redox equilibrium in both fluorophores in response to glucose addition.
 
 It is important to rule out the possibility that flavin cycling is merely a function of the cell division cycle to make sure that flavin monitoring monitors the YMC\@.
 None of these flavoproteins are strictly cell division cycle proteins, but this does not exclude cycling of flavin autofluorescence linked to the cell division cycle.
