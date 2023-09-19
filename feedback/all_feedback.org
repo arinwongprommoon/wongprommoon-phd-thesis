@@ -35,11 +35,11 @@
 - [X] L1399: spit --> split
 - [X] L1420: change title
 ** Biology
-- [ ] L1531: move words
+- [X] L1531: move words
 - [ ] F3.05, F3.06: Move figs down
-- [ ] L1671: p-value.  Missing ')'?
-- [ ] L1826: add 'with'
-- [ ] L1854: e --> y
+- [X] L1671: p-value.  Missing ')'?
+- [X] L1826: add 'with'
+- [X] L1854: e --> y
 ** Analysis
 - [ ] Remove 'rhythmicity detection' from Section 4.4.X titles
 - [ ] Add something to Section 4.5.3 & 4.6.2 titles
