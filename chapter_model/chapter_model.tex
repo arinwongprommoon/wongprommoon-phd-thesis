@@ -275,12 +275,13 @@ If $\log_{2}(\mathrm{FC}_{i,j}) > 0$, the cell allocates more of its proteome to
 In addition, if enzyme expression switches on ($e_{i, \mathrm{par}} = 0$), $\log_{2}(\mathrm{FC}_{i,j}) \ll 0$.
 Conversely, if enzyme expression switches off ($e_{i, j} = 0$), $\log_{2}(\mathrm{FC}_{i,j}) \gg 0$.
 
-Subsystem information aids interpretation of the changes in proteome allocation across rounds of ablation.
-Here, I matched the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
-If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
-Then, the subsystem associated with each enzyme-catalysed reaction was taken from the gene-protein map, and noted.
+% ON SECOND THOUGHT, THIS LOOKS LIKE UNNECESSARY DETAIL WHICH BELONGS IN THE METHODS/APPENDIX, AND POTENTIALLY CONFUSES PEOPLE.
+% Subsystem information aids interpretation of the changes in proteome allocation across rounds of ablation.
+% Here, I matched the flux carried by each enzyme usage pseudoreaction to the enzyme-catalysed reaction that the enzyme is associated with.
+% If an enzyme usage pseudoreaction is associated with multiple enzyme-catalysed reactions, data entries were duplicated accordingly.
+% Then, the subsystem associated with each enzyme-catalysed reaction was taken from the gene-protein map, and noted.
 
-To show that in each round of ablation, the cell re-allocated its finite proteome to enzymes with roles related to the synthesis of each biomass component, Fig.\ \ref{fig:model-ablate-enz-use} categorises fold changes by subsystem.
+To show that the re-allocation of the proteome in each round of ablation reflects metabolic pathways that are relevant for prioritising the synthesis of the respective biomass component, Fig.\ \ref{fig:model-ablate-enz-use} categorises fold changes of enzyme-catalysed reactions by subsystem.
 
 \begin{figure}
   \centering
@@ -399,7 +400,8 @@ The quantities $\Tseq$ and $\Tpar$ are defined:
   \label{eq:model-b}
 \end{equation}
 
-Because $\biomfrac{protein} = 0.525$ (Table~\ref{tab:model-biomfrac}), $\Tpar = \Tprop{protein}$.
+% I DON'T THINK THIS SENTENCE IS NEEDED IN LIGHT OF THE EXISTENCE OF THE THIRD LINE IN eq:model-ratio
+%Because $\biomfrac{protein} = 0.525$ (Table~\ref{tab:model-biomfrac}), $\Tpar = \Tprop{protein}$.
 
 Therefore,
 

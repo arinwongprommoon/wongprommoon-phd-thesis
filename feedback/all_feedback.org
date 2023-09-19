@@ -62,14 +62,14 @@
 ** Biology
 - [X] L1613-1615: explain how this links to figs
 ** Model
-- [ ] L2646: clarify
-- [ ] L2716: fix dangling sentence
+- [X] L2646: clarify
+- [X] L2716: fix dangling sentence
 - [ ] L2838-2854: make easier to read
 ** Conclusion
-- [ ] (to clarify) L3110: clarify if I know explanation
+- [X] (to clarify) L3110: clarify if I know explanation
 
 * Category 3
 ** Model
-- [ ] L2647: fix 'incomplete sentence' (I think it's complete, but it might just be written poorly)
+- [X] L2647: fix 'incomplete sentence' (I think it's complete, but it might just be written poorly)
 ** Backmatter
-- [ ] L3363: B.3 is referenced in chapter, make it more obvious in both chapter & appendix, possibly write a sentence at the beginning of the appendix section
+- [X] L3363: B.3 is referenced in chapter, make it more obvious in both chapter & appendix, possibly write a sentence at the beginning of the appendix section
