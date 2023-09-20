@@ -9,7 +9,7 @@
 
 The \textit{Saccharomyces cerevisiae} strains used in this thesis are described in Table~\ref{tab:methods-strains}.
 
-\begin{table}
+\begin{table}[hb]
   \footnotesize
   \centering
   \begin{tabularx}{\linewidth}{bbbbb}
@@ -33,7 +33,7 @@ The minimal medium described by \textcite{verduynEffectBenzoicAcid1992} was used
 This minimal medium does not contain riboflavin, thus minimising its effect on flavin autofluorescence imaging, and its composition is known and easily controlled.
 Specifically, the composition of the carbon source-limiting medium are described in Tables~\ref{tab:methods-media-delft}--\ref{tab:methods-media-delft-vitamins}, and the media pH was adjusted to 6.0 using potassium hydroxide, or sodium hydroxide for potassium-free media.
 
-\begin{table}
+\begin{table}[h]
   \footnotesize
   \centering
   \begin{tabularx}{\linewidth}{bbb}
@@ -57,7 +57,7 @@ Specifically, the composition of the carbon source-limiting medium are described
   \label{tab:methods-media-delft}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
   \footnotesize
   \centering
   \begin{tabularx}{\linewidth}{bbS}
@@ -84,7 +84,7 @@ Specifically, the composition of the carbon source-limiting medium are described
   \label{tab:methods-media-delft-metals}
 \end{table}
 
-\begin{table}
+\begin{table}[h]
   \footnotesize
   \centering
   \begin{tabularx}{\linewidth}{bbS}
@@ -111,7 +111,7 @@ Specifically, the composition of the carbon source-limiting medium are described
 For auxotrophic strains, supplements were added according to Table~\ref{tab:methods-media-auxotroph}.
 Then, a carbon source is added as appropriate to create the growth medium.
 
-\begin{table}
+\begin{table}[h]
   \footnotesize
   \centering
   \begin{tabularx}{\linewidth}{bS}
@@ -183,9 +183,8 @@ I used \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an en
 It then uses \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells (Fig.\ \ref{fig:methods-timelapse}).
 \textit{aliby} then overlays the cell outlines onto the fluorescence (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
 The background fluorescence is also computed, based on the pixel intensity outside cell outlines, and is then subtracted from the cell fluorescence.
-Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see Section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 
-\begin{figure}
+\begin{figure}[hp]
   \centering
   \begin{subfigure}[htpb]{0.6\textwidth}
    \centering
@@ -218,6 +217,8 @@ Flavin fluorescence thus represents the oxidation of flavins throughout the yeas
   }
   \label{fig:methods-timelapse}
 \end{figure}
+
+Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see Section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
 
 
 \section{Time series analysis methods}
@@ -559,7 +560,7 @@ and the noise $n$ is defined as
 \end{equation}
 
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
