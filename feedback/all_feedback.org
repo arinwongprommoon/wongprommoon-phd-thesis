@@ -11,7 +11,7 @@
 
 * Category 1
 ** General
-- [ ] Figure placement (htbp?)
+- [X] Figure placement (htbp?)
 ** Frontmatter
 *** Abstract
 - [X] L0020: add 'which is'
