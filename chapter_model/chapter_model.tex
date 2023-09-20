@@ -647,6 +647,11 @@ In contrast, when the growth rate was near its maximum, where neither glucose no
   \label{fig:model-grid-glc}
 \end{figure}
 
+To link the changes in the values of $\Tabl{carbohydrate}$ and $\Tabl{protein}$ with cellular biochemistry, Fig.\ \ref{fig:model-grid-glc-carb} and~\ref{fig:model-grid-glc-prot} show how both values are affected by $\exchrate{glc}$ and $\exchrate{amm}$.
+Fig.\ \ref{fig:model-grid-glc-carb} shows that glucose exchange limited carbohydrate synthesis time in all nutrient conditions, and this observation could be explained by glucose uptake being directly linked to carbohydrate synthesis.
+In contrast, Fig.\ \ref{fig:model-grid-glc-prot} shows that ammonium exchange limited protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange was very low.
+This observation can be explained by the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
+
 To determine whether changes in the synthesis time of biomass components are responsible for switching of scheduling strategies between sequential and parallel biosynthesis, I investigated how $\exchrate{glc}$ and $\exchrate{amm}$ affected $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
 Synthesis times $\Tiabl$ were computed to assess whether the ratio between the synthesis times differed in different conditions.
 The ratio $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ serves as the principal measure to quantify how $\Tiabl$ values change as nutrient conditions change.
@@ -665,21 +670,11 @@ This ratio is informative because:
 %   \label{eq:model-carb-prot-ratio}
 % \end{equation}
 
-Although there is no obvious relationship between $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ and $\ratioabl$ values (Fig.\ \ref{fig:model-grid-glc-carb-to-prot}),
-the effect of $\exchrate{glc}$ and $\exchrate{pyr}$ on $\Tabl{carbohydrate}$ and $\Tabl{protein}$ explains the behaviour of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$.
-Fig.\ \ref{fig:model-grid-glc-carb-to-prot} shows that in the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ was at a constant high value because, as $\exchrate{glc}$ increased in this region, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decreased.
-However, in the ammonium-limited region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increased as $\exchrate{amm}$ increased because $\Tabl{protein}$ decreased while $\Tabl{carbohydrate}$ remained constant.
-
-Consider the trajectory of $(\exchrate{glc}, \exchrate{amm})$ values from $(0, 0)$ to $(\exchrate{glc, sat}, \exchrate{amm, sat})$ through conditions with high $\ratioabl$ values (Fig.\ \ref{fig:model-grid-glc-ratio}), where $\exchrate{glc, sat}$ and $\exchrate{amm, sat}$ are saturation values of glucose and ammonium values, respectively.
-This trajectory includes conditions in which both glucose and ammonium are limiting, and as the trajectory is followed, both $\Tabl{carbohydrate}$ and $\Tabl{protein}$ decreased, explaining why $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remained roughly at the same value along this trajectory.
-
-The different effects of the exchange rates on $\Tabl{carbohydrate}$ and on $\Tabl{protein}$ has a biological relevance.
-Fig.\ \ref{fig:model-grid-glc-carb} shows that glucose exchange limited carbohydrate synthesis time in all nutrient conditions, and this observation can be explained by glucose being the sole carbon source for the cell.
-In contrast, Fig.\ \ref{fig:model-grid-glc-prot} shows that ammonium exchange limited protein synthesis time for most nutrient conditions, except for conditions in which glucose exchange was very low.
-This observation can be explained by the fact that both carbon and nitrogen sources contribute to protein biosynthesis.
-% This sounds like a pain point to be emphasised.
-In sum, the relationships between carbon and nitrogen source uptake and the synthesis of carbohydrates and proteins determine how scheduling strategies change according to nutrient conditions.
-
+Fig.\ \ref{fig:model-grid-glc-carb-to-prot} suggests that carbon and nitrogen limitation affect the ratios of synthesis times among biomass components, as shown by the change in the value of $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ as $\exchrate{glc}$ and $\exchrate{amm}$ changed.
+Specifically, within the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ was at a high and constant value.
+In contrast, within the ammonium-limiting region, as $\exchrate{amm}$ increases, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increased.
+In addition, along the boundary of both regions, where glucose and ammonium were both near-limiting and $\ratioabl$ was high, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remained roughly constant.
+These observations link synthesis times of biomass components with scheduling strategy; specifically, the observations suggest that the ratios of synthesis times alone did not explain the choice of scheduling strategy, and that total biosynthesis time was an additional factor.
 
 \subsubsection{Pyruvate and ammonium}
 \label{subsec:model-grid-pyruvate}

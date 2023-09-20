@@ -64,7 +64,7 @@
 ** Model
 - [X] L2646: clarify
 - [X] L2716: fix dangling sentence
-- [ ] L2838-2854: make easier to read
+- [X] L2838-2854: make easier to read
 ** Conclusion
 - [X] (to clarify) L3110: clarify if I know explanation
 
