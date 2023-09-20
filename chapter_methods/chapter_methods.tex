@@ -180,10 +180,44 @@ Five z-slices were taken for mCherry images, with a spacing of \SI{0.6}{\micro\m
 I used \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}, an end-to-end Python-based software package developed for time-lapse microscopy, to process the microscope images in order to obtain flavin and mCherry time series for further analysis.
 
 \textit{aliby} tracks tiles that correspond to a trap across time-lapse images to account for expected spatial drifting in the microscope.
-It then uses \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells.
+It then uses \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} to segment the images of traps to identify the outlines of cells and to track cells from one time point to another, creating a lineage of cells (Fig.\ \ref{fig:methods-timelapse}).
 \textit{aliby} then overlays the cell outlines onto the fluorescence (flavin and mCherry) images to extract fluorescence intensity, and assigns a fluorescence value to each cell at each time point based on the mean intensity of pixels within the cell's outline.
 The background fluorescence is also computed, based on the pixel intensity outside cell outlines, and is then subtracted from the cell fluorescence.
 Flavin fluorescence thus represents the oxidation of flavins throughout the yeast metabolic cycle (see Section~\ref{sec:intro-flavin}), and mCherry fluorescence thus represents the amount of histone proteins as a proxy for cell division cycle progression \parencite{garmendia-torresMultipleInputsEnsure2018}.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.6\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{example_images_mCherry_edit.png}
+   \caption{
+   }
+   \label{fig:methods-timelapse-images}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{1.0\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{example_dataframe.png}
+   \caption{
+   }
+   \label{fig:methods-timelapse-dataframe}
+  \end{subfigure}
+
+  \caption[
+    Example time course of images from a microfluidics experiment, processed by \textit{aliby}.
+    The extracted values were then saved in an array of numbers, with rows indicating cells (labelled by IDs) and columns indicating time in minutes --- each row thus represents a time series.
+  ]{
+    \textbf{(\ref{fig:methods-timelapse-images})}
+    Example time course of images from a microfluidics experiment, processed by \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}.
+    Top row shows brightfield images taken over time; only the first three time points are shown for illustrative purposes.
+    Here, \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} segments brightfield images to obtain cell outlines (blue and brown).
+    Bottom row shows a images from a sample fluorescence channel taken over time.
+    The cell outlines from image segmentation were overlaid onto the fluorescence channel images so that the fluorescence intensity within each cell can be extracted.
+    \textbf{(\ref{fig:methods-timelapse-dataframe})}
+    The extracted values were then saved in an array of numbers, with rows indicating cells (labelled by IDs) and columns indicating time in minutes --- each row thus represents a time series.
+  }
+  \label{fig:methods-timelapse}
+\end{figure}
 
 
 \section{Time series analysis methods}
