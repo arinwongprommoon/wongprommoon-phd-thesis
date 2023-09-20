@@ -335,7 +335,7 @@ For all $\gamma$ values, modularity clustering was able to further show communit
 However, such communities did not divide along the division between BY4741 and \textit{zwf1$\Delta$} cells, suggesting that time series features alone were not able to divide these two strains.
 This agreed with my observation that some oscillatory \textit{zwf1$\Delta$} time series resembled BY4741 time series (Fig.\ \ref{fig:analysis-sample-zwf1}).
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=0.6\linewidth]{sample_ts_zwf1.pdf}
 
@@ -373,7 +373,7 @@ Highest-ranked time series resembled sinusoids and therefore led to periodograms
 Conversely, lowest-ranked time series resembled white noise and led to periodograms with power equally spread across all frequencies, thus bringing down the height of the highest peak.
 However, some time series with irregular oscillations based on visual inspection (Fig.\ \ref{fig:glynn-best}; ranks 2, 3) were given higher ranks than those with more regular oscillations based on visual inspection, thus calling into question the reliability of the ranking method.
 
-\begin{figure}[htbp]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[t]{0.65\textwidth}
   \centering
@@ -404,7 +404,7 @@ However, some time series with irregular oscillations based on visual inspection
   \label{fig:glynn-best}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[t]{0.65\textwidth}
   \centering
@@ -443,7 +443,7 @@ Controlling the false discovery rate thus controls the expected proportion of os
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
 The area under the ROC curve (0.762) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=0.5\textwidth]{glynn_is20016_5_edit.pdf}
   \caption[
@@ -464,7 +464,7 @@ In the implementation of the autoregressive model used by \textcite{jiaFrequency
 The resulting power spectra fell into four categories, one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
-\begin{figure}
+\begin{figure}[b!]
   \centering
   \includegraphics[width=1.0\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
   \caption[
@@ -476,6 +476,8 @@ This method thus allows computing the frequency of the oscillation from the loca
   }
   \label{fig:analysis-ar-classification}
 \end{figure}
+
+\pagebreak
 
 Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory at a period of \SI{75.2}{\minute}, as evidenced by the location of a peak in the periodogram that the model predicted.
 
@@ -512,7 +514,7 @@ Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to corr
 To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
 The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
 
-\begin{table}
+\begin{table}[h!]
   \centering
   % https://tex.stackexchange.com/a/20295
   \begin{tabular}{l|l|c|c|c}
@@ -586,16 +588,16 @@ To predict the probability that each time series was oscillatory, I used Platt s
 Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
 Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities (Fig.\ \ref{fig:analysis-svc-proba-histogram-model}), in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
 
-\begin{figure}
+\begin{figure}[ht!]
   \centering
-  \begin{subfigure}[htpb]{0.5\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{svm_2_edit.pdf}
    \caption{
    }
    \label{fig:analysis-svc-proba-histogram-model}
   \end{subfigure}%
-  \begin{subfigure}[htpb]{0.5\textwidth}
+  \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{svm_scramble_2_edit.pdf}
    \caption{
@@ -617,9 +619,9 @@ Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier perfor
 
 In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the probabilities can serve as a good score to rank time series by oscillation quality.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
-  \includegraphics[width=0.8\textwidth]{svm_3_edit.pdf}
+  \includegraphics[width=0.65\textwidth]{svm_3_edit.pdf}
 
   \caption{
     Sample time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.
@@ -719,7 +721,7 @@ Furthermore, the variation of the autocorrelation function among time series at 
 Gillespie noise is based on the birth-death process (Fig.\ \ref{fig:analysis-birthdeath-process}), and its two parameters control noise parameters (Methods Section~\ref{subsec:methods-computational-synthetic}).
 Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has a standard deviation of noise amplitude $A = \sqrt{k_{0}/d_{0}}$ and noise timescale $\tau = 1/d_{0}$.
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \begin{subfigure}[t]{0.6\textwidth}
     \centering
@@ -979,7 +981,7 @@ Additionally, the effect of noise parameters on the autocorrelation function is 
 % As a consequence, estimating the noise timescale $\tau$ from the decay rate $D$ of the exponential decay function produced a greater range of uncertainty (Fig.\ \ref{fig:acf-fhn-noiseparams-noisetimescale}).
 % However, estimating the noise amplitude $A$ based on the y-displacement $C$ of the exponential decay function remained as reliable as the sinusoid oscillator case (Fig.\ \ref{fig:acf-fhn-noiseparams-noiseamplitude}).
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \begin{subfigure}[t]{0.6\textwidth}
   \centering
@@ -1124,7 +1126,7 @@ This shift was evidenced by the position of the peak of the cross-correlation fu
 The cross-correlation function further showed that synchrony between the two oscillators was maintained along the entire time series, across all time series.
 Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gillespie noise, the lag between the two oscillators could still be deduced from the cross-correlation function.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \begin{subfigure}[t]{0.6\textwidth}
   \centering
