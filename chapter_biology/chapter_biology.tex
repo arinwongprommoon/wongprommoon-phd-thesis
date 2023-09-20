@@ -37,7 +37,7 @@ Replicating results from a previous flavin-based microfluidics study is importan
 
 Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms shortly before G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
     \includegraphics[width=1.0\linewidth]{single_birth_plot_edit.pdf}
     \caption[
@@ -79,7 +79,7 @@ Fig.\ \ref{fig:biology-highglc-sync-spectral} shows that flavin fluorescence osc
 Figs.\ \ref{fig:biology-highglc-sync-acf} and \ref{fig:biology-highglc-sync-acf-2} additionally show that the cell division cycle proceeded at the same period, as evidenced by the autocorrelation function of mCherry.
 The duration of the cell division cycles agrees with previously reported values \parencite{herskowitzLifeCycleBudding1988}.
 
-\begin{figure}
+\begin{figure}[b!]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
@@ -129,7 +129,7 @@ that the cell division cycle varies between cells,
 with most just under \SI{2}{\hour}, agreeing with Fig.\ \ref{fig:biology-highglc-sync-acf} (inset).
 The oscillatory shape of the median flavin fluorescence time series when aligned to the first budding event (Fig.\ \ref{fig:biology-highglc-sync-median}) further confirms the synchrony between the metabolic cycle and budding events.
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
@@ -270,7 +270,7 @@ Combined with results from the previous section, my data suggest that the metabo
 The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that, upon starvation, cell division cycles progress to the next gap phase (G\textsubscript{1} or G\textsubscript{2}/M) while the metabolic cycle continues.
 To test this implication, Fig.\ \ref{fig:biology-starvation-raw} shows that cells may remain in G\textsubscript{1} (Fig.\ \ref{fig:biology-starvation-raw-2}), as evidenced by low mCherry intensity, or in G\textsubscript{2}/M (Fig.\ \ref{fig:biology-starvation-raw-1}), as evidenced by high mCherry intensity.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
@@ -488,7 +488,7 @@ Furthermore, the synchrony between the metabolic cycle and cell division cycle r
 Fig.\ \ref{fig:biology-pyruvate-single} shows that the longer cell division cycles were because of longer G\textsubscript{1} phases but unchanged S/M phases, as evidenced by the longer flat regions of the mCherry signal.
 %However, the flavin cycles were not regular over long periods of time, as evidenced by a lack of repeated oscillations in the cross-correlation function.
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
@@ -540,9 +540,11 @@ Fig.\ \ref{fig:biology-pyruvate-single} shows that the longer cell division cycl
 % COULD DO:
 % (Add statistical tests to reject the null hypothesis that the mean duration of metabolic cycles in pyruvate is equal to the mean duration of metabolic cycles in high glucose.  This would depend on having a good number of the duration, and it looks like the inset is the best candidate for this.)
 
+\pagebreak
+
 Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells had longer metabolic cycles when grown in minimal media supplemented with \SI{0.010}{\gram~\litre^{-1}} glucose.
 
-\begin{figure}
+\begin{figure}[b!]
   \centering
   \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
@@ -574,9 +576,11 @@ Fig.\ \ref{fig:biology-lowglc} shows that FY4 HTB2::mCherry cells had longer met
   \label{fig:biology-lowglc}
 \end{figure}
 
+\pagebreak
+
 Additionally, Fig.\ \ref{fig:biology-lowglc-gr-budprob} shows that the growth rate and the rate of bud formation of cells on limiting glucose was lower than on high glucose (\SI{20}{\gram~\litre^{-1}}).
 
-\begin{figure}
+\begin{figure}[htbp!]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
@@ -623,7 +627,7 @@ Additionally, Fig.\ \ref{fig:biology-lowglc-gr-budprob} shows that the growth ra
 
 Furthermore, Fig.\ \ref{fig:biology-compare-snr} shows that the amplitude of the flavin oscillations in this glucose-limiting condition was low relative to other conditions, as evidenced by the lower signal-to-noise ratios (two-sided Kolmogorov-Smirnov test: low-glucose vs pyruvate $p = \num{1.6e-82}$, low-glucose vs high-glucose $p = \num{1.9d-171}$).
 
-\begin{figure}
+\begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.6\textwidth]{csource_snrs_edit}
 
@@ -658,7 +662,7 @@ Chemostat experiments obscure the behaviour of individual cells, and single-cell
 To test whether potassium deficiency eliminates metabolic cycles, I treated cells with potassium-deficient minimal medium, replacing monopotassium phosphate (\ce{KH2PO4}) in the minimal medium with an equivalent molarity of monosodium phosphate (\ce{NaH2PO4}), as described in Table~\ref{tab:methods-media-delft}, with both media supplemented with \SI{20}{\gram~\litre^{-1}} glucose as a carbon source.
 \textcite{oneillEukaryoticCellBiology2020} suggested that, in chemostat cultures, as potassium in the nutrient medium is gradually replaced with sodium, the period and amplitude of dissolved-oxygen oscillations decrease until the oscillations disappear (Fig.\ \ref{fig:biology-kdeficient-oneill}).
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=0.7\textwidth]{oneillEukaryoticCellBiology2020_4_adapted.png}
   \caption{
@@ -671,7 +675,7 @@ To test whether potassium deficiency eliminates metabolic cycles, I treated cell
 Fig.\ \ref{fig:biology-kdeficient-single} shows that FY4 HTB2::mCherry cells retained synchronised metabolic cycles and cell division cycles when cells were abruptly switched from potassium-containing to potassium-deficient minimal medium.
 Such cycles were longer and were generated less reliably as in the normal growth medium (Fig.\ \ref{fig:biology-kdeficient-acf}).
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \begin{subfigure}[htpb]{1.0\textwidth}
    \centering
@@ -708,7 +712,7 @@ Such cycles were longer and were generated less reliably as in the normal growth
 In addition, the distribution of signal-to-noise ratios of time series before potassium-deficiency and during potassium-deficiency were identical (Fig.\ \ref{fig:biology-kdeficient-snr}; two-sided Kolmogorov-Smirnov test, $p = \num{0.10}$), indicating an unchanged amplitude of flavin signal; however, the same was not true when comparing time series during potassium-deficiency and after potassium-deficiency (two-sided Kolmogorov-Smirnov test, $p = \num{4.09e-7}$).
 %Furthermore, although the changes in the mean signal-to-noise ratio as the medium changed were significant (Fig.\ \ref{fig:biology-kdeficient-snr}; $\bar{x}_{\mathrm{before}} = 2.22$, $\bar{x}_{\mathrm{deficient}} = 2.44$, $\bar{x}_{\mathrm{after}} = 1.79$; Welch's $t$-test: deficient vs before $p = \num{0.015}$, deficient vs after $p = \num{1.26d-12}$), the differences were more subtle than in the glucose-starvation experiment.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
    \includegraphics[width=0.6\textwidth]{kdeficient_snr_edit.pdf}
    \caption{
@@ -721,7 +725,7 @@ In addition, to test whether potassium deficiency affected cell growth and divis
 This global response across cells is suggestive of an osmotic response as a result of intracellular potassium leaking out the cell, though the change and recovery of growth rate is slower than the change and recovery of cell volume in response to osmotic stress reported by \textcite{granadosDistributingTasksMultiple2017}.
 Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the rate of budding was unaffected during potassium-deficiency, in contrast to a pause under glucose starvation (Fig.\ \ref{fig:biology-starvation-cumul}).
 
-\begin{figure}
+\begin{figure}[ht!]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
@@ -755,12 +759,7 @@ Fig.\ \ref{fig:biology-kdeficient-cumul} further shows that the rate of budding 
 
 Finally, in contrast to glucose starvation, Fig.\ \ref{fig:biology-kdeficient-histogram} suggests that potassium deficiency did not affect the time each cell spent in each phase of the metabolic and cell division cycles as they progressed through growth.
 
-My results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after.
-My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition, in contrast to \textcite{oneillEukaryoticCellBiology2020}.
-%Thus, my observations warrant a model to reconcile the apparent differences between the chemostat and single-cell investigations.
-Furthermore, the significance of the potassium-deficient, sodium-containing nutrient condition is highlighted by the toxicity of sodium ions for budding yeast \parencite{arinoAlkaliMetalCation2010,caseyEffectSaltsCofermentation2013,watcharawipasSodiumAcetateResponses2018}.
-
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
@@ -786,6 +785,11 @@ Furthermore, the significance of the potassium-deficient, sodium-containing nutr
   }
   \label{fig:biology-kdeficient-histogram}
 \end{figure}
+
+My results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after.
+My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition, in contrast to \textcite{oneillEukaryoticCellBiology2020}.
+%Thus, my observations warrant a model to reconcile the apparent differences between the chemostat and single-cell investigations.
+Furthermore, the significance of the potassium-deficient, sodium-containing nutrient condition is highlighted by the toxicity of sodium ions for budding yeast \parencite{arinoAlkaliMetalCation2010,caseyEffectSaltsCofermentation2013,watcharawipasSodiumAcetateResponses2018}.
 
 
 %\section[Deletion strains]{Do single-cell flavin traces recapitulate dissolved-oxygen YMCs in chemostats? -- deletion strains}
