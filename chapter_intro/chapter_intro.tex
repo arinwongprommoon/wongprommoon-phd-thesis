@@ -193,7 +193,7 @@ Finally, it has metabolite oscillations as evidenced by changes in the levels of
 Based on chemostat studies,
 the YMC can be divided into two major phases: an oxidative, high-oxygen consumption (OX/HOC) phase and a reductive, low-oxygen consumption (RED/LOC) phase (Fig.\ \ref{fig:intro-ymc-overview}).
 
-\begin{figure}
+\begin{figure}[htb!]
   \centering
   \includegraphics[width=1.0\textwidth]{mellorMolecularBasisMetabolic2016_3c_adapted}
   \caption[
@@ -211,9 +211,9 @@ Many authors \parencite{slavovMetabolicCyclingCell2011, murrayRedoxRegulationRes
 In contrast, some authors \parencite{machneYinYangYeast2012} base their two-phase model on the clustering of transcript level patterns.
 \textcite{krishnaMinimalPushPull2018} interpret the oxidative phase as a growth state, while the reductive phase is a quiescent state.
 
-\begin{figure}
+\begin{figure}[ht!]
   \centering
-  \includegraphics[width=0.8\textwidth]{tuLogicYeastMetabolic2005_1}
+  \includegraphics[width=0.7\textwidth]{tuLogicYeastMetabolic2005_1}
   \caption[
     The yeast metabolic cycle has been described as spontaneous respiratory cycles
   ]{
@@ -225,7 +225,7 @@ In contrast, some authors \parencite{machneYinYangYeast2012} base their two-phas
 In contrast to the two-phase model, some authors identify a three-phase model with a reductive-building (RB) phase and a reductive-charging (RC) phase within the reductive phase.
 This three-phase model is primarily based on cellular events, including clustering of transcript trajectories \parencite{tuLogicYeastMetabolic2005} (Fig.\ \ref{fig:intro-ymc-tu-transcripts}) and of metabolite concentration trajectories \parencite{tuCyclicChangesMetabolic2007}.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=1.0\textwidth]{tuLogicYeastMetabolic2005_3d_adapted}
   \caption[
@@ -245,7 +245,7 @@ In later chapters, I adhere to this single-cell definition because I perform a s
 %However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
 The two- or three-phase response may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=1.0\textwidth]{zylstraMetabolicDynamicsCell2022_1}
   \caption[
@@ -267,7 +267,7 @@ Biosynthesis and associated gene expression are confirmed by increased transcrip
 \parencite{murrayRedoxRegulationRespiring2011} become most oxidised in this phase.
 As cells transition from the oxidative to the reductive phase, 70\% of metabolite concentrations peak, when NAD(P)H autofluorescence peaks, and the DNA synthesis rate is at its maximum \parencite{lloydTemporalArchitectureEukaryotic2006}.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.9\textwidth]{oneillEukaryoticCellBiology2020_3a_adapted}
   \caption[
@@ -391,7 +391,7 @@ Genes that control the cell division cycle and metabolism have been deleted in s
 
 Several deletions have been shown to remove the metabolic oscillations in chemostats: \textit{zwf1$\Delta$} \parencite{tuCyclicChangesMetabolic2007}, \textit{gsy2$\Delta$}, and \textit{gph1$\Delta$} \parencite{oneillEukaryoticCellBiology2020} (Figs.\ \ref{fig:intro-ymc-zwf1},~\ref{fig:intro-ymc-gsy2-gph1}).
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \begin{subfigure}[htpb]{0.9\textwidth}
    \centering
@@ -516,7 +516,7 @@ Parameter optimisation predicts that the metabolic cycle most strongly influence
 Under perturbations, the model system remains stable but shows a shift in oscillation frequency, agreeing with experimental observations, and also predicts the effects of Cdc20 and Cdc14 dynamic depletions.
 However, a key criticism of this model-based study is that the Kuramoto model makes simplistic assumptions about the oscillators, which may be unrealistic, given how little is known about the mechanistic basis of the metabolic oscillator.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=1.0\textwidth]{ozsezenInferenceHighLevelInteraction2019_7}
   \caption[
@@ -727,7 +727,7 @@ Flavins are a group of organic compounds that share an aromatic moiety that allo
 Specifically, the flavin moiety can exist in the oxidised, semiquinone, or reduced states.
 Flavins thus function as electron carriers in the cell.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{patelFlavinContainingOxidativeBiocatalysts2006_1}
   \caption[
@@ -743,7 +743,7 @@ FMN and FAD can be covalently bound to these proteins or be free \parencite{mewi
 FAD is a co-enzyme and has major roles in transferring electrons from the tricarboxylic acid cycle to the mitochondrial electron transport chain.
 Flavins in \textit{Saccharomyces cerevisiae} are derived from riboflavin (Fig.\ \ref{fig:intro-flavin-schematic}).
 
-\begin{figure}
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=0.8\textwidth]{flavin-cell-schematic}
   \caption[
@@ -759,7 +759,7 @@ Riboflavin can be synthesised \textit{de novo} from purine biosynthesis and the 
 Based on the metabolism of flavins, the cell only synthesises new flavin for synthesis of FMN and FAD\@; therefore, monitoring of flavins monitors the combined pool of FMN and FAD in their oxidised states.
 
 % https://www.genome.jp/pathway/map00740
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=1.0\textwidth]{kegg-flavin}
   \caption[
