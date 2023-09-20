@@ -126,7 +126,7 @@ In a conventional genome-scale model, metabolic fluxes through reactions are con
 This constraint narrows the solution space when the objective function is optimised.
 GECKO imposes an additional constraint on the metabolic fluxes based on the concentration of the enzyme that catalyses the reaction (Fig.\ \ref{fig:model-gecko}).
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=0.9\linewidth]{sanchezImprovingPhenotypePredictions2017_1b_adapted}
   \caption[
@@ -215,7 +215,7 @@ To simulate the cell prioritising biosynthesis of lipids, I set the stoichiometr
 Using this modified reaction as the objective function, the model was optimised using FBA, and
 this process was repeated for the other pseudometabolites, resulting in different growth rates for each round of ablation (Fig.\ \ref{fig:model-ablate-fluxes}).
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=.6\linewidth]{ablation_example_fluxes.png}
   \caption[
@@ -327,7 +327,7 @@ Results thus validate ablation of biomass components as a method to simulate seq
 
 To evaluate whether sequential or parallel synthesis of biomass components offers a time advantage during cell growth, I estimated the timescale of biosynthesis for either resource allocation strategy (Fig.\ \ref{fig:model-ablate-times}).
 
-\begin{figure}
+\begin{figure}[htbp!]
   \centering
   \includegraphics[width=.7\linewidth]{ablation_example_adapted.png}
   \caption[
@@ -427,10 +427,11 @@ To corroborate results from Chapter~\ref{ch:biology}, the BY4741 \textit{zwf1$\D
 The deletions were made by restricting to zero the reaction fluxes that are associated with the deleted genes in the model.
 For BY4741-background strains, supplements were simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
 The same applied to BY4742-background strains, but lysine uptake replaced methionine uptake.
+
 Fig.\ \ref{fig:model-ablation-strains} shows that $\ratioabl < 1$ still held for auxotrophs and deletion strains, suggesting that the sequential biosynthesis strategy remained advantageous.
 Assuming that temporal scheduling of the synthesis of biomass components during growth explains the timing of biosynthetic events in the yeast metabolic cycle, these observations supports results in Chapter~\ref{ch:biology} which shows that auxotrophs and deletion strains have YMCs.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=0.7\textwidth]{deletions}
 
@@ -455,7 +456,7 @@ Within the range of $\epool^{\prime}$ that gives realistic growth rates, this is
 Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate.
 These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling the changes of $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
 
-\begin{figure}
+\begin{figure}[htb!]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
@@ -519,7 +520,7 @@ Figs.\ \ref{fig:model-saturation-glucose} and~\ref{fig:model-saturation-pyruvate
 In addition, the maximum growth rate on glucose (\SI{0.38}{\hour^{-1}}) was greater than the maximum growth rate on pyruvate (\SI{0.25}{\hour^{-1}}).
 Furthermore, Fig.\ \ref{fig:model-saturation-ammonium} shows that the maximum growth rate on the carbon source sets the saturation point for ammonium.
 
-\begin{figure}
+\begin{figure}[hbp!]
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -758,7 +759,7 @@ Enzyme usage reaction flux vectors show how the cell allocates its finite proteo
 To test whether similarities in proteome allocation to enzymes explain parallel biosynthesis, Fig.\ \ref{fig:model-rank-glc-highratio-rank} shows that when both glucose and ammonium were limiting, the allocation patterns were similar across rounds of ablation, thus explaining the advantage of parallel biosynthesis of biomass components.
 This similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall}, which shows that parallel biosynthesis exhibited relatively similar proteome allocation with the synthesis of individual biomass components.
 
-\begin{figure}
+\begin{figure}[htbp!]
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -826,6 +827,7 @@ The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig
   \label{fig:model-rank-glc-lowratio}
 \end{figure}
 
+\pagebreak
 
 \subsubsection{Pyruvate and ammonium}
 \label{subsec:model-rank-pyruvate}
@@ -835,7 +837,7 @@ To evaluate, in a different carbon source, whether parallel biosynthesis is also
 Similar to the glucose-ammonium investigation, in the high $\ratioabl$ condition where pyruvate and ammonium were limiting, Figs.\ \ref{fig:model-rank-pyr-highratio-rank} and~\ref{fig:model-rank-pyr-highratio-kendall} show that proteome allocation were similar across rounds of ablation, supporting parallel biosynthesis as a scheduling strategy.
 However, the results for the low $\ratioabl$ case suggest that grouping of biomass components explains sequential biosynthesis for only very low $\ratioabl$.
 
-\begin{figure}
+\begin{figure}[htbp!]
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -870,7 +872,7 @@ However, the results for the low $\ratioabl$ case suggest that grouping of bioma
 Fig.\ \ref{fig:model-rank-pyr-lowratio-rank} shows that when pyruvate was the carbon source, the contrast of proteome allocation between biomass components in the low $\ratioabl$ condition was lessened compared to when glucose was the carbon source.
 This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 0.9$), compared to the $\ratioabl$ in the glucose-ammonium investigation ($\ratioabl = 0.7$).
 
-\begin{figure}
+\begin{figure}[htbp!]
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -904,12 +906,8 @@ This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 
 
 The use of enzyme usage vectors to explain biomass synthesis scheduling strategies is called into question by the multiplicity of solutions in FBA.
 Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates and measures of similarity between enzyme usage fluxes when carbohydrate was prioritised and when protein was prioritised was not continuous.
-This observation is likely explained by the multiplicity of solutions in FBA.
-Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) is equivalent across linear programming solvers.
-% I still don't like this sentence.
-In sum, although choosing representative nutrient conditions led to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may cast doubts on conclusions.
 
-\begin{figure}
+\begin{figure}[htb!]
   \centering
   \begin{subfigure}[t]{0.45\textwidth}
   \centering
@@ -950,6 +948,11 @@ In sum, although choosing representative nutrient conditions led to an attractiv
     }
   \label{fig:model-noisy}
 \end{figure}
+
+This observation is likely explained by the multiplicity of solutions in FBA.
+Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) is equivalent across linear programming solvers.
+% I still don't like this sentence.
+In sum, although choosing representative nutrient conditions led to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may cast doubts on conclusions.
 
 
 \section{Discussion}
