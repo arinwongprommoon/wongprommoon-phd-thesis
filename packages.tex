@@ -132,6 +132,15 @@
 \addbibresource{bib/arin-all.bib}
 \bibliography{bib/arin-all}
 
+% Should remove 'editor' field if it is an '@article',
+% but currently doesn't work.
+% https://tex.stackexchange.com/a/187763
+\AtEveryBibitem{%
+\ifentrytype{article}{
+    \clearfield{editor}%%
+}{}
+}
+
 \usepackage{varioref}
 
 %% Lang, incl. proper hyphenation
