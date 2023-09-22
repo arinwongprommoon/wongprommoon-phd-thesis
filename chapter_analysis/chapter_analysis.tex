@@ -1059,6 +1059,14 @@ Nevertheless, relating the shape of the autocorrelation function to the effect o
     \label{fig:acf-sinusoid-biol-acf}
   \end{subfigure}
 
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{BioDare2_is26643_htb2mCherry_flavin.pdf}
+    \caption{
+    }
+    \label{fig:acf-sinusoid-biol-biodare}
+  \end{subfigure}
+
   % \begin{subfigure}[t]{0.5\textwidth}
   % \centering
   %   \includegraphics[width=\linewidth]{acf_sinusoid_biol_acf_fit.png}
@@ -1076,6 +1084,9 @@ Nevertheless, relating the shape of the autocorrelation function to the effect o
     Autocorrelation function across a population of time series of flavin autofluorescence.
     % \textbf{(\ref{fig:acf-sinusoid-biol-acf-fit})}
     % Fitting exponential decay functions to determine noise parameters, lag axis scaled to match Fig.\ \ref{fig:acf-noisetimescale-effect}.
+    \textbf{(\ref{fig:acf-sinusoid-biol-biodare})}
+    Period estimation using mFourFit ($n=190$), FFT NLLS ($n=20$), MESA ($n=169$), and Lomb-Scargle periodogram ($n=183$), as implemented by BioDare2 \parencite{zielinskiPeriodEstimationRhythm2022}.
+    For compatibility with BioDare2, the time axis was scaled so that \SI{95}{\minute} mapped to \SI{24}{\hour}.
   }
   \label{fig:acf-sinusoid-biol}
 \end{figure}
@@ -1100,6 +1111,15 @@ The abundance of histone 2B follow an asymmetric oscillation (Fig.\ \ref{fig:acf
     \label{fig:acf-fhn-biol-acf}
   \end{subfigure}
 
+  \begin{subfigure}[t]{0.7\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{BioDare2_is26643_htb2mCherry_mCherry.pdf}
+    \caption{
+    }
+    \label{fig:acf-fhn-biol-biodare}
+  \end{subfigure}
+
+
   % \begin{subfigure}[t]{0.5\textwidth}
   % \centering
   %   \includegraphics[width=\linewidth]{acf_fhn_biol_acf_fit.png}
@@ -1117,6 +1137,9 @@ The abundance of histone 2B follow an asymmetric oscillation (Fig.\ \ref{fig:acf
     Autocorrelation function across a population of time series of histone 2B abundance.
     % \textbf{(\ref{fig:acf-fhn-biol-acf-fit})}
     % Fitting exponential decay functions to determine noise parameters.
+    \textbf{(\ref{fig:acf-fhn-biol-biodare})}
+    Period estimation using mFourFit ($n=190$), FFT NLLS ($n=9$), MESA ($n=177$), and Lomb-Scargle periodogram ($n=185$), as implemented by BioDare2 \parencite{zielinskiPeriodEstimationRhythm2022}.
+    For compatibility with BioDare2, the time axis was scaled so that \SI{95}{\minute} mapped to \SI{24}{\hour}.
   }
   \label{fig:acf-fhn-biol}
 \end{figure}
