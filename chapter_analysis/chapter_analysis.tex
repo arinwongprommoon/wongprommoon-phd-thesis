@@ -437,19 +437,37 @@ However, some time series with irregular oscillations based on visual inspection
 
 To detect rhythmicity in one time series, \textcite{glynnDetectingPeriodicPatterns2006} calculates the probability of the null hypothesis that a peak in the periodogram occurs due to chance.
 When extended across a population of time series, rhythmicity detection by this method thus becomes a task of testing multiple hypotheses.
-\textcite{glynnDetectingPeriodicPatterns2006} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods, Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
+\textcite{glynnDetectingPeriodicPatterns2006} thus proposed controlling the false discovery rate, defined as the proportion of cases in which the null hypothesis is true among all hypotheses in which the test is declared significant (see Methods Section~\ref{subsec:methods-computational-periodogram}, specifically Eq.\ \ref{eq:lsp-khat}).
 Controlling the false discovery rate thus controls the expected proportion of oscillations that are classified as oscillatory.
 
 To assess the performance of this method as a classifier for rhythmicity detection, Fig.\ \ref{fig:glynn-roc} shows the receiver operating characteristic (ROC) curve, created as the false discovery rate was varied.
 The area under the ROC curve (0.762) suggests that the classifier performed modestly well, especially for a large ($n=425$) dataset of time series with a large variety of quality of oscillations.
+This performance was slightly better than the eJTK method for rhythmicity detection \parencite{hutchisonImprovedStatisticalMethods2015}, which gave an area under the ROC curve of 0.696.
 
-\begin{figure}[hb!]
+\begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.5\textwidth]{glynn_is20016_5_edit.pdf}
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{glynn_is20016_5.pdf}
+    \caption{
+    }
+    \label{fig:glynn-roc-glynn}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.45\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{biodare_roc_is20016_zwf1egf.pdf}
+    \caption{
+    }
+    \label{fig:glynn-roc-ejtk}
+  \end{subfigure}
+
   \caption[
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006}.
   ]{
+    \textbf{(\ref{fig:glynn-roc-glynn})}
     ROC curve of classifier based on \textcite{glynnDetectingPeriodicPatterns2006} as the false discovery rate was varied.
+    \textbf{(\ref{fig:glynn-roc-ejtk})}
+    ROC curve of the eJTK rhythmicity detection test \parencite{hutchisonImprovedStatisticalMethods2015}, as implemented by BioDare2 \parencite{zielinskiPeriodEstimationRhythm2022}, as the threshold $p$-value with Benjamini-Hochberg correction \parencite{benjaminiControllingFalseDiscovery1995} was varied.
     The true positive rate and false positive rates were computed based on the manual labels of the \textit{zwf1$\Delta$} dataset.
   }
   \label{fig:glynn-roc}
@@ -461,10 +479,11 @@ The area under the ROC curve (0.762) suggests that the classifier performed mode
 
 To assess the performance of a time series classification method based on the autoregressive model, I implemented the method described by \textcite{jiaFrequencyDomainAnalysis2020}, used to characterise synthetic time series of stochastic, oscillatory gene expression in a dividing cell.
 In the implementation of the autoregressive model used by \textcite{jiaFrequencyDomainAnalysis2020}, each data point was expressed as a linear combination of a number of data points that precede it, and model parameters led to an analytical solution for the periodogram, thus giving an advantage over the low-resolution Fourier spectrum (Methods Section~\ref{subsec:methods-computational-ar}).
+
 The resulting power spectra fell into four categories, one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
-\begin{figure}[b!]
+\begin{figure}[htb!]
   \centering
   \includegraphics[width=1.0\textwidth]{jiaFrequencyDomainAnalysis2020_2ab_adapted}
   \caption[
