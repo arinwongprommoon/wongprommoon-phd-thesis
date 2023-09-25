@@ -44,7 +44,7 @@ $P_{\mathrm{measured}}$ is the protein fraction of proteins whose weight are acc
 $f$ represents the fraction of proteins that are enzymes, and
 $\sigma$ is a parameter that represents the average saturation of enzymes.
 ecYeast8.6.0 assumes parameter values of $f = 0.5$, $P_{\mathrm{total}} = 0.5$, and $\sigma = 0.5$.
-If no proteomic data is used, as is the case in this chapter, $P_{\mathrm{measured}} = 0$.
+If no proteomic data is used, as is the case in this thesis, $P_{\mathrm{measured}} = 0$.
 
 Defining such parameters is a judgement call, especially when the protein fraction varies across growth rates~\parencite{elsemmanWholecellModelingYeast2022}, but $f = 0.5$ is close to the protein mass fraction of ecYeast8.6.0.
 Subsequently, GECKO changes the carbohydrate composition based on the assumption that a change in the amino acid composition is offset by the reverse change in the carbohydrate composition;
@@ -154,7 +154,7 @@ The resulting molecular weight will thus represent the mass fraction of each bio
 Computing the molecular weights of the carbohydrate, DNA, RNA, cofactor, and ion pseudometabolites is straightforward.
 This is because the equations similarly have reactants with molecular weights specified in the model and only the pseudometabolite, the sole product, does not have a molecular weight specified.
 In such cases, Eq.\ \ref{eq:conservation-of-mass} can be applied directly, i.e.\ the molecular weight of the pseudometabolite is equal to $\sum_{r = j}^{n_{r}}m_{r}c_{r}$, where $m_{r}$ values are taken directly from the molecular weights specified in the model.
-The results for these pseudometabolites are shown in Table~\ref{tab:ecyeast8-easy-rxns}
+The results for these pseudometabolites are shown in Table~\ref{tab:ecyeast8-easy-rxns}.
 
 \begin{table}[ht]
   \centering
@@ -174,7 +174,7 @@ The results for these pseudometabolites are shown in Table~\ref{tab:ecyeast8-eas
 \subsection{Protein pseudometabolite}
 \label{append:model-molweights-protein}
 
-Other metabolites were less straightforward and required some judgement calls.
+Other metabolites were less straightforward.
 To compute the molecular weight of the protein pseudometabolite, I inspected reaction \texttt{r\_4047}:
 
 \texttt{
@@ -245,7 +245,8 @@ To compute the molecular weight of \texttt{fatty acid backbone}, the reactions t
 Because of SLIMEr, four reactions in the model produce \texttt{fatty acid backbone} (Table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}).
 The model specifies molecular weights for all species in these four reactions, except for \texttt{fatty acid backbone}.
 Therefore, using each chemical equation, the molecular weight of \texttt{fatty acid backbone} can be solved for by rearranging Eq.\ \ref{eq:conservation-of-mass} with parameters defined to match each reaction.
-However, the molecular weights computed from each equation are different.% , as shown in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}.
+However, the molecular weights computed from each equation are different.
+% , as shown in table~\ref{tab:ecyeast8-fatty-acid-backbone-rxns}.
 Because the differences are slight, %, and ultimately I am making a back-of-the-envelope calculation,
 I took the mean of the four weights to give \SI{729.53}{\gram~\mole^{-1}}.
 Subsequently, the molecular weight of \texttt{lipid backbone} was computed from this mean value and the molecular weights of other species involved in the production of \texttt{lipid backbone}, giving \SI{21.31}{\gram~\mole^{-1}}.
@@ -303,7 +304,7 @@ To explain the increase in $\ratioabl$ as $\epool^{\prime}$ increases, I conside
 With reference to Fig.\ \ref{fig:model-pool}, consider $0 \leq x \leq 0.5$.
 In this region of $x$, based on the observations in the figure, we model $\gro = k_{0}x$ and $\griabl = k_{i}x$, where constants $k_{0}, k_{i} > 0$.
 This models how these values initially increase linearly in Fig.\ \ref{fig:model-pool}.
-Eq.\ \ref{eq:model-ratio-diff} thus becomes:
+Thus, Eq.\ \ref{eq:model-ratio-diff} becomes:
 \begin{equation}
   \begin{aligned}
   \ndif{\ratioabl(x)}{x} &= \frac{1}{\biomfrac{protein}} \left[ \left( \sum_i \frac{f_i}{k_{i}x} \right) \cdot k_{0} - k_{0}x \sum_{i}\left( \frac{f_{i}}{{(k_{i}x)}^{2}} \cdot k_{i} \right) \right]\\
@@ -314,12 +315,12 @@ Eq.\ \ref{eq:model-ratio-diff} thus becomes:
   \label{eq:model-ratio-diff-smallx}
 \end{equation}
 
-And this explains the constant $\ratioabl$ in this region.
+Eq.\ \ref{eq:model-ratio-diff-smallx} thus explains the constant $\ratioabl$ in this region.
 
 Now, consider $0.5 < x \leq 9$.
 In this region, the trajectories of $\griabl$ with respect to time remain linear, but some with changes in slope.
 In other words, in a sub-region where the slopes of all $\griabl$ are constant, we can let: $\gro = k_{0}x$ and $\griabl = m_{i}x + c_{i}$, where $k_{0}, m_{i}, c_{i} > 0$.
-Eq.\ \ref{eq:model-ratio-diff} thus becomes:
+Thus, Eq.\ \ref{eq:model-ratio-diff} becomes:
 \begin{equation}
   \begin{aligned}
   \ndif{\ratioabl(x)}{x} &= \frac{1}{\biomfrac{protein}} \left[ \left( \sum_i \frac{f_i}{m_{i}x+c_{i}} \right) \cdot k_{0} - k_{0}x \sum_{i}\left( \frac{f_{i}}{{(m_{i}x+c_{i})}^{2}} \cdot m_{i} \right) \right]\\
@@ -332,12 +333,12 @@ Eq.\ \ref{eq:model-ratio-diff} thus becomes:
 
 As $f_{i}, c_{i}, m_{i} > 0$ for all biomass components $i$, and $k_{0} > 0$, we get $\ndif{\ratioabl(x)}{x} > 0$ regardless of the values that these constants take.
 Because $k_{0}$ does not change over the region of $x$ considered, $m_{i}$, $c_{i}$, and $x$ values thus determine the magnitude of $\ndif{\ratioabl(x)}{x}$.
-If within a region of $x$, $m_{i}$ and $c_{i}$ values remain constant for all $i$, then as $x$ increases, $\ndif{\ratioabl(x)}{x}$ should decrease --- this is certainly the case, as can be observed in Fig.\ \ref{fig:model-pool}.
+If within a region of $x$, $m_{i}$ and $c_{i}$ values remain constant for all $i$, then as $x$ increases, $\ndif{\ratioabl(x)}{x}$ should decrease --- this was the case, as observed in Fig.\ \ref{fig:model-pool}.
 
 Lastly, consider $x > 9$.
 In this region, $\gro$ becomes constant, thus we let $\gro = k_{0}$.
 We keep $\griabl = m_{i}x + c_{i}$, and as before, $k_{0}, m_{i}, c_{i} > 0$.
-Eq.\ \ref{eq:model-ratio-diff} thus becomes:
+Thus, Eq.\ \ref{eq:model-ratio-diff} becomes:
 \begin{equation}
   \begin{aligned}
   \ndif{\ratioabl(x)}{x} &= \frac{1}{\biomfrac{protein}} \left[ 0 - k_{0} \sum_{i}\left( \frac{f_{i}}{{(m_{i}x+c_{i})}^{2}} \cdot m_{i} \right) \right]\\
