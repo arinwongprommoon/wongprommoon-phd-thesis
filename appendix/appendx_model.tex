@@ -228,12 +228,14 @@ Reaction \texttt{r\_4063} specifies a lipid backbone pseudoreaction, in which \t
 \begin{table}[ht]
   \centering
     \begin{tabular}{llS}
-      ID & Reaction & {\makecell{Computed molecular\\ weight (\SI{}{\gram~\mole^{-1}})}} \\
       \toprule
+      ID & Reaction & {\makecell{Computed molecular\\ weight (\SI{}{\gram~\mole^{-1}})}} \\
+      \midrule
     \texttt{r\_3975} & \makecell{\texttt{palmitate} \\ \texttt{--> 0.255421 fatty acid backbone} \\ \texttt{0.256429 C16:0 chain}} & 742.54 \\
     \texttt{r\_3976} & \makecell{\texttt{palmitoleate} \\ \texttt{--> 0.253405 fatty acid backbone} \\ \texttt{0.254413 C16:1 chain}} & 744.56 \\
     \texttt{r\_3977} & \makecell{\texttt{stearate} \\ \texttt{--> 0.283475 fatty acid backbone} \\ \texttt{0.284483 C18:0 chain}} & 714.49 \\
     \texttt{r\_3978} & \makecell{\texttt{oleate} \\ \texttt{--> 0.281459 fatty acid backbone} \\ \texttt{0.282467 C18:1 chain}} & 716.51 \\
+      \bottomrule
     \end{tabular}
     \caption{ecYeast8 reactions that generate the \texttt{fatty acid backbone} metabolite}
     \label{tab:ecyeast8-fatty-acid-backbone-rxns}
@@ -259,8 +261,9 @@ Subsequently, the mass fraction of each biomass component is computed by dividin
 \begin{table}[ht]
   \centering
   \begin{tabular}{lS}
-    Metabolite & {$f_{i}$} \\
     \toprule
+    Metabolite & {$f_{i}$} \\
+    \midrule
     Protein & 0.52453 \\
     Carbohydrate & 0.36438 \\
     RNA & 0.06660 \\
@@ -268,6 +271,7 @@ Subsequently, the mass fraction of each biomass component is computed by dividin
     Cofactors & 0.00502 \\
     DNA & 0.00406 \\
     Ions & 0.00258 \\
+    \bottomrule
   \end{tabular}
   \caption{
     $f_{i}$ values for each biomass component.

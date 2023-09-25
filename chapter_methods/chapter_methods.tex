@@ -643,8 +643,9 @@ The ratio between the molecular weights are similar to the ratio between the mas
 \begin{table}[ht]
   \centering
   \begin{tabular}{lSS}
+    \toprule
     Metabolite & {\makecell{Computed molecular weight\\ (\SI{}{\gram~\mol^{-1}})}} & {\makecell{Biomass composition\\ at growth rate \SI{0.375}{\hour^{-1}}\\ (\SI{}{\gram~\kilo\gram_{DW}^{-1}})}} \\
-    \hline
+    \midrule
     Protein & 504.37 & 505.\\
     Carbohydrate & 350.37 & 237.\\
     RNA & 64.04 & 105.\\
@@ -652,7 +653,7 @@ The ratio between the molecular weights are similar to the ratio between the mas
     Cofactors & 4.83 & \\
     DNA & 3.90 & 5. \\
     Ions & 2.48 & \\
-    \hline
+    \bottomrule
     Total & 961.57 & \\
   \end{tabular}
   \caption[
@@ -665,7 +666,7 @@ The ratio between the molecular weights are similar to the ratio between the mas
 
 Adding together molecular weights of pseudometabolites gave a molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
 In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
-In addition, the sum of stoichiometric coefficients are not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
+In addition, the sum of stoichiometric coefficients is not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
 
 %%% Local Variables:
 %%% mode: latex
