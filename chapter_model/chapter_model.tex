@@ -1,7 +1,7 @@
 \chapter{Modelling yeast biosynthesis strategies under constraints}
 \label{ch:model}
 
-To better understand the mechanistic basis of the YMC, I sought to build a model of how the cyclic sequence of cellular events respond to extracellular nutrient conditions.
+To better understand the mechanistic basis of the YMC, I sought to build a model of how the cyclic sequence of cellular events responds to extracellular nutrient conditions.
 However, it is challenging to develop a fine-grained model for the aspects of the YMC,
 especially if the detailed molecular mechanisms are unclear.
 Further complicating the development of a fine-grained model is the fact that the main read-outs from single-cell studies --- NAD(P)H and flavin autofluorescence --- are aggregate signals from several biochemical phenomena.
@@ -13,7 +13,7 @@ Here, I use a genome-scale metabolic model and flux balance analysis (FBA) to ad
 
 Specifically, I aim to evaluate these hypotheses:
 \begin{enumerate}
-  \item A finite proteome pool gives rise to sequential scheduling of the synthesis of biomass components during growth: lipid, carbohydrate, amino acids, and nucleic acids.
+  \item A finite proteome pool gives rise to sequential scheduling of the synthesis of biomass components during growth: lipids, carbohydrates, amino acids, and nucleic acids.
         In other words, as an adaption, the cell synthesises biomass components in sequence rather than in parallel.
         This would explain the timing of biosynthetic events in the phases of the yeast metabolic cycle.
   \item This resource allocation strategy remains advantageous in many nutrient conditions and deletion strains,
@@ -72,7 +72,8 @@ the stoichiometric matrix and reaction flux bounds (Eq.\ \ref{eq:model-fba-const
 The stoichiometric matrix balances reaction inputs and outputs, while flux bounds impose upper and lower limits on the fluxes of each reaction.
 These constraints restrict the solution space for the FBA problem.
 
-FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions that are difficult to construct and parametrise.
+FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions.
+Such differential equations can be difficult to construct and parametrise.
 
 \section{Modelling temporal scheduling of biosynthesis}
 \label{sec:model-temporal}
@@ -98,7 +99,7 @@ Traditional genome-scale models assume that the uptake rate of carbon source lim
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
 An enzyme-constrained model fits the assumption that there is a fixed number of amino acids the cell has to distribute \parencite{weisseMechanisticLinksCellular2015}.
 Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{elsemmanWholecellModelingYeast2022} constrain the total sum of fluxes based on a defined total amount of enzyme.
-\textcite{elsemmanWholecellModelingYeast2022} additionally impose a ribosome capacity constraint and compartment constraints.
+\textcite{elsemmanWholecellModelingYeast2022} additionally imposed a ribosome capacity constraint and compartment constraints.
 
 In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate two strategies of scheduling of the synthesis of biomass components: in sequence and in parallel.
 To simulate the cell prioritising the synthesis of each biomass component in sequence, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
@@ -110,7 +111,7 @@ Finally, to show how nutrient conditions affect the cell's scheduling strategy, 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
 \label{sec:model-yeast8}
 
-To impose proteome constraints, I used the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019} and performed FBA.
+To impose proteome constraints, I used the enzyme-constrained Yeast8 (ecYeast8) model \parencite{luConsensusCerevisiaeMetabolic2019} and performed FBA\@.
 I used this model because it is recent, offers a good coverage of reactions, and is continuously updated in a well-characterised and well-documented software repository.
 Here, I used the model ec\-Yeast\-8.6.0, the latest version for which both original and enzyme-constrained variants are available.
 ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017} --- specifically, GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, the latest published version.
@@ -135,7 +136,7 @@ GECKO imposes an additional constraint on the metabolic fluxes based on the conc
     Modifications to the stoichiometric matrix of a genome-scale model that GECKO imposes.
     The original stoichiometric matrix $\mathbf{S}$ includes metabolites $M_{1} \ldots M_{m}$ and reactions $v_{1} \ldots v_{n}$.
     GECKO extends this matrix to include enzymes $E_{1} \ldots E_{p}$ and enzyme usage reactions $e_{1} \ldots e_{p}$.
-    The new stoichiometric matrix can be seen as four submatrices concatenated together: the upper right submatrix is $\mathbf{0}$, the lower left submatrix encodes kinetic information, and the lower right submatrix is $\mathbf{I}$.
+    The new stoichiometric matrix can be seen as four submatrices concatenated together: the upper left submatrix is the original $\mathbf{S}$, the upper right submatrix is $\mathbf{0}$, the lower left submatrix encodes kinetic information, and the lower right submatrix is $\mathbf{I}$.
     Figure adapted from~\textcite{sanchezImprovingPhenotypePredictions2017}.
   }
   \label{fig:model-gecko}
@@ -191,7 +192,7 @@ Appendices~\ref{append:model-gecko}--\ref{append:model-gecko-nonsimple} illustra
 \label{sec:model-yeast8-pseudometabolites-def}
 
 To simulate producing each class of biomass component in turn,
-I take advantage of pseudometabolites in ecYeast8 to remove them in turn from the biomass reaction ---
+I took advantage of pseudometabolites in ecYeast8 to remove them in turn from the biomass reaction ---
 in other words, ablating pseudometabolites from the biomass reaction.
 %Specifically, I exclude each pseudometabolite from the biomass reaction, in turn, and optimise the model.
 
@@ -319,7 +320,7 @@ Specifically, the figure shows:
         However, these subsystems showed weak decreases in flux when DNA is prioritised, though the enzyme usage flux profile overall is similar to when RNA is prioritised.
 \end{enumerate}
 
-Results thus validate ablation of biomass components as a method to simulate sequential synthesis of biomass components by the cell, as the changes of fluxes reflect cellular biochemistry.
+Because the changes of fluxes reflect cellular biochemistry, results thus validate ablation of biomass components as a method to simulate sequential synthesis of biomass components by the cell.
 
 
 \section{Estimating timescale of biosynthesis}
@@ -359,7 +360,7 @@ Based on the growth rates computed in rounds of ablation (Fig.\ \ref{fig:model-a
 where
 $i$ represents each of the biomass components (lipids, proteins, carbohydrates, DNA, RNA, cofactors, and ions),
 $\Tiabl$ is the predicted time for synthesis of each biomass component,
-$f_{i}$ is the mass fraction of each biomass component (shown in Table~\ref{tab:model-biomfrac}), and
+$f_{i}$ is the mass fraction of each biomass component (Table~\ref{tab:model-biomfrac}), and
 $\griabl$ is the optimal flux of the ablated biomass reaction.
 In Eq.\ \ref{eq:model-ablated-time}, $f_{i}$ functions as a scaling factor so that the synthesis time of a biomass component is proportional to the proportion of the biomass component in dry cell mass.
 
@@ -423,7 +424,7 @@ Conversely, $\ratioabl > 1$ indicates that parallel synthesis of biomass compone
 
 % In figure~\ref{fig:model-ablate-times}, the $\ratioabl = 0.70$.
 To confirm that the advantage of the sequential biosynthesis strategy is retained in other genetic backgrounds, I extended the computation $\ratioabl$ and related quantities to models in which genes were deleted.
-To corroborate results from Chapter~\ref{ch:biology}, the BY4741 \textit{zwf1$\Delta$} and BY4742 \textit{tsa2$\Delta$} strains were simulated --- the latter was substituted for \textit{tsa1$\Delta$ tsa2$\Delta$} because the ecYeast8 model did not include reactions that correspond to \textit{TSA1}.
+To corroborate results from Chapter~\ref{ch:biology}, the BY4741 \textit{zwf1$\Delta$} and BY4742 \textit{tsa2$\Delta$} strains were simulated --- the latter was substituted for \textit{tsa1$\Delta$ tsa2$\Delta$} because the ecYeast8 model does not include reactions that correspond to \textit{TSA1}.
 The deletions were made by restricting to zero the reaction fluxes that are associated with the deleted genes in the model.
 For BY4741-background strains, supplements were simulated by allowing uptake of histidine, leucine, tryptophan, methionine and uracil.
 The same applied to BY4742-background strains, but lysine uptake replaced methionine uptake.
@@ -438,7 +439,7 @@ Assuming that temporal scheduling of the synthesis of biomass components during 
   \caption[
     Estimated synthesis times of biomass components, for BY4741, \textit{zwf$\Delta$}, and \textit{tsa2$\Delta$}
   ]{
-    Estimated synthesis times of biomass components: from ablation and $\Tpar$, for wild-type (unmodified model) BY4741, \textit{zwf$\Delta$} in the BY4741 background, and \textit{tsa2$\Delta$} in the BY4742 background
+    Estimated synthesis times of biomass components: from ablation and $\Tpar$, for wild-type (unmodified model), BY4741, \textit{zwf$\Delta$} in the BY4741 background, and \textit{tsa2$\Delta$} in the BY4742 background
   }
   \label{fig:model-ablation-strains}
 \end{figure}
@@ -675,7 +676,8 @@ Fig.\ \ref{fig:model-grid-glc-carb-to-prot} suggests that carbon and nitrogen li
 Specifically, within the glucose-limiting region, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ was at a high and constant value.
 In contrast, within the ammonium-limiting region, as $\exchrate{amm}$ increases, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ increased.
 In addition, along the boundary of both regions, where glucose and ammonium were both near-limiting and $\ratioabl$ was high, $\frac{\Tabl{carbohydrate}}{\Tabl{protein}}$ remained roughly constant.
-These observations link synthesis times of biomass components with scheduling strategy; specifically, the observations suggest that the ratios of synthesis times alone did not explain the choice of scheduling strategy, and that total biosynthesis time was an additional factor.
+These observations link synthesis times of biomass components with scheduling strategy.
+Specifically, the observations suggest that the ratios of synthesis times alone did not explain the choice of scheduling strategy, and that total biosynthesis time was an additional factor.
 
 \subsubsection{Pyruvate and ammonium}
 \label{subsec:model-grid-pyruvate}
@@ -944,7 +946,7 @@ Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates a
   ]{
     Measures of similarity between enzyme usage fluxes in different nutrient conditions.
     Cosine distances between the vector of enzyme usage fluxes when protein is prioritised and the equivalent vector when carbohydrate is prioritised are shown \textbf{(\ref{fig:model-noisy-glc-cosine})} for glucose-ammonium conditions and \textbf{(\ref{fig:model-noisy-pyr-cosine})} pyruvate-ammonium conditions; smaller distances indicate a greater similarity between the two conditions.
-    Means of the set of Kendall's $\tau$-b rank correlation coefficients between the parallel case and each biomass-prioritised case are shown \textbf{(\ref{fig:model-noisy-glc-kendall})} for glucose-ammonium conditions and \textbf{(\ref{fig:model-noisy-pyr-kendall})} pyruvate-ammonium conditions; larger means indicate a greater similarity between parallel biosynthesis and individual biomass component synthesis.
+    Means of the set of Kendall's $\tau$-b rank correlation coefficients between the parallel case and each biomass-prioritised case are shown \textbf{(\ref{fig:model-noisy-glc-kendall})} for glucose-ammonium conditions and \textbf{(\ref{fig:model-noisy-pyr-kendall})} pyruvate-ammonium conditions; larger mean values indicate a greater similarity between parallel biosynthesis and individual biomass component synthesis.
     }
   \label{fig:model-noisy}
 \end{figure}
@@ -952,7 +954,7 @@ Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates a
 This observation is likely explained by the multiplicity of solutions in FBA\@.
 Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) is equivalent across linear programming solvers.
 % I still don't like this sentence.
-In sum, although choosing representative nutrient conditions led to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may cast doubts on conclusions.
+In sum, although choosing representative nutrient conditions led to an attractive picture that may confirm the hypothesis that the cell favours parallel biosynthesis in nutrient limiting conditions if biomass components share metabolic pathways, the computational limitations of FBA may cast doubts on conclusions.
 
 
 \section{Discussion}
@@ -963,14 +965,14 @@ This chapter uses a genome-scale model of budding yeast and flux balance analysi
 % However, changes in nutrient conditions may make parallel biosynthesis advantageous if the proteome allocation between biomass components become more similar.
 
 My results suggest that ablation of components of the biomass reaction was a viable method to simulate sequential synthesis of biomass components, as evidenced by how ablation predicted biologically relevant changes in proteome allocation to enzymes.
-In addition, ablation lead to a way to estimate the time of synthesis of biomass components.
+In addition, ablation led to a way to estimate the time of synthesis of biomass components.
 These times suggest that sequential scheduling of biosynthesis saves time during growth and remains advantageous across deletion strains.
 
 My results further show that within realistic growth rates, a smaller proteome pool led to a greater advantage of sequential biosynthesis over parallel biosynthesis.
 However, parallel scheduling of biosynthesis becomes advantageous in some nutrient conditions, such as when both carbon and nitrogen sources are limiting.
 Further simulations suggest an explanation for this advantage of parallel biosynthesis: as each biomass component is synthesised, the cell allocates its proteome pool to enzymes in similar patterns.
 
-The advantage of sequential scheduling of biosynthesis over parallel scheduling of biosynthesis may explain why yeast cells exhibit metabolic cycles, in which there is a sequence of synthesising biomass components.
+The advantage of sequential scheduling of biosynthesis over parallel scheduling of biosynthesis may explain why yeast cells exhibit metabolic cycles, in which there is a sequence of synthesising biomass components \parencite{mellorMolecularBasisMetabolic2016}.
 Conversely, the advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis in nutrient-limiting conditions may explain the absence of metabolic cycles in extreme, non-permissive conditions.
 The metabolic cycle may thus be an adaptation to a limited proteome pool and having to carry out the metabolically expensive process of protein synthesis during cell growth \parencite{oneillEukaryoticCellBiology2020}.
 Clustering of the synthesis of lipids and proteins in one group may explain cycling of storage lipids \parencite{campbellBuildingBlocksAre2020}, while clustering of carbohydrate, DNA, and RNA synthesis in another group to group together processes that require oxidative phosphorylation may explain respiratory cycles in the YMC \parencite{tuLogicYeastMetabolic2005}.
