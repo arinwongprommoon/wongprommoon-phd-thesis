@@ -92,7 +92,7 @@ An attempt in extending FBA to solve a time-dependent resource allocation proble
 This study extended a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to find the temporal order of intracellular synthesis reactions which optimises the growth rate of the cell, under resource constraints.
 However, the model relies on an external oscillator --- namely, the light-dark cycle.
 In contrast, the yeast metabolic cycle is autonomously generated.
-Therefore, it is difficult to extend the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC.
+Therefore, it is difficult to extend the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC\@.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
@@ -116,7 +116,7 @@ Here, I used the model ec\-Yeast\-8.6.0, the latest version for which both origi
 ecYeast8 uses the GECKO formalism \parencite{sanchezImprovingPhenotypePredictions2017} --- specifically, GECKO 2 \parencite{domenzainReconstructionCatalogueGenomescale2022}, the latest published version.
 GECKO applies an enzyme constraint by modifying the stoichiometric matrix of a genome-scale metabolic model.
 In addition, the model has `pseudometabolites' defined by reactions that group specific chemical species in general classes.
-These formalisms allow studying each class of biomass component (e.g.\ lipid, protein, carbohydrate) individually (Methods Section \ref{subsec:methods-fba-ecYeast8}).
+These formalisms allow studying each class of biomass component (e.g.\ lipid, protein, carbohydrate) individually (Methods Section~\ref{subsec:methods-fba-ecYeast8}).
 
 
 \subsection{GECKO}
@@ -411,7 +411,7 @@ Therefore,
     & = \frac{\left( \sum_{i} \Tiabl \right)}{\left( \argmax_{i} \Tiprop \right)}\\
     & = \frac{\left(  \sum_{i} f_{i} \cdot \frac{\ln 2}{\griabl} \right)}{\left( \biomfrac{protein} \cdot \frac{\ln 2}{\gro} \right)}\\
     %& = \left( \sum_i \frac{f_i}{\griabl} \right) \cdot \frac{\gro}{\biomfrac{protein}} \\
-    & = \left( \frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \ldots + \frac{\biomfrac{ion}}{\grabl{ion}} \right) \cdot \frac{\gro}{\biomfrac{protein}}
+    & = \left( \frac{\biomfrac{lipid}}{\grabl{lipid}} + \frac{\biomfrac{protein}}{\grabl{protein}} + \cdots + \frac{\biomfrac{ion}}{\grabl{ion}} \right) \cdot \frac{\gro}{\biomfrac{protein}}
     \end{aligned}
   \label{eq:model-ratio}
 \end{equation}
@@ -454,7 +454,7 @@ With a smaller $\epool$, the sum of fluxes of enzyme usage pseudoreactions must 
 Fig.\ \ref{fig:model-pool} shows that constraining the proteome pool available for enzymes leads to a greater advantage of sequential biosynthesis of biomass components over parallel biosynthesis.
 Within the range of $\epool^{\prime}$ that gives realistic growth rates, this is evidenced by a decreasing $\ratioabl$ ratio if $\epool^{\prime}$ decreases (Fig.\ \ref{fig:model-pool-ratio-growthrate}).
 Concurrently, as $\epool^{\prime}$ decreases, the wild type growth rate ($\gro$) decreases linearly to zero and ablated growth rates ($\griabl$) decrease in linear segments independently of each other and of the growth rate.
-These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling the changes of $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix \ref{append:model-pool}).
+These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and modelling the changes of $\gro$ and $\griabl$ with respect to $\epool^{\prime}/\epool$ as linear equations (Appendix~\ref{append:model-pool}).
 
 \begin{figure}[htb!]
   \centering
@@ -491,7 +491,7 @@ These observations can be explained by considering Eq.\ \ref{eq:model-ratio} and
   \caption[
     Effect of the size of the proteome pool available for enzymes
   ]{
-    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on \textbf{(\ref{fig:model-pool-ratio-growthrate}, \ref{fig:model-pool-ratio-growthrate-20})} $\ratioabl$, the growth rate, and \textbf{(\ref{fig:model-pool-ablated}, \ref{fig:model-pool-ablated-20})} the optimal flux of the ablated biomass reaction $\griabl$ in each round of ablation.
+    Effect of the size of the proteome pool available for enzymes ($\epool^{\prime}$) on \textbf{(\ref{fig:model-pool-ratio-growthrate},~\ref{fig:model-pool-ratio-growthrate-20})} $\ratioabl$, the growth rate, and \textbf{(\ref{fig:model-pool-ablated},~\ref{fig:model-pool-ablated-20})} the optimal flux of the ablated biomass reaction $\griabl$ in each round of ablation.
     \textbf{(\ref{fig:model-pool-ratio-growthrate})} and \textbf{(\ref{fig:model-pool-ablated})} show $\epool^{\prime}/\epool \leq 2$, while
     \textbf{(\ref{fig:model-pool-ratio-growthrate-20})} and \textbf{(\ref{fig:model-pool-ablated-20})} show $\epool^{\prime}/\epool \leq 20$.
   }
@@ -904,7 +904,7 @@ This may be explained by the higher $\ratioabl$ in this condition ($\ratioabl = 
   \label{fig:model-rank-pyr-lowratio}
 \end{figure}
 
-The use of enzyme usage vectors to explain biomass synthesis scheduling strategies is called into question by the multiplicity of solutions in FBA.
+The use of enzyme usage vectors to explain biomass synthesis scheduling strategies is called into question by the multiplicity of solutions in FBA\@.
 Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates and measures of similarity between enzyme usage fluxes when carbohydrate was prioritised and when protein was prioritised was not continuous.
 
 \begin{figure}[htb!]
@@ -949,7 +949,7 @@ Fig.\ \ref{fig:model-noisy} shows that the relationship between exchange rates a
   \label{fig:model-noisy}
 \end{figure}
 
-This observation is likely explained by the multiplicity of solutions in FBA.
+This observation is likely explained by the multiplicity of solutions in FBA\@.
 Namely, while FBA finds the optimal value of the objective function, there is no guarantee that the flux vector $\mathbf{v}$ (Eq.\ \ref{eq:model-fba-objective}) is equivalent across linear programming solvers.
 % I still don't like this sentence.
 In sum, although choosing representative nutrient conditions led to an attractive picture that may confirm the hypothesis of this section, the computational limitations of FBA may cast doubts on conclusions.
