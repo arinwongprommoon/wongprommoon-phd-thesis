@@ -13,7 +13,7 @@ This thesis is divided into six chapters:
   \item Chapter~\ref{ch:biology} presents results from single-cell microfluidics and fluorescence microscopy to detect flavin-based metabolic cycles in yeast cells.
         I show that the metabolic cycle and cell division cycle are autonomous and synchronise in permissive conditions, while perturbations affect the relationship between these two biological oscillators.
   \item Chapter~\ref{ch:analysis} discusses the analysis of oscillatory time series.
-        Given and the challenges of analysing noisy low-resolution time series, this deserves discussion in its own right.
+        Given the challenges of analysing noisy low-resolution time series, this deserves discussion in its own right.
         This chapter explores processes to visualise groups in the dataset, detecting rhythmicity, period estimation, and detecting synchrony.
   \item Chapter~\ref{ch:model} discusses using flux balance analysis to address whether proteome constraints explain sequential scheduling of biosynthesis in the yeast metabolic cycle.
   \item Finally, Chapter~\ref{ch:concl} presents a conclusion based on the previous three results chapters and suggests further avenues of study.
@@ -232,7 +232,7 @@ This three-phase model is primarily based on cellular events, including clusteri
     The yeast metabolic cycle is characterised by transcript cycling
   ]{
     The yeast metabolic cycle is characterised by transcript cycling.
-    Such transcripts are divided into three clusters based on their patterns and phase relationship.
+    Such transcripts are divided into three clusters based on their patterns and phase relationships.
     The peaking of these transcripts correspond to the three (OX, RB, RC) phases of the yeast metabolic cycle.
     Adapted from \textcite{tuLogicYeastMetabolic2005}.}
   \label{fig:intro-ymc-tu-transcripts}
@@ -389,7 +389,7 @@ Although the molecular basis of the yeast metabolic cycle is not well-characteri
 % Mellor (2016) provide an awesome table.
 Genes that control the cell division cycle and metabolism have been deleted in studies.
 
-Several deletions have been shown to remove the metabolic oscillations in chemostats: \textit{zwf1$\Delta$} \parencite{tuCyclicChangesMetabolic2007}, \textit{gsy2$\Delta$}, and \textit{gph1$\Delta$} \parencite{oneillEukaryoticCellBiology2020} (Figs.\ \ref{fig:intro-ymc-zwf1},~\ref{fig:intro-ymc-gsy2-gph1}).
+Several deletions have been shown to remove the metabolic oscillations in chemostats: \textit{zwf1$\Delta$} \parencite{tuCyclicChangesMetabolic2007}, \textit{gsy2$\Delta$}, and \textit{gph1$\Delta$} \parencite{oneillEukaryoticCellBiology2020} (Figs.\ \ref{fig:intro-ymc-zwf1}--\ref{fig:intro-ymc-gsy2-gph1}).
 
 \begin{figure}[p]
   \centering
@@ -481,7 +481,7 @@ Deleting \textit{SWE1} also resulted in shortened periods of dissolved-oxygen me
 
 Tsa1p and Tsa2p are paralogous cytoplasmic thioredoxin peroxidases that cooperate in the peroxiredoxin-thioredoxin system to eliminate reactive oxygen species and have been shown to be a marker for circadian rhythms.
 A double deletion of the two genes still results in metabolic cycles, but with an additional burst in high oxygen consumption during what would otherwise be the reductive-charging phase, showing that the peroxiredoxin-thioredoxin system is instrumental in the integrity of the yeast metabolic cycle (Fig.\ \ref{fig:intro-ymc-tsa1-tsa2}).
-In addition, \textcite{amponsahPeroxiredoxinsCoupleMetabolism2021} show the presence of cycling peroxiredoxin oxidation during the YMC using chemostat-based studies, with a corresponding cycling of hydrogen peroxide.
+In addition, \textcite{amponsahPeroxiredoxinsCoupleMetabolism2021},using the chemostat, show that the oxidation of peroxiredoxin cycles during the YMC, with a corresponding cycling of hydrogen peroxide.
 They also confirm that inactivating peroxiredoxins disrupts the metabolic cycle and decouples it from the cell division cycle, through inducible degradation of an additional cytosolic peroxiredoxin Ahp1p.
 
 %Moreover, deletion of \textit{GTS1} shortens the oscillation periods \parencite{lloydUltradianMetronomeTimekeeper2005},
@@ -589,8 +589,8 @@ However, temporal segregation of physiological process has also been reported in
 
 The chemostat obscures contribution of sub-populations of cells (Fig.\ \ref{fig:intro-ymc-populations}).
 \textcite{burnettiCellCycleStart2016} suggest that sub-populations within the yeast culture that enter the yeast metabolic cycle in a staggered manner can be responsible for the metabolic cycle and the cell division cycle appearing coupled one-to-one in the chemostat while having different periods.
-This proposition was information by observing one pulse of DNA replication per YMC and observing that a fraction of cells that exhibit the YMC initiated cell division.
-Contributions from sub-populations of cells are further highlighted by \textcite{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that a group of genetically identical yeast cells divide themselves into two populations.
+This proposition was informed by observing one pulse of DNA replication per YMC and observing that a fraction of cells that exhibited the YMC initiated cell division.
+Contributions from sub-populations of cells were further highlighted by \textcite{bagameryPutativeBetHedgingStrategy2020}, who used a microfluidic platform to show that a group of genetically identical yeast cells divide themselves into two populations.
 Such a bet-hedging strategy results in some percentage of the population surviving in a glucose-starved or a glucose-rich condition, beneficial for long-term population survival.
 Taken together, it is possible that phenotypically different sub-populations in the chemostat culture may partially explain the observations in the chemostat so far.
 
@@ -640,7 +640,7 @@ In sum, these single-cell studies address a small fraction of the knowledge cove
 There are unknowns in the molecular mechanism that drives YMCs.
 Genome-wide transcript cycling has two superclusters that correspond to the oxidative and reductive-building phases \parencite{machneYinYangYeast2012}.
 However, there has been no genome-wide analysis of genes that influence cycling \parencite{mellorMolecularBasisMetabolic2016}, though some genes seem to have key roles.
-As we lack proteome analysis, it is unclear how protein levels and post-translation modifications are affected.
+Although proteome analysis has suggested two clusters of cycling proteins that correspond to the HOC and LOC phases \parencite{oneillEukaryoticCellBiology2020}, the small proportion of cycling proteins relative to the whole proteome suggests a post-translational regulation mechanism \parencite{zylstraMetabolicDynamicsCell2022}, which is yet to be elucidated.
 
 %[FIGURE: MY INVESTIGATION OF CAMPBELL ET AL. 2020 TO SHOW PERIODICITY OF TRANSCRIPTS/PROTEINS/METABOLITES]
 
