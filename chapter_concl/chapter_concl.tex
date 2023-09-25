@@ -3,7 +3,7 @@
 
 Although biological rhythms are crucial for living organisms to control their physiological processes in response to external conditions, not all biological rhythms are well-characterised.
 In contrast to the circadian rhythm and the cell division cycle, our knowledge of the biochemical basis of the yeast metabolic cycle is incomplete.
-It is unclear which mechanism drives cell division-independent cycling of biosynthesis observed in the yeast metabolic cycle, and it is also unclear what mechanism is responsible for the adaptation of the yeast metabolic cycle to changing demands \parencite{zylstraMetabolicDynamicsCell2022}.
+It is unclear what mechanism drives cell division-independent cycling of biosynthesis observed in the yeast metabolic cycle, and it is also unclear what mechanism is responsible for the adaptation of the yeast metabolic cycle to changing demands \parencite{zylstraMetabolicDynamicsCell2022}.
 Additionally, chemostat-based and single-cell experiments led to conflicting conclusions about the yeast metabolic cycle because each type of experiment creates different culture conditions and have different types of measurements.
 
 The primary goal of this thesis was thus to develop an explanation to reconcile chemostat and single-cell studies on the yeast metabolic cycle.
@@ -30,8 +30,8 @@ My results further suggest that the presence of sub-populations in the yeast cul
 The idea of sub-populations that stagger their entry into the yeast metabolic cycle has been suggested before to explain chemostat observations \parencite{burnettiCellCycleStart2016}, and the presence of genetically identical sub-populations that respond differently to the same nutrient perturbation has later been shown \parencite{bagameryPutativeBetHedgingStrategy2020}.
 Additionally, genetically identical sub-populations that have different levels of sensitivities to an inhibitor may also explain chemostat oscillations \parencite{smithTheoryChemostatDynamics1995}.
 
-To provide more clarity to the role of nutrient storage in the yeast metabolic cycle, future work may include experiments with lipid synthesis-deficient strains.
-Additionally, a feast-and-famine experimental set-up which better emulates chemostat conditions could lead to a clearer explanation for previous chemostat-based studies.
+To provide more clarity to the role of nutrient storage in the yeast metabolic cycle, future work may include experiments with strains deficient in lipid synthesis.
+Additionally, a feast-and-famine experimental set-up which better emulates chemostat conditions could lead to a clearer explanation of previous chemostat-based studies.
 The glucose pulses imposed by this set-up may lead to a mathematical model of coupled oscillations that links the intrinsic yeast metabolic cycle to extrinsically-imposed oscillations.
 
 
@@ -49,14 +49,14 @@ Finally, I showed that the cross-correlation function could be used to quantify 
 
 % MOVE TO CHAPT 4 DISCUSSION?  IT LOOKS OUT OF PLACE HERE.
 Rhythmicity detection is complicated by its different definitions depending on the approach --- reflected in the variety of rhythmicity detection methods compared in Chapter~\ref{ch:analysis}.
-From a signal-processing perspective, it can be defined as finding a strong signal within a range of expected frequencies \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+From a signal processing perspective, it can be defined as finding a strong signal within a range of expected frequencies \parencite{zielinskiStrengthsLimitationsPeriod2014}.
 However, from a data science perspective, rhythmicity detection can be seen as identifying the values of a set of time series features that best discriminate between non-oscillatory and oscillatory time series.
 
 To improve the usefulness of the time series analysis methods, further refinement is needed.
 To make the clustering methods and the support vector classifier generalisable, we require a large enough dataset of signals that includes a variety of oscillation types and shapes, and hyperparameter tuning.
 Furthermore, to improve the ability of the autocorrelation function to infer noise properties of real data, a broader range of noise parameters should be simulated.
-Such simulations would provide addition information that leads to give a more precise relationship between noise parameters and the shape of the autocorrelation function.
-A precise way to detect of noise parameters can then be useful to compare the noise from different environmental conditions and imaging methods.
+Such simulations would provide additional information that leads to a more precise relationship between noise parameters and the shape of the autocorrelation function.
+A precise way to detect of noise parameters can then be useful to compare the noise from different environmental conditions and from imaging methods.
 With the improvements in place, the methods developed in Chapter~\ref{ch:analysis} can form a powerful time series analysis pipeline for oscillatory signals from any natural phenomenon.
 
 
@@ -87,7 +87,7 @@ Identification of such sub-populations could then potentially reconcile results 
 Biological rhythms are an important physiological adaptation of all living organisms.
 This thesis, in sum, shows the robustness of the yeast metabolic cycle and relates it to resource allocation strategies, thus potentially shedding light on what could be a fundamental biological process.
 
-The presence of the yeast metabolic cycle leads to questions about the benefits of biological oscillations that justify their existence.
+The presence of the yeast metabolic cycle leads to a question: what benefits of biological oscillations justify their existence?
 The benefits of the circadian rhythm and the cell division cycle are clear: circadian rhythms synchronise physiological processes to the light-dark cycle, while the cell division cycle coordinates resource-intensive processes with the presence of nutrient stores and maintains genetic fidelity.
 In the yeast metabolic cycle, it has been proposed that sequential scheduling of biosynthesis optimises the use of the limited proteome for cell growth \parencite{oneillEukaryoticCellBiology2020,takhaveevTemporalSegregationBiosynthetic2023} so that biomass components are synthesised `just-in-time' for when they are required for phase of the cell division cycle \parencite{zylstraMetabolicDynamicsCell2022}.
 However, the continued presence of the yeast metabolic cycle when the cell division cycle is halted implies that the metabolic cycle has functions other than control of the cell division cycle.
@@ -95,9 +95,9 @@ Alternatively, the metabolic cycle may function as a environment-sensitive backg
 
 Furthermore, the common control features of the yeast metabolic cycle and other biological rhythms may reflect a common evolutionary or functional origin.
 The yeast metabolic cycle may be mediated via post-translational modifications, as evidenced by how the proteome shows far less cyclic variation than the transcriptome \parencite{felthamTranscriptionalChangesAre2020} or the metabolome \parencite{oneillEukaryoticCellBiology2020}.
-Specifically, studies have highlighted the role of peroxiredoxin oxidation cycles in the integrity of the yeast metabolic cycle in chemostats \parencite{caustonMetabolicCyclesYeast2015,amponsahPeroxiredoxinsCoupleMetabolism2021}, while other studies highlight the importance of chromatin remodelling in this biological rhythm \parencite{nocettiNucleosomeRepositioningUnderlies2016,gowansINO80ChromatinRemodeling2018}.
+Specifically, studies have highlighted the role of cycles of peroxiredoxin oxidation in the integrity of the yeast metabolic cycle in chemostats \parencite{caustonMetabolicCyclesYeast2015,amponsahPeroxiredoxinsCoupleMetabolism2021}, while other studies highlight the importance of chromatin remodelling in the metabolic cycle \parencite{nocettiNucleosomeRepositioningUnderlies2016,gowansINO80ChromatinRemodeling2018}.
 
-Continued peroxiredoxin oxidation cycles have also been observed in circadian rhythms of transcription-disabled \textit{Ostreococcus tauri} cells \parencite{oneillCircadianRhythmsPersist2011} and DNA-lacking human red blood cells \parencite{oneillCircadianClocksHuman2011}.
-Furthermore, human red blood cells also exhibit NADH/NADPH and ATP cycles, independent of the glycolytic cycle \parencite{oneillCircadianClocksHuman2011}, similar to the yeast metabolic cycle \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+Continued cycles of peroxiredoxin oxidation have also been observed in circadian rhythms of transcription-disabled \textit{Ostreococcus tauri} cells \parencite{oneillCircadianRhythmsPersist2011} and DNA-lacking human red blood cells \parencite{oneillCircadianClocksHuman2011}.
+Furthermore, human red blood cells also exhibit NADH/NADPH and ATP cycles that are independent of the glycolytic cycle \parencite{oneillCircadianClocksHuman2011}, similar to the yeast metabolic cycle \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
 In addition, the glycolytic cycle is regulated through solely biochemical means \parencite{ghoshOscillationsGlycolyticIntermediates1964,higginsChemicalMechanismOscillation1964}, so this cycle may represent a basal mechanism of regulation of biological rhythms.
 Such similarities, across a range of biological kingdoms, thus strongly suggest a non-genetic common origin of biological rhythms.
