@@ -16,13 +16,13 @@ The \textit{Saccharomyces cerevisiae} strains used in this thesis are described 
     \toprule
     Name & Background & Genotype & Origin & Notes\\
     \midrule
-    FY4 & FY4 & - & EUROSCARF & \textcite{winstonConstructionSetConvenient1995} \\
-    htb2::mCherry & FY4 & HTB2::mCherry & In-house, CRISPR & - \\
+    FY4 & FY4 & --- & EUROSCARF & \textcite{winstonConstructionSetConvenient1995} \\
+    htb2::mCherry & FY4 & HTB2::mCherry & In-house, CRISPR & --- \\
     BY4741 & BY4741 & \textit{MAT}a \textit{his3$\Delta$1 leu2$\Delta$0 met15$\Delta$0 ura3$\Delta$0} & EUROSCARF & \textcite{brachmannDesignerDeletionStrains1998}\\
     \textit{zwf1$\Delta$} & BY4741 & \textit{zwf1$\Delta$::KAN} & Edinburgh Genome Foundry & Yeast deletion collection \\
-    BY4742 & BY4742 & \textit{MAT}a \textit{his3$\Delta$1 leu2$\Delta$0 lys2$\Delta$0 ura3$\Delta$0} & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019}\\
+    BY4742 & BY4742 & \textit{MAT}$\alpha$ \textit{his3$\Delta$1 leu2$\Delta$0 lys2$\Delta$0 ura3$\Delta$0} & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019}\\
     \textit{tsa1$\Delta$ tsa2$\Delta$} & BY4742 & \textit{tsa1$\Delta$::natNT2 tsa2$\Delta$::kanMX4} & Bruce Morgan & \textcite{calabreseHyperoxidationMitochondrialPeroxiredoxin2019} \\
-    CEN.PK113-7D & CEN.PK113-7D & - & Peter K\"{o}tter & \textcite{nijkampNovoSequencingAssembly2012} \\
+    CEN.PK113-7D & CEN.PK113-7D & --- & Peter K\"{o}tter & \textcite{nijkampNovoSequencingAssembly2012} \\
     \bottomrule \\
   \end{tabularx}
   \caption{Strains used in this thesis.}
@@ -31,7 +31,7 @@ The \textit{Saccharomyces cerevisiae} strains used in this thesis are described 
 
 The minimal medium described by \textcite{verduynEffectBenzoicAcid1992} was used unless otherwise stated.
 This minimal medium does not contain riboflavin, thus minimising its effect on flavin autofluorescence imaging, and its composition is known and easily controlled.
-Specifically, the composition of the carbon source-limiting medium are described in Tables~\ref{tab:methods-media-delft}--\ref{tab:methods-media-delft-vitamins}, and the media pH was adjusted to 6.0 using potassium hydroxide, or sodium hydroxide for potassium-free media.
+Specifically, the composition of the carbon source-limiting medium is described in Tables~\ref{tab:methods-media-delft}--\ref{tab:methods-media-delft-vitamins}, and the media pH was adjusted to 6.0 using potassium hydroxide, or sodium hydroxide for potassium-free media.
 
 \begin{table}[h]
   \footnotesize
@@ -142,7 +142,8 @@ Cells were grown from colonies on solid agar in a liquid culture composed of min
 The cells were incubated at \SI{30}{\celsius} for \SI{14}{\hour} (overnight) if the carbon source is glucose or \SI{48}{\hour} if the carbon source is pyruvate.
 Subsequently, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and were then incubated for a further \SI{4}{\hour}.
 
-ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared and for an experiment, one device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
+ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared.
+To prepare for an experiment, a device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
 Cells were then loaded into the ALCATRAS chambers --- different chambers can house cells from different strains (Fig.\ \ref{fig:methods-microfluidics}).
 Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
 As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after the parents bud.
@@ -248,11 +249,11 @@ With this definition, I compute the classical periodogram for each time series:
   \item I define an effective number of independent frequencies $M = f_{max}N_{g}$ for each time series, where $f_{max}$ is the Nyquist limit \parencite{vanderplasUnderstandingLombScarglePeriodogram2018}.
   I then calculate the $p$-value of testing the null hypothesis that such a peak is due to chance:
   \begin{equation}
-    p_{g} = 1 - (1 - e^{-h_{g}})^M
+    p_{g} = 1 - {(1 - e^{-h_{g}})}^M
     \label{eq:lsp-pval}
   \end{equation}
   This formula is based on the exponential distribution of the power at a given frequency in the periodogram \parencite{scargleStudiesAstronomicalTime1982}.
-\item I order the cells by $p$-values: $p_{1} \leq p_{2} \leq \dots \leq p_{\mathcal{G}}$.
+\item I order the cells by $p$-values: $p_{1} \leq p_{2} \leq \cdots \leq p_{\mathcal{G}}$.
       This order thus ranks the cells by oscillation quality.
 \item To control the false discovery rate \parencite{benjaminiControllingFalseDiscovery1995}, I find $\hat{k}$ according to:
   \begin{equation}
@@ -260,7 +261,7 @@ With this definition, I compute the classical periodogram for each time series:
     \label{eq:lsp-khat}
   \end{equation}
   where $q$ is a defined false discovery rate.
-\item Cells whose $p$-values correspond to $p_{1}, p_{2}, \dots, p_{\hat{k}}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
+\item Cells whose $p$-values correspond to $p_{1}, p_{2}, \ldots, p_{\hat{k}}$ are thus denoted to have statistically significant oscillatory behaviour for the false discovery rate $q$.
 \end{enumerate}
 
 
@@ -273,7 +274,7 @@ As an alternative method to detect rhythmicity in time series, I fitted an autor
   \item The algorithm relies on fitting a single time series $n(0), n(1), \ldots , n(M-1)$ with an autoregressive model $\mathrm{AR}(P)$ with order $P$:
         \begin{equation}
           \label{eq:ar-model}
-          \phi_{0}n_{t} + \phi_{1}n_{t-1} + \phi_{2}n_{t-2} + \ldots + \phi_{P}n_{t-P} = \theta_{0}\epsilon_{t}
+          \phi_{0}n_{t} + \phi_{1}n_{t-1} + \phi_{2}n_{t-2} + \cdots + \phi_{P}n_{t-P} = \theta_{0}\epsilon_{t}
         \end{equation}
         where $\epsilon_{t}$ is a white noise satisfying $\langle \epsilon_{t} \rangle = 0$,
         $\phi_{0} = 1$, and
@@ -292,10 +293,10 @@ As an alternative method to detect rhythmicity in time series, I fitted an autor
         \begin{equation}
           \label{eq:ar-yule-walker}
           \begin{bmatrix}
-            R_{0} & R_{1} & \dots & R_{P-1} \\
-            R_{1} & R_{0} & \dots & R_{P-2} \\
+            R_{0} & R_{1} & \cdots & R_{P-1} \\
+            R_{1} & R_{0} & \cdots & R_{P-2} \\
             \vdots & \vdots & \ddots & \vdots \\
-            R_{P-1} & R_{P-2} & \dots & R_{0}
+            R_{P-1} & R_{P-2} & \cdots & R_{0}
           \end{bmatrix}
           \begin{bmatrix}
             \phi_{1} \\
@@ -461,6 +462,8 @@ The FitzHugh-Nagumo oscillator $v(t)$ is defined as a solution of the system:
 where $RI_{\mathrm{ext}}$, $\tau$, $a$, and $b$ are constant parameters to be determined.
 %Fig.\ \ref{fig:fitzhughnagumo_sample} shows an example.
 
+\pagebreak
+
 In addition, I emulated noise by generating Gaussian and Gillespie noise.
 
 Gaussian noise was generated by randomly drawing samples from the normal distribution $\mathcal{N}(0,\sigma^{2})$.
@@ -598,11 +601,12 @@ In this thesis, I define $\omega_{c} = \SI{0.018}{\minute^{-1}}$ because this fr
 \section{Methods related to flux balance analysis}
 \label{sec:methods-fba}
 
+To evaluate biosynthesis strategies in the \textit{S. cerevisiae} cell, I used the ecYeast8 \parencite{luConsensusCerevisiaeMetabolic2019} genome-scale metabolic model and performed flux balance analysis.
+
 \subsection{ecYeast8 formalisms}
 \label{subsec:methods-fba-ecYeast8}
 
-In this section, I discuss the formalisms used in ecYeast8 because they differ from the usual formalisms used in genome-scale metabolic models.
-
+The formalisms used in ecYeast8 differ from the usual formalisms used in genome-scale metabolic models.
 ecYeast8 contains four formalisms relevant to this thesis:
 \begin{enumerate}
   \item
@@ -621,7 +625,7 @@ ecYeast8 contains four formalisms relevant to this thesis:
         SLIMEr thus introduces reactions that split lipids into their basic components and lipid pseudoreactions to preserve the distribution of acyl chains.
         As a result, the definitions of lipids are flexible.
   \item
-        GECKO was applied to Yeast8 to produce ecYeast8.
+        GECKO \parencite{sanchezImprovingPhenotypePredictions2017} was applied to Yeast8 to produce ecYeast8.
         GECKO modifies the stoichiometric matrix of a genome-scale metabolic model to account for enzyme abundances and kinetics.
         Specifically, it adds to enzyme-catalysed reactions enzyme species with a stoichiometric coefficient derived from its $k_{cat}$ value.
         The formalism also adds reactions to model drawing enzymes from a pool.
@@ -643,8 +647,9 @@ The ratio between the molecular weights are similar to the ratio between the mas
 \begin{table}[ht]
   \centering
   \begin{tabular}{lSS}
+    \toprule
     Metabolite & {\makecell{Computed molecular weight\\ (\SI{}{\gram~\mol^{-1}})}} & {\makecell{Biomass composition\\ at growth rate \SI{0.375}{\hour^{-1}}\\ (\SI{}{\gram~\kilo\gram_{DW}^{-1}})}} \\
-    \hline
+    \midrule
     Protein & 504.37 & 505.\\
     Carbohydrate & 350.37 & 237.\\
     RNA & 64.04 & 105.\\
@@ -652,7 +657,7 @@ The ratio between the molecular weights are similar to the ratio between the mas
     Cofactors & 4.83 & \\
     DNA & 3.90 & 5. \\
     Ions & 2.48 & \\
-    \hline
+    \bottomrule
     Total & 961.57 & \\
   \end{tabular}
   \caption[
@@ -665,7 +670,7 @@ The ratio between the molecular weights are similar to the ratio between the mas
 
 Adding together molecular weights of pseudometabolites gave a molecular weight of the biomass pseudometabolite of \SI{961.57}{\gram~\mol^{-1}}, close to the \SI{966}{\gram~\mol^{-1}} computed by \textcite{takhaveevTemporalSegregationBiosynthetic2023} from a different genome-scale model.
 In theory, this number should be \SI{1000}{\gram~\mol^{-1}} because the stoichiometric coefficients of the species that form biomass components are expressed in terms of \SI{}{\mmolgdw} \parencite{thieleProtocolGeneratingHighquality2010, palssonSystemsBiologyConstraintbased2015}, but the deviation from 1000 could be explained by the SLIMEr formalism.
-In addition, the sum of stoichiometric coefficients are not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
+In addition, the sum of stoichiometric coefficients is not always verified in genome-scale models \parencite{chanStandardizingBiomassReactions2017}.
 
 %%% Local Variables:
 %%% mode: latex

@@ -53,7 +53,7 @@ UMAP \parencite{mcinnesUMAPUniformManifold2020} is a dimension reduction method 
 UMAP has several hyperparameters, of which four have major effects on the embedding:
 \begin{enumerate}
   \item The \emph{number of neighbours} ($n$) to consider when approximating the local metric controls how the method balances local and global structure in the data.
-        With low values of this parameter, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
+        If this parameter takes low values, the algorithm concentrates on very local structure, potentially to the detriment of the big picture.
         As the value increases, the algorithm `glues' more nodes together to form clusters.
   \item The \emph{largest embedding dimension} ($d$) controls the number of dimensions the data is reduced to.
         In other words, it controls whether the resulting map is one-dimensional, two-dimensional, three-dimensional, or of higher dimensions.
@@ -85,13 +85,13 @@ In this section, the classification task is identifying whether a time series (i
 % Is this necessary?  It seems too basic.  Dump into appendix?
 A typical classification pipeline can be described by the following steps:
 \begin{enumerate}
-  \item \emph{Pre-processing of data:} Input data is cleaned or normalised.
+  \item \emph{Pre-processing of data:} Input data are cleaned or normalised.
         For example, to classify oscillatory time series, the input time series may be normalised to give similar dynamic ranges.
   \item \emph{Labelling:} Each piece of input data has a label assigned to it to denote which category it belongs to.
         For example, to classify oscillatory time series, a human can subjective assign the label `0' for non-oscillatory time series and `1' for oscillatory time series, for a total of two categories.
-  \item \emph{Featurisation:} Input data converted to feature vectors in the process of featurisation.
+  \item \emph{Featurisation:} Input data are converted to feature vectors in the process of featurisation.
         This process uses domain knowledge related to the type or origin of the data to define characteristics of the data that may be useful for classification.
-  \item \emph{Train-test split:} The input data set is then randomly divided into a training data set and a test data set.
+  \item \emph{Train-test split:} The input data are then randomly divided into a training data set and a test data set.
   \item \emph{Training of model:} The machine learning model is then fit on the (featurised) training data set and its labels to fit parameters in the model.
   \item \emph{Evaluation of model on test dataset:}
         The model, trained on the training dataset, is used to predict the labels of data in the (featurised) test data set.
@@ -112,6 +112,8 @@ Let $X_{i}(t)$ represent the number of molecules of $S_{i}$ at time $t$, and the
 \end{equation}
 
 thus gives the state of the system at any given time $t$.
+
+\pagebreak
 
 Each reaction $R_{j}$ is described by two quantities:
 \begin{enumerate}
@@ -147,7 +149,7 @@ Where, in all cases, $k_{j}$ is the rate constant of reaction $R_{j}$.
 The Gillespie algorithm aims to predict the temporal evolution of the state vector given the initial state $\mathbf{X}(t_{0}) = \mathbf{x}_{0}$.
 It does so by iteratively choosing the next reaction that occurs, based on its probability, and then choosing its firing time based on a propensity function.
 Combining these simulations gives a trajectory of state vectors across the time course of interest.
-In detail, the direct Gillespie algorithm can be defined as stated in algorithm~\ref{alg:gillespie}:
+In detail, the direct Gillespie algorithm can be defined as stated in Algorithm~\ref{alg:gillespie}:
 
 \RestyleAlgo{ruled}
 \begin{algorithm}[htbp]

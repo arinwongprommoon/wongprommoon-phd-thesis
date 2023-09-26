@@ -48,7 +48,7 @@ FFT-NLLS, mFourFit, MESA, the Enright periodogram, the Lomb-Scargle periodogram,
 
 Studies of biological rhythms have used the BioDare pipeline to quantify features of oscillations of fluorescence.
 These included using FFT-NLLS to calculate the period and amplitude error of fluorescence in mouse brain sections to determine the mechanistic basis of the synchronisation of the suprachiasmatic nucleus \parencite{hamnettVasoactiveIntestinalPeptide2019}.
-Another study used linear detrending of data followed by FFT-NLLS and spectral resampling to estimate the period and amplitude error of delayed fluorescence of chloroplasts in \textit{Kalancho\"{e} fedtschenkoi} leaves to determine whether phosphorylation of phosphoenolpyruvate affects robustness of circadian rhythms \parencite{boxallPhosphorylationPhosphoenolpyruvateCarboxylase2017}.
+Another study used linear detrending of data followed by FFT-NLLS and spectral resampling to estimate the period and amplitude error of delayed fluorescence of chloroplasts in \textit{Kalanchoe fedtschenkoi} leaves to determine whether phosphorylation of phosphoenolpyruvate affects robustness of circadian rhythms \parencite{boxallPhosphorylationPhosphoenolpyruvateCarboxylase2017}.
 
 In addition, \textcite{fulcherHctsaComputationalFramework2017} described a software pipeline, termed \textit{hctsa}, that computes over 7700 time series features for input time series.
 The resulting feature matrix --- a row for each time series and a column for each feature --- could then be used to identify sets of features that are useful to discriminate between sets of time series or to identify clusters of time series based on their properties.
@@ -136,7 +136,7 @@ Fig.\ \ref{fig:analysis-filter-movavg} shows that the moving average method intr
 
 To identify structures in datasets of time series, I implemented UMAP, a dimension-reduction method, and modularity clustering, a graph-based clustering method.
 Such data visualisation methods are important because the structures they show may identify differences between groups that are biologically relevant --- for example, sub-populations of oscillations with similar properties.
-Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions.
+Previous efforts in using computational methods to identify groups in a set of biological time series include using $k$-means clustering to identify clusters of transcript cycling patterns that correspond to phases of the YMC \parencite{tuLogicYeastMetabolic2005}, development of a method to cluster featurised multivariate time series based of videos of human motion \parencite{wangStructureBasedStatisticalFeatures2007}, and using signal entropy to featurise fMRI signals followed by modularity clustering to partition the signals into brain regions \parencite{shafieiDopamineSignalingModulates2019}.
 
 To demonstrate the data visualisation methods, I used time series of flavin autofluorescence oscillations from one experiment with both the wild-type BY4741 strain ($n=206$) and the mutant \textit{zwf1$\Delta$} strain ($n=425$).
 These time series had time points sampled every \SI{5}{\minute} in the experiment, for a total of 163 time points.
@@ -209,7 +209,9 @@ In addition, non-oscillatory time series were consistently displayed into groups
 
 Modularity clustering is a mathematical method that partitions a graph into groups to optimise a `modularity' value, defined so that the method finds a trade-off between maximising the connections within a cluster and minimising the connections between clusters \parencite{newmanModularityCommunityStructure2006}.
 This optimisation problem is computationally difficult, so approximations such as the Louvain algorithm are needed for large networks \parencite{blondelFastUnfoldingCommunities2008}, with the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019} subsequently developed to ensure that communities are well-connected and to provide an optimum number of communities.
-Furthermore, the intrinsic scale of modularity scales with the square root of the number of connections in the network; therefore, if the network is large, there is a large resolution limit, preventing a modularity clustering algorithm from detecting small-scale structures \parencite{fortunatoResolutionLimitCommunity2007,traagNarrowScopeResolutionlimitfree2011}.
+
+Furthermore, the intrinsic scale of modularity scales with the square root of the number of connections in the network.
+Therefore, if the network is large, there is a large resolution limit, preventing a modularity clustering algorithm from detecting small-scale structures \parencite{fortunatoResolutionLimitCommunity2007,traagNarrowScopeResolutionlimitfree2011}.
 To remedy this, algorithms that implement a resolution parameter ($\gamma$), were devised; the value of this parameter thus controls the scale at which communities are detected \parencite{reichardtDetectingFuzzyCommunity2004,kumpulaLimitedResolutionComplex2007}.
 
 To assess the performance of a graph-based clustering method in identifying clusters in time series data, I represented a dataset of time series as a graph before using modularity clustering to identify clusters.
@@ -262,7 +264,7 @@ Fig.\ \ref{fig:analysis-clustering-modclust} illustrates this process, specifica
     Pruning the complete graph so that each node had at least the $k$ nearest neighbours.
     \textbf{(\ref{fig:analysis-clustering-modclust-modclust})}
     Modularity clustering, using the Leiden algorithm \parencite{traagLouvainLeidenGuaranteeing2019}, to identify communities.
-    \ref{fig:analysis-clustering-modclust-modclust} adapted from \textcite{newmanModularityCommunityStructure2006}.
+    Fig.\ \ref{fig:analysis-clustering-modclust-modclust} is adapted from \textcite{newmanModularityCommunityStructure2006}.
     In all subfigures, data are synthetic and only serve to illustrate the process.
   }
   \label{fig:analysis-clustering-modclust}
@@ -479,8 +481,7 @@ This performance was slightly better than the eJTK method for rhythmicity detect
 
 To assess the performance of a time series classification method based on the autoregressive model, I implemented the method described by \textcite{jiaFrequencyDomainAnalysis2020}, used to characterise synthetic time series of stochastic, oscillatory gene expression in a dividing cell.
 In the implementation of the autoregressive model used by \textcite{jiaFrequencyDomainAnalysis2020}, each data point was expressed as a linear combination of a number of data points that precede it, and model parameters led to an analytical solution for the periodogram, thus giving an advantage over the low-resolution Fourier spectrum (Methods Section~\ref{subsec:methods-computational-ar}).
-
-The resulting power spectra fell into four categories, one of which corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
+The resulting power spectra fell into four categories, one of which (Type I) corresponded to a lack of oscillations, characterised by an absence of a local maximum in the power spectrum (Fig.\ \ref{fig:analysis-ar-classification}).
 This method thus allows computing the frequency of the oscillation from the location of the peak in the periodogram and quality of the oscillation from the height of the peak.
 
 \begin{figure}[htb!]
@@ -638,7 +639,7 @@ Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier perfor
 
 In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the probabilities can serve as a good score to rank time series by oscillation quality.
 
-\begin{figure}[hb!]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{svm_3_edit.pdf}
 
@@ -652,7 +653,7 @@ In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the pr
 \section{Period estimation using the autocorrelation function}
 \label{sec:analysis-characterisation}
 
-Estimating the period of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations as was previously used by \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
+Estimating the period of oscillatory time series is important as it provides a quantitative measure of how yeast metabolic cycles respond to genetic nutrient perturbations, as was previously used by \textcite{papagiannakisAutonomousMetabolicOscillations2017}.
 To show that the autocorrelation function can be used to estimate the period and noise properties of both symmetric and asymmetric oscillations, I adapted the autocorrelation function as used by \textcite{pietschDeterminingGrowthRates2023} (Methods Section~\ref{subsec:methods-computational-xcf}).
 To calibrate the method, I generated synthetic oscillations --- sinusoids and the FitzHugh-Nagumo oscillator \parencite{fitzhughImpulsesPhysiologicalStates1961} --- to investigate the effect of their properties on the autocorrelation function.
 Subsequently, I applied the autocorrelation function to characterise experimentally-recorded time series.
@@ -750,7 +751,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
     \label{fig:analysis-birthdeath-process-illustration}
   \end{subfigure}
 
-  \begin{subfigure}[t]{0.4\textwidth}
+  \begin{subfigure}[t]{0.6\textwidth}
     \centering
     \includegraphics[width=\textwidth]{gillespie}
     \caption{
@@ -773,7 +774,7 @@ Specifically, given a birth rate $k_{0}$ and a death rate $d_{0}$, the noise has
 
 % [Show working -- i.e. the mathematical derivations that make me expect this exponential fit?]
 % Though Peter said this `is not trivial'.
-Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} shows that when Gillespie noise was added to the sinusoids, the medium autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
+Fig.\ \ref{fig:acf-sinusoids-gillnoise-acf} shows that when Gillespie noise was added to the sinusoids, the median autocorrelation followed the exponential decay function $y = \me^{-2d_{0}T}$, where $T$ represents lag.
 In addition, the locations of the peaks of the autocorrelation function were preserved.
 The observation thus suggests that the death rate $d_{0}$ parameter of Gillespie noise controlled the shape of the autocorrelation function.
 
@@ -1212,7 +1213,7 @@ Furthermore, Fig.\ \ref{fig:xcf-gillnoise-xcf} suggests that even with strong Gi
     the cross-correlation function of the FitzHugh-Nagumo oscillators with respect to the sinusoids.
     %
     \textbf{(\ref{fig:xcf-gillnoise-ts})}
-    (Blue) Sample sinusoid and (orange) FitzHugh-Nagumo oscillator with same parameters as \ref{fig:xcf-nonoise-ts}, but with Gillespie noise ($d_{0} = 0.05$, $k_{0} = 5$), and
+    (Blue) Sample sinusoid and (orange) FitzHugh-Nagumo oscillator with same parameters as~\ref{fig:xcf-nonoise-ts}, but with Gillespie noise ($d_{0} = 0.05$, $k_{0} = 5$), and
     \textbf{(\ref{fig:xcf-gillnoise-xcf})}
     the cross-correlation function of the FitzHugh-Nagumo oscillators with respect to the sinusoids.
     %
