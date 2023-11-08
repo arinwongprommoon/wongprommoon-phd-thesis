@@ -1,0 +1,38 @@
+#+title: Corrections
+
+* Notes
+- Based on feedback on examiners <2023-11-07> (i.e. minor corrections), after <2023-10-31> viva.
+- Pages and page numbers based on the ~examiner-submission-linenumbers~ tagged version, which is identical to the ~examiner-submission~ version, save for the line numbers in the left margin.  The line numbers are for my benefit in this process.
+- To help with communicating with examiners, I put both page numbers and line numbers in this org note, and tasks are labelled by examiner.
+
+* Andrew Millar
+** Intro
+- [ ] (AM) p016/L0757: phase -> period
+- [ ] (AM) p016/L0758: Actually it can go longer, please include doi.org/10.1073/pnas.0907902107
+- [ ] (AM) p017/L0766, L0771: statements conflict
+- [ ] (AM) p032/L1095: delete sentence
+- [ ] (AM) p032/L1106: ~'philosophical question' -> ~'operating principles'
+** Methods
+- [ ] (AM) p050/L1345: use better descriptor with reference
+- [ ] (AM) p058/L1481: ~'frequency' -> ~'period of 55 min'
+** Biology
+- [ ] (AM) p067/F3.03: make explicit that one experiment as a,b and the other is c,d
+- [ ] (AM) p095/L1966: do you really mean circadian?  (yeast doesn't have circadian cycles; read Charvin et al. 2009 to make sure I know what I'm talking about)
+** Analysis
+- [ ] (AM) p096/L1975: clarify -- Fourier spectrum gives period estimates at low resolution, unless you take additional steps, e.g. padding.
+- [ ] (AM) p096/L1976: "This is a strong claim to make but you could support it by summarising the analysis methods from the handful of single-cell YMC papers and showing they are all different."
+- [ ] (AM) p099/L2039: rephrase to avoid contrasting the approaches, as they overlap.
+** Model
+- [ ] (AM) p136/L2511: rephrase/clarify, make it in terms of phenomenological model
+- [ ] (AM) p141/L2597: define FC as fold change
+- [ ] (AM) p142/L2601: per time unit?
+  - I think there shouldn't be one, if I remember the enzyme usage definition correctly; in that case, I should make it clear that my units make sense.
+- [ ] (AM) p157/L2834: clarify 'was half saturation', 'was above' or 'far above'?  (I think I meant something else entirely)
+- [ ] (AM) p160/L2870: clarify 'similar' -- specify which aspect of the quantification used to make claim
+- [ ] (AM) p166/F5.14: standardise colour scales so c = d
+- [ ] (AM) p167/L2931: discuss whether 'limiting' conditions similar to extremes required to stop YMC in experiments
+** Conclusion
+- [ ] (AM) p170/L2982: repeat chemostat-ss differences here
+- [ ] (AM) p172/L3034: add ', which I defined visually.'
+** Appendix
+- [ ] (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
