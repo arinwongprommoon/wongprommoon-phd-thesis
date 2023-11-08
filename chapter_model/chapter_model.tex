@@ -238,8 +238,8 @@ To assess whether ablation leads to metabolic changes that reflect cellular bioc
 When the model prioritised a different biomass component in each round of ablation, the model partitioned the limited proteome available for enzyme production differently.
 In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) was different from each other and from the non-ablated case, in which all biomass components were synthesised in parallel.
 
-To quantify changes in proteome allocation across rounds of ablation, I computed the $\log_{2}(\mathrm{FC})$ of fluxes relative to the non-ablated, parallel case.
-This is defined as:
+To quantify changes in proteome allocation across rounds of ablation, I computed the base-2 logarithm of fold changes of fluxes relative to the non-ablated, parallel case.
+This computation is defined as:
 
 \begin{equation}
   \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}^{\prime}}{e_{i, \mathrm{par}}^{\prime}} \right)
