@@ -36,3 +36,35 @@
 - [ ] (AM) p172/L3034: add ', which I defined visually.'
 ** Appendix
 - [ ] (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
+
+* Lucia Marucci
+** Intro
+- [ ] (LM) Overall, the chapter is well written, but I would like to see a specific section about single-cell literature.
+- [ ] (LM) It would be good to see at the end of the chapter a section where the aims of the thesis and the research questions are clearly stated.
+- [ ] (LM) It would be good to be more specific about choice of methods, for example you talk about the role of cell communication, is it really possible to assess this with your experimental setting?
+- [ ] (LM) In this chapter it would be good to see also review of literature relevant to the work you presented in Chapter 5.
+** Methods
+- [ ] (LM) There isn’t much about chip design, material, fluidic dynamics etc. This aspect is important for data interpretation.
+- [ ] (LM) It would be good to better clarify any pre-processing that was applied to data [which figures show filtered data, for example].
+** Biology
+- [ ] (LM) Please be explicit about commonalities/differences with the work in Baumgartner et al. (2018), both in terms of methodologies (e.g. microfluidic device, reporter system etc.) and similarities/differences in terms of results.
+- [ ] (LM) p064-065/F3.01-3.02: Please swap figures 3.1 and 3.2.
+- [ ] (LM) It would be very useful to perform a proper statistical analysis for all the experiments shown in the chapter, and add at the end of the chapter a table summarizing results and showing clearly which conditions show statistically significant differences.
+- [ ] (LM) p070/F3.05: amplitude seems different during starvation, please mention this in results description.
+- [ ] (LM) p071/L1662: "Importantly, the results suggest that diffusion of signalling chemicals between cells is not required for generation of metabolic cycles". Is it possible you miss this because of your experimental set-up (single cells in traps?) Please discuss. [from the viva: you noted that you had done spatial analysis but found no gradient of responses along the direction of fluid flow; please refer to this result. Also, we discussed potential adsorption of chemical signals on to the PDMS, which is not mentioned in the text]
+- [ ] (LM) p072/L1668: "The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that..." This sentence is not clear, and very qualitative. Please rephrase.
+- [ ] (LM) p073/L1681: "In addition, the overall higher intensity of flavin signals after starvation compared to before starvation suggest some memory of starvation." Please define clearly what you mean by "memory of starvation".
+- [ ] (LM) p086/L1785: "My results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after. My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition, in contrast to J. S. O’Neill et al. (2020)" Please better articulate these sentences, indicating more clearly differences in the experimental set-up (e.g. material of the microfluidic device) that might also explain the differences in the observed phenotypes.
+- [ ] (LM) p090/L1831: Same when you say "Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the zwf1∆ and tsa1∆ tsa2∆ deletion strains. These discrepancies warrant further explanation."
+** Analysis
+- [ ] (LM) Please mention more clearly the novelty of the proposed methods, as compared to what had been previously proposed in the literature.
+- [ ] (LM) p103/F4.02: Limitations of results in Fig 4.2 should be better discussed; does the fact for example that some oscillatory/non-oscillatory timeseries overlap depend on the choice of the UMAP algorithm, or on the data? I suggest showing some time-series for which there is overlap, and some for which there is not to better understand what is going on, you could also try to repeat the analysis just using the first half of the time series.
+- [ ] (LM) p114/T4.01: Discuss more results in table 4.1, why are they so poor?
+- [ ] (LM) You should at least mention the possibility of using other classifier better suited for time-series analysis/classification.
+** Model
+- [ ] (LM) Be sure you mention why you used FBA, that is a method that looks just at steady state, and at the average behaviour of many cells. How can you relate the results in this chapter to results/methods in Chapters 3 and 4?
+- [ ] (LM) Please better clarify novelty vs Takhaveev et al. (2023)
+- [ ] (LM) "For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction..."; is this a valid assumption?
+- [ ] (LM) Discuss how to possibly test results in Chapter 5 in the lab.
+** Conclusion
+- [ ] (LM) Try to better link results in Chapters 3 and 4, and 5.  [for example in the viva, we discussed where the low-glucose conditions tested in Chapter 3 would fall on the response surface graphs of Chapter 5]
