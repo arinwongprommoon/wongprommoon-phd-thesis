@@ -14,11 +14,11 @@
 * Category 1
 ** Intro
 - [X] (AM) p016/L0757: phase -> period
-- [ ] $L (AM) p016/L0758: Actually it can go longer, please include doi.org/10.1073/pnas.0907902107
+- [X] $L (AM) p016/L0758: Actually it can go longer, please include doi.org/10.1073/pnas.0907902107
 - [X] (AM) p032/L1095: delete sentence
 - [X] (AM) p032/L1106: ~'philosophical question' -> ~'operating principles'
 ** Methods
-- [ ] (LM) It would be good to better clarify any pre-processing that was applied to data [which figures show filtered data, for example].
+- [X] (LM) It would be good to better clarify any pre-processing that was applied to data [which figures show filtered data, for example].
 - [X] (AM) p058/L1481: ~'frequency' -> ~'period of 55 min'
 ** Biology
 - [ ] $L (LM) Please be explicit about commonalities/differences with the work in Baumgartner et al. (2018), both in terms of methodologies (e.g. microfluidic device, reporter system etc.) and similarities/differences in terms of results.
