@@ -24,7 +24,7 @@
 - [X] $L (LM) Please be explicit about commonalities/differences with the work in Baumgartner et al. (2018), both in terms of methodologies (e.g. microfluidic device, reporter system etc.) and similarities/differences in terms of results.
 - [X] (LM) p064-065/F3.01-3.02: Please swap figures 3.1 and 3.2.
 - [X] (AM) p067/F3.03: make explicit that one experiment as a,b and the other is c,d
-- [ ] (LM) p070/F3.05: amplitude seems different during starvation, please mention this in results description.
+- [X] (LM) p070/F3.05: amplitude seems different during starvation, please mention this in results description.
 ** Analysis
 - [ ] (AM) p096/L1975: clarify -- Fourier spectrum gives period estimates at low resolution, unless you take additional steps, e.g. padding.
 - [ ] (AM) p099/L2039: rephrase to avoid contrasting the approaches, as they overlap.
