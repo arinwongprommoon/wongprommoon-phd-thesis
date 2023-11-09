@@ -93,9 +93,8 @@ Both studies model the metabolic state of the cell at each phase of the YMC, rat
 
 An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}.
 This study extended a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to find the temporal order of intracellular synthesis reactions which optimises the growth rate of the cell, under resource constraints.
-However, the model relies on an external oscillator --- namely, the light-dark cycle.
-In contrast, the yeast metabolic cycle is autonomously generated.
-Therefore, it is difficult to extend the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC\@.
+However, extending the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC is hampered by the lack of an explicit mechanistic model of the YMC, owing to the unknowns of the biochemical mechanisms of the YMC\@.
+Instead, any FBA model based on the metabolic model must include a phenomenological description of a metabolic cycle, which would be equivalent to including an external oscillator as implemented by \textcite{reimersCellularTradeoffsOptimal2017} as a light-dark cycle.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
