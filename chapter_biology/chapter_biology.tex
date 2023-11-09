@@ -34,12 +34,29 @@ These situations include potassium deficiency and deletions of genes with roles 
 \section{Coupled oscillations in permissive conditions}
 \label{sec:biology-sync}
 
-To show that metabolic cycles are generated autonomously and are coupled to the cell division cycle, I replicated the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}.
+To show that metabolic cycles are generated autonomously and are coupled to the cell division cycle, I replicated the single-cell flavin oscillations observed by \textcite{baumgartnerFlavinbasedMetabolicCycles2018}, using prototrophic FY4 cells engineered with an HTB2::mCherry insertion.
 Replicating results from a previous flavin-based microfluidics study is important to confirm that my use of ALCATRAS \parencite{craneMicrofluidicSystemStudying2014} monitored the yeast metabolic cycle, especially given that the microfluidics set-up differed from previous studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018}.
 
-Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms shortly before G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+The HTB2::mCherry insertion allows monitoring phases of the cell division cycle through quantifying the intensity of the fluorescence of the inserted protein over time \parencite{garmendia-torresMultipleInputsEnsure2018} (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding the overlap of flavin and GFP emission spectra.
 
 \begin{figure}[hb!]
+  \centering
+    \includegraphics[width=0.45\linewidth]{garmendia-torresMultipleInputsEnsure2018_1_adapted.jpg}
+    \caption[
+      Engineering a fluorescent protein cassette fused to \textit{HTB2} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
+    ]{
+      \textbf{(A)} Engineering a fluorescent protein cassette fused to \textit{HTB2} \textbf{(B)} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
+      Adapted from \textcite{garmendia-torresMultipleInputsEnsure2018}.
+    }
+  \label{fig:biology-htb2}
+\end{figure}
+
+Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluorescence peak when a bud forms shortly before G\textsubscript{2}/M, as evidenced by prototrophic FY4 HTB2::mCherry cells grown in minimal medium supplemented with \SI{20}{\gram~\litre^{-1}} glucose.
+%Fig.\ \ref{fig:biology-highglc-single}
+This figure also shows that in some cases, a metabolic oscillation occurred without cell division cycle progression or bud formation.
+Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via cycles of NAD(P)H fluorescence, confirmed that the metabolic cycle is generated autonomously from the cell division cycle.
+
+\begin{figure}[htb!]
   \centering
     \includegraphics[width=1.0\linewidth]{single_birth_plot_edit.pdf}
     \caption[
@@ -51,23 +68,6 @@ Fig.\ \ref{fig:biology-highglc-single} shows that oscillations in flavin fluores
     }
   \label{fig:biology-highglc-single}
 \end{figure}
-
-The HTB2::mCherry insertion allows monitoring phases of the cell division cycle through quantifying the intensity of the fluorescence of the inserted protein over time \parencite{garmendia-torresMultipleInputsEnsure2018} (Fig.\ \ref{fig:biology-htb2}), while also allowing monitoring flavin fluorescence by avoiding the overlap of flavin and GFP emission spectra.
-
-\begin{figure}
-  \centering
-    \includegraphics[width=0.5\linewidth]{garmendia-torresMultipleInputsEnsure2018_1_adapted.jpg}
-    \caption[
-      Engineering a fluorescent protein cassette fused to \textit{HTB2} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
-    ]{
-      \textbf{(A)} Engineering a fluorescent protein cassette fused to \textit{HTB2} \textbf{(B)} allows the identification of phases of the cell division cycle through monitoring changes in fluorescence of the fluorescent protein.
-      Adapted from \textcite{garmendia-torresMultipleInputsEnsure2018}.
-    }
-  \label{fig:biology-htb2}
-\end{figure}
-
-Fig.\ \ref{fig:biology-highglc-single} also shows that in some cases, a metabolic oscillation occurred without cell division cycle progression or bud formation.
-Such cases, also revealed by \textcite{papagiannakisAutonomousMetabolicOscillations2017} via cycles of NAD(P)H fluorescence, confirmed that the metabolic cycle is generated autonomously from the cell division cycle.
 
 As observed, oxidation of flavin upon budding was expected for these reasons:
 \begin{enumerate}
