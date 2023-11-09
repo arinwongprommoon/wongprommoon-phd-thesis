@@ -225,6 +225,20 @@ Flavin fluorescence thus represents the oxidation of flavins throughout the yeas
 \section{Time series analysis methods}
 \label{sec:methods-computational}
 
+\subsection{Data pre-processing}
+\label{subsec:methods-computational-preprocessing}
+
+To filter out long-term trends that may confound analysis of oscillatory time series, a high-pass Butterworth filter, with a critical frequency of \SI{2.86d-3}{\minute^{-1}}, corresponding to a period of \SI{350}{\minute}, was applied to fluorescence time series generated from \textit{aliby}.
+% COMMENT TO PRESERVE ORIGINAL REF KEYS, AS OPPOSED TO RANGES SHOWN BELOW.
+% TO BE PROPER, I CAN USE SMART REFS, BUT THEY ARE NOT IMPLEMENTED IN THIS THESIS.
+% Specifically, Figs \ref{fig:biology-highglc-single}, \ref{fig:biology-highglc-sync-spectral}, \ref{fig:biology-highglc-sync-corr}, \ref{fig:biology-starvation}, \ref{fig:biology-by4741-sync}, \ref{fig:biology-cenpk-sync}, \ref{fig:biology-pyruvate}, \ref{fig:biology-lowglc}, \ref{fig:biology-compare-snr}, \ref{fig:biology-kdeficient}, \ref{fig:biology-kdeficient-snr}, \ref{fig:biology-zwf1}, and \ref{fig:biology-tsa1tsa2} in Chapter~\ref{ch:biology} and all figures from Chapter~\ref{ch:analysis} except for \ref{fig:analysis-filter-raw} are derived from filtered time series.
+Specifically, Figs \ref{fig:biology-highglc-single}, \ref{fig:biology-highglc-sync-spectral}--\ref{fig:biology-starvation}, \ref{fig:biology-by4741-sync}--\ref{fig:biology-lowglc}, \ref{fig:biology-compare-snr}, \ref{fig:biology-kdeficient}--\ref{fig:biology-kdeficient-snr}, and \ref{fig:biology-zwf1}--\ref{fig:biology-tsa1tsa2} in Chapter~\ref{ch:biology} and all figures from Chapter~\ref{ch:analysis} except for \ref{fig:analysis-filter-raw} are derived from filtered time series.
+Section~\ref{sec:analysis-cleaning} further discusses the rationale for this filtering method.
+
+However, the long-term shifts of fluorescence intensities are important for interpreting some results based on imposing temporary environmental perturbations on yeast cells.
+In such cases, such long-term shifts would be filtered away by the high-pass Butterworth filter, and thus the filter was not applied.
+Specifically, Figs \ref{fig:biology-starvation-raw}--\ref{fig:biology-starvation-histogram}, and \ref{fig:biology-kdeficient-histogram} are derived from unfiltered time series.
+
 \subsection{Classical periodogram}
 \label{subsec:methods-computational-periodogram}
 
