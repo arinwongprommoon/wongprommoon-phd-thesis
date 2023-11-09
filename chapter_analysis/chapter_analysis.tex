@@ -55,7 +55,9 @@ The resulting feature matrix --- a row for each time series and a column for eac
 The publication then showed that \textit{hctsa} could be used to distinguish five \textit{Caenorhabditis elegans} strains based on their movement patterns, and to identify clusters in the feature space of time series of \textit{Drosophila melanogaster} movement patterns which correspond well to experimental groups.
 To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} identified 22 features, termed \textit{catch22}, of \textit{hctsa} that performed well in time series classification tasks based on 93 datasets (Table~\ref{tab:catch22} in Appendix~\ref{append:analysis-catch22}).
 
-Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two approaches to analysis of time series: on one end, relying on mathematical methods, and on the other end, a data science approach to time series classification tasks.
+Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two approaches to analysis of time series.
+On one hand, BioDare relies on using few mathematical methods that address the same time series feature, such as period or rhythmicity.
+On the other hand, \textit{hctsa} relies on using a wider range of mathematical methods that concern a large set of features, which then can serve as a feature vector to be used as an input for data science methods.
 
 
 \section{Data cleaning: filtering out long-term trends}
