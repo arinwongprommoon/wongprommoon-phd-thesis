@@ -26,7 +26,7 @@
 - [X] (AM) p067/F3.03: make explicit that one experiment as a,b and the other is c,d
 - [X] (LM) p070/F3.05: amplitude seems different during starvation, please mention this in results description.
 ** Analysis
-- [ ] (AM) p096/L1975: clarify -- Fourier spectrum gives period estimates at low resolution, unless you take additional steps, e.g. padding.
+- [X] (AM) p096/L1975: clarify -- Fourier spectrum gives period estimates at low resolution, unless you take additional steps, e.g. padding.
 - [ ] (AM) p099/L2039: rephrase to avoid contrasting the approaches, as they overlap.
 - [ ] $L (LM) You should at least mention the possibility of using other classifier better suited for time-series analysis/classification.
 ** Model
