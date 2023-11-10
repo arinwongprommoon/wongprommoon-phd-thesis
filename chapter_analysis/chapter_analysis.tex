@@ -1228,7 +1228,7 @@ This chapter discusses methods to filter long-term trends in time series data, t
 My results suggest that using a high-pass Butterworth filter to filter out long-term trends in time series data gives better control over the frequency profile of the time series than moving-average methods, which is often used to detrend time series from biological oscillators.
 Such results highlight that a degree of caution is needed to choose methods for such a crucial step in data analysis.
 
-My exploration of UMAP and modularity clustering suggests that both methods were useful in discovering structure within time series, particularly in discriminating between oscillatory and non-oscillatory time series.
+My exploration of UMAP and modularity clustering suggests that both methods were useful in discovering structure within a dataset of time series, particularly in discriminating between oscillatory and non-oscillatory time series.
 These methods further indicated sub-groups of time series that may have similar properties, such as shape or oscillation quality, which may correspond to sub-populations of metabolic cycle-producing cells in a culture.
 The consistency between the two methods strongly suggest that such groups in the dataset are meaningful.
 
@@ -1236,6 +1236,11 @@ Subsequently, my exploration of three approaches to detect rhythmicity --- deriv
 The spectral method described by \textcite{glynnDetectingPeriodicPatterns2006} had a modest performance.
 The autoregressive model was able to identify the most likely period in some time series, but otherwise classified most time series as non-oscillatory, and lacked a tuning parameter.
 Finally, the support vector classifier suggests that a simple machine learning model could be adapted for rhythmicity detection, subject to a good feature set and training data.
+
+Changes in featurisation or classifier architecture may improve performance in discovering structure in a dataset of time series or rhythmicity detection.
+Other time series feature sets such as \textit{tsfresh} (794 features from 63 methods) \parencite{christTimeSeriesFeatuRe2018} and \textit{FATS} (45 features developed for astronomical light curve data) \parencite{nunFATSFeatureAnalysis2015} may be used in place of \textit{catch22}.
+In addition, other machine learning architectures may be used.
+Such architectures include deep learning models more suited for time series data, such as Long Short-Term Memory, which learns how to remember and forget information \parencite{hochreiterLongShortTermMemory1997}, and temporal convolutional networks, shown to outperform recurrent networks on tasks utilising time- and sequence-dependent data \parencite{baiEmpiricalEvaluationGeneric2018}.
 
 Ultimately, rhythmicity detection requires supplying a threshold in some form, be it a range of frequencies in which oscillations are expected \parencite{zielinskiStrengthsLimitationsPeriod2014}, a parameter that controls the proportion of time series detected as oscillatory, or training labels.
 This is because there is no way to objectively specify a failure rate for a rhythmicity detection method as there is no independent method to estimate rhythmicity \parencite{zielinskiStrengthsLimitationsPeriod2014}.
