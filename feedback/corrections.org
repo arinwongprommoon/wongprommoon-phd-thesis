@@ -33,9 +33,10 @@
 - [X] $L (LM) Please better clarify novelty vs Takhaveev et al. (2023)
 - [X] (AM) p136/L2511: rephrase/clarify, make it in terms of phenomenological model
 - [X] (AM) p141/L2597: define FC as fold change
-- [ ] $L (AM) p142/L2601: per time unit?
+- +[ ] $L (AM) p142/L2601: per time unit?+
   - I think there shouldn't be one, if I remember the enzyme usage definition correctly; in that case, I should make it clear that my units make sense.
-- [ ] (AM) p160/L2870: clarify 'similar' -- specify which aspect of the quantification used to make claim
+  - TODO: Clarify this with Andrew in an email.
+- [X] (AM) p160/L2870: clarify 'similar' -- specify which aspect of the quantification used to make claim
 - [ ] $C (AM) p166/F5.14: standardise colour scales so c = d
 ** Conclusion
 - [ ] (AM) p170/L2982: repeat chemostat-ss differences here
