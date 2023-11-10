@@ -103,6 +103,7 @@ Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{el
 \textcite{elsemmanWholecellModelingYeast2022} additionally imposed a ribosome capacity constraint and compartment constraints.
 
 In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate two strategies of scheduling of the synthesis of biomass components: in sequence and in parallel.
+In contrast to \textcite{takhaveevTemporalSegregationBiosynthetic2023}, which modelled the levels of biosynthesis for each biomass component at each phase of the cell division cycle based on the aggregate single-cell response observed in experimental data, without predicting timescales, this chapter predicts the timescale for biosynthesis for different proteome pool sizes and different nutrient conditions.
 To simulate the cell prioritising the synthesis of each biomass component in sequence, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
 To assess the advantage of sequential synthesis over parallel synthesis, I estimated the synthesis time for each biomass component based on ablation, then compared these times predicted by the unmodified model.
 To show that sequential synthesis is an adaptation for a finite proteome pool, I varied the size of the enzyme-available proteome pool to observe its effect on the cell's preferred scheduling strategy.
