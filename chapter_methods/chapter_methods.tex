@@ -242,7 +242,7 @@ Specifically, Figs \ref{fig:biology-starvation-raw}--\ref{fig:biology-starvation
 \subsection{Classical periodogram}
 \label{subsec:methods-computational-periodogram}
 
-To detect rhythmicity in time series, I computed the classical periodogram and used a statistical test for rhythmicity based on \textcite{glynnDetectingPeriodicPatterns2006}, described as follows:
+To detect rhythmicity in time series, I computed the periodogram, based on the classical (original) definition of the periodogram \parencite{schusterInvestigationHiddenPeriodicities1898,scargleStudiesAstronomicalTime1982}, and by using the fast Fourier transform, then used a statistical test for rhythmicity based on \textcite{glynnDetectingPeriodicPatterns2006}, described as follows:
 
 \begin{enumerate}
 \item Let the data have $\mathcal{G}$ cells.
@@ -250,7 +250,7 @@ Let cell $g = 1, \dots{}, \mathcal{G}$ have a time series with $N_{g}$ time poin
 The time series is thus denoted $Y_{g}(t) = y_{g}(t_{1}), \dots{}, y_{g}(t_{N_{g}})$.
 \item For each time series, I define a range of test frequencies linearly from $\frac{1}{N_{g}}$ to the Nyquist limit (i.e.\ half the rate of image acquisition).
 
-With this definition, I compute the classical periodogram for each time series:
+With this definition, I compute the classical periodogram for each time series, via the Fourier transform:
   \begin{equation}
     P_{g}(\omega) = \frac{N_{g}}{2\sigma^{2}} \left|\int_{-\infty}^{\infty} Y_{g} e^{-2\pi it}dt \right|, % check constants, etc
     \label{eq:normalised-periodogram-ar}
