@@ -795,9 +795,12 @@ Finally, in contrast to glucose starvation, Fig.\ \ref{fig:biology-kdeficient-hi
   \label{fig:biology-kdeficient-histogram}
 \end{figure}
 
-My results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after.
-My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition, in contrast to \textcite{oneillEukaryoticCellBiology2020}.
-%Thus, my observations warrant a model to reconcile the apparent differences between the chemostat and single-cell investigations.
+In summary, my results show that upon switching from potassium-containing to potassium-deficient, sodium-containing media, cells' growth rates briefly dropped, but soon after, cells resumed generating metabolic cycles and dividing in synchrony.
+My observations also indicate that during potassium-deficiency, the amplitude of metabolic oscillations remained constant, as evidenced by a lack of statistically significant changes in the signal-to-noise ratio distributions of flavin signals.
+These observations contrast \textcite{oneillEukaryoticCellBiology2020}, which showed that in chemostats, as the potassium concentration in the medium is decreased, the amplitude of dissolved oxygen cycles becomes smaller until the cycles disappear.
+The differences between my observations and \textcite{oneillEukaryoticCellBiology2020} may be explained by the different experimental set-ups: if a population of cells generates metabolic cycles less reliably and over a broader range of periods, as revealed by the single-cell microfluidic set-up, then the combined effect of these cells in the chemostat can be the loss of dissolved oxygen cycles that arise from synchronous metabolic cycles.
+In addition, \textcite{oneillEukaryoticCellBiology2020} proposed that intracellular carbohydrate or amino acid stores are responsible for metabolic cycles.
+This leads to an alternative explanation for experimental discrepancies: these stores can be sufficient to drive metabolic oscillations during a relatively short period of potassium-deficiency in my experiment.
 Furthermore, the significance of the potassium-deficient, sodium-containing nutrient condition is highlighted by the toxicity of sodium ions for budding yeast \parencite{arinoAlkaliMetalCation2010,caseyEffectSaltsCofermentation2013,watcharawipasSodiumAcetateResponses2018}.
 
 
@@ -960,8 +963,12 @@ Fig.\ \ref{fig:biology-tsa1tsa2-snr} additionally shows that the amplitudes and 
   \label{fig:biology-tsa1tsa2}
 \end{figure}
 
-Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} deletion strains.
-These discrepancies warrant further explanation.
+Taken together, the flavin-based metabolic cycles from single-cell experiments and the dissolved-oxygen cycles from chemostat experiments with \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} exhibited discrepancies.
+These discrepancies may be explained by the physical separation between cells in the microfluidic device and the lack of a glucose starvation treatment that is usually performed in chemostat-based experiments.
+For \textit{zwf1$\Delta$}, the population of cells in the single-cell microfluidic device shows a heterogeneity of flavin signals, unlike the more homogeneous parent BY4741 strain.
+Therefore, the absence of dissolved oxygen cycles observed in the chemostat from this strain, as reported by \textcite{tuCyclicChangesMetabolic2007}, may be the combined effect of metabolic cycles of varies periods that are asynchronous due to the loss of ability to reset phase in response to the glucose starvation at the beginning of the chemostat experiment.
+For \textit{tsa1$\Delta$ tsa2$\Delta$}, the population of cells in the single-cell microfluidic device exhibits flavin signals that mostly fall under two main periods.
+Therefore, the M-shaped oxygen cycles observed in the chemostat from this strain, as reported by \textcite{caustonMetabolicCyclesYeast2015}, may result from the additive effect of two sub-populations of cells that each have a different natural metabolic cycle period, and still retain the ability to reset phase in response to the glucose starvation at the beginning of the chemostat experiment.
 
 
 \section{Discussion}
