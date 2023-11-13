@@ -47,7 +47,7 @@
 - [X] (LM) Overall, the chapter is well written, but I would like to see a specific section about single-cell literature.
   - Re-organisation (e.g. defining a new section)?
 - [X] (AM) p017/L0766, L0771: statements conflict
-- [ ] (LM) It would be good to be more specific about choice of methods, for example you talk about the role of cell communication, is it really possible to assess this with your experimental setting?
+- [X] (LM) It would be good to be more specific about choice of methods, for example you talk about the role of cell communication, is it really possible to assess this with your experimental setting?
   - Clarifying from memory: Lucia wants me to say that single-cell microfluidics cannot test the role of cell communication, unless combined with bulk-culture methods such as a turbidostat or chemostat.
 - [ ] $L (LM) In this chapter it would be good to see also review of literature relevant to the work you presented in Chapter 5.
   - Notes: I can combine the first bit of Chapter 5 with the org note on the FBA project.  It's going to be a bit of work converting that to prose.
