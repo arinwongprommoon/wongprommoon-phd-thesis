@@ -44,7 +44,7 @@
 
 * Category 2
 ** Intro
-- [ ] (LM) Overall, the chapter is well written, but I would like to see a specific section about single-cell literature.
+- [X] (LM) Overall, the chapter is well written, but I would like to see a specific section about single-cell literature.
   - Re-organisation (e.g. defining a new section)?
 - [X] (AM) p017/L0766, L0771: statements conflict
 - [ ] (LM) It would be good to be more specific about choice of methods, for example you talk about the role of cell communication, is it really possible to assess this with your experimental setting?

@@ -177,6 +177,19 @@ Specifically, the yeast metabolic cycle has gene-expression oscillators as evide
 Furthermore, it has biochemical oscillators as evidenced by changes in dissolved oxygen in the chemostat.
 Finally, it has metabolite oscillations as evidenced by changes in the levels of compounds that undergo redox reactions like NADH/NADPH and flavins.
 
+
+\subsubsection{History of evidence for the yeast metabolic cycle}
+\label{subsubsec:intro-ymc-definition-history}
+
+Aspects of the YMC have been observed over decades.
+\textcite{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \textit{S. cerevisiae} cultures show oscillatory oxygen consumption.
+\textcite{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while \textcite{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
+\textcite{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of a 40-minute YMC for cells in continuous culture.
+\textcite{tuLogicYeastMetabolic2005}
+first incorporated transcript cycling in the description of the YMC and defined the YMC events
+based on a chemostat-based investigation of growth of budding yeast on glucose-starved conditions.
+
+
 \subsubsection{Phases of the yeast metabolic cycle}
 \label{subsubsec:intro-ymc-definition-phases}
 % INTEGRATE THIS STRUCTURE IN EACH PARAGRAPH THAT DISCUSSES EACH PHASE
@@ -238,23 +251,6 @@ This three-phase model is primarily based on cellular events, including clusteri
   \label{fig:intro-ymc-tu-transcripts}
 \end{figure}
 
-Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
-Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (Fig.\ \ref{fig:intro-ymc-overview-ss}).
-In later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
-% ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
-%However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
-The two- or three-phase response may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=1.0\textwidth]{zylstraMetabolicDynamicsCell2022_1}
-  \caption[
-    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell
-  ]{
-    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell, generated autonomously of the cell division cycle, but are linked in permissive conditions.
-    Adapted from \textcite{zylstraMetabolicDynamicsCell2022}.}
-  \label{fig:intro-ymc-overview-ss}
-\end{figure}
 
 Cellular processes occur with the phases of the metabolic cycle (Fig.\ \ref{fig:intro-ymc-overview-oneill}).
 In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
@@ -312,17 +308,51 @@ Although there is no consensus on the function of such flexible gating,
 gating can aid the allocation of metabolites to different temporal phases of both cellular oscillators.
 % Discuss allocation of metabolites later -- and this can be linked to the modelling chapter of thesis.
 
-\subsubsection{History of evidence for the yeast metabolic cycle}
-\label{subsubsec:intro-ymc-definition-history}
+
+\subsubsection{Single-cell studies of the yeast metabolic cycle}
+\label{subsubsec:intro-ymc-definition-singlecell}
+
+Most studies of the YMC arise from chemostat experiments, but few studies have investigated the YMC in single-cell settings using microfluidic devices.
+\textcite{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue.
+They cultured strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cells from a chemostat to a microfluidic device.
+The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
+This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two sub-populations in the culture.
+However, it lacks quantitative time-series analysis; rather, it reports qualitative interpretations of fluorescence images.
+The microfluidic device did not truly physically separate each cell individually, thus it was unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
+
+Later microfluidics studies revealed additional features of the YMC in single cells.
+\textcite{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell division cycle, based on measurements of the  level of ATP and of the combined level of NADH and NADPH in single cells in microfluidic devices.
+Specifically, they showed that such metabolic cycles synchronise with the cell division cycle at different compromise periods as the carbon source changes, and that cell division cycle events are gated to distinct phases in the metabolic cycle.
+Furthermore, such metabolic cycles can progress without progress of the cell division cycle progress, both spontaneously and under chemically induced G\textsubscript{1} arrest.
+
+In addition, by measuring flavin fluorescence in the cell, \textcite{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that there is strong coupling between the YMC and the cell division cycle across perturbations in nitrogen sources, showing that as nitrogen sources become poorer, the coupled oscillations oscillated at longer periods and spontaneous decoupling between the YMC and the cell division cycle became more frequent.
+This study importantly also demonstrated that respiration is not required for the YMC\@; evidence includes the observation that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell division cycle inhibitor rapamycin desynchronises the YMC and the cell division cycle.
+
+More recently, \textcite{ozsezenInferenceHighLevelInteraction2019} extended the experimental data reported by \textcite{papagiannakisAutonomousMetabolicOscillations2017} and estimated parameters of a Kuramoto model, which suggested that the metabolic cycle separately gates START and the M phases of the cell division cycle, and that the S phase oscillator follows START without input from the metabolic cycle.
+This mathematical model of coupled oscillators predicted that synchrony should be maintained if the period of the metabolic cycle is perturbed; this prediction was validated experimentally using nutrient shifts.
+Furthermore, the model predicted that perturbation of mitotic exit should still result in synchrony of the oscillators that remain and that additional removal S-phase exit should give a system that oscillates at a compromise frequency; such predictions were validated by dynamic depletion of Cdc14 and Cdc20.
+
+Unlike chemostat-based studies, single-cell studies do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
+Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (Fig.\ \ref{fig:intro-ymc-overview-ss}).
+In later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
+% ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
+%However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
+The two- or three-phase response as reported from chemostat-based studies may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\textwidth]{zylstraMetabolicDynamicsCell2022_1}
+  \caption[
+    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell
+  ]{
+    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell, generated autonomously of the cell division cycle, but are linked in permissive conditions.
+    Adapted from \textcite{zylstraMetabolicDynamicsCell2022}.}
+  \label{fig:intro-ymc-overview-ss}
+\end{figure}
 
 
-Aspects of the YMC have been observed over decades.
-\textcite{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \textit{S. cerevisiae} cultures show oscillatory oxygen consumption.
-\textcite{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while \textcite{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
-\textcite{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of a 40-minute YMC for cells in continuous culture.
-\textcite{tuLogicYeastMetabolic2005}
-first incorporated transcript cycling in the description of the YMC and defined the YMC events
-based on a chemostat-based investigation of growth of budding yeast on glucose-starved conditions.
+\subsubsection{Contrasting the yeast metabolic cycle with the glycolytic oscillation}
+\label{subsubsec:intro-ymc-definition-vsglycolytic}
 
 The yeast metabolic cycle is longer and is more robust than a similar biological oscillator, the glycolytic oscillation.
 The glycolytic oscillation has a period of approximately 40 seconds \parencite{olsenRegulationGlycolyticOscillations2009}.
@@ -560,7 +590,7 @@ Specifically, there is a small window of frequencies in which both oscillators c
 \label{subsubsec:intro-ymc-unresolved-chemostat_singlecell}
 
 There is a dispute of whether the same conclusions can be drawn from chemostat-based studies and from single-cell based studies.
-Most studies of the YMC arise from chemostat experiments.
+%Most studies of the YMC arise from chemostat experiments.
 Reconciling the two types of studies is difficult because the readouts and conditions are different:
 chemostat studies produce dissolved oxygen and transcript cycling readings, while single-cell experiments cannot report on dissolved oxygen and chiefly report metabolite cycling.
 This leads to differing definitions of the YMC\@.
@@ -618,18 +648,8 @@ However, NAD(P)H \parencite{papagiannakisAutonomousMetabolicOscillations2017,ozs
 Furthermore, \textit{ATP5} and \textit{CYT1} deletions that impair oxidative respiration do not remove single-cell flavin-based metabolic oscillations \parencite{baumgartnerFlavinbasedMetabolicCycles2018}, thus giving additional evidence that oxidative metabolism is not required for the YMC\@.
 
 Single-cell microfluidic studies are well-positioned to address the limitations of the chemostat,
-although there have been only few studies.
-\textcite{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue.
-They cultured strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cells from a chemostat to a microfluidic device.
-The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
-This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two sub-populations in the culture.
-However, it lacks quantitative time-series analysis; rather, it reports qualitative interpretations of fluorescence images.
-The microfluidic device did not truly physically separate each cell individually, thus it was unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
-
-Later microfluidics studies reveals additional features of the YMC in single cells.
-\textcite{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell division cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
-Furthermore, by measuring flavin fluorescence in the cell, \textcite{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell division cycle inhibitor rapamycin desynchronises the YMC and the cell division cycle.
-In sum, these single-cell studies address a small fraction of the knowledge covered by chemostat studies, and further such studies are required.
+although there have been only few studies \parencite{laxmanBehaviorMetabolicCycling2010,papagiannakisAutonomousMetabolicOscillations2017,baumgartnerFlavinbasedMetabolicCycles2018,ozsezenInferenceHighLevelInteraction2019}, discussed earlier in Section~\ref{subsubsec:intro-ymc-definition-singlecell}.
+These single-cell studies address a small fraction of the knowledge covered by chemostat studies, and further such studies are required.
 
 
 \subsubsection{Molecular and genetic mechanisms}
