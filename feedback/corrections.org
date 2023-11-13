@@ -69,7 +69,7 @@
 - [ ] $C (LM) It would be very useful to perform a proper statistical analysis for all the experiments shown in the chapter, and add at the end of the chapter a table summarizing results and showing clearly which conditions show statistically significant differences.
 ** Analysis
 - [X] $L (AM) p096/L1976: "This is a strong claim to make but you could support it by summarising the analysis methods from the handful of single-cell YMC papers and showing they are all different."
-- [ ] $L (LM) Please mention more clearly the novelty of the proposed methods, as compared to what had been previously proposed in the literature.
+- [X] $L (LM) Please mention more clearly the novelty of the proposed methods, as compared to what had been previously proposed in the literature.
 - [ ] $C (LM) p103/F4.02: Limitations of results in Fig 4.2 should be better discussed; does the fact for example that some oscillatory/non-oscillatory timeseries overlap depend on the choice of the UMAP algorithm, or on the data? I suggest showing some time-series for which there is overlap, and some for which there is not to better understand what is going on, you could also try to repeat the analysis just using the first half of the time series.
 - [ ] (LM) p114/T4.01: Discuss more results in table 4.1, why are they so poor?
 ** Model
