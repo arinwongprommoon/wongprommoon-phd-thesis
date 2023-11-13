@@ -978,7 +978,8 @@ However, parallel scheduling of biosynthesis becomes advantageous in some nutrie
 Further simulations suggest an explanation for this advantage of parallel biosynthesis: as each biomass component is synthesised, the cell allocates its proteome pool to enzymes in similar patterns.
 
 The advantage of sequential scheduling of biosynthesis over parallel scheduling of biosynthesis may explain why yeast cells exhibit metabolic cycles, in which there is a sequence of synthesising biomass components \parencite{mellorMolecularBasisMetabolic2016}.
-Conversely, the advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis in nutrient-limiting conditions may explain the absence of metabolic cycles in extreme, non-permissive conditions.
+Conversely, the advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis in nutrient-limiting conditions may explain the metabolic cycle being less reliably generated and of low quality in low-glucose conditions in my observations (Section~\ref{sec:biology-carbon}).
+Furthermore, it is possible that implementing conditions not tested by this chapter, such as highly acidic conditions \parencite{oneillEukaryoticCellBiology2020}, in flux balance analysis simulations may predict on advantage of parallel scheduling of biosynthesis, thus explaining the absence of metabolic cycles in such conditions.
 The metabolic cycle may thus be an adaptation to a limited proteome pool and having to carry out the metabolically expensive process of protein synthesis during cell growth \parencite{oneillEukaryoticCellBiology2020}.
 Clustering of the synthesis of lipids and proteins in one group may explain cycling of storage lipids \parencite{campbellBuildingBlocksAre2020}, while clustering of carbohydrate, DNA, and RNA synthesis in another group to group together processes that require oxidative phosphorylation may explain respiratory cycles in the YMC \parencite{tuLogicYeastMetabolic2005}.
 
@@ -988,3 +989,7 @@ These values in the GECKO model include enzyme usage reaction fluxes, which woul
 In addition, FBA gives a steady-state picture of metabolism.
 To describe changes in fluxes over time, derivatives such as dynamic FBA \parencite{mahadevanDynamicFluxBalance2002} could be used.
 To further increase the precision of the model and thus its ability to make predictions, compartmentalisation can be considered \parencite{elsemmanWholecellModelingYeast2022}, or resource balance analysis \parencite{goelzerCellDesignBacteria2011} can be used.
+
+To validate the predictions from flux balance analysis in this chapter, conditions that correspond to an advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis, and vice versa, can be applied to yeast cells in a single-cell microfluidics experiment.
+Performing such experiments will necessitate calibrating carbon and nitrogen source concentrations in the nutrient media with exchange rates in the ecYeast8 model.
+In addition, other nutrient perturbations and genetic perturbations in this thesis --- namely, potassium-deficiency and the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} strains --- can be simulated using the modelling approach in this chapter, and can lead to further cross-validation between the single-cell microfluidics and modelling approaches used in this thesis.

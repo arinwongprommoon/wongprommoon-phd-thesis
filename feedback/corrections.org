@@ -75,8 +75,8 @@
 ** Model
 - [ ] (LM) Be sure you mention why you used FBA, that is a method that looks just at steady state, and at the average behaviour of many cells. How can you relate the results in this chapter to results/methods in Chapters 3 and 4?
 - [ ] (LM) "For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction..."; is this a valid assumption?
-- [ ] (AM) p167/L2931: discuss whether 'limiting' conditions similar to extremes required to stop YMC in experiments
-- [ ] (LM) Discuss how to possibly test results in Chapter 5 in the lab.
+- [X] (AM) p167/L2931: discuss whether 'limiting' conditions similar to extremes required to stop YMC in experiments
+- [X] (LM) Discuss how to possibly test results in Chapter 5 in the lab.
 ** Conclusion
 - [ ] (LM) Try to better link results in Chapters 3 and 4, and 5.  [for example in the viva, we discussed where the low-glucose conditions tested in Chapter 3 would fall on the response surface graphs of Chapter 5]
 ** Appendix
