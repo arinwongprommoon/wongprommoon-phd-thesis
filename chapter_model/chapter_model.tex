@@ -23,6 +23,7 @@ Specifically, I aim to evaluate these hypotheses:
   \item Synthesis of biomass components in parallel, as opposed to in sequence, may be advantageous if the processes of synthesising each biomass component share similar enzyme levels across biomass components.
 \end{enumerate}
 
+
 \section{Introduction to flux balance analysis}
 \label{sec:model-fba}
 
@@ -108,6 +109,17 @@ To simulate the cell prioritising the synthesis of each biomass component in seq
 To assess the advantage of sequential synthesis over parallel synthesis, I estimated the synthesis time for each biomass component based on ablation, then compared these times predicted by the unmodified model.
 To show that sequential synthesis is an adaptation for a finite proteome pool, I varied the size of the enzyme-available proteome pool to observe its effect on the cell's preferred scheduling strategy.
 Finally, to show how nutrient conditions affect the cell's scheduling strategy, I modelled changes in carbon and nitrogen source concentrations, then observed how the changes affect allocation of the proteome to metabolic enzymes.
+
+FBA was chosen as a proof-of-concept method to simulate sequential scheduling of the synthesis of biomass components for its ease of use, and may serve as a basis for more fine-grained modelling to evaluate the hypotheses in this chapter in future investigations.
+Although FBA only examines the steady state of metabolism in a biological system, the technique is useful when combined with ablating the biomass reaction, as ablation introduces a series of different steady states, as each biomass component is prioritised, that can occur in sequence.
+This thus reflects, to some extent, how the metabolic state of the cell changes over time.
+
+Furthermore, FBA simulates an average behaviour of yeast cells.
+To simulate a population of cells, extensions to FBA can be applied.
+For example, \textcite{tourignySimulatingSinglecellMetabolism2021} developed a stochastic simulation algorithm with FBA embedded, which models fluctuations in enzyme and metabolite copy numbers.
+Applying this algorithm developed for \textit{Mycobacterium genitalium} for ecYeast8 must then account for the greater genome complexity and variability of lipid composition \parencite{sanchezSLIMErProbingFlexibility2019} in budding yeast.
+In addition, \textcite{labhsetwarPopulationFBAPredicts2017} developed a population FBA approach, which was based on sampling enzyme copy numbers from an experimental distribution; applying this idea to ecYeast8 may mean a stochastic size of the enzyme-available proteome pool.
+Both approaches are beyond the scope of this thesis, but may be used in extensions to this work.
 
 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
@@ -990,6 +1002,11 @@ In addition, FBA gives a steady-state picture of metabolism.
 To describe changes in fluxes over time, derivatives such as dynamic FBA \parencite{mahadevanDynamicFluxBalance2002} could be used.
 To further increase the precision of the model and thus its ability to make predictions, compartmentalisation can be considered \parencite{elsemmanWholecellModelingYeast2022}, or resource balance analysis \parencite{goelzerCellDesignBacteria2011} can be used.
 
-To validate the predictions from flux balance analysis in this chapter, conditions that correspond to an advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis, and vice versa, can be applied to yeast cells in a single-cell microfluidics experiment.
+To validate the predictions from flux balance analysis in this chapter with experimental results from Chapter~\ref{ch:biology}, conditions that correspond to an advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis, and vice versa, can be applied to yeast cells in a single-cell microfluidics experiment.
 Performing such experiments will necessitate calibrating carbon and nitrogen source concentrations in the nutrient media with exchange rates in the ecYeast8 model.
 In addition, other nutrient perturbations and genetic perturbations in this thesis --- namely, potassium-deficiency and the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} strains --- can be simulated using the modelling approach in this chapter, and can lead to further cross-validation between the single-cell microfluidics and modelling approaches used in this thesis.
+As the precision of the modelling approach is increased by using derivations of FBA, the results from Chapter~\ref{ch:biology} can be used to calibrate such computational methods, and a more precise model can then be used to predict new nutrient perturbations or genetic perturbations that impair the metabolic cycle, forming a design-build-test-learn cycle.
+
+The synthesis times predicted by this chapter may inform the period length to be used to simulate time series as discussed in Chapter~\ref{ch:analysis}.
+In addition, if stochastic extensions to FBA \parencite{tourignySimulatingSinglecellMetabolism2021,labhsetwarPopulationFBAPredicts2017} are used in an extension to this study, this can lead to a population of time series with different periods or noise parameters.
+In such a case, methods to visualise groups in a dataset (Section~\ref{sec:analysis-clustering}) or to estimate the period in a population of time series (Section~\ref{sec:analysis-characterisation}) can be used to evaluate whether the population of simulated time series in this case approximates recorded time series from cells as presented in Chapter~\ref{ch:biology}.

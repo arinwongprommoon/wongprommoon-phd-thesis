@@ -77,7 +77,7 @@
 - [ ] (LM) p114/T4.01: Discuss more results in table 4.1, why are they so poor?
   - Might need re-running of code and exploring the data a bit.  I don't know the reason, and neither did Diego, I think.
 ** Model
-- [ ] (LM) Be sure you mention why you used FBA, that is a method that looks just at steady state, and at the average behaviour of many cells. How can you relate the results in this chapter to results/methods in Chapters 3 and 4?
+- [X] (LM) Be sure you mention why you used FBA, that is a method that looks just at steady state, and at the average behaviour of many cells. How can you relate the results in this chapter to results/methods in Chapters 3 and 4?
   - Writing down some ideas
     - Even if it looks just at steady state, it is useful for estimating time scale by virtue of the flux rate of the biomass reaction that changes between conditions.  Changing biomass components approximates changing cellular events -- without these multiple changes (put together), FBA wouldn't be so useful.
     - FBA looks at the average behaviour of many cells, but there isn't a good way to simulate a population of cells that behave differently.  Stochastic FBA exists (https://www.sciencedirect.com/science/article/pii/S0006349521009449), but has only been developed for /Mycobacterium pneumoniae/ -- extending it to budding yeast will take time, and will be complicated by stuff like SLIMEr and pseudometabolites.  There is also population FBA (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005728), which have their enzyme copy numbers sampled from experimental distributions; to apply this idea to ecYeast8, one might instead sample the size of the proteome pool.
