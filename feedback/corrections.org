@@ -97,4 +97,4 @@
 - [X] $L (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
 * Category 3
 ** Model
-- [ ] (AM) p157/L2834: clarify 'was half saturation', 'was above' or 'far above'?  (I think I meant something else entirely)
+- [X] (AM) p157/L2834: clarify 'was half saturation', 'was above' or 'far above'?  (I think I meant something else entirely)
