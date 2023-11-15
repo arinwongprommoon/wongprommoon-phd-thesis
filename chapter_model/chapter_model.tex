@@ -24,60 +24,6 @@ Specifically, I aim to evaluate these hypotheses:
 \end{enumerate}
 
 
-\section{Introduction to flux balance analysis}
-\label{sec:model-fba}
-
-Metabolic network reconstructions are mathematical representations of a set of metabolic pathways in a living organism.
-Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions that are represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
-This information can be represented in a two-dimensional stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
-
-For example, if reaction $R_{1}$ is defined by:
-
-\begin{equation}
-  \ce{1 M1 + 2 M2 -> 3 M3}
-  \label{eq:model-example-chemical-reaction}
-\end{equation}
-
-the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
-
-A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system that is catalysed by a gene-encoded enzyme.
-In most of the reactions represented in a metabolic network reconstruction, one or more chemical species react to create a different set of chemical species as products.
-However, reactions in a metabolic network reconstruction may include processes that are not chemical reactions.
-Such processes may include exchange of nutrients, as well as a reaction that models biomass formation.
-
-Flux balance analysis (FBA) is a mathematical method that finds the steady-state flux of reactions through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
-These metabolic fluxes represent rates of chemical reactions.
-At its core, FBA is a method of solving the linear programming problem of finding the flux values that optimise the output value of an objective function, subject to biological constraints.
-
-Mathematically, the linear programming problem of FBA can be expressed as:
-
-\begin{equation}
-  \max \mathbf{c}^{\intercal} \mathbf{v}
-  \label{eq:model-fba-objective}
-\end{equation}
-
-subject to
-
-\begin{equation}
-  \begin{gathered}
-    \mathbf{S} \mathbf{v} = \mathbf{0}\\
-    v_{i,\mathrm{min}} \leq v_{i} \leq v_{i,\mathrm{max}}
-  \end{gathered}
-  \label{eq:model-fba-constraints}
-\end{equation}
-
-where $\mathbf{c}$ is a vector of weights such that $\mathbf{c}^{\intercal} \mathbf{v}$ defines the objective function, $\mathbf{S}$ is the stoichiometric matrix, and $\mathbf{v}$ is the vector of fluxes. The expression $v_{i,\mathrm{min}}$ represents the lower bound and $v_{i,\mathrm{max}}$ represents the upper bound for each flux $v_{i}$ in $\mathbf{v}$.
-
-The objective function is given as the task of maximising a mathematical expression that is based on a subset of fluxes (Eq.\ \ref{eq:model-fba-objective}).
-Most commonly, the objective function is maximising the flux of the biomass reaction, thus optimising the growth rate of the cell.
-The constraints for FBA are, in the most basic case, imposed by two factors:
-the stoichiometric matrix and reaction flux bounds (Eq.\ \ref{eq:model-fba-constraints}).
-The stoichiometric matrix balances reaction inputs and outputs, while flux bounds impose upper and lower limits on the fluxes of each reaction.
-These constraints restrict the solution space for the FBA problem.
-
-FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions.
-Such differential equations can be difficult to construct and parametrise.
-
 \section{Modelling temporal scheduling of biosynthesis}
 \label{sec:model-temporal}
 
