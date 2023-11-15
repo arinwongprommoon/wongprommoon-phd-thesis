@@ -94,7 +94,7 @@
 ** Conclusion
 - [X] (LM) Try to better link results in Chapters 3 and 4, and 5.  [for example in the viva, we discussed where the low-glucose conditions tested in Chapter 3 would fall on the response surface graphs of Chapter 5]
 ** Appendix
-- [ ] $L (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
+- [X] $L (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
 * Category 3
 ** Model
 - [ ] (AM) p157/L2834: clarify 'was half saturation', 'was above' or 'far above'?  (I think I meant something else entirely)
