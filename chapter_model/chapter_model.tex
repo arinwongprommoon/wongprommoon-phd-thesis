@@ -387,6 +387,14 @@ For comparison, I computed estimates of the time for each biomass component, ass
 
 where $t_{0}$ is the doubling time found in Eq.\ \ref{eq:model-doubling-time}.
 
+The assumption that underlies Eq.\ \ref{eq:model-proportional-time} implies that different biomass components require the same synthesis time per unit of mass.
+Challenging this assumption is the fact that protein synthesis is a metabolically expensive process, with translation requiring many precursors and a series of catalytic processes, compared to the polymerisation of other macromolecules.
+Such complex translation machinery creates multiple rate-limiting steps for protein synthesis \parencite{shahRateLimitingStepsYeast2013}, which also vary depending on the gene each protein is expressed because of regulatory elements \parencite{lahtveeAbsoluteQuantificationProtein2017} and because of amino acid composition \parencite{chenYeastHasEvolved2022}.
+So, it is reasonable to believe that per unit of mass, protein synthesis may require more time than the synthesis of other biomass components.
+To evaluate the assumption that synthesis time is proportional to mass fraction, the inferred synthesis times can be compared to findings from previous studies; however, model estimates give a large range of protein synthesis rates --- \num{1900} to \num{19500} proteins per cell per second \parencite{seegerDynamicalStochasticModel2023} --- thus making such a comparison difficult.
+In addition, in simulating parallel biosynthesis, it is not possible to simulate different synthesis rates for different biomass components as only one objective function is optimised.
+In the absence of precise time estimates for the synthesis of biomass components, the assumption that synthesis time is proportional to mass fraction may be the best assumption for the parallel case, which is one of two hypothetical scenarios.
+
 To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I defined a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time:
 
 \begin{equation}
