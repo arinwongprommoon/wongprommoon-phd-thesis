@@ -92,7 +92,7 @@
 - [X] (AM) p167/L2931: discuss whether 'limiting' conditions similar to extremes required to stop YMC in experiments
 - [X] (LM) Discuss how to possibly test results in Chapter 5 in the lab.
 ** Conclusion
-- [ ] (LM) Try to better link results in Chapters 3 and 4, and 5.  [for example in the viva, we discussed where the low-glucose conditions tested in Chapter 3 would fall on the response surface graphs of Chapter 5]
+- [X] (LM) Try to better link results in Chapters 3 and 4, and 5.  [for example in the viva, we discussed where the low-glucose conditions tested in Chapter 3 would fall on the response surface graphs of Chapter 5]
 ** Appendix
 - [ ] $L (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
 * Category 3
