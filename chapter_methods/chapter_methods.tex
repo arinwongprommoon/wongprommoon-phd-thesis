@@ -142,11 +142,49 @@ Cells were grown from colonies on solid agar in a liquid culture composed of min
 The cells were incubated at \SI{30}{\celsius} for \SI{14}{\hour} (overnight) if the carbon source is glucose or \SI{48}{\hour} if the carbon source is pyruvate.
 Subsequently, the cells were diluted so that the resulting culture had an OD\textsubscript{600} of 0.10--0.20, and were then incubated for a further \SI{4}{\hour}.
 
-ALCATRAS microfluidics \parencite{craneMicrofluidicSystemStudying2014} devices were then prepared.
+To monitor metabolic cycles in single cells, ALCATRAS microfluidics  \parencite{craneMicrofluidicSystemStudying2014} devices were prepared and connected to syringes containing nutrient media (Fig.\ \ref{fig:methods-chip}).
+ALCATRAS microfluidic devices were made from polydimethylsiloxane (PDMS), with a 10:1 ratio between Sylgard 184 (Dow Corning) and curing agent.
+The devices consist of chambers that contain of a dense array of cell traps to trap parent cells, allowing approximately 100 traps to be imaged at once using a 40 $\times$ objective lens magnification.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{craneMicrofluidicSystemStudying2014_1}
+  \caption[
+    Overview of ALCATRAS microfluidic chip design.
+  ]{
+    Overview of ALCATRAS microfluidic chip design.
+    \textbf{(A)} Sample brightfield image of cell traps in the chip, overlaid with fluorescence image of Doa1p-GFP, to indicate cells (green).
+    \textbf{(B)} Switching between media sources (yellow to pink) occurs within \SI{6}{\second}.
+    \textbf{(C)} Microfluidic chip design.
+    \textbf{(D)} Switching rate was assessed by imaging the fluorescence in the chamber whilst the input medium was switched between a non-fluorescent medium and medium containing 0.1\% fluorescein.
+    \textbf{(E)} Trap dimensions, in micrometres.
+    Adapted from \textcite{craneMicrofluidicSystemStudying2014}.
+      }
+  \label{fig:methods-chip}
+\end{figure}
+
+The pressure on the syringes were controlled automatically to achieve a constant \SI{4}{\micro\litre~\minute^{-1}} media flow, creating laminar flow.
+The shape of the traps allows parent cells to be trapped in place, while progeny cells leave the trap after the bud from parent cells as nutrient medium flows across the device.
+In particular, when a cell falls into a trap, the local pressure gradient changes to create a low-energy pocket that keeps the cell trapped, as evidenced by a simulation of fluid dynamics given the device design (Fig.\ \ref{fig:methods-fluid_dynamics}).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{craneMicrofluidicSystemStudying2014_S1}
+  \caption[
+    Fluid dynamic simulations of the ALCATRAS microfluic chip.
+  ]{
+    Fluid dynamic simulations of the ALCATRAS microfluic chip.
+    \textbf{(A)} Velocity of fluid (in units of \SI{}{\micro\metre~\second^{-1}}) as a function of spatial position in the device.
+    \textbf{(B)} Pressure of fluid (in units of \SI{}{\pascal}) as a function of spatial position in the device.
+    Adapted from \textcite{craneMicrofluidicSystemStudying2014}.
+      }
+  \label{fig:methods-fluid_dynamics}
+\end{figure}
+
 To prepare for an experiment, a device's multiple chambers were filled with growth media supplemented with 0.05\% w/v bovine serum albumin.
 Cells were then loaded into the ALCATRAS chambers --- different chambers can house cells from different strains (Fig.\ \ref{fig:methods-microfluidics}).
-Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
-As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after the parents bud.
+% Syringe pumps containing media were programmed to produce a constant flow of \SI{4}{\micro\litre~\hour^{-1}} into the chambers.
+% As a consequence, parent cells are held in place within traps, while progeny cells flow out of traps into the outflow after the parents bud.
 There are two syringes that can contain different media, and in experiments that require different nutrient conditions at different times, the ALCATRAS system is programmed to switch between the two syringes.
 The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs) that was maintained at \SI{30}{\celsius}.
 
@@ -164,7 +202,7 @@ The cells and ALCATRAS chambers were located in an incubation chamber (Oko-labs)
   \label{fig:methods-microfluidics}
 \end{figure}
 
-Microscopy was performed using a 60 $\times$ 1.4 NA oil immersion objective (Nikon), and the Nikon Perfect Focus System was used to ensure consistent focus.
+Microscopy was performed using a 40 $\times$ 1.4 NA oil immersion objective (Nikon), and the Nikon Perfect Focus System was used to ensure consistent focus.
 X-Y spatial positions were defined for each chamber to maximise spatial coverage of the chamber while ensuring that the microscope takes less time to move positions and capture images than the interval period.
 Images were taken every \SI{5}{\minute}, and the duration of image acquisition varied for each experiment.
 Brightfield and flavin images were captured in all strains and mCherry images were additionally captured for the HTB2::mCherry strain.

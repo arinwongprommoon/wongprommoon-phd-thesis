@@ -54,7 +54,13 @@
 - [X] (LM) It would be good to see at the end of the chapter a section where the aims of the thesis and the research questions are clearly stated.
   - Take research questions from the presentation.
 ** Methods
-- [ ] $L, $A[François, Ivan] (LM) There isn’t much about chip design, material, fluidic dynamics etc. This aspect is important for data interpretation.
+- [X] $L, $A[François, Ivan] (LM) There isn’t much about chip design, material, fluidic dynamics etc. This aspect is important for data interpretation.
+  - I think this should just be a short description that covers the above, and references Crane et al. (2014).  In a similar vein as describing aliby and referencing Alán's thesis.
+  - I should still read the PDMS adsorption (and it may well appear briefly here), but the absorption part will be more important elsewhere.
+    - Toepke & Beebe (2006): likely most relevant
+    - Li et al. (2009)
+    - Prestidge et al. (2004)
+    - Vlachopoulou et al. (2009)
 - [X] $L (AM) p050/L1345: use better descriptor with reference
 ** Biology
 - [X] $L (AM) p095/L1966: do you really mean circadian?  (yeast doesn't have circadian cycles; read Charvin et al. 2009 to make sure I know what I'm talking about)
