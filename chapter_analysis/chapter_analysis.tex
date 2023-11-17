@@ -520,7 +520,7 @@ Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to corr
 \end{figure}
 
 To assess the performance of the use of the autoregressive model for rhythmicity detection across a dataset, I extended this method across the \textit{zwf1$\Delta$} dataset, treating Type I power spectra (Fig.\ \ref{fig:analysis-ar-classification}) as non-oscillatory.
-The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions), as it classed a large proportion of time series as non-oscillatory.
+The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests that the method leads to poor performance (precision = 0.532, recall = 0.629, no-skill classifier: precision = recall = 0.527, see Methods Section~\ref{subsec:methods-computational-precision-recall} for definitions).
 
 \begin{table}[h!]
   \centering
@@ -543,6 +543,41 @@ The confusion matrix (Table~\ref{tab:analysis-ar-confusion-matrix}) suggests tha
   }
   \label{tab:analysis-ar-confusion-matrix}
 \end{table}
+
+To find an explanation for the poor performance, I consider the false negatives (83 time series) and false positives (124 time series).
+To address the false negatives, Fig.\ \ref{fig:analysis-ar-order} shows that Type I power spectra have lower optimal orders of the autoregressive model compared to Type II and Type III power spectra.
+With lower orders, there is less information that is used to inform the power spectrum, and therefore it is more likely that the resulting power spectrum is of Type I.
+To address the false positives, a potential explanation is that non-oscillatory time series correspond to power spectra with multiple local maxima, as opposed to a single local maximum that corresponds to the most likely period of an oscillatory time series, and such power spectra are classified as Types II or III\@.
+However, Fig.\ \ref{fig:analysis-ar-maxima} shows that there is no relationship between the number of local minima and whether a time series is oscillatory (contingency table $\chi^{2} = 2.90$, 3 degrees of freedom, $p = 0.41$); therefore, a new, yet unknown, explanation is needed.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{ar_eval_1.pdf}
+   \caption{
+   }
+   \label{fig:analysis-ar-order}
+  \end{subfigure}%
+  \begin{subfigure}[htpb]{0.5\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{ar_eval_2.pdf}
+   \caption{
+   }
+   \label{fig:analysis-ar-maxima}
+  \end{subfigure}
+
+  \caption[
+  ]{
+    \textbf{(\ref{fig:analysis-ar-order})}
+    Optimal order of autoregressive function fitted to time series, categorised by whether they are non-oscillatory or oscillatory time series (human-labelled) and the type of oscillation based on the analytical periodogram derived from the autoregressive function \parencite{jiaFrequencyDomainAnalysis2020}.
+    No oscillatory time series have Type IV power spectra, thus not shown.
+    \textbf{(\ref{fig:analysis-ar-maxima})}
+    Proportions of non-oscillatory and oscillatory time series that have 0 to 3 local maxima in their analytical periodograms.
+  }
+  \label{fig:analysis-ar}
+\end{figure}
+
 
 
 \subsection{Machine learning}
