@@ -157,11 +157,12 @@ Specifically, UMAP aims to find a manifold structure of the input observations a
 This embedding thus serves as coordinates to plot the data onto a low-dimensional space.
 
 To evaluate whether UMAP was able to discover a structure within the BY4741 \& \textit{zwf1$\Delta$} dataset that corresponded to meaningful divisions, I featurised the time series with \textit{catch22}, then used UMAP to compute two-dimensional embeddings.
+
 Fig.\ \ref{fig:umap-osc} demonstrates that UMAP suggested a small group of non-oscillatory time series that differed markedly from the rest ($\ast$ in figure), and a larger group that was more similar to oscillatory time series ($\ast \ast$ in figure).
-In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggested that the BY4741 time series were more similar to each other.
-In contrast, \textit{zwf1$\Delta$} occupied larger regions of the embedding space.
+However, the figure also suggested that a third group of non-oscillatory time series occupied the same region in embedding space as oscillatory time series.
+In addition, Fig.\ \ref{fig:umap-strain} demonstrates that UMAP suggested that the BY4741 time series were more similar to each other than \textit{zwf$\Delta$} were to each other.
+This was evidenced by how \textit{zwf1$\Delta$} occupied larger regions of the embedding space than BY4741.
 These embeddings agreed with my observation that time series from the \textit{zwf1$\Delta$} strain had a larger variety of shapes and oscillation quality than the BY4741 strain.
-Thus, UMAP may have potential to separate oscillatory and non-oscillatory time series, or time series of different shapes.
 
 \begin{figure}
   \centering
@@ -193,9 +194,19 @@ Thus, UMAP may have potential to separate oscillatory and non-oscillatory time s
   \label{fig:umap}
 \end{figure}
 
-To improve the visualisation, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ UMAP hyperparameters (Appendix~\ref{append:analysis-umap}) to find the best combination.
+The overlaps between oscillatory and non-oscillatory time series and between BY4741 and \textit{zwf1$\Delta$} time series in feature space can be explained by two factors: the characteristics of the time series themselves, or the UMAP algorithm.
+To show the contribution of the characteristics of the time series to their positions on the embedding space, Fig.\ [...] shows non-oscillatory time series that correspond to the two regions described by Fig.\ \ref{fig:umap-osc} along with those that occupy the same region in embedding space as oscillatory time series.
+
+% INSERT NEW FIGURE HERE
+
+To further emphasise the role of the characteristics of the time series, Fig.\ [...] repeats the UMAP analysis, but on the first half of the time series...
+
+% INSERT NEW FIGURE HERE
+
+To improve the visualisation in Fig.\ \ref{fig:umap}, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ UMAP hyperparameters (Appendix~\ref{append:analysis-umap}) to find the best combination that separates the groups of time series.
 Fig.\ \ref{fig:umap-gridsearch} suggests that $50 \leq n \leq 150$ and $0.25 \leq \mathrm{min\_dist} \leq 1$ resulted in a good separation between the BY4741 and \textit{zwf1$\Delta$} nodes.
-In addition, non-oscillatory time series were consistently displayed into groups separate from the rest as the hyperparameters were varied.
+However, in this region, the two groups of non-oscillatory time series marked by $\ast$ and $\ast \ast$ in \ref{fig:umap} were merged.
+Altogether, these non-oscillatory time series were consistently displayed into groups separate from the rest as the hyperparameters were varied.
 
 \begin{figure}
   \centering
@@ -208,6 +219,10 @@ In addition, non-oscillatory time series were consistently displayed into groups
     }
   \label{fig:umap-gridsearch}
 \end{figure}
+
+Varying parameter values to obtain better separation between groups of time series decreases the contribution of the UMAP algorithm to the overlap between groups.
+However, some overlap between non-oscillatory and oscillatory time series and between BY4741 and \textit{zwf1$\Delta$} time series remain, leading to the conclusion that the characteristics of the time series are chiefly responsible for their positions in embedding space.
+Thus, UMAP may have potential to visualise groups in a dataset of time series that may not correspond to biologically relevant groups, and this may lead to finding heterogeneity in time series among cells of the same strain.
 
 
 \subsection{Graph-based clustering}
