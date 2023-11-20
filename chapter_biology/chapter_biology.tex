@@ -275,11 +275,40 @@ However, interpreting my single-cell microfluidics results in conjunction with r
 The PDMS that forms the microfluidic devices may additionally affect results as small, hydrophobic molecules are known to be absorbed by \parencite{toepkePDMSAbsorptionSmall2006} and adsorb onto the surface of \parencite{liPDMSCompoundAdsorption2009} PDMS\@; though, the PDMS in my experiments has been treated to reduce absorption and adsorption \parencite{craneMicrofluidicSystemStudying2014}.
 As \textcite{krishnaMinimalPushPull2018} propose that acetyl-CoA and NADPH may serve as signalling chemicals for the metabolic cycles, if absorption and adsorption remain in my microfluidic devices, these processes would remove such signalling chemicals, further eliminating the possibility that signalling chemicals are required for generation of metabolic cycles.
 
-To show that my microfluidics set-up creates fluid flow in chambers that flushes potential signalling chemicals away from cells, making cell-to-cell communication impossible, Fig.\ [...] shows that there is no gradient of response along the direction of fluid flow.
+To show that my microfluidics set-up creates fluid flow in chambers that flushes potential signalling chemicals away from cells, making cell-to-cell communication impossible, Fig.\ \ref{fig:biology-starvation-xy} shows that there is no gradient of response along the direction of fluid flow.
+Specifically, there is no significant correlation between spatial position and the mean intensity of the raw flavin signal (x-axis: $\rho = -0.11$, $p = 0.10$, y-axis: $\rho = -0.0047$, $p = 0.95$), and there is also no such correlation between spatial position and the period of flavin oscillations (x-axis: $\rho = -0.063$, $p = 0.44$, y-axis: $\rho = 0.016$, $p = 0.85$).
+
+\begin{figure}[hb!]
+  \centering
+  \begin{subfigure}[htpb]{1.0\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_xy_flavin_signal.png}
+   \caption{
+   }
+   \label{fig:biology-starvation-xy-signal}
+  \end{subfigure}
+
+  \begin{subfigure}[htpb]{1.0\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{19972_xy_flavin_period.png}
+   \caption{
+   }
+   \label{fig:biology-starvation-xy-signal}
+  \end{subfigure}
+
+  \caption[
+    Relationship between the spatial position of trap and the mean raw flavin signal across all time points, and the period of flavin oscillation, for each parent cell, during glucose starvation.
+  ]{
+    Relationship between the spatial (X, Y) position of trap and
+    \textbf{(\ref{fig:biology-starvation-xy-signal})} the mean raw flavin signal across all time points, and
+    \textbf{(\ref{fig:biology-starvation-xy-signal})} the period of flavin oscillation (first peak of autocorrelation function), for each parent cell, during glucose starvation.
+    Media flow is along the X axis.
+  }
+  \label{fig:biology-starvation-xy}
+\end{figure}
+
 To further demonstrate this effect of fluid flow, further experiments can collect `spent medium', remaining nutrient medium that has passed through a chamber with cells.
 This spent medium can then be filtered and used as input nutrient media for a repeat experiment to show that no signalling molecule that can synchronise metabolic cycles are in the spent medium.
-
-% INSERT NEW FIGURE HERE
 
 Combined with results from the previous section, my data suggest that the metabolic cycle responds to external conditions and allows the cell division cycle to be initiated during a specific phase of the metabolic cycle, if conditions are favourable for growth.
 
