@@ -195,9 +195,46 @@ These embeddings agreed with my observation that time series from the \textit{zw
 \end{figure}
 
 The overlaps between oscillatory and non-oscillatory time series and between BY4741 and \textit{zwf1$\Delta$} time series in feature space can be explained by two factors: the characteristics of the time series themselves, or the UMAP algorithm.
-To show the contribution of the characteristics of the time series to their positions on the embedding space, Fig.\ [...] shows non-oscillatory time series that correspond to the two regions described by Fig.\ \ref{fig:umap-osc} along with those that occupy the same region in embedding space as oscillatory time series.
+To show the contribution of the characteristics of the time series to their positions on the embedding space, Fig.\ \ref{fig:umap-sample-regions} shows non-oscillatory time series that correspond to the two regions described by Fig.\ \ref{fig:umap-osc} along with those that occupy the same region in embedding space as oscillatory time series.
+This figure suggests that the groups of interest were defined by the characteristics of the time series.
+Specifically, Region 1 corresponds to non-oscillatory time series with very high signal-to-noise ratios, Region 2 corresponds to non-oscillatory time series with high signal-to-noise ratios, and Region 3 corresponds to time series with inconsistent oscillatory behaviour.
+Such time series in Region 3 were labelled non-oscillatory due to their inconsistent behaviour but likely occupy the same region in embedding space with oscillatory time series because they share similar noise characteristics.
 
-% INSERT NEW FIGURE HERE
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{umap_single_is20016_bbox1.pdf}
+    \caption{
+    }
+    \label{fig:umap-sample-bbox1}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{umap_single_is20016_bbox2.pdf}
+    \caption{
+    }
+    \label{fig:umap-sample-bbox2}
+  \end{subfigure}
+
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{umap_single_is20016_bbox3.pdf}
+    \caption{
+    }
+    \label{fig:umap-sample-bbox3}
+  \end{subfigure}
+
+  \caption[
+      Sample non-oscillatory time series from regions of interest in UMAP embedding space
+  ]{
+      Sample non-oscillatory time series from regions of interest in UMAP embedding space shown in Fig.\ \ref{fig:umap}.
+      \textbf{(\ref{fig:umap-sample-bbox1})} Non-oscillatory group (small group, $\ast$ in Fig.\ \ref{fig:umap-osc}).
+      \textbf{(\ref{fig:umap-sample-bbox2})} Non-oscillatory group (large group, $\ast \ast$ in Fig.\ \ref{fig:umap-osc}).
+      \textbf{(\ref{fig:umap-sample-bbox2})} Non-oscillatory time series that occupy the same region of embedding space as oscillatory time series.
+    }
+  \label{fig:umap-sample-regions}
+\end{figure}
 
 To further emphasise the role of the characteristics of the time series, Fig.\ [...] repeats the UMAP analysis, but on the first half of the time series...
 
