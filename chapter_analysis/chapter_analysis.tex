@@ -236,9 +236,40 @@ Such time series in Region 3 were labelled non-oscillatory due to their inconsis
   \label{fig:umap-sample-regions}
 \end{figure}
 
-To further emphasise the role of the characteristics of the time series, Fig.\ [...] repeats the UMAP analysis, but on the first half of the time series...
+To further emphasise the role of the characteristics of the time series, Fig.\ \ref{fig:umap-firsthalf} repeats the UMAP analysis, but on the first half of the time series.
+As the first half of each time series is likely to have similar time series properties as the whole time series, this figure provides further evidence to suggest that the characteristics of each time series are the major determinant of each node's position in the embedding space.
+This conclusion is further evidenced by the continued presence of a small group of non-oscillatory time series that differed substantially from the rest and a larger group that was more similar to oscillatory time series (Fig.\ \ref{fig:umap-firsthalf-osc}), similar to what could be observed in Fig.\ \ref{fig:umap-osc}.
 
-% INSERT NEW FIGURE HERE
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{umap_single_is20016_firsthalf_2.png}
+    \caption{
+    }
+    \label{fig:umap-firsthalf-osc}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\textwidth}
+  \centering
+    \includegraphics[width=\linewidth]{umap_single_is20016_firsthalf_1.png}
+    \caption{
+    }
+    \label{fig:umap-firsthalf-strain}
+  \end{subfigure}
+
+  \caption[
+      UMAP embedding of a dataset of the first half of time series, featurised using \textit{catch22}.
+    ]{
+      UMAP embedding ($n=5$, $\mathrm{min\_dist} = 0.5$, $d=2$, Euclidean distance as the metric) of a dataset of the first half of time series used in Fig.\ \ref{fig:umap}, featurised using \textit{catch22}.
+      Each node represents a time series, coloured either by
+      \textbf{(\ref{fig:umap-firsthalf-osc})}
+      whether each is oscillatory or not, human-labelled, or by
+      \textbf{(\ref{fig:umap-firsthalf-strain})}
+      strain (`BY4741' or `\textit{zwf1$\Delta$}').
+    }
+  \label{fig:umap-firsthalf}
+\end{figure}
+
 
 To improve the visualisation in Fig.\ \ref{fig:umap}, I performed a grid search of the $n$ and $\mathrm{min\_dist}$ UMAP hyperparameters (Appendix~\ref{append:analysis-umap}) to find the best combination that separates the groups of time series.
 Fig.\ \ref{fig:umap-gridsearch} suggests that $50 \leq n \leq 150$ and $0.25 \leq \mathrm{min\_dist} \leq 1$ resulted in a good separation between the BY4741 and \textit{zwf1$\Delta$} nodes.
