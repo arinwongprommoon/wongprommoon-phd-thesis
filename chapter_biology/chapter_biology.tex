@@ -269,14 +269,17 @@ In addition, the results show that each cell can individually reset the phase of
 Similar phenomena have been observed upon bulk addition of carbon sources \parencite{kuangMsn2RegulateExpression2017, krishnaMinimalPushPull2018}.
 
 Importantly, the results also suggest that diffusion of signalling chemicals between cells is not required for generation of metabolic cycles.
-To prove this assertion, a bulk-culture experiment, such as form a turbidostat or chemostat, should be performed as a control.
+To prove this assertion, a bulk-culture experiment, such as from a turbidostat or chemostat, should be performed as a control.
 However, interpreting my single-cell microfluidics results in conjunction with reports from analogous chemostat-based studies \parencite{tuLogicYeastMetabolic2005} should still give strong evidence in support of the lack of requirement for cell-to-cell signalling.
 
-The PDMS that forms the microfluidic devices may additionally affect results as small, hydrophobic molecules are known to be absorbed by \parencite{toepkePDMSAbsorptionSmall2006} and adsorb onto the surface of \parencite{liPDMSCompoundAdsorption2009} PDMS\@; though, the PDMS in my experiments has been treated to reduce absorption and adsorption \parencite{craneMicrofluidicSystemStudying2014}.
-As \textcite{krishnaMinimalPushPull2018} propose that acetyl-CoA and NADPH may serve as signalling chemicals for the metabolic cycles, if absorption and adsorption remain in my microfluidic devices, these processes would remove such signalling chemicals, further eliminating the possibility that signalling chemicals are required for generation of metabolic cycles.
+The PDMS that forms the microfluidic devices may additionally affect results because small, hydrophobic molecules are known to be absorbed by \parencite{toepkePDMSAbsorptionSmall2006} and adsorb onto the surface of \parencite{liPDMSCompoundAdsorption2009} PDMS\@.
+Though, the PDMS in my experiments has been treated to reduce absorption and adsorption \parencite{craneMicrofluidicSystemStudying2014}.
+Additionally, \textcite{krishnaMinimalPushPull2018} propose that acetyl-CoA and NADPH may serve as signalling chemicals for the metabolic cycles.
+Therefore, if absorption and adsorption still occur in my microfluidic devices, these processes would remove such signalling chemicals, further eliminating the possibility that signalling chemicals are required for generation of metabolic cycles.
 
-To show that my microfluidics set-up creates fluid flow in chambers that flushes potential signalling chemicals away from cells, making cell-to-cell communication impossible, Fig.\ \ref{fig:biology-starvation-xy} shows that there is no gradient of response along the direction of fluid flow.
-Specifically, there is no significant correlation between spatial position and the mean intensity of the raw flavin signal (x-axis: $\rho = -0.11$, $p = 0.10$, y-axis: $\rho = -0.0047$, $p = 0.95$), and there is also no such correlation between spatial position and the period of flavin oscillations (x-axis: $\rho = -0.063$, $p = 0.44$, y-axis: $\rho = 0.016$, $p = 0.85$).
+To show that my microfluidics set-up creates fluid flow in chambers that would flush any signalling chemicals away from cells, making cell-to-cell communication impossible, Fig.\ \ref{fig:biology-starvation-xy} shows that there is no gradient of response along the direction of fluid flow.
+Specifically, there is no significant correlation between spatial position and the mean intensity of the raw flavin signal (x-axis: $\rho = -0.11$, $p = 0.10$, y-axis: $\rho = -0.0047$, $p = 0.95$).
+Additionally, there is also no significant correlation between spatial position and the period of flavin oscillations (x-axis: $\rho = -0.063$, $p = 0.44$, y-axis: $\rho = 0.016$, $p = 0.85$).
 
 \begin{figure}[hb!]
   \centering
@@ -307,12 +310,13 @@ Specifically, there is no significant correlation between spatial position and t
   \label{fig:biology-starvation-xy}
 \end{figure}
 
-To further demonstrate this effect of fluid flow, further experiments can collect `spent medium', remaining nutrient medium that has passed through a chamber with cells.
-This spent medium can then be filtered and used as input nutrient media for a repeat experiment to show that no signalling molecule that can synchronise metabolic cycles are in the spent medium.
+To further demonstrate that fluid flow in my microfluidic devices eliminates cell-to-cell signalling, further experiments can collect `spent medium', i.e.\ nutrient medium that has passed through a chamber that contains cells.
+This spent medium can then be filtered and used as input nutrient media for a repeat experiment.
+Such an experiment would show that no signalling molecule that can synchronise metabolic cycles are in the spent medium.
 
 Combined with results from the previous section, my data suggest that the metabolic cycle responds to external conditions and allows the cell division cycle to be initiated during a specific phase of the metabolic cycle, if conditions are favourable for growth.
 
-If the metabolic cycle gates initiation of the early and late cell division cycle, as was suggested by \textcite{ozsezenInferenceHighLevelInteraction2019}, then a condition that creates unfavourable conditions for cell division should lead to each cell progressing through its cell division cycle until its next gap phase, before halting its cell division cycle.
+If the metabolic cycle gates initiation of the early and late cell division cycle \parencite{ozsezenInferenceHighLevelInteraction2019}, then a condition that creates unfavourable conditions for cell division should lead to each cell progressing through its cell division cycle until its next gap phase, before halting its cell division cycle.
 Depending on which phase in the cell division cycle the cell happens to be in upon starvation, this next gap phase can either be G\textsubscript{1} or G\textsubscript{2}/M.
 To test this implication, Fig.\ \ref{fig:biology-starvation-raw} shows that cells may remain in G\textsubscript{1} during glucose starvation (Fig.\ \ref{fig:biology-starvation-raw-2}), as evidenced by low mCherry intensity, or in G\textsubscript{2}/M (Fig.\ \ref{fig:biology-starvation-raw-1}), as evidenced by high mCherry intensity.
 

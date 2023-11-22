@@ -51,21 +51,24 @@ Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{el
 
 In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate two strategies of scheduling of the synthesis of biomass components: in sequence and in parallel.
 In contrast to \textcite{takhaveevTemporalSegregationBiosynthetic2023}, which modelled the levels of biosynthesis for each biomass component at each phase of the cell division cycle based on the aggregate single-cell response observed in experimental data, without predicting timescales, this chapter predicts the timescale for biosynthesis for different proteome pool sizes and different nutrient conditions.
+
 To simulate the cell prioritising the synthesis of each biomass component in sequence, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
 To assess the advantage of sequential synthesis over parallel synthesis, I estimated the synthesis time for each biomass component based on ablation, then compared these times predicted by the unmodified model.
 To show that sequential synthesis is an adaptation for a finite proteome pool, I varied the size of the enzyme-available proteome pool to observe its effect on the cell's preferred scheduling strategy.
 Finally, to show how nutrient conditions affect the cell's scheduling strategy, I modelled changes in carbon and nitrogen source concentrations, then observed how the changes affect allocation of the proteome to metabolic enzymes.
 
 FBA was chosen as a proof-of-concept method to simulate sequential scheduling of the synthesis of biomass components for its ease of use, and may serve as a basis for more fine-grained modelling to evaluate the hypotheses in this chapter in future investigations.
-Although FBA only examines the steady state of metabolism in a biological system, the technique is useful when combined with ablating the biomass reaction, as ablation introduces a series of different steady states, as each biomass component is prioritised, that can occur in sequence.
+As a limitation, FBA only examines the steady state of metabolism in a biological system.
+However, FBA is useful when combined with ablating the biomass reaction, because ablation introduces a series of different steady states --- as each biomass component is prioritised --- that can occur in sequence.
 This thus reflects, to some extent, how the metabolic state of the cell changes over time.
 
-Furthermore, FBA simulates an average behaviour of yeast cells.
+An additional limitation is that FBA simulates an average behaviour of yeast cells.
 To simulate a population of cells, extensions to FBA can be applied.
-For example, \textcite{tourignySimulatingSinglecellMetabolism2021} developed a stochastic simulation algorithm with FBA embedded, which models fluctuations in enzyme and metabolite copy numbers.
-Applying this algorithm developed for \textit{Mycobacterium genitalium} for ecYeast8 must then account for the greater genome complexity and variability of lipid composition \parencite{sanchezSLIMErProbingFlexibility2019} in budding yeast.
-In addition, \textcite{labhsetwarPopulationFBAPredicts2017} developed a population FBA approach, which was based on sampling enzyme copy numbers from an experimental distribution; applying this idea to ecYeast8 may mean a stochastic size of the enzyme-available proteome pool.
-Both approaches are beyond the scope of this thesis, but may be used in extensions to this work.
+For example, \textcite{tourignySimulatingSinglecellMetabolism2021} developed a stochastic simulation algorithm with FBA embedded, which models fluctuations in enzyme and metabolite copy numbers, for \textit{Mycobacterium genitalium}.
+Applying this algorithm to ecYeast8 must account for the greater genome complexity and variability of lipid composition \parencite{sanchezSLIMErProbingFlexibility2019} in budding yeast.
+In addition, \textcite{labhsetwarPopulationFBAPredicts2017} developed a population FBA approach, which was based on sampling enzyme copy numbers from an experimental distribution.
+Applying this idea to ecYeast8 may mean a stochastic size of the enzyme-available proteome pool.
+Both approaches are challenging and are beyond the scope of this thesis, but may be used in extensions to this work.
 
 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
@@ -333,13 +336,15 @@ For comparison, I computed estimates of the time for each biomass component, ass
 
 where $t_{0}$ is the doubling time found in Eq.\ \ref{eq:model-doubling-time}.
 
-The assumption that underlies Eq.\ \ref{eq:model-proportional-time} implies that different biomass components require the same synthesis time per unit of mass.
+Eq.\ \ref{eq:model-proportional-time} assumes that different biomass components require the same synthesis time per unit of mass.
 Challenging this assumption is the fact that protein synthesis is a metabolically expensive process, with translation requiring many precursors and a series of catalytic processes, compared to the polymerisation of other macromolecules.
 Such complex translation machinery creates multiple rate-limiting steps for protein synthesis \parencite{shahRateLimitingStepsYeast2013}, which also vary depending on the gene each protein is expressed because of regulatory elements \parencite{lahtveeAbsoluteQuantificationProtein2017} and because of amino acid composition \parencite{chenYeastHasEvolved2022}.
-So, it is reasonable to believe that per unit of mass, protein synthesis may require more time than the synthesis of other biomass components.
-To evaluate the assumption that synthesis time is proportional to mass fraction, the inferred synthesis times can be compared to findings from previous studies; however, model estimates give a large range of protein synthesis rates --- \num{1900} to \num{19500} proteins per cell per second \parencite{seegerDynamicalStochasticModel2023} --- thus making such a comparison difficult.
+So, per unit of mass, protein synthesis may require more time than the synthesis of other biomass components.
+
+To evaluate the assumption that synthesis time is proportional to mass fraction, the inferred synthesis times can be compared to findings from previous studies.
+However, model estimates give a large range of protein synthesis rates --- \num{1900} to \num{19500} proteins per cell per second \parencite{seegerDynamicalStochasticModel2023} --- thus making such a comparison difficult.
 In addition, in simulating parallel biosynthesis, it is not possible to simulate different synthesis rates for different biomass components as only one objective function is optimised.
-In the absence of precise time estimates for the synthesis of biomass components, the assumption that synthesis time is proportional to mass fraction may be the best assumption for the parallel case, which is one of two hypothetical scenarios.
+In the absence of precise time estimates for the synthesis of biomass components, the assumption that synthesis time is proportional to mass fraction may be the best assumption for the parallel case, which is one of two hypothetical scenarios, alongside the sequential case.
 
 To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I defined a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time:
 
@@ -658,7 +663,8 @@ To investigate the effect of a non-fermentable carbon source on biomass synthesi
 Results show that the saturation curve of pyruvate controlled the effect of exchange rates on scheduling strategies.
 Fig.\ \ref{fig:model-grid-pyr} shows that when pyruvate was the carbon source, the region of carbon source limitation was larger than when glucose was the carbon source.
 This observation reflected the different shapes of the pyruvate and glucose saturation curves (Fig.\ \ref{fig:model-saturation}): below growth rate saturation, the relationship between pyruvate exchange rate and growth rate is linear, while the relationship between glucose exchange rate and growth rate is not linear.
-In other words, on pyruvate, the growth rate reached half of its maximum value when the pyruvate exchange rate was half of the value that corresponds to the maximum growth rate; in contrast, on glucose, when the growth rate reached half of its maximum value, the glucose exchange rate was well below half of the value that corresponds to the maximum growth rate.
+In other words, on pyruvate, the growth rate reached half of its maximum value when the pyruvate exchange rate was half of the value that corresponds to the maximum growth rate.
+In contrast, on glucose, when the growth rate reached half of its maximum value, the glucose exchange rate was well below half of the value that corresponds to the maximum growth rate.
 
 \begin{figure}
   \centering
