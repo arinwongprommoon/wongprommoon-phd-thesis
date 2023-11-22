@@ -1016,6 +1016,38 @@ Therefore, the M-shaped oxygen cycles observed in the chemostat from this strain
 \section{Discussion}
 \label{sec:biology-discussion}
 
+To summarise the results in this chapter, Table~\ref{tab:biology-summary} shows summary statistics pertaining to the period of metabolic oscillations for each experiment discussed.
+
+\begin{table}[hb]
+  \footnotesize
+  \centering
+  \begin{tabularx}{\linewidth}{bbbbb}
+    \toprule
+    Experiment \& section referenced & Number of time series & Number of oscillatory time series & Mean estimated period \& SEM (min) & Notes\\
+    \midrule
+    High glucose, repeat 1 (\ref{sec:biology-sync}) & 190 & 166 (87.4\%) & 115.7 $\pm$ 3.6 & \\
+    High glucose, repeat 2 (\ref{sec:biology-sync}) & 52 & 42 (80.8\%) & 111.9 $\pm$ 7.9 & \\
+    Glucose starvation (\ref{sec:biology-abrupt}) & 212 & 26 (12.3\%) & 117.3 $\pm$ 10.2 & Only time points during starvation considered.\\
+    BY4741 (\ref{sec:biology-backgrounds}) & 298 & 246 (82.6\%) & 92.4 $\pm$ 2.6 & \\
+    CEN.PK (\ref{sec:biology-backgrounds}) & 29 & 6 (20.7\%) & 118.3 $\pm$ 24.7 & \\
+    Pyruvate (\ref{sec:biology-carbon}) & 360 & 152 (42.2\%) & 247.4 $\pm$ 6.2 & \\
+    Low glucose (\ref{sec:biology-carbon}) & 1520 & 183 (12.0\%) & 193.6 $\pm$ 7.6 & \\
+    Potassium deficient (\ref{sec:biology-potassium_deficient}) & 511 & 206 (40.3\%) & 132.8 $\pm$ 2.8 & Only time points during potassium deficiency considered.\\
+    \textit{zwf1$\Delta$} (\ref{sec:biology-deletions}) & 112 & 63 (56.3\%) & 192.8 $\pm$ 7.7 & \\
+    \textit{tsa1$\Delta$ tsa2$\Delta$} (\ref{sec:biology-deletions}) & 212 & 67 (31.6\%) & 157.7 $\pm$ 7.7 & \\
+    \bottomrule
+  \end{tabularx}
+  \caption[
+    Summary statistics of time series of flavin oscillations for each experiment.
+    ]{
+    Summary statistics of time series of flavin oscillations for each experiment discussed in Chapter~\ref{ch:biology}.
+    Oscillatory and non-oscillatory time series were human-labelled, and the percentage of total time series that were labelled as oscillatory is shown.
+    Periods were estimated by finding the location of the first peak of the autocorrelation function of each oscillatory time series; subsequently, the mean and standard error of the mean were calculated.
+    }
+  \label{tab:biology-summary}
+\end{table}
+
+
 \subsection{Interpretation of results}
 \label{subsec:biology-discussion-interpretation}
 
