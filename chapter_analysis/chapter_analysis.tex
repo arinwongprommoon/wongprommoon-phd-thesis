@@ -636,16 +636,16 @@ Such power spectra with multiple local maxima were thus classified as Types II o
 However, Fig.\ \ref{fig:analysis-ar-maxima} shows that there is no relationship between the number of local minima and whether a time series is oscillatory (contingency table $\chi^{2} = 2.90$, 3 degrees of freedom, $p = 0.41$).
 Thus, a better explanation is needed to explain the false positives.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
-  \begin{subfigure}[htpb]{0.5\textwidth}
+  \begin{subfigure}[htpb]{0.4\textwidth}
    \centering
    \includegraphics[width=\textwidth]{ar_eval_1.pdf}
    \caption{
    }
    \label{fig:analysis-ar-order}
   \end{subfigure}%
-  \begin{subfigure}[htpb]{0.5\textwidth}
+  \begin{subfigure}[htpb]{0.4\textwidth}
    \centering
    \includegraphics[width=\textwidth]{ar_eval_2.pdf}
    \caption{
@@ -716,6 +716,8 @@ To predict the probability that each time series was oscillatory, I used Platt s
 Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
 Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities (Fig.\ \ref{fig:analysis-svc-proba-histogram-model}), in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
 
+\pagebreak
+
 \begin{figure}[ht!]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
@@ -749,7 +751,7 @@ In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the pr
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.65\textwidth]{svm_3_edit.pdf}
+  \includegraphics[width=0.6\textwidth]{svm_3_edit.pdf}
 
   \caption{
     Sample time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.

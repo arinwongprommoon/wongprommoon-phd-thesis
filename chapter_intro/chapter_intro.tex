@@ -964,12 +964,7 @@ Such differential equations can be difficult to construct and parametrise.
 Several versions of genome-scale metabolic models for \textit{Saccharomyces cerevisiae} have been developed since the first model, iFF708 \parencite{forsterGenomeScaleReconstructionSaccharomyces2003}, reviewed in \textcite{chenGenomescaleModelingYeast2022} (Fig.\ \ref{fig:intro-fba-timeline}).
 Subsequent developments have included the addition of new reactions, the addition of new cellular compartments, and correcting gene-protein associations.
 
-Initially, new models were built based on iFF708, adhering to BiGG conventions \parencite{norsigianBiGGModels20202020}.
-These models include iND750 \parencite{duarteReconstructionValidationSaccharomyces2004}, iLL672 \parencite{nookaewGenomescaleMetabolicModel2008}, and iMM904 \parencite{moConnectingExtracellularMetabolomic2009} and consist of increasing numbers of reactions.
-
-Yeast1 \parencite{herrgardConsensusYeastMetabolic2008} became the first consensus genome-scale metabolic model of budding yeast, combining knowledge from previous models in standardised terminology; however, it was not until Yeast4 \parencite{dobsonFurtherDevelopmentsGenomescale2010} when gaps in the network were filled and constraint-based simulations were possible.
-
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \includegraphics[width=0.9\textwidth]{chenGenomescaleModelingYeast2022_1}
   \caption[
@@ -980,6 +975,11 @@ Yeast1 \parencite{herrgardConsensusYeastMetabolic2008} became the first consensu
     }
   \label{fig:intro-fba-timeline}
 \end{figure}
+
+Initially, new models were built based on iFF708, adhering to BiGG conventions \parencite{norsigianBiGGModels20202020}.
+These models include iND750 \parencite{duarteReconstructionValidationSaccharomyces2004}, iLL672 \parencite{nookaewGenomescaleMetabolicModel2008}, and iMM904 \parencite{moConnectingExtracellularMetabolomic2009} and consist of increasing numbers of reactions.
+
+Yeast1 \parencite{herrgardConsensusYeastMetabolic2008} became the first consensus genome-scale metabolic model of budding yeast, combining knowledge from previous models in standardised terminology; however, it was not until Yeast4 \parencite{dobsonFurtherDevelopmentsGenomescale2010} when gaps in the network were filled and constraint-based simulations were possible.
 
 More recent developments of consensus genome-scale metabolic models of budding yeast created formalisms that are relevant to this thesis.
 Yeast5 \parencite{heavnerYeastExpandedReconstruction2012} introduced `\textit{isa}' reactions and pseudometabolites to group specific lipid species within a more general lipid class (Fig.\ \ref{fig:intro-fba-isa}).
@@ -1051,6 +1051,7 @@ To create dynamic simulations, DynamicME expresses the stoichiometric matrix and
 In this thesis, GECKO is used to simulate allocation of proteomic resources because there is an easily available derivative of Yeast8 with the GECKO formalism already applied.
 Furthermore, GECKO provides an easy way to control the size of the enzyme-available proteome, thus making it easy to test the hypothesis of whether the size of the proteome affects metabolic strategies in the budding yeast cell.
 
+\pagebreak
 
 \section{Aims of thesis and research questions}
 \label{sec:intro-aims}
@@ -1062,12 +1063,12 @@ This thesis aims to address these research questions:
 \end{enumerate}
 
 To test whether metabolic oscillations in chemostat-based studies arise from communication between cells or from external synchronisation, I use a single-cell microfluidics platform to monitor flavin-based metabolic cycles.
-I chose a single-cell microfluidics platform because the physical separation between individual cells and the rapid media flow eliminates communication between cells that may occur in the chemostat.
+I chose this platform because it physically separates cells and has rapid media flow, and both eliminate communication between cells that may occur in the chemostat.
 Single-cell microfluidics alone cannot assess the role of communication between cells without comparing with bulk-culture set-ups such as the chemostat or the turbidostat.
 However, using such bulk-culture equipment is beyond the scope of this thesis, and this thesis aims to address the first research question by comparing single-cell results with corresponding chemostat-based results in the literature.
 
 The observation that metabolic cycles are persistent across nutrient and genetic perturbations gave rise to the second research question.
-To test whether the persistence of metabolic cycles across conditions reflect sequential synthesis of biomass components, I employ flux balance analysis on an enzyme-constrained genome-scale metabolic model of budding yeast.
+To test whether this persistence reflects sequential synthesis of biomass components, I use flux balance analysis with an enzyme-constrained genome-scale metabolic model of budding yeast.
 Specifically, I assess whether imposing a constraint on the proteome or changing nutrient conditions leads to sequential synthesis of biomass components taking less time than parallel synthesis of biomass components.
 Answering this latter research question could lead to an understanding of the yeast metabolic cycle as a fundamental metabolic adaptation to physiological constraints.
 

@@ -281,9 +281,9 @@ To show that my microfluidics set-up creates fluid flow in chambers that would f
 Specifically, there is no significant correlation between spatial position and the mean intensity of the raw flavin signal (x-axis: $\rho = -0.11$, $p = 0.10$, y-axis: $\rho = -0.0047$, $p = 0.95$).
 Additionally, there is also no significant correlation between spatial position and the period of flavin oscillations (x-axis: $\rho = -0.063$, $p = 0.44$, y-axis: $\rho = 0.016$, $p = 0.85$).
 
-\begin{figure}[hb!]
+\begin{figure}[ht!]
   \centering
-  \begin{subfigure}[htpb]{1.0\textwidth}
+  \begin{subfigure}[htpb]{0.8\textwidth}
    \centering
    \includegraphics[width=\textwidth]{19972_xy_flavin_signal.png}
    \caption{
@@ -291,7 +291,7 @@ Additionally, there is also no significant correlation between spatial position 
    \label{fig:biology-starvation-xy-signal}
   \end{subfigure}
 
-  \begin{subfigure}[htpb]{1.0\textwidth}
+  \begin{subfigure}[htpb]{0.8\textwidth}
    \centering
    \includegraphics[width=\textwidth]{19972_xy_flavin_period.png}
    \caption{
@@ -358,7 +358,7 @@ In contrast, Fig.\ \ref{fig:biology-starvation-histogram-flavin} suggests that d
 %This observation can be explained by lower-amplitude oscillations during starvation, which was evidenced by a lower signal-to-noise ratio ($\bar{x}_{\mathrm{before}} = 2.86$, $\bar{x}_{\mathrm{starvation}} = 2.17$, $\bar{x}_{\mathrm{after}} = 4.09$; two-sided Kolmogorov-Smirnov test: starvation vs before $p = \num{6.9e-15}$, starvation vs after $p = \num{6.6d-18}$).
 In addition, the figure suggests that cells retain memory of starvation --- in other words, whether each cell has encountered starvation before influences the cell's metabolic cycle --- as evidenced by how the flavin signals after starvation were, overall, higher than before starvation.
 
-\begin{figure}
+\begin{figure}[ht!]
   \centering
   \begin{subfigure}[htpb]{0.5\textwidth}
    \centering
@@ -471,7 +471,7 @@ CEN.PK is an important background to consider because it harbours genetic differ
 Furthermore, CEN.PK has greater mitochondrial stability and a better gene regulatory response to levels of oxygen, owing to the insertion mutation that deactivates the \textit{HAP1} gene in S288c \parencite{gaisneNaturalMutationSaccharomyces1999}.
 Fig.\ \ref{fig:biology-cenpk-sync} suggests that CEN.PK113-7D cells exhibited \SI{90}{\minute} flavin oscillations that were synchronised with budding events, similar to FY4 cells, thus further confirming the robustness of the metabolic cycle across genetic backgrounds.
 
-\begin{figure}
+\begin{figure}[hb!]
   \centering
   \begin{subfigure}[htpb]{0.45\textwidth}
    \centering
@@ -1025,7 +1025,7 @@ Therefore, the M-shaped oxygen cycles observed in the chemostat from this strain
 
 To summarise the results in this chapter, Table~\ref{tab:biology-summary} shows summary statistics pertaining to the period of metabolic oscillations for each experiment discussed.
 
-\begin{table}[hb]
+\begin{table}[htb!]
   \footnotesize
   \centering
   \begin{tabularx}{\linewidth}{bbbbb}
