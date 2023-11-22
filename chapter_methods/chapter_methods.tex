@@ -253,7 +253,7 @@ The background fluorescence is also computed, based on the pixel intensity outsi
     Example time course of images from a microfluidics experiment, processed by \textit{aliby} \parencite{munozgonzalezPhenotypingSingleCells2023}.
     Top row shows brightfield images taken over time; only the first three time points are shown for illustrative purposes.
     Here, \textit{BABY} \parencite{pietschDeterminingGrowthRates2023} segments brightfield images to obtain cell outlines (blue and brown).
-    Bottom row shows a images from a sample fluorescence channel taken over time.
+    Bottom row shows images from a sample fluorescence channel taken over time.
     The cell outlines from image segmentation were overlaid onto the fluorescence channel images so that the fluorescence intensity within each cell can be extracted.
     \textbf{(\ref{fig:methods-timelapse-dataframe})}
     The extracted values were then saved in an array of numbers, with rows indicating cells (labelled by IDs) and columns indicating time in minutes --- each row thus represents a time series.
@@ -569,7 +569,7 @@ The model describes a species that is produced at a linear birth rate $k_{0}$ an
 
 To produce Gillespie noise, a stochastic simulation employing the direct method of the Gillespie algorithm was performed on the birth-death process model with defined $k_{0}$ and $d_{0}$ parameters.
 The final time was defined in such a way that allows the trajectory of the amount of $P$ over time to reach a steady state (Fig.\ \ref{fig:gillespie_trajectory}).
-This time varied depending on the $k_{0}$ and $d_{0}$ values, but the final time of \num{1500} was chosen as it was long enough to have the trajectory each steady state for the $k_{0}$ and $d_{0}$ values used in this study.
+This time varied depending on the $k_{0}$ and $d_{0}$ values, but the final time of \num{1500} was chosen as it was long enough to have the trajectory reach steady state for the $k_{0}$ and $d_{0}$ values used in this study.
 
 The latter half of the trajectory was taken and then put on a grid with \num{1000} regularly-spaced time points, equal to the number of time points for the synthetic oscillators (harmonic and FitzHugh-Nagumo).
 The time series was then normalised by subtracting the mean ($k_{0}/d_{0}$) and then dividing by $\sqrt{1/d_{0}}$ to create a time series representing Gillespie noise with mean 0 and standard deviation $\sqrt{k_{0}}$.
