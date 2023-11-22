@@ -74,10 +74,10 @@
   - I'm not sure if the material of the microfluidic device is relevant here?  Especially if I'm compared my single-cell study with a chemostat experiment.  Another comparison of experimental set-ups may be more appropriate.  Though I might change my mind after reading about PDMS.
 - [X] $L (LM) p090/L1831: Same when you say "Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the zwf1∆ and tsa1∆ tsa2∆ deletion strains. These discrepancies warrant further explanation."
   - REVISIT THIS: Same as the above.  Though I don't think the PDMS matters here, as there is no change in medium.
-- [ ] $C (LM) It would be very useful to perform a proper statistical analysis for all the experiments shown in the chapter, and add at the end of the chapter a table summarizing results and showing clearly which conditions show statistically significant differences.  These are what you should report in the table requested (and optionally on the plots)...
-  - [ ] Summarising the number of cells tested in each experiment
-  - [ ] Reporting the numbers of cells scored rhythmic or arrhythmic in each experiment
-  - [ ] Reporting the distribution of periods (or frequencies) for rhythmic cells, and obtaining uncertainty measures such as SEM, to use in statistical tests of the comparisons that you comment on in the text.
+- [X] $C (LM) It would be very useful to perform a proper statistical analysis for all the experiments shown in the chapter, and add at the end of the chapter a table summarizing results and showing clearly which conditions show statistically significant differences.  These are what you should report in the table requested (and optionally on the plots)...
+  - [X] Summarising the number of cells tested in each experiment
+  - [X] Reporting the numbers of cells scored rhythmic or arrhythmic in each experiment
+  - [X] Reporting the distribution of periods (or frequencies) for rhythmic cells, and obtaining uncertainty measures such as SEM, to use in statistical tests of the comparisons that you comment on in the text.
 ** Analysis
 - [X] $L (AM) p096/L1976: "This is a strong claim to make but you could support it by summarising the analysis methods from the handful of single-cell YMC papers and showing they are all different."
 - [X] $L (LM) Please mention more clearly the novelty of the proposed methods, as compared to what had been previously proposed in the literature.
