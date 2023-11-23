@@ -19,8 +19,10 @@ In Chapter~\ref{ch:biology}, I used the ALCATRAS \parencite{craneMicrofluidicSys
 I showed that yeast cells independently generated flavin-based single-cell metabolic cycles.
 In addition, a specific phase of such cycles likely gated the cell division cycle, as evidenced by decoupling between the metabolic and cell division cycles during starvation.
 I further showed that the metabolic cycle was retained in nutrient perturbations and in deletion strains.
-In particular, I showed that cells generated such cycles in potassium-deficient conditions, contrary to \textcite{oneillEukaryoticCellBiology2020}.
-I also showed that that \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} cells generated flavin cycles whose waveforms differed from cycles of dissolved oxygen previously observed in the chemostat \parencite{tuCyclicChangesMetabolic2007,caustonMetabolicCyclesYeast2015}.
+In particular, I showed that cells generated such cycles in potassium-deficient conditions, contrary to \textcite{oneillEukaryoticCellBiology2020}, although at a longer period than standard, high-glucose, single-cell conditions.
+I also showed that \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} cells generated flavin cycles whose waveforms differed from cycles of dissolved oxygen previously observed in the chemostat.
+Specifically, I observed that \textit{zwf1$\Delta$} generated longer flavin cycles than wild-type cells, contrary to the absence of dissolved oxygen cycles observed by \textcite{tuCyclicChangesMetabolic2007}.
+Additionally, I observed that \textit{tsa1$\Delta$ tsa2$\Delta$} cells generated flavin cycles of two main period lengths, contrary to the M-shaped dissolved oxygen cycles observed by \textcite{caustonMetabolicCyclesYeast2015}.
 
 My results suggest that the yeast metabolic cycle is likely an intrinsic cycle in budding yeast that oscillates within a range of natural frequencies, but the cell is able to adjust this frequency to respond to nutrient conditions.
 If conditions are permissive, the metabolic cycle provides windows of opportunities for the cell division cycle to be initiated.
@@ -50,14 +52,17 @@ Finally, I showed that the cross-correlation function could be used to quantify 
 % MOVE TO CHAPT 4 DISCUSSION?  IT LOOKS OUT OF PLACE HERE.
 Rhythmicity detection is complicated by its different definitions depending on the approach --- reflected in the variety of rhythmicity detection methods compared in Chapter~\ref{ch:analysis}.
 From a signal processing perspective, it can be defined as finding a strong signal within a range of expected frequencies \parencite{zielinskiStrengthsLimitationsPeriod2014}.
-However, from a data science perspective, rhythmicity detection can be seen as identifying the values of a set of time series features that best discriminate between non-oscillatory and oscillatory time series.
+However, from a data science perspective, rhythmicity detection can be seen as identifying the values of a set of time series features that best discriminate between non-oscillatory and oscillatory time series, which I defined visually.
 
 To improve the usefulness of the time series analysis methods, further refinement is needed.
 To make the clustering methods and the support vector classifier generalisable, we require a large enough dataset of signals that includes a variety of oscillation types and shapes, and hyperparameter tuning.
 Furthermore, to improve the ability of the autocorrelation function to infer noise properties of real data, a broader range of noise parameters should be simulated.
 Such simulations would provide additional information that leads to a more precise relationship between noise parameters and the shape of the autocorrelation function.
 A precise way to detect of noise parameters can then be useful to compare the noise from different environmental conditions and from imaging methods.
+
 With the improvements in place, the methods developed in Chapter~\ref{ch:analysis} can form a powerful time series analysis pipeline for oscillatory signals from any natural phenomenon.
+For example, the methods can detect rhythmicity in the time series presented in Chapter~\ref{ch:biology}.
+In addition, to test whether there are sub-populations of cells that have different metabolic cycling behaviours among a genetically homogeneous culture, methods to visualise groups in a dataset of time series (Section~\ref{sec:analysis-clustering}) can be used if there are natural divisions within an experiment that suggest biologically relevant sub-populations.
 
 
 \section{Modelling yeast biosynthesis strategies under constraints}
@@ -66,22 +71,26 @@ With the improvements in place, the methods developed in Chapter~\ref{ch:analysi
 Finally, in Chapter~\ref{ch:model}, I used an enzyme-constrained genome-scale model of budding yeast and flux balance analysis to address whether a limited proteome pool leads to a preference of sequential biosynthesis over parallel biosynthesis.
 In this chapter, I used the novel approach of ablating components of the biomass reaction to simulate temporal segregation of biosynthesis, and devised a time ratio that indicates whether sequential or parallel biosynthesis was more advantageous.
 I showed that sequential scheduling of biosynthesis was advantageous across deletion strains, and became more advantageous if the proteome pool was smaller.
+This prediction agrees with the presence of single-cell metabolic cycles in the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} strains as reported in Section~\ref{sec:biology-deletions}.
+
 However, I also showed that parallel scheduling of biosynthesis became advantageous when both carbon and nitrogen sources were limiting.
 This observation may be explained by the synthesis pathways across different biomass components sharing enzymes.
+This observation also agrees with experimental observations; specifically, the low-glucose conditions discussed in Section~\ref{sec:biology-carbon} fall in a region of parallel scheduling of biosynthesis being advantageous and thus may explain the lack of robustness of metabolic cycles in such conditions.
 
 The advantage of sequential biosynthesis may explain why the yeast cell sequentially schedules biosynthesis of biomass components across phases of the yeast metabolic cycle, even when such sequential scheduling is not needed to coordinate events of the cell division cycle --- e.g.\ when the metabolic cycle proceeds without cell division during starvation.
 Furthermore, the advantage of parallel biosynthesis in some conditions suggests that the metabolic cycle may cease to occur if nutrient conditions are too harsh, in concordance with studies that suggest disappearance of the metabolic cycle in extreme conditions \parencite{oneillEukaryoticCellBiology2020}.
 % IDEA: Do the grid plot for the deletion strains?
 To improve model predictability, this study could be extended by using derivations of flux balance analysis that account for compartmentalisation or temporality, such as dynamic flux balance analysis.
+In addition, derivations that account for stochastic variation in metabolism can be used to estimate periods and noise parameters of metabolic oscillations, which can then be used to generate synthetic time series that can in turn be characterised using time series analysis methods discussed in Chapter~\ref{ch:analysis}.
 
 
 \section{Summary and broader context of thesis}
 \label{sec:concl-summary}
 
-Put together, single-cell analysis of flavin-based yeast metabolic cycles and modelling of the metabolism of budding yeast may provide a mechanistic explanation for such an under-characterised biological rhythm.
+Put together, single-cell analysis of flavin-based yeast metabolic cycles (Chapter~\ref{ch:biology}) and modelling of the metabolism of budding yeast (Chapter~\ref{ch:model}) may provide a mechanistic explanation for such an under-characterised biological rhythm.
 Such insights may lead to a biochemical mechanism for the autonomous generation of the yeast metabolic cycle and for its response to nutrient conditions.
 The biochemistry of the yeast metabolic cycle could then be modelled using techniques such as flux balance analysis.
-In addition, robust time series analysis methods would be able to discover classes of oscillations within a microfluidics experiment that could correspond to sub-populations in the culture.
+In addition, robust time series analysis methods (Chapter~\ref{ch:analysis}) would be able to discover classes of oscillations within a microfluidics experiment that could correspond to sub-populations in the culture.
 Identification of such sub-populations could then potentially reconcile results of single-cell and chemostat experiments.
 
 Biological rhythms are an important physiological adaptation of all living organisms.

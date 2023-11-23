@@ -1,0 +1,108 @@
+#+title: Corrections
+
+* Notes
+- Based on feedback on examiners <2023-11-07> (i.e. minor corrections), after <2023-10-31> viva.
+- Pages and page numbers based on the ~examiner-submission-linenumbers~ tagged version, which is identical to the ~examiner-submission~ version, save for the line numbers in the left margin.  The line numbers are for my benefit in this process.
+- To help with communicating with examiners:
+  - Comments are labelled by examiner: 'AM' for Andrew Millar, 'LM' for Lucia Marucci.
+  - I put both page numbers and line numbers in this org note, where relevant.
+- Notation:
+  - $L :: requires looking at literature
+  - $C :: requires coding
+  - $A :: requires asking people, with name indicated
+
+* Category 1
+** Intro
+- [X] (AM) p016/L0757: phase -> period
+- [X] $L (AM) p016/L0758: Actually it can go longer, please include doi.org/10.1073/pnas.0907902107
+- [X] (AM) p032/L1095: delete sentence
+- [X] (AM) p032/L1106: ~'philosophical question' -> ~'operating principles'
+** Methods
+- [X] (LM) It would be good to better clarify any pre-processing that was applied to data [which figures show filtered data, for example].
+- [X] (AM) p058/L1481: ~'frequency' -> ~'period of 55 min'
+** Biology
+- [X] $L (LM) Please be explicit about commonalities/differences with the work in Baumgartner et al. (2018), both in terms of methodologies (e.g. microfluidic device, reporter system etc.) and similarities/differences in terms of results.
+- [X] (LM) p064-065/F3.01-3.02: Please swap figures 3.1 and 3.2.
+- [X] (AM) p067/F3.03: make explicit that one experiment as a,b and the other is c,d
+- [X] (LM) p070/F3.05: amplitude seems different during starvation, please mention this in results description.
+** Analysis
+- [X] (AM) p096/L1975: clarify -- Fourier spectrum gives period estimates at low resolution, unless you take additional steps, e.g. padding.
+- [X] (AM) p099/L2039: rephrase to avoid contrasting the approaches, as they overlap.
+- [X] $L (LM) You should at least mention the possibility of using other classifier better suited for time-series analysis/classification.
+** Model
+- [X] $L (LM) Please better clarify novelty vs Takhaveev et al. (2023)
+- [X] (AM) p136/L2511: rephrase/clarify, make it in terms of phenomenological model
+- [X] (AM) p141/L2597: define FC as fold change
+- [X] $L (AM) p142/L2601: per time unit?
+  - I think there shouldn't be one, if I remember the enzyme usage definition correctly; in that case, I should make it clear that my units make sense.
+  - TODO: Clarify this with Andrew in an email.
+- [X] (AM) p160/L2870: clarify 'similar' -- specify which aspect of the quantification used to make claim
+- [X] $C (AM) p166/F5.14: standardise colour scales so c = d
+** Conclusion
+- [X] (AM) p170/L2982: repeat chemostat-ss differences here
+- [X] (AM) p172/L3034: add ', which I defined visually.'
+
+* Category 2
+** Intro
+- [X] (LM) Overall, the chapter is well written, but I would like to see a specific section about single-cell literature.
+  - Re-organisation (e.g. defining a new section)?
+- [X] (AM) p017/L0766, L0771: statements conflict
+- [X] (LM) It would be good to be more specific about choice of methods, for example you talk about the role of cell communication, is it really possible to assess this with your experimental setting?
+  - Clarifying from memory: Lucia wants me to say that single-cell microfluidics cannot test the role of cell communication, unless combined with bulk-culture methods such as a turbidostat or chemostat.
+- [X] $L (LM) In this chapter it would be good to see also review of literature relevant to the work you presented in Chapter 5.
+  - Notes: I can combine the first bit of Chapter 5 with the org note on the FBA project.  It's going to be a bit of work converting that to prose.
+- [X] (LM) It would be good to see at the end of the chapter a section where the aims of the thesis and the research questions are clearly stated.
+  - Take research questions from the presentation.
+** Methods
+- [X] $L, $A[François, Ivan] (LM) There isn’t much about chip design, material, fluidic dynamics etc. This aspect is important for data interpretation.
+  - I think this should just be a short description that covers the above, and references Crane et al. (2014).  In a similar vein as describing aliby and referencing Alán's thesis.
+  - I should still read the PDMS adsorption (and it may well appear briefly here), but the absorption part will be more important elsewhere.
+    - Toepke & Beebe (2006): likely most relevant
+    - Li et al. (2009)
+    - Prestidge et al. (2004)
+    - Vlachopoulou et al. (2009)
+- [X] $L (AM) p050/L1345: use better descriptor with reference
+** Biology
+- [X] $L (AM) p095/L1966: do you really mean circadian?  (yeast doesn't have circadian cycles; read Charvin et al. 2009 to make sure I know what I'm talking about)
+- [X] $C (LM) p071/L1662: "Importantly, the results suggest that diffusion of signalling chemicals between cells is not required for generation of metabolic cycles". Is it possible you miss this because of your experimental set-up (single cells in traps?) Please discuss. [from the viva: you noted that you had done spatial analysis but found no gradient of responses along the direction of fluid flow; please refer to this result. Also, we discussed potential adsorption of chemical signals on to the PDMS, which is not mentioned in the text] [and you mentioned testing the addition of ‘spent medium’, either as a result or a potential later test]
+  - PDMS was treated to reduce absorption & adsorption.
+  - Krishna & Laxman propose the acetyl-CoA (MW 809.57 g/mol, probably hydrophobic) and NADPH (MW 744.416 g/mol) are potential chemical signals.  If they are small & hydrophobic enough to stick on to (adsorption) or be absorbed by PDMS, if anything, the PDMS would even eliminate the possibility of these being chemical signals even further.
+- [X] (LM) p072/L1668: "The model in which the metabolic cycle creates windows of opportunity for the cell division cycle implies that..." This sentence is not clear, and very qualitative. Please rephrase.
+- [X] (LM) p073/L1681: "In addition, the overall higher intensity of flavin signals after starvation compared to before starvation suggest some memory of starvation." Please define clearly what you mean by "memory of starvation".
+- [X] $L (LM) p086/L1785: "My results thus show that even though there was an initial response to potassium depletion, cells resumed growth, division, and generation of metabolic cycles soon after. My observations indicate that the metabolic cycle still occurs with a consistent amplitude, as evidenced by signal-to-noise ratios, in a drastically changed nutrient condition, in contrast to J. S. O’Neill et al. (2020)" Please better articulate these sentences, indicating more clearly differences in the experimental set-up (e.g. material of the microfluidic device) that might also explain the differences in the observed phenotypes.
+  - REVISIT THIS: After reading about PDMS & potential adsorption of ions.
+  - I'm not sure if the material of the microfluidic device is relevant here?  Especially if I'm compared my single-cell study with a chemostat experiment.  Another comparison of experimental set-ups may be more appropriate.  Though I might change my mind after reading about PDMS.
+- [X] $L (LM) p090/L1831: Same when you say "Taken together, there are striking discrepancies between the metabolic cycle observed as dissolved oxygen oscillations from the chemostat and the metabolic cycle observed as flavin autofluorescence oscillations in single-cell conditions in the zwf1∆ and tsa1∆ tsa2∆ deletion strains. These discrepancies warrant further explanation."
+  - REVISIT THIS: Same as the above.  Though I don't think the PDMS matters here, as there is no change in medium.
+- [X] $C (LM) It would be very useful to perform a proper statistical analysis for all the experiments shown in the chapter, and add at the end of the chapter a table summarizing results and showing clearly which conditions show statistically significant differences.  These are what you should report in the table requested (and optionally on the plots)...
+  - [X] Summarising the number of cells tested in each experiment
+  - [X] Reporting the numbers of cells scored rhythmic or arrhythmic in each experiment
+  - [X] Reporting the distribution of periods (or frequencies) for rhythmic cells, and obtaining uncertainty measures such as SEM, to use in statistical tests of the comparisons that you comment on in the text.
+** Analysis
+- [X] $L (AM) p096/L1976: "This is a strong claim to make but you could support it by summarising the analysis methods from the handful of single-cell YMC papers and showing they are all different."
+- [X] $L (LM) Please mention more clearly the novelty of the proposed methods, as compared to what had been previously proposed in the literature.
+- [X] $C (LM) p103/F4.02: Limitations of results in Fig 4.2 should be better discussed; does the fact for example that some oscillatory/non-oscillatory timeseries overlap depend on the choice of the UMAP algorithm, or on the data? I suggest showing some time-series for which there is overlap, and some for which there is not [including the two smaller, separated clusters of non-oscillating timeseries] to better understand what is going on, you could also try to repeat the analysis just using the first half of the time series.
+- [X] (LM) p114/T4.01: Discuss more results in table 4.1, why are they so poor?
+  - Might need re-running of code and exploring the data a bit.  I don't know the reason, and neither did Diego, I think.
+** Model
+- [X] (LM) Be sure you mention why you used FBA, that is a method that looks just at steady state, and at the average behaviour of many cells. How can you relate the results in this chapter to results/methods in Chapters 3 and 4?
+  - Writing down some ideas
+    - Even if it looks just at steady state, it is useful for estimating time scale by virtue of the flux rate of the biomass reaction that changes between conditions.  Changing biomass components approximates changing cellular events -- without these multiple changes (put together), FBA wouldn't be so useful.
+    - FBA looks at the average behaviour of many cells, but there isn't a good way to simulate a population of cells that behave differently.  Stochastic FBA exists (https://www.sciencedirect.com/science/article/pii/S0006349521009449), but has only been developed for /Mycobacterium pneumoniae/ -- extending it to budding yeast will take time, and will be complicated by stuff like SLIMEr and pseudometabolites.  There is also population FBA (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005728), which have their enzyme copy numbers sampled from experimental distributions; to apply this idea to ecYeast8, one might instead sample the size of the proteome pool.
+    - Overall, my methods (vanilla FBA) serve as a first-approach, perhaps a proof-on-concept, and will be a basis for more realistic models later on.
+  - Relating to previous chapters
+    - This isn't related to chapter 4 -- it's more like chapter 3 is the most important one, and chapters 4 and 5 relate to different aspects of the study.  Though one could say that the heterogeneity of responses (in a possible extension to the study) can be related to e.g. discovering structures in a dataset, and the predicted timescale can inform the frequency of oscillations generated.  Combining (extended) chapter 5 and methods from chapter 4 can lead to creating a population of time series to test/develop further analysis methods.
+    - For chapter 3 -- this is cross-validating in vivo and in silico results.  In vivo results can help calibrate the model -- i.e. tell us when to 'stop' adding new features because it's realistic enough, and then the (now phenomenological) model can be used to predict further results, perhaps starting from the chemostat studies already reported, and then predict conditions not before investigated that affect the YMC.  This can save a bit of time on experiments, and can form a design-build-test-learn cycle.
+- [X] (LM) "For comparison, I computed estimates of the time for each biomass component, assuming that it is proportional to the mass fraction..."; is this a valid assumption?
+  - In the absence of studies that use FBA to create time predictions, this is the best solution we have for the parallel case (with just one flux value).  This assumes that importance/time is proportional to mass.
+  - This assumption may be invalidated by if e.g. protein takes more time to synthesise per mass than lipids, which may well be the case considering how metabolically expensive protein synthesis is.  However, we just don't have the numbers to calibrate this because of a lack of timescale studies.
+  - In any case, if we replace Tpar with t0, then tau seq/par will just be scaled by some scaling factor, and the 'threshold' may become some other value that is not 1.
+- [X] (AM) p167/L2931: discuss whether 'limiting' conditions similar to extremes required to stop YMC in experiments
+- [X] (LM) Discuss how to possibly test results in Chapter 5 in the lab.
+** Conclusion
+- [X] (LM) Try to better link results in Chapters 3 and 4, and 5.  [for example in the viva, we discussed where the low-glucose conditions tested in Chapter 3 would fall on the response surface graphs of Chapter 5]
+** Appendix
+- [X] $L (from my memory of viva) p177/TA.01: clarify what Wang et al. (2007) did
+* Category 3
+** Model
+- [X] (AM) p157/L2834: clarify 'was half saturation', 'was above' or 'far above'?  (I think I meant something else entirely)

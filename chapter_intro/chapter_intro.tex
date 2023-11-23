@@ -8,7 +8,7 @@ My reasons are twofold: (a) biological rhythms are important for coordination of
 
 This thesis is divided into six chapters:
 \begin{enumerate}
-  \item Chapter~\ref{ch:intro} discusses the background behind the yeast metabolic cycle and using flavin autofluorescence as a way to monitor the yeast metabolic cycle.
+  \item Chapter~\ref{ch:intro} discusses the background behind the yeast metabolic cycle, using flavin autofluorescence as a way to monitor the yeast metabolic cycle, and the use of genome-scale metabolic models and flux balance analysis to investigate the metabolism of budding yeast.
   \item Chapter~\ref{ch:methods} discusses the methods: single-cell microfluidics of yeast strains, an automated image analysis pipeline, and time series analysis methods.
   \item Chapter~\ref{ch:biology} presents results from single-cell microfluidics and fluorescence microscopy to detect flavin-based metabolic cycles in yeast cells.
         I show that the metabolic cycle and cell division cycle are autonomous and synchronise in permissive conditions, while perturbations affect the relationship between these two biological oscillators.
@@ -177,6 +177,19 @@ Specifically, the yeast metabolic cycle has gene-expression oscillators as evide
 Furthermore, it has biochemical oscillators as evidenced by changes in dissolved oxygen in the chemostat.
 Finally, it has metabolite oscillations as evidenced by changes in the levels of compounds that undergo redox reactions like NADH/NADPH and flavins.
 
+
+\subsubsection{History of evidence for the yeast metabolic cycle}
+\label{subsubsec:intro-ymc-definition-history}
+
+Aspects of the YMC have been observed over decades.
+\textcite{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \textit{S. cerevisiae} cultures show oscillatory oxygen consumption.
+\textcite{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while \textcite{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
+\textcite{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of a 40-minute YMC for cells in continuous culture.
+\textcite{tuLogicYeastMetabolic2005}
+first incorporated transcript cycling in the description of the YMC and defined the YMC events
+based on a chemostat-based investigation of growth of budding yeast on glucose-starved conditions.
+
+
 \subsubsection{Phases of the yeast metabolic cycle}
 \label{subsubsec:intro-ymc-definition-phases}
 % INTEGRATE THIS STRUCTURE IN EACH PARAGRAPH THAT DISCUSSES EACH PHASE
@@ -238,23 +251,6 @@ This three-phase model is primarily based on cellular events, including clusteri
   \label{fig:intro-ymc-tu-transcripts}
 \end{figure}
 
-Single-cell studies \parencite{papagiannakisAutonomousMetabolicOscillations2017, baumgartnerFlavinbasedMetabolicCycles2018} do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
-Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (Fig.\ \ref{fig:intro-ymc-overview-ss}).
-In later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
-% ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
-%However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
-The two- or three-phase response may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=1.0\textwidth]{zylstraMetabolicDynamicsCell2022_1}
-  \caption[
-    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell
-  ]{
-    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell, generated autonomously of the cell division cycle, but are linked in permissive conditions.
-    Adapted from \textcite{zylstraMetabolicDynamicsCell2022}.}
-  \label{fig:intro-ymc-overview-ss}
-\end{figure}
 
 Cellular processes occur with the phases of the metabolic cycle (Fig.\ \ref{fig:intro-ymc-overview-oneill}).
 In the oxidative phase, cells consume oxygen at a high rate as respiration, fermentation, and
@@ -312,21 +308,55 @@ Although there is no consensus on the function of such flexible gating,
 gating can aid the allocation of metabolites to different temporal phases of both cellular oscillators.
 % Discuss allocation of metabolites later -- and this can be linked to the modelling chapter of thesis.
 
-\subsubsection{History of evidence for the yeast metabolic cycle}
-\label{subsubsec:intro-ymc-definition-history}
+
+\subsubsection{Single-cell studies of the yeast metabolic cycle}
+\label{subsubsec:intro-ymc-definition-singlecell}
+
+Most studies of the YMC arise from chemostat experiments, but few studies have investigated the YMC in single-cell settings using microfluidic devices.
+\textcite{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue.
+They cultured strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cells from a chemostat to a microfluidic device.
+The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
+This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two sub-populations in the culture.
+However, it lacks quantitative time-series analysis; rather, it reports qualitative interpretations of fluorescence images.
+The microfluidic device did not truly physically separate each cell individually, thus it was unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
+
+Later microfluidics studies revealed additional features of the YMC in single cells.
+\textcite{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell division cycle, based on measurements of the  level of ATP and of the combined level of NADH and NADPH in single cells in microfluidic devices.
+Specifically, they showed that such metabolic cycles synchronise with the cell division cycle at different compromise periods as the carbon source changes, and that cell division cycle events are gated to distinct phases in the metabolic cycle.
+Furthermore, such metabolic cycles can progress without progress of the cell division cycle progress, both spontaneously and under chemically induced G\textsubscript{1} arrest.
+
+In addition, by measuring flavin fluorescence in the cell, \textcite{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that there is strong coupling between the YMC and the cell division cycle across perturbations in nitrogen sources, showing that as nitrogen sources become poorer, the coupled oscillations oscillated at longer periods and spontaneous decoupling between the YMC and the cell division cycle became more frequent.
+This study importantly also demonstrated that respiration is not required for the YMC\@; evidence includes the observation that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell division cycle inhibitor rapamycin desynchronises the YMC and the cell division cycle.
+
+More recently, \textcite{ozsezenInferenceHighLevelInteraction2019} extended the experimental data reported by \textcite{papagiannakisAutonomousMetabolicOscillations2017} and estimated parameters of a Kuramoto model, which suggested that the metabolic cycle separately gates START and the M phases of the cell division cycle, and that the S phase oscillator follows START without input from the metabolic cycle.
+This mathematical model of coupled oscillators predicted that synchrony should be maintained if the period of the metabolic cycle is perturbed; this prediction was validated experimentally using nutrient shifts.
+Furthermore, the model predicted that perturbation of mitotic exit should still result in synchrony of the oscillators that remain and that additional removal S-phase exit should give a system that oscillates at a compromise frequency; such predictions were validated by dynamic depletion of Cdc14 and Cdc20.
+
+Unlike chemostat-based studies, single-cell studies do not discuss phases as the single-cell microfluidic set-up does not allow live monitoring of transcription, and oxygen consumption rate can only be measured from chemostat cultures.
+Such studies define the metabolic cycle as autonomous oscillations in metabolite levels in individual cells over time (Fig.\ \ref{fig:intro-ymc-overview-ss}).
+In later chapters, I adhere to this single-cell definition because I perform a single-cell study of the yeast metabolic cycle.
+% ---- I don't think any publication explicitly says this -- it's mostly just Kevin IIRC.  I suggest phrasing it differently, below
+%However, others [INSERT CHAIN OF PUBLICATIONS HERE] debate the existence of the reductive-charging phase and argue that this phase is an artefact of cellular adaptation to glucose limitation or feast-and-famine conditions.
+The two- or three-phase response as reported from chemostat-based studies may result from cellular adaptation to glucose limitation in chemostat cultures, and it is unknown whether these dynamics hold true in glucose-rich conditions, which cannot be created in a chemostat \parencite{slavovCouplingGrowthRate2011}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\textwidth]{zylstraMetabolicDynamicsCell2022_1}
+  \caption[
+    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell
+  ]{
+    The yeast metabolic cycle seen as coordinated cycling of metabolites in the cell, generated autonomously of the cell division cycle, but are linked in permissive conditions.
+    Adapted from \textcite{zylstraMetabolicDynamicsCell2022}.}
+  \label{fig:intro-ymc-overview-ss}
+\end{figure}
 
 
-Aspects of the YMC have been observed over decades.
-\textcite{nosohSYNCHRONIZATIONBUDDINGCYCLE1962} discovered that synchronised \textit{S. cerevisiae} cultures show oscillatory oxygen consumption.
-\textcite{kasparvonmeyenburgEnergeticsBuddingCycle1969} showed that gas metabolism and energy generation increase upon budding, while \textcite{mochanRespiratoryOscillationsAdapting1973} described a high-amplitude respiratory oscillation following a substrate shift from glucose to ethanol.
-\textcite{satroutdinovOscillatoryMetabolismSaccharomyces1992} were the first to describe the metabolic components of a 40-minute YMC for cells in continuous culture.
-\textcite{tuLogicYeastMetabolic2005}
-first incorporated transcript cycling in the description of the YMC and defined the YMC events
-based on a chemostat-based investigation of growth of budding yeast on glucose-starved conditions.
+\subsubsection{Contrasting the yeast metabolic cycle with the glycolytic oscillation}
+\label{subsubsec:intro-ymc-definition-vsglycolytic}
 
 The yeast metabolic cycle is longer and is more robust than a similar biological oscillator, the glycolytic oscillation.
 The glycolytic oscillation has a period of approximately 40 seconds \parencite{olsenRegulationGlycolyticOscillations2009}.
-In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-phase cycle \parencite{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-phase cycle, which is most commonly described to be 4--5 hours \parencite{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \parencite{beuseEffectDilutionRate1998}.
+In contrast, the yeast metabolic cycle has been described, using various definitions, to either exhibit a 40-minute short-period cycle \parencite{lloydUltradianMetronomeTimekeeper2005, liRapidGenomescaleResponse2006, lloydRedoxRhythmicityClocks2007}, or a long-period cycle, which is most commonly described to be 4--5 hours \parencite{tuLogicYeastMetabolic2005, tuCyclicChangesMetabolic2007}, but also ranges between 1.4 hours to 14 hours, depending on the chemostat dilution rate \parencite{beuseEffectDilutionRate1998}.
 Glycolytic oscillations are highly damped, but yeast metabolic oscillations are robust, lasting for weeks \parencite{lloydRedoxRhythmicityClocks2007}.
 Additionally, glycolytic oscillations have been observed in anaerobic conditions \parencite{lloydSaccharomycesCerevisiaeOscillatory2019}, but yeast metabolic cycles have been observed in aerobic conditions.
 Moreover, glycolytic oscillations are characterised by fluctuations in NADH fluorescence and glycolytic intermediates.
@@ -341,7 +371,7 @@ However, yeast metabolic cycles consist of fluctuations in NADH fluorescence, fl
   % - Key deletion strains shed light on mechanism
 
 Perturbations in growth conditions can affect the length of the metabolic cycle and its relationship with other cellular events.
-The long-phase cycle may vary from 1.4 to 14 hours \parencite{caustonMetabolicRhythmsFramework2018}.
+The long-period cycle may vary from 1.4 to 14 hours under constant chemostat conditions with various changes in nutrient media and dilution rates \parencite{caustonMetabolicRhythmsFramework2018}, although 24-hour cycles have also been observed when temperature cycles were imposed \parencite{eelderink-chenCircadianClockSaccharomyces2010}.
 The main nutrient perturbations that have been studied are perturbations in carbon sources and in nitrogen sources.
 
 \subsubsection{Perturbations in growth conditions}
@@ -354,10 +384,8 @@ Lower glucose concentrations prolong the metabolic cycle, as evidenced by both c
 % 20 g/L --> 0.5 g/L doesn't seem to significantly prolong it, but maybe
 % a greater effect will be seen if we get to the region of glucose limitation
 % Though I am aware that this is my experimental observations -- need to see if literature confirms.
-For example, decreasing the dilution rate decreases the growth rate, and in turn increases the duration of the oxidative phase relative to the reductive phases \parencite{slavovCouplingGrowthRate2011}, thus prolonging the metabolic cycle.
-This effect is pronounced in the region of glucose limitation.
-Increasing the glucose concentration beyond a certain point does not produce an effect.
-Additionally, several studies \parencite{slavovCouplingGrowthRate2011,oneillEukaryoticCellBiology2020} show that the duration of the low oxygen consumption phase increases while the duration of the high oxygen consumption phase holds constant if the metabolic cycle duration increases due to these reasons.
+For example, increasing the dilution rate in chemostats increases the growth rate, and in turn decreases the duration of the low oxygen consumption phase while the duration of the high oxygen consumption phase holds constant \parencite{slavovCouplingGrowthRate2011,oneillEukaryoticCellBiology2020}.
+This effect is pronounced in the region of glucose limitation; this was evidenced by a small increase in metabolic cycle period in single cells when the glucose concentration was decreased from \SI{10}{\gram~\litre^{-1}} to \SI{0.05}{\gram~\litre^{-1}} compared to a large increase in period when glucose concentration was decreased from \SI{0.05}{\gram~\litre^{-1}} to \SI{0.025}{\gram~\litre^{-1}} \parencite{papagiannakisAutonomousMetabolicOscillations2017}.
 
 Such experimental observations could by explained by models such as \textcite{jonesCyberneticModelGrowth1999}, which suggest that as the dilution rate is decreased, metabolic oscillations acquire greater amplitudes and longer periods, but if it is low enough, metabolism becomes entirely oxidative, and metabolic oscillations disappear.
 % ferm vs non-ferm
@@ -562,7 +590,7 @@ Specifically, there is a small window of frequencies in which both oscillators c
 \label{subsubsec:intro-ymc-unresolved-chemostat_singlecell}
 
 There is a dispute of whether the same conclusions can be drawn from chemostat-based studies and from single-cell based studies.
-Most studies of the YMC arise from chemostat experiments.
+%Most studies of the YMC arise from chemostat experiments.
 Reconciling the two types of studies is difficult because the readouts and conditions are different:
 chemostat studies produce dissolved oxygen and transcript cycling readings, while single-cell experiments cannot report on dissolved oxygen and chiefly report metabolite cycling.
 This leads to differing definitions of the YMC\@.
@@ -620,18 +648,8 @@ However, NAD(P)H \parencite{papagiannakisAutonomousMetabolicOscillations2017,ozs
 Furthermore, \textit{ATP5} and \textit{CYT1} deletions that impair oxidative respiration do not remove single-cell flavin-based metabolic oscillations \parencite{baumgartnerFlavinbasedMetabolicCycles2018}, thus giving additional evidence that oxidative metabolism is not required for the YMC\@.
 
 Single-cell microfluidic studies are well-positioned to address the limitations of the chemostat,
-although there have been only few studies.
-\textcite{laxmanBehaviorMetabolicCycling2010} was an early attempt at using microfluidics to address the bulk vs single-cell issue.
-They cultured strains with fluorescent gene expression reporters for each phase (OX, RB, RC) of the metabolic cycle by transferring cells from a chemostat to a microfluidic device.
-The study showed that low glucose levels were required for the synchrony of metabolic cycles across cells.
-This study also shows the presence of quiescent cells, and then proposed that during OX phase, cells decide whether to commit to cell growth or enter a quiescent state, leading to a model of two sub-populations in the culture.
-However, it lacks quantitative time-series analysis; rather, it reports qualitative interpretations of fluorescence images.
-The microfluidic device did not truly physically separate each cell individually, thus it was unable to eliminate the possibility of cell-to-cell communication via a diffusible signalling chemical.
-
-Later microfluidics studies reveals additional features of the YMC in single cells.
-\textcite{papagiannakisAutonomousMetabolicOscillations2017} revealed that YMCs are an intrinsic feature of single cells and are autonomous with respect to the cell division cycle, based on measurements of the combined level of NADH and NADPH in single cells in microfluidic devices.
-Furthermore, by measuring flavin fluorescence in the cell, \textcite{baumgartnerFlavinbasedMetabolicCycles2018} demonstrated that YMCs persist in mutants deficient in oxidative phosphorylation, and that the cell division cycle inhibitor rapamycin desynchronises the YMC and the cell division cycle.
-In sum, these single-cell studies address a small fraction of the knowledge covered by chemostat studies, and further such studies are required.
+although there have been only few studies \parencite{laxmanBehaviorMetabolicCycling2010,papagiannakisAutonomousMetabolicOscillations2017,baumgartnerFlavinbasedMetabolicCycles2018,ozsezenInferenceHighLevelInteraction2019}, discussed earlier in Section~\ref{subsubsec:intro-ymc-definition-singlecell}.
+These single-cell studies address a small fraction of the knowledge covered by chemostat studies, and further such studies are required.
 
 
 \subsubsection{Molecular and genetic mechanisms}
@@ -669,13 +687,12 @@ There is reason to believe that a wide range of organisms exhibit biochemical ph
 
 Metabolic oscillations may be the origins of biological timekeeping mechanisms.
 \textcite{lloydRedoxRhythmicityClocks2007} assert that ultradian oscillations form the basis of longer-period biological oscillators like the circadian rhythm or the cell cycle, based on temperature compensation and sensitivity of the period.
-It is logical for a biological oscillation to have temperature compensation because temperature oscillates with a period of a day on most of the planet.
 Circadian rhythms can occur in cells of eukaryotes without transcription \parencite{oneillCircadianRhythmsPersist2011,oneillCircadianClocksHuman2011}, refuting the idea that gene circuits are responsible for such rhythms.
 Additionally, the eukaryotic cell cycle evolved before cyclin-dependent kinases \parencite{papagiannakisAutonomousMetabolicOscillations2017}, so metabolic oscillations may have served to regulate the cell cycle before cyclin-dependent kinases evolved.
 Furthermore, YMCs share mechanisms with the circadian oscillator \parencite{caustonMetabolicCyclesYeast2015,arataQuantitativeStudiesCellDivision2019}, suggesting a common evolutionary origin.
 Thus, studying YMCs may shed light on the evolution of biological rhythms.
 
-A philosophical question that unites all biological oscillators is: why have oscillations?
+A question about operation principles that unites all biological oscillators is: why have oscillations?
 The answers may differ for each type of biological oscillator.
 
 The answer is clear for circadian rhythms: circadian clocks evolved as an adaptation to the Earth's 24-hour rotation, and allow organisms to match biological processes that benefit from light or warmth to the time of day at which they occur \parencite{millarInputSignalsPlant2004}.
@@ -881,6 +898,179 @@ Therefore, it cannot be concluded that flavin fluorescence is the readout of one
 Furthermore, the changes in flavin fluorescence can be because of changes in the `flavin pool' --- the amount of flavin-derived moieties in a cell across all their redox states --- or due to global changes in intracellular flavin redox state, as a function of intracellular redox state.
 Most studies assume a constant flavin pool and see oscillations as periodic shifts in redox equilibrium.
 These caveats are not unique to flavin fluorescence, but are shared limitations with other autofluorescing cellular components like NAD(P)H, and the benefits of having a non-invasive method to monitor cellular metabolism outweighs the caveats.
+
+
+\section{Flux balance analysis}
+\label{sec:intro-fba}
+
+\subsection{Introduction to flux balance analysis}
+\label{subsec:intro-fba-intro}
+
+Metabolic network reconstructions are mathematical representations of a set of metabolic pathways in a living organism.
+Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions that are represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
+This information can be represented in a two-dimensional stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
+
+For example, if reaction $R_{1}$ is defined by:
+
+\begin{equation}
+  \ce{1 M1 + 2 M2 -> 3 M3}
+  \label{eq:model-example-chemical-reaction}
+\end{equation}
+
+the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
+
+A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system that is catalysed by a gene-encoded enzyme.
+In most of the reactions represented in a metabolic network reconstruction, one or more chemical species react to create a different set of chemical species as products.
+However, reactions in a metabolic network reconstruction may include processes that are not chemical reactions.
+Such processes may include exchange of nutrients, as well as a reaction that models biomass formation.
+
+Flux balance analysis (FBA) is a mathematical method that finds the steady-state flux of reactions through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
+These metabolic fluxes represent rates of chemical reactions.
+At its core, FBA is a method of solving the linear programming problem of finding the flux values that optimise the output value of an objective function, subject to biological constraints.
+
+Mathematically, the linear programming problem of FBA can be expressed as:
+
+\begin{equation}
+  \max \mathbf{c}^{\intercal} \mathbf{v}
+  \label{eq:model-fba-objective}
+\end{equation}
+
+subject to
+
+\begin{equation}
+  \begin{gathered}
+    \mathbf{S} \mathbf{v} = \mathbf{0}\\
+    v_{i,\mathrm{min}} \leq v_{i} \leq v_{i,\mathrm{max}}
+  \end{gathered}
+  \label{eq:model-fba-constraints}
+\end{equation}
+
+where $\mathbf{c}$ is a vector of weights such that $\mathbf{c}^{\intercal} \mathbf{v}$ defines the objective function, $\mathbf{S}$ is the stoichiometric matrix, and $\mathbf{v}$ is the vector of fluxes. The expression $v_{i,\mathrm{min}}$ represents the lower bound and $v_{i,\mathrm{max}}$ represents the upper bound for each flux $v_{i}$ in $\mathbf{v}$.
+
+The objective function is given as the task of maximising a mathematical expression that is based on a subset of fluxes (Eq.\ \ref{eq:model-fba-objective}).
+Most commonly, the objective function is maximising the flux of the biomass reaction, thus optimising the growth rate of the cell.
+The constraints for FBA are, in the most basic case, imposed by two factors:
+the stoichiometric matrix and reaction flux bounds (Eq.\ \ref{eq:model-fba-constraints}).
+The stoichiometric matrix balances reaction inputs and outputs, while flux bounds impose upper and lower limits on the fluxes of each reaction.
+These constraints restrict the solution space for the FBA problem.
+
+FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions.
+Such differential equations can be difficult to construct and parametrise.
+
+
+\subsection{Development of genome-scale metabolic models for budding yeast}
+\label{subsec:intro-fba-gemm}
+
+Several versions of genome-scale metabolic models for \textit{Saccharomyces cerevisiae} have been developed since the first model, iFF708 \parencite{forsterGenomeScaleReconstructionSaccharomyces2003}, reviewed in \textcite{chenGenomescaleModelingYeast2022} (Fig.\ \ref{fig:intro-fba-timeline}).
+Subsequent developments have included the addition of new reactions, the addition of new cellular compartments, and correcting gene-protein associations.
+
+\begin{figure}[hb!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{chenGenomescaleModelingYeast2022_1}
+  \caption[
+    Timeline of development of genome-scale metabolic models of \textit{Saccharomyces cerevisiae}.
+  ]{
+    Timeline of development of genome-scale metabolic models of \textit{Saccharomyces cerevisiae}.
+    Adapted from \textcite{chenGenomescaleModelingYeast2022}.
+    }
+  \label{fig:intro-fba-timeline}
+\end{figure}
+
+Initially, new models were built based on iFF708, adhering to BiGG conventions \parencite{norsigianBiGGModels20202020}.
+These models include iND750 \parencite{duarteReconstructionValidationSaccharomyces2004}, iLL672 \parencite{nookaewGenomescaleMetabolicModel2008}, and iMM904 \parencite{moConnectingExtracellularMetabolomic2009} and consist of increasing numbers of reactions.
+
+Yeast1 \parencite{herrgardConsensusYeastMetabolic2008} became the first consensus genome-scale metabolic model of budding yeast, combining knowledge from previous models in standardised terminology; however, it was not until Yeast4 \parencite{dobsonFurtherDevelopmentsGenomescale2010} when gaps in the network were filled and constraint-based simulations were possible.
+
+More recent developments of consensus genome-scale metabolic models of budding yeast created formalisms that are relevant to this thesis.
+Yeast5 \parencite{heavnerYeastExpandedReconstruction2012} introduced `\textit{isa}' reactions and pseudometabolites to group specific lipid species within a more general lipid class (Fig.\ \ref{fig:intro-fba-isa}).
+This formalism has two aims.
+First, \textit{isa} reactions account for generic chemical compounds, as opposed to specific chemical species, represented in KEGG pathways of sphingolipid metabolism.
+Such generic compounds include `complex sphingolipid', `fatty acid', and `acyl-CoA' rather than specific chemical species.
+Second, \textit{isa} reactions create \textit{OR} logic in what constitutes biomass --- in other words, users of the model can choose whether one set of lipid species or another set forms part of biomass.
+This \textit{OR} logic accounts for different lipid species in aerobic and anaerobic growth.
+Yeast5 provides two biomass equations, one for aerobic growth and the other for anaerobic growth, that have different stoichiometric coefficients.
+The formalisms in Yeast5 resemble that of iIN800 \parencite{nookaewGenomescaleMetabolicModel2008}, which has two alternative biomass reactions for carbon-limited and nitrogen-limited conditions.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{heavnerYeastExpandedReconstruction2012_1}
+  \caption[
+    Illustration of \textit{isa} reactions in Yeast5.
+  ]{
+    Illustration of \textit{isa} reactions in Yeast5.
+    \textbf{(A)} `Complex sphingolipid' is a pseudometabolite that is comprised of two chemical species, MIPC and M(IP)\textsubscript{2}C, and one pseudometabolite, IPC\@.
+    To implement these relationships in Yeast5, \textit{isa} reactions are defined --- e.g.\ `MIPC is a complex sphingolipid'.
+    \textbf{(B)} Another pseudoreaction is defined in order to define lipids as an a collective of other compounds, complex sphingolipids among them.
+    Here, `lipid' is a pseudometabolite.
+    \textbf{(C)} The biomass reaction is defined with chemical species and pseudometabolites as reactants and a `biomass' pseudometabolite as the product.
+    Adapted from \textcite{heavnerYeastExpandedReconstruction2012}.
+    }
+  \label{fig:intro-fba-isa}
+\end{figure}
+
+Later, Yeast6 \parencite{heavnerVersionConsensusYeast2013} eliminated the separate biomass equations for aerobic and anaerobic growth conditions.
+Subsequently, Yeast7 \parencite{aungRevisingRepresentationFatty2013} revised representation of fatty acid metabolism to correct for errors and expanded the variety of glycerolipid and glycerophospholipid composition covered by \textit{isa} reactions.
+
+The development of the most recent consensus model, Yeast8 \parencite{luConsensusCerevisiaeMetabolic2019}, included additional pseudometabolites, incorporating SLIMEr \parencite{sanchezSLIMErProbingFlexibility2019}, and improving the biomass reaction.
+First, in addition to lipids as in previous consensus models, Yeast8 includes pseudometabolites that represent proteins, carbohydrates, DNA, RNA, cofactors, and ions, making it easy to study each component of biomass separately.
+Second, SLIMEr (Splits Lipids Into Measurable Entities) solves the problem of representing many possible lipid species in genome-scale metabolic models through the addition of two types of pseudoreactions.
+Specifically, it creates SLIME reactions to split lipids into their basic components (e.g.\ glycerol and fatty acid chains for triglycerides) and it creates lipid pseudoreactions to impose constraints on lipid classes and acyl chain distribution to make the ratio between each class match measured abundances.
+Third, the biomass reaction in Yeast8 is improved by the addition of trace metal ions and cofactors, along with re-scaling the stoichiometric coefficients in biomass composition and re-fitting the growth-associated maintenance energy requirements, to preserve mass balance.
+
+Consequently, Yeast8 is the most comprehensive genome-scale metabolic model of budding yeast metabolism, with improved metabolic scope compared to earlier models, closer to the real metabolic network.
+
+
+\subsection{Allocation of proteomic resources}
+\label{subsec:intro-fba-ec}
+
+Metabolism in microbes are subject to limited resources: metabolic building blocks, energy currency, biosynthesis machinery, and spatial compartments \parencite{elsemmanWholecellModelingYeast2022}.
+An important aspect of this resource limitation is a limited proteome, implying that the cell must allocate its proteome to its proteins, as evidenced by observations on how RNA-to-protein ratios affect growth rate \parencite{scottBacterialGrowthLaws2011}.
+
+To account for limited proteomic resources, genome-scale metabolic models can be extended.
+Here, I review two main approaches: minimising protein cost and explicit addition of optimisation of resources to models \parencite{adjavonComputationalAnalysisSinglecell2022}.
+
+Some adaptations of FBA include methods to ensure that the protein cost is minimised during optimisation.
+These methods include three strategies: adding an additional objective function, imposing additional constraints, and imposing bounds on fluxes.
+Among studies that use additional objective functions, \textcite{schuetzMultidimensionalOptimalityMicrobial2012} tested setting reactions other than the biomass reaction as the objective and showed that combining maximisation of ATP yield and of biomass yield together with minimising the sum of absolute fluxes resulted in highest optimality.
+Additionally, \textcite{wangGrowthStrategyMicrobes2019} aimed to understand diauxie by defining a new variable, enzyme utilisation efficiency, to be optimised.
+Enzyme utilisation efficiency was defined based on carbon flux and an enzyme cost variable derived from enzyme concentrations and molecular weights.
+
+Alternatively, additional constraints can be imposed for the linear programming problem in flux balance analysis.
+For example, \textcite{moriConstrainedAllocationFlux2016} proposed a Constrained Allocation Flux Balance Analysis method, which divided the proteome into four sectors and imposed the constraint that sum of fluxes in each sector must be below a threshold value.
+Furthermore, bounds can be set directly on fluxes.
+This approach was implemented in GECKO \parencite{sanchezImprovingPhenotypePredictions2017,domenzainReconstructionCatalogueGenomescale2022}, in which pseudoreactions were defined to model allocation of an enzyme-available proteome pool to individual enzymes, and the size of the proteome pool was set setting an upper bound on the flux of the corresponding pseudoreaction.
+
+Rather than adding relatively small formalisms to FBA problems, the optimisation of resources can be explicitly added to models.
+This strategy includes two deviations from ordinary flux balance analysis: resource balance analysis \parencite{goelzerCellDesignBacteria2011} and DynamicME \parencite{yangDynamicMEDynamicSimulation2019}.
+Resource balance analysis predicts the distribution of resources from the nutrient medium among cellular subsystems by modelling the living system as an interconnection of subsystems that compete for common resources.
+Thus, growth rate depends on resource allocation among subsystems.
+Unlike ordinary FBA, resource balance analysis predicts concentrations of metabolites in addition to fluxes, but still gives a steady-state picture of metabolism.
+In contrast, DynamicME simulates changes in metabolism and protein expression over time.
+To create dynamic simulations, DynamicME expresses the stoichiometric matrix and flux bounds as functions of growth rate, and to simulate optimisation of resources, it imposes macromolecular crowding constraints.
+
+In this thesis, GECKO is used to simulate allocation of proteomic resources because there is an easily available derivative of Yeast8 with the GECKO formalism already applied.
+Furthermore, GECKO provides an easy way to control the size of the enzyme-available proteome, thus making it easy to test the hypothesis of whether the size of the proteome affects metabolic strategies in the budding yeast cell.
+
+\pagebreak
+
+\section{Aims of thesis and research questions}
+\label{sec:intro-aims}
+
+This thesis aims to address these research questions:
+\begin{enumerate}
+  \item Do metabolic oscillations arise from communication between cells or from external synchronisation?
+  \item If metabolic cycles are persistent across nutrient and genetic perturbations, is it because metabolic cycles reflect sequential synthesis of biomass components?
+\end{enumerate}
+
+To test whether metabolic oscillations in chemostat-based studies arise from communication between cells or from external synchronisation, I use a single-cell microfluidics platform to monitor flavin-based metabolic cycles.
+I chose this platform because it physically separates cells and has rapid media flow, and both eliminate communication between cells that may occur in the chemostat.
+Single-cell microfluidics alone cannot assess the role of communication between cells without comparing with bulk-culture set-ups such as the chemostat or the turbidostat.
+However, using such bulk-culture equipment is beyond the scope of this thesis, and this thesis aims to address the first research question by comparing single-cell results with corresponding chemostat-based results in the literature.
+
+The observation that metabolic cycles are persistent across nutrient and genetic perturbations gave rise to the second research question.
+To test whether this persistence reflects sequential synthesis of biomass components, I use flux balance analysis with an enzyme-constrained genome-scale metabolic model of budding yeast.
+Specifically, I assess whether imposing a constraint on the proteome or changing nutrient conditions leads to sequential synthesis of biomass components taking less time than parallel synthesis of biomass components.
+Answering this latter research question could lead to an understanding of the yeast metabolic cycle as a fundamental metabolic adaptation to physiological constraints.
 
 %%% Local Variables:
 %%% mode: latex

@@ -23,59 +23,6 @@ Specifically, I aim to evaluate these hypotheses:
   \item Synthesis of biomass components in parallel, as opposed to in sequence, may be advantageous if the processes of synthesising each biomass component share similar enzyme levels across biomass components.
 \end{enumerate}
 
-\section{Introduction to flux balance analysis}
-\label{sec:model-fba}
-
-Metabolic network reconstructions are mathematical representations of a set of metabolic pathways in a living organism.
-Usually, each metabolite is represented as a node, and metabolites are connected to each other through reactions that are represented as links \parencite{palssonSystemsBiologyConstraintbased2015}.
-This information can be represented in a two-dimensional stoichiometric matrix, in which the rows of the matrix represent the metabolites, the columns represent the reactions, and the values of each element in the matrix show the stoichiometry of the reactions in the system.
-
-For example, if reaction $R_{1}$ is defined by:
-
-\begin{equation}
-  \ce{1 M1 + 2 M2 -> 3 M3}
-  \label{eq:model-example-chemical-reaction}
-\end{equation}
-
-the elements in the stoichiometric matrix that correspond to the metabolite-reaction combinations $(M_{1}, R_{1})$, $(M_{2}, R_{1})$, and $(M_{3}, R_{1})$ are -1, -2, and 3, respectively.
-
-A genome-scale metabolic model is, in simple terms, a metabolic network reconstruction that aims to cover every biochemical reaction in a living system that is catalysed by a gene-encoded enzyme.
-In most of the reactions represented in a metabolic network reconstruction, one or more chemical species react to create a different set of chemical species as products.
-However, reactions in a metabolic network reconstruction may include processes that are not chemical reactions.
-Such processes may include exchange of nutrients, as well as a reaction that models biomass formation.
-
-Flux balance analysis (FBA) is a mathematical method that finds the steady-state flux of reactions through a metabolic network that is best for a given condition \parencite{orthWhatFluxBalance2010}.
-These metabolic fluxes represent rates of chemical reactions.
-At its core, FBA is a method of solving the linear programming problem of finding the flux values that optimise the output value of an objective function, subject to biological constraints.
-
-Mathematically, the linear programming problem of FBA can be expressed as:
-
-\begin{equation}
-  \max \mathbf{c}^{\intercal} \mathbf{v}
-  \label{eq:model-fba-objective}
-\end{equation}
-
-subject to
-
-\begin{equation}
-  \begin{gathered}
-    \mathbf{S} \mathbf{v} = \mathbf{0}\\
-    v_{i,\mathrm{min}} \leq v_{i} \leq v_{i,\mathrm{max}}
-  \end{gathered}
-  \label{eq:model-fba-constraints}
-\end{equation}
-
-where $\mathbf{c}$ is a vector of weights such that $\mathbf{c}^{\intercal} \mathbf{v}$ defines the objective function, $\mathbf{S}$ is the stoichiometric matrix, and $\mathbf{v}$ is the vector of fluxes. The expression $v_{i,\mathrm{min}}$ represents the lower bound and $v_{i,\mathrm{max}}$ represents the upper bound for each flux $v_{i}$ in $\mathbf{v}$.
-
-The objective function is given as the task of maximising a mathematical expression that is based on a subset of fluxes (Eq.\ \ref{eq:model-fba-objective}).
-Most commonly, the objective function is maximising the flux of the biomass reaction, thus optimising the growth rate of the cell.
-The constraints for FBA are, in the most basic case, imposed by two factors:
-the stoichiometric matrix and reaction flux bounds (Eq.\ \ref{eq:model-fba-constraints}).
-The stoichiometric matrix balances reaction inputs and outputs, while flux bounds impose upper and lower limits on the fluxes of each reaction.
-These constraints restrict the solution space for the FBA problem.
-
-FBA thus offers a computationally inexpensive way to simulate metabolism in a living system, as opposed to solving a large set of differential equations that describe the kinetics of biochemical reactions.
-Such differential equations can be difficult to construct and parametrise.
 
 \section{Modelling temporal scheduling of biosynthesis}
 \label{sec:model-temporal}
@@ -93,9 +40,8 @@ Both studies model the metabolic state of the cell at each phase of the YMC, rat
 
 An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}.
 This study extended a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to find the temporal order of intracellular synthesis reactions which optimises the growth rate of the cell, under resource constraints.
-However, the model relies on an external oscillator --- namely, the light-dark cycle.
-In contrast, the yeast metabolic cycle is autonomously generated.
-Therefore, it is difficult to extend the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC\@.
+However, extending the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC is hampered by the lack of an explicit mechanistic model of the YMC, owing to the unknowns of the biochemical mechanisms of the YMC\@.
+Instead, any FBA model based on the metabolic model must include a phenomenological description of a metabolic cycle, which would be equivalent to including an external oscillator as implemented by \textcite{reimersCellularTradeoffsOptimal2017} as a light-dark cycle.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
@@ -104,10 +50,25 @@ Models like \textcite{sanchezImprovingPhenotypePredictions2017} and \textcite{el
 \textcite{elsemmanWholecellModelingYeast2022} additionally imposed a ribosome capacity constraint and compartment constraints.
 
 In this chapter, I used an enzyme-constrained genome-scale model of \textit{Saccharomyces cerevisiae} and performed FBA to simulate two strategies of scheduling of the synthesis of biomass components: in sequence and in parallel.
+In contrast to \textcite{takhaveevTemporalSegregationBiosynthetic2023}, which modelled the levels of biosynthesis for each biomass component at each phase of the cell division cycle based on the aggregate single-cell response observed in experimental data, without predicting timescales, this chapter predicts the timescale for biosynthesis for different proteome pool sizes and different nutrient conditions.
+
 To simulate the cell prioritising the synthesis of each biomass component in sequence, I ablated metabolites from the biomass reaction so that one biomass component remained, then optimised the model.
 To assess the advantage of sequential synthesis over parallel synthesis, I estimated the synthesis time for each biomass component based on ablation, then compared these times predicted by the unmodified model.
 To show that sequential synthesis is an adaptation for a finite proteome pool, I varied the size of the enzyme-available proteome pool to observe its effect on the cell's preferred scheduling strategy.
 Finally, to show how nutrient conditions affect the cell's scheduling strategy, I modelled changes in carbon and nitrogen source concentrations, then observed how the changes affect allocation of the proteome to metabolic enzymes.
+
+FBA was chosen as a proof-of-concept method to simulate sequential scheduling of the synthesis of biomass components for its ease of use, and may serve as a basis for more fine-grained modelling to evaluate the hypotheses in this chapter in future investigations.
+As a limitation, FBA only examines the steady state of metabolism in a biological system.
+However, FBA is useful when combined with ablating the biomass reaction, because ablation introduces a series of different steady states --- as each biomass component is prioritised --- that can occur in sequence.
+This thus reflects, to some extent, how the metabolic state of the cell changes over time.
+
+An additional limitation is that FBA simulates an average behaviour of yeast cells.
+To simulate a population of cells, extensions to FBA can be applied.
+For example, \textcite{tourignySimulatingSinglecellMetabolism2021} developed a stochastic simulation algorithm with FBA embedded, which models fluctuations in enzyme and metabolite copy numbers, for \textit{Mycobacterium genitalium}.
+Applying this algorithm to ecYeast8 must account for the greater genome complexity and variability of lipid composition \parencite{sanchezSLIMErProbingFlexibility2019} in budding yeast.
+In addition, \textcite{labhsetwarPopulationFBAPredicts2017} developed a population FBA approach, which was based on sampling enzyme copy numbers from an experimental distribution.
+Applying this idea to ecYeast8 may mean a stochastic size of the enzyme-available proteome pool.
+Both approaches are challenging and are beyond the scope of this thesis, but may be used in extensions to this work.
 
 
 \section{The Yeast8 and ecYeast8 models and their formalisms}
@@ -238,8 +199,8 @@ To assess whether ablation leads to metabolic changes that reflect cellular bioc
 When the model prioritised a different biomass component in each round of ablation, the model partitioned the limited proteome available for enzyme production differently.
 In other words, in each round of ablation, the vector of fluxes carried by each enzyme usage pseudoreaction (defined in Eq.\ \ref{eq:model-gecko-enzyme-usage}) was different from each other and from the non-ablated case, in which all biomass components were synthesised in parallel.
 
-To quantify changes in proteome allocation across rounds of ablation, I computed the $\log_{2}(\mathrm{FC})$ of fluxes relative to the non-ablated, parallel case.
-This is defined as:
+To quantify changes in proteome allocation across rounds of ablation, I computed the base-2 logarithm of fold changes of fluxes relative to the non-ablated, parallel case.
+This computation is defined as:
 
 \begin{equation}
   \log_{2}(\mathrm{FC}_{i,j}) = \log_{2}\left( \frac{e_{i,j}^{\prime}}{e_{i, \mathrm{par}}^{\prime}} \right)
@@ -257,7 +218,7 @@ where, to ensure that $\log_{2}(\mathrm{FC}_{i,j})$ can be defined for all $i$ a
   \label{eq:model-epsilon-round}
 \end{equation}
 
-where $e^{\prime}$ is either $e_{i,j}^{\prime}$ or $e_{i, \mathrm{par}}^{\prime}$, $e$ is the corresponding $e_{i,j}$ or $e_{i, \mathrm{par}}$, and $\epsilon$ is the minimum flux of $\SI{1}{\molecule~\cell^{-1}} = \SI{1.11d-10}{\mmolgdw}$, computed assuming a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}.
+where $e^{\prime}$ is either $e_{i,j}^{\prime}$ or $e_{i, \mathrm{par}}^{\prime}$, $e$ is the corresponding $e_{i,j}$ or $e_{i, \mathrm{par}}$, and $\epsilon$ is the minimum flux of $\SI{1}{\molecule~\cell^{-1}} = \SI{1.11d-10}{\mmolgdw}$, computed assuming a cell dry weight of \SI{15}{\pico\gram} dry weight per cell \parencite{shermanGettingStartedYeast2002}, and with units consistent with enzyme usage reactions as described by \textcite{sanchezImprovingPhenotypePredictions2017}.
 Here, $e_{i, \mathrm{par}}$ represents the flux of an enzyme usage reaction associated with each enzyme $E_{i}$ in the model (defined in Eq.\ \ref{eq:model-gecko-enzyme-pool}) in the non-ablated, parallel case, and $e_{i,j}$ represents the flux of the enzyme usage reaction when biomass component $j$ is prioritised in a round of ablation.
 
 % The value $\epsilon$ is defined as:
@@ -375,6 +336,16 @@ For comparison, I computed estimates of the time for each biomass component, ass
 
 where $t_{0}$ is the doubling time found in Eq.\ \ref{eq:model-doubling-time}.
 
+Eq.\ \ref{eq:model-proportional-time} assumes that different biomass components require the same synthesis time per unit of mass.
+Challenging this assumption is the fact that protein synthesis is a metabolically expensive process, with translation requiring many precursors and a series of catalytic processes, compared to the polymerisation of other macromolecules.
+Such complex translation machinery creates multiple rate-limiting steps for protein synthesis \parencite{shahRateLimitingStepsYeast2013}, which also vary depending on the gene each protein is expressed because of regulatory elements \parencite{lahtveeAbsoluteQuantificationProtein2017} and because of amino acid composition \parencite{chenYeastHasEvolved2022}.
+So, per unit of mass, protein synthesis may require more time than the synthesis of other biomass components.
+
+To evaluate the assumption that synthesis time is proportional to mass fraction, the inferred synthesis times can be compared to findings from previous studies.
+However, model estimates give a large range of protein synthesis rates --- \num{1900} to \num{19500} proteins per cell per second \parencite{seegerDynamicalStochasticModel2023} --- thus making such a comparison difficult.
+In addition, in simulating parallel biosynthesis, it is not possible to simulate different synthesis rates for different biomass components as only one objective function is optimised.
+In the absence of precise time estimates for the synthesis of biomass components, the assumption that synthesis time is proportional to mass fraction may be the best assumption for the parallel case, which is one of two hypothetical scenarios, alongside the sequential case.
+
 To determine whether sequential biosynthesis of biomass components or parallel biosynthesis of biomass components is advantageous, I defined a ratio $\ratioabl$ that represents the ratio between the total time predicted by ablation and the biomass component that is predicted to take the most time:
 
 \begin{equation}
@@ -383,8 +354,6 @@ To determine whether sequential biosynthesis of biomass components or parallel b
 \end{equation}
 
 where $\Tseq$ represents the predicted growth time assuming sequential biosynthesis and $\Tpar$ represents the limiting biomass synthesis time assuming parallel biosynthesis.
-
-\pagebreak
 
 The quantities $\Tseq$ and $\Tpar$ are defined:
 
@@ -691,7 +660,9 @@ To investigate the effect of a non-fermentable carbon source on biomass synthesi
 
 Results show that the saturation curve of pyruvate controlled the effect of exchange rates on scheduling strategies.
 Fig.\ \ref{fig:model-grid-pyr} shows that when pyruvate was the carbon source, the region of carbon source limitation was larger than when glucose was the carbon source.
-This observation reflected the different shapes of the pyruvate and glucose saturation curves (Fig.\ \ref{fig:model-saturation}): on glucose, the growth rate reached half of its maximum value when glucose exchange was well below half saturation, while on pyruvate the growth rate reached half of its maximum value when pyruvate exchange was half saturation.
+This observation reflected the different shapes of the pyruvate and glucose saturation curves (Fig.\ \ref{fig:model-saturation}): below growth rate saturation, the relationship between pyruvate exchange rate and growth rate is linear, while the relationship between glucose exchange rate and growth rate is not linear.
+In other words, on pyruvate, the growth rate reached half of its maximum value when the pyruvate exchange rate was half of the value that corresponds to the maximum growth rate.
+In contrast, on glucose, when the growth rate reached half of its maximum value, the glucose exchange rate was well below half of the value that corresponds to the maximum growth rate.
 
 \begin{figure}
   \centering
@@ -764,7 +735,7 @@ To evaluate this hypothesis, I compared the enzyme usage reaction flux vectors i
 Enzyme usage reaction flux vectors show how the cell allocates its finite proteome to enzymes when each biomass component is prioritised (Section~\ref{sec:model-timescale}).
 
 To test whether similarities in proteome allocation to enzymes explain parallel biosynthesis, Fig.\ \ref{fig:model-rank-glc-highratio-rank} shows that when both glucose and ammonium were limiting, the allocation patterns were similar across rounds of ablation, thus explaining the advantage of parallel biosynthesis of biomass components.
-This similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall}, which shows that parallel biosynthesis exhibited relatively similar proteome allocation with the synthesis of individual biomass components.
+This similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall}, which shows that parallel biosynthesis exhibited relatively similar proteome allocation with the synthesis of individual biomass components, as evidenced by relatively high pairwise Kendall's $\tau$-b rank correlation coefficients (mean = 0.38).
 
 \begin{figure}[htbp!]
   \centering
@@ -800,7 +771,7 @@ This similarity is quantified in Fig.\ \ref{fig:model-rank-glc-highratio-kendall
 
 In contrast, Fig.\ \ref{fig:model-rank-glc-lowratio-rank} shows that when neither glucose nor ammonium limited growth, biomass components could be divided into two groups based on enzyme usage reaction flux vectors.
 These groups suggest an explanation for sequential biosynthesis: the cell may synthesise lipids and proteins together in one stage of its growth cycle, while synthesising carbohydrates, DNA, RNA, cofactors, and ions together in another stage.
-The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig:model-rank-glc-lowratio-kendall}, which shows that parallel biosynthesis exhibited different proteome allocation compared to the synthesis of individual biomass components.
+The bias towards sequential biosynthesis is further emphasised by Fig.\ \ref{fig:model-rank-glc-lowratio-kendall}, which shows that parallel biosynthesis exhibited different proteome allocation compared to the synthesis of individual biomass components, as evidenced by relatively low pairwise Kendall's $\tau$-b rank correlation coefficients compared to Fig.\ \ref{fig:model-rank-glc-highratio-kendall} (mean = 0.28).
 
 \begin{figure}
   \centering
@@ -978,7 +949,12 @@ However, parallel scheduling of biosynthesis becomes advantageous in some nutrie
 Further simulations suggest an explanation for this advantage of parallel biosynthesis: as each biomass component is synthesised, the cell allocates its proteome pool to enzymes in similar patterns.
 
 The advantage of sequential scheduling of biosynthesis over parallel scheduling of biosynthesis may explain why yeast cells exhibit metabolic cycles, in which there is a sequence of synthesising biomass components \parencite{mellorMolecularBasisMetabolic2016}.
-Conversely, the advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis in nutrient-limiting conditions may explain the absence of metabolic cycles in extreme, non-permissive conditions.
+Conversely, the advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis in nutrient-limiting conditions may explain the metabolic cycle being less reliably generated and of low quality in some conditions in my observations.
+For example, the model predicts an advantage of parallel scheduling of biosynthesis when there is low (10-20\% saturation) glucose exchange and when ammonium exchange lies below saturation.
+This may correspond to low-glucose conditions in Section~\ref{sec:biology-carbon}, from which most flavin signals are non-oscillatory.
+However, such correspondence is only true when the glucose exchange rate in the model corresponds to the glucose concentration in the experiment, and experiments to calibrate the two quantities must be performed to verify this correspondence.
+
+Furthermore, it is possible that implementing conditions not tested by this chapter, such as highly acidic conditions \parencite{oneillEukaryoticCellBiology2020}, in flux balance analysis simulations may predict on advantage of parallel scheduling of biosynthesis, thus explaining the absence of metabolic cycles in such conditions.
 The metabolic cycle may thus be an adaptation to a limited proteome pool and having to carry out the metabolically expensive process of protein synthesis during cell growth \parencite{oneillEukaryoticCellBiology2020}.
 Clustering of the synthesis of lipids and proteins in one group may explain cycling of storage lipids \parencite{campbellBuildingBlocksAre2020}, while clustering of carbohydrate, DNA, and RNA synthesis in another group to group together processes that require oxidative phosphorylation may explain respiratory cycles in the YMC \parencite{tuLogicYeastMetabolic2005}.
 
@@ -988,3 +964,12 @@ These values in the GECKO model include enzyme usage reaction fluxes, which woul
 In addition, FBA gives a steady-state picture of metabolism.
 To describe changes in fluxes over time, derivatives such as dynamic FBA \parencite{mahadevanDynamicFluxBalance2002} could be used.
 To further increase the precision of the model and thus its ability to make predictions, compartmentalisation can be considered \parencite{elsemmanWholecellModelingYeast2022}, or resource balance analysis \parencite{goelzerCellDesignBacteria2011} can be used.
+
+To validate the predictions from flux balance analysis in this chapter with experimental results from Chapter~\ref{ch:biology}, conditions that correspond to an advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis, and vice versa, can be applied to yeast cells in a single-cell microfluidics experiment.
+Performing such experiments will necessitate calibrating carbon and nitrogen source concentrations in the nutrient media with exchange rates in the ecYeast8 model.
+In addition, other nutrient perturbations and genetic perturbations in this thesis --- namely, potassium-deficiency and the \textit{zwf1$\Delta$} and \textit{tsa1$\Delta$ tsa2$\Delta$} strains --- can be simulated using the modelling approach in this chapter, and can lead to further cross-validation between the single-cell microfluidics and modelling approaches used in this thesis.
+As the precision of the modelling approach is increased by using derivations of FBA, the results from Chapter~\ref{ch:biology} can be used to calibrate such computational methods, and a more precise model can then be used to predict new nutrient perturbations or genetic perturbations that impair the metabolic cycle, forming a design-build-test-learn cycle.
+
+The synthesis times predicted by this chapter may inform the period length to be used to simulate time series as discussed in Chapter~\ref{ch:analysis}.
+In addition, if stochastic extensions to FBA \parencite{tourignySimulatingSinglecellMetabolism2021,labhsetwarPopulationFBAPredicts2017} are used in an extension to this study, this can lead to a population of time series with different periods or noise parameters.
+In such a case, methods to visualise groups in a dataset (Section~\ref{sec:analysis-clustering}) or to estimate the period in a population of time series (Section~\ref{sec:analysis-characterisation}) can be used to evaluate whether the population of simulated time series in this case approximates recorded time series from cells as presented in Chapter~\ref{ch:biology}.
