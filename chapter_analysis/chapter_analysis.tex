@@ -63,6 +63,27 @@ Taken together, BioDare and \textit{hctsa} serve as two examples of approaches t
 However, these approaches overlap: the \textit{catch22} feature set, itself a subset of \textit{hctsa}, includes Fourier coefficients used in some BioDare methods.
 Additionally, \textit{catch22} includes and a periodicity measure based on the autocorrelation function \parencite{wangStructureBasedStatisticalFeatures2007}, similar to the period estimation method that will be discussed in Section~\ref{sec:analysis-characterisation}.
 
+To assess the impact of this overlap on time series analysis, Fig.\ [...] shows the \textit{catch22} features that were most influential in my analysis, as evidenced by a Random Forest classifier to distinguish manually scored oscillatory and non-oscillatory time series (further discussed in Section~\ref{sec:analysis-classification}).
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[htpb]{0.8\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{}
+   \caption{
+   }
+   \label{fig:analysis-catch22-importance-subfig}
+  \end{subfigure}
+
+  \caption[
+    Insert caption here.
+  ]{
+    Insert caption here.
+  }
+  \label{fig:analysis-catch22-importance}
+\end{figure}
+
+
 \section{Data cleaning: filtering out long-term trends}
 \label{sec:analysis-cleaning}
 
