@@ -26,4 +26,4 @@
 ** Biology
 - [ ] B-a/p105: Please clarify if this still applies to the rhythmic cells, and note that there is a profound change in the rhythmic fraction.
 ** Analysis
-- [ ] C/p118: analyse and report which of the catch22 classifiers were most influential in your analysis (or some other evidence, such as how many classifiers were influential – if there were 10, say, the results clearly didn’t depend on these rhythmicity measures alone).
+- [X] C/p118: analyse and report which of the catch22 classifiers were most influential in your analysis (or some other evidence, such as how many classifiers were influential – if there were 10, say, the results clearly didn’t depend on these rhythmicity measures alone).

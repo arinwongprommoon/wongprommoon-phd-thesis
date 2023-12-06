@@ -62,26 +62,7 @@ To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} ident
 Taken together, BioDare and \textit{hctsa} serve as two examples of approaches to analyse time series.
 However, these approaches overlap: the \textit{catch22} feature set, itself a subset of \textit{hctsa}, includes Fourier coefficients used in some BioDare methods.
 Additionally, \textit{catch22} includes and a periodicity measure based on the autocorrelation function \parencite{wangStructureBasedStatisticalFeatures2007}, similar to the period estimation method that will be discussed in Section~\ref{sec:analysis-characterisation}.
-
-To assess the impact of this overlap on time series analysis, Fig.\ [...] shows the \textit{catch22} features that were most influential in my analysis, as evidenced by a Random Forest classifier to distinguish manually scored oscillatory and non-oscillatory time series (further discussed in Section~\ref{sec:analysis-classification}).
-
-\begin{figure}
-  \centering
-  \begin{subfigure}[htpb]{0.8\textwidth}
-   \centering
-   %\includegraphics[width=\textwidth]{}
-   \caption{
-   }
-   \label{fig:analysis-catch22-importance-subfig}
-  \end{subfigure}
-
-  \caption[
-    Insert caption here.
-  ]{
-    Insert caption here.
-  }
-  \label{fig:analysis-catch22-importance}
-\end{figure}
+Such overlaps in measures may mean that the use of \textit{catch22} may reduce to a few measures equivalent to analysis using BioDare --- this implication is explored further in Section~\ref{subsec:analysis-classification-ml}.
 
 
 \section{Data cleaning: filtering out long-term trends}
@@ -777,6 +758,26 @@ In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the pr
     Sample time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.
   }
   \label{fig:analysis-svc-proba-gallery}
+\end{figure}
+
+
+To assess whether a specific mathematical measure of rhythmicity within the \textit{catch22} feature set is responsible for classification of time series, Fig.\ \ref{fig:analysis-catch22-importance} evaluates the \textit{catch22} features that were most influential in my analysis.
+Specifically, the figure suggests that the importance of each feature in classifying manually-scored oscillatory and non-oscillatory time series was small.
+Furthermore, there was no subset of features that had significantly greater importance than others.
+In other words, the figure suggests that classification of rhythmicity did not depend only on a few explicit mathematical measures of rhythmicity.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{rf.pdf}
+
+  \caption[
+    Permutation feature importance values of \textit{catch22} features in classifying manually-scored oscillatory and non-oscillatory time series
+  ]{
+    Permutation feature importance values of \textit{catch22} features in classifying manually-scored oscillatory and non-oscillatory time series from the \textit{zwf1$\Delta$} dataset, arranged by the mean decrease in accuracy when the feature of interest is randomly shuffled.
+    To compute feature importance, a random forest classifier was fitted to the training dataset.
+    Error bars show inter-trees variability.
+  }
+  \label{fig:analysis-catch22-importance}
 \end{figure}
 
 
