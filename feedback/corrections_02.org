@@ -11,7 +11,7 @@
 
 * Category 1
 ** Intro
-- [ ] A/p018: add 'and immediately after' to ref to Eelderink-Chen et al. (2010)
+- [X] A/p018: add 'and immediately after' to ref to Eelderink-Chen et al. (2010)
 ** Biology
 (Do B-a first)
 - [ ] B-b/p105: if you argue that there are two periods, and show that in the inset period histogram, then you need to annotate the mean period shown in Table 3.1 – you are arguing that a single mean isn’t meaningful in this case.
