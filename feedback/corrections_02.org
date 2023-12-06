@@ -20,7 +20,7 @@
 - [X] C/p118: note p.118 that Fourier coefficients overlap between catch22 and some BioDare methods, and that the Wang measure is similar to the autocorrelation that you use elsewhere
 - [X] p124: Typo in Figure 4.3 legend, you have 4.3b twice and no 4.3c.
 ** Model
-- [ ] D/p136: You have addressed my point but not its implication. If a phenomenological YMC model is equivalent to the light-dark cycle of Reimers, and Reimers successfully used this approach to study the order of reactions in those conditions with FBA, then you too could use that approach for the yeast FBA model with a YMC. Thus it is incorrect to say that your application of Reimers approach would be hampered by ignorance of a YMC mechanism. Optionally, you might move a comment on Reimers to the Discussion section of this chapter as a future opportunity. In a publication, that might give the reviewers a hostage, but that’s not an issue in your thesis.
+- [X] D/p136: You have addressed my point but not its implication. If a phenomenological YMC model is equivalent to the light-dark cycle of Reimers, and Reimers successfully used this approach to study the order of reactions in those conditions with FBA, then you too could use that approach for the yeast FBA model with a YMC. Thus it is incorrect to say that your application of Reimers approach would be hampered by ignorance of a YMC mechanism. Optionally, you might move a comment on Reimers to the Discussion section of this chapter as a future opportunity. In a publication, that might give the reviewers a hostage, but that’s not an issue in your thesis.
 
 * Category 2
 ** Biology

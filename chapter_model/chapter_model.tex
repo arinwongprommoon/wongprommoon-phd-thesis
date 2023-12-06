@@ -31,6 +31,7 @@ Previous studies have attempted to use FBA to model how each phase of the YMC ha
 \textcite{takhaveevTemporalSegregationBiosynthetic2023} showed that in different stages of the cell division cycle, the cell synthesises different components of its biomass at different levels.
 In the study, they blocked synthesis of each class of macromolecule and recorded the changes in single-cell NAD(P)H cycles, representing the YMC, to quantify the level of each class of macromolecule that the cell synthesises at each time point within a cell division cycle.
 Then, they used these activities as coefficients for a modified thermodynamic-stoichiometric metabolic model at each time point and used FBA to deduce biomass production rates.
+
 % Does not suggest that synthesis of each class of macromolecule excludes all others (which makes sense).
 % Rather, this study confirms that timescale of observed synthesis events matches simulations.
 % Do I even cite this?  It's so bad.
@@ -40,8 +41,7 @@ Both studies model the metabolic state of the cell at each phase of the YMC, rat
 
 An attempt in extending FBA to solve a time-dependent resource allocation problem was \textcite{reimersCellularTradeoffsOptimal2017}.
 This study extended a genome-scale model of the cyanobacterium \textit{Synechococcus elongatus} PCC7942 to find the temporal order of intracellular synthesis reactions which optimises the growth rate of the cell, under resource constraints.
-However, extending the ideas in \textcite{reimersCellularTradeoffsOptimal2017} to the study of the YMC is hampered by the lack of an explicit mechanistic model of the YMC, owing to the unknowns of the biochemical mechanisms of the YMC\@.
-Instead, any FBA model based on the metabolic model must include a phenomenological description of a metabolic cycle, which would be equivalent to including an external oscillator as implemented by \textcite{reimersCellularTradeoffsOptimal2017} as a light-dark cycle.
+This model imposes time dependence by implementing a light-dark cycle as an external oscillator.
 
 Traditional genome-scale models assume that the uptake rate of carbon source limits production.
 However, levels of each enzyme also restrict reaction fluxes, leading to the development of enzyme-constrained models.
@@ -963,6 +963,7 @@ The multiplicity of solutions in FBA makes it challenging to draw conclusions ab
 These values in the GECKO model include enzyme usage reaction fluxes, which would inform proteome allocation strategies.
 In addition, FBA gives a steady-state picture of metabolism.
 To describe changes in fluxes over time, derivatives such as dynamic FBA \parencite{mahadevanDynamicFluxBalance2002} could be used.
+Alternatively, to introduce time-dependence of resource allocation, a phenomenological description of the metabolic cycle can be included; such an approach would be equivalent to the addition of a light-dark cycle as an external oscillator as performed by \textcite{reimersCellularTradeoffsOptimal2017}.
 To further increase the precision of the model and thus its ability to make predictions, compartmentalisation can be considered \parencite{elsemmanWholecellModelingYeast2022}, or resource balance analysis \parencite{goelzerCellDesignBacteria2011} can be used.
 
 To validate the predictions from flux balance analysis in this chapter with experimental results from Chapter~\ref{ch:biology}, conditions that correspond to an advantage of parallel scheduling of biosynthesis over sequential scheduling of biosynthesis, and vice versa, can be applied to yeast cells in a single-cell microfluidics experiment.
