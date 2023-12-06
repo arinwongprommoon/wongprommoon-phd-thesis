@@ -940,10 +940,12 @@ To be consistent with \textit{zwf1$\Delta$}, cells were pre-cultured and culture
 %
 % Is this because of a wide variety of oscillation frequencies?  Look at the FFT inset, or do additional investigations.
 
-Fig.\ \ref{fig:biology-tsa1tsa2} suggests that the metabolic cycles generated from the auxotrophic \textit{tsa1$\Delta$ tsa2$\Delta$} strain were not consistent, likely due to multiple periods.
-Specifically, the Fourier spectra (Fig.\ \ref{fig:biology-tsa1tsa2-fourier}) suggest that \SI{2.45}{\hour} and \SI{3.92}{\hour} oscillations were prominent in the population.
+Fig.\ \ref{fig:biology-tsa1tsa2} suggests that the metabolic cycles generated from the auxotrophic \textit{tsa1$\Delta$ tsa2$\Delta$} strain were not consistent.%likely due to multiple periods.
+Supporting this is the fact that the fraction of rhythmic cells fell from 83\% in the parent strain to 32\% in the \textit{tsa1$\Delta$ tsa2$\Delta$} strain (Table.\ \ref{tab:biology-summary}), though rhythmic cells exhibited oscillations with low noise, as evidenced by relatively high signal-to-noise ratios (median = 2.2).
+Additionally, the Fourier spectra (Fig.\ \ref{fig:biology-tsa1tsa2-fourier}) suggest that oscillations of around \SI{2.5}{\hour} and \SI{4}{\hour} were prominent in the population.
 These two prominent periods were obscured by the median fluorescence signal aligned by first budding event (Fig.\ \ref{fig:biology-tsa1tsa2-median}), which merely suggests that a \SI{3}{\hour} oscillation was prominent in the population, and by the median autocorrelation function (Fig.\ \ref{fig:biology-tsa1tsa2-acf}), which suggests that the oscillations were not at a consistent frequency across the population, in contrast to the BY4742 wild-type that showed robust \SI{1.5}{\hour} oscillations.
-Fig.\ \ref{fig:biology-tsa1tsa2-snr} additionally shows that the amplitudes and qualities of oscillations were retained, as evidenced by signal-to-noise ratios comparable to the FY4 strain cultured in pyruvate (Fig.\ \ref{fig:biology-compare-snr}).%; ADD STATISTICAL TEST HERE).
+%Fig.\ \ref{fig:biology-tsa1tsa2-snr} additionally show that the oscillations exhibited relatively low noise, as evidenced by relatively high signal-to-noise ratios.
+
 
 \begin{figure}
   \centering
@@ -1041,7 +1043,7 @@ To summarise the results in this chapter, Table~\ref{tab:biology-summary} shows 
     Low glucose (\ref{sec:biology-carbon}) & 1520 & 183 (12.0\%) & 193.6 $\pm$ 7.6 $\ast$ & \\
     Potassium deficient (\ref{sec:biology-potassium_deficient}) & 511 & 206 (40.3\%) & 132.8 $\pm$ 2.8 $\ast$ & Only time points during potassium deficiency used.\\
     \textit{zwf1$\Delta$} (\ref{sec:biology-deletions}) & 112 & 63 (56.3\%) & 192.8 $\pm$ 7.7 $\ast$ & \\
-    \textit{tsa1$\Delta$ tsa2$\Delta$} (\ref{sec:biology-deletions}) & 212 & 67 (31.6\%) & 157.7 $\pm$ 7.7 $\ast$ & \\
+    \textit{tsa1$\Delta$ tsa2$\Delta$} (\ref{sec:biology-deletions}) & 212 & 67 (31.6\%) & 157.7 $\pm$ 7.7 $\ast$ & Single value for mean period may not be representative because population likely contains two dominant periods.\\
     \bottomrule
   \end{tabularx}
   \caption[

@@ -14,8 +14,8 @@
 - [X] A/p018: add 'and immediately after' to ref to Eelderink-Chen et al. (2010)
 ** Biology
 (Do B-a first)
-- [ ] B-b/p105: if you argue that there are two periods, and show that in the inset period histogram, then you need to annotate the mean period shown in Table 3.1 – you are arguing that a single mean isn’t meaningful in this case.
-- [ ] B-c/p105: Given the limited resolution of your period estimates without zero-padding, reporting periods to two decimals looks like false precision. For tsa1 tsa2, I might say ‘around 2.5h and 4h.’
+- [X] B-b/p105: if you argue that there are two periods, and show that in the inset period histogram, then you need to annotate the mean period shown in Table 3.1 – you are arguing that a single mean isn’t meaningful in this case.
+- [X] B-c/p105: Given the limited resolution of your period estimates without zero-padding, reporting periods to two decimals looks like false precision. For tsa1 tsa2, I might say ‘around 2.5h and 4h.’
 ** Analysis
 - [X] C/p118: note p.118 that Fourier coefficients overlap between catch22 and some BioDare methods, and that the Wang measure is similar to the autocorrelation that you use elsewhere
 - [X] p124: Typo in Figure 4.3 legend, you have 4.3b twice and no 4.3c.
@@ -24,6 +24,8 @@
 
 * Category 2
 ** Biology
-- [ ] B-a/p105: Please clarify if this still applies to the rhythmic cells, and note that there is a profound change in the rhythmic fraction.
+- [X] B-a/p105: Please clarify if this still applies to the rhythmic cells, and note that there is a profound change in the rhythmic fraction.
+  - I think Andrew misunderstood.  I meant signal-to-noise ratio, but I think I should just remove this sentence and replace it with another so this ends quickly.
+  - The signal-to-noise ratio histogram of oscillatory tsa1Δ tsa2Δ time series looks similar to the histogram in the thesis.  I can report that, if it flows well.  So is the non-oscillatory ones though, which comprise of a larger proportion, but this one has a slightly lower median SNR...
 ** Analysis
 - [X] C/p118: analyse and report which of the catch22 classifiers were most influential in your analysis (or some other evidence, such as how many classifiers were influential – if there were 10, say, the results clearly didn’t depend on these rhythmicity measures alone).
