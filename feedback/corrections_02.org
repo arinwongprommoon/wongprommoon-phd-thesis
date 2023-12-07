@@ -1,0 +1,31 @@
+#+title: Corrections
+
+* Notes
+- Based on feedback on internal examiner <2023-12-06> (i.e. additional minor corrections), after <2023-11-23> submission of 1st round of corrections
+- Not using line numbers because the corrections are too few to justify the additional work with LaTeX and note-taking.
+- Letter (A, B, C, D) corresponds to which of the four additional corrections the item belongs to.  Page numbers based on the ~corrections_01~ tagged version.
+- Notation:
+  - $L :: requires looking at literature
+  - $C :: requires coding
+  - $A :: requires asking people, with name indicated
+
+* Category 1
+** Intro
+- [X] A/p018: add 'and immediately after' to ref to Eelderink-Chen et al. (2010)
+** Biology
+(Do B-a first)
+- [X] B-b/p105: if you argue that there are two periods, and show that in the inset period histogram, then you need to annotate the mean period shown in Table 3.1 – you are arguing that a single mean isn’t meaningful in this case.
+- [X] B-c/p105: Given the limited resolution of your period estimates without zero-padding, reporting periods to two decimals looks like false precision. For tsa1 tsa2, I might say ‘around 2.5h and 4h.’
+** Analysis
+- [X] C/p118: note p.118 that Fourier coefficients overlap between catch22 and some BioDare methods, and that the Wang measure is similar to the autocorrelation that you use elsewhere
+- [X] p124: Typo in Figure 4.3 legend, you have 4.3b twice and no 4.3c.
+** Model
+- [X] D/p136: You have addressed my point but not its implication. If a phenomenological YMC model is equivalent to the light-dark cycle of Reimers, and Reimers successfully used this approach to study the order of reactions in those conditions with FBA, then you too could use that approach for the yeast FBA model with a YMC. Thus it is incorrect to say that your application of Reimers approach would be hampered by ignorance of a YMC mechanism. Optionally, you might move a comment on Reimers to the Discussion section of this chapter as a future opportunity. In a publication, that might give the reviewers a hostage, but that’s not an issue in your thesis.
+
+* Category 2
+** Biology
+- [X] B-a/p105: Please clarify if this still applies to the rhythmic cells, and note that there is a profound change in the rhythmic fraction.
+  - I think Andrew misunderstood.  I meant signal-to-noise ratio, but I think I should just remove this sentence and replace it with another so this ends quickly.
+  - The signal-to-noise ratio histogram of oscillatory tsa1Δ tsa2Δ time series looks similar to the histogram in the thesis.  I can report that, if it flows well.  So is the non-oscillatory ones though, which comprise of a larger proportion, but this one has a slightly lower median SNR...
+** Analysis
+- [X] C/p118: analyse and report which of the catch22 classifiers were most influential in your analysis (or some other evidence, such as how many classifiers were influential – if there were 10, say, the results clearly didn’t depend on these rhythmicity measures alone).

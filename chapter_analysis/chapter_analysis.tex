@@ -59,9 +59,10 @@ The resulting feature matrix --- a row for each time series and a column for eac
 The publication then showed that \textit{hctsa} could be used to distinguish five \textit{Caenorhabditis elegans} strains based on their movement patterns, and to identify clusters in the feature space of time series of \textit{Drosophila melanogaster} movement patterns which correspond well to experimental groups.
 To reduce computation time, \textcite{lubbaCatch22CAnonicalTimeseries2019} identified 22 features, termed \textit{catch22}, of \textit{hctsa} that performed well in time series classification tasks based on 93 datasets (Table~\ref{tab:catch22} in Appendix~\ref{append:analysis-catch22}).
 
-Taken together, the two examples of BioDare and \textit{hctsa} demonstrate two approaches to analysis of time series.
-On one hand, BioDare relies on using few mathematical methods that address the same time series feature, such as period or rhythmicity.
-On the other hand, \textit{hctsa} relies on using a wider range of mathematical methods that concern a large set of features, which then can serve as a feature vector to be used as an input for data science methods.
+Taken together, BioDare and \textit{hctsa} serve as two examples of approaches to analyse time series.
+However, these approaches overlap: the \textit{catch22} feature set, itself a subset of \textit{hctsa}, includes Fourier coefficients used in some BioDare methods.
+Additionally, \textit{catch22} includes and a periodicity measure based on the autocorrelation function \parencite{wangStructureBasedStatisticalFeatures2007}, similar to the period estimation method that will be discussed in Section~\ref{sec:analysis-characterisation}.
+Such overlaps in measures may mean that the use of \textit{catch22} may reduce to a few measures equivalent to analysis using BioDare --- this implication is explored further in Section~\ref{subsec:analysis-classification-ml}.
 
 
 \section{Data cleaning: filtering out long-term trends}
@@ -231,7 +232,7 @@ Such time series in Region 3 were labelled non-oscillatory due to their inconsis
       Sample non-oscillatory time series from regions of interest in UMAP embedding space shown in Fig.\ \ref{fig:umap}.
       \textbf{(\ref{fig:umap-sample-bbox1})} Non-oscillatory group (small group, $\ast$ in Fig.\ \ref{fig:umap-osc}).
       \textbf{(\ref{fig:umap-sample-bbox2})} Non-oscillatory group (large group, $\ast \ast$ in Fig.\ \ref{fig:umap-osc}).
-      \textbf{(\ref{fig:umap-sample-bbox2})} Non-oscillatory time series that occupy the same region of embedding space as oscillatory time series.
+      \textbf{(\ref{fig:umap-sample-bbox3})} Non-oscillatory time series that occupy the same region of embedding space as oscillatory time series.
     }
   \label{fig:umap-sample-regions}
 \end{figure}
@@ -757,6 +758,28 @@ In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the pr
     Sample time series arranged by probability that each is oscillatory, as predicted by the support vector classifier.
   }
   \label{fig:analysis-svc-proba-gallery}
+\end{figure}
+
+
+To assess whether a specific mathematical measure of rhythmicity within the \textit{catch22} feature set is responsible for classification of time series, Fig.\ \ref{fig:analysis-catch22-importance} evaluates the \textit{catch22} features that were most influential for the classifier.
+To do so, I used a Random Forest architecture with the same train-test split and featurisation as the best-performing SVC model, so that I can compute the mean decrease in accuracy as the value of each feature is randomly shuffled \parencite{breimanRandomForests2001}.
+Fig.\ \ref{fig:analysis-catch22-importance} suggests that the importance of each feature in rhythmicity detection was small and that there was no set of features that had significantly greater importance than others.
+In other words, classification of rhythmicity did not depend only on a few explicit mathematical measures of rhythmicity and adequate classification was only possible when all features were combined.
+This suggests that the use of \textit{catch22} does not reduce to a few features equivalent to analysis using tools like BioDare \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+
+
+\begin{figure}[hb!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{rf.pdf}
+
+  \caption[
+    Permutation feature importance values of \textit{catch22} features in classifying manually-scored oscillatory and non-oscillatory time series
+  ]{
+    Permutation feature importance values of \textit{catch22} features in classifying manually-scored oscillatory and non-oscillatory time series from the \textit{zwf1$\Delta$} dataset, arranged by the mean decrease in accuracy when the feature of interest is randomly shuffled \parencite{breimanRandomForests2001}.
+    To compute feature importance, a random forest classifier was fitted to the training dataset.
+    Error bars show inter-trees variability.
+  }
+  \label{fig:analysis-catch22-importance}
 \end{figure}
 
 
