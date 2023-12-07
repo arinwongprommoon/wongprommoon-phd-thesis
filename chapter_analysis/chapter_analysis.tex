@@ -761,10 +761,12 @@ In addition, Fig.\ \ref{fig:analysis-svc-proba-gallery} demonstrates that the pr
 \end{figure}
 
 
-To assess whether a specific mathematical measure of rhythmicity within the \textit{catch22} feature set is responsible for classification of time series, Fig.\ \ref{fig:analysis-catch22-importance} evaluates the \textit{catch22} features that were most influential in my analysis.
-Specifically, the figure suggests that the importance of each feature in classifying manually-scored oscillatory and non-oscillatory time series was small.
-Furthermore, there was no subset of features that had significantly greater importance than others.
-In other words, the figure suggests that classification of rhythmicity did not depend only on a few explicit mathematical measures of rhythmicity.
+To assess whether a specific mathematical measure of rhythmicity within the \textit{catch22} feature set is responsible for classification of time series, Fig.\ \ref{fig:analysis-catch22-importance} evaluates the \textit{catch22} features that were most influential for the classifier.
+To do so, I used a Random Forest architecture with the same train-test split and featurisation as the best-performing SVC model, so that I can compute the mean decrease in accuracy as the value of each feature is randomly shuffled \parencite{breimanRandomForests2001}.
+Fig.\ \ref{fig:analysis-catch22-importance} suggests that the importance of each feature in rhythmicity detection was small and that there was no set of features that had significantly greater importance than others.
+In other words, classification of rhythmicity did not depend only on a few explicit mathematical measures of rhythmicity and adequate classification was only possible when all features were combined.
+This suggests that the use of \textit{catch22} does not reduce to a few features equivalent to analysis using tools like BioDare \parencite{zielinskiStrengthsLimitationsPeriod2014}.
+
 
 \begin{figure}[hb!]
   \centering
