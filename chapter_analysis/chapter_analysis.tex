@@ -569,8 +569,6 @@ This method thus allows computing the frequency of the oscillation from the loca
   \label{fig:analysis-ar-classification}
 \end{figure}
 
-\pagebreak
-
 Fig.\ \ref{fig:analysis-ar} shows that the autoregressive model was able to correctly identify a time series as oscillatory at a period of \SI{75.2}{\minute}, as evidenced by the location of a peak in the periodogram that the model predicted.
 
 \begin{figure}
@@ -716,8 +714,6 @@ Fig.\ \ref{fig:analysis-precision-recall} suggests that featurisation using \tex
 To predict the probability that each time series was oscillatory, I used Platt scaling  \parencite{plattProbabilisticOutputsSupport1999} with the support vector classifier, as implemented by the \texttt{predict\_proba} method in the Python package \texttt{scikit\_learn}.
 Platt scaling involves finding parameters for a logistic sigmoid function which approximates the posterior class probability for a binary classifier.
 Fig.\ \ref{fig:analysis-svc-proba-histogram} suggests that the classifier performed well in discriminating between the two classes, as evidenced by the U-shaped histogram of probabilities (Fig.\ \ref{fig:analysis-svc-proba-histogram-model}), in contrast to the control (Fig.\ \ref{fig:analysis-svc-proba-histogram-scramble}).
-
-\pagebreak
 
 \begin{figure}[ht!]
   \centering
