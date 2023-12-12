@@ -596,7 +596,6 @@
   %
   \vfill
   %
-  \includegraphics[width=0.4\textwidth]{signature.png}
 
   % Add a line with the authors name underneath.
   % The line should not be less than 0.4/textwidth
